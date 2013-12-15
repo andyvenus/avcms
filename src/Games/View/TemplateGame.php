@@ -1,6 +1,6 @@
 <?php
 
-namespace Calendar\View;
+namespace Games\View;
 
 use AVCMS\View\TemplateObject;
 

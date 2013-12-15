@@ -1,6 +1,6 @@
 <?php
 
-namespace Calendar\Model;
+namespace Games\Model;
 
 use AVCMS\Model\Model;
 use AVCMS\Model\Entity;
@@ -9,7 +9,9 @@ class Games extends Model
 {
     protected $table = 'games';
 
-    protected $entity = 'Calendar\Model\Game';
+    protected $singular = 'game';
+
+    protected $entity = 'Games\Model\Game';
 
     public function insert(Entity $entity) {
         if (isset($entity->url)) {

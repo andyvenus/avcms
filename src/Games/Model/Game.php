@@ -1,6 +1,6 @@
 <?php
 
-namespace Calendar\Model;
+namespace Games\Model;
 
 use AVCMS\Model\Entity;
 use AVCMS\Validation\Rules;
@@ -46,7 +46,7 @@ class Game extends Entity {
     {
         $validator->addRule('description', new Rules\Numeric(), "Holy MOLY THE DESCRIPTION TOO");
 
-        $validator->addRule('name', new Rules\MustNotExist('Calendar\Model\Games', 'name', $this->id), "That name is already in use");
+        $validator->addRule('name', new Rules\MustNotExist('Games\Model\Games', 'name', $this->id), "That name is already in use");
 
         return $validator;
     }

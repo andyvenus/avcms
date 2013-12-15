@@ -1,6 +1,6 @@
 <?php
 
-namespace Calendar\Controller;
+namespace Games\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\FlattenException;

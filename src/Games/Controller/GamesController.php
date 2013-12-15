@@ -1,18 +1,19 @@
 <?php
 
-namespace Calendar\Controller;
+namespace Games\Controller;
 
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AVCMS\Controller\Controller;
-use Calendar\Model\Game;
+use Games\Model\Game;
 use AVCMS\Form\FormOutput;
-use Calendar\Form\GameForm;
+use Games\Form\GameForm;
 
 class GamesController extends Controller
 {
 
-    protected $parent_namespace = "Calendar";
+    protected $parent_namespace = "Games";
 
 
     public function newModelAction(Request $request)
@@ -106,6 +107,9 @@ class GamesController extends Controller
 
     public function joinAction(Request $request, $id)
     {
+
+        echo $this->getUser()->name;
+
         $games = $this->newModel('Games');
 
         $categories = $this->newModel('Categories');
@@ -114,6 +118,39 @@ class GamesController extends Controller
 
         $game = $games->find($id)->first();
 
-        return new Response($game->name.' Category: '.$game->category->name);
+        $twig = $this->container->get('twig');
+
+        return new Response( $twig->render('{{ game.name }}, {{ game.category.name }}', array('game' => $game)) );
+    }
+
+    public function subRequestAction(Request $request)
+    {
+        $twig = $this->container->get('twig');
+
+        return new Response( $twig->render('Hello {{ name }}!', array('name' => 'Andy')) ); // Response( $template->build() );
+    }
+
+    public function stressTestAction(Request $request)
+    {
+
+        $games = $this->newModel('Games');
+
+        $categories = $this->newModel('Categories');
+
+        $games->setJoin($categories, array('name'));
+
+        $all_games = $games->select()->get();
+
+        $twig = $this->container->get('twig');
+
+        return new Response( $twig->render('{% for game in games %} {{ game.name }} in cat {{ game.category.name }} <br /> {% endfor %}', array('games' => $all_games)) ); // Response( $template->build() );
+    }
+
+    public function setUserAction($id)
+    {
+        $r = new Response("ITS SET");
+        $r->headers->setCookie(new Cookie('avcms_userid', $id));
+
+        return $r;
     }
 }

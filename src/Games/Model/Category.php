@@ -1,6 +1,6 @@
 <?php
 
-namespace Calendar\Model;
+namespace Games\Model;
 
 use AVCMS\Model\Entity;
 

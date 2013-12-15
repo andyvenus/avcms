@@ -1,8 +1,8 @@
 <?php
 
-// example.com/src/Calendar/Model/LeapYear.php
+// example.com/src/Games/Model/LeapYear.php
 
-namespace Calendar\Model;
+namespace Games\Model;
 
 class LeapYear
 {

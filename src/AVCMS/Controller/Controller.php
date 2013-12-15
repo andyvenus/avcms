@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use AVCMS\Model\ModelFactory;
 
-class Controller extends ContainerAware {
+abstract class Controller extends ContainerAware {
 
     protected $parent_namespace = "";
 
@@ -20,7 +20,7 @@ class Controller extends ContainerAware {
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
-        $this->model_factory = new ModelFactory($this->container);
+        $this->model_factory = $container->get('model.factory');
     }
 
     /**
@@ -46,5 +46,10 @@ class Controller extends ContainerAware {
         $validator->setModelFactory($this->model_factory);
 
         return $validator;
+    }
+
+    protected function getUser()
+    {
+        return $this->container->get('active.user')->getUser();
     }
 }

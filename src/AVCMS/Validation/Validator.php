@@ -6,10 +6,19 @@ use AVCMS\Model\ModelFactory;
 
 class Validator {
 
+    /**
+     * @const SCOPE_SHARED Only sub-validate parameters that also appear within the parent
+     */
     const SCOPE_SHARED = 'shared_fields';
 
+    /**
+     * @const SCOPE_SHARED Validate all parameters, regardless of if they're shared by the parent or not
+     */
     const SCOPE_ALL = 'all';
 
+    /**
+     * @const SCOPE_SHARED Only validate the parent parameters
+     */
     const SCOPE_PARENT_ONLY = 'parent_only';
 
     protected $parameters;
@@ -20,12 +29,25 @@ class Validator {
 
     protected $sub_validation_objects = array();
 
+    /**
+     * @var 'The object we're validating'
+     */
     protected $validation_obj;
 
+    /**
+     * @var ModelFactory
+     */
     protected $model_factory;
 
     protected $limited_params = array();
 
+    /**
+     * @param string|array $param_names
+     * @param Rules\Rule $rule
+     * @param string $error_message
+     * @param bool $ignore_null
+     * @param bool $stop_propagation
+     */
     public function addRule($param_names, Rules\Rule $rule, $error_message, $ignore_null = false, $stop_propagation = false)
     {
         if (!is_array($param_names)) {
@@ -43,16 +65,28 @@ class Validator {
         }
     }
 
+    /**
+     * @param Validatable $obj
+     */
     public function addSubValidation(Validatable $obj)
     {
         $this->sub_validation_objects[] = $obj;
     }
 
+    /**
+     * @param array $limited_params
+     */
     public function limitValidationParams($limited_params = array())
     {
         $this->limited_params = $limited_params;
     }
 
+    /**
+     * @param Validatable $obj
+     * @param string $scope
+     * @param bool $ignore_null
+     * @throws \Exception
+     */
     public function validate(Validatable $obj, $scope = Validator::SCOPE_ALL, $ignore_null = false)
     {
         $this->resetParameters();
@@ -66,7 +100,7 @@ class Validator {
             if (isset($this->parameters[ $rule['param_name'] ])) {
 
                 // If the parameters to validate are limited, make sure this parameter is one of those
-                if ( ( isset ($this->limited_params) && in_array($rule['param_name'], $this->limited_params) )) {
+                if ( ( empty($this->limited_params) || in_array($rule['param_name'], $this->limited_params) )) {
                     /** @var $rule_obj Rules\Rule */
                     $rule_obj = $rule['rule'];
 
@@ -85,15 +119,20 @@ class Validator {
                 }
 
             }
-            elseif ($ignore_null == false) {
-                $this->errors[] = $rule;
+            elseif ($rule['ignore_null'] == false) {
                 $rule['error_message'] = "Parameter '{$rule['param_name']}' not set";
+                $this->errors[] = $rule;
             }
         }
 
         $this->getSubValidationErrors($scope, $ignore_null);
     }
 
+    /**
+     * @param string $scope
+     * @param bool $ignore_null
+     * @return null
+     */
     public function getSubValidationErrors($scope = Validator::SCOPE_ALL, $ignore_null = false)
     {
 
@@ -131,16 +170,25 @@ class Validator {
         $this->errors = array();
     }
 
+    /**
+     * @return bool
+     */
     public function isValid()
     {
         return empty($this->errors);
     }
 
+    /**
+     * @return array
+     */
     public function getErrors()
     {
         return $this->errors;
     }
 
+    /**
+     * @param ModelFactory $model_factory
+     */
     public function setModelFactory(ModelFactory $model_factory) {
         $this->model_factory = $model_factory;
     }

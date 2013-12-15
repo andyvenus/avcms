@@ -17,7 +17,6 @@ $request = Request::createFromGlobals();
 
 $sc = include __DIR__.'/src/container.php';
 $sc->setParameter('routes', include __DIR__.'/src/app.php');
-$sc->setParameter('pdo', include __DIR__.'/src/config.php');
 
 $response = $sc->get('framework')->handle($request);
 

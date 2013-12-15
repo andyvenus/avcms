@@ -9,7 +9,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  * Class Model
  * @package AVCMS\Model
  */
-class Model {
+abstract class Model {
 
     /**
      * @var $query_builder QueryBuilderHandler
@@ -22,6 +22,11 @@ class Model {
     protected $table;
 
     /**
+     * @var $singular string The singular for what the database table contains. For example, if the table is "articles" the singular would be "article"
+     */
+    protected $singular;
+
+    /**
      * @var Entity
      */
     protected $entity = 'stdClass';
@@ -32,11 +37,23 @@ class Model {
     protected $last_insert_id;
 
     /**
+     * @var array Joined on models
+     */
+    protected $joins;
+
+    /**
      *
      */
     public  function __construct($query_builder, EventDispatcher $event_dispatcher)
     {
         $this->query_builder = $query_builder;
+
+        if (!isset($this->table)) {
+            throw new \Exception("Model '".get_class($this)."' does not have a database table defined");
+        }
+        elseif (!isset($this->singular)) {
+            throw new \Exception("Model '".get_class($this)."' does not have a a 'singular' definition");
+        }
     }
 
     public function select($columns = '*')
@@ -64,11 +81,19 @@ class Model {
 
         if (isset($this->joins)) {
             foreach ($this->joins as $join) {
-                $entity_name = $join['model']->getEntity();
-                $sub_entities[] = array('class' => $entity_name, 'id' => $join['id']);
-                $table = $join['model']->getTable();
 
-                $query->join($table, $table.'.id', '=', $this->table.'.category_id');
+                /**
+                 * @var $join_model Model
+                 */
+                $join_model = $join['model'];
+
+                $entity_name = $join_model->getEntity();
+                $sub_entities[] = array('class' => $entity_name, 'id' => $join['id']);
+                $join_table = $join_model->getTable();
+
+                $join_column = $join_model->getJoinColumn($this->table);
+
+                $query->join($join_table, $join_table.'.id', '=', $this->table.'.'.$join_column);
             }
             if (isset($sub_entities)) {
                 $query->sub_entities($sub_entities);
@@ -81,6 +106,14 @@ class Model {
     public function find($id)
     {
         return $this->select()->where($this->table.'.id', $id);
+    }
+
+    public function getOne($id)
+    {
+        $query = $this->query()
+            ->where('id', $id);
+
+        return $query->first();
     }
 
     public function save(Entity $entity)
@@ -114,11 +147,14 @@ class Model {
 
     public function setJoin(Model $join_model, $columns = array())
     {
-        $sub_entity_id = lcfirst(substr($join_model->getEntity(), strrpos( $join_model->getEntity(), "\\") + 1));
+        $join_singular = $join_model->getSingular();
+
+        $columns_updated = array();
+
         foreach ($columns as $column) {
-            $columns_updated[] = "categories.{$column}` as `{$sub_entity_id}.{$column}"; // @todo do this better?
+            $columns_updated[] = "categories.{$column}` as `{$join_singular}.{$column}"; // @todo do this better?
         }
-        $this->joins[] = array('model'=>$join_model, 'id' => $sub_entity_id, 'columns'=>$columns_updated);
+        $this->joins[] = array('model'=>$join_model, 'id' => $join_singular, 'columns'=>$columns_updated);
     }
 
     public function getInsertId()
@@ -139,5 +175,15 @@ class Model {
     public function getEntity()
     {
         return $this->entity;
+    }
+
+    public function getSingular()
+    {
+        return $this->singular;
+    }
+
+    public function getJoinColumn($table)
+    {
+        return $this->singular.'_id';
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Calendar\Form;
+namespace Games\Form;
 
 use AVCMS\Form\FormBuilder;
 use AVCMS\Validation\Rules;

@@ -1,6 +1,6 @@
 {
-  "name": "avcms/avcms",
-  "description": "AVCMS is a CMS foundation for AV Scripts products",
+    "name": "avcms/avcms",
+    "description": "AVCMS is a CMS framework for AV Scripts products",
     "require": {
         "symfony/class-loader": "2.3.*",
         "symfony/http-foundation": "2.3.*",
@@ -9,17 +9,20 @@
         "symfony/event-dispatcher": "2.3.*",
         "symfony/dependency-injection": "2.3.*",
         "symfony/form": "2.3.*",
+        "symfony/translation": "2.3.*",
         "usmanhalalit/pixie": "1.*@dev",
-        "phpunit/phpunit": "3.7.*"
+        "twig/twig": "1.*"
     },
-  "require-dev": {
-      "phpdocumentor/phpdocumentor": "dev-master"
-  },
+    "require-dev": {
+        "phpdocumentor/phpdocumentor": "dev-master",
+        "phpunit/phpunit": "3.7.*",
+        "phpmd/phpmd" : "1.4.*"
+    },
     "autoload": {
-        "psr-0": { "AVCMS": "src/", "Calendar": "src/" }
+        "psr-0": { "AVCMS": "src/", "Games": "src/" }
     },
-  "config": {
-    "vendor-dir": "vendor",
-    "preferred-install": "dist"
-  }
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist"
+    }
 }
