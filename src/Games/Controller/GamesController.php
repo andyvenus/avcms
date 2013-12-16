@@ -114,9 +114,7 @@ class GamesController extends Controller
 
         $categories = $this->newModel('Categories');
 
-        $games->setJoin($categories, array('name'));
-
-        $game = $games->find($id)->first();
+        $game = $games->find($id)->modelJoin($categories, array('name'))->first();
 
         $twig = $this->container->get('twig');
 
@@ -148,9 +146,20 @@ class GamesController extends Controller
 
     public function setUserAction($id)
     {
+        /*
         $r = new Response("ITS SET");
         $r->headers->setCookie(new Cookie('avcms_userid', $id));
 
-        return $r;
+        return $r; */
+
+        $games = $this->newModel('Games');
+        $categories = $this->newModel('Categories');
+
+        $game = $games->find(5)
+            ->select(array('name', 'description'))
+            ->modelJoin($categories, array('name', 'description'))
+            ->first();
+
+        return new Response ( $game->name . ' - ' . $game->category->name . ': ' . $game->category->description );
     }
 }

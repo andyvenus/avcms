@@ -2,7 +2,7 @@
 
 namespace AVCMS\Model;
 
-use Pixie\QueryBuilder\QueryBuilderHandler;
+use AVCMS\Database\QueryBuilder\QueryBuilderHandler;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
@@ -27,7 +27,7 @@ abstract class Model {
     protected $singular;
 
     /**
-     * @var Entity
+     * @var \AVCMS\Model\Entity
      */
     protected $entity = 'stdClass';
 
@@ -56,56 +56,23 @@ abstract class Model {
         }
     }
 
-    public function select($columns = '*')
-    {
-        $columns2[] = $this->table.'.'.$columns; // @todo sort this out
-        if (isset($this->joins)) {
-            foreach ($this->joins as $join) {
-                foreach ($join['columns'] as $column)
-                $columns2[] = $column;
-            }
-        }
-
-        $query = $this->query()->select($columns2);
-
-        //echo $query->getQuery()->getSql();
-        return $query;
-    }
-
     /**
      * @return static|QueryBuilderHandler
      */
     public function query()
     {
-        $query = $this->query_builder->table($this->table)->entity($this->entity);
-
-        if (isset($this->joins)) {
-            foreach ($this->joins as $join) {
-
-                /**
-                 * @var $join_model Model
-                 */
-                $join_model = $join['model'];
-
-                $entity_name = $join_model->getEntity();
-                $sub_entities[] = array('class' => $entity_name, 'id' => $join['id']);
-                $join_table = $join_model->getTable();
-
-                $join_column = $join_model->getJoinColumn($this->table);
-
-                $query->join($join_table, $join_table.'.id', '=', $this->table.'.'.$join_column);
-            }
-            if (isset($sub_entities)) {
-                $query->sub_entities($sub_entities);
-            }
-        }
+        $query = $this->query_builder->table($this->table)->entity($this->entity)->model($this);
 
         return $query;
     }
 
+    /**
+     * @param $id
+     * @return static|QueryBuilderHandler
+     */
     public function find($id)
     {
-        return $this->select()->where($this->table.'.id', $id);
+        return $this->query()->where($this->table.'.id', $id);
     }
 
     public function getOne($id)
@@ -143,18 +110,6 @@ abstract class Model {
     public function update(Entity $entity)
     {
         $this->query()->where('id', $entity->id)->update($entity->getData());
-    }
-
-    public function setJoin(Model $join_model, $columns = array())
-    {
-        $join_singular = $join_model->getSingular();
-
-        $columns_updated = array();
-
-        foreach ($columns as $column) {
-            $columns_updated[] = "categories.{$column}` as `{$join_singular}.{$column}"; // @todo do this better?
-        }
-        $this->joins[] = array('model'=>$join_model, 'id' => $join_singular, 'columns'=>$columns_updated);
     }
 
     public function getInsertId()
