@@ -28,7 +28,7 @@ return $PDO;
 
 /*/ Import & Create AVMS PDO Databaseold Wrapper Object
 //include 'includes/class/class_database.php';
-$DB = new AVCMS\Core\Databaseold\Databaseold($PDO, $db_prefex);
+$DB = new AVCMS\Core\Core\Databaseold\Databaseold($PDO, $db_prefex);
 
 // Get settings
 if (!isset($install)) {

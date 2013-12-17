@@ -12,7 +12,7 @@ $sc->register('context', 'Symfony\Component\Routing\RequestContext');
 $sc->register('matcher', 'Symfony\Component\Routing\Matcher\UrlMatcher')
    ->setArguments(array('%routes%', new Reference('context')))
 ;
-$sc->register('resolver', 'AVCMS\Controller\ControllerResolver')
+$sc->register('resolver', 'AVCMS\Core\Controller\ControllerResolver')
    ->setArguments(array('%container%'));
 
 $sc->register('listener.router', 'Symfony\Component\HttpKernel\EventListener\RouterListener')
@@ -25,7 +25,7 @@ $sc->register('listener.exception', 'Symfony\Component\HttpKernel\EventListener\
     ->setArguments(array('Games\\Controller\\ErrorController::exceptionAction'))
 ;
 
-$sc->register('active.user', 'AVCMS\User\ActiveUser')
+$sc->register('active.user', 'AVCMS\Core\User\ActiveUser')
     ->setArguments(array('%container%', new Reference('model.factory')));
 
 $sc->register('dispatcher', 'Symfony\Component\EventDispatcher\EventDispatcher')
@@ -34,18 +34,21 @@ $sc->register('dispatcher', 'Symfony\Component\EventDispatcher\EventDispatcher')
     ->addMethodCall('addSubscriber', array(new Reference('listener.exception')))
     ->addMethodCall('addSubscriber', array(new Reference('active.user')))
 ;
-$sc->register('framework', 'AVCMS\Framework')
+$sc->register('framework', 'AVCMS\Core\Framework')
     ->setArguments(array(new Reference('dispatcher'), new Reference('resolver')))
 ;
 
+$loader = new \AVCMS\Games\View\TwigLoaderFilesystem('templates', array('index.twig' => 'index2.twig'));
+$loader->addPath('src/AVCMS/Games/View/Templates', 'games');
+
 $sc->register('twig', 'Twig_Environment')
     ->setArguments(array(
-        new Twig_Loader_String(),
-        array('cache' => 'cache')
+        $loader,
+        array('cache' => false, 'debug' => true)
     ));
 ;
 
-$sc->register('model.factory', 'AVCMS\Model\ModelFactory')
+$sc->register('model.factory', 'AVCMS\Core\Model\ModelFactory')
     ->setArguments(array('%container%'))
 ;
 
@@ -60,7 +63,7 @@ $dbconfig = array(
     'prefix'    => 'avms_', // Table prefix, optional
 );
 
-$sc->register('query_builder', 'AVCMS\Database\Connection')
+$sc->register('query_builder', 'AVCMS\Core\Database\Connection')
     ->setArguments(array('mysql', $dbconfig, 'QB'));
 
 return $sc;
