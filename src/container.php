@@ -1,9 +1,9 @@
 <?php
 
-use Symfony\Component\DependencyInjection;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-$sc = new DependencyInjection\ContainerBuilder();
+$sc = new ContainerBuilder();
 
 $sc->setParameter('container', $sc);
 
@@ -44,8 +44,9 @@ $loader->addPath('src/AVCMS/Games/View/Templates', 'games');
 $sc->register('twig', 'Twig_Environment')
     ->setArguments(array(
         $loader,
-        array('cache' => false, 'debug' => true)
-    ));
+        array('cache' => 'cache', 'debug' => true)
+    ))
+    ->addMethodCall('addExtension', array(new \AVCMS\Core\View\TwigModuleExtension()))
 ;
 
 $sc->register('model.factory', 'AVCMS\Core\Model\ModelFactory')

@@ -5,6 +5,7 @@ namespace AVCMS\Core\Form;
 use AVCMS\Core\Validation\Validatable;
 use AVCMS\Core\Validation\Validator;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Translation\TranslatorInterface;
 
 
 /**
@@ -169,7 +170,7 @@ class FormBuilder implements Validatable
             }
         }
 
-        if ($this->submitted) {
+        if ($this->submitted && !empty($params)) {
             $this->params = $params;
             if ($assign_to_entities) {
                 $this->saveToEntity();
@@ -212,7 +213,7 @@ class FormBuilder implements Validatable
         $this->validator = $validator;
     }
 
-    public function isValid($validation_scope = Validator::SCOPE_SHARED)
+    public function isValid($validation_scope = Validator::SCOPE_SUB_SHARED)
     {
         if (!isset($this->validator)) {
             throw new \Exception("Validator not set in form");

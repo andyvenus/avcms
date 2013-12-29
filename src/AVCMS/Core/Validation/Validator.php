@@ -3,13 +3,14 @@
 namespace AVCMS\Core\Validation;
 
 use AVCMS\Core\Model\ModelFactory;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class Validator {
 
     /**
      * @const SCOPE_SHARED Only sub-validate parameters that also appear within the parent
      */
-    const SCOPE_SHARED = 'shared_fields';
+    const SCOPE_SUB_SHARED = 'shared_fields';
 
     /**
      * @const SCOPE_SHARED Validate all parameters, regardless of if they're shared by the parent or not
@@ -41,6 +42,13 @@ class Validator {
 
     protected $limited_params = array();
 
+
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
+
     /**
      * @param string|array $param_names
      * @param Rules\Rule $rule
@@ -48,7 +56,7 @@ class Validator {
      * @param bool $ignore_null
      * @param bool $stop_propagation
      */
-    public function addRule($param_names, Rules\Rule $rule, $error_message, $ignore_null = false, $stop_propagation = false)
+    public function addRule($param_names, Rules\Rule $rule, $error_message = null, $ignore_null = false, $stop_propagation = false)
     {
         if (!is_array($param_names)) {
             $param_names = array($param_names);
@@ -99,7 +107,7 @@ class Validator {
         foreach ($this->rules as $rule) {
             if (isset($this->parameters[ $rule['param_name'] ])) {
 
-                // If the parameters to validate are limited, make sure this parameter is one of those
+                // If the parameters to validate have been limited, make sure this parameter is one of those
                 if ( ( empty($this->limited_params) || in_array($rule['param_name'], $this->limited_params) )) {
                     /** @var $rule_obj Rules\Rule */
                     $rule_obj = $rule['rule'];
@@ -114,6 +122,19 @@ class Validator {
                     }
 
                     if ( ! $rule_obj->assert( $this->parameters[ $rule['param_name'] ] )) {
+                        if (!$rule['error_message']) {
+
+                            if (!$rule['error_message'] = $rule_obj->getError()) {
+                                $rule['error_message'] = "Unidentified {param_name} error";
+                            }
+                        }
+
+                        // TODO: Bind params to error message
+                        if (isset($this->translator)) {
+                            $rule['error_message'] = $this->translator->trans($rule['error_message'],
+                                $rule_obj->getRuleData());
+                        }
+
                         $this->errors[] = $rule;
                     }
                 }
@@ -121,6 +142,11 @@ class Validator {
             }
             elseif ($rule['ignore_null'] == false) {
                 $rule['error_message'] = "Parameter '{$rule['param_name']}' not set";
+
+                if (isset($this->translator)) {
+                    $rule['error_message'] = $this->translator->trans($rule['error_message']);
+                }
+
                 $this->errors[] = $rule;
             }
         }
@@ -143,7 +169,13 @@ class Validator {
         foreach($this->sub_validation_objects as $svo)
         {
             $validator = new Validator();
-            $validator->setModelFactory($this->model_factory);
+
+            if (isset($this->model_factory)) {
+                $validator->setModelFactory($this->model_factory);
+            }
+            if (isset($this->translator)) {
+                $validator->setTranslator($this->translator);
+            }
 
             if ($scope != Validator::SCOPE_ALL) {
                 $validator->limitValidationParams(array_keys($this->parameters));
@@ -154,7 +186,7 @@ class Validator {
             if (!$validator->isValid($scope)) {
                 foreach ($validator->getErrors() as $error) {
                     // If the scope is set to SCOPE_ALL, always proceed. If the scope is set to SCOPE_SHARED, make sure the parent also has that property
-                    if ( ( $scope == Validator::SCOPE_ALL ) || ( $scope == Validator::SCOPE_SHARED && isset( $this->parameters[ $error['param_name'] ] ) ) )  {
+                    if ( ( $scope == Validator::SCOPE_ALL ) || ( $scope == Validator::SCOPE_SUB_SHARED && isset( $this->parameters[ $error['param_name'] ] ) ) )  {
                         // inherit the error
                         $this->errors[] = $error;
                     }
@@ -192,4 +224,12 @@ class Validator {
     public function setModelFactory(ModelFactory $model_factory) {
         $this->model_factory = $model_factory;
     }
-} 
+
+    /**
+     * @param TranslatorInterface $translator
+     */
+    public function setTranslator(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+}

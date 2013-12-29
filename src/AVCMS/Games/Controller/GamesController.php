@@ -2,13 +2,14 @@
 
 namespace AVCMS\Games\Controller;
 
-use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AVCMS\Core\Controller\Controller;
 use AVCMS\Games\Model\Game;
 use AVCMS\Core\Form\FormOutput;
 use AVCMS\Games\Form\GameForm;
+use Symfony\Component\Translation\MessageSelector;
+use Symfony\Component\Translation\Translator;
 
 class GamesController extends Controller
 {
@@ -130,13 +131,15 @@ class GamesController extends Controller
 
         $categories = $this->newModel('Categories');
 
-        $games->setJoin($categories, array('name'));
+        $all_games = $games->query()->modelJoin($categories, array('name'))->get();
 
-        $all_games = $games->select()->get();
+        $all_games2 = $games->query()->modelJoin($categories, array('name'))->get();
 
-        $twig = $this->container->get('twig');
+        $all_games3 = $games->query()->modelJoin($categories, array('name'))->get();
 
-        return new Response( $twig->render('{% for game in games %} {{ game.name }} in cat {{ game.category.name }} <br /> {% endfor %}', array('games' => $all_games)) ); // Response( $template->build() );
+        $all_games4 = $games->query()->modelJoin($categories, array('name'))->get();
+
+        return new Response( $this->render('stress.twig', array('games' => $all_games, 'games2' => $all_games2, 'games3' => $all_games3, 'games4' => $all_games4)) ); // Response( $template->build() );
     }
 
     public function setUserAction($id)
@@ -145,7 +148,7 @@ class GamesController extends Controller
         $r = new Response("ITS SET");
         $r->headers->setCookie(new Cookie('avcms_userid', $id));
 
-        return $r; */
+        return $r;
 
         $games = $this->newModel('Games');
         $categories = $this->newModel('Categories');
@@ -156,5 +159,30 @@ class GamesController extends Controller
             ->first();
 
         return new Response ( $game->name . ' - ' . $game->category->name . ': ' . $game->category->description );
+        */
+
+        $routes = $this->container->getParameter('routes')->all();
+
+        foreach ($routes as $route_name => $route) {
+            if (!$name = $route->getDefault('_name')) {
+                $name = $route_name;
+            }
+            if (!$description = $route->getDefault('_description')) {
+                $description = 'No description';
+            }
+
+            echo 'Name: '.$name.' Description: '.$description.'<br>';
+        }
+
+        return new Response('');
+    }
+
+
+    public function translateAction()
+    {
+
+        $translator = new Translator('en_GB', new MessageSelector());
+
+        return new Response($translator->trans('Symfony Translator'));
     }
 }

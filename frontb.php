@@ -18,7 +18,9 @@ $request = Request::createFromGlobals();
 $sc = include __DIR__.'/src/container.php';
 $sc->setParameter('routes', include __DIR__.'/src/routes.php');
 
-$response = $sc->get('framework')->handle($request);
+$framework = new \AVCMS\Core\FrameworkBundles('dev', true);
+
+$response = $framework->handle($request);
 
 $response->send();
 

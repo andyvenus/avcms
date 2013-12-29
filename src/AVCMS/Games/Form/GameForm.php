@@ -19,6 +19,6 @@ class GameForm extends FormBuilder {
 
     public function validationRules(Validator $validator)
     {
-
+        $validator->addRule('name', new Rules\Length(1, 5));
     }
 } 

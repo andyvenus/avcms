@@ -8,6 +8,9 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use AVCMS\Core\Model\ModelFactory;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Translation\Loader\ArrayLoader;
+use Symfony\Component\Translation\MessageSelector;
+use AVCMS\Core\Translation\Translator;
 
 abstract class Controller extends ContainerAware {
 
@@ -45,6 +48,14 @@ abstract class Controller extends ContainerAware {
     {
         $validator = new Validator();
         $validator->setModelFactory($this->model_factory);
+
+        if (!isset($this->translator)) {
+            $this->translator = new Translator('en_GB', new MessageSelector());
+            $this->translator->addLoader('array', new ArrayLoader());
+            $this->translator->addResource('array', array('That name is already in use' => 'Arr, that name be already in use'), 'en_GB');
+        }
+
+        $validator->setTranslator($this->translator);
 
         return $validator;
     }
