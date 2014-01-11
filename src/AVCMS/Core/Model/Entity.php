@@ -1,78 +1,76 @@
 <?php
+/**
+ * User: Andy
+ * Date: 04/01/2014
+ * Time: 15:46
+ */
 
 namespace AVCMS\Core\Model;
 
-use AVCMS\Core\Validation\Validatable;
-use AVCMS\Core\Validation\Validator;
 
-class Entity implements Validatable {
-
-    protected $fields = array();
-
+class Entity
+{
     protected $data = array();
 
-    protected $other_data = array();
+    protected $sub_entities;
 
-    public function __set($name, $value) {
-        if (in_array($name, $this->fields)) {
-            $this->data[$name] = $value;
-        }
-        else {
-            $this->other_data[$name] = $value;
-        }
-    }
-
-    public function __get($name) {
-        if (isset($this->data[$name])) {
-            return $this->data[$name];
+    protected function data($param)
+    {
+        if (isset($this->data[$param])) {
+            return $this->data[$param];
         }
         else {
             return null;
         }
     }
 
-    public function __isset($name)
+    protected function setData($param, $value)
     {
-        return isset($this->data[$name]);
+        $this->data[$param] = $value;
     }
 
+    /**
+     * @return array
+     * @depreciated
+     */
     public function getData()
+    {
+        return $this->toArray();
+    }
+
+    public function toArray()
     {
         return $this->data;
     }
 
-    public function hasField($name)
-    {
-        return in_array($name, $this->fields);
-    }
-
-    public function getOther($name)
-    {
-        return $this->other_data[$name];
-    }
-
     public function addSubEntity($name, Entity $entity)
     {
-        $this->data[$name] = $entity;
+        $this->sub_entities[$name] = $entity;
     }
 
-    public function addField($field)
-    {
-        $this->fields[] = $field;
+    public function setId($value) {
+        $this->setData('id', $value);
     }
 
-    public function validationRules(Validator $validator)
-    {
-        return $validator;
+    public function getId() {
+        return $this->data('id');
     }
 
-    public function getValidationRules(Validator $validator)
+    public function __set($name, $value)
     {
-        return $this->validationRules($validator);
+        $this->sub_entities[$name] = $value;
     }
 
-    public function getParameters()
+    public function __get($name)
     {
-        return $this->getData();
+        return $this->sub_entities[$name];
     }
+
+    public function __isset($name)
+    {
+        return isset($this->sub_entities[$name]);
+    }
+
+    // Magic methods to get sub-entities as params like
+    // $entity->category->getName();
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<dataset>
+    <table name="animals">
+        <column>id</column>
+        <column>name</column>
+        <column>description</column>
+        <column>views</column>
+        <column>food_item_id</column>
+        <row>
+            <value>1</value>
+            <value>Lion</value>
+            <value>Lions are one of many big cats. They are known to go "roar"!</value>
+            <value>10</value>
+            <value>3</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Monkey</value>
+            <value>Monkies mostly hang out in the jungle, literally!</value>
+            <value>15</value>
+            <value>2</value>
+        </row>
+    </table>
+
+    <table name="food">
+        <column>id</column>
+        <column>name</column>
+        <row>
+            <value>1</value>
+            <value>Grass</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Banana</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>Meat</value>
+        </row>
+    </table>
+</dataset>

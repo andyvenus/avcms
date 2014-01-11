@@ -9,7 +9,8 @@ namespace AVCMS\Core\Translation;
 
 use Symfony\Component\Translation\Translator as TranslatorBase;
 
-class Translator extends TranslatorBase {
+class Translator extends TranslatorBase
+{
     /**
      * {@inheritdoc}
      *

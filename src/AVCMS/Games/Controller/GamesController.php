@@ -39,6 +39,18 @@ class GamesController extends Controller
         return new Response('');
     }
 
+    public function symFormAction(Request $request)
+    {
+        $formFactory = \Symfony\Component\Form\Forms::createFormFactory();
+
+        $formFactory->createBuilder()
+            ->add('task', 'text')
+            ->add('dueDate', 'date')
+            ->getForm();
+
+        return new Response();
+    }
+
     public function formAction(Request $request)
     {
         $games = $this->newModel('Games');
@@ -98,8 +110,8 @@ class GamesController extends Controller
     public function addGameAction(Request $request)
     {
         $new_game = new Game();
-        $new_game->name = "Filetype Test1";
-        $new_game->url = 'http://www.andyvenus.com/file.swf';
+        $new_game->setName("Filetype Test1");
+        $new_game->setUrl('http://www.andyvenus.com/file.swf');
         $games = $this->newModel('Games');
         $games->insert($new_game);
 

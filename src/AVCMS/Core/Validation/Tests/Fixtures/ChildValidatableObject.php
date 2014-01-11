@@ -26,6 +26,11 @@ class ChildValidatableObject implements Validatable {
 
         $validator->addRule('shared_parameter_one', new FailureRule(), "Shared Param Error 1 - Child"); // Error, FailureRule
 
+        // Errors but should not be reached due to parent throwing propagation-stopping error
+        $validator->addRule('shared_parameter_three', new FailureRule(), "Shared Param Error 3 - Child");
+
+        $validator->addRule('shared_parameter_four', new FailureRule(), "Shared Param Error 4 - Child");
+
     }
 
     public function getParameters()
@@ -35,7 +40,8 @@ class ChildValidatableObject implements Validatable {
             'child_parameter_three' => 'Child String three',
             'child_parameter_four' => 'Child String four',
             'shared_parameter_one' => 'Shared String One',
-            'shared_parameter_two' => 'Shared String Two'
+            'shared_parameter_two' => 'Shared String Two',
+            'shared_parameter_three' => 'Shared String Three'
         );
     }
 

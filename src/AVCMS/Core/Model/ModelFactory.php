@@ -10,14 +10,14 @@ class ModelFactory {
      * @var string;
      */
 
-    protected $container;
+    protected $query_builder;
 
-    public function __construct($container)
+    protected $event_dispatcher;
+
+    public function __construct($query_builder, $event_dispatcher)
     {
-        $this->container = $container;
-
-        $this->query_builder = $this->container->get('query_builder')->getQueryBuilder();
-        $this->event_dispatcher = $this->container->get('dispatcher');
+        $this->query_builder = $query_builder->getQueryBuilder();
+        $this->event_dispatcher = $event_dispatcher;
     }
 
     /**

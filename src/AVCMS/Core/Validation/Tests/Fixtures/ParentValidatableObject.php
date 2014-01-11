@@ -33,6 +33,10 @@ class ParentValidatableObject implements Validatable {
 
         $validator->addRule('shared_parameter_two', new SuccessRule(), "Shared Param Error 2 - Parent"); // Success
 
+        $validator->addRule('shared_parameter_three', new FailureRule(), "Shared Param Error 3 - Parent", false, true); // Error, FailureRule
+
+        $validator->addRule('shared_parameter_four', new FailureRule(), "Shared Param Error 4 - Parent", false, true); // Error, not set
+
         $validator->addSubValidation($this->child_validatable);
     }
 
@@ -44,7 +48,8 @@ class ParentValidatableObject implements Validatable {
             'parent_parameter_three' => 'Parent String three',
             'parent_parameter_four' => 'Parent String four',
             'shared_parameter_one' => 'Shared String One',
-            'shared_parameter_two' => 'Shared String Two'
+            'shared_parameter_two' => 'Shared String Two',
+            'shared_parameter_three' => 'Shared String Three'
         );
     }
 
@@ -53,7 +58,9 @@ class ParentValidatableObject implements Validatable {
         return array(
             'Parent Error 1',
             "Parameter 'parent_parameter_five' not set",
-            'Shared Param Error 1 - Parent'
+            'Shared Param Error 1 - Parent',
+            'Shared Param Error 3 - Parent',
+            "Parameter 'shared_parameter_four' not set"
         );
     }
 

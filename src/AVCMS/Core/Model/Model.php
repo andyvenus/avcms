@@ -44,7 +44,7 @@ abstract class Model {
     /**
      *
      */
-    public  function __construct(QueryBuilderHandler $query_builder, EventDispatcher $event_dispatcher)
+    public  function __construct(QueryBuilderHandler $query_builder)
     {
         $this->query_builder = $query_builder;
 
@@ -77,7 +77,7 @@ abstract class Model {
 
     /**
      * @param $id
-     * @return Entity
+     * @return Entity|mixed
      */
     public function getOne($id)
     {
@@ -88,7 +88,7 @@ abstract class Model {
 
     public function save(Entity $entity)
     {
-        if (isset($entity->id)) {
+        if ($entity->getId()) {
             $this->update($entity);
         }
         else {
@@ -98,7 +98,7 @@ abstract class Model {
 
     public function insert(Entity $entity)
     {
-        if ($entity->hasField('date_added')) {
+        if (method_exists($entity, 'setDateAdded') && !$entity->getDateAdded()) {
             $date = new \DateTime();
             $entity->date_added = $date->getTimestamp();
         }
@@ -112,13 +112,13 @@ abstract class Model {
 
     public function update(Entity $entity)
     {
-        $this->query()->where('id', $entity->id)->update($entity->getData());
+        $this->query()->where('id', $entity->getID())->update($entity->getData());
     }
 
     public function delete(Entity $entity)
     {
-        if (isset($entity->id)) {
-            $this->deleteById($entity->id);
+        if ($entity->getId()) {
+            $this->deleteById($entity->getId());
         }
         else {
             throw new \Exception("The entity passed to delete() does not have an ID set");

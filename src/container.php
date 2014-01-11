@@ -32,7 +32,7 @@ $sc->register('dispatcher', 'Symfony\Component\EventDispatcher\EventDispatcher')
     ->addMethodCall('addSubscriber', array(new Reference('listener.router')))
     ->addMethodCall('addSubscriber', array(new Reference('listener.response')))
     ->addMethodCall('addSubscriber', array(new Reference('listener.exception')))
-    ->addMethodCall('addSubscriber', array(new Reference('active.user')))
+    //->addMethodCall('addSubscriber', array(new Reference('active.user')))
 ;
 $sc->register('framework', 'AVCMS\Core\Framework')
     ->setArguments(array(new Reference('dispatcher'), new Reference('resolver')))
@@ -50,7 +50,7 @@ $sc->register('twig', 'Twig_Environment')
 ;
 
 $sc->register('model.factory', 'AVCMS\Core\Model\ModelFactory')
-    ->setArguments(array('%container%'))
+    ->setArguments(array(new Reference('query_builder'), new Reference('dispatcher')))
 ;
 
 $dbconfig = array(
@@ -64,7 +64,7 @@ $dbconfig = array(
     'prefix'    => 'avms_', // Table prefix, optional
 );
 
-$sc->register('query_builder', 'AVCMS\Core\Database\Connection')
+$sc->register('query_builder', 'AVCMS\Core\Database\Connection') // TODO: change so ->getQueryBuilder doesn't have to be used
     ->setArguments(array('mysql', $dbconfig, 'QB'));
 
 return $sc;

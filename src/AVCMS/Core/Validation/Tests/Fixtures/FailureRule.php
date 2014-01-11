@@ -9,10 +9,12 @@ namespace AVCMS\Core\Validation\Tests\Fixtures;
 
 use AVCMS\Core\Validation\Rules\Rule;
 
-class FailureRule extends Rule {
+class FailureRule extends Rule
+{
 
     public function assert($param)
     {
+        $this->error = "FailureRule default error on {param_name}";
         return false;
     }
 }

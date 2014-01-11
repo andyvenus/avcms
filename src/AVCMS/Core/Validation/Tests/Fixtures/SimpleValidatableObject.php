@@ -23,6 +23,8 @@ class SimpleValidatableObject implements Validatable {
         $validator->addRule('parameter_four', new SuccessRule(), "Error 4", true); // Success
 
         $validator->addRule('parameter_five', new SuccessRule(), "Error 5"); // Error, null not allowed
+
+        $validator->addRule('parameter_four', new FailureRule()); // Error, FailureRule. Use default error
     }
 
     public function getParameters()
@@ -39,7 +41,8 @@ class SimpleValidatableObject implements Validatable {
         return array(
             'Error 1',
             'Error 1',
-            "Parameter 'parameter_five' not set"
+            "Parameter 'parameter_five' not set",
+            "FailureRule default error on parameter_four"
         );
     }
 

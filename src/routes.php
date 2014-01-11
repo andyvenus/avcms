@@ -15,6 +15,11 @@ $routes->add('game_form', new Route('/game_form/{id}', array(
     '_controller' => 'AVCMS\\Games\\Controller\\GamesController::formAction',
 )));
 
+$routes->add('sym_form', new Route('/sym_form/{id}', array(
+    'id' => null,
+    '_controller' => 'AVCMS\\Games\\Controller\\GamesController::symFormAction',
+)));
+
 $routes->add('add_game', new Route('/add_game', array(
     '_controller' => 'AVCMS\\Games\\Controller\\GamesController::addGameAction',
 )));
@@ -47,6 +52,10 @@ $routes->add('setuser', new Route('/setuser/{id}', array(
 
 $routes->add('translate', new Route('/translate', array(
     '_controller' => 'AVCMS\\Games\\Controller\\GamesController::translateAction',
+)));
+
+$routes->add('generate', new Route('/generate/{table}', array(
+    '_controller' => 'AVCMS\\Games\\Controller\\GenerateController::generateAction',
 )));
 
 return $routes;

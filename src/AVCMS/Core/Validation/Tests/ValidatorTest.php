@@ -10,7 +10,8 @@ use AVCMS\Core\Validation\Validator;
 /**
  *  @group validator
  */
-class ValidatorTest extends \PHPUnit_Framework_TestCase {
+class ValidatorTest extends \PHPUnit_Framework_TestCase
+{
 
     /**
      * @var Validator
@@ -94,10 +95,13 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase {
         $expected_errors[] = 'Error 1 Translated';
         $expected_errors[] = 'Error 1 Translated';
         $expected_errors[] = "Parameter 'parameter_five' not set Translated";
+        $expected_errors[] = "FailureRule default error on {param_name} Translated";
 
         $map = array(
-            array('Error 1', array(), null, null, $expected_errors[0]),
-            array("Parameter 'parameter_five' not set", array(), null, null, $expected_errors[2])
+            array('Error 1', array('param_name' => 'parameter_one'), null, null, $expected_errors[0]),
+            array('Error 1', array('param_name' => 'parameter_three'), null, null, $expected_errors[1]),
+            array("Parameter '{param_name}' not set", array('param_name' => 'parameter_five'), null, null, $expected_errors[2]),
+            array("FailureRule default error on {param_name}", array('param_name' => 'parameter_four'), null, null, $expected_errors[3])
         );
 
         $mock_translator = $this->getMockBuilder('\AVCMS\Core\Translation\Translator')
@@ -107,8 +111,6 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase {
         $mock_translator->expects($this->any())
         ->method('trans')
         ->will($this->returnValueMap($map));
-
-        $this->assertEquals('Error 1 Translated', $mock_translator->trans('Error 1'));
 
         $this->validator->setTranslator($mock_translator);
 

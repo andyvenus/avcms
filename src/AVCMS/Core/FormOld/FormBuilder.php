@@ -11,7 +11,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 /**
  * Class FormBuilder
  * @package AVCMS\Core\Form
- * @todo HTML Secure
+ * @todo HTML Secure - Escape labels and form data especially
  */
 class FormBuilder implements Validatable
 {

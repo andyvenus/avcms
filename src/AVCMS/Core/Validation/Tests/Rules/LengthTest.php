@@ -9,7 +9,8 @@ namespace AVCMS\Core\Validation\Tests\Rules;
 
 use AVCMS\Core\Validation\Rules\Length;
 
-class LengthTest extends \PHPUnit_Framework_TestCase {
+class LengthTest extends \PHPUnit_Framework_TestCase
+{
     // TODO: Test error messages
 
     public function testMaxSmallerThanMin()
@@ -17,6 +18,13 @@ class LengthTest extends \PHPUnit_Framework_TestCase {
         $this->setExpectedException('AVCMS\Core\Validation\Rules\RuleInvalidException', 'The maximum length cannot be higher than the minimum length');
 
         $length = new Length(10, 5);
+    }
+
+    public function testMaxMinNull()
+    {
+        $this->setExpectedException('AVCMS\Core\Validation\Rules\RuleInvalidException', 'No minimum or maximum length set');
+
+        $length = new Length();
     }
 
     /**

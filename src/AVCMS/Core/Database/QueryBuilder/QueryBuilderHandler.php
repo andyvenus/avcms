@@ -30,7 +30,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
         }
 
         // If we have sub-entities, do the more complex method including joins
-        if (isset($this->sub_entities)) {
+        if ($class != 'stdClass') {
             return $this->getEntity($class);
         }
 
@@ -70,10 +70,18 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
                     $column = str_replace($sub_entity_name.'.', '', $column_name);
 
                     $sub_entity = $entity->$sub_entity_name;
-                    $sub_entity->{$column} = $column_value;
+
+                    $setter_method_name = 'set'.$this->dashesToCamelCase($column, true);
+                    if (method_exists($sub_entity, $setter_method_name)) {
+                        $sub_entity->$setter_method_name($column_value);
+                    }
                 }
                 else {
-                    $entity->{$column_name} = $column_value;
+                    $setter_method_name = 'set'.$this->dashesToCamelCase($column_name, true);
+
+                    if (method_exists($entity, $setter_method_name)) {
+                        $entity->$setter_method_name($column_value);
+                    }
                 }
             }
 
@@ -213,5 +221,17 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
         $this->addSubEntity($join_model->getEntity(), $join_singular);
 
         return $this;
+    }
+
+    protected function dashesToCamelCase($string, $capitalizeFirstCharacter = false)
+    {
+
+        $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
+
+        if (!$capitalizeFirstCharacter) {
+            $str[0] = strtolower($str[0]);
+        }
+
+        return $str;
     }
 } 
