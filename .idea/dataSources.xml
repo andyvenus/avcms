@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="3192743693">
+    <data-source source="LOCAL" name="Data Source" uuid="44b41e0e-6a2a-414d-b865-9b0f7f29fc37">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:8889/avms</jdbc-url>
+      <user-name>root</user-name>
+      <user-password>dfd8dfc5dfc5dfde</user-password>
+      <schema-pattern>avcms_test.* avms.*</schema-pattern>
+      <default-schemas>avms.*</default-schemas>
+      <libraries>
+        <library>
+          <url>jar://$USER_HOME$/Dev/PHPStorm/mysql-connector-java-5.1.26-bin.jar!/</url>
+        </library>
+        <library>
+          <url>file://$USER_HOME$/Dev/PHPStorm/mysql-connector-license.txt</url>
+        </library>
+      </libraries>
+    </data-source>
+  </component>
+</project>
+

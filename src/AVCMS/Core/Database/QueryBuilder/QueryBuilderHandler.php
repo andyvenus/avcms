@@ -225,7 +225,6 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
 
     protected function dashesToCamelCase($string, $capitalizeFirstCharacter = false)
     {
-
         $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
 
         if (!$capitalizeFirstCharacter) {

@@ -12,6 +12,10 @@ class Form
 {
     protected $fields = array();
 
+    protected $submission_type = "POST";
+
+    protected $submission_url = null;
+
     public function add($name, $type, $options = array())
     {
 
@@ -24,6 +28,8 @@ class Form
             'type' => $type,
             'options' => $options
         );
+
+        return $this;
     }
 
     public function replace($name, $type, $options = array(), $add_if_not_exist = false)
@@ -37,6 +43,8 @@ class Form
             'type' => $type,
             'options' => $options
         );
+
+        return $this;
     }
 
     public function addAfter($offset, $name, $type, $options = array())
@@ -50,6 +58,8 @@ class Form
         );
 
         $this->fields = $this->insertAfterKey($this->fields, $offset, $new_field);
+
+        return $this;
     }
 
     public function addBefore($offset, $name, $type, $options = array())
@@ -63,11 +73,15 @@ class Form
         );
 
         $this->fields = $this->insertAfterKey($this->fields, $offset, $new_field, true);
+
+        return $this;
     }
 
     public function remove($name)
     {
         unset($this->fields[$name]);
+
+        return $this;
     }
 
     public function has($name)
@@ -90,9 +104,41 @@ class Form
         return array_keys($this->fields);
     }
 
+    public function getDefaultData()
+    {
+        $default_data = array();
+        foreach ($this->fields as $field) {
+            if (isset($field['options']['default'])) {
+                $default_data[$field['name']] = $field['options']['default'];
+            }
+        }
+        return $default_data;
+    }
+
     public function getAll()
     {
         return $this->fields;
+    }
+
+    public function setAction($url, $type = null)
+    {
+        if ($type) {
+            $this->submission_type = $type;
+        }
+
+        $this->submission_url = $url;
+
+        return $this;
+    }
+
+    public function getSubmitUrl()
+    {
+        return $this->submission_url;
+    }
+
+    public function getSubmitType()
+    {
+        return $this->submission_type;
     }
 
     protected function insertAfterKey($array, $key, $data = null, $insert_before = false)

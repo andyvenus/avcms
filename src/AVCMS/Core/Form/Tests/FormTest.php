@@ -143,5 +143,10 @@ class FormTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals($expected_result, $this->form->getAll());
     }
+
+    public function testSetAction()
+    {
+        $this->form->setAction('POST', 'http://www.example.com/page');
+    }
 }
  
