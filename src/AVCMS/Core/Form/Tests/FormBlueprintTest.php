@@ -7,17 +7,17 @@
 
 namespace AVCMS\Core\Form\Tests;
 
-use AVCMS\Core\Form\Form;
+use AVCMS\Core\Form\FormBlueprint;
 
-class FormTest extends \PHPUnit_Framework_TestCase {
+class FormBlueprintTest extends \PHPUnit_Framework_TestCase {
     /**
-     * @var Form
+     * @var FormBlueprint
      */
     private $form;
 
     public function setUp()
     {
-        $this->form = new Form();
+        $this->form = new FormBlueprint();
     }
 
     public function testAddElement()
@@ -52,7 +52,7 @@ class FormTest extends \PHPUnit_Framework_TestCase {
 
         $this->form->addAfter('four', 'five', 'text');
 
-        $fields = $this->form->getFields();
+        $fields = $this->form->getFieldNames();
 
         $expected = array('one', 'two', 'three', 'four', 'five');
 
@@ -69,7 +69,7 @@ class FormTest extends \PHPUnit_Framework_TestCase {
 
         $this->form->addBefore('three', 'two', 'text');
 
-        $fields = $this->form->getFields();
+        $fields = $this->form->getFieldNames();
 
         $expected = array('one', 'two', 'three', 'four');
 

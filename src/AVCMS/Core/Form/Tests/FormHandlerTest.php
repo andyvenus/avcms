@@ -7,7 +7,10 @@
 
 namespace AVCMS\Core\Form\Tests;
 
+use AVCMS\Core\Form\EntityProcessor\GetterSetterEntityProcessor;
+use AVCMS\Core\Form\FormBlueprint;
 use AVCMS\Core\Form\FormHandler;
+use AVCMS\Core\Form\Tests\Fixtures\AvcmsStandardEntity;
 use AVCMS\Core\Form\Tests\Fixtures\BasicForm;
 use AVCMS\Core\Form\Tests\Fixtures\StandardFormEntity;
 use AVCMS\Core\Form\Tests\Fixtures\StandardForm;
@@ -15,16 +18,52 @@ use Symfony\Component\HttpFoundation\Request;
 
 class FormHandlerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var BasicForm
+     */
     protected $basic_form;
 
+    /**
+     * @var StandardForm
+     */
     protected $standard_form;
 
+    /**
+     * @var array
+     */
     protected $standard_form_request;
+
+    /**
+     * @var array
+     */
+    protected $basic_form_request;
+
+    /**
+     * @var FormHandler
+     */
+    protected $standard_form_handler;
+
+    /**
+     * @var FormHandler
+     */
+    protected $basic_form_handler;
+
+    /**
+     * @var \AVCMS\Core\Form\ValidatorExtension\ValidatorExtension
+     */
+    protected $mock_validator;
 
     public function setUp()
     {
         $this->basic_form = new BasicForm();
         $this->standard_form = new StandardForm();
+        
+        $this->basic_form_handler = new FormHandler($this->basic_form, new GetterSetterEntityProcessor());
+        $this->standard_form_handler = new FormHandler($this->standard_form);
+
+        $this->basic_form_request = array(
+            'name' => 'Example Name'
+        );
 
         $this->standard_form_request = array(
             'name' => 'Example Name',
@@ -33,9 +72,11 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
             'password' => '',
             'published' => 1
         );
+
+        $this->mock_validator = $this->getMock('AVCMS\Core\Form\ValidatorExtension\ValidatorExtension');
     }
 
-    public function testHandleSymfonyRequest()
+    public function testHandleSymfonyPostRequest()
     {
         if (!class_exists('Symfony\Component\HttpFoundation\Request')) {
             $this->markTestSkipped("Symfony Request component not installed");
@@ -47,7 +88,31 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
             'name' => 'Example Name'
         ));
 
-        $form_handler = new FormHandler($this->basic_form);
+        $form_handler = $this->basic_form_handler;
+
+        $form_handler->setMethod('POST');
+
+        $form_handler->handleRequest($request, 'symfony');
+
+        $this->assertEquals('Example Name', $form_handler->getData('name'));
+        $this->assertTrue($form_handler->isSubmitted());
+    }
+
+    public function testHandleSymfonyGetRequest()
+    {
+        if (!class_exists('Symfony\Component\HttpFoundation\Request')) {
+            $this->markTestSkipped("Symfony Request component not installed");
+
+            return null;
+        }
+
+        $request = new Request(array(
+            'name' => 'Example Name'
+        ));
+
+        $form_handler = $this->basic_form_handler;
+
+        $form_handler->setMethod('GET');
 
         $form_handler->handleRequest($request, 'symfony');
 
@@ -59,7 +124,7 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $request = $this->standard_form_request;
 
-        $form_handler = new FormHandler($this->standard_form);
+        $form_handler = $this->standard_form_handler;
 
         $form_handler->handleRequest($request, 'standard');
 
@@ -73,7 +138,7 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
 
         unset($request['password']);
 
-        $form_handler = new FormHandler($this->standard_form);
+        $form_handler = $this->standard_form_handler;
 
         $form_handler->handleRequest($request, 'standard');
 
@@ -86,7 +151,7 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDefaultValues($default_values)
     {
-        $form_handler = new FormHandler($this->standard_form);
+        $form_handler = $this->standard_form_handler;
         $form_handler->setDefaultValues($default_values);
 
         foreach ($default_values as $name => $value) {
@@ -94,15 +159,85 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testGetAllData()
+    {
+        $req_data = array('description'=>'Default description', 'published' => '1');
+
+        $this->standard_form_handler->handleRequest($req_data, 'standard');
+
+        $form_data = $this->standard_form_handler->getData();
+
+        $this->assertEquals($req_data, $form_data);
+    }
+
+    public function testAvcmsEntity()
+    {
+        if (!class_exists('AVCMS\Core\Model\Entity')) {
+            $this->markTestSkipped("AVCMS Not installed");
+
+            return null;
+        }
+
+        $entity = new AvcmsStandardEntity();
+        $entity->setName('AVCMS Name');
+        $entity->setDescription('AVCMS Description');
+
+        $form_handler = $this->standard_form_handler;
+        $form_handler->addEntity($entity);
+
+        $form_handler->handleRequest(array(), 'standard');
+
+        $this->assertEquals('AVCMS Name', $form_handler->getData('name'));
+        $this->assertEquals('AVCMS Description', $form_handler->getData('description'));
+    }
+
+    public function testMultipleEntityAssignment()
+    {
+        $entity_one = new StandardFormEntity();
+        $entity_one->setName('Name One');
+        $entity_one->setDescription('Description One');
+        $entity_one->setCategory('5');
+        $entity_one->setPassword('Secure One');
+
+        $entity_two = new StandardFormEntity();
+        $entity_two->setName('Name Two');
+        $entity_two->setDescription('Description Two');
+        $entity_two->setCategory('1');
+        $entity_two->setPassword('Secure Two');
+
+        $this->standard_form_handler->addEntity($entity_one, array('name', 'description'));
+        $this->standard_form_handler->addEntity($entity_two, array('name', 'password', 'category'));
+
+        $name_field = $this->standard_form_handler->getField('name');
+        $this->assertEquals('Name Two', $name_field['value']);
+
+        $description_field = $this->standard_form_handler->getField('description');
+        $this->assertEquals('Description One', $description_field['value']);
+
+        $this->standard_form_handler->handleRequest($this->standard_form_request, 'standard');
+
+        $this->standard_form_handler->saveToEntities();
+
+        $this->assertEquals('Example Name', $entity_one->getName());
+        $this->assertEquals('Example Description', $entity_one->getDescription());
+        $this->assertEquals('5', $entity_one->getCategory());
+        $this->assertEquals('Secure One', $entity_one->getPassword());
+
+        $this->assertEquals('Example Name', $entity_two->getName());
+        $this->assertEquals('Description Two', $entity_two->getDescription());
+        $this->assertEquals('3', $entity_two->getCategory());
+        $this->assertEquals('', $entity_two->getPassword());
+    }
+
     /**
      * @dataProvider providerDefaultValues
      *
      * Test that these values take precedence over each other
-     * Request > Entity Values > Default Values > Internal Form Default Values
+     * Request > Entity Values > Default Values > Internal FormBlueprint Default Values
      */
     public function testValuePriority($default_values)
     {
-        $form_handler = new FormHandler($this->standard_form);
+        $form_handler = $this->standard_form_handler;
 
         $this->assertEquals('Default description', $form_handler->getData('description'));
 
@@ -123,7 +258,7 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $request = $this->standard_form_request;
 
-        $form_handler = new FormHandler($this->standard_form);
+        $form_handler = $this->basic_form_handler;
 
         $form_handler->handleRequest($request, 'standard');
 
@@ -137,6 +272,120 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals($expected, $form_handler->getField('name'));
+    }
+
+    public function testGetFields()
+    {
+        $request = $this->standard_form_request;
+
+        $form_handler = $this->basic_form_handler;
+
+        $form_handler->handleRequest($request, 'standard');
+
+        $expected = array(
+            'name' => array (
+                'name' => 'name',
+                'type' => 'text',
+                'options' => array (
+                    'label' => 'Name'
+                ),
+                'value' => 'Example Name'
+            )
+        );
+
+        $this->assertEquals($expected, $form_handler->getFields());
+    }
+
+    public function testCreateView()
+    {
+        $form_handler = $this->basic_form_handler;
+
+        $mock_validator = $this->mock_validator;
+        $mock_validator->expects($this->any())
+            ->method('getErrors')
+            ->will($this->returnValue($errors = array('error_one' => 'Error One Message')));
+
+        $form_handler->setValidatior($mock_validator);
+
+        $form_handler->handleRequest($this->basic_form_request, 'standard');
+
+        $form_view = $form_handler->createView();
+
+        $this->assertTrue(isset($form_view->name));
+        $this->assertEquals($errors, $form_view->getErrors());
+    }
+
+    public function testGetSetMethod()
+    {
+        $form_handler = $this->basic_form_handler;
+
+        $this->assertEquals('POST', $form_handler->getMethod());
+
+        $form_handler->setMethod('GET');
+
+        $this->assertEquals('GET', $form_handler->getMethod());
+    }
+
+    public function testBasicValidation()
+    {
+        $this->mock_validator->expects($this->any())
+            ->method('getErrors')
+            ->will($this->returnValue($errors = array('error_one' => 'Error One Message')));
+        $this->mock_validator->expects($this->any())
+            ->method('isValid')
+            ->will($this->returnValue(false));
+
+        $this->basic_form_handler->setValidatior($this->mock_validator);
+
+        $this->basic_form_handler->handleRequest($this->basic_form_request);
+
+        $this->assertFalse($this->basic_form_handler->isValid());
+        $this->assertEquals($errors, $this->basic_form_handler->getValidationErrors());
+    }
+
+
+    public function testArrayFields()
+    {
+        $form = new FormBlueprint();
+        $form->add('colours[]', 'text', array(
+            'default' => '#FF0000'
+        ));
+
+        $form->add('colours[]', 'text', array(
+            'default' => '#00FF00'
+        ));
+
+        $form->add('colours[]', 'text', array(
+            'default' => '#0000FF'
+        ));
+
+        $form_handler = new FormHandler($form);
+
+        $data = $form_handler->getData('colours');
+
+        $this->assertEquals('#0000FF', $data[2]);
+    }
+
+    public function testNamedArrayFields()
+    {
+        $form = new FormBlueprint();
+        $form->add('colours[red]', 'text', array(
+            'default' => '#FF0000'
+        ));
+
+        $form->add('colours[green]', 'text', array(
+            'default' => '#00FF00'
+        ));
+
+        $form->add('colours[blue]', 'text', array(
+            'default' => '#0000FF'
+        ));
+
+        $form_handler = new FormHandler($form);
+
+        $data = $form_handler->getData('colours');
+
+        $this->assertEquals('#0000FF', $data['blue']);
     }
 
     public function providerDefaultValues()

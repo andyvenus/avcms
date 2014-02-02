@@ -2,11 +2,13 @@
 
 namespace AVCMS\Core\Controller;
 
-use AVCMS\Core\Form\FormBuilder;
+use AVCMS\Core\Form\FormBlueprint;
+use AVCMS\Core\Form\FormHandler;
+use AVCMS\Core\Form\FormView;
+use AVCMS\Core\Form\ValidatorExtension\AVCMSValidatorExtension;
 use AVCMS\Core\Validation\Validator;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use AVCMS\Core\Model\ModelFactory;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Translation\Loader\ArrayLoader;
 use Symfony\Component\Translation\MessageSelector;
@@ -15,6 +17,8 @@ use AVCMS\Core\Translation\Translator;
 abstract class Controller extends ContainerAware {
 
     protected $parent_namespace = "";
+
+    protected $translator;
 
     /**
      * @var \AVCMS\Core\Model\ModelFactory
@@ -25,6 +29,19 @@ abstract class Controller extends ContainerAware {
     {
         $this->container = $container;
         $this->model_factory = $container->get('model.factory');
+
+        $this->translator = new Translator('en_GB', new MessageSelector());
+        $this->translator->addLoader('array', new ArrayLoader());
+        $this->translator->addResource('array',
+            array(
+                'That name is already in use' => 'Arr, that name be already in use',
+                'Name' => 'FRUNCH NAME',
+                'Cat One' => 'Le Category Une',
+                'Published' => 'Pubèlishé',
+                'Submit' => 'Subsmit'
+            ),
+            'en_GB'
+        );
     }
 
     /**
@@ -37,27 +54,25 @@ abstract class Controller extends ContainerAware {
         return $this->model_factory->create($full_namespace);
     }
 
-    protected function buildForm(FormBuilder $form)
-    {
-        $form->setValidator( $this->newValidator() );
-
-        return $form;
-    }
-
     protected function newValidator()
     {
         $validator = new Validator();
         $validator->setModelFactory($this->model_factory);
 
-        if (!isset($this->translator)) {
-            $this->translator = new Translator('en_GB', new MessageSelector());
-            $this->translator->addLoader('array', new ArrayLoader());
-            $this->translator->addResource('array', array('That name is already in use' => 'Arr, that name be already in use'), 'en_GB');
-        }
-
         $validator->setTranslator($this->translator);
 
         return $validator;
+    }
+
+    protected function buildForm(FormBlueprint $form)
+    {
+        $form_handler = new FormHandler($form);
+        $form_handler->setValidatior(new AVCMSValidatorExtension($this->newValidator()));
+        $form_view = new FormView();
+        $form_view->setTranslator($this->translator);
+        $form_handler->setFormView($form_view);
+
+        return $form_handler;
     }
 
     protected function getUser()

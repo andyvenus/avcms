@@ -47,6 +47,7 @@ $sc->register('twig', 'Twig_Environment')
         array('cache' => 'cache', 'debug' => true)
     ))
     ->addMethodCall('addExtension', array(new \AVCMS\Core\View\TwigModuleExtension()))
+    ->addMethodCall('addExtension', array(new \AVCMS\Core\Form\Twig\FormExtension()))
 ;
 
 $sc->register('model.factory', 'AVCMS\Core\Model\ModelFactory')

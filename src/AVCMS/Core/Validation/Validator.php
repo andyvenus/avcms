@@ -3,6 +3,8 @@
 namespace AVCMS\Core\Validation;
 
 use AVCMS\Core\Model\ModelFactory;
+use AVCMS\Core\Validation\Handlers\SelfValidatableHandler;
+use AVCMS\Core\Validation\Handlers\ValidatableHandler;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class Validator
@@ -23,16 +25,28 @@ class Validator
      */
     const SCOPE_PARENT_ONLY = 'parent_only';
 
+    /**
+     * @var array
+     */
     protected $parameters;
 
+    /**
+     * @var array
+     */
     protected $rules = array();
 
+    /**
+     * @var array
+     */
     protected $errors = array();
 
+    /**
+     * @var array
+     */
     protected $sub_validation_objects = array();
 
     /**
-     * @var 'The object we're validating'
+     * @var mixed The object we are validating
      */
     protected $validation_obj;
 
@@ -41,14 +55,31 @@ class Validator
      */
     protected $model_factory;
 
+    /**
+     * @var array
+     */
     protected $limited_params = array();
 
+    /**
+     * @var ValidatableHandler[]
+     */
+    protected $validatable_handlers;
 
     /**
      * @var TranslatorInterface
      */
     protected $translator;
 
+
+    public function __construct($validatable_handlers = null)
+    {
+        if ($validatable_handlers) {
+            $this->validatable_handlers = $validatable_handlers;
+        }
+        else {
+            $this->addValidatableHandler(new SelfValidatableHandler());
+        }
+    }
 
     /**
      * @param string|array $param_names
@@ -75,11 +106,17 @@ class Validator
     }
 
     /**
-     * @param Validatable $obj
+     * @param mixed $validatable
+     * @param null $limit_parameters
+     * @param string $validatable_handler
      */
-    public function addSubValidation(Validatable $obj)
+    public function addSubValidation($validatable, $limit_parameters = null, $validatable_handler = 'standard')
     {
-        $this->sub_validation_objects[] = $obj;
+        $this->sub_validation_objects[] = array(
+            'object' => $validatable,
+            'limited_params' => $limit_parameters,
+            'handler' => $validatable_handler
+        );
     }
 
     /**
@@ -91,23 +128,34 @@ class Validator
     }
 
     /**
-     * @param Validatable $obj
+     * @param mixed $validatable
+     * @param string $handler
      * @param string $scope
      * @param bool $ignore_null
      * @throws \Exception
      */
-    public function validate(Validatable $obj, $scope = Validator::SCOPE_ALL, $ignore_null = false)
+    public function validate($validatable, $handler = 'standard', $scope = Validator::SCOPE_ALL, $ignore_null = false)
     {
-        $this->resetParameters();
-        $this->validation_obj = $obj;
+        $this->resetParameters(); // TODO: Is this a good idea at all?
+        $this->validation_obj = $validatable;
 
-        $obj->getValidationRules($this);
-        $this->parameters = $obj->getParameters();
+        if (is_array($validatable)) {
+            $this->parameters = $validatable;
+        }
+        else {
+            if (!isset($this->validatable_handlers[$handler])) {
+                throw new \Exception("The validation handler $handler does not exist in this validator");
+            }
+
+            $this->validatable_handlers[$handler]->getValidationRules($validatable, $this);
+            $this->parameters = $this->validatable_handlers[$handler]->getValidationData($validatable, $this);
+        }
 
         $sub_validation_ignore = array();
 
         $this->errors = array();
         foreach ($this->rules as $rule) {
+
             if (isset($this->parameters[ $rule['param_name'] ])) {
 
                 // If the parameters to validate have been limited, make sure this parameter is one of those
@@ -182,13 +230,14 @@ class Validator
     public function getSubValidationErrors($scope = Validator::SCOPE_ALL, $ignore_null = false, $ignored_parameters = array())
     {
 
+        // Scope set to parent only, so we don't want to do any sub-validation
         if ($scope == Validator::SCOPE_PARENT_ONLY) {
             return null;
         }
 
-        foreach($this->sub_validation_objects as $svo)
+        foreach($this->sub_validation_objects as $validatable)
         {
-            $validator = new Validator();
+            $validator = new Validator($this->validatable_handlers);
 
             if (isset($this->model_factory)) {
                 $validator->setModelFactory($this->model_factory);
@@ -198,10 +247,17 @@ class Validator
             }
 
             if ($scope != Validator::SCOPE_ALL) {
-                $validator->limitValidationParams(array_keys($this->parameters));
+                if ($validatable['limited_params']) {
+                    $limit_params = $validatable['limited_params'];
+                }
+                else {
+                    $limit_params = $this->parameters;
+                }
+
+                $validator->limitValidationParams(array_keys($limit_params));
             }
 
-            $validator->validate($svo, $scope, $ignore_null);
+            $validator->validate($validatable['object'], $validatable['handler'], $scope, $ignore_null);
 
             if (!$validator->isValid($scope)) {
                 foreach ($validator->getErrors() as $error) {
@@ -227,7 +283,6 @@ class Validator
 
     protected function resetParameters()
     {
-        $this->rules = array();
         $this->parameters = array();
         $this->errors = array();
     }
@@ -246,6 +301,12 @@ class Validator
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    public function addValidatableHandler(ValidatableHandler $handler)
+    {
+        $name = $handler->getName();
+        $this->validatable_handlers[$name] = $handler;
     }
 
     /**

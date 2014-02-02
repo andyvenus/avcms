@@ -58,4 +58,18 @@ $routes->add('generate', new Route('/generate/{table}', array(
     '_controller' => 'AVCMS\\Games\\Controller\\GenerateController::generateAction',
 )));
 
+$routes->add('form_test', new Route('/forms/{id}', array(
+    'id' => 1,
+    '_controller' => 'AVCMS\\Games\\Controller\\FormController::formTestAction',
+)));
+
+$routes->add('form_array_test', new Route('/forms_array/{id}', array(
+    'id' => 1,
+    '_controller' => 'AVCMS\\Games\\Controller\\FormController::formArrayTestAction',
+)));
+
+$routes->add('validator_test', new Route('/validation', array(
+    '_controller' => 'AVCMS\\Games\\Controller\\FormController::validatorTestAction',
+)));
+
 return $routes;

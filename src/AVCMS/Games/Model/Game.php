@@ -8,8 +8,11 @@
 namespace AVCMS\Games\Model;
 
 use AVCMS\Core\Model\Entity;
+use AVCMS\Core\Validation\Validatable;
+use AVCMS\Core\Validation\Validator;
+use AVCMS\Core\Validation\Rules;
 
-class Game extends Entity {
+class Game extends Entity implements Validatable {
     public function setName($value) {
         $this->setData('name', $value);
     }
@@ -201,4 +204,16 @@ class Game extends Entity {
     public function getHtmlCode() {
         return $this->data('html_code');
     }
-} 
+
+    public function getValidationRules(Validator $validator)
+    {
+        $validator->addRule('name', new Rules\Length(15), 'Entity says min length is 15');
+
+        $validator->addRule('name', new Rules\MustNotExist('AVCMS\Games\Model\Games', 'name', $this->getId()), 'That name already exists sonny boy');
+    }
+
+    public function getValidationData()
+    {
+        return $this->toArray();
+    }
+}

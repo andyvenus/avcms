@@ -27,7 +27,7 @@ class SimpleValidatableObject implements Validatable {
         $validator->addRule('parameter_four', new FailureRule()); // Error, FailureRule. Use default error
     }
 
-    public function getParameters()
+    public function getValidationData()
     {
         return array(
             'parameter_one' => 'String one',

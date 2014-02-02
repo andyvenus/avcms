@@ -150,7 +150,7 @@ abstract class Model {
         return $this->singular;
     }
 
-    public function getJoinColumn($table)
+    public function getJoinColumn($table) // todo: support alternate column names
     {
         return $this->singular.'_id';
     }

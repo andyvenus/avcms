@@ -33,7 +33,7 @@ class ChildValidatableObject implements Validatable {
 
     }
 
-    public function getParameters()
+    public function getValidationData()
     {
         return array(
             'child_parameter_one' => 'Child String one',

@@ -17,7 +17,7 @@ use AVCMS\Core\Form\ValidatorExtension\ValidatorExtension;
  *
  * Handles form requests, form validation and allows forms to interact with entities
  */
-class FormHandler
+class FormHandlerBroken
 {
     /**
      * @var FormBlueprint
@@ -95,6 +95,25 @@ class FormHandler
         $this->method = $form->getMethod();
         $this->action = $form->getAction();
         $this->form_name = $form->getName();
+    }
+
+    public function getData($name = null, $data = null)
+    {
+        if ($data === null) {
+            $data = $this->data;
+        }
+
+        if ($name === null) {
+            return $data;
+        }
+        else {
+            if (isset($data[$name])) {
+                return $data[$name];
+            }
+            else {
+                return null;
+            }
+        }
     }
 
     public function getForm()
@@ -194,47 +213,24 @@ class FormHandler
         return $this->submitted;
     }
 
-    public function getFields()
+    public function getField($name, $parents = array())
     {
-        return $this->processFieldsCollection($this->fields, $this->data);
-    }
-
-    public function getField($name)
-    {
-        if (isset($this->fields[$name])) {
-            return $this->getProcessedField($this->fields[$name], $this->data);
+        if (empty($parents)) {
+            $field_data = $this->fields;
         }
-    }
-
-    protected function processFieldsCollection($field_collection, $data)
-    {
-        $fields = array();
-        foreach ($field_collection as $field) {
-            // Unnamed array fields
-            if ($field['name'] === null) {
-                if (!isset($i)) $i = 0;
-
-                $field['name'] = $i;
-                $fields[] = $this->getProcessedField($field, $data);
-
-                $i++;
-            }
-            else {
-                $fields[$field['name']] = $this->getProcessedField($field, $data);
-            }
+        else {
+            $field_data = $this->getCollectionFields($parents);
         }
 
-        return $fields;
-    }
-
-    protected function getProcessedField($field, $data)
-    {
-        if (isset($data[$field['name']])) {
-            $field['value'] = $data[$field['name']];
+        if (!isset($field_data[$name])) {
+            return false;
         }
 
-        if (isset($field['fields']) && isset($field['value'])) {
-            $field['fields'] = $this->processFieldsCollection($field['fields'], $field['value']);
+        $field = $field_data[$name];
+        $field['value'] = $this->getData($name, $parents);
+
+        if (isset($field['fields'])) {
+            $field['fields'] = $this->getFields($field['fields'], $field['value']);
         }
 
         if (isset($field['original_name'])) {
@@ -244,21 +240,81 @@ class FormHandler
         return $field;
     }
 
-    public function getData($name = null)
+    public function getFields($collection = null, $parents = array())
     {
-        $this->data;
-
-        if ($name === null) {
-            return $this->data;
+        if ($collection === null) {
+            $field_data = $this->fields;
         }
         else {
-            if (isset($this->data[$name])) {
-                return $this->data[$name];
+            $field_data = $this->getCollectionFields($collection, $parents);
+        }
+
+        $fields = array();
+        foreach ($field_data as $field) {
+            // Unnamed array fields
+            if ($field['name'] === null) {
+                if (!isset($i)) $i = 0;
+
+                $fields[] = $this->getField($i, $parents);
+
+                $i++;
+            }
+            else {
+                $fields[$field['name']] = $this->getField($field['name'], $parents);
+            }
+        }
+
+        return $fields;
+    }
+
+    protected function getCollectionFields($name, $parents = array(), $fields = null)
+    {
+        if ($fields === null) {
+            $fields = $this->fields;
+        }
+
+        if (empty($parents)) {
+            if (isset($fields[$name])) {
+                return $fields[$name]['fields'];
             }
             else {
                 return null;
             }
         }
+
+        $field = array_shift($parents);
+
+        if (isset($this->fields[$field])) {
+            return $this->getCollectionFields($name, $parents, $fields[$field]['fields']);
+        }
+        else {
+            return null;
+        }
+    }
+
+    protected function getCollectionFields2($name, $parents = array())
+    {
+
+        $fields = $this->fields;
+
+        if (empty($parents)) {
+            if (isset($fields[$name])) {
+                return $fields[$name]['fields'];
+            }
+            else {
+                return null;
+            }
+        }
+
+        foreach ($parents as $parent_name) {
+            if (!isset($fields[$parent_name]['fields'])) {
+                return null;
+            }
+
+            $fields = $fields[$parent_name]['fields'];
+        }
+
+        return $fields;
     }
 
     public function setMethod($method)

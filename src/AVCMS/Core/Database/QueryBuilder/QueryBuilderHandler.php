@@ -55,6 +55,8 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
 
         $this->preparePdoStatement();
 
+        $result = array();
+
         while ($row_array = $this->pdoStatement->fetch(\PDO::FETCH_ASSOC)) {
             $entity = new $class;
 

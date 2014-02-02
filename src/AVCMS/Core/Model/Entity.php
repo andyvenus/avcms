@@ -114,6 +114,10 @@ class Entity
         return isset($this->sub_entities[$name]);
     }
 
-    // Magic methods to get sub-entities as params like
-    // $entity->category->getName();
+    public function __clone()
+    {
+        foreach($this->sub_entities as $name => $obj) {
+            $this->sub_entities[$name] = clone $obj;
+        }
+    }
 }

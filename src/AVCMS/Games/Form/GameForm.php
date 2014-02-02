@@ -22,4 +22,9 @@ class GameForm extends FormBuilder {
     {
         $validator->addRule('name', new Rules\Length(1, 5));
     }
+
+    public function getValidationData()
+    {
+        return $this->data;
+    }
 } 

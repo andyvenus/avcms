@@ -1,0 +1,128 @@
+{% block form_start %}
+    {% spaceless %}
+    <form action="{{ form.params.action }}" name="{{ form.params.name }}" method="{{ form.params.method }}">
+    {% endspaceless %}
+{% endblock %}
+
+{% block form_end %}
+    {% spaceless %}
+    </form>
+    {% endspaceless %}
+{% endblock %}
+
+{% block input_field %}
+    {% spaceless %}
+    {% set type = type|default('text') %}
+    <input type="{{ type }}" name="{{ name }}" {% if value is not empty %}value="{{ value }}" {% endif %} />
+    {% endspaceless %}
+{% endblock %}
+
+{% block password_field %}
+    {% spaceless %}
+    {% set type = type|default('password') %}
+    {{ block('input_field') }}
+    {% endspaceless %}
+{% endblock %}
+
+{% block text_field %}
+    {% spaceless %}
+        {% set type = type|default('text') %}
+        {{ block('input_field') }}
+    {% endspaceless %}
+{% endblock %}
+
+{% block hidden_field %}
+    {% spaceless %}
+        {% set type = type|default('hidden') %}
+        {{ block('input_field') }}
+    {% endspaceless %}
+{% endblock %}
+
+{% block textarea_field %}
+    {% spaceless %}
+        <textarea name="{{ name }}">{% if value is not empty %}{{ value }}{% endif %}</textarea>
+    {% endspaceless %}
+{% endblock %}
+
+{% block select_field %}
+    {% spaceless %}
+        <select name="{{ name }}">
+            {% if options.choices is not empty %}
+                {% for choice_value, choice_name in options.choices %}
+                    <option value="{{ choice_value }}" {% if choice_value == value %}selected="selected"{% endif %}>{{ choice_name }}</option>
+                {% endfor %}
+            {% else %}
+                <option value="">No options set</option>
+            {% endif %}
+        </select>
+    {% endspaceless %}
+{% endblock %}
+
+{% block radio_field %}
+    {% spaceless %}
+        {% if options.choices is not empty %}
+            {% for choice_value, choice_name in options.choices %}
+                <input type="radio" name="{{ name }}" value="{{ choice_value }}" id="{{ name }}_{{ choice_value }}" {% if choice_value == value %}checked="checked"{% endif %} /> <label for="{{ name }}_{{ choice_value }}">{{ choice_name }}</label>&nbsp;
+            {% endfor %}
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block checkbox_field %}
+    {% spaceless %}
+        <input type="checkbox" name="{{ name }}" {% if value is not empty %}value="{{ value }}" {% endif %} /> {{ options.label }}
+    {% endspaceless %}
+{% endblock %}
+
+{% block form_label %}
+    {% spaceless %}
+    {% set label = options.label|default('') %}
+    <label>{{ label }}</label>
+    {% endspaceless %}
+{% endblock %}
+
+{% block submit_button %}
+    {% spaceless %}
+        {% set label = label|default('Submit') %}
+        {% set type = type|default('submit') %}
+        {{ block('button') }}
+    {% endspaceless %}
+{% endblock %}
+
+{% block button %}
+    {% spaceless %}
+        {% set type = type|default('button') %}
+        <button type="{{ type }}">{{ label }}</button>
+    {% endspaceless %}
+{% endblock %}
+
+{% block form_rows %}
+    {% spaceless %}
+        {% for form_row in form_rows %}
+            {{ form_row(form_row) }}
+        {% endfor %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block form_row %}
+    {% spaceless %}
+        <div class="form_row">
+            {{ form_label(form_row) }}
+            {{ form_field(form_row) }}
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block hidden_row %}
+    {% spaceless %}
+        {{ form_field(form_row) }}
+    {% endspaceless %}
+{% endblock %}
+
+{% block collection_field %}
+    {% spaceless %}
+        {% for field in fields %}
+            {{ form_row(field) }}
+        {% endfor %}
+    {% endspaceless %}
+{% endblock %}

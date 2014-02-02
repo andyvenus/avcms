@@ -7,12 +7,14 @@
 
 namespace AVCMS\Core\Form\Tests\Fixtures;
 
-use AVCMS\Core\Form\Form;
+use AVCMS\Core\Form\FormBlueprint;
 
-class BasicForm extends Form
+class BasicForm extends FormBlueprint
 {
     public function __construct()
     {
+        $this->setName('basic_form');
+
         $this->add('name', 'text', array(
             'label' => 'Name'
         ));

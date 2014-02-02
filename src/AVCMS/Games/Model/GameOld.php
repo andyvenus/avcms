@@ -42,6 +42,8 @@ class Game extends Entity {
 
     public function validationRules(Validator $validator)
     {
+        $validator->setDataRetriever(new EntityProcessor());
+
         $validator->addRule('description', new Rules\Numeric(), "Holy MOLY THE DESCRIPTION TOO");
 
         $validator->addRule('name', new Rules\MustNotExist('AVCMS\Games\Model\Games', 'name', $this->id), "That name is already in use");

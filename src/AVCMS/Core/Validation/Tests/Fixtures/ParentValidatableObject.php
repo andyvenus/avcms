@@ -41,7 +41,7 @@ class ParentValidatableObject implements Validatable {
     }
 
 
-    public function getParameters()
+    public function getValidationData()
     {
         return array(
             'parent_parameter_one' => 'Parent String one',

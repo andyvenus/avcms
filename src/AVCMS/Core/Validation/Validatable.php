@@ -6,5 +6,5 @@ interface Validatable
 {
     public function getValidationRules(Validator $validator);
 
-    public function getParameters();
-} 
+    public function getValidationData();
+}

@@ -5,12 +5,14 @@
  * Time: 18:41
  */
 
-namespace AVCMS\Core\Form\Tests\Fixtures;
-
+namespace AVCMS\Games\Form;
 
 use AVCMS\Core\Form\FormBlueprint;
+use AVCMS\Core\Validation\Rules\Length;
+use AVCMS\Core\Validation\Rules\MinLength;
+use AVCMS\Core\Validation\Validator;
 
-class StandardForm extends FormBlueprint {
+class TestForm extends FormBlueprint {
     public function __construct()
     {
         $this->add('name', 'text', array(
@@ -22,13 +24,18 @@ class StandardForm extends FormBlueprint {
             'default' => 'Default description'
         ));
 
-        $this->add('category', 'select', array(
+        $this->add('category_id', 'select', array(
             'label' => 'Category',
             'choices' => array(
                 '1' => 'Cat One',
                 '2' => 'Cat Two',
                 '3' => 'Cat Three',
             )
+        ));
+
+        $this->add('hidden_one', 'hidden', array(
+            'label' => 'You should not see this',
+            'default' => 'dino'
         ));
 
         $this->add('password', 'password', array(
@@ -45,8 +52,13 @@ class StandardForm extends FormBlueprint {
         ));
     }
 
+    public function getValidationRules(Validator $validator)
+    {
+        $validator->addRule('name', new Length(10), 'The name must be at least {min} fuckity characters');
+    }
+
     public function getName()
     {
-        return 'standard_form';
+        return 'test_form';
     }
 } 

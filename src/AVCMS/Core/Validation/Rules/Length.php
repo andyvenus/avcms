@@ -15,7 +15,7 @@ class Length extends Rule {
 
     public function __construct($min = null, $max = null)
     {
-        if ($min > $max) {
+        if ($min && $max && $min > $max) {
             throw new RuleInvalidException("The maximum length cannot be higher than the minimum length");
         }
         elseif ($min === null && $max === null) {

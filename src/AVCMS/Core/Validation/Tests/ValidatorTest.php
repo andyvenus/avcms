@@ -59,7 +59,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $parent_validatable = new ParentValidatableObject();
         $child_validatable = $parent_validatable->getChildValidatable();
 
-        $this->validator->validate($parent_validatable, $scope);
+        $this->validator->validate($parent_validatable, 'standard', $scope);
 
         $this->assertEquals($parent_validatable->expectedValid(), $this->validator->isValid());
 

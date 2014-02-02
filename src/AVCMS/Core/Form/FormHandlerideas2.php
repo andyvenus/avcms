@@ -17,7 +17,7 @@ use AVCMS\Core\Form\ValidatorExtension\ValidatorExtension;
  *
  * Handles form requests, form validation and allows forms to interact with entities
  */
-class FormHandler
+class FormHandlerideas
 {
     /**
      * @var FormBlueprint
@@ -95,6 +95,25 @@ class FormHandler
         $this->method = $form->getMethod();
         $this->action = $form->getAction();
         $this->form_name = $form->getName();
+    }
+
+    public function getData($name = null, $data = null)
+    {
+        if ($data === null) {
+            $data = $this->data;
+        }
+
+        if ($name === null) {
+            return $data;
+        }
+        else {
+            if (isset($data[$name])) {
+                return $data[$name];
+            }
+            else {
+                return null;
+            }
+        }
     }
 
     public function getForm()
@@ -194,47 +213,21 @@ class FormHandler
         return $this->submitted;
     }
 
-    public function getFields()
+    public function getField($name, $field_data = null, $data = null)
     {
-        return $this->processFieldsCollection($this->fields, $this->data);
-    }
-
-    public function getField($name)
-    {
-        if (isset($this->fields[$name])) {
-            return $this->getProcessedField($this->fields[$name], $this->data);
-        }
-    }
-
-    protected function processFieldsCollection($field_collection, $data)
-    {
-        $fields = array();
-        foreach ($field_collection as $field) {
-            // Unnamed array fields
-            if ($field['name'] === null) {
-                if (!isset($i)) $i = 0;
-
-                $field['name'] = $i;
-                $fields[] = $this->getProcessedField($field, $data);
-
-                $i++;
-            }
-            else {
-                $fields[$field['name']] = $this->getProcessedField($field, $data);
-            }
+        if ($field_data === null) {
+            $field_data = $this->fields;
         }
 
-        return $fields;
-    }
-
-    protected function getProcessedField($field, $data)
-    {
-        if (isset($data[$field['name']])) {
-            $field['value'] = $data[$field['name']];
+        if (!isset($field_data[$name])) {
+            return false;
         }
 
-        if (isset($field['fields']) && isset($field['value'])) {
-            $field['fields'] = $this->processFieldsCollection($field['fields'], $field['value']);
+        $field = $field_data[$name];
+        $field['value'] = $this->getData($name, $data);
+
+        if (isset($field['fields'])) {
+            $field['fields'] = $this->getFields($field['fields'], $field['value']);
         }
 
         if (isset($field['original_name'])) {
@@ -244,21 +237,28 @@ class FormHandler
         return $field;
     }
 
-    public function getData($name = null)
+    protected function getFields($field_data = null, $data = null)
     {
-        $this->data;
-
-        if ($name === null) {
-            return $this->data;
+        if ($field_data === null) {
+            $field_data = $this->fields;
         }
-        else {
-            if (isset($this->data[$name])) {
-                return $this->data[$name];
+
+        $fields = array();
+        foreach ($field_data as $field) {
+            // Unnamed array fields
+            if ($field['name'] === null) {
+                if (!isset($i)) $i = 0;
+
+                $fields[] = $this->getField($i, $field_data, $data);
+
+                $i++;
             }
             else {
-                return null;
+                $fields[$field['name']] = $this->getField($field['name'], $field_data, $data);
             }
         }
+
+        return $fields;
     }
 
     public function setMethod($method)
