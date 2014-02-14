@@ -1,0 +1,32 @@
+{% extends 'index.twig' %}
+
+{% block title %}Blog Homepage{% endblock %}
+
+{% block content %}
+    Hello {{ user.username }}, lets get blogging!
+    <div class="row">
+
+        <div class="col-md-8">
+            {% for post in posts %}
+                <article class="blog_post_container">
+                    <h2>{{ post.title }} <small>by {{ post.author }}</small></h2>
+
+                    <p>{{ post.body }}</p>
+
+                    <small>Options: <a href="{{ url('edit_post', { id: post.id}) }}">Edit</a></small>
+                </article>
+            {% endfor %}
+        </div>
+
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Welcome</h3>
+                </div>
+                <div class="panel-body">
+                    Well hello and welcome to my blog! I love a good blog in the afternoon!
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -108,10 +108,9 @@ interface FormBlueprintInterface
      * Set the URL and HTTP method the form will submit to
      *
      * @param $url The submit URL
-     * @param null|string $type Either POST or GET
      * @return $this
      */
-    public function setAction($url, $type = null);
+    public function setAction($url);
 
     /**
      * Get the URL the form should submit to
@@ -121,7 +120,15 @@ interface FormBlueprintInterface
     public function getAction();
 
     /**
-     * Get the form method, either POST or GET
+     * Set the form method (POST or GET, default POST)
+     *
+     * @param $method
+     * @return mixed
+     */
+    public function setMethod($method);
+
+    /**
+     * Get the form method (POST or GET, default POST)
      *
      * @return string
      */

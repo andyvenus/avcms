@@ -73,6 +73,7 @@ class FormBlueprint implements FormBlueprintInterface
 
     /**
      * {@inheritdoc}
+     * TODO: Make Recursive
      */
     public function addBefore($offset, $name, $type, $options = array())
     {
@@ -202,12 +203,8 @@ class FormBlueprint implements FormBlueprintInterface
     /**
      * {@inheritdoc}
      */
-    public function setAction($url, $method = null)
+    public function setAction($url)
     {
-        if ($method) {
-            $this->method = $method;
-        }
-
         $this->action = $url;
 
         return $this;
@@ -219,6 +216,16 @@ class FormBlueprint implements FormBlueprintInterface
     public function getAction()
     {
         return $this->action;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setMethod($method)
+    {
+        $this->method = $method;
+
+        return $this;
     }
 
     /**

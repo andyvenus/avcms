@@ -39,7 +39,7 @@ $routes->add('blank', new Route('/blank/{id}', array(
 )));
 
 $routes->add('subreq', new Route('/subreq', array(
-    '_controller' => 'AVCMS\\Games\\Controller\\GamesController::subRequestAction',
+    '_controller' => 'AVCMS\\Games\\Controller\\GamesController::testSubRequest',
 )));
 
 $routes->add('stress', new Route('/stress', array(
@@ -71,5 +71,10 @@ $routes->add('form_array_test', new Route('/forms_array/{id}', array(
 $routes->add('validator_test', new Route('/validation', array(
     '_controller' => 'AVCMS\\Games\\Controller\\FormController::validatorTestAction',
 )));
+
+$routes->add('upload_form', new Route('/upload_form', array(
+    '_controller' => 'AVCMS\\Games\\Controller\\FormController::fileUploadAction',
+)));
+
 
 return $routes;

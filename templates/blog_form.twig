@@ -1,0 +1,35 @@
+{% extends 'avcms_form.twig' %}
+
+{% block form_row %}
+    {% spaceless %}
+        <div class="form-group">
+            <div class="form_label">
+                {{ form_label(form_row) }}
+            </div>
+
+            <div class="form_field">
+                {{ form_field(form_row) }}
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block input_field %}
+    {% spaceless %}
+        {% set type = type|default('text') %}
+        <input type="{{ type }}" name="{{ name }}" {% if value is not empty %}value="{{ value }}"{% endif %} class="form-control" />
+    {% endspaceless %}
+{% endblock %}
+
+{% block textarea_field %}
+    {% spaceless %}
+        <textarea name="{{ name }}" class="form-control">{% if value is not empty %}{{ value }}{% endif %}</textarea>
+    {% endspaceless %}
+{% endblock %}
+
+{% block button %}
+    {% spaceless %}
+        {% set type = type|default('button') %}
+        <button type="{{ type }}" class="btn btn-success">{{ label }}</button>
+    {% endspaceless %}
+{% endblock %}

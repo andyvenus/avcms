@@ -83,8 +83,15 @@ class FormExtension extends \Twig_Extension
         );
     }
 
-    public function formStart($form)
+    public function formStart($form, $template = null)
     {
+        if ($template == null) {
+            $this->base_template = $this->environment->loadTemplate('avcms_form.twig');
+        }
+        else {
+            $this->base_template = $this->environment->loadTemplate($template);
+        }
+
         return $this->base_template->renderBlock('form_start', array('form' => $form));
     }
 
@@ -95,12 +102,13 @@ class FormExtension extends \Twig_Extension
 
     public function formField($field_data)
     {
-        if ($this->base_template->hasBlock($field_data['type'].'_field')) {
-            return $this->base_template->renderBlock($field_data['type'].'_field', $field_data);
-        }
-        else {
+        $field = $this->base_template->renderBlock($field_data['type'].'_field', $field_data);
+
+        if (!$field) {
             return "<strong>Error:</strong> No template for field type '$field_data[type]'";
         }
+
+        return $field;
     }
 
     public function formLabel($field_data)

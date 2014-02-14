@@ -10,6 +10,8 @@ namespace AVCMS\Core\Form\Tests;
 use AVCMS\Core\Form\EntityProcessor\GetterSetterEntityProcessor;
 use AVCMS\Core\Form\FormBlueprint;
 use AVCMS\Core\Form\FormHandler;
+use AVCMS\Core\Form\FormView;
+use AVCMS\Core\Form\RequestHandler\SymfonyRequestHandler;
 use AVCMS\Core\Form\Tests\Fixtures\AvcmsStandardEntity;
 use AVCMS\Core\Form\Tests\Fixtures\BasicForm;
 use AVCMS\Core\Form\Tests\Fixtures\StandardFormEntity;
@@ -53,12 +55,17 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
      */
     protected $mock_validator;
 
+    /**
+     * @var array The original $_GET, $_POST & $_FILES vars, reset for each test
+     */
+    protected $default_request;
+
     public function setUp()
     {
         $this->basic_form = new BasicForm();
         $this->standard_form = new StandardForm();
         
-        $this->basic_form_handler = new FormHandler($this->basic_form, new GetterSetterEntityProcessor());
+        $this->basic_form_handler = new FormHandler($this->basic_form, null, new GetterSetterEntityProcessor());
         $this->standard_form_handler = new FormHandler($this->standard_form);
 
         $this->basic_form_request = array(
@@ -74,6 +81,27 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->mock_validator = $this->getMock('AVCMS\Core\Form\ValidatorExtension\ValidatorExtension');
+
+        $this->resetRequest();
+    }
+
+    public function testSetGetFormAttributes()
+    {
+        $this->assertEquals('POST', $this->basic_form_handler->getMethod());
+        $this->assertEquals(null, $this->basic_form_handler->getAction());
+
+        $this->basic_form_handler->setMethod('GET');
+        $this->basic_form_handler->setAction('example_url/something');
+
+        $this->assertEquals('GET', $this->basic_form_handler->getMethod());
+        $this->assertEquals('example_url/something', $this->basic_form_handler->getAction());
+    }
+
+    public function testInvalidMethod()
+    {
+        $this->setExpectedException('\Exception');
+
+        $this->basic_form_handler->setMethod('BAD');
     }
 
     public function testHandleSymfonyPostRequest()
@@ -88,11 +116,11 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
             'name' => 'Example Name'
         ));
 
-        $form_handler = $this->basic_form_handler;
+        $form_handler = new FormHandler($this->basic_form, new SymfonyRequestHandler());
 
         $form_handler->setMethod('POST');
 
-        $form_handler->handleRequest($request, 'symfony');
+        $form_handler->handleRequest($request);
 
         $this->assertEquals('Example Name', $form_handler->getData('name'));
         $this->assertTrue($form_handler->isSubmitted());
@@ -110,7 +138,7 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
             'name' => 'Example Name'
         ));
 
-        $form_handler = $this->basic_form_handler;
+        $form_handler = new FormHandler($this->basic_form, new SymfonyRequestHandler());
 
         $form_handler->setMethod('GET');
 
@@ -122,11 +150,11 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testHandleStandardRequest()
     {
-        $request = $this->standard_form_request;
+        $_POST = $this->standard_form_request;
 
         $form_handler = $this->standard_form_handler;
 
-        $form_handler->handleRequest($request, 'standard');
+        $form_handler->handleRequest();
 
         $this->assertEquals('Example Name', $form_handler->getData('name'));
         $this->assertTrue($form_handler->isSubmitted());
@@ -134,13 +162,13 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testIncompleteStandardRequest()
     {
-        $request = $this->standard_form_request;
+        $_POST = $this->standard_form_request;
 
-        unset($request['password']);
+        unset($_POST['password']);
 
         $form_handler = $this->standard_form_handler;
 
-        $form_handler->handleRequest($request, 'standard');
+        $form_handler->handleRequest();
 
         $this->assertEquals(null, $form_handler->getData('password'));
         $this->assertFalse($form_handler->isSubmitted());
@@ -161,13 +189,13 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAllData()
     {
-        $req_data = array('description'=>'Default description', 'published' => '1');
+        $_POST = array('description'=>'Default description', 'published' => '1');
 
-        $this->standard_form_handler->handleRequest($req_data, 'standard');
+        $this->standard_form_handler->handleRequest();
 
         $form_data = $this->standard_form_handler->getData();
 
-        $this->assertEquals($req_data, $form_data);
+        $this->assertEquals($_POST, $form_data);
     }
 
     public function testAvcmsEntity()
@@ -208,13 +236,16 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $this->standard_form_handler->addEntity($entity_one, array('name', 'description'));
         $this->standard_form_handler->addEntity($entity_two, array('name', 'password', 'category'));
 
+        $this->assertEquals(2, count($this->standard_form_handler->getEntities()));
+
         $name_field = $this->standard_form_handler->getField('name');
         $this->assertEquals('Name Two', $name_field['value']);
 
         $description_field = $this->standard_form_handler->getField('description');
         $this->assertEquals('Description One', $description_field['value']);
 
-        $this->standard_form_handler->handleRequest($this->standard_form_request, 'standard');
+        $_POST = $this->standard_form_request;
+        $this->standard_form_handler->handleRequest();
 
         $this->standard_form_handler->saveToEntities();
 
@@ -315,6 +346,17 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($errors, $form_view->getErrors());
     }
 
+    public function testSetFormView()
+    {
+        $form_view = new FormView();
+
+        $this->basic_form_handler->setFormView($form_view);
+
+        $this->basic_form_handler->createView();
+
+        $this->assertEquals('name', $form_view->name['name']);
+    }
+
     public function testGetSetMethod()
     {
         $form_handler = $this->basic_form_handler;
@@ -343,6 +385,19 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($errors, $this->basic_form_handler->getValidationErrors());
     }
 
+    public function testNoValidatorException()
+    {
+        $this->setExpectedException('\Exception');
+
+        $this->basic_form_handler->isValid();
+    }
+
+    public function testNoValidatorException2()
+    {
+        $this->setExpectedException('\Exception');
+
+        $this->basic_form_handler->getValidationErrors();
+    }
 
     public function testArrayFields()
     {
@@ -364,6 +419,12 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $data = $form_handler->getData('colours');
 
         $this->assertEquals('#0000FF', $data[2]);
+
+        $form_view = $form_handler->createView();
+
+        $this->assertEquals(3, count($form_view->colours['fields']));
+        $this->assertEquals('colours[]', $form_view->colours['fields'][0]['name']);
+        $this->assertEquals('colours[]', $form_view->colours['fields'][2]['name']);
     }
 
     public function testNamedArrayFields()
@@ -386,6 +447,19 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $data = $form_handler->getData('colours');
 
         $this->assertEquals('#0000FF', $data['blue']);
+
+        $form_view = $form_handler->createView();
+
+        $this->assertEquals(3, count($form_view->colours['fields']));
+        $this->assertEquals('colours[red]', $form_view->colours['fields']['colours[red]']['name']);
+        $this->assertEquals('colours[blue]', $form_view->colours['fields']['colours[blue]']['name']);
+    }
+
+    public function testGetForm()
+    {
+        $form = $this->standard_form_handler->getForm();
+
+        $this->assertEquals($this->standard_form, $form);
     }
 
     public function providerDefaultValues()
@@ -399,6 +473,19 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
                 )
             )
         );
+    }
+
+    protected function resetRequest()
+    {
+        if (!isset($this->default_request)) {
+            $this->default_request['GET'] = $_GET;
+            $this->default_request['POST'] = $_POST;
+            $this->default_request['FILES'] = $_FILES;
+        }
+
+        $_GET = $this->default_request['GET'];
+        $_POST = $this->default_request['POST'];
+        $_FILES = $this->default_request['FILES'];
     }
 }
  

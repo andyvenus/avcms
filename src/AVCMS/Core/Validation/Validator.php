@@ -155,8 +155,9 @@ class Validator
 
         $this->errors = array();
         foreach ($this->rules as $rule) {
+            $parameter_value = $this->getFromMultidimensionalArray($rule['param_name'], $this->parameters);
 
-            if (isset($this->parameters[ $rule['param_name'] ])) {
+            if ($parameter_value !== null) {
 
                 // If the parameters to validate have been limited, make sure this parameter is one of those
                 if ( ( empty($this->limited_params) || in_array($rule['param_name'], $this->limited_params) )) {
@@ -172,7 +173,7 @@ class Validator
                         }
                     }
 
-                    if ( ! $rule_obj->assert( $this->parameters[ $rule['param_name'] ] )) {
+                    if (!$rule_obj->assert($parameter_value)) {
                         if (!$rule['error_message']) {
 
                             if (!$rule['error_message'] = $rule_obj->getError()) {
@@ -219,6 +220,21 @@ class Validator
             }
             return strtr($error_message, $error_params_updated);
         }
+    }
+
+    protected function getFromMultidimensionalArray($str, $array)
+    {
+        $depth = explode('.', $str);
+
+        foreach ($depth as $key) {
+            if (!isset($array[$key])) {
+                return null;
+            }
+
+            $array = $array[$key];
+        }
+
+        return $array;
     }
 
     /**

@@ -21,6 +21,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
      * Get all rows
      *
      * @param string $class
+     * @internal param null $query_name
      * @return mixed
      */
     public function get($class = 'stdClass')

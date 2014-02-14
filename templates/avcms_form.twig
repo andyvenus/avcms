@@ -1,6 +1,6 @@
 {% block form_start %}
     {% spaceless %}
-    <form action="{{ form.params.action }}" name="{{ form.params.name }}" method="{{ form.params.method }}">
+    <form enctype="{{ form.params.encoding }}" action="{{ form.params.action }}" name="{{ form.params.name }}" method="{{ form.params.method }}">
     {% endspaceless %}
 {% endblock %}
 
@@ -34,6 +34,13 @@
 {% block hidden_field %}
     {% spaceless %}
         {% set type = type|default('hidden') %}
+        {{ block('input_field') }}
+    {% endspaceless %}
+{% endblock %}
+
+{% block file_field %}
+    {% spaceless %}
+        {% set type = type|default('file') %}
         {{ block('input_field') }}
     {% endspaceless %}
 {% endblock %}

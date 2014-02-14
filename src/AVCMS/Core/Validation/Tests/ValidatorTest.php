@@ -2,6 +2,7 @@
 
 namespace AVCMS\Core\Validation\Tests;
 
+use AVCMS\Core\Validation\Tests\Fixtures\NestedArrayValidatableObject;
 use AVCMS\Core\Validation\Tests\Fixtures\ParentValidatableObject;
 use AVCMS\Core\Validation\Tests\Fixtures\SimpleValidatableObject;
 use AVCMS\Core\Validation\Validatable;
@@ -31,6 +32,29 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     public function testSimpleValidatableObject()
     {
         $validatable = new SimpleValidatableObject();
+
+        $this->validator->validate($validatable);
+
+        $this->assertEquals($validatable->expectedValid(), $this->validator->isValid());
+
+        if (!$validatable->expectedValid()) {
+
+            $errors = $this->validator->getErrors();
+
+            $error_messages = array();
+            foreach ($errors as $error) {
+                $error_messages[] = $error['error_message'];
+            }
+
+            $expected_errors = $validatable->expectedErrors();
+
+            $this->assertEquals($expected_errors, $error_messages);
+        }
+    }
+
+    public function testNestedArrayValidatableObject()
+    {
+        $validatable = new NestedArrayValidatableObject();
 
         $this->validator->validate($validatable);
 

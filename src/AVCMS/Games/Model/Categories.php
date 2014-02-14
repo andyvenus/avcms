@@ -6,9 +6,18 @@ use AVCMS\Core\Model\Model;
 
 class Categories extends Model
 {
-    protected $table = 'categories';
+    public function getTable()
+    {
+        return 'categories';
+    }
 
-    protected $singular = 'category';
+    public function getSingular()
+    {
+        return 'category';
+    }
 
-    protected $entity = 'AVCMS\Games\Model\Category';
+    public function getEntity()
+    {
+        return 'AVCMS\Games\Model\Category';
+    }
 }

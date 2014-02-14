@@ -1,0 +1,17 @@
+{% extends 'index.twig' %}
+
+{% block title %}Edit Blog Post{% endblock %}
+
+{% block content %}
+    {{ form_start(form, 'blog_form.twig') }}
+
+    {% for error in form.errors %}
+        {{ error.error_message }}<br />
+    {% endfor %}
+
+    {{ form_rows(form) }}
+
+    {{ form_submit_button(form) }}
+
+    {{ form_end(form) }}
+{% endblock %}

@@ -17,7 +17,7 @@ $request = Request::createFromGlobals();
 
 $sc = include __DIR__.'/src/container.php';
 $sc->setParameter('routes', include __DIR__.'/src/routes.php');
-
+$sc->get('bundle.initializer')->initBundles();
 $response = $sc->get('framework')->handle($request);
 
 $response->send();

@@ -5,11 +5,13 @@ namespace AVCMS\Core\Controller;
 use AVCMS\Core\Form\FormBlueprint;
 use AVCMS\Core\Form\FormHandler;
 use AVCMS\Core\Form\FormView;
+use AVCMS\Core\Form\RequestHandler\SymfonyRequestHandler;
 use AVCMS\Core\Form\ValidatorExtension\AVCMSValidatorExtension;
 use AVCMS\Core\Validation\Validator;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Translation\Loader\ArrayLoader;
 use Symfony\Component\Translation\MessageSelector;
 use AVCMS\Core\Translation\Translator;
@@ -66,7 +68,7 @@ abstract class Controller extends ContainerAware {
 
     protected function buildForm(FormBlueprint $form)
     {
-        $form_handler = new FormHandler($form);
+        $form_handler = new FormHandler($form, new SymfonyRequestHandler(), null, $this->container->get('dispatcher'));
         $form_handler->setValidatior(new AVCMSValidatorExtension($this->newValidator()));
         $form_view = new FormView();
         $form_view->setTranslator($this->translator);
@@ -75,9 +77,17 @@ abstract class Controller extends ContainerAware {
         return $form_handler;
     }
 
-    protected function getUser()
+    protected function generateUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
-        return $this->container->get('active.user')->getUser();
+        return $this->container->get('routing.url.generator')->generate($route, $parameters, $referenceType);
+    }
+
+    /**
+     * @return \AVCMS\Users\ActiveUser
+     */
+    protected function getActiveUser()
+    {
+        return $this->container->get('active.user');
     }
 
     protected function render($template, $context, $return_response = false)

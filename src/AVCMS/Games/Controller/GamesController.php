@@ -8,6 +8,7 @@ use AVCMS\Core\Controller\Controller;
 use AVCMS\Games\Model\Game;
 use AVCMS\Core\Form\FormOutput;
 use AVCMS\Games\Form\GameForm;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\Translation\MessageSelector;
 use Symfony\Component\Translation\Translator;
 
@@ -196,5 +197,21 @@ class GamesController extends Controller
         $translator = new Translator('en_GB', new MessageSelector());
 
         return new Response($translator->trans('Symfony Translator'));
+    }
+
+    public function testSubRequest()
+    {
+        // create some other request manually as needed
+        $request = new Request();
+        $request->attributes->add(['_controller' => 'AVCMS\\Games\\Controller\\GamesController::stressTestAction']);
+
+        $response = $this->container->get('framework')->handle($request, HttpKernelInterface::SUB_REQUEST);
+
+        return new Response($response->getContent());
+    }
+
+    public function testSecondary()
+    {
+        return new Response('Fun');
     }
 }

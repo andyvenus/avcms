@@ -113,4 +113,27 @@ class FormController extends Controller {
 
         return new Response('');
     }
+
+    public function fileUploadAction(Request $request)
+    {
+        $form = new FormBlueprint();
+        $form->add('file', 'file', array(
+            'label' => 'A file here'
+        ));
+
+        $form = $this->buildForm($form);
+
+        $form->handleRequest($request, 'symfony');
+
+
+        if ($form->isSubmitted()) {
+            echo 'Form submitted';
+
+            $the_file = $form->getData('file');
+
+            $the_file->move('uploads', $the_file->getClientOriginalName().'.'.$the_file->getClientOriginalExtension());
+        }
+
+        return new Response($this->render('test_form.twig', array('form' => $form->createView())));
+    }
 }

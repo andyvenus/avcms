@@ -4,13 +4,44 @@
     {% block head %}
         <title>{% block title %}{% endblock %} - My Webpage</title>
     {% endblock %}
+
+    <link rel="stylesheet" type="text/css" href="http://localhost:8888/avcms/web/css/style.css" />
+    <link href="http://localhost:8888/avcms/web/css/bootstrap.min.css" rel="stylesheet">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<div id="content">{% block content %}{% endblock %}</div>
-<div id="footer">
+
+<header class="leaderboard">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"><a href="{{ url('login') }}">Login</a> / <a href="{{ url('register') }}">Register</a></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{ url('blog_home') }}"><h1>AVCMS - The Beginning</h1></a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="container">
+    {% block content %}{% endblock %}</div>
+</section>
+
+<footer class="container">
     {% block footer %}
-       AVCMS
+    <div class="row">
+        <div class="col-md-4">
+            Copyright AV Scripts 2014
+        </div>
+    </div>
     {% endblock %}
-</div>
+</footer>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="http://localhost:8888/avcms/web/js/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://localhost:8888/avcms/web/js/bootstrap.min.js"></script>
 </body>
 </html>

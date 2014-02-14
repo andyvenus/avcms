@@ -12,7 +12,7 @@ namespace AVCMS\Core\Model;
  * Class Entity
  * @package AVCMS\Core\Model
  */
-class Entity
+abstract class Entity
 {
     /**
      * @var array The data this entity is holding

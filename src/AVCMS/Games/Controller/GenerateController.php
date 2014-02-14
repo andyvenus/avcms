@@ -21,7 +21,7 @@ class GenerateController extends Controller {
 
         while ($col = $q->fetch()) {
 
-            echo 'public function set'.$this->dashesToCamelCase($col['Field'], true).'($value) {';
+            echo 'public function set'.$this->dashesToCamelCase($col['Field'], true).'($value) <br/>{';
             echo '<br />';
             echo '&nbsp;&nbsp;&nbsp;&nbsp;$this->setData(\''.$col['Field'].'\', $value);';
             echo '<br />';

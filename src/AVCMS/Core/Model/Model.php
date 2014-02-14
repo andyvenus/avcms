@@ -8,28 +8,15 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 /**
  * Class Model
  * @package AVCMS\Core\Model
+ *
+ * TODO: Make singular, entity and table name accessed through methods defined in an interface
  */
-abstract class Model {
+abstract class Model implements ModelInterface {
 
     /**
      * @var $query_builder QueryBuilderHandler
      */
     protected $query_builder;
-
-    /**
-     * @var $table string
-     */
-    protected $table;
-
-    /**
-     * @var $singular string The singular for what the database table contains. For example, if the table is "articles" the singular would be "article"
-     */
-    protected $singular;
-
-    /**
-     * @var \AVCMS\Core\Model\Entity
-     */
-    protected $entity = 'stdClass';
 
     /**
      * @var integer
@@ -47,13 +34,6 @@ abstract class Model {
     public  function __construct(QueryBuilderHandler $query_builder)
     {
         $this->query_builder = $query_builder;
-
-        if (!isset($this->table)) {
-            throw new \Exception("Model '".get_class($this)."' does not have a database table defined");
-        }
-        elseif (!isset($this->singular)) {
-            throw new \Exception("Model '".get_class($this)."' does not have a a 'singular' definition");
-        }
     }
 
     /**
@@ -61,7 +41,7 @@ abstract class Model {
      */
     public function query()
     {
-        $query = $this->query_builder->table($this->table)->entity($this->entity)->model($this);
+        $query = $this->query_builder->table($this->getTable())->entity($this->getEntity())->model($this);
 
         return $query;
     }
@@ -72,7 +52,7 @@ abstract class Model {
      */
     public function find($id)
     {
-        return $this->query()->where($this->table.'.id', $id);
+        return $this->query()->where($this->getTable().'.id', $id);
     }
 
     /**
@@ -135,23 +115,8 @@ abstract class Model {
         return $this->last_insert_id;
     }
 
-    public function getTable()
-    {
-        return $this->table;
-    }
-
-    public function getEntity()
-    {
-        return $this->entity;
-    }
-
-    public function getSingular()
-    {
-        return $this->singular;
-    }
-
     public function getJoinColumn($table) // todo: support alternate column names
     {
-        return $this->singular.'_id';
+        return $this->getSingular().'_id';
     }
 }

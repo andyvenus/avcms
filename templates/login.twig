@@ -1,0 +1,17 @@
+{% extends 'index.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    {{ form_start(login_form, 'blog_form.twig') }}
+
+    {% for error in login_form.errors %}
+        {{ error.error_message }}<br />
+    {% endfor %}
+
+    {{ form_rows(login_form) }}
+
+    {{ form_submit_button(login_form) }}
+
+    {{ form_end(login_form) }}
+{% endblock %}

@@ -9,7 +9,12 @@ namespace AVCMS\Core\Form;
 
 use AVCMS\Core\Form\EntityProcessor\EntityProcessor;
 use AVCMS\Core\Form\EntityProcessor\GetterSetterEntityProcessor;
+use AVCMS\Core\Form\Event\FormHandlerConstructEvent;
+use AVCMS\Core\Form\Event\FormHandlerRequestEvent;
+use AVCMS\Core\Form\RequestHandler\RequestHandlerInterface;
+use AVCMS\Core\Form\RequestHandler\StandardRequestHandler;
 use AVCMS\Core\Form\ValidatorExtension\ValidatorExtension;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * Class FormHandler
@@ -75,10 +80,32 @@ class FormHandler
     protected $fields;
 
     /**
-     * @param FormBlueprint $form
-     * @param EntityProcessor $entity_processor
+     * @var string
      */
-    public function __construct(FormBlueprint $form, EntityProcessor $entity_processor = null)
+    protected $encoding = 'application/x-www-form-urlencoded';
+
+    /**
+     * @var RequestHandler\StandardRequestHandler
+     */
+    protected $request_handler;
+
+    /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcher
+     */
+    protected $event_dispatcher;
+
+    /**
+     * @param FormBlueprintInterface $form
+     * @param \AVCMS\Core\Form\RequestHandler\RequestHandlerInterface|null $request_handler
+     * @param EntityProcessor $entity_processor
+     * @param \Symfony\Component\EventDispatcher\EventDispatcher $event_dispatcher
+     */
+    public function __construct(
+        FormBlueprintInterface $form,
+        RequestHandlerInterface $request_handler = null,
+        EntityProcessor $entity_processor = null,
+        EventDispatcher $event_dispatcher = null
+    )
     {
         $this->form = $form;
 
@@ -89,12 +116,30 @@ class FormHandler
             $this->entity_processor = new GetterSetterEntityProcessor();
         }
 
+        if ($request_handler) {
+            $this->request_handler = $request_handler;
+        }
+        else {
+            $this->request_handler = new StandardRequestHandler();
+        }
+
+        if ($event_dispatcher) {
+            $this->event_dispatcher = $event_dispatcher;
+            $event = new FormHandlerConstructEvent($this, $this->form);
+            $this->event_dispatcher->dispatch('form_handler.construct', $event);
+            $this->form = $event->getFormBlueprint();
+        }
+
         $this->fields = $form->getAll();
         $this->data = $form->getDefaultData();
 
         $this->method = $form->getMethod();
         $this->action = $form->getAction();
         $this->form_name = $form->getName();
+
+        if ($this->hasFieldOfType('file')) {
+            $this->encoding = 'multipart/form-data';
+        }
     }
 
     public function getForm()
@@ -136,37 +181,19 @@ class FormHandler
         return $this->entities;
     }
 
-    public function handleRequest($request, $type = 'standard')
+    public function handleRequest($request = null)
     {
         $this->submitted = true;
 
-        if ($type == 'symfony') {
-            if ($this->method == 'POST') {
-                $param_bag = 'request';
+        $request_data = $this->request_handler->handleRequest($this, $request);
+
+        foreach ($this->fields as $field) {
+            if (!isset($request_data[ $field['name'] ]) && $field['type'] != 'checkbox') {
+                $this->submitted = false;
+                break;
             }
             else {
-                $param_bag = 'query';
-            }
-
-            foreach ($this->fields as $field) {
-                if (!$request->$param_bag->has($field['name']) && $field['type'] != 'checkbox') {
-                    $this->submitted = false;
-                    break;
-                }
-                else {
-                    $req_data[$field['name']] = $request->$param_bag->get($field['name']);
-                }
-            }
-        }
-        elseif ($type == 'standard') {
-            foreach ($this->fields as $field) {
-                if (!isset($request[$field['name']]) && $field['type'] != 'checkbox') {
-                    $this->submitted = false;
-                    break;
-                }
-                else {
-                    $req_data[$field['name']] = $request[$field['name']];
-                }
+                $req_data[ $field['name'] ] = $request_data[ $field['name'] ];
             }
         }
 
@@ -175,6 +202,12 @@ class FormHandler
         }
         else {
             $this->submitted = false;
+        }
+
+        if (isset($this->event_dispatcher)) {
+            $event = new FormHandlerRequestEvent($this, $request, $this->data);
+            $this->event_dispatcher->dispatch('form_handler.request', $event);
+            $this->data = $event->getFormData();
         }
     }
 
@@ -204,6 +237,8 @@ class FormHandler
         if (isset($this->fields[$name])) {
             return $this->getProcessedField($this->fields[$name], $this->data);
         }
+
+        return null;
     }
 
     protected function processFieldsCollection($field_collection, $data)
@@ -244,6 +279,21 @@ class FormHandler
         return $field;
     }
 
+    public function hasFieldOfType($field_type)
+    {
+        foreach ($this->fields as $field) {
+            if ($field['type'] == $field_type) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param null $name
+     * @return array|null|string|\Symfony\Component\HttpFoundation\File\UploadedFile
+     */
     public function getData($name = null)
     {
         $this->data;
@@ -292,6 +342,11 @@ class FormHandler
         return $this->form_name;
     }
 
+    public function getEncoding()
+    {
+        return $this->encoding;
+    }
+
     public function setFormView(FormViewInterface $view)
     {
         $this->form_view = $view;
@@ -306,6 +361,7 @@ class FormHandler
         $this->form_view->setFields($this->getFields());
         $this->form_view->setMethod($this->getMethod());
         $this->form_view->setName($this->getName());
+        $this->form_view->setEncoding($this->getEncoding());
 
         if ($this->submitted && isset($this->validator)) {
             $this->form_view->setErrors($this->getValidationErrors());
@@ -341,15 +397,4 @@ class FormHandler
 
         return $this->validator->getErrors();
     }
-
-    protected function dashesToCamelCase($string, $capitalizeFirstCharacter = false)
-    {
-        $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
-
-        if (!$capitalizeFirstCharacter) {
-            $str[0] = strtolower($str[0]);
-        }
-
-        return $str;
-    }
-} 
+}

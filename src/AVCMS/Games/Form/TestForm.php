@@ -55,6 +55,11 @@ class TestForm extends FormBlueprint {
     public function getValidationRules(Validator $validator)
     {
         $validator->addRule('name', new Length(10), 'The name must be at least {min} fuckity characters');
+
+        /*
+        $validator->addRule('name.someting', new Length(10));
+        $validator->addRule('name.*', new Length(11));
+        */
     }
 
     public function getName()

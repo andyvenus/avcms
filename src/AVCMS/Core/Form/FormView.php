@@ -7,7 +7,6 @@
 
 namespace AVCMS\Core\Form;
 
-
 use Symfony\Component\Translation\TranslatorInterface;
 
 class FormView implements FormViewInterface
@@ -41,11 +40,6 @@ class FormView implements FormViewInterface
      * @var array
      */
     protected $errors;
-
-    /**
-     * @var string The name of the form
-     */
-    protected $name;
 
     /**
      * @var array
@@ -129,6 +123,19 @@ class FormView implements FormViewInterface
     /**
      * {@inheritdoc}
      */
+    public function setEncoding($encoding)
+    {
+        $this->params['encoding'] = $encoding;
+    }
+
+    public function getEncoding()
+    {
+        return $this->params['encoding'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function setSubmitButtonLabel($label)
     {
         $this->submit_button_label = $label;
@@ -187,11 +194,6 @@ class FormView implements FormViewInterface
     public function getParams()
     {
         return $this->params;
-    }
-
-    protected function getReservedFieldNames()
-    {
-        return array('params');
     }
 
     /**
