@@ -272,8 +272,8 @@ class FormBlueprint implements FormBlueprintInterface
      * @param $field_name
      * @return array
      *
-     * Example: field_name = "example[one][two]"
-     * Result: array('example', 'one', 'two')
+     * Example: $field_name = "example[one][two]"
+     *          return array('example', 'one', 'two')
      */
     protected function explodeFieldNameArray($field_name)
     {

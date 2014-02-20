@@ -2,7 +2,7 @@
 
 namespace AVCMS\Core\Model;
 
-use AVCMS\Core\Event\CreateModelEvent;
+use AVCMS\Core\Model\Event\CreateModelEvent;
 
 class ModelFactory {
 
@@ -12,6 +12,9 @@ class ModelFactory {
 
     protected $query_builder;
 
+    /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcher
+     */
     protected $event_dispatcher;
 
     public function __construct($query_builder, $event_dispatcher)

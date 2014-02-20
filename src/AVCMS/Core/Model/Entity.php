@@ -22,7 +22,12 @@ abstract class Entity
     /**
      * @var array Any entities assigned via the magic __get method
      */
-    protected $sub_entities;
+    protected $sub_entities = array();
+
+    /**
+     * @var array
+     */
+    protected $extension_sub_entities = array();
 
     /**
      * @param $param
@@ -61,16 +66,36 @@ abstract class Entity
      */
     public function toArray()
     {
-        return $this->data;
+        if (empty($this->sub_entities)) {
+            return $this->data;
+        }
+        else {
+            $data = $this->data;
+            foreach ($this->sub_entities as $sub_entity) {
+                if (is_a($sub_entity, 'AVCMS\Core\Model\ExtensionEntity')) {
+
+                    $sub_data = $sub_entity->toArray();
+
+                    $data = array_merge($data, $sub_data);
+                }
+            }
+
+            return $data;
+        }
     }
 
     /**
      * @param $name
      * @param Entity $entity
+     * @param bool $extension
      */
-    public function addSubEntity($name, Entity $entity)
+    public function addSubEntity($name, Entity $entity, $extension = false)
     {
         $this->sub_entities[$name] = $entity;
+
+        if ($extension) {
+            $this->extension_sub_entities[] = $name;
+        }
     }
 
     /**
@@ -85,6 +110,11 @@ abstract class Entity
      */
     public function getId() {
         return $this->data('id');
+    }
+
+    public function getAllSubEntities()
+    {
+        return $this->sub_entities;
     }
 
     /**

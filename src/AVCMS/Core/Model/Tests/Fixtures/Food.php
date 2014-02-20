@@ -11,9 +11,18 @@ use AVCMS\Core\Model\Model;
 
 class Food extends Model
 {
-    protected $table = 'food';
+    public function getTable()
+    {
+        return 'food';
+    }
 
-    protected $singular = 'food_item';
+    public function getSingular()
+    {
+        return 'food_item';
+    }
 
-    protected $entity = 'AVCMS\Core\Model\Tests\Fixtures\FoodItem';
+    public function getEntity()
+    {
+        return 'AVCMS\Core\Model\Tests\Fixtures\FoodItem';
+    }
 }

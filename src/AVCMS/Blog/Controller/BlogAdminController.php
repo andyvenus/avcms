@@ -7,14 +7,14 @@
 
 namespace AVCMS\Blog\Controller;
 
-
 use AVCMS\Blog\Form\PostForm;
 use AVCMS\Blog\Model\Post;
 use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class BlogAdminController extends Controller {
+class BlogAdminController extends Controller
+{
 
     protected $parent_namespace = 'AVCMS\Blog';
 

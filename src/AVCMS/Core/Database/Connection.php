@@ -9,6 +9,8 @@ class Connection extends PixieConnection {
     /**
      * Create an easily accessible query builder alias
      *
+     * Replaces default with AVCMS class
+     *
      * @param $alias
      */
     public function createAlias($alias)
@@ -20,6 +22,8 @@ class Connection extends PixieConnection {
 
     /**
      * Returns an instance of Query Builder
+     *
+     * Replaces default with AVCMS class
      */
     public function getQueryBuilder()
     {

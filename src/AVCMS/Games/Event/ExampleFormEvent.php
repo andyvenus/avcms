@@ -9,6 +9,7 @@ namespace AVCMS\Games\Event;
 
 use AVCMS\Core\Form\Event\FormHandlerConstructEvent;
 use AVCMS\Core\Form\Event\FormHandlerRequestEvent;
+use AVCMS\Core\Model\Event\CreateModelEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ExampleFormEvent implements EventSubscriberInterface
@@ -18,7 +19,7 @@ class ExampleFormEvent implements EventSubscriberInterface
         $blueprint = $event->getFormBlueprint();
 
         if ($blueprint->getName() == 'blog_post_form') {
-            $blueprint->add('nice', 'text', array(
+            $blueprint->add('something', 'text', array(
                 'label' => "WOOT",
             ));
         }
@@ -28,16 +29,26 @@ class ExampleFormEvent implements EventSubscriberInterface
 
     public function reqThing(FormHandlerRequestEvent $event)
     {
-        $data = $event->getFormData();
-        $data['nice'] = 'Cups';
-        $event->setFormData($data);
+        //$data = $event->getFormData();
+        //$data['nice'] = 'Cups';
+        //$event->setFormData($data);
+    }
+
+    public function entityExtension(CreateModelEvent $event)
+    {
+        $model = $event->getModel();
+
+        if (get_class($model) == 'AVCMS\Games\Model\Games' || get_class($model) == 'AVCMS\Blog\Model\Posts') {
+            $model->addOverflowEntity('testone', 'AVCMS\Games\Model\GameExtension');
+        }
     }
 
     public static function getSubscribedEvents()
     {
         return array(
             'form_handler.construct' => 'exampleThing',
-            'form_handler.request' => 'reqThing'
+            'form_handler.request' => 'reqThing',
+            'model.create' => 'entityExtension'
         );
     }
 }

@@ -15,7 +15,10 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
 
     protected $sub_entities;
 
-    protected $joins;
+    /**
+     * @var Model[]
+     */
+    protected $model_joins = array();
 
     /**
      * Get all rows
@@ -31,7 +34,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
         }
 
         // If we have sub-entities, do the more complex method including joins
-        if ($class != 'stdClass') {
+        if (isset($this->model)) {
             return $this->getEntity($class);
         }
 
@@ -47,10 +50,9 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     /**
      * Get all rows with join as sub-entities
      *
-     * @param string $class
      * @return mixed
      */
-    protected function getEntity($class = 'stdClass')
+    protected function getEntity()
     {
         $this->fireEvents('before-select');
 
@@ -59,24 +61,31 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
         $result = array();
 
         while ($row_array = $this->pdoStatement->fetch(\PDO::FETCH_ASSOC)) {
-            $entity = new $class;
+            $entity = $this->model->newEntity();
 
-            if (isset($this->sub_entities)) {
-                foreach ($this->sub_entities as $sub_entity) {
-                    $entity->addSubEntity($sub_entity['id'], new $sub_entity['class']);
+            if (!empty($this->model_joins)) {
+                foreach ($this->model_joins as $join_name => $join_model) {
+                    $sub_entity = $join_model->newEntity();
+                    $entity->addSubEntity($join_name, new $sub_entity);
                 }
             }
 
             foreach ($row_array as $column_name => $column_value) {
-                if (isset($this->sub_entities) && strpos($column_name, '.') !== false) {
-                    $sub_entity_name = strstr($column_name, '.', true);
-                    $column = str_replace($sub_entity_name.'.', '', $column_name);
 
-                    $sub_entity = $entity->$sub_entity_name;
+                $column_value_used = false;
 
-                    $setter_method_name = 'set'.$this->dashesToCamelCase($column, true);
-                    if (method_exists($sub_entity, $setter_method_name)) {
-                        $sub_entity->$setter_method_name($column_value);
+                if (strpos($column_name, '__') !== false) {
+                    $sub_entity_name = strstr($column_name, '__', true);
+                    $column = str_replace($sub_entity_name.'__', '', $column_name);
+
+                    if (isset($entity->$sub_entity_name)) {
+                        $sub_entity = $entity->$sub_entity_name;
+
+                        $setter_method_name = 'set'.$this->dashesToCamelCase($column, true);
+                        if (method_exists($sub_entity, $setter_method_name)) {
+                            $sub_entity->$setter_method_name($column_value);
+                            $column_value_used = true;
+                        }
                     }
                 }
                 else {
@@ -84,7 +93,12 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
 
                     if (method_exists($entity, $setter_method_name)) {
                         $entity->$setter_method_name($column_value);
+                        $column_value_used = true;
                     }
+                }
+
+                if ($column_value_used == false) {
+                    // TODO: LOG IN DEV MODE
                 }
             }
 
@@ -197,6 +211,13 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
         return $this;
     }
 
+    /**
+     * Add a sub-entity that allows extension of the main entity
+     *
+     * @param $entity_name
+     * @param $join_id
+     * @return $this
+     */
     public function addSubEntity($entity_name, $join_id)
     {
         $this->sub_entities[] = array('class' => $entity_name, 'id' => $join_id);
@@ -204,6 +225,13 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
         return $this;
     }
 
+    /**
+     * Do a one-to-one join based on data provided by a model
+     *
+     * @param Model $join_model
+     * @param array $columns
+     * @return $this
+     */
     public function modelJoin(Model $join_model, array $columns = array())
     {
         $this_table = $this->model->getTable();
@@ -215,7 +243,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
         $columns_updated = array();
 
         foreach ($columns as $column) {
-            $columns_updated[] = "{$join_table}.{$column}` as `{$join_singular}.{$column}"; // @todo do this better?
+            $columns_updated[] = "{$join_table}.{$column}` as `{$join_singular}__{$column}"; // @todo do this better?
         }
 
         $this->select($columns_updated, true);
@@ -223,14 +251,34 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
 
         $this->addSubEntity($join_model->getEntity(), $join_singular);
 
+        $this->model_joins[$join_singular] = $join_model;
+
         return $this;
     }
 
-    protected function dashesToCamelCase($string, $capitalizeFirstCharacter = false)
+    /**
+     * Start a query based on data provided by a Model class
+     *
+     * @param Model $model
+     * @return $this
+     */
+    public function modelQuery(Model $model)
+    {
+        return $this->table($model->getTable())->entity($model->getEntity())->model($model);
+    }
+
+    /**
+     * Convert something_like_this to somethingLikeThis
+     *
+     * @param $string
+     * @param bool $capitalize_first_character
+     * @return mixed
+     */
+    protected function dashesToCamelCase($string, $capitalize_first_character = false)
     {
         $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
 
-        if (!$capitalizeFirstCharacter) {
+        if (!$capitalize_first_character) {
             $str[0] = strtolower($str[0]);
         }
 

@@ -51,6 +51,9 @@ class ActiveUser implements EventSubscriberInterface {
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function getUser()
     {
         if (isset($this->user)) {

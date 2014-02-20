@@ -11,9 +11,18 @@ use AVCMS\Core\Model\Model;
 
 class Animals extends Model
 {
-    protected $table = 'animals';
+    public function getTable()
+    {
+        return 'animals';
+    }
 
-    protected $singular = 'animals';
+    public function getSingular()
+    {
+        return 'animals';
+    }
 
-    protected $entity = 'AVCMS\Core\Model\Tests\Fixtures\Animal';
+    public function getEntity()
+    {
+        return 'AVCMS\Core\Model\Tests\Fixtures\Animal';
+    }
 }

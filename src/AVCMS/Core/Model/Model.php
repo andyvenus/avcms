@@ -29,11 +29,22 @@ abstract class Model implements ModelInterface {
     protected $joins;
 
     /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcher
+     */
+    protected $event_dispatcher;
+
+    /**
+     * @var array
+     */
+    protected $sub_entities = array();
+
+    /**
      *
      */
-    public  function __construct(QueryBuilderHandler $query_builder)
+    public  function __construct(QueryBuilderHandler $query_builder, EventDispatcher $event_dispatcher)
     {
         $this->query_builder = $query_builder;
+        $this->event_dispatcher = $event_dispatcher;
     }
 
     /**
@@ -41,7 +52,7 @@ abstract class Model implements ModelInterface {
      */
     public function query()
     {
-        $query = $this->query_builder->table($this->getTable())->entity($this->getEntity())->model($this);
+        $query = $this->query_builder->modelQuery($this);
 
         return $query;
     }
@@ -80,7 +91,7 @@ abstract class Model implements ModelInterface {
     {
         if (method_exists($entity, 'setDateAdded') && !$entity->getDateAdded()) {
             $date = new \DateTime();
-            $entity->date_added = $date->getTimestamp();
+            $entity->setDateAdded($date->getTimestamp());
         }
 
         $insert_id = $this->query()->insert($entity->getData());
@@ -105,6 +116,19 @@ abstract class Model implements ModelInterface {
         }
     }
 
+    public function newEntity()
+    {
+        $entity_name = $this->getEntity();
+        $entity = new $entity_name();
+
+        foreach ($this->sub_entities as $sub_entity_name => $sub_entity) {
+            $sub_entity_instance = new $sub_entity['class']();
+
+            $entity->addSubEntity($sub_entity_name, $sub_entity_instance, true);
+        }
+        return $entity;
+    }
+
     public function deleteById($id)
     {
         $this->query()->where('id', $id)->delete();
@@ -118,5 +142,10 @@ abstract class Model implements ModelInterface {
     public function getJoinColumn($table) // todo: support alternate column names
     {
         return $this->getSingular().'_id';
+    }
+
+    public function addOverflowEntity($overflow_name, $class_name)
+    {
+        $this->sub_entities[$overflow_name] = array('class' => $class_name, 'type' => 'overflow');
     }
 }

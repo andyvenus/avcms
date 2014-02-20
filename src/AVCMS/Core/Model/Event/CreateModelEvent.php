@@ -1,6 +1,6 @@
 <?php
 
-namespace AVCMS\Core\Event;
+namespace AVCMS\Core\Model\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use AVCMS\Core\Model\Model;

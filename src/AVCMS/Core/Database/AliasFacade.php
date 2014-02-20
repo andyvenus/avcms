@@ -6,8 +6,15 @@ use Pixie\AliasFacade as PixieAliasFacade;
 
 use AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler;
 
-class AliasFacade extends PixieAliasFacade {
-
+class AliasFacade extends PixieAliasFacade
+{
+    /**
+     * Replaces Pixie QB instance with AVCMS QB instance
+     *
+     * @param $method
+     * @param $args
+     * @return mixed
+     */
     public static function __callStatic($method, $args)
     {
         if (!static::$queryBuilderInstance) {

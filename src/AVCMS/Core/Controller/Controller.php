@@ -7,6 +7,7 @@ use AVCMS\Core\Form\FormHandler;
 use AVCMS\Core\Form\FormView;
 use AVCMS\Core\Form\RequestHandler\SymfonyRequestHandler;
 use AVCMS\Core\Form\ValidatorExtension\AVCMSValidatorExtension;
+use AVCMS\Core\Model\FormEntityProcessor;
 use AVCMS\Core\Validation\Validator;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -31,7 +32,7 @@ abstract class Controller extends ContainerAware {
     {
         $this->container = $container;
         $this->model_factory = $container->get('model.factory');
-
+        // TODO: Remove this
         $this->translator = new Translator('en_GB', new MessageSelector());
         $this->translator->addLoader('array', new ArrayLoader());
         $this->translator->addResource('array',
@@ -48,7 +49,7 @@ abstract class Controller extends ContainerAware {
 
     /**
      * @param $model_name
-     * @return \AVCMS\Core\Model\Model
+     * @return \AVCMS\Core\Model\Model|mixed
      */
     protected function newModel($model_name)
     {
@@ -68,7 +69,7 @@ abstract class Controller extends ContainerAware {
 
     protected function buildForm(FormBlueprint $form)
     {
-        $form_handler = new FormHandler($form, new SymfonyRequestHandler(), null, $this->container->get('dispatcher'));
+        $form_handler = new FormHandler($form, new SymfonyRequestHandler(), new FormEntityProcessor(), $this->container->get('dispatcher'));
         $form_handler->setValidatior(new AVCMSValidatorExtension($this->newValidator()));
         $form_view = new FormView();
         $form_view->setTranslator($this->translator);
