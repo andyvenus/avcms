@@ -7,6 +7,7 @@
 
 namespace AVCMS\Users;
 
+use AVCMS\Core\Form\FormError;
 use AVCMS\Users\Model\Sessions;
 use AVCMS\Users\Model\Users;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -77,12 +78,12 @@ class LoginHandler
         $this->unauthorized_user = $this->users_model->getByUsernameOrEmail($identifier);
 
         if (!$this->unauthorized_user) {
-            $this->errors[] = "Cannot find an account that has that username or email address";
+            $this->errors[] = new FormError('identifier', "Cannot find an account that has that username or email address", true);
             return false;
         }
 
         if (!password_verify($password, $this->unauthorized_user->getPassword())) {
-            $this->errors[] = 'The password you entered is incorrect';
+            $this->errors[] = new FormError('password', "The password you entered is incorrect", true);
             return false;
         }
 

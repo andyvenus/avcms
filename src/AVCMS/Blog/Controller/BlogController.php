@@ -22,6 +22,17 @@ class BlogController extends Controller {
 
         $user = $this->getActiveUser();
 
-        return new Response($this->render('blog_home.twig', array('posts' => $all_posts, 'user' => $user->getUser())));
+        return new Response($this->render('@AVBlog/blog_home.twig', array('posts' => $all_posts, 'user' => $user->getUser())));
+    }
+
+    public function blogLatestModule()
+    {
+        $posts = $this->newModel('Posts');
+
+        $all_posts = $posts->query()->get();
+
+        $user = $this->getActiveUser();
+
+        return new Response($this->render('blog_top_module.twig', array('posts' => $all_posts, 'user' => $user->getUser())));
     }
 }

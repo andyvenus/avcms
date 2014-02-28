@@ -14,6 +14,12 @@ use Symfony\Component\Routing\RouteCollection;
 
 class BlogBundle extends Bundle
 {
+
+    public function setUp()
+    {
+        $this->addTemplateDirectory('src/AVCMS/Blog/Twig', 'AVBlog');
+    }
+
     public function modifyContainer(ContainerBuilder $container)
     {
 
@@ -25,7 +31,7 @@ class BlogBundle extends Bundle
             '_controller' => 'AVCMS\\Games\\Controller\\GamesController::stressTestAction',
         )));
 
-        $routes->add('blog_home', new Route('/blog', array(
+        $routes->add('blog_home', new Route('/', array(
             '_controller' => 'AVCMS\\Blog\\Controller\\BlogController::blogHomeAction',
         )));
 

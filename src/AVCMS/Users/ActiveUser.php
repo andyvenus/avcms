@@ -41,7 +41,7 @@ class ActiveUser implements EventSubscriberInterface {
      */
     protected $user_logged_in = false;
 
-    public function __construct(ModelFactory $model_factory, $users_model, $sessions_model, $groups_model=null, $permissions_model = null)
+    public function __construct(ModelFactory $model_factory, $users_model, $sessions_model, $groups_model = null, $permissions_model = null)
     {
         $this->users_model = $model_factory->create($users_model);
         $this->sessions_model = $model_factory->create($sessions_model);

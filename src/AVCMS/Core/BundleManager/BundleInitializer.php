@@ -32,8 +32,9 @@ class BundleInitializer {
                 /**
                  * @var $bundle_obj \AVCMS\Core\Bundle\BundleInterface
                  */
-                $bundle_obj = new $full_namespace;
+                $bundle_obj = new $full_namespace($this->container);
 
+                $bundle_obj->setUp();
                 $bundle_obj->modifyContainer($this->container);
                 $bundle_obj->routes($this->container->getParameter('routes'));
             }

@@ -176,11 +176,16 @@ class FormView implements FormViewInterface
     }
 
     /**
-     * @param $errors array
+     * @param $errors FormError[]
      */
     public function setErrors(array $errors)
     {
-        $this->errors = $errors;
+        foreach ($errors as $error) {
+            if ($error->getTranslate() == true) {
+                $error->setMessage($this->translate($error->getMessage()));
+            }
+            $this->errors[] = $error;
+        }
     }
 
     /**

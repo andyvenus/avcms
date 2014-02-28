@@ -5,11 +5,14 @@
  * Time: 21:25
  */
 
-namespace AVCMS\Games\View;
+namespace AVCMS\Core\View;
 
 
 class TwigLoaderFilesystem extends \Twig_Loader_Filesystem {
 
+    /**
+     * @var array
+     */
     protected $overrides;
 
     public function __construct($paths = array(), $overrides = array())
@@ -21,6 +24,10 @@ class TwigLoaderFilesystem extends \Twig_Loader_Filesystem {
         if ($overrides) {
             $this->overrides = $overrides;
         }
+    }
+
+    public function setOverride($original, $replacement) {
+        $this->overrides[$original] = $replacement;
     }
 
     protected function findTemplate($name)

@@ -6,7 +6,7 @@
     {{ form_start(form, 'blog_form.twig') }}
 
     {% for error in form.errors %}
-        {{ error.error_message }}<br />
+        <div class="alert alert-danger">{{ error.message }}</div>
     {% endfor %}
 
     {{ form_rows(form) }}

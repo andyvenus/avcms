@@ -230,9 +230,10 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
      *
      * @param Model $join_model
      * @param array $columns
+     * @param string $type
      * @return $this
      */
-    public function modelJoin(Model $join_model, array $columns = array())
+    public function modelJoin(Model $join_model, array $columns = array(), $type = 'left')
     {
         $this_table = $this->model->getTable();
 
@@ -247,7 +248,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
         }
 
         $this->select($columns_updated, true);
-        $this->join($join_table, $join_table.'.id', '=', $this_table.'.'.$join_column);
+        $this->join($join_table, $join_table.'.id', '=', $this_table.'.'.$join_column, $type);
 
         $this->addSubEntity($join_model->getEntity(), $join_singular);
 

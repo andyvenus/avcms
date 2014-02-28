@@ -41,7 +41,8 @@ abstract class Controller extends ContainerAware {
                 'Name' => 'FRUNCH NAME',
                 'Cat One' => 'Le Category Une',
                 'Published' => 'Pubèlishé',
-                'Submit' => 'Subsmit'
+                'Submit' => 'Subsmit',
+                'Cannot find an account that has that username or email address' => 'Oh vue du nuet finel the user'
             ),
             'en_GB'
         );

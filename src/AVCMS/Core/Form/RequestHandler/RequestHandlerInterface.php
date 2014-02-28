@@ -11,10 +11,11 @@ use AVCMS\Core\Form\FormHandler;
 interface RequestHandlerInterface
 {
     /**
+     * Return an array of request data
+     *
      * @param $form_handler
-     * @param $request \Symfony\Component\HttpFoundation\Request
+     * @param $request mixed
      * @return array
-     * @throws \Exception
      */
     public function handleRequest(FormHandler $form_handler, $request);
 }

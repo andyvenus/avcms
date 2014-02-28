@@ -95,6 +95,11 @@ class FormHandler
     protected $event_dispatcher;
 
     /**
+     * @var array
+     */
+    protected $errors = array();
+
+    /**
      * @param FormBlueprintInterface $form
      * @param \AVCMS\Core\Form\RequestHandler\RequestHandlerInterface|null $request_handler
      * @param EntityProcessor $entity_processor
@@ -142,6 +147,9 @@ class FormHandler
         }
     }
 
+    /**
+     * @return FormBlueprint|FormBlueprintInterface
+     */
     public function getForm()
     {
         return $this->form;
@@ -157,6 +165,9 @@ class FormHandler
     }
 
     /**
+     * Add an entity to the form. The entities values will be used to fill the form and the forms data
+     * will be assigned to the entity when saveToEntities is called
+     *
      * @param $entity
      * @param null $fields
      * @param bool $validatable
@@ -176,11 +187,20 @@ class FormHandler
         $this->data = array_merge($this->data, $entity_data);
     }
 
+    /**
+     * @return array
+     */
     public function getEntities()
     {
         return $this->entities;
     }
 
+    /**
+     * Use a request handler to get data from a request and store the values that match fields
+     * in the form blueprint
+     *
+     * @param null $request
+     */
     public function handleRequest($request = null)
     {
         $this->submitted = true;
@@ -194,6 +214,10 @@ class FormHandler
             }
             else {
                 $req_data[ $field['name'] ] = $request_data[ $field['name'] ];
+            }
+
+            if ($field['type'] == 'checkbox' && !isset($request_data[ $field['name'] ]) && isset($field['options']['unchecked_value'])) {
+                $req_data[ $field['name'] ] = $field['options']['unchecked_value'];
             }
         }
 
@@ -211,6 +235,9 @@ class FormHandler
         }
     }
 
+    /**
+     * Save the current form data to the assigned entities
+     */
     public function saveToEntities()
     {
         if (!isset($this->entities)) {
@@ -222,16 +249,32 @@ class FormHandler
         }
     }
 
+    /**
+     * Check if the form has been submitted
+     *
+     * @return bool
+     */
     public function isSubmitted()
     {
         return $this->submitted;
     }
 
+    /**
+     * Get the processed fields from the form
+     *
+     * @return array
+     */
     public function getFields()
     {
         return $this->processFieldsCollection($this->fields, $this->data);
     }
 
+    /**
+     * Get a processed field from the form
+     *
+     * @param $name
+     * @return null
+     */
     public function getField($name)
     {
         if (isset($this->fields[$name])) {
@@ -241,6 +284,13 @@ class FormHandler
         return null;
     }
 
+    /**
+     * Process a collection of fields
+     *
+     * @param $field_collection
+     * @param $data
+     * @return array
+     */
     protected function processFieldsCollection($field_collection, $data)
     {
         $fields = array();
@@ -262,6 +312,14 @@ class FormHandler
         return $fields;
     }
 
+    /**
+     * Process a field, set it's original name and it's value. Process sub-fields if
+     * the field is a collection
+     *
+     * @param $field
+     * @param $data
+     * @return mixed
+     */
     protected function getProcessedField($field, $data)
     {
         if (isset($data[$field['name']])) {
@@ -276,9 +334,31 @@ class FormHandler
             $field['name'] = $field['original_name'];
         }
 
+        $field['has_error'] = false;
+
+        if ((isset($this->validator) && $this->isSubmitted() && $this->validator->fieldHasError($field['name'])) || $this->fieldHasCustomError($field['name'])) {
+            $field['has_error'] = true;
+        }
+
         return $field;
     }
 
+    public function fieldHasCustomError($field) {
+        foreach ($this->errors as $error) {
+            if ($error->getParam() == $field) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if the form contains any fields of a certain type like "select" or "textarea"
+     *
+     * @param $field_type
+     * @return bool
+     */
     public function hasFieldOfType($field_type)
     {
         foreach ($this->fields as $field) {
@@ -311,6 +391,12 @@ class FormHandler
         }
     }
 
+    /**
+     * Set the form submission method
+     *
+     * @param $method string Value: POST/GET
+     * @throws \Exception
+     */
     public function setMethod($method)
     {
         if ($method != 'POST' && $method != 'GET')
@@ -322,36 +408,61 @@ class FormHandler
         }
     }
 
+    /**
+     * @return string
+     */
     public function getMethod()
     {
         return $this->method;
     }
 
+    /**
+     * @param $action string The url the form will submit to
+     */
     public function setAction($action)
     {
         $this->action = $action;
     }
 
+    /**
+     * @return null|string
+     */
     public function getAction()
     {
         return $this->action;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->form_name;
     }
 
+    /**
+     * @return string
+     */
     public function getEncoding()
     {
         return $this->encoding;
     }
 
+    /**
+     * Set the view used to render the form
+     *
+     * @param FormViewInterface $view
+     */
     public function setFormView(FormViewInterface $view)
     {
         $this->form_view = $view;
     }
 
+    /**
+     * Assign the form data to the view
+     *
+     * @return FormView
+     */
     public function createView()
     {
         if (!$this->form_view) {
@@ -370,31 +481,81 @@ class FormHandler
         return $this->form_view;
     }
 
+    /**
+     * Set a validator wrapped in a ValidatorExtension class
+     *
+     * @param ValidatorExtension $validator
+     */
     public function setValidatior(ValidatorExtension $validator)
     {
         $this->validator = $validator;
         $this->validator->setFormHandler($this);
     }
 
-    public function isValid($scope = null, $options = null) {
-        if (!isset($this->validator)) {
-            throw new \Exception("Cannot check if a form is valid if no ValidationExtension has been assigned to the form handler");
-        }
-        elseif (!$this->isSubmitted()) {
+    public function getValidator()
+    {
+        return $this->validator;
+    }
+
+    /**
+     * Check if the form is valid using the validator if it is set and checking for any
+     * custom errors. Will save data to entities.
+     *
+     * @param null $scope
+     * @param null $options
+     * @return bool
+     * @throws \Exception
+     */
+    public function isValid($scope = null, $options = null)
+    {
+        if (!$this->isSubmitted()) {
             return false;
         }
 
         $this->saveToEntities();
 
-        return $this->validator->isValid($scope, $options);
+        if ((isset($this->validator) && $this->validator->isValid($scope, $options) && empty($this->errors)) || (!isset($this->validator) && empty($this->errors))) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
+    /**
+     * Add custom errors to the form. Must be an array of FormError objects
+     *
+     * @param $errors FormError[]
+     * @throws \Exception
+     */
+    public function addCustomErrors($errors)
+    {
+        foreach ($errors as $error) {
+            if (!is_a($error, 'AVCMS\Core\Form\FormError')) {
+                throw new \Exception('Custom errors must be AVCMS\Core\Form\FormError objects');
+            }
+            else {
+                $this->errors[] = $error;
+            }
+        }
+    }
+
+    /**
+     * Get the errors from the validator
+     *
+     * @return mixed
+     * @throws \Exception
+     */
     public function getValidationErrors()
     {
-        if (!isset($this->validator)) {
-            throw new \Exception("Cannot check if a form is valid if no ValidationExtension has been assigned to the form handler");
+
+        $errors = $this->errors;
+
+        if (isset($this->validator)) {
+            $validator_errors = $this->validator->getErrors();
+            $errors = array_merge($errors, $validator_errors);
         }
 
-        return $this->validator->getErrors();
+        return $errors;
     }
 }

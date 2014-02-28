@@ -7,12 +7,14 @@
 
 namespace AVCMS\Core\Model;
 
+use AVCMS\Core\Validation\Validatable;
+use AVCMS\Core\Validation\Validator;
 
 /**
  * Class Entity
  * @package AVCMS\Core\Model
  */
-abstract class Entity
+abstract class Entity implements Validatable
 {
     /**
      * @var array The data this entity is holding
@@ -20,14 +22,9 @@ abstract class Entity
     protected $data = array();
 
     /**
-     * @var array Any entities assigned via the magic __get method
+     * @var Entity[] Any entities assigned via the magic __get method
      */
     protected $sub_entities = array();
-
-    /**
-     * @var array
-     */
-    protected $extension_sub_entities = array();
 
     /**
      * @param $param
@@ -75,8 +72,13 @@ abstract class Entity
                 if (is_a($sub_entity, 'AVCMS\Core\Model\ExtensionEntity')) {
 
                     $sub_data = $sub_entity->toArray();
+                    $sub_data_prefixed = array();
 
-                    $data = array_merge($data, $sub_data);
+                    foreach ($sub_data as $param_name => $param_data) {
+                        $sub_data_prefixed[$sub_entity->getPrefix().'__'.$param_name] = $param_data;
+                    }
+
+                    $data = array_merge($data, $sub_data_prefixed);
                 }
             }
 
@@ -92,10 +94,6 @@ abstract class Entity
     public function addSubEntity($name, Entity $entity, $extension = false)
     {
         $this->sub_entities[$name] = $entity;
-
-        if ($extension) {
-            $this->extension_sub_entities[] = $name;
-        }
     }
 
     /**
@@ -115,6 +113,27 @@ abstract class Entity
     public function getAllSubEntities()
     {
         return $this->sub_entities;
+    }
+
+    public function getValidationRules(Validator $validator)
+    {
+        $this->validationRules($validator);
+
+        foreach ($this->sub_entities as $sub_entity) {
+            if (is_a($sub_entity, 'AVCMS\Core\Validation\Validatable')) {
+                $validator->addSubValidation($sub_entity);
+            }
+        }
+    }
+
+    public function getValidationData()
+    {
+        return $this->getData();
+    }
+
+    public function validationRules(Validator $validator)
+    {
+
     }
 
     /**

@@ -7,6 +7,7 @@
 
 namespace AVCMS\Core\Form\ValidatorExtension;
 
+use AVCMS\Core\Form\FormError;
 use AVCMS\Core\Form\FormHandler;
 use AVCMS\Core\Validation\Validator;
 
@@ -26,6 +27,11 @@ class AVCMSValidatorExtension implements ValidatorExtension {
      */
     protected $validation_run = false;
 
+    /**
+     * @var array
+     */
+    protected $invalid_params;
+
     public function __construct(Validator $validator, $entity_handler = null)
     {
         $this->validator = $validator;
@@ -41,12 +47,9 @@ class AVCMSValidatorExtension implements ValidatorExtension {
         if (!$this->validation_run) {
             $form = $this->form_handler->getForm();
 
-            if (!method_exists($form, 'getValidationRules')) {
-                $form_class = get_class($form);
-                throw new \Exception("The form you're trying to validate ($form_class) does not have a 'getValidationRules' method");
+            if (method_exists($form, 'getValidationRules')) {
+                $form->getValidationRules($this->validator);
             }
-
-            $form->getValidationRules($this->validator);
 
             foreach ($this->form_handler->getEntities() as $entity) {
                 $this->validator->addSubValidation($entity['entity'], $entity['fields']);
@@ -76,6 +79,30 @@ class AVCMSValidatorExtension implements ValidatorExtension {
 
     public function getErrors()
     {
-        return $this->validator->getErrors();
+        $errors = $this->validator->getErrors();
+
+        $error_objects = array();
+        // Errors must be converted to FormError objects
+        foreach ($errors as $error) {
+            $error_objects[] = new FormError($error['param_name'], $error['error_message'], false);
+        }
+
+        return $error_objects;
+    }
+
+    public function fieldHasError($field)
+    {
+        if (!isset($this->invalid_params)) {
+            $invalid_params = array();
+            $errors = $this->validator->getErrors();
+
+            foreach ($errors as $error) {
+                $invalid_params[] = $error['param_name'];
+            }
+
+            $this->invalid_params = $invalid_params;
+        }
+
+        return in_array($field, $this->invalid_params);
     }
 }

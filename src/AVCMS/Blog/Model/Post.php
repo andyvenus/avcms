@@ -8,6 +8,8 @@
 namespace AVCMS\Blog\Model;
 
 use AVCMS\Core\Model\Entity;
+use AVCMS\Core\Validation\Rules\Length;
+use AVCMS\Core\Validation\Validator;
 
 class Post extends Entity {
     public function setTitle($value) {
@@ -32,5 +34,10 @@ class Post extends Entity {
 
     public function getAuthor() {
         return $this->data('author');
+    }
+
+    public function validationRules(Validator $validator)
+    {
+        $validator->addRule('title', new Length(10), 'The title must be 10 chars long', true);
     }
 } 

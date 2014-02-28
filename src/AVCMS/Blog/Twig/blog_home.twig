@@ -3,7 +3,7 @@
 {% block title %}Blog Homepage{% endblock %}
 
 {% block content %}
-    Hello {{ user.username }}, lets get blogging!
+    Hello {{ user.username }}, lets get bloggingz!
     <div class="row">
 
         <div class="col-md-8">
@@ -13,7 +13,7 @@
 
                     <p>{{ post.body }}</p>
 
-                    <small>Options: <a href="{{ url('edit_post', { id: post.id}) }}">Edit</a></small>
+                    <small>Options: <a href="{{ url('edit_post', { id: post.id}) }}">Edit</a> Extension: {{ post.testone.something }}</small>
                 </article>
             {% endfor %}
         </div>

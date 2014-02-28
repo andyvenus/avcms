@@ -13,7 +13,7 @@ class LoginForm extends FormBlueprint
 {
     public function __construct()
     {
-        $this->add('username', 'text', array(
+        $this->add('identifier', 'text', array(
             'label' => 'Username'
         ));
 

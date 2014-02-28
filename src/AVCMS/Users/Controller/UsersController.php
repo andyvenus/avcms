@@ -21,11 +21,10 @@ class UsersController extends Controller
         $login_form->handleRequest($request);
 
         if ($login_form->isSubmitted()) {
-            $login_handler = $this->getActiveUser()->logIn($login_form->getData('username'), $login_form->getData('password'));
+            $login_handler = $this->getActiveUser()->logIn($login_form->getData('identifier'), $login_form->getData('password'));
 
             if (!$login_handler->loginSuccess()) {
-                //$login_form->addErrors();
-                print_r($login_handler->getErrors());
+                $login_form->addCustomErrors($login_handler->getErrors());
             }
             else {
                 $response = new RedirectResponse($this->generateUrl('blog_home'));
@@ -35,9 +34,8 @@ class UsersController extends Controller
 
         if (!isset($response)) {
             $response = new Response();
+            $response->setContent($this->render('login.twig', array('login_form' => $login_form->createView())));
         }
-
-        $response->setContent($this->render('login.twig', array('login_form' => $login_form->createView())));
 
         return $response;
     }

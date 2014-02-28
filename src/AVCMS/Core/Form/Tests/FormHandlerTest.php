@@ -299,7 +299,8 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
             'options' => array (
                 'label' => 'Name'
             ),
-            'value' => 'Example Name'
+            'value' => 'Example Name',
+            'has_error' => ''
         );
 
         $this->assertEquals($expected, $form_handler->getField('name'));
@@ -320,7 +321,8 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
                 'options' => array (
                     'label' => 'Name'
                 ),
-                'value' => 'Example Name'
+                'value' => 'Example Name',
+                'has_error' => ''
             )
         );
 
@@ -383,20 +385,6 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($this->basic_form_handler->isValid());
         $this->assertEquals($errors, $this->basic_form_handler->getValidationErrors());
-    }
-
-    public function testNoValidatorException()
-    {
-        $this->setExpectedException('\Exception');
-
-        $this->basic_form_handler->isValid();
-    }
-
-    public function testNoValidatorException2()
-    {
-        $this->setExpectedException('\Exception');
-
-        $this->basic_form_handler->getValidationErrors();
     }
 
     public function testArrayFields()

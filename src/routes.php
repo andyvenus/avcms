@@ -76,5 +76,9 @@ $routes->add('upload_form', new Route('/upload_form', array(
     '_controller' => 'AVCMS\\Games\\Controller\\FormController::fileUploadAction',
 )));
 
+$routes->add('assetic', new Route('/assetic', array(
+    '_controller' => 'AVCMS\\Games\\Controller\\GamesController::asseticAction',
+)));
+
 
 return $routes;

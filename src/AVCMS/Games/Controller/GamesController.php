@@ -2,6 +2,13 @@
 
 namespace AVCMS\Games\Controller;
 
+use Assetic\Asset\AssetCollection;
+use Assetic\Asset\AssetReference;
+use Assetic\Asset\FileAsset;
+use Assetic\Asset\GlobAsset;
+use Assetic\AssetWriter;
+use Assetic\Extension\Twig\TwigResource;
+use Assetic\Factory\AssetFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AVCMS\Core\Controller\Controller;
@@ -213,5 +220,15 @@ class GamesController extends Controller
     public function testSecondary()
     {
         return new Response('Fun');
+    }
+
+    public function asseticAction()
+    {
+        $am = $this->container->get('assetic.manager');
+
+        $writer = new AssetWriter('web/compiled');
+        $writer->writeManagerAssets($am);
+
+        return new Response(htmlspecialchars($am->dump()));
     }
 }

@@ -9,10 +9,17 @@ namespace AVCMS\Core\Form\RequestHandler;
 
 use AVCMS\Core\Form\FormHandler;
 
-class StandardRequestHandler implements RequestHandlerInterface {
+/**
+ * Class StandardRequestHandler
+ * @package AVCMS\Core\Form\RequestHandler
+ *
+ * Reads the request data from the global variables $_GET, $_POST & $_FILES
+ */
+class StandardRequestHandler implements RequestHandlerInterface
+{
     /**
      * @param $form_handler
-     * @param $request \Symfony\Component\HttpFoundation\Request
+     * @param $request null Unused, global vars used to get data
      * @return array
      * @throws \Exception
      */

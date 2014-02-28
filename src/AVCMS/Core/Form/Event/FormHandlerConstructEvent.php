@@ -14,6 +14,8 @@ use Symfony\Component\EventDispatcher\Event;
 /**
  * Class FormHandlerConstructEvent
  * @package AVCMS\Core\Form\Event
+ *
+ * Event called within FormHandler::__construct()
  */
 class FormHandlerConstructEvent extends Event
 {

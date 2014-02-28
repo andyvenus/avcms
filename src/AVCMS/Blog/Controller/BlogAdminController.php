@@ -26,7 +26,7 @@ class BlogAdminController extends Controller
             $post = $posts->getOne($request->get('id'));
         }
         else {
-            $post = new Post();
+            $post = $posts->newEntity();
         }
 
         $form = $this->buildForm(new PostForm($this->getActiveUser()->getUser()->getUsername()));
@@ -35,12 +35,12 @@ class BlogAdminController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isValid()) {
             $form->saveToEntities();
 
             $posts->save($post);
         }
 
-        return new Response($this->render('edit_post.twig', array('form' => $form->createView())));
+        return new Response($this->render('@AVBlog/edit_post.twig', array('form' => $form->createView())));
     }
 }

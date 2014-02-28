@@ -9,6 +9,12 @@ namespace AVCMS\Core\Form\RequestHandler;
 
 use AVCMS\Core\Form\FormHandler;
 
+/**
+ * Class SymfonyRequestHandler
+ * @package AVCMS\Core\Form\RequestHandler
+ *
+ * Reads the request data from a Symfony Request object
+ */
 class SymfonyRequestHandler implements RequestHandlerInterface
 {
     /**

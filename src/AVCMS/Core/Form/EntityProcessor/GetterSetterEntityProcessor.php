@@ -8,8 +8,20 @@
 namespace AVCMS\Core\Form\EntityProcessor;
 
 
+/**
+ * Class GetterSetterEntityProcessor
+ * @package AVCMS\Core\Form\EntityProcessor
+ */
 class GetterSetterEntityProcessor implements EntityProcessor
 {
+    /**
+     * Get data from an entity using getter methods
+     *
+     * @param $entity
+     * @param array $form_parameters
+     * @param null $limit_fields
+     * @return array
+     */
     public function getFromEntity($entity, array $form_parameters, $limit_fields = null)
     {
         $extracted_data = array();
@@ -25,6 +37,14 @@ class GetterSetterEntityProcessor implements EntityProcessor
         return $extracted_data;
     }
 
+    /**
+     * Save data to an entity using setter methods
+     *
+     * @param $entity
+     * @param $form_data
+     * @param null $limit_fields
+     * @return void
+     */
     public function saveToEntity($entity, $form_data, $limit_fields = null)
     {
         foreach($form_data as $field => $value) {
@@ -36,6 +56,12 @@ class GetterSetterEntityProcessor implements EntityProcessor
         }
     }
 
+    /**
+     * Convert string from something_like_this to somethingLikeThis
+     *
+     * @param $string
+     * @return mixed
+     */
     protected function dashesToCamelCase($string)
     {
         $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));

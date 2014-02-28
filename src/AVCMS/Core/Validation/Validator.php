@@ -43,6 +43,11 @@ class Validator
     /**
      * @var array
      */
+    protected $fields_with_errors = array();
+
+    /**
+     * @var array
+     */
     protected $sub_validation_objects = array();
 
     /**
@@ -85,10 +90,10 @@ class Validator
      * @param string|array $param_names
      * @param Rules\Rule $rule
      * @param string $error_message
-     * @param bool $ignore_null
+     * @param bool $ignore_unset
      * @param bool $stop_propagation
      */
-    public function addRule($param_names, Rules\Rule $rule, $error_message = null, $ignore_null = false, $stop_propagation = false)
+    public function addRule($param_names, Rules\Rule $rule, $error_message = null, $ignore_unset = false, $stop_propagation = false)
     {
         if (!is_array($param_names)) {
             $param_names = array($param_names);
@@ -100,7 +105,7 @@ class Validator
                 'rule' => $rule,
                 'error_message' => $error_message,
                 'stop_propagation' => $stop_propagation,
-                'ignore_null' => $ignore_null,
+                'ignore_unset' => $ignore_unset,
             );
         }
     }
@@ -131,10 +136,10 @@ class Validator
      * @param mixed $validatable
      * @param string $handler
      * @param string $scope
-     * @param bool $ignore_null
+     * @param bool $ignore_unset
      * @throws \Exception
      */
-    public function validate($validatable, $handler = 'standard', $scope = Validator::SCOPE_ALL, $ignore_null = false)
+    public function validate($validatable, $handler = 'standard', $scope = Validator::SCOPE_ALL, $ignore_unset = false)
     {
         $this->resetParameters(); // TODO: Is this a good idea at all?
         $this->validation_obj = $validatable;
@@ -157,7 +162,7 @@ class Validator
         foreach ($this->rules as $rule) {
             $parameter_value = $this->getFromMultidimensionalArray($rule['param_name'], $this->parameters);
 
-            if ($parameter_value !== null) {
+            if ($parameter_value !== false) {
 
                 // If the parameters to validate have been limited, make sure this parameter is one of those
                 if ( ( empty($this->limited_params) || in_array($rule['param_name'], $this->limited_params) )) {
@@ -188,11 +193,12 @@ class Validator
                         }
 
                         $this->errors[] = $rule;
+                        $this->fields_with_errors[] = $rule['param_name'];
                     }
                 }
 
             }
-            elseif ($rule['ignore_null'] == false) {
+            elseif ($rule['ignore_unset'] == false) {
                 $rule['error_message'] = "Parameter '{param_name}' not set";
 
                 $rule['error_message'] = $this->processError($rule['error_message'], array('param_name' => $rule['param_name']));
@@ -202,10 +208,11 @@ class Validator
                 }
 
                 $this->errors[] = $rule;
+                $this->fields_with_errors[] = $rule['param_name'];
             }
         }
 
-        $this->getSubValidationErrors($scope, $ignore_null, $sub_validation_ignore);
+        $this->getSubValidationErrors($scope, $ignore_unset, $sub_validation_ignore);
     }
 
     protected function processError($error_message, $error_parameters = array())
@@ -228,7 +235,7 @@ class Validator
 
         foreach ($depth as $key) {
             if (!isset($array[$key])) {
-                return null;
+                return false;
             }
 
             $array = $array[$key];
@@ -239,11 +246,11 @@ class Validator
 
     /**
      * @param string $scope
-     * @param bool $ignore_null
+     * @param bool $ignore_unset
      * @param array $ignored_parameters
      * @return null
      */
-    public function getSubValidationErrors($scope = Validator::SCOPE_ALL, $ignore_null = false, $ignored_parameters = array())
+    public function getSubValidationErrors($scope = Validator::SCOPE_ALL, $ignore_unset = false, $ignored_parameters = array())
     {
 
         // Scope set to parent only, so we don't want to do any sub-validation
@@ -273,7 +280,7 @@ class Validator
                 $validator->limitValidationParams(array_keys($limit_params));
             }
 
-            $validator->validate($validatable['object'], $validatable['handler'], $scope, $ignore_null);
+            $validator->validate($validatable['object'], $validatable['handler'], $scope, $ignore_unset);
 
             if (!$validator->isValid($scope)) {
                 foreach ($validator->getErrors() as $error) {

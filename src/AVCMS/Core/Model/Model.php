@@ -98,6 +98,9 @@ abstract class Model implements ModelInterface {
 
         if ($insert_id) {
             $this->last_insert_id = $insert_id;
+            if (method_exists($entity, 'setId')) {
+                $entity->setId($insert_id);
+            }
         }
     }
 
@@ -139,7 +142,7 @@ abstract class Model implements ModelInterface {
         return $this->last_insert_id;
     }
 
-    public function getJoinColumn($table) // todo: support alternate column names
+    public function getJoinColumn() // todo: support alternate column names
     {
         return $this->getSingular().'_id';
     }

@@ -2,8 +2,8 @@
 
 {% block form_row %}
     {% spaceless %}
-        <div class="form-group">
-            <div class="form_label">
+        <div class="form-group{% if form_row.has_error == true %} has-error{% endif %}">
+            <div class="control-label">
                 {{ form_label(form_row) }}
             </div>
 

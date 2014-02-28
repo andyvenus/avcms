@@ -11,6 +11,19 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Routing\RouteCollection;
 
 abstract class Bundle implements BundleInterface {
+
+    protected $container;
+
+    public function __construct(ContainerBuilder $container)
+    {
+        $this->container = $container;
+    }
+
+    public function setUp()
+    {
+
+    }
+
     public function modifyContainer(ContainerBuilder $container)
     {
 
@@ -21,8 +34,19 @@ abstract class Bundle implements BundleInterface {
 
     }
 
+    public function templates()
+    {
+
+    }
+
     public function bundleInfo()
     {
 
+    }
+
+    public function addTemplateDirectory($dir, $namespace = \Twig_Loader_Filesystem::MAIN_NAMESPACE)
+    {
+        $this->container->getDefinition('twig.filesystem')
+            ->addMethodCall('addPath', array($dir, $namespace));
     }
 } 

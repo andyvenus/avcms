@@ -1,5 +1,7 @@
 <?php
 
+use Assetic\Asset\AssetCollection;
+use Assetic\Asset\GlobAsset;
 use AVCMS\Games\Event\ExampleFormEvent;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -41,21 +43,48 @@ $sc->register('framework', 'AVCMS\Core\Framework')
     ->setArguments(array(new Reference('dispatcher'), new Reference('resolver')))
 ;
 
-$loader = new \AVCMS\Games\View\TwigLoaderFilesystem('templates', array('original.twig' => 'replacement.twig'));
-$loader->addPath('src/AVCMS/Games/View/Templates', 'games');
+
+$a = new GlobAsset('web/js/*.js');
+$a->setTargetPath('shared_js.js');
+$b = new GlobAsset('web/js/frontend/*.js');
+$b->setTargetPath('frontend_js.js');
+$c = new GlobAsset('web/js/admin/*.js');
+$c->setTargetPath('admin_js.js');
+
+
+$sc->register('assetic.manager', 'Assetic\AssetManager')
+    ->addMethodCall('set', array('shared_js', $a))
+    ->addMethodCall('set', array('frontend_js', $b))
+    ->addMethodCall('set', array('admin_js', $c))
+;
+
+$sc->register('assetic.factory', 'Assetic\Factory\AssetFactory')
+    ->setArguments(array('/web'))
+    ->addMethodCall('setAssetManager', array(new Reference('assetic.manager')))
+    ->addMethodCall('setDebug', array(true))
+;
+
+$sc->register('twig.filesystem', 'AVCMS\Core\View\TwigLoaderFilesystem')
+    ->setArguments(array('templates', array('original.twig' => 'replacement.twig')))
+    ->addMethodCall('addPath', array('src/AVCMS/Games/View/Templates', 'games'))
+;
 
 $sc->register('twig', 'Twig_Environment')
     ->setArguments(array(
-        $loader,
+        new Reference('twig.filesystem'),
         array('cache' => 'cache', 'debug' => true)
     ))
     ->addMethodCall('addExtension', array(new \AVCMS\Core\View\TwigModuleExtension()))
     ->addMethodCall('addExtension', array(new \AVCMS\Core\Form\Twig\FormExtension()))
     ->addMethodCall('addExtension', array(new Reference('twig.routing.extension')))
+    ->addMethodCall('addExtension', array(new Reference('twig.assetic.extension')))
 ;
 
 $sc->register('twig.routing.extension', 'Symfony\Bridge\Twig\Extension\RoutingExtension')
     ->setArguments(array(new Reference('routing.url.generator')));
+
+$sc->register('twig.assetic.extension', 'Assetic\Extension\Twig\AsseticExtension')
+    ->setArguments(array(new Reference('assetic.factory')));
 
 $request_context = new RequestContext();
 $request_context->fromRequest($request);

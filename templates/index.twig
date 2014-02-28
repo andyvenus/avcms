@@ -8,6 +8,10 @@
     <link rel="stylesheet" type="text/css" href="http://localhost:8888/avcms/web/css/style.css" />
     <link href="http://localhost:8888/avcms/web/css/bootstrap.min.css" rel="stylesheet">
 
+    {% javascripts '@shared_js' '@frontend_js' output='web/compiled/fontend_js.js' debug=false %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -26,7 +30,7 @@
 </header>
 
 <section class="container">
-    {% block content %}{% endblock %}</div>
+    {% block content %}{% endblock %}
 </section>
 
 <footer class="container">

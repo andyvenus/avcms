@@ -9,8 +9,20 @@ namespace AVCMS\Core\Model;
 
 use AVCMS\Core\Form\EntityProcessor\EntityProcessor;
 
+/**
+ * Class FormEntityProcessor
+ * @package AVCMS\Core\Model
+ */
 class FormEntityProcessor implements EntityProcessor
 {
+    /**
+     * Get data from an entity using getter methods. Check for 'sub-entities' and merge their data.
+     *
+     * @param $entity
+     * @param array $form_parameters
+     * @param null $limit_fields
+     * @return array
+     */
     public function getFromEntity($entity, array $form_parameters, $limit_fields = null)
     {
         $extracted_data = array();
@@ -37,6 +49,14 @@ class FormEntityProcessor implements EntityProcessor
         return $extracted_data;
     }
 
+    /**
+     * Save the form data to an entity and any sub-entities if they are set
+     *
+     * @param $entity
+     * @param $form_data
+     * @param null $limit_fields
+     * @return void
+     */
     public function saveToEntity($entity, $form_data, $limit_fields = null)
     {
         foreach($form_data as $field => $value) {
@@ -67,6 +87,10 @@ class FormEntityProcessor implements EntityProcessor
         }
     }
 
+    /**
+     * @param $string
+     * @return mixed
+     */
     protected function dashesToCamelCase($string)
     {
         $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
