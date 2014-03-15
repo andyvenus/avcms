@@ -58,8 +58,6 @@
                 {% for choice_value, choice_name in options.choices %}
                     <option value="{{ choice_value }}" {% if choice_value == value %}selected="selected"{% endif %}>{{ choice_name }}</option>
                 {% endfor %}
-            {% else %}
-                <option value="">No options set</option>
             {% endif %}
         </select>
     {% endspaceless %}

@@ -7,10 +7,13 @@
 
     <link rel="stylesheet" type="text/css" href="http://localhost:8888/avcms/web/css/style.css" />
     <link href="http://localhost:8888/avcms/web/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://localhost:8888/avcms/web/css/bootstrap-markdown.min.css" rel="stylesheet">
+    <link href="http://localhost:8888/avcms/web/css/select2.css" rel="stylesheet">
+    <link href="http://localhost:8888/avcms/web/css/select2-bootstrap.css" rel="stylesheet">
 
-    {% javascripts '@shared_js' '@frontend_js' output='web/compiled/fontend_js.js' debug=false %}
-        <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    {% for js in javascripts('frontend') %}
+        <script type ="text/javascript" src="http://localhost:8888/avcms/front.php/{{ js }}"></script>
+    {% endfor %}
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -19,7 +22,7 @@
 <header class="leaderboard">
     <div class="container">
         <div class="row">
-            <div class="col-md-2"><a href="{{ url('login') }}">Login</a> / <a href="{{ url('register') }}">Register</a></div>
+            <div class="col-md-2"><a href="{{ url('login') }}">Login</a> / <a href="">Register</a></div>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -47,5 +50,14 @@
 <script src="http://localhost:8888/avcms/web/js/jquery.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="http://localhost:8888/avcms/web/js/bootstrap.min.js"></script>
+
+<script src="http://localhost:8888/avcms/web/js/bootstrap-markdown.js"></script>
+<script src="http://localhost:8888/avcms/web/js/markdown.js"></script>
+<script src="http://localhost:8888/avcms/web/js/to-markdown.js"></script>
+<script src="http://localhost:8888/avcms/web/js/select2.min.js"></script>
+<script type="text/javascript">
+    $("textarea[name=body]").markdown({autofocus:false,savable:false});
+    $("select[name=author]").select2();
+</script>
 </body>
 </html>

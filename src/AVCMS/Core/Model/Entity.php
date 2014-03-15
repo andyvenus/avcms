@@ -51,15 +51,6 @@ abstract class Entity implements Validatable
 
     /**
      * @return array
-     * @depreciated
-     */
-    public function getData()
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * @return array
      */
     public function toArray()
     {
@@ -128,7 +119,7 @@ abstract class Entity implements Validatable
 
     public function getValidationData()
     {
-        return $this->getData();
+        return $this->toArray();
     }
 
     public function validationRules(Validator $validator)

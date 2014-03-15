@@ -17,7 +17,7 @@ $request = Request::createFromGlobals();
 
 $sc = include __DIR__.'/src/container.php';
 $sc->setParameter('routes', include __DIR__.'/src/routes.php');
-$sc->get('bundle.initializer')->initBundles();
+$sc->get('bundle_manager')->initBundles();
 $response = $sc->get('framework')->handle($request);
 
 $response->send();
@@ -53,4 +53,4 @@ $time = explode(' ', $time);
 $time = $time[1] + $time[0];
 $finish = $time;
 $total_time = round(($finish - $start), 3);
-echo '<br><br><br>Time: '.$total_time.' &nbsp;Memory: Peak: '.bytesToSize(memory_get_peak_usage()). ' Now: '.bytesToSize(memory_get_usage()) ;
+echo '// Time: '.$total_time.' &nbsp;Memory: Peak: '.bytesToSize(memory_get_peak_usage()). ' Now: '.bytesToSize(memory_get_usage()) ;

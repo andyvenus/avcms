@@ -8,8 +8,6 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 /**
  * Class Model
  * @package AVCMS\Core\Model
- *
- * TODO: Make singular, entity and table name accessed through methods defined in an interface
  */
 abstract class Model implements ModelInterface {
 
@@ -24,22 +22,23 @@ abstract class Model implements ModelInterface {
     protected $last_insert_id;
 
     /**
-     * @var array Joined on models
-     */
-    protected $joins;
-
-    /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcher
      */
     protected $event_dispatcher;
 
     /**
-     * @var array
+     * @var array Sub entities that are auto-added to the base entity when newEntity() is called
      */
     protected $sub_entities = array();
 
     /**
-     *
+     * @var string
+     */
+    protected $identifier_column = 'id';
+
+    /**
+     * @param QueryBuilderHandler $query_builder
+     * @param EventDispatcher $event_dispatcher
      */
     public  function __construct(QueryBuilderHandler $query_builder, EventDispatcher $event_dispatcher)
     {
@@ -48,6 +47,8 @@ abstract class Model implements ModelInterface {
     }
 
     /**
+     * Create a query using this model's information and return it
+     *
      * @return QueryBuilderHandler
      */
     public function query()
@@ -63,7 +64,7 @@ abstract class Model implements ModelInterface {
      */
     public function find($id)
     {
-        return $this->query()->where($this->getTable().'.id', $id);
+        return $this->query()->where($this->getTable().'.'.$this->identifier_column, $id);
     }
 
     /**
@@ -77,16 +78,49 @@ abstract class Model implements ModelInterface {
         return $query->first();
     }
 
-    public function save(Entity $entity)
+    /**
+     * Get one result by ID or get a new entity if $id is 0 (or null etc)
+     *
+     * @param $id
+     * @return Entity|mixed
+     */
+    public function getOneOrNew($id)
+    {
+        if (!$id) {
+            return $this->newEntity();
+        }
+        else {
+            return $this->getOne($id);
+        }
+    }
+
+    /**
+     * Save the data stored in an entity to the database
+     *  * Insert new row if no ID is set
+     *  * Update row if ID is set
+     *
+     * Cannot be used on tables/entities where there's no ID parameter
+     *
+     * @param Entity $entity
+     * @param string $column_match
+     * @throws \Exception
+     */
+    public function save(Entity $entity, $column_match = null)
     {
         if ($entity->getId()) {
-            $this->update($entity);
+            $this->update($entity, $column_match);
         }
         else {
             $this->insert($entity);
         }
     }
 
+    /**
+     * Insert the data from an entity into the database table
+     *
+     * @param Entity $entity
+     * @return array|string
+     */
     public function insert(Entity $entity)
     {
         if (method_exists($entity, 'setDateAdded') && !$entity->getDateAdded()) {
@@ -94,31 +128,84 @@ abstract class Model implements ModelInterface {
             $entity->setDateAdded($date->getTimestamp());
         }
 
-        $insert_id = $this->query()->insert($entity->getData());
+        return $this->query()->insert($entity);
+    }
 
-        if ($insert_id) {
-            $this->last_insert_id = $insert_id;
-            if (method_exists($entity, 'setId')) {
-                $entity->setId($insert_id);
+    /**
+     * Use the data from an entity to update the database table
+     *
+     * @param Entity $entity
+     * @param string|array $column_match Set the columns that must match to update on.
+     *        By default will update row with matching 'id' field
+     *
+     * @throws \Exception
+     */
+    public function update(Entity $entity, $column_match = null)
+    {
+        if (!$column_match) {
+            $column_match = $this->identifier_column;
+        }
+
+        $query = $this->createWhereQuery($entity, $column_match);
+
+        $query->update($entity);
+    }
+
+    /**
+     * Delete a row from the database using the matching parameter(s) of an entity
+     *
+     * @param Entity $entity
+     * @param string $column_match
+     * @throws \Exception
+     */
+    public function delete(Entity $entity, $column_match = null)
+    {
+        if (!$column_match) {
+            $column_match = $this->identifier_column;
+        }
+
+        $query = $this->createWhereQuery($entity, $column_match);
+
+        $query->delete();
+    }
+
+    /**
+     * Create a WHERE query from an entity and it's values
+     *
+     * For example, if the entity has an 'id' field and $column_match contains 'id'
+     * a WHERE will be generated for WHERE id = $entity->getId();
+     *
+     * @param $entity
+     * @param $column_match
+     *
+     * @throws \Exception
+     * @return QueryBuilderHandler
+     */
+    protected function createWhereQuery($entity, $column_match)
+    {
+        $query = $this->query();
+
+        $columns = (array) $column_match;
+
+        foreach ($columns as $column) {
+            $getter = 'get'.str_replace('_', '', $column);
+
+            if (!method_exists($entity, $getter)) {
+                throw new \Exception('Cannot generate where query, entity does not have a '.$getter.' method');
             }
+
+            $query->where($column, $entity->$getter());
         }
+
+        return $query;
     }
 
-    public function update(Entity $entity)
-    {
-        $this->query()->where('id', $entity->getID())->update($entity->getData());
-    }
-
-    public function delete(Entity $entity)
-    {
-        if ($entity->getId()) {
-            $this->deleteById($entity->getId());
-        }
-        else {
-            throw new \Exception("The entity passed to delete() does not have an ID set");
-        }
-    }
-
+    /**
+     * Create a new entity from the getEntity() method and assign any sub-entities that
+     * have been assigned to this Model
+     *
+     * @return mixed
+     */
     public function newEntity()
     {
         $entity_name = $this->getEntity();
@@ -132,21 +219,35 @@ abstract class Model implements ModelInterface {
         return $entity;
     }
 
+    /**
+     * Delete a row by ID
+     *
+     * @param $id
+     */
     public function deleteById($id)
     {
-        $this->query()->where('id', $id)->delete();
+        $this->query()->where($this->identifier_column, $id)->delete();
     }
 
-    public function getInsertId()
+    /**
+     * Get the column name that this model looks for when joined onto another
+     *
+     * @param null $table The table that is being joined. Allows for different columns to be specified for different tables.
+     * @return string
+     */
+    public function getJoinColumn($table = null) // todo: support alternate column names
     {
-        return $this->last_insert_id;
-    }
-
-    public function getJoinColumn() // todo: support alternate column names
-    {
+        // Default join column
         return $this->getSingular().'_id';
     }
 
+    /**
+     * Add a sub-entity that will contain data that has been added to the table
+     * using an extension
+     *
+     * @param $overflow_name
+     * @param $class_name
+     */
     public function addOverflowEntity($overflow_name, $class_name)
     {
         $this->sub_entities[$overflow_name] = array('class' => $class_name, 'type' => 'overflow');

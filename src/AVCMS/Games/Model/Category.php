@@ -16,4 +16,14 @@ class Category extends Entity {
         return $this->data('name');
     }
 
+    public function setDescription($value)
+    {
+        $this->setData('description', $value);
+    }
+
+    public function getDescription()
+    {
+        return $this->data('description');
+    }
+
 }

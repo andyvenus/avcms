@@ -9,6 +9,7 @@ namespace AVCMS\Core\Form\Tests;
 
 use AVCMS\Core\Form\EntityProcessor\GetterSetterEntityProcessor;
 use AVCMS\Core\Form\FormBlueprint;
+use AVCMS\Core\Form\FormError;
 use AVCMS\Core\Form\FormHandler;
 use AVCMS\Core\Form\FormView;
 use AVCMS\Core\Form\RequestHandler\SymfonyRequestHandler;
@@ -211,7 +212,7 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $entity->setDescription('AVCMS Description');
 
         $form_handler = $this->standard_form_handler;
-        $form_handler->addEntity($entity);
+        $form_handler->bindEntity($entity);
 
         $form_handler->handleRequest(array(), 'standard');
 
@@ -233,8 +234,8 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $entity_two->setCategory('1');
         $entity_two->setPassword('Secure Two');
 
-        $this->standard_form_handler->addEntity($entity_one, array('name', 'description'));
-        $this->standard_form_handler->addEntity($entity_two, array('name', 'password', 'category'));
+        $this->standard_form_handler->bindEntity($entity_one, array('name', 'description'));
+        $this->standard_form_handler->bindEntity($entity_two, array('name', 'password', 'category'));
 
         $this->assertEquals(2, count($this->standard_form_handler->getEntities()));
 
@@ -276,7 +277,7 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($default_values['description'], $form_handler->getData('description'));
 
-        $form_handler->addEntity(new StandardFormEntity());
+        $form_handler->bindEntity(new StandardFormEntity());
 
         $this->assertEquals("Entity Description", $form_handler->getData('description'));
 
@@ -336,7 +337,7 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $mock_validator = $this->mock_validator;
         $mock_validator->expects($this->any())
             ->method('getErrors')
-            ->will($this->returnValue($errors = array('error_one' => 'Error One Message')));
+            ->will($this->returnValue($errors = array(new FormError('name', 'Error One'))));
 
         $form_handler->setValidatior($mock_validator);
 

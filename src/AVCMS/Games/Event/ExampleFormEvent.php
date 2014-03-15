@@ -7,6 +7,7 @@
 
 namespace AVCMS\Games\Event;
 
+use AVCMS\Core\Database\Events\QueryBuilderModelJoinEvent;
 use AVCMS\Core\Form\Event\FormHandlerConstructEvent;
 use AVCMS\Core\Form\Event\FormHandlerRequestEvent;
 use AVCMS\Core\Model\Event\CreateModelEvent;
@@ -38,8 +39,19 @@ class ExampleFormEvent implements EventSubscriberInterface
     {
         $model = $event->getModel();
 
-        if (get_class($model) == 'AVCMS\Games\Model\Games' || get_class($model) == 'AVCMS\Blog\Model\Posts') {
+        if (get_class($model) == 'AVCMS\Games\Model\Games' || get_class($model) == 'AVCMS\Bundles\Blog\Model\Posts' || get_class($model) == 'AVCMS\Games\Model\Categories') {
             $model->addOverflowEntity('testone', 'AVCMS\Games\Model\GameExtension');
+        }
+    }
+
+    public function joiny(QueryBuilderModelJoinEvent $event)
+    {
+        $join_model = $event->getJoinModel();
+
+        if ($join_model->getTable() == 'categories') {
+            $columns = $event->getColumns();
+            $columns[] = 'testone__something';
+            $event->setColumns($columns);
         }
     }
 
@@ -48,7 +60,8 @@ class ExampleFormEvent implements EventSubscriberInterface
         return array(
             'form_handler.construct' => 'exampleThing',
             'form_handler.request' => 'reqThing',
-            'model.create' => 'entityExtension'
+            'model.create' => 'entityExtension',
+            'query_builder.model_join' => 'joiny'
         );
     }
 }

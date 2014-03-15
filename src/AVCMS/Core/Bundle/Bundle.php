@@ -7,6 +7,7 @@
 
 namespace AVCMS\Core\Bundle;
 
+use AVCMS\Core\AssetManager\AssetManager;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Routing\RouteCollection;
 
@@ -40,6 +41,11 @@ abstract class Bundle implements BundleInterface {
     }
 
     public function bundleInfo()
+    {
+
+    }
+
+    public function assets(AssetManager $asset_manager)
     {
 
     }

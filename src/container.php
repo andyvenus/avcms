@@ -1,5 +1,7 @@
 <?php
 
+use Aptoma\Twig\Extension\MarkdownEngine\MichelfMarkdownEngine;
+use Aptoma\Twig\Extension\MarkdownExtension;
 use Assetic\Asset\AssetCollection;
 use Assetic\Asset\GlobAsset;
 use AVCMS\Games\Event\ExampleFormEvent;
@@ -29,8 +31,8 @@ $sc->register('listener.exception', 'Symfony\Component\HttpKernel\EventListener\
     ->setArguments(array('Games\\Controller\\ErrorController::exceptionAction'))
 ;
 
-$sc->register('active.user', 'AVCMS\Users\ActiveUser')
-    ->setArguments(array(new Reference('model.factory'), 'AVBlog\Users\Model\Users', 'AVCMS\Users\Model\Sessions'));
+$sc->register('active.user', 'AVCMS\Bundles\UsersBase\ActiveUser')
+    ->setArguments(array(new Reference('model.factory'), 'AVBlog\Bundles\Users\Model\Users', 'AVCMS\Bundles\UsersBase\Model\Sessions'));
 
 $sc->register('dispatcher', 'Symfony\Component\EventDispatcher\EventDispatcher')
     ->addMethodCall('addSubscriber', array(new Reference('listener.router')))
@@ -66,7 +68,7 @@ $sc->register('assetic.factory', 'Assetic\Factory\AssetFactory')
 
 $sc->register('twig.filesystem', 'AVCMS\Core\View\TwigLoaderFilesystem')
     ->setArguments(array('templates', array('original.twig' => 'replacement.twig')))
-    ->addMethodCall('addPath', array('src/AVCMS/Games/View/Templates', 'games'))
+    //->addMethodCall('addPath', array('src/AVCMS/Games/View/Templates', 'games'))
 ;
 
 $sc->register('twig', 'Twig_Environment')
@@ -76,8 +78,10 @@ $sc->register('twig', 'Twig_Environment')
     ))
     ->addMethodCall('addExtension', array(new \AVCMS\Core\View\TwigModuleExtension()))
     ->addMethodCall('addExtension', array(new \AVCMS\Core\Form\Twig\FormExtension()))
+    ->addMethodCall('addExtension', array(new MarkdownExtension(new MichelfMarkdownEngine())))
     ->addMethodCall('addExtension', array(new Reference('twig.routing.extension')))
     ->addMethodCall('addExtension', array(new Reference('twig.assetic.extension')))
+    ->addMethodCall('addExtension', array(new Reference('twig.asset_manager.extension')))
 ;
 
 $sc->register('twig.routing.extension', 'Symfony\Bridge\Twig\Extension\RoutingExtension')
@@ -85,6 +89,12 @@ $sc->register('twig.routing.extension', 'Symfony\Bridge\Twig\Extension\RoutingEx
 
 $sc->register('twig.assetic.extension', 'Assetic\Extension\Twig\AsseticExtension')
     ->setArguments(array(new Reference('assetic.factory')));
+
+$sc->register('twig.asset_manager.extension', 'AVCMS\Core\AssetManager\Twig\AssetManagerExtension')
+    ->setArguments(array(new Reference('asset_manager')));
+
+$sc->register('asset_manager', 'AVCMS\Core\AssetManager\AssetManager')
+    ->setArguments(array(new Reference('assetic.factory'), new Reference('bundle_manager')));
 
 $request_context = new RequestContext();
 $request_context->fromRequest($request);
@@ -108,14 +118,15 @@ $dbconfig = array(
 );
 
 $sc->register('query_builder', 'AVCMS\Core\Database\Connection') // TODO: change so ->getQueryBuilder doesn't have to be used
-    ->setArguments(array('mysql', $dbconfig, 'QB'));
+    ->setArguments(array('mysql', $dbconfig, 'QB', null, new Reference('dispatcher')));
 
 $bundles = array(
-    'Blog' => 'AVCMS\Blog',
-    'Users' => 'AVBlog\Users'
+    'Blog' => array('namespace' => 'AVCMS\Bundles\Blog'),
+    'Users' => array('namespace' => 'AVBlog\Bundles\Users'),
+    'Assets' => array('namespace' => 'AVCMS\Bundles\Assets')
 );
 
-$sc->register('bundle.initializer', 'AVCMS\Core\BundleManager\BundleInitializer')
+$sc->register('bundle_manager', 'AVCMS\Core\BundleManager\BundleManager')
     ->setArguments(array($bundles, '%container%'));
 
 return $sc;

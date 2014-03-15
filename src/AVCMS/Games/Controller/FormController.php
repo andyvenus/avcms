@@ -21,10 +21,10 @@ class FormController extends Controller {
     {
         $form = $this->buildForm(new TestForm());
 
-        $games = $this->newModel('Games');
+        $games = $this->model('Games');
         $game = $games->find($id)->first();
 
-        $form->addEntity($game);
+        $form->bindEntity($game);
 
         /*
          * $handler->setMethod('GET');

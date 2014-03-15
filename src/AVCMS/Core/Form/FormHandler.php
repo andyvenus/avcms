@@ -174,7 +174,7 @@ class FormHandler
      * @param null $id
      * @throws \Exception
      */
-    public function addEntity($entity, $fields = null, $validatable = true, $id = null)
+    public function bindEntity($entity, $fields = null, $validatable = true, $id = null)
     {
         if ($this->submitted) {
             throw new \Exception("Entities cannot be assigned after handleRequest has been called");
@@ -376,8 +376,6 @@ class FormHandler
      */
     public function getData($name = null)
     {
-        $this->data;
-
         if ($name === null) {
             return $this->data;
         }
@@ -530,12 +528,14 @@ class FormHandler
      */
     public function addCustomErrors($errors)
     {
-        foreach ($errors as $error) {
-            if (!is_a($error, 'AVCMS\Core\Form\FormError')) {
-                throw new \Exception('Custom errors must be AVCMS\Core\Form\FormError objects');
-            }
-            else {
-                $this->errors[] = $error;
+        if ($errors) {
+            foreach ($errors as $error) {
+                if (!is_a($error, 'AVCMS\Core\Form\FormError')) {
+                    throw new \Exception('Custom errors must be AVCMS\Core\Form\FormError objects');
+                }
+                else {
+                    $this->errors[] = $error;
+                }
             }
         }
     }
@@ -557,5 +557,15 @@ class FormHandler
         }
 
         return $errors;
+    }
+
+    public function __get($param)
+    {
+        return $this->getData($param);
+    }
+
+    public function __isset($param)
+    {
+        return isset($this->data[$param]);
     }
 }

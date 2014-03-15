@@ -2,13 +2,8 @@
 
 namespace AVCMS\Games\Controller;
 
-use Assetic\Asset\AssetCollection;
-use Assetic\Asset\AssetReference;
-use Assetic\Asset\FileAsset;
-use Assetic\Asset\GlobAsset;
-use Assetic\AssetWriter;
-use Assetic\Extension\Twig\TwigResource;
-use Assetic\Factory\AssetFactory;
+use Assetic\Filter\JSqueezeFilter;
+use Assetic\FilterManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AVCMS\Core\Controller\Controller;
@@ -27,7 +22,7 @@ class GamesController extends Controller
 
     public function newModelAction(Request $request)
     {
-        $games = $this->newModel('Games');
+        $games = $this->model('Games');
 
         $game = $games->find($request->attributes->get('id', 1))->first();
 
@@ -40,28 +35,16 @@ class GamesController extends Controller
 
     public function blankAction()
     {
-        //$games = $this->newModel('Games');
+        //$games = $this->model('Games');
 
-        //$gametwo = $this->newModel('Categories');
+        //$gametwo = $this->model('Categories');
 
         return new Response('');
     }
 
-    public function symFormAction(Request $request)
-    {
-        $formFactory = \Symfony\Component\Form\Forms::createFormFactory();
-
-        $formFactory->createBuilder()
-            ->add('task', 'text')
-            ->add('dueDate', 'date')
-            ->getForm();
-
-        return new Response();
-    }
-
     public function formAction(Request $request)
     {
-        $games = $this->newModel('Games');
+        $games = $this->model('Games');
 
         if ($request->attributes->get('id')) {
             $game = $games->find($request->attributes->get('id'))->first();
@@ -120,7 +103,7 @@ class GamesController extends Controller
         $new_game = new Game();
         $new_game->setName("Filetype Test1");
         $new_game->setUrl('http://www.andyvenus.com/file.swf');
-        $games = $this->newModel('Games');
+        $games = $this->model('Games');
         $games->insert($new_game);
 
         return new Response("Game inserted with ID: ".$games->getInsertId());
@@ -128,9 +111,9 @@ class GamesController extends Controller
 
     public function joinAction(Request $request, $id)
     {
-        $games = $this->newModel('Games');
+        $games = $this->model('Games');
 
-        $categories = $this->newModel('Categories');
+        $categories = $this->model('Categories');
 
         $game = $games->find($id)->modelJoin($categories, array('name'))->first();
 
@@ -147,11 +130,13 @@ class GamesController extends Controller
     public function stressTestAction(Request $request)
     {
 
-        $games = $this->newModel('Games');
+        $games = $this->model('Games');
 
-        $categories = $this->newModel('Categories');
+        $categories = $this->model('Categories');
 
         $all_games = $games->query()->modelJoin($categories, array('name'))->get();
+
+        //var_dump($all_games[0]);
 
         $all_games2 = $games->query()->modelJoin($categories, array('name'))->get();
 
@@ -170,8 +155,8 @@ class GamesController extends Controller
 
         return $r;
 
-        $games = $this->newModel('Games');
-        $categories = $this->newModel('Categories');
+        $games = $this->model('Games');
+        $categories = $this->model('Categories');
 
         $game = $games->find(5)
             ->select(array('name', 'description'))
@@ -224,11 +209,62 @@ class GamesController extends Controller
 
     public function asseticAction()
     {
-        $am = $this->container->get('assetic.manager');
+        /*
+        $qb = $this->container->get('query_builder');
 
-        $writer = new AssetWriter('web/compiled');
-        $writer->writeManagerAssets($am);
+        $g = $qb->getQueryBuilder()->table('games')
+            ->leftJoin('categories', function($table) {
+                $table->on('games.category_id', '=', 'categories.id');
+            })
+            ->leftJoin('catjoins', function($table) {
+                $table->on('categories.catjoin_id', '=', 'catjoins.id');
+            })
+            ->where('games.id', 1);
 
-        return new Response(htmlspecialchars($am->dump()));
+        return new Response($g->getQuery()->getRawSql());
+
+
+        $games = $this->model('Games');
+        $categories = $this->model('Categories');
+        $catjoins = $this->model('CatJoins');
+
+        $games_array = $games->query()->modelJoin($categories, array('name'))
+            ->modelJoin($catjoins, array('cow'), 'left', 'category')
+            ->get();
+
+        return new Response($games_array[0]->category->catjoin->getCow());
+
+
+        $games = $this->model('Games');
+
+        $e = $games->newEntity();
+        $e->setMochiId('486c1cfbc9f1e311');
+        $e->setSeoUrl('sweet-heart-dressup');
+        $e->setHighscores('9');
+
+        $games->delete($e, ['mochi_id', 'seo_url']);
+
+
+
+        $games = $this->model('Games');
+        $games->query()->where('id', 1)->update(['hits' => 'games.hits + 1']);
+        */
+
+
+        $assetic = $this->get('assetic.factory');
+
+        $fm = new FilterManager();
+        $fm->set('minify_js', new JSqueezeFilter());
+
+        $assetic->setFilterManager($fm);
+
+        $css = $assetic->createAsset(array(
+            '@shared_js'
+        ),
+        array(
+            'minify_js'
+        ));
+
+        return new Response($css->dump(), 200, array('Content-Type' => 'text/javascript'));
     }
 }

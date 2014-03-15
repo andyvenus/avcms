@@ -41,8 +41,9 @@ abstract class Controller extends ContainerAware {
                 'Name' => 'FRUNCH NAME',
                 'Cat One' => 'Le Category Une',
                 'Published' => 'Pubèlishé',
-                'Submit' => 'Subsmit',
-                'Cannot find an account that has that username or email address' => 'Oh vue du nuet finel the user'
+                'Submit' => 'Procesèur',
+                'Cannot find an account that has that username or email address' => 'Oh vue du nuet finel the user',
+                'Title' => 'Oh qui le Titlè'
             ),
             'en_GB'
         );
@@ -52,10 +53,16 @@ abstract class Controller extends ContainerAware {
      * @param $model_name
      * @return \AVCMS\Core\Model\Model|mixed
      */
-    protected function newModel($model_name)
+    protected function model($model_name)
     {
-        $full_namespace = "$this->parent_namespace\\Model\\$model_name";
-        return $this->model_factory->create($full_namespace);
+        // If no namespace seems to be specified, use the same namespace that the controller uses
+        if (!strpos($model_name, '\\')) {
+            $class = get_class($this);
+            $namespace = substr($class, 0, strpos($class, '\\Controller'));
+
+            $model_name = "$namespace\\Model\\$model_name";
+        }
+        return $this->model_factory->create($model_name);
     }
 
     protected function newValidator()
@@ -85,7 +92,7 @@ abstract class Controller extends ContainerAware {
     }
 
     /**
-     * @return \AVCMS\Users\ActiveUser
+     * @return \AVCMS\Bundles\UsersBase\ActiveUser
      */
     protected function getActiveUser()
     {
@@ -103,5 +110,10 @@ abstract class Controller extends ContainerAware {
         else {
             return $result;
         }
+    }
+
+    protected function get($service)
+    {
+        return $this->container->get($service);
     }
 }
