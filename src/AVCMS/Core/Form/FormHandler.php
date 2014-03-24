@@ -47,7 +47,7 @@ class FormHandler
     /**
      * @var array The entities that have been assigned
      */
-    protected $entities;
+    protected $entities = array();
 
     /**
      * @var GetterSetterEntityProcessor The entity processor to set and get values from an entity
@@ -207,22 +207,50 @@ class FormHandler
 
         $request_data = $this->request_handler->handleRequest($this, $request);
 
+        /*
+        foreach ($this->fields as $field_name => $field) {
+            if (!isset($request_data[ $field['name'] ]) && $field->allowUnset() === false) {
+                $this->submitted = false;
+                break;
+            }
+            elseif ($field->allowUnset() === false) {
+                $form_data[$field_name] = $field->getValue();
+            }
+        }
+
+        if ($this->submitted === true) {
+            foreach ($this->fields as $field_name => $field) {
+                if (!isset($request_data[ $field['name'] ])) {
+                    $field->handleNoRequestData();
+                }
+                else {
+                    $field->handleRequestData($request_data[ $field['name'] ]);
+                }
+            }
+        }
+         */
+
         foreach ($this->fields as $field) {
             if (!isset($request_data[ $field['name'] ]) && $field['type'] != 'checkbox') {
                 $this->submitted = false;
                 break;
             }
-            else {
+            elseif ($field['type'] != 'checkbox') {
                 $req_data[ $field['name'] ] = $request_data[ $field['name'] ];
             }
-
-            if ($field['type'] == 'checkbox' && !isset($request_data[ $field['name'] ]) && isset($field['options']['unchecked_value'])) {
-                $req_data[ $field['name'] ] = $field['options']['unchecked_value'];
+            elseif (!isset($request_data[ $field['name'] ])) {
+                $req_data[ $field['name'] ] = (isset($field['options']['unchecked_value']) ? $field['options']['value'] : 0);
+                $this->fields[$field['name']]['options']['checked'] = false;
+            }
+            else {
+                $req_data[ $field['name'] ] =  (isset($field['options']['value']) ? $field['options']['value'] : 1);
+                $this->fields[$field['name']]['options']['checked'] = true;
             }
         }
 
         if ($this->submitted == true && isset($req_data)) {
             $this->data = $req_data;
+            $this->checkRequiredFields();
         }
         else {
             $this->submitted = false;
@@ -322,8 +350,11 @@ class FormHandler
      */
     protected function getProcessedField($field, $data)
     {
-        if (isset($data[$field['name']])) {
+        if (isset($data[$field['name']]) && $field['type'] != 'checkbox') {
             $field['value'] = $data[$field['name']];
+        }
+        else if ($field['type'] == 'checkbox') {
+            $field['value'] = (isset($field['options']['default']) ? $field['options']['default'] : 1);
         }
 
         if (isset($field['fields']) && isset($field['value'])) {
@@ -517,6 +548,23 @@ class FormHandler
         }
         else {
             return false;
+        }
+    }
+
+    public function checkRequiredFields()
+    {
+        foreach ($this->fields as $field) {
+            if (isset($field['options']['required']) && $field['options']['required'] === true) {
+                if (!isset($this->data[ $field['name'] ]) || !$this->data[ $field['name'] ] ) {
+                    if (isset($field['options']['label'])) {
+                        $label = $field['options']['label'];
+                    }
+                    else {
+                        $label = $field['name'];
+                    }
+                    $this->errors[] = new FormError($field['name'], "Field {field_label} must be set", true, array('field_label' => $label));
+                }
+            }
         }
     }
 

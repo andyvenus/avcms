@@ -2,6 +2,7 @@
 
 namespace AVCMS\Core\Controller;
 
+use AVCMS\Bundles\UsersBase\Exception\PermissionDeniedException;
 use AVCMS\Core\Form\FormBlueprint;
 use AVCMS\Core\Form\FormHandler;
 use AVCMS\Core\Form\FormView;
@@ -99,7 +100,16 @@ abstract class Controller extends ContainerAware {
         return $this->container->get('active.user');
     }
 
-    protected function render($template, $context, $return_response = false)
+    protected function checkPermission($permission)
+    {
+        $permission = $this->container->get('active.user')->hasPermission($permission);
+
+        if (!$permission) {
+            throw new PermissionDeniedException("You don't have permission to view this page");
+        }
+    }
+
+    protected function render($template, array $context = array(), $return_response = false)
     {
         $twig = $this->container->get('twig');
         $result = $twig->render($template, $context);

@@ -7,6 +7,7 @@
 
 namespace AVCMS\Bundles\Blog;
 
+use Assetic\Filter\ScssphpFilter;
 use AVCMS\Core\AssetManager\Asset\BundleFileAsset;
 use AVCMS\Core\AssetManager\AssetManager;
 use AVCMS\Core\Bundle\Bundle;
@@ -41,11 +42,19 @@ class BlogBundle extends Bundle
             'id' => null,
             '_controller' => 'AVCMS\\Bundles\\Blog\\Controller\\BlogAdminController::editPostAction',
         )));
+
+        $routes->add('blog_test', new Route('/blog_test', array(
+            'id' => null,
+            '_controller' => 'AVCMS\\Bundles\\Blog\\Controller\\BlogController::testBlogPageAction',
+        )));
     }
 
     public function assets(AssetManager $asset_manager)
     {
         $asset_manager->addJavaScript(new BundleFileAsset('Blog', 'javascript', 'blog_js.js'));
+        $asset_manager->addJavaScript(new BundleFileAsset('Blog', 'javascript', 'jquery.js'));
+
+        $asset_manager->addCSS(new BundleFileAsset('Blog', 'css', 'test.scss', array(new ScssphpFilter())));
     }
 
     public function bundleInfo()

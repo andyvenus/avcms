@@ -24,7 +24,7 @@ class UsersController extends Controller
             $login_handler = $this->getActiveUser()->logIn($login_form->identifier, $login_form->password);
             $login_form->addCustomErrors($login_handler->getErrors());
 
-            if ($login_handler->loginSuccess()) {
+            if ($login_handler->loginSuccess() && $login_form->isValid()) {
                 $response = new RedirectResponse($this->generateUrl('blog_home'));
                 $login_handler->getLoginCookies($response);
             }

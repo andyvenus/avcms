@@ -35,4 +35,9 @@ class BlogController extends Controller {
 
         return new Response($this->render('blog_top_module.twig', array('posts' => $all_posts, 'user' => $user->getUser())));
     }
+
+    public function testBlogPageAction()
+    {
+        return new Response($this->render('@AVBlog/test.twig'));
+    }
 }

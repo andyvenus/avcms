@@ -42,4 +42,12 @@ class AssetsController extends Controller
 
         return new Response($selected_asset->dump(), 200, array('Content-Type' => 'text/javascript'));
     }
+
+    public function generateAssetsAction()
+    {
+        $asset_manager = $this->get('asset_manager');
+        $asset_manager->generateProductionAssets();
+
+        return new Response('Assets generated');
+    }
 }

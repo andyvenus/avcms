@@ -75,14 +75,14 @@
 
 {% block checkbox_field %}
     {% spaceless %}
-        <input type="checkbox" name="{{ name }}" {% if value is not empty %}value="{{ value }}" {% endif %} /> {{ options.label }}
+        <label><input type="checkbox" name="{{ name }}" {% if value is not empty %}value="{{ value }}" {% endif %} {% if options.checked == true %}checked="checked"{% endif %} /> {{ options.label }}</label>
     {% endspaceless %}
 {% endblock %}
 
 {% block form_label %}
     {% spaceless %}
     {% set label = options.label|default('') %}
-    <label>{{ label }}</label>
+    <label>{{ label }}{% if options.required is not empty %} *{% endif %}</label>
     {% endspaceless %}
 {% endblock %}
 
@@ -109,10 +109,18 @@
     {% endspaceless %}
 {% endblock %}
 
-{% block form_row %}
+{% block form_label_row %}
     {% spaceless %}
         <div class="form_row">
             {{ form_label(form_row) }}
+            {{ form_field(form_row) }}
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block checkbox_row %}
+    {% spaceless %}
+        <div class="form_row">
             {{ form_field(form_row) }}
         </div>
     {% endspaceless %}

@@ -127,8 +127,11 @@ class FormExtension extends \Twig_Extension
         if ($field['type'] == 'hidden') {
             $block = 'hidden_row';
         }
+        elseif ($field['type'] == 'checkbox') {
+            $block = 'checkbox_row';
+        }
         else {
-            $block = 'form_row';
+            $block = 'form_label_row';
         }
 
         return $this->base_template->renderBlock($block, array('form_row' => $field));

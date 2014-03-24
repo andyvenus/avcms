@@ -14,11 +14,18 @@ class LoginForm extends FormBlueprint
     public function __construct()
     {
         $this->add('identifier', 'text', array(
-            'label' => 'Username'
+            'label' => 'Username',
+            'required' => true
         ));
 
         $this->add('password', 'password', array(
-            'label' => 'Password'
+            'label' => 'Password',
+            'required' => true
+        ));
+
+        $this->add('remember', 'checkbox', array(
+            'label' => 'Remember me',
+            'checked' => true
         ));
     }
 } 

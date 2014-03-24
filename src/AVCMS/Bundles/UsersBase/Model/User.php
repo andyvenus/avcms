@@ -52,12 +52,12 @@ class User extends Entity
         return $this->data('about');
     }
 
-    public function setGroup($value) {
-        $this->setData('group', $value);
+    public function setGroupId($value) {
+        $this->setData('group_id', $value);
     }
 
-    public function getGroup() {
-        return $this->data('group');
+    public function getGroupId() {
+        return $this->data('group_id');
     }
 
     public function setLocation($value) {

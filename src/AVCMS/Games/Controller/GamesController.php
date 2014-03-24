@@ -248,7 +248,6 @@ class GamesController extends Controller
 
         $games = $this->model('Games');
         $games->query()->where('id', 1)->update(['hits' => 'games.hits + 1']);
-        */
 
 
         $assetic = $this->get('assetic.factory');
@@ -266,5 +265,17 @@ class GamesController extends Controller
         ));
 
         return new Response($css->dump(), 200, array('Content-Type' => 'text/javascript'));
+        */
+
+        if ($s = $this->getActiveUser()->hasPermission('add_edit_save')) {
+            echo 'bom';
+        }
+        else {
+            echo 'nul';
+        }
+
+        $this->checkPermission('add_edit_save');
+
+        return new Response($this->get('active.user')->getUser()->group->getName());
     }
 }

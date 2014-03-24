@@ -14,24 +14,60 @@ class AssetManagerExtension extends \Twig_Extension
 {
     protected $asset_manager;
 
+    protected $debug;
+
     public function __construct(AssetManager $asset_manager, $debug = false)
     {
         $this->asset_manager = $asset_manager;
+        $this->debug = $debug;
     }
 
     public function getFunctions()
     {
         return array(
-            'javascripts' => new \Twig_SimpleFunction('javascripts',
-                    array($this, 'javascripts'),
-                    array('is_safe' => array('html'))
-                )
+            'javascripts' => new \Twig_SimpleFunction(
+                'javascripts',
+                array($this, 'javascripts'),
+                array('is_safe' => array('html'))
+            ),
+            'css' => new \Twig_SimpleFunction(
+                'css',
+                array($this, 'css'),
+                array('is_safe' => array('html'))
+            )
         );
     }
 
     public function javascripts($environment)
     {
-        return $this->getDevAssetUrls('javascript', $environment);
+        if ($this->debug) {
+            return $this->getDevAssetUrls('javascript', $environment);
+        }
+        else {
+            return $this->getProductionAssetUrls('javascript', $environment);
+        }
+    }
+
+    public function css($environment)
+    {
+        if ($this->debug) {
+            return $this->getDevAssetUrls('css', $environment);
+        }
+        else {
+            return $this->getProductionAssetUrls('css', $environment);
+        }
+    }
+
+    protected function getProductionAssetUrls($asset_type, $environment)
+    {
+        if ($asset_type == 'javascript') {
+            $ext = 'js';
+        }
+        else {
+            $ext = 'css';
+        }
+
+        return array("web/compiled/$environment.$ext", "web/compiled/shared.$ext");
     }
 
     protected function getDevAssetUrls($asset_type, $environment)
@@ -44,12 +80,12 @@ class AssetManagerExtension extends \Twig_Extension
 
         if (isset($assets[$environment])) {
             foreach ($assets[$environment] as $asset) {
-                $asset_urls[] = $this->generateDevAssetUrl($asset);
+                $asset_urls[] = 'front.php/'.$this->generateDevAssetUrl($asset);
             }
         }
         if (isset($assets[AssetManager::SHARED])) {
             foreach ($assets[AssetManager::SHARED] as $asset) {
-                $asset_urls[] = $this->generateDevAssetUrl($asset);
+                $asset_urls[] = 'front.php/'.$this->generateDevAssetUrl($asset);
             }
         }
 

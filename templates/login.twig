@@ -5,9 +5,15 @@
 {% block content %}
     {{ form_start(login_form, 'blog_form.twig') }}
 
-    {% for error in login_form.errors %}
-        <div class="alert alert-danger">{{ error.message }}</div>
-    {% endfor %}
+    {% if login_form.errors is not empty %}
+        <div class="alert alert-danger">
+            <ul>
+            {% for error in login_form.errors %}
+                <li>{{ error.message }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 
     {{ form_rows(login_form) }}
 

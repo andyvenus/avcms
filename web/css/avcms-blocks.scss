@@ -1,0 +1,61 @@
+@function offset-color($color, $amount) {
+
+  @if (lightness( $color ) > 40) {
+    @return darken($color, $amount);
+  }
+  @else {
+    @return lighten($color, $amount);
+  }
+
+}
+
+$panel-primary-background: #eceaff;
+$panel-primary-color: offset-color($panel-primary-background, 100);
+$panel-primary-header-background: #6a68af;
+$panel-primary-header-color: white;
+$panel-primary-footer-background: #7c7caf;
+$panel-primary-footer-color: white;
+
+$panel-aside-background: #eaeaea;
+$panel-aside-color: offset-color($panel-primary-background, 100);
+$panel-aside-header-background: darken($panel-aside-background, 30);
+$panel-aside-header-color: white;
+
+.panel-heading {
+  h1,h2,h3,h4,h5,h6 {
+    margin: 0px;
+  }
+}
+
+.avcms-main {
+
+  .panel-primary {
+    border: 1px solid #9b9acc;
+    background-color: $panel-primary-background;
+
+    .panel-body {
+      .media {
+
+      }
+    }
+
+    .panel-heading {
+      border-bottom: 1px solid #9b9acc;
+      background-color: #6a68af;
+      color: #fff;
+    }
+
+    .btn-default {
+      background-color: $panel-primary-background;
+    }
+
+    .list-group-item {
+      background-color: $panel-primary-background;
+      border: none;
+    }
+
+    .list-group-item:nth-child(even) {
+      background-color: darken($panel-primary-background, 3);
+    }
+  }
+}

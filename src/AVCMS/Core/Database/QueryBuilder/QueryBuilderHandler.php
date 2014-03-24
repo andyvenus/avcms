@@ -126,7 +126,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
                 }
             }
 
-            if (method_exists($entity, 'getId')) {
+            if (method_exists($entity, 'getId') && $entity->getID() !== null) {
                 $result[ $entity->getId() ] = $entity;
             }
             else {
@@ -285,7 +285,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
      *
      * @return QueryBuilderHandler
      */
-    public function modelJoin(Model $join_model, array $columns = array(), $type = 'left', $join_to = null, $key = null, $operator = '=', $value = null)
+    public function modelJoin(Model $join_model, array $columns, $type = 'left', $join_to = null, $key = null, $operator = '=', $value = null)
     {
         if ($this->event_dispatcher) {
             $event = new QueryBuilderModelJoinEvent($join_model, $columns, $type);

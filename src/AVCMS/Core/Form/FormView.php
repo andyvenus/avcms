@@ -163,12 +163,13 @@ class FormView implements FormViewInterface
      * Translate a string if the translator has been injected
      *
      * @param $str The string that will be translated
+     * @param array $params
      * @return string
      */
-    protected function translate($str)
+    protected function translate($str, $params = array())
     {
         if (isset($this->translator)) {
-            return $this->translator->trans($str);
+            return $this->translator->trans($str, $params);
         }
         else {
             return $str;
@@ -182,10 +183,15 @@ class FormView implements FormViewInterface
     {
         foreach ($errors as $error) {
             if ($error->getTranslate() == true) {
-                $error->setMessage($this->translate($error->getMessage()));
+                $error->setMessage($this->translate($error->getMessage(), $error->getTranslationParams()));
             }
             $this->errors[] = $error;
         }
+    }
+
+    public function hasErrors()
+    {
+        return isset($this->errors);
     }
 
     /**
@@ -193,7 +199,12 @@ class FormView implements FormViewInterface
      */
     public function getErrors()
     {
-        return $this->errors;
+        if (isset($this->errors)) {
+            return $this->errors;
+        }
+        else {
+            return null;
+        }
     }
 
     public function getParams()

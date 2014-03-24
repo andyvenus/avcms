@@ -53,4 +53,9 @@ $time = explode(' ', $time);
 $time = $time[1] + $time[0];
 $finish = $time;
 $total_time = round(($finish - $start), 3);
-echo '// Time: '.$total_time.' &nbsp;Memory: Peak: '.bytesToSize(memory_get_peak_usage()). ' Now: '.bytesToSize(memory_get_usage()) ;
+
+$file = fopen('cache/pageloadinfo.txt', 'w');
+fwrite($file, 'Time: '.$total_time.' - Memory: Peak: '.bytesToSize(memory_get_peak_usage()). ' Now: '.bytesToSize(memory_get_usage()));
+fclose($file);
+
+//echo '// Time: '.$total_time.' &nbsp;Memory: Peak: '.bytesToSize(memory_get_peak_usage()). ' Now: '.bytesToSize(memory_get_usage()) ;

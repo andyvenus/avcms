@@ -11,8 +11,14 @@
     <link href="http://localhost:8888/avcms/web/css/select2.css" rel="stylesheet">
     <link href="http://localhost:8888/avcms/web/css/select2-bootstrap.css" rel="stylesheet">
 
+    {% for css in css('frontend') %}
+        <link href="http://localhost:8888/avcms/{{ css }}" rel="stylesheet">
+    {% endfor %}
+
+    <link href="http://localhost:8888/avcms/web/css/avcms-blocks.css" rel="stylesheet">
+
     {% for js in javascripts('frontend') %}
-        <script type ="text/javascript" src="http://localhost:8888/avcms/front.php/{{ js }}"></script>
+        <script type="text/javascript" src="http://localhost:8888/avcms/{{ js }}"></script>
     {% endfor %}
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,13 +32,13 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <a href="{{ url('blog_home') }}"><h1>AVCMS - The Beginning</h1></a>
+                <a href="{{ url('blog_home') }}"><h1>AVCMS Blog</h1></a>
             </div>
         </div>
     </div>
 </header>
 
-<section class="container">
+<section class="container avcms-main">
     {% block content %}{% endblock %}
 </section>
 

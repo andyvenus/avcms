@@ -451,6 +451,60 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->standard_form, $form);
     }
 
+    /**
+     * @dataProvider providerCheckboxBehaviour
+     *
+     * @param $options
+     * @param $expected_data
+     * @param $expected_checked
+     * @param $request
+     */
+    public function testCheckboxBehaviour($options, $expected_data, $expected_checked, $request)
+    {
+        $form = new FormBlueprint();
+        $form->add('test_cb', 'checkbox', $options);
+
+        $form_handler = new FormHandler($form);
+
+        $_POST = $request;
+        $form_handler->handleRequest();
+
+        $data = $form_handler->getData();
+        $field = $form_handler->getField('test_cb');
+
+        $this->assertEquals($expected_data, $data['test_cb']);
+        $this->assertEquals($expected_checked, $field['options']['checked']);
+    }
+
+    public function providerCheckboxBehaviour()
+    {
+        return array(
+            // Request made, checkbox was ticked, default values
+            array (
+                array(),
+                '1',
+                true,
+                array('test_cb' => '1')
+            ),
+            // Request not made, default values
+            array (
+                array(),
+                '0',
+                false,
+                array()
+            ),
+            // Request made, checkbox was ticked, has value set
+            array (
+                array(
+                    'value' => 'set'
+                ),
+                'set',
+                true,
+                array('test_cb' => 'set')
+            )
+        );
+    }
+
     public function providerDefaultValues()
     {
         return array(

@@ -30,6 +30,10 @@ class AssetsBundle extends Bundle
         $routes->add('bundle_asset', new Route('/asset/{bundle}/{type}/{asset}', array(
             '_controller' => 'AVCMS\\Bundles\\Assets\\Controller\\AssetsController::getAssetAction',
         )));
+
+        $routes->add('generate_assets', new Route('/generate_assets', array(
+            '_controller' => 'AVCMS\\Bundles\\Assets\\Controller\\AssetsController::generateAssetsAction',
+        )));
     }
 
     public function bundleInfo()

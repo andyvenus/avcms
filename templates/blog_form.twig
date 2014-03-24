@@ -1,6 +1,6 @@
 {% extends 'avcms_form.twig' %}
 
-{% block form_row %}
+{% block form_label_row %}
     {% spaceless %}
         <div class="form-group{% if form_row.has_error == true %} has-error{% endif %}">
             <div class="control-label">
@@ -10,6 +10,14 @@
             <div class="form_field">
                 {{ form_field(form_row) }}
             </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block checkbox_row %}
+    {% spaceless %}
+        <div class="checkbox{% if form_row.has_error == true %} has-error{% endif %}">
+                {{ form_field(form_row) }}
         </div>
     {% endspaceless %}
 {% endblock %}

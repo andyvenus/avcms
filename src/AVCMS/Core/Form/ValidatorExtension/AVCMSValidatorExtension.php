@@ -51,8 +51,12 @@ class AVCMSValidatorExtension implements ValidatorExtension {
                 $form->getValidationRules($this->validator);
             }
 
-            foreach ($this->form_handler->getEntities() as $entity) {
-                $this->validator->addSubValidation($entity['entity'], $entity['fields']);
+            $entities = $this->form_handler->getEntities();
+
+            if (!empty($entities)) {
+                foreach ($entities as $entity) {
+                    $this->validator->addSubValidation($entity['entity'], $entity['fields']);
+                }
             }
 
             $this->validator->validate($this->form_handler->getData(), 'standard', $scope);

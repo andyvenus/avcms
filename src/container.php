@@ -32,7 +32,13 @@ $sc->register('listener.exception', 'Symfony\Component\HttpKernel\EventListener\
 ;
 
 $sc->register('active.user', 'AVCMS\Bundles\UsersBase\ActiveUser')
-    ->setArguments(array(new Reference('model.factory'), 'AVBlog\Bundles\Users\Model\Users', 'AVCMS\Bundles\UsersBase\Model\Sessions'));
+    ->setArguments(array(
+        new Reference('model.factory'),
+        'AVBlog\Bundles\Users\Model\Users',
+        'AVCMS\Bundles\UsersBase\Model\Sessions',
+        'AVCMS\Bundles\UsersBase\Model\Groups',
+        'AVCMS\Bundles\UsersBase\Model\GroupPermissions'
+    ));
 
 $sc->register('dispatcher', 'Symfony\Component\EventDispatcher\EventDispatcher')
     ->addMethodCall('addSubscriber', array(new Reference('listener.router')))
@@ -91,10 +97,10 @@ $sc->register('twig.assetic.extension', 'Assetic\Extension\Twig\AsseticExtension
     ->setArguments(array(new Reference('assetic.factory')));
 
 $sc->register('twig.asset_manager.extension', 'AVCMS\Core\AssetManager\Twig\AssetManagerExtension')
-    ->setArguments(array(new Reference('asset_manager')));
+    ->setArguments(array(new Reference('asset_manager'), true));
 
 $sc->register('asset_manager', 'AVCMS\Core\AssetManager\AssetManager')
-    ->setArguments(array(new Reference('assetic.factory'), new Reference('bundle_manager')));
+    ->setArguments(array(new Reference('bundle_manager')));
 
 $request_context = new RequestContext();
 $request_context->fromRequest($request);
