@@ -339,7 +339,7 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('getErrors')
             ->will($this->returnValue($errors = array(new FormError('name', 'Error One'))));
 
-        $form_handler->setValidatior($mock_validator);
+        $form_handler->setValidator($mock_validator);
 
         $form_handler->handleRequest($this->basic_form_request, 'standard');
 
@@ -380,7 +380,7 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('isValid')
             ->will($this->returnValue(false));
 
-        $this->basic_form_handler->setValidatior($this->mock_validator);
+        $this->basic_form_handler->setValidator($this->mock_validator);
 
         $this->basic_form_handler->handleRequest($this->basic_form_request);
 
@@ -501,6 +501,23 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
                 'set',
                 true,
                 array('test_cb' => 'set')
+            ),
+            // Request not made, checkbox not ticked, has unchecked_value set
+            array (
+                array(
+                    'value' => 'set',
+                    'unchecked_value' => 'unset_value'
+                ),
+                'unset_value',
+                false,
+                array()
+            ),
+            // Request not made, checkbox not ticked, no values set
+            array (
+                array(),
+                '0',
+                false,
+                array()
             )
         );
     }

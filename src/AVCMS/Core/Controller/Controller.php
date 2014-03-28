@@ -79,7 +79,7 @@ abstract class Controller extends ContainerAware {
     protected function buildForm(FormBlueprint $form)
     {
         $form_handler = new FormHandler($form, new SymfonyRequestHandler(), new FormEntityProcessor(), $this->container->get('dispatcher'));
-        $form_handler->setValidatior(new AVCMSValidatorExtension($this->newValidator()));
+        $form_handler->setValidator(new AVCMSValidatorExtension($this->newValidator()));
         $form_view = new FormView();
         $form_view->setTranslator($this->translator);
         $form_handler->setFormView($form_view);

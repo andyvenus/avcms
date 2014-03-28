@@ -67,9 +67,10 @@ class LoginHandler
      *
      * @param $identifier string The username of email address of the user
      * @param $password string The raw user password
+     * @param bool $remember Should the user stay logged in after the session expires
      * @return bool
      */
-    public function logIn($identifier, $password)
+    public function logIn($identifier, $password, $remember = false)
     {
         unset($this->errors);
         $this->login_success = false;

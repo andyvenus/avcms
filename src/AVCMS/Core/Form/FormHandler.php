@@ -207,49 +207,30 @@ class FormHandler
 
         $request_data = $this->request_handler->handleRequest($this, $request);
 
-        /*
-        foreach ($this->fields as $field_name => $field) {
-            if (!isset($request_data[ $field['name'] ]) && $field->allowUnset() === false) {
-                $this->submitted = false;
-                break;
-            }
-            elseif ($field->allowUnset() === false) {
-                $form_data[$field_name] = $field->getValue();
-            }
-        }
-
-        if ($this->submitted === true) {
-            foreach ($this->fields as $field_name => $field) {
-                if (!isset($request_data[ $field['name'] ])) {
-                    $field->handleNoRequestData();
-                }
-                else {
-                    $field->handleRequestData($request_data[ $field['name'] ]);
-                }
-            }
-        }
-         */
-
         foreach ($this->fields as $field) {
+            // If a field is missing from the request, we assume the form wasn't submitted unless it's a checkbox
             if (!isset($request_data[ $field['name'] ]) && $field['type'] != 'checkbox') {
                 $this->submitted = false;
                 break;
             }
+            // If the field is set and it's not a checkbox, get it's value
             elseif ($field['type'] != 'checkbox') {
-                $req_data[ $field['name'] ] = $request_data[ $field['name'] ];
+                $form_data[ $field['name'] ] = $request_data[ $field['name'] ];
             }
+            // For checkboxes, get the right value if the checkbox isn't checked
             elseif (!isset($request_data[ $field['name'] ])) {
-                $req_data[ $field['name'] ] = (isset($field['options']['unchecked_value']) ? $field['options']['value'] : 0);
+                $form_data[ $field['name'] ] = (isset($field['options']['unchecked_value']) ? $field['options']['unchecked_value'] : 0);
                 $this->fields[$field['name']]['options']['checked'] = false;
             }
+            // For checkboxes, get the right value when the checkbox is checked
             else {
-                $req_data[ $field['name'] ] =  (isset($field['options']['value']) ? $field['options']['value'] : 1);
+                $form_data[ $field['name'] ] =  (isset($field['options']['value']) ? $field['options']['value'] : 1);
                 $this->fields[$field['name']]['options']['checked'] = true;
             }
         }
 
-        if ($this->submitted == true && isset($req_data)) {
-            $this->data = $req_data;
+        if ($this->submitted == true && isset($form_data)) {
+            $this->data = $form_data;
             $this->checkRequiredFields();
         }
         else {
@@ -354,7 +335,7 @@ class FormHandler
             $field['value'] = $data[$field['name']];
         }
         else if ($field['type'] == 'checkbox') {
-            $field['value'] = (isset($field['options']['default']) ? $field['options']['default'] : 1);
+            $field['value'] = (isset($field['options']['value']) ? $field['options']['value'] : 1);
         }
 
         if (isset($field['fields']) && isset($field['value'])) {
@@ -515,7 +496,7 @@ class FormHandler
      *
      * @param ValidatorExtension $validator
      */
-    public function setValidatior(ValidatorExtension $validator)
+    public function setValidator(ValidatorExtension $validator)
     {
         $this->validator = $validator;
         $this->validator->setFormHandler($this);

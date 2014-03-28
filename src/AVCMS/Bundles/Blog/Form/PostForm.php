@@ -28,6 +28,14 @@ class PostForm extends FormBlueprint {
             )
         ));
 
+        $this->add('b[]', 'text', array(
+            'label' => 'Title'
+        ));
+
+        $this->add('b[]', 'text', array(
+            'label' => 'Title'
+        ));
+
         $this->setName('blog_post_form');
     }
 } 

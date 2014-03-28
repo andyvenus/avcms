@@ -7,11 +7,9 @@
 
     {% if login_form.errors is not empty %}
         <div class="alert alert-danger">
-            <ul>
             {% for error in login_form.errors %}
-                <li>{{ error.message }}</li>
+                {{ error.message }}<br />
             {% endfor %}
-            </ul>
         </div>
     {% endif %}
 

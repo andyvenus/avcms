@@ -123,10 +123,10 @@ class ActiveUser implements EventSubscriberInterface {
         return false;
     }
 
-    public function logIn($identifier, $password)
+    public function logIn($identifier, $password, $remember = false)
     {
         $login_handler = new LoginHandler($this->users_model, $this->sessions_model);
-        $login_handler->logIn($identifier, $password);
+        $login_handler->logIn($identifier, $password, $remember);
 
         if ($login_handler->loginSuccess()) {
             $this->user_logged_in = true;
