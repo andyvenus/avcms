@@ -13,6 +13,7 @@ use AVCMS\Core\Validation\Validator;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Translation\Loader\ArrayLoader;
 use Symfony\Component\Translation\MessageSelector;
@@ -28,6 +29,9 @@ abstract class Controller extends ContainerAware {
      * @var \AVCMS\Core\Model\ModelFactory
      */
     protected $model_factory;
+
+    // todo: do this proper
+    protected $config = array('users_model' => 'AVBlog\Bundles\Users\Model\Users');
 
     public function setContainer(ContainerInterface $container = null)
     {
@@ -76,17 +80,34 @@ abstract class Controller extends ContainerAware {
         return $validator;
     }
 
-    protected function buildForm(FormBlueprint $form)
+    protected function buildForm(FormBlueprint $form, $entities = array(), $request = null)
     {
-        $form_handler = new FormHandler($form, new SymfonyRequestHandler(), new FormEntityProcessor(), $this->container->get('dispatcher'));
+        $form_handler = new FormHandler($form, new SymfonyRequestHandler(), new FormEntityProcessor(), null,  $this->container->get('dispatcher'));
         $form_handler->setValidator(new AVCMSValidatorExtension($this->newValidator()));
         $form_view = new FormView();
         $form_view->setTranslator($this->translator);
         $form_handler->setFormView($form_view);
 
+        if (!is_array($entities)) {
+            $entities = array($entities);
+        }
+        foreach ($entities as $entity) {
+            $form_handler->bindEntity($entity);
+        }
+
+        if ($request) {
+            $form_handler->handleRequest($request);
+        }
+
         return $form_handler;
     }
 
+    /**
+     * @param $route
+     * @param array $parameters
+     * @param bool $referenceType
+     * @return null|string
+     */
     protected function generateUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         return $this->container->get('routing.url.generator')->generate($route, $parameters, $referenceType);
@@ -95,7 +116,7 @@ abstract class Controller extends ContainerAware {
     /**
      * @return \AVCMS\Bundles\UsersBase\ActiveUser
      */
-    protected function getActiveUser()
+    protected function activeUser()
     {
         return $this->container->get('active.user');
     }
@@ -125,5 +146,17 @@ abstract class Controller extends ContainerAware {
     protected function get($service)
     {
         return $this->container->get($service);
+    }
+
+    public function createNotFoundException($message = 'Not Found', \Exception $previous = null)
+    {
+        return new NotFoundHttpException($message, $previous);
+    }
+
+    public function requirePermissions($permissions)
+    {
+        if ($this->activeUser()->hasPermission($permissions) == false) {
+            throw new \Exception('');
+        }
     }
 }

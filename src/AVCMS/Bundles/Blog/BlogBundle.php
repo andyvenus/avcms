@@ -38,21 +38,35 @@ class BlogBundle extends Bundle
             '_controller' => 'AVCMS\\Bundles\\Blog\\Controller\\BlogController::blogHomeAction',
         )));
 
-        $routes->add('edit_post', new Route('/edit_post/{id}', array(
+        $routes->add('blog_edit_post', new Route('/admin/blog/edit/{id}', array(
             'id' => null,
             '_controller' => 'AVCMS\\Bundles\\Blog\\Controller\\BlogAdminController::editPostAction',
+            '_permissions' => array('add_edit_save', 'adverts')
         )));
 
         $routes->add('blog_test', new Route('/blog_test', array(
             'id' => null,
             '_controller' => 'AVCMS\\Bundles\\Blog\\Controller\\BlogController::testBlogPageAction',
         )));
+
+        $routes->add('blog_add_post', new Route('/admin/blog/new', array(
+            '_controller' => 'AVCMS\\Bundles\\Blog\\Controller\\BlogAdminController::editPostAction',
+        )));
+
+        $routes->add('blog_finder', new Route('/admin/blog/finder/{page}', array(
+            'page' => '1',
+            '_controller' => 'AVCMS\\Bundles\\Blog\\Controller\\BlogAdminController::finderAction',
+        )));
+
+        $routes->add('blog_admin_home', new Route('/admin/blog', array(
+            '_controller' => 'AVCMS\\Bundles\\Blog\\Controller\\BlogAdminController::blogHomeAction',
+        )));
     }
 
     public function assets(AssetManager $asset_manager)
     {
         $asset_manager->addJavaScript(new BundleFileAsset('Blog', 'javascript', 'blog_js.js'));
-        $asset_manager->addJavaScript(new BundleFileAsset('Blog', 'javascript', 'jquery.js'));
+        //$asset_manager->addJavaScript(new BundleFileAsset('Blog', 'javascript', 'jquery.js'));
 
         $asset_manager->addCSS(new BundleFileAsset('Blog', 'css', 'test.scss', array(new ScssphpFilter())));
     }

@@ -1,0 +1,26 @@
+{% extends ajax_depth == 'editor' ? '@admin/ajax_page.twig' : browser_template|default('@admin/browser.twig') %}
+
+{% block editor %}
+    <div class="editor-container">
+        <div class="editor-header">
+            <div class="animated fadeInRight">
+                <div class="pull-left">
+                    {% if item.id %}
+                        {% block editor_title_edit %}{% endblock %}
+                    {% else %}
+                        {% block editor_title_new %}{% endblock %}
+                    {% endif %}
+                </div>
+                <div class="pull-right header-label-container">
+                   &nbsp;
+                </div>
+            </div>
+        </div>
+
+        <div class="editor-content animated fadeInRight">
+            {% block editor_content %}
+
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

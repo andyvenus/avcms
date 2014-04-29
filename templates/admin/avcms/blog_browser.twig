@@ -1,0 +1,27 @@
+{% extends '@admin/browser.twig' %}
+
+{% block finder_top -%}
+    <h3>Blog Posts</h3>
+    {{ form_start(finder_filters_form) }}
+    <div class="filter-form-row">{{ form_field(finder_filters_form.order) }}</div>
+    {{ form_field(finder_filters_form.search, {"class": "input-md", "placeholder": "Search"}) }}
+    {{ form_end(finder_filters_form) }}
+{%- endblock %}
+
+{% block add_item %}
+    <div class="add-item">
+        <a href="{{ url('blog_add_post') }}">
+            <span class="glyphicon glyphicon-plus"> </span> Add Blog Post
+        </a>
+    </div>
+{% endblock %}
+
+{% block finder %}
+    <div data-url="{{ url('blog_finder') }}">
+        {{ render(url('blog_finder')) }}
+    </div>
+{% endblock %}
+
+{% block mobile_back_link %}
+    {{ url('blog_admin_home') }}
+{% endblock %}

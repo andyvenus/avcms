@@ -101,7 +101,21 @@ class AVCMSValidatorExtension implements ValidatorExtension {
             $errors = $this->validator->getErrors();
 
             foreach ($errors as $error) {
-                $invalid_params[] = $error['param_name'];
+                // Convert error parameter name from a.string.like.this to a[string][like][this]
+                if (strpos($error['param_name'], '.') !== false) {
+                    $exploded_name = explode('.', $error['param_name']);
+
+                    $param_name = array_shift($exploded_name);
+
+                    foreach ($exploded_name as $name_param) {
+                        $param_name .= '['.$name_param.']';
+                    }
+                }
+                else {
+                    $param_name = $error['param_name'];
+                }
+
+                $invalid_params[] = $param_name;
             }
 
             $this->invalid_params = $invalid_params;

@@ -29,7 +29,7 @@ class FormExtension extends \Twig_Extension
     {
         $this->environment = $environment;
         $this->compiler = $environment->getCompiler();
-        $this->base_template = $this->environment->loadTemplate('avcms_form.twig');
+        $this->base_template = $this->environment->loadTemplate('bootstrap_form.twig');
     }
 
     /**
@@ -83,16 +83,21 @@ class FormExtension extends \Twig_Extension
         );
     }
 
-    public function formStart($form, $template = null)
+    public function formStart($form, $attributes = array(), $template = null)
     {
         if ($template == null) {
-            $this->base_template = $this->environment->loadTemplate('avcms_form.twig');
+            $this->base_template = $this->environment->loadTemplate('bootstrap_form.twig');
         }
         else {
             $this->base_template = $this->environment->loadTemplate($template);
         }
 
-        return $this->base_template->renderBlock('form_start', array('form' => $form));
+        return $this->base_template->renderBlock('form_start', array('form' => $form, 'attr' => $attributes));
+    }
+
+    public function setFormTemplate($template)
+    {
+        $this->base_template = $this->environment->loadTemplate($template);
     }
 
     public function formEnd($form)
@@ -100,8 +105,10 @@ class FormExtension extends \Twig_Extension
         return $this->base_template->renderBlock('form_end', array('form' => $form));
     }
 
-    public function formField($field_data)
+    public function formField($field_data, $attributes = array())
     {
+        $field_data['attr'] = $attributes;
+
         $field = $this->base_template->renderBlock($field_data['type'].'_field', $field_data);
 
         if (!$field) {
@@ -122,9 +129,9 @@ class FormExtension extends \Twig_Extension
         return $this->base_template->renderBlock('submit_button', array('label' => $label));
     }
 
-    public function formRow($field)
+    public function formRow($field, $attributes = array())
     {
-        if ($field['type'] == 'hidden') {
+        if ($field['type'] == 'hidden' || $field['type'] == 'collection') {
             $block = 'hidden_row';
         }
         elseif ($field['type'] == 'checkbox') {
@@ -134,13 +141,13 @@ class FormExtension extends \Twig_Extension
             $block = 'form_label_row';
         }
 
-        return $this->base_template->renderBlock($block, array('form_row' => $field));
+        return $this->base_template->renderBlock($block, array('form_row' => $field, 'attr' => $attributes));
     }
 
-    public function formRows($form)
+    public function formRows($form, $attributes = array())
     {
         $rows = $form->getFields();
 
-        return $this->base_template->renderBlock('form_rows', array('form_rows' => $rows));
+        return $this->base_template->renderBlock('form_rows', array('form_rows' => $rows, 'attr' => $attributes));
     }
 }

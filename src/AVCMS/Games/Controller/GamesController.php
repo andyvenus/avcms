@@ -267,7 +267,7 @@ class GamesController extends Controller
         return new Response($css->dump(), 200, array('Content-Type' => 'text/javascript'));
         */
 
-        if ($s = $this->getActiveUser()->hasPermission('add_edit_save')) {
+        if ($s = $this->activeUser()->hasPermission('add_edit_save')) {
             echo 'bom';
         }
         else {

@@ -1,0 +1,13 @@
+{% for post in posts %}
+    <div class="browser-finder-item" data-id="{{ post.id }}">
+        <div class="finder-item-title" data-field="title">
+            {{ post.title }}
+        </div>
+
+        <div class="btn-group">
+            <a class="btn btn-xs btn-default" href="{{ url('blog_edit_post', {'id': post.id}) }}"><span class="glyphicon glyphicon-edit"></span></a>
+
+            <a class="btn btn-xs btn-default" href="{{ url('blog_edit_post', {'id': post.id}) }}"><span class="glyphicon glyphicon-certificate"></span></a>
+        </div>
+    </div>
+{% endfor %}

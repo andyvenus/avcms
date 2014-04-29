@@ -28,12 +28,12 @@ class Post extends Entity {
         return $this->data('body');
     }
 
-    public function setAuthor($value) {
-        $this->setData('author', $value);
+    public function setUserId($value) {
+        $this->setData('user_id', $value);
     }
 
-    public function getAuthor() {
-        return $this->data('author');
+    public function getUserId() {
+        return $this->data('user_id');
     }
 
     public function validationRules(Validator $validator)

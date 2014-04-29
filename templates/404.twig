@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>Error: {{ error.message }}</title>
+
+        <style type="text/css">
+            body {
+                font-family: Verdana, Helvetica, Arial, sans-serif;
+            }
+            .error-container {
+                width: 500px;
+                margin: 200px auto;
+                text-align: center;
+
+            }
+            .error-status-code {
+                font-size: 100px;
+                color: #626262;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="error-container">
+            <div class="error-status-code">
+                {{ error.statusCode }}
+            </div>
+
+            <div class="error-message">
+                {{ error.message }}
+            </div>
+        </div>
+    </body>
+</html>

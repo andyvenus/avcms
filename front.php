@@ -48,13 +48,18 @@ function bytesToSize($bytes, $precision = 2)
     }
 }
 
+// TODO: REMOVE THIS HOLY MOLY
 $time = microtime();
 $time = explode(' ', $time);
 $time = $time[1] + $time[0];
 $finish = $time;
 $total_time = round(($finish - $start), 3);
 
-$file = fopen('cache/pageloadinfo.txt', 'w');
+$filename = str_replace('/avcms/front.php/', '', $_SERVER["REQUEST_URI"]);
+$filename = str_replace('/', '-', $filename);
+
+
+$file = fopen('cache/loadtimes/'.$filename.'.txt', 'w');
 fwrite($file, 'Time: '.$total_time.' - Memory: Peak: '.bytesToSize(memory_get_peak_usage()). ' Now: '.bytesToSize(memory_get_usage()));
 fclose($file);
 

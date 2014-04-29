@@ -35,11 +35,11 @@ class FormHandlerRequestEvent extends Event
 
     /**
      * @param FormHandler $form_handler
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param mixed $request
      * @param $form_data
      * @internal param \AVCMS\Core\Form\FormBlueprintInterface $form_blueprint
      */
-    public function __construct(FormHandler $form_handler, Request $request, $form_data)
+    public function __construct(FormHandler $form_handler, $request, $form_data)
     {
         $this->setFormHandler($form_handler);
         $this->setRequest($request);
@@ -63,9 +63,9 @@ class FormHandlerRequestEvent extends Event
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param mixed $request
      */
-    public function setRequest(Request $request)
+    public function setRequest($request)
     {
         $this->request = $request;
     }

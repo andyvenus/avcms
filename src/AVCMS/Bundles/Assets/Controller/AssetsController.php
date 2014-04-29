@@ -40,7 +40,7 @@ class AssetsController extends Controller
             return new Response('Not found', 404);
         }
 
-        return new Response($selected_asset->dump(), 200, array('Content-Type' => 'text/javascript'));
+        return new Response($selected_asset->dump(), 200, array('Content-Type' => 'text/'.$type));
     }
 
     public function generateAssetsAction()

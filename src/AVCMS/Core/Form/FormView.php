@@ -212,6 +212,14 @@ class FormView implements FormViewInterface
         return $this->params;
     }
 
+    public function getJsonResponseData()
+    {
+        $json['errors'] = $this->errors;
+        $json['has_errors'] = $this->hasErrors();
+
+        return $json;
+    }
+
     /**
      * {@inheritdoc}
      */

@@ -1,0 +1,79 @@
+{% set url = 'http://192.168.0.2:8888/avcms' %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+        <title>{% block title %}{% endblock %} - AVCMS</title>
+    {% endblock %}
+
+    <link rel="stylesheet" type="text/css" href="{{ url }}/web/css/style.css" />
+    <link href="{{ url }}/web/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url }}/web/css/bootstrap-markdown.min.css" rel="stylesheet">
+    <link href="{{ url }}/web/css/select2.css" rel="stylesheet">
+    <link href="{{ url }}/web/css/select2-bootstrap.css" rel="stylesheet">
+    <link href="{{ url }}/templates/admin/avcms/animate.css" rel="stylesheet">
+    <link href="{{ url }}/web/css/nanoscroller.css" rel="stylesheet">
+
+    <link href="{{ url }}/templates/admin/avcms/avcms_admin.css" rel="stylesheet">
+
+    {% for css in css('admin') %}
+        <link href="{{ url }}/{{ css }}" rel="stylesheet">
+    {% endfor %}
+
+    <link href="{{ url }}/web/css/avcms-blocks.css" rel="stylesheet">
+
+    {% for js in javascripts('admin') %}
+        <script type="text/javascript" src="{{ url }}/{{ js }}"></script>
+    {% endfor %}
+
+    <!--[if lt IE 9]>
+    <script src="{{ url }}/web/js/html5shiv.js"></script>
+    <script src="{{ url }}/web/js/respond.js"></script>
+    <![endif]-->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<header class="admin-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2"><a href="{{ url('login') }}">Login</a> / <a href="">Register</a></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{ url('blog_home') }}"><h1>AVCMS Blog</h1></a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<aside class="admin-menu">
+    <ul>
+        <li><a href="#"><span class="glyphicon glyphicon-search"></span> Search</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-headphones"></span> Music</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-tree-deciduous"></span> Environment</a></li>
+    </ul>
+</aside>
+
+<div class="main">
+    <section class="ajax-main">
+        {% block main_content %}{% endblock %}
+    </section>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="{{ url }}/web/js/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{{ url }}/web/js/bootstrap.min.js"></script>
+
+<script src="{{ url }}/web/js/bootstrap-markdown.js"></script>
+<script src="{{ url }}/web/js/markdown.js"></script>
+<script src="{{ url }}/web/js/to-markdown.js"></script>
+<script src="{{ url }}/web/js/select2.min.js"></script>
+<script src="{{ url }}/web/js/jquery.history.js"></script>
+<script src="{{ url }}/web/js/jquery.nanoscroller.min.js"></script>
+<script src="{{ url }}/web/js/avcms_admin.js"></script>
+
+</body>
+</html>

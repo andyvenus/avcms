@@ -10,8 +10,8 @@ namespace AVCMS\Core\Form;
 
 class FormError
 {
-    protected $param;
-    protected $message;
+    public $param;
+    public $message;
     protected $translate;
     protected $translation_params;
 

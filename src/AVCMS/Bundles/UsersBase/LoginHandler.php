@@ -52,6 +52,11 @@ class LoginHandler
     protected $unauthorized_user;
 
     /**
+     * @var mixed|bool
+     */
+    protected $remember;
+
+    /**
      * @param Users $users_model
      * @param Sessions $sessions_model
      * @internal param \Symfony\Component\HttpFoundation\Request $request
@@ -90,6 +95,7 @@ class LoginHandler
         if (!isset($this->errors)) {
             $this->session = $this->sessions_model->generateAndSaveSession($this->unauthorized_user->getId());
             $this->login_success = true;
+            $this->remember = $remember;
         }
 
         return $this->login_success;
@@ -127,7 +133,14 @@ class LoginHandler
             throw new \Exception("Cannot get login cookies, the user was not logged in successfully");
         }
 
-        $response->headers->setCookie(new Cookie('avcms_session', $this->session->getSessionId()));
-        $response->headers->setCookie(new Cookie('avcms_user_id', $this->session->getUserId()));
+        if (isset($this->remember) && $this->remember) {
+            $cookie_expiry = time() + (60 * 60 * 24 * 120);
+        }
+        else {
+            $cookie_expiry = 0;
+        }
+
+        $response->headers->setCookie(new Cookie('avcms_session', $this->session->getSessionId(), $cookie_expiry));
+        $response->headers->setCookie(new Cookie('avcms_user_id', $this->session->getUserId(), $cookie_expiry));
     }
 }

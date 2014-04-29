@@ -28,7 +28,10 @@ $sc->register('listener.response', 'Symfony\Component\HttpKernel\EventListener\R
     ->setArguments(array('UTF-8'))
 ;
 $sc->register('listener.exception', 'Symfony\Component\HttpKernel\EventListener\ExceptionListener')
-    ->setArguments(array('Games\\Controller\\ErrorController::exceptionAction'))
+    ->setArguments(array('AVCMS\\ErrorController::exceptionAction'))
+;
+$sc->register('listener.security', 'AVCMS\Core\Security\SecureRoutes')
+    ->setArguments(array(new Reference('active.user'), '%routes%'))
 ;
 
 $sc->register('active.user', 'AVCMS\Bundles\UsersBase\ActiveUser')
@@ -45,6 +48,7 @@ $sc->register('dispatcher', 'Symfony\Component\EventDispatcher\EventDispatcher')
     ->addMethodCall('addSubscriber', array(new Reference('listener.response')))
     ->addMethodCall('addSubscriber', array(new Reference('listener.exception')))
     ->addMethodCall('addSubscriber', array(new Reference('active.user')))
+    ->addMethodCall('addSubscriber', array(new Reference('listener.security')))
     ->addMethodCall('addSubscriber', array(new ExampleFormEvent()))
 ;
 $sc->register('framework', 'AVCMS\Core\Framework')
@@ -74,7 +78,7 @@ $sc->register('assetic.factory', 'Assetic\Factory\AssetFactory')
 
 $sc->register('twig.filesystem', 'AVCMS\Core\View\TwigLoaderFilesystem')
     ->setArguments(array('templates', array('original.twig' => 'replacement.twig')))
-    //->addMethodCall('addPath', array('src/AVCMS/Games/View/Templates', 'games'))
+    ->addMethodCall('addPath', array('templates/admin/avcms', 'admin'))
 ;
 
 $sc->register('twig', 'Twig_Environment')
@@ -88,7 +92,20 @@ $sc->register('twig', 'Twig_Environment')
     ->addMethodCall('addExtension', array(new Reference('twig.routing.extension')))
     ->addMethodCall('addExtension', array(new Reference('twig.assetic.extension')))
     ->addMethodCall('addExtension', array(new Reference('twig.asset_manager.extension')))
+    ->addMethodCall('addExtension', array(new Reference('twig.http-kernel.extension')))
 ;
+
+$sc->register('twig.http-kernel.extension', 'Symfony\Bridge\Twig\Extension\HttpKernelExtension')
+    ->setArguments(array(new Reference('fragment.handler')))
+;
+
+$sc->register('fragment.handler', 'Symfony\Component\HttpKernel\Fragment\FragmentHandler')
+    ->setArguments(array(array(new Reference('inline.fragment.renderer'))))
+    ->addMethodCall('setRequest', array($request)) // todo: move this?
+;
+
+$sc->register('inline.fragment.renderer', 'Symfony\Component\HttpKernel\Fragment\InlineFragmentRenderer')
+    ->setArguments(array(new Reference('framework')));
 
 $sc->register('twig.routing.extension', 'Symfony\Bridge\Twig\Extension\RoutingExtension')
     ->setArguments(array(new Reference('routing.url.generator')));

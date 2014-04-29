@@ -14,7 +14,7 @@
 
                     <p>{{ post.body|markdown }}</p>
 
-                    <small>Options: <a href="{{ url('edit_post', { id: post.id}) }}">Edit</a> Extension: {{ post.testone.something }}</small>
+                    <small>Options: <a href="{{ url('blog_edit_post', { id: post.id}) }}">Edit</a> Extension: {{ post.testone.something }}</small>
                 </article>
             {% endfor %}
         {% endblock %}

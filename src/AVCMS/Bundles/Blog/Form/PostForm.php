@@ -8,6 +8,8 @@
 namespace AVCMS\Bundles\Blog\Form;
 
 use AVCMS\Core\Form\FormBlueprint;
+use AVCMS\Core\Validation\Rules\Length;
+use AVCMS\Core\Validation\Validator;
 
 class PostForm extends FormBlueprint {
     public function __construct($username)
@@ -20,7 +22,7 @@ class PostForm extends FormBlueprint {
             'label' => 'Post content'
         ));
 
-        $this->add('author', 'select', array(
+        $this->add('user_id', 'select', array(
             'label' => 'Author',
             'default' => $username,
             'choices' => array(
@@ -28,14 +30,6 @@ class PostForm extends FormBlueprint {
             )
         ));
 
-        $this->add('b[]', 'text', array(
-            'label' => 'Title'
-        ));
-
-        $this->add('b[]', 'text', array(
-            'label' => 'Title'
-        ));
-
         $this->setName('blog_post_form');
     }
-} 
+}

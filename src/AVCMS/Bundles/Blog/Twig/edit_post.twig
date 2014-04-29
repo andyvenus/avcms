@@ -1,17 +1,17 @@
-{% extends 'index.twig' %}
+{% extends '@admin/edit_item.twig' %}
 
-{% block title %}Edit Blog Post{% endblock %}
+{% block title %}
+    {% if item.id %}
+        Editing {{ item.title }}
+    {% else %}
+        New Post
+    {% endif %}
+{% endblock %}
 
-{% block content %}
-    {{ form_start(form, 'blog_form.twig') }}
+{% block editor_title_edit %}
+    <span class="light">Editing Post:</span> <span data-id="{{ item.id }}" data-field="title">{{ item.title }}</span>
+{% endblock %}
 
-    {% for error in form.errors %}
-        <div class="alert alert-danger">{{ error.message }}</div>
-    {% endfor %}
-
-    {{ form_rows(form) }}
-
-    {{ form_submit_button(form) }}
-
-    {{ form_end(form) }}
+{% block editor_title_new %}
+    New Post
 {% endblock %}

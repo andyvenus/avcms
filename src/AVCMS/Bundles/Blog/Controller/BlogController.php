@@ -20,7 +20,7 @@ class BlogController extends Controller {
 
         $all_posts = $posts->query()->get();
 
-        $user = $this->getActiveUser();
+        $user = $this->activeUser();
 
         return new Response($this->render('@AVBlog/blog_home.twig', array('posts' => $all_posts, 'user' => $user->getUser())));
     }
@@ -31,7 +31,7 @@ class BlogController extends Controller {
 
         $all_posts = $posts->query()->get();
 
-        $user = $this->getActiveUser();
+        $user = $this->activeUser();
 
         return new Response($this->render('blog_top_module.twig', array('posts' => $all_posts, 'user' => $user->getUser())));
     }

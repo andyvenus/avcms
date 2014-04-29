@@ -76,6 +76,18 @@ class FormBlueprintTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $fields);
     }
 
+    public function testAddAferWhenNotExist()
+    {
+        $this->form->add('one', 'text');
+
+        $this->form->addBefore('non-existant', 'two', 'text');
+
+        $expected = array('one', 'two');
+        $fields = $this->form->getFieldNames();
+
+        $this->assertEquals($expected, $fields);
+    }
+
     public function testRemoveElement()
     {
         $this->form->add('name', 'text');
@@ -97,6 +109,13 @@ class FormBlueprintTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals('textarea', $field['type']);
         $this->assertEquals('Replacement Label', $field['options']['label']);
+    }
+
+    public function testInvalidReplaceElement()
+    {
+        $this->setExpectedException('\Exception');
+
+        $this->form->replace('does-not-exist', 'text');
     }
 
     public function testGetAll()
@@ -146,7 +165,17 @@ class FormBlueprintTest extends \PHPUnit_Framework_TestCase {
 
     public function testSetAction()
     {
-        $this->form->setAction('POST', 'http://www.example.com/page');
+        $this->assertEquals($this->form, $this->form->setAction('POST', 'http://www.example.com/page'));
+    }
+
+    public function testSetMethod()
+    {
+        $this->assertEquals($this->form, $this->form->setMethod('GET'));
+    }
+
+    public function testUnsetGet()
+    {
+        $this->assertNull($this->form->get('non-existant'));
     }
 }
  

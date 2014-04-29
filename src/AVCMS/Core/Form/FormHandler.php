@@ -13,6 +13,8 @@ use AVCMS\Core\Form\Event\FormHandlerConstructEvent;
 use AVCMS\Core\Form\Event\FormHandlerRequestEvent;
 use AVCMS\Core\Form\RequestHandler\RequestHandlerInterface;
 use AVCMS\Core\Form\RequestHandler\StandardRequestHandler;
+use AVCMS\Core\Form\Type\TypeHandler;
+use AVCMS\Core\Form\Type\TypeInterface;
 use AVCMS\Core\Form\ValidatorExtension\ValidatorExtension;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -35,7 +37,7 @@ class FormHandler
     protected $data;
 
     /**
-     * @var string FormBlueprint submit method
+     * @var string The form submission method
      */
     protected $method = 'POST';
 
@@ -103,12 +105,14 @@ class FormHandler
      * @param FormBlueprintInterface $form
      * @param \AVCMS\Core\Form\RequestHandler\RequestHandlerInterface|null $request_handler
      * @param EntityProcessor $entity_processor
+     * @param \AVCMS\Core\Form\Type\TypeHandler $type_handler
      * @param \Symfony\Component\EventDispatcher\EventDispatcher $event_dispatcher
      */
     public function __construct(
         FormBlueprintInterface $form,
         RequestHandlerInterface $request_handler = null,
         EntityProcessor $entity_processor = null,
+        TypeHandler $type_handler = null,
         EventDispatcher $event_dispatcher = null
     )
     {
@@ -128,6 +132,13 @@ class FormHandler
             $this->request_handler = new StandardRequestHandler();
         }
 
+        if ($type_handler) {
+            $this->type_handler = $type_handler;
+        }
+        else {
+            $this->type_handler = new TypeHandler();
+        }
+
         if ($event_dispatcher) {
             $this->event_dispatcher = $event_dispatcher;
             $event = new FormHandlerConstructEvent($this, $this->form);
@@ -135,7 +146,7 @@ class FormHandler
             $this->form = $event->getFormBlueprint();
         }
 
-        $this->fields = $form->getAll();
+        $this->fields = $this->getDefaultOptions($form->getAll());
         $this->data = $form->getDefaultData();
 
         $this->method = $form->getMethod();
@@ -148,7 +159,20 @@ class FormHandler
     }
 
     /**
-     * @return FormBlueprint|FormBlueprintInterface
+     *  Get the default options for the fields for their type
+     */
+    protected function getDefaultOptions($fields)
+    {
+        $fields_updated = array();
+        foreach ($fields as $field_name => $field) {
+            $fields_updated[$field_name] = $this->type_handler->getDefaultOptions($field);
+        }
+
+        return $fields_updated;
+    }
+
+    /**
+     * @return FormBlueprintInterface
      */
     public function getForm()
     {
@@ -177,7 +201,7 @@ class FormHandler
     public function bindEntity($entity, $fields = null, $validatable = true, $id = null)
     {
         if ($this->submitted) {
-            throw new \Exception("Entities cannot be assigned after handleRequest has been called");
+            throw new \Exception("Entities cannot be assigned after FormHandler::handleRequest has been called");
         }
 
         $this->entities[] = array('entity' => $entity, 'fields' => $fields, 'validatable' => $validatable);
@@ -208,30 +232,36 @@ class FormHandler
         $request_data = $this->request_handler->handleRequest($this, $request);
 
         foreach ($this->fields as $field) {
-            // If a field is missing from the request, we assume the form wasn't submitted unless it's a checkbox
-            if (!isset($request_data[ $field['name'] ]) && $field['type'] != 'checkbox') {
+            $field_name = $field['name'];
+            if (isset($request_data[ $field_name ])) {
+                $field_submitted = $this->type_handler->isValidRequestData($field, $request_data[$field_name]);
+            }
+            else {
+                $field_submitted = $this->type_handler->allowUnsetRequest($field);
+            }
+
+            // Form was not submitted
+            if ($field_submitted === false) {
                 $this->submitted = false;
                 break;
             }
-            // If the field is set and it's not a checkbox, get it's value
-            elseif ($field['type'] != 'checkbox') {
-                $form_data[ $field['name'] ] = $request_data[ $field['name'] ];
-            }
-            // For checkboxes, get the right value if the checkbox isn't checked
-            elseif (!isset($request_data[ $field['name'] ])) {
-                $form_data[ $field['name'] ] = (isset($field['options']['unchecked_value']) ? $field['options']['unchecked_value'] : 0);
-                $this->fields[$field['name']]['options']['checked'] = false;
-            }
-            // For checkboxes, get the right value when the checkbox is checked
             else {
-                $form_data[ $field['name'] ] =  (isset($field['options']['value']) ? $field['options']['value'] : 1);
-                $this->fields[$field['name']]['options']['checked'] = true;
+                if (isset($request_data[$field_name])) {
+                    $valid_request_data[$field_name] = $this->type_handler->processRequestData($field, $request_data[$field_name]);
+                }
+                else {
+                    $data = $this->type_handler->getUnsetRequestData($field);
+
+                    if ($data !== null) {
+                        $valid_request_data[$field_name] = $data;
+                    }
+                }
             }
         }
 
-        if ($this->submitted == true && isset($form_data)) {
-            $this->data = $form_data;
-            $this->checkRequiredFields();
+        if ($this->submitted == true && isset($valid_request_data)) {
+            $this->data = $valid_request_data;
+            $this->setRequiredFieldErrors();
         }
         else {
             $this->submitted = false;
@@ -249,10 +279,6 @@ class FormHandler
      */
     public function saveToEntities()
     {
-        if (!isset($this->entities)) {
-            return;
-        }
-
         foreach ($this->entities as $entity) {
             $this->entity_processor->saveToEntity($entity['entity'], $this->data, $entity['fields']);
         }
@@ -269,16 +295,6 @@ class FormHandler
     }
 
     /**
-     * Get the processed fields from the form
-     *
-     * @return array
-     */
-    public function getFields()
-    {
-        return $this->processFieldsCollection($this->fields, $this->data);
-    }
-
-    /**
      * Get a processed field from the form
      *
      * @param $name
@@ -286,83 +302,64 @@ class FormHandler
      */
     public function getField($name)
     {
-        if (isset($this->fields[$name])) {
-            return $this->getProcessedField($this->fields[$name], $this->data);
-        }
-
-        return null;
+        return $this->getProcessedField($name);
     }
 
     /**
-     * Process a collection of fields
+     * Process all fields and return them
      *
-     * @param $field_collection
-     * @param $data
      * @return array
      */
-    protected function processFieldsCollection($field_collection, $data)
+    public function getProcessedFields()
     {
         $fields = array();
-        foreach ($field_collection as $field) {
-            // Unnamed array fields
-            if ($field['name'] === null) {
-                if (!isset($i)) $i = 0;
-
-                $field['name'] = $i;
-                $fields[] = $this->getProcessedField($field, $data);
-
-                $i++;
-            }
-            else {
-                $fields[$field['name']] = $this->getProcessedField($field, $data);
-            }
+        foreach ($this->fields as $field_name => $field) {
+            $fields[$field_name] = $this->getProcessedField($field_name);
         }
 
         return $fields;
     }
 
     /**
-     * Process a field, set it's original name and it's value. Process sub-fields if
-     * the field is a collection
+     * Process a field and return it
      *
-     * @param $field
-     * @param $data
-     * @return mixed
+     * @param $field_name
+     * @return bool
      */
-    protected function getProcessedField($field, $data)
+    public function getProcessedField($field_name)
     {
-        if (isset($data[$field['name']]) && $field['type'] != 'checkbox') {
-            $field['value'] = $data[$field['name']];
-        }
-        else if ($field['type'] == 'checkbox') {
-            $field['value'] = (isset($field['options']['value']) ? $field['options']['value'] : 1);
+        if (!isset($this->fields[$field_name])) {
+            return false;
         }
 
-        if (isset($field['fields']) && isset($field['value'])) {
-            $field['fields'] = $this->processFieldsCollection($field['fields'], $field['value']);
-        }
+        $field = $this->fields[$field_name];
 
-        if (isset($field['original_name'])) {
-            $field['name'] = $field['original_name'];
-        }
+        $field['has_error'] = $this->fieldHasError($field_name);
 
-        $field['has_error'] = false;
-
-        if ((isset($this->validator) && $this->isSubmitted() && $this->validator->fieldHasError($field['name'])) || $this->fieldHasCustomError($field['name'])) {
-            $field['has_error'] = true;
-        }
-
-        return $field;
+        return $this->type_handler->makeView($field, $this->data, $this);
     }
 
-    public function fieldHasCustomError($field) {
+    /**
+     * Check if a field has an error
+     *
+     * @param $field_name
+     * @return bool
+     */
+    public function fieldHasError($field_name)
+    {
+        if (!$this->isSubmitted()) {
+            return false;
+        }
+
+        if (isset($this->validator) && $this->validator->fieldHasError($field_name)) {
+            return true;
+        }
+
         foreach ($this->errors as $error) {
-            if ($error->getParam() == $field) {
+            if ($error->getParam() == $field_name) {
                 return true;
             }
         }
-
-        return false;
     }
 
     /**
@@ -384,7 +381,7 @@ class FormHandler
 
     /**
      * @param null $name
-     * @return array|null|string|\Symfony\Component\HttpFoundation\File\UploadedFile
+     * @return mixed
      */
     public function getData($name = null)
     {
@@ -399,6 +396,11 @@ class FormHandler
                 return null;
             }
         }
+    }
+
+    public function getTypeHandler()
+    {
+        return $this->type_handler;
     }
 
     /**
@@ -479,7 +481,7 @@ class FormHandler
             $this->form_view = new FormView();
         }
 
-        $this->form_view->setFields($this->getFields());
+        $this->form_view->setFields($this->getProcessedFields());
         $this->form_view->setMethod($this->getMethod());
         $this->form_view->setName($this->getName());
         $this->form_view->setEncoding($this->getEncoding());
@@ -504,7 +506,12 @@ class FormHandler
 
     public function getValidator()
     {
-        return $this->validator;
+        if (isset($this->validator)) {
+            return $this->validator;
+        }
+        else {
+            throw new \Exception('Cannot get validator, no validator assigned');
+        }
     }
 
     /**
@@ -532,7 +539,11 @@ class FormHandler
         }
     }
 
-    public function checkRequiredFields()
+    /**
+     * Check each field to see if they're required. If they have no data set, assign the error
+     * TODO: Recursive support for collection
+     */
+    public function setRequiredFieldErrors()
     {
         foreach ($this->fields as $field) {
             if (isset($field['options']['required']) && $field['options']['required'] === true) {
@@ -588,13 +599,13 @@ class FormHandler
         return $errors;
     }
 
-    public function __get($param)
+    public function __get($name)
     {
-        return $this->getData($param);
+        return $this->getData($name);
     }
 
-    public function __isset($param)
+    public function __isset($name)
     {
-        return isset($this->data[$param]);
+        return isset($this->data[$name]);
     }
 }

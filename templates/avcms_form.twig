@@ -1,6 +1,6 @@
 {% block form_start %}
     {% spaceless %}
-    <form enctype="{{ form.params.encoding }}" action="{{ form.params.action }}" name="{{ form.params.name }}" method="{{ form.params.method }}">
+    <form enctype="{{ form.params.encoding }}" {% if form.params.action is not empty %}action="{{ form.params.action }}"{% endif %} name="{{ form.params.name }}" method="{{ form.params.method }}"{{ block('attributes') }}>
     {% endspaceless %}
 {% endblock %}
 
@@ -13,7 +13,7 @@
 {% block input_field %}
     {% spaceless %}
     {% set type = type|default('text') %}
-    <input type="{{ type }}" name="{{ name }}" {% if value is not empty %}value="{{ value }}" {% endif %} />
+    <input type="{{ type }}" name="{{ name }}" {% if value is not empty %}value="{{ value }}" {% endif %} {{ block('attributes') }} />
     {% endspaceless %}
 {% endblock %}
 
@@ -104,7 +104,7 @@
 {% block form_rows %}
     {% spaceless %}
         {% for form_row in form_rows %}
-            {{ form_row(form_row) }}
+            {{ form_row(form_row, attr[form_row.name]|default({})) }}
         {% endfor %}
     {% endspaceless %}
 {% endblock %}
@@ -112,8 +112,8 @@
 {% block form_label_row %}
     {% spaceless %}
         <div class="form_row">
-            {{ form_label(form_row) }}
-            {{ form_field(form_row) }}
+            {{ form_label(form_row, attr) }}
+            {{ form_field(form_row, attr) }}
         </div>
     {% endspaceless %}
 {% endblock %}
@@ -138,4 +138,10 @@
             {{ form_row(field) }}
         {% endfor %}
     {% endspaceless %}
+{% endblock %}
+
+{% block attributes %}
+    {% for attr_name, attr_value in attr %}
+        {{ attr_name }}="{{- attr_value -}}"
+    {% endfor %}
 {% endblock %}

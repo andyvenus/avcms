@@ -4,11 +4,11 @@
     {% spaceless %}
         <div class="form-group{% if form_row.has_error == true %} has-error{% endif %}">
             <div class="control-label">
-                {{ form_label(form_row) }}
+                {{ form_label(form_row, attr) }}
             </div>
 
             <div class="form_field">
-                {{ form_field(form_row) }}
+                {{ form_field(form_row, attr) }}
             </div>
         </div>
     {% endspaceless %}
@@ -17,7 +17,7 @@
 {% block checkbox_row %}
     {% spaceless %}
         <div class="checkbox{% if form_row.has_error == true %} has-error{% endif %}">
-                {{ form_field(form_row) }}
+                {{ form_field(form_row, attr) }}
         </div>
     {% endspaceless %}
 {% endblock %}
@@ -25,7 +25,7 @@
 {% block input_field %}
     {% spaceless %}
         {% set type = type|default('text') %}
-        <input type="{{ type }}" name="{{ name }}" {% if value is not empty %}value="{{ value }}"{% endif %} class="form-control" />
+        <input type="{{ type }}" name="{{ name }}" {% if value is not empty %}value="{{ value }}"{% endif %} {{ block('attributes') }} />
     {% endspaceless %}
 {% endblock %}
 
@@ -40,4 +40,11 @@
         {% set type = type|default('button') %}
         <button type="{{ type }}" class="btn btn-success">{{ label }}</button>
     {% endspaceless %}
+{% endblock %}
+
+{% block attributes %}
+    {% if type == 'input' or type == 'textarea' or type == 'text' %}
+        {% set attr = attr|merge({class: attr.class ~ ' form-control'}) %}
+    {% endif %}
+    {{ parent() }}
 {% endblock %}

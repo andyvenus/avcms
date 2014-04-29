@@ -1,0 +1,44 @@
+{% extends ajax_depth ? '@admin/ajax_page.twig' : '@admin/index.twig' %}
+
+{% block title %}Browser{% endblock %}
+
+{% block main_content %}
+    <div class="browser">
+        <div class="browser-finder animated fadeIn">
+            <div class="browser-finder-top">
+                {% block finder_top -%}
+                    <h3>Browser</h3>
+                {%- endblock %}
+            </div>
+
+            {% block add_item %}
+                <div class="add-item">
+                    <div class="finder-item-title">
+                        Add Item
+                    </div>
+                </div>
+            {% endblock %}
+
+            <div class="browser-finder-results">
+                <div class="nano">
+                    <div class="nano-content finder-ajax">
+                        {% block finder %}
+
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="browser-editor">
+            <div class="mobile-back">
+                <a href="{% block mobile_back_link %}{% endblock %}" class="btn btn-link"><span class="glyphicon glyphicon-chevron-left"></span> Back To Finder</a>
+            </div>
+
+            <div class="ajax-editor">
+                <div class="ajax-editor-inner">
+                    {% block editor %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

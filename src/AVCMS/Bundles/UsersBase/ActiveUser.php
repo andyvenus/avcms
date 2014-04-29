@@ -16,8 +16,11 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class ActiveUser implements EventSubscriberInterface {
-
+class ActiveUser implements EventSubscriberInterface
+{
+    /**
+     * @var
+     */
     protected $user;
 
     /**
@@ -123,7 +126,7 @@ class ActiveUser implements EventSubscriberInterface {
         return false;
     }
 
-    public function logIn($identifier, $password, $remember = false)
+    public function logIn($identifier, $password, $remember = 0)
     {
         $login_handler = new LoginHandler($this->users_model, $this->sessions_model);
         $login_handler->logIn($identifier, $password, $remember);
@@ -175,13 +178,17 @@ class ActiveUser implements EventSubscriberInterface {
         foreach ($permission_entities as $permission) {
             $this->permissions[ $permission->getName() ] = $permission->getValue();
         }
+
+        if ($this->user->getAdmin() === '1') {
+            $this->permissions[ 'admin' ] = 1;
+        }
     }
 
 
     public static function getSubscribedEvents()
     {
         return array(
-            KernelEvents::REQUEST => 'kernelRequestEvent',
+            KernelEvents::REQUEST => array('kernelRequestEvent', 10),
         );
     }
 }

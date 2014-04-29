@@ -3,7 +3,7 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-    {{ form_start(login_form, 'blog_form.twig') }}
+    {{ form_start(login_form, null, 'bootstrap_form.twig') }}
 
     {% if login_form.errors is not empty %}
         <div class="alert alert-danger">

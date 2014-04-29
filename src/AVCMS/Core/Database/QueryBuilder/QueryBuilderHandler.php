@@ -41,14 +41,14 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
      * @internal param null $query_name
      * @return mixed
      */
-    public function get($class = 'stdClass')
+    public function get($class = null)
     {
-        if ($class == 'stdClass' && isset($this->entity)) {
+        if ($class == null && isset($this->entity)) {
             $class = $this->entity;
         }
 
         // If we have sub-entities, do the more complex method including joins
-        if (isset($this->model)) {
+        if (isset($this->model) && $class != 'stdClass') {
             return $this->getEntity($class);
         }
 
@@ -406,5 +406,37 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
         }
 
         return $str;
+    }
+
+    /**
+     * Updated to use stdClass
+     *
+     * @param $type
+     *
+     * @return int
+     */
+    protected function aggregate($type)
+    {
+        // Get the current selects
+        $mainSelects = isset($this->statements['selects']) ? $this->statements['selects'] : null;
+        // Replace select with a scalar value like `count`
+        $this->statements['selects'] = array($this->raw($type . '(*) as field'));
+        $row = $this->get('stdClass');
+
+        // Set the select as it was
+        if ($mainSelects) {
+            $this->statements['selects'] = $mainSelects;
+        } else {
+            unset($this->statements['selects']);
+        }
+
+        return isset($row[0]->field) ? (int) $row[0]->field : 0;
+    }
+
+
+    public function paginated($page, $results_per_page) {
+        $offset = $results_per_page * ($page - 1);
+
+        return $this->limit($results_per_page)->offset($offset);
     }
 } 

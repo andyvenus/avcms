@@ -44,6 +44,7 @@ $routes->add('subreq', new Route('/subreq', array(
 
 $routes->add('stress', new Route('/stress', array(
     '_controller' => 'AVCMS\\Games\\Controller\\GamesController::stressTestAction',
+    '_permissions' => array('ADMIN_BLOG', 'EDIT')
 )));
 
 $routes->add('setuser', new Route('/setuser/{id}', array(

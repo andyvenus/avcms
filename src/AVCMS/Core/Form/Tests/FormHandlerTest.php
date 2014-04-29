@@ -17,6 +17,7 @@ use AVCMS\Core\Form\Tests\Fixtures\AvcmsStandardEntity;
 use AVCMS\Core\Form\Tests\Fixtures\BasicForm;
 use AVCMS\Core\Form\Tests\Fixtures\StandardFormEntity;
 use AVCMS\Core\Form\Tests\Fixtures\StandardForm;
+use AVCMS\Core\Form\Type\TypeHandler;
 use Symfony\Component\HttpFoundation\Request;
 
 class FormHandlerTest extends \PHPUnit_Framework_TestCase
@@ -261,6 +262,15 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('', $entity_two->getPassword());
     }
 
+    public function testBindEntityException()
+    {
+        $this->setExpectedException('\Exception');
+
+        $this->basic_form_handler->handleRequest(array());
+
+        $this->basic_form_handler->bindEntity(new StandardFormEntity());
+    }
+
     /**
      * @dataProvider providerDefaultValues
      *
@@ -307,7 +317,7 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $form_handler->getField('name'));
     }
 
-    public function testGetFields()
+    public function testGetProcessedFields()
     {
         $request = $this->standard_form_request;
 
@@ -327,7 +337,12 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $this->assertEquals($expected, $form_handler->getFields());
+        $this->assertEquals($expected, $form_handler->getProcessedFields());
+    }
+
+    public function testNonExistentProcessedField()
+    {
+        $this->assertFalse($this->basic_form_handler->getProcessedField('does-not-exist'));
     }
 
     public function testCreateView()
@@ -384,8 +399,17 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
 
         $this->basic_form_handler->handleRequest($this->basic_form_request);
 
+        $this->assertEquals($this->mock_validator, $this->basic_form_handler->getValidator());
         $this->assertFalse($this->basic_form_handler->isValid());
         $this->assertEquals($errors, $this->basic_form_handler->getValidationErrors());
+    }
+
+    public function testNoValidator()
+    {
+        $this->assertFalse($this->basic_form_handler->isValid());
+
+        $this->setExpectedException('\Exception', 'Cannot get validator, no validator assigned');
+        $this->basic_form_handler->getValidator();
     }
 
     public function testArrayFields()
@@ -451,75 +475,72 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->standard_form, $form);
     }
 
-    /**
-     * @dataProvider providerCheckboxBehaviour
-     *
-     * @param $options
-     * @param $expected_data
-     * @param $expected_checked
-     * @param $request
-     */
-    public function testCheckboxBehaviour($options, $expected_data, $expected_checked, $request)
+    public function testSetTypeHandler()
     {
-        $form = new FormBlueprint();
-        $form->add('test_cb', 'checkbox', $options);
-
-        $form_handler = new FormHandler($form);
-
-        $_POST = $request;
-        $form_handler->handleRequest();
-
-        $data = $form_handler->getData();
-        $field = $form_handler->getField('test_cb');
-
-        $this->assertEquals($expected_data, $data['test_cb']);
-        $this->assertEquals($expected_checked, $field['options']['checked']);
+        $type_handler = new TypeHandler();
+        $form_handler = new FormHandler($this->basic_form, null, null, $type_handler);
+        $this->assertEquals($type_handler, $form_handler->getTypeHandler());
     }
 
-    public function providerCheckboxBehaviour()
+    public function testAllowUnset()
     {
-        return array(
-            // Request made, checkbox was ticked, default values
-            array (
-                array(),
-                '1',
-                true,
-                array('test_cb' => '1')
-            ),
-            // Request not made, default values
-            array (
-                array(),
-                '0',
-                false,
-                array()
-            ),
-            // Request made, checkbox was ticked, has value set
-            array (
-                array(
-                    'value' => 'set'
-                ),
-                'set',
-                true,
-                array('test_cb' => 'set')
-            ),
-            // Request not made, checkbox not ticked, has unchecked_value set
-            array (
-                array(
-                    'value' => 'set',
-                    'unchecked_value' => 'unset_value'
-                ),
-                'unset_value',
-                false,
-                array()
-            ),
-            // Request not made, checkbox not ticked, no values set
-            array (
-                array(),
-                '0',
-                false,
-                array()
-            )
-        );
+        $form = new FormBlueprint();
+        $form->add('unset_allowed', 'input', array(
+            'allow_unset' => true,
+            'unset_value' => 'unset_value'
+        ));
+
+        $handler = new FormHandler($form);
+
+        $handler->handleRequest();
+
+        $this->assertTrue($handler->isSubmitted());
+
+        $processed_field = $handler->getProcessedField('unset_allowed');
+
+        $this->assertEquals('unset_value', $processed_field['value']);
+    }
+
+    public function testCustomErrors()
+    {
+        $custom_error = new FormError('name', 'Custom Error');
+
+        $this->basic_form_handler->addCustomErrors(array($custom_error));
+    }
+
+    public function testCustomErrorsException()
+    {
+        $this->setExpectedException('\Exception', 'Custom errors must be AVCMS\Core\Form\FormError objects');
+
+        $this->basic_form_handler->addCustomErrors(array('invalid'));
+    }
+
+    public function testFileFormEncoding()
+    {
+        $form_blueprint = new FormBlueprint();
+        $form_blueprint->add('file_upload', 'file');
+
+        $handler = new FormHandler($form_blueprint);
+
+        $this->assertEquals('multipart/form-data', $handler->getEncoding());
+    }
+
+    public function testFormEvents()
+    {
+        if (!class_exists('\Symfony\Component\EventDispatcher\EventDispatcher')) {
+            $this->markTestSkipped('Symfony Event dispatcher not installed');
+            return;
+        }
+
+        $event_dispatcher_mock = $this->getMock('\Symfony\Component\EventDispatcher\EventDispatcher');
+
+        $event_dispatcher_mock->expects($this->exactly(2))
+            ->method('dispatch');
+
+        // Triggers FormHandlerConstructEvent
+        $handler = new FormHandler(new BasicForm(), null, null, null,  $event_dispatcher_mock);
+        // Triggers FormHandlerRequestEvent
+        $handler->handleRequest();
     }
 
     public function providerDefaultValues()

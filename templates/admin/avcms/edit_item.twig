@@ -1,0 +1,30 @@
+{% extends '@admin/editor.twig' %}
+
+{% block title %}No title{% endblock %}
+
+{% block editor_title_edit %}
+    Editing
+{% endblock %}
+
+{% block editor_title_new -%}
+    Adding New
+{%- endblock %}
+
+{% block editor_content %}
+    {{ form_start(form, {"data-item-id": item.id|default(0)}, 'bootstrap_form.twig') }}
+
+    <div class="form-errors">
+        {% for error in form.errors %}
+            <div class="alert alert-danger">{{ error.message }}</div>
+        {% endfor %}
+    </div>
+
+    {% block form_rows %}
+        {{ form_rows(form) }}
+    {% endblock %}
+
+    {{ form_submit_button(form) }}
+    <button type="button" class="btn btn-link reset-button">Revert Changes</button>
+
+    {{ form_end(form) }}
+{% endblock %}

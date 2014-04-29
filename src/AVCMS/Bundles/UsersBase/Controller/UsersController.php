@@ -21,7 +21,7 @@ class UsersController extends Controller
         $login_form->handleRequest($request);
 
         if ($login_form->isSubmitted()) {
-            $login_handler = $this->getActiveUser()->logIn($login_form->identifier, $login_form->password, $login_form->remember);
+            $login_handler = $this->activeUser()->logIn($login_form->identifier, $login_form->password, $login_form->remember);
             $login_form->addCustomErrors($login_handler->getErrors());
 
             if ($login_handler->loginSuccess() && $login_form->isValid()) {

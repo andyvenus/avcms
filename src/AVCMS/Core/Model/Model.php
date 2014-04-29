@@ -103,15 +103,17 @@ abstract class Model implements ModelInterface {
      *
      * @param Entity $entity
      * @param string $column_match
+     * @return array|null|int
      * @throws \Exception
      */
     public function save(Entity $entity, $column_match = null)
     {
         if ($entity->getId()) {
             $this->update($entity, $column_match);
+            return $entity->getId();
         }
         else {
-            $this->insert($entity);
+            return $this->insert($entity);
         }
     }
 

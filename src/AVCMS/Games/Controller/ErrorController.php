@@ -2,8 +2,8 @@
 
 namespace AVCMS\Games\Controller;
 
+use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\FlattenException;
 
 class ErrorController
 {
