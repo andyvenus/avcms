@@ -1,13 +1,13 @@
 {% extends '@admin/editor.twig' %}
 
-{% block title %}No title{% endblock %}
+{% block title %}{% trans %}No title{% endtrans %}{% endblock %}
 
 {% block editor_title_edit %}
-    Editing
+    {% trans %}Editing{% endtrans %}
 {% endblock %}
 
 {% block editor_title_new -%}
-    Adding New
+    {% trans %}Adding New{% endtrans %}
 {%- endblock %}
 
 {% block editor_content %}
@@ -24,7 +24,7 @@
     {% endblock %}
 
     {{ form_submit_button(form) }}
-    <button type="button" class="btn btn-link reset-button">Revert Changes</button>
+    <button type="button" class="btn btn-link reset-button">{% trans %}Revert Changes{% endtrans %}</button>
 
     {{ form_end(form) }}
 {% endblock %}

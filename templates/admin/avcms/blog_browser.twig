@@ -1,17 +1,30 @@
 {% extends '@admin/browser.twig' %}
 
+{% block title %}
+    {% trans %}Blog Posts{% endtrans %}
+{% endblock %}
+
 {% block finder_top -%}
-    <h3>Blog Posts</h3>
+    <h3>{% trans %}Blog Posts{% endtrans %}</h3>
+
     {{ form_start(finder_filters_form) }}
+
     <div class="filter-form-row">{{ form_field(finder_filters_form.order) }}</div>
-    {{ form_field(finder_filters_form.search, {"class": "input-md", "placeholder": "Search"}) }}
+
+    <div class="input-group">
+        {{ form_field(finder_filters_form.search, {"class": "input-md", "placeholder": "Search", "autocomplete": "off"}) }}
+        <span class="input-group-btn">
+            <button class="btn btn-default clear-search" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+        </span>
+    </div>
+
     {{ form_end(finder_filters_form) }}
 {%- endblock %}
 
 {% block add_item %}
     <div class="add-item">
         <a href="{{ url('blog_add_post') }}">
-            <span class="glyphicon glyphicon-plus"> </span> Add Blog Post
+            <span class="glyphicon glyphicon-plus"></span> {% trans %}Add Blog Post{% endtrans %}
         </a>
     </div>
 {% endblock %}

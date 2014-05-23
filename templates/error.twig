@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title>Error: {{ error.message }}</title>
+
+        <style type="text/css">
+            body {
+                font-family: Verdana, Helvetica, Arial, sans-serif;
+            }
+            .error-container {
+                margin: 50px auto;
+                text-align: center;
+
+            }
+            .error-status-code {
+                font-size: 100px;
+                color: #626262;
+
+                text-shadow: 3px 3px #dddddd;
+                margin-bottom: 15px;
+            }
+            .error-message {
+                color: #5d5d5d;
+            }
+            .error-home-link {
+                margin-top: 30px;
+            }
+
+            .error-home-link a {
+                color: #222222;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="error-container">
+
+                <div class="error-status-code">
+                    {% if error.statusCode != 200 %}
+                        {{ error.statusCode }}
+                    {% else %}
+                        :(
+                    {% endif %}
+                </div>
+
+
+            <div class="error-message">
+                {{ error.message }}
+            </div>
+
+            <div class="error-home-link">
+                <a href="{{ url('blog_home') }}">&larr; Go To Homepage</a>
+            </div>
+        </div>
+    </body>
+</html>

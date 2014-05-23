@@ -9,10 +9,10 @@ namespace AVCMS\Core\AssetManager\Asset;
 
 use Assetic\Asset\FileAsset;
 
-class BundleFileAsset extends FileAsset implements BundleAssetInterface
+class AppFileAsset extends FileAsset implements AppAssetInterface
 {
 
-    protected $bundle;
+    protected $template;
 
     protected $type;
 
@@ -20,20 +20,14 @@ class BundleFileAsset extends FileAsset implements BundleAssetInterface
 
     protected $source;
 
-    public function __construct($bundle, $type, $file, $filters = array(), $sourceRoot = null, $sourcePath = null, array $vars = array())
+    public function __construct($type, $file, $filters = array(), $sourceRoot = null, $sourcePath = null, array $vars = array())
     {
-        $this->bundle = $bundle;
         $this->type = $type;
         $this->file = $file;
 
-        $this->source = 'src/AVCMS/Bundles/'.$bundle.'/resources/'.$type.'/'.$file;
+        $this->source = 'web/'.$type.'/'.$file;
 
         parent::__construct($this->source, $filters, $sourceRoot, $sourcePath, $vars);
-    }
-
-    public function getBundle()
-    {
-        return $this->bundle;
     }
 
     public function getType()
@@ -48,6 +42,6 @@ class BundleFileAsset extends FileAsset implements BundleAssetInterface
 
     public function getDevUrl($prepend)
     {
-        return $prepend.'bundle_asset/'.$this->getBundle().'/'.$this->getType().'/'.$this->getFile();
+        return $this->source;
     }
 }

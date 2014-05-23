@@ -43,7 +43,7 @@
 {% endblock %}
 
 {% block attributes %}
-    {% if type == 'input' or type == 'textarea' or type == 'text' %}
+    {% if type == 'input' or type == 'textarea' or type == 'text' or type == 'password' %}
         {% set attr = attr|merge({class: attr.class ~ ' form-control'}) %}
     {% endif %}
     {{ parent() }}

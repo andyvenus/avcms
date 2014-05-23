@@ -7,10 +7,11 @@
 
 namespace AVCMS\Bundles\Blog\Controller;
 
+use AVCMS\Bundles\Blog\Finder\BlogPostsFinder;
 use AVCMS\Bundles\Blog\Form\BlogPostsFilterForm;
 use AVCMS\Bundles\Blog\Form\PostForm;
 use AVCMS\Core\Controller\AdminController;
-use AVCMS\Core\Finder\Finder;
+
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,58 +33,30 @@ class BlogAdminController extends AdminController
 
     public function editPostAction(Request $request)
     {
-        //$this->requirePermissions(array('manage_blog', 'edit_blog_post'));
-
-        $posts = $this->model('Posts');
-
-        $post = $posts->getOneOrNew($request->get('id', 0));
-
-        if (!$post) {
-            throw $this->createNotFoundException('Post not found');
-        }
+        $model = $this->model('Posts');
 
         $current_username = $this->activeUser()->getUser()->getUsername();
-        $form = $this->buildForm(new PostForm($current_username), $post, $request);
+        $form_blueprint = new PostForm($current_username);
 
-        if ($form->isSubmitted()) {
-            $id = null;
-            if ($form->isValid()) {
-                $id = $posts->save($post);
-            }
-
-            return new JsonResponse(array(
-                'form' => $form->createView()->getJsonResponseData(),
-                'redirect' => $this->generateUrl('blog_edit_post', array('id' => $id))
-            ));
-        }
-
-        return new Response($this->renderAdminSection(
-            '@AVBlog/edit_post.twig',
-            $request->get('ajax_depth'),
-            array('item' => $post, 'form' => $form->createView(), 'browser_template' => '@admin/blog_browser.twig'))
-        );
+        return $this->editItem($request, $model, $form_blueprint, '@AVBlog/edit_post.twig', '@admin/blog_browser.twig', 'blog_edit_post');
     }
 
     public function finderAction(Request $request)
     {
         $posts_model = $this->model('Posts');
 
-        $finder = new Finder($posts_model);
+        $finder = new BlogPostsFinder($posts_model);
+        $finder->setSearchFields(array('title'));
         $finder->setResultsPerPage(10);
-        $finder->handleRequest($request, array('page' => 1, 'order' => 'newest'));
+        $finder->handleRequest($request, array('page' => 1, 'order' => 'newest', 'search' => null));
 
-        $users_model = $this->model($this->config['users_model']);
+        $users_model = $this->model('@users');
 
         $posts = $finder->getQuery()
             ->modelJoin($users_model, array('username'))
             ->get();
 
         return new Response($this->render('@admin/finder.twig', array('posts' => $posts)));
-    }
-
-    public function turnipsAction()
-    {
-        return new Response('<div id="ajax_page_title">lol</div>Ha');
     }
 
     protected function getIndexTemplateVars($ajax_depth)

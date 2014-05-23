@@ -25,7 +25,12 @@ class Finder
     /**
      * @var int
      */
-    protected $results_per_page;
+    protected $results_per_page = 10;
+
+    /**
+     * @var array
+     */
+    protected $search_fields = array();
 
     /**
      * @var array
@@ -35,8 +40,6 @@ class Finder
     public function __construct(Model $model)
     {
         $this->model = $model;
-
-        $this->results_per_page = 10;
 
         $this->sort_options = array(
             'newest' => 'id DESC',
@@ -90,6 +93,36 @@ class Finder
         }
 
         $this->current_query->paginated($page, $this->results_per_page);
+    }
+
+    public function search($term)
+    {
+        if (!$term) {
+            return;
+        }
+
+        $search_fields = $this->search_fields;
+
+        $this->current_query->where(function ($q) use ($term, $search_fields)
+        {
+            foreach ($search_fields as $search_field) {
+                if (!isset($i)) {
+                    $func = 'where';
+                    $i = true;
+                }
+                else {
+                    $func = 'orWhere';
+                }
+
+                //todo: is secure?
+                $q->$func($search_field, 'LIKE', '%'.$term.'%');
+            }
+        });
+    }
+
+    public function setSearchFields(array $fields)
+    {
+        $this->search_fields = $fields;
     }
 
     public function getQuery($ignored_filters = array())

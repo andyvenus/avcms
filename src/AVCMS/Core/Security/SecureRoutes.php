@@ -8,7 +8,6 @@
 namespace AVCMS\Core\Security;
 use AVCMS\Bundles\UsersBase\ActiveUser;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\RouteCollection;
@@ -21,31 +20,50 @@ use Symfony\Component\Routing\RouteCollection;
  */
 class SecureRoutes implements EventSubscriberInterface
 {
+    /**
+     * @var array
+     */
+    protected $secure_url_matches = array();
+
     public function __construct(ActiveUser $active_user, RouteCollection $routes)
     {
         $this->active_user = $active_user;
         $this->routes = $routes;
     }
 
+    public function addRouteMatcherPermission($regex, $permission)
+    {
+        $this->secure_url_matches[] = array('regex' => $regex, 'permission' => $permission);
+    }
+
     public function handleRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();
 
+        if ($request->attributes->has('exception')) {
+            return;
+        }
+
         $route = $this->routes->get($request->attributes->get(('_route')));
         $route_path = $route->getPath();
 
-        if (preg_match('/^\/admin/', $route_path)) {
-            if ($this->active_user->hasPermission('admin') == false) {
-                $event->setResponse($this->getNoAccessResponse());
+
+        // Regex protected routes
+        foreach ($this->secure_url_matches as $match) {
+            if (preg_match($match['regex'], $route_path)) {
+                if ($this->active_user->hasPermission($match['permission']) == false) {
+                    throw new PermissionsError('You don\'t have permission to access this page (regex secure).');
+                }
             }
         }
 
+        // Explicitly protected route
         if ($request->attributes->has('_permissions')) {
             $permissions = (array) $request->attributes->get('_permissions');
 
             foreach ($permissions as $permission) {
                 if ($this->active_user->hasPermission($permission) == false) {
-                    $event->setResponse($this->getNoAccessResponse());
+                    throw new PermissionsError('You don\'t have permission to access this page (explicitly secure route).');
                 }
             }
         }
@@ -56,10 +74,5 @@ class SecureRoutes implements EventSubscriberInterface
         return array(
             KernelEvents::REQUEST => array('handleRequest', 8),
         );
-    }
-
-    private function getNoAccessResponse()
-    {
-        return new Response('You don\'t have permission to access this page.');
     }
 }

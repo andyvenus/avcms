@@ -9,6 +9,7 @@ use AVCMS\Core\Form\FormView;
 use AVCMS\Core\Form\RequestHandler\SymfonyRequestHandler;
 use AVCMS\Core\Form\ValidatorExtension\AVCMSValidatorExtension;
 use AVCMS\Core\Model\FormEntityProcessor;
+use AVCMS\Core\Security\PermissionsError;
 use AVCMS\Core\Validation\Validator;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -37,21 +38,7 @@ abstract class Controller extends ContainerAware {
     {
         $this->container = $container;
         $this->model_factory = $container->get('model.factory');
-        // TODO: Remove this
-        $this->translator = new Translator('en_GB', new MessageSelector());
-        $this->translator->addLoader('array', new ArrayLoader());
-        $this->translator->addResource('array',
-            array(
-                'That name is already in use' => 'Arr, that name be already in use',
-                'Name' => 'FRUNCH NAME',
-                'Cat One' => 'Le Category Une',
-                'Published' => 'Pubèlishé',
-                'Submit' => 'Procesèur',
-                'Cannot find an account that has that username or email address' => 'Oh vue du nuet finel the user',
-                'Title' => 'Oh qui le Titlè'
-            ),
-            'en_GB'
-        );
+        $this->translator = $container->get('translator');
     }
 
     /**
@@ -61,7 +48,7 @@ abstract class Controller extends ContainerAware {
     protected function model($model_name)
     {
         // If no namespace seems to be specified, use the same namespace that the controller uses
-        if (!strpos($model_name, '\\')) {
+        if (strpos($model_name, '\\') === false && strpos($model_name, '@') === false) {
             $class = get_class($this);
             $namespace = substr($class, 0, strpos($class, '\\Controller'));
 
@@ -155,8 +142,12 @@ abstract class Controller extends ContainerAware {
 
     public function requirePermissions($permissions)
     {
-        if ($this->activeUser()->hasPermission($permissions) == false) {
-            throw new \Exception('');
+        $permissions = (array) $permissions;
+
+        foreach ($permissions as $permission) {
+            if ($this->activeUser()->hasPermission($permission) == false) {
+                throw new PermissionsError('You do not have authorisation to view this page', $permission);
+            }
         }
     }
 }

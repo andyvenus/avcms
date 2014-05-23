@@ -7,12 +7,14 @@
 
 namespace AVCMS\Bundles\Assets\Controller;
 
+use AVCMS\Core\AssetManager\Asset\BundleAssetInterface;
+use AVCMS\Core\AssetManager\Asset\TemplateAssetInterface;
 use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 class AssetsController extends Controller
 {
-    public function getAssetAction($bundle, $asset, $type)
+    public function getAssetAction($asset_file, $type, $bundle = null, $template = null, $environment = null)
     {
         /**
          * @var $bundle_manager \AVCMS\Core\BundleManager\BundleManager
@@ -28,10 +30,18 @@ class AssetsController extends Controller
         $assets = $asset_manager->$manager_getter();
 
         foreach ($assets as $asset_environment) {
-            foreach ($asset_environment as $asset_obj) {
-                if ($asset_obj->getBundle() == $bundle && $asset_obj->getType() == $type && $asset_obj->getFile() == $asset) {
-                    $selected_asset = $asset_obj;
-                    break;
+            foreach ($asset_environment as $asset) {
+                if ($bundle != null && $asset['asset'] instanceof BundleAssetInterface) {
+                    if ($asset['asset']->getBundle() == $bundle && $asset['asset']->getType() == $type && $asset['asset']->getFile() == $asset_file) {
+                        $selected_asset = $asset['asset'];
+                        break;
+                    }
+                }
+                else if ($template != null && $asset['asset'] instanceof TemplateAssetInterface) {
+                    if ($asset['asset']->getEnvironment() == $environment && $asset['asset']->getTemplate() == $template && $asset['asset']->getType() == $type && $asset['asset']->getFile() == $asset_file) {
+                        $selected_asset = $asset['asset'];
+                        break;
+                    }
                 }
             }
         }

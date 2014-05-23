@@ -7,7 +7,9 @@
 
 namespace AVCMS\Core\AssetManager\Twig;
 
+use Assetic\Asset\BaseAsset;
 use AVCMS\Core\AssetManager\Asset\BundleAsset;
+use AVCMS\Core\AssetManager\Asset\BundleFileAsset;
 use AVCMS\Core\AssetManager\AssetManager;
 
 class AssetManagerExtension extends \Twig_Extension
@@ -67,34 +69,26 @@ class AssetManagerExtension extends \Twig_Extension
             $ext = 'css';
         }
 
-        return array("web/compiled/$environment.$ext", "web/compiled/shared.$ext");
+        return array("web/compiled/$environment.$ext");
     }
 
     protected function getDevAssetUrls($asset_type, $environment)
     {
-        $asset_method = 'get'.$asset_type;
-
-        $assets = $this->asset_manager->$asset_method();
-
-        $asset_urls = array();
-
-        if (isset($assets[$environment])) {
-            foreach ($assets[$environment] as $asset) {
-                $asset_urls[] = 'front.php/'.$this->generateDevAssetUrl($asset);
-            }
-        }
-        if (isset($assets[AssetManager::SHARED])) {
-            foreach ($assets[AssetManager::SHARED] as $asset) {
-                $asset_urls[] = 'front.php/'.$this->generateDevAssetUrl($asset);
-            }
-        }
-
-        return $asset_urls;
+        return $this->asset_manager->getDevAssetUrls($asset_type, $environment);
     }
 
-    protected function generateDevAssetUrl(BundleAsset $asset)
+    /**
+     * @param $asset \AVCMS\Core\AssetManager\Asset\BundleFileAsset|\AVCMS\Core\AssetManager\Asset\TemplateFileAsset
+     * @return string
+     */
+    protected function generateDevAssetUrl($asset)
     {
-        return 'asset/'.$asset->getBundle().'/'.$asset->getType().'/'.$asset->getFile();
+        if ($asset instanceof BundleFileAsset) {
+            return 'bundle_asset/'.$asset->getBundle().'/'.$asset->getType().'/'.$asset->getFile();
+        }
+        else {
+            return 'template_asset/'.$asset->getEnvironment().'/'.$asset->getTemplate().'/'.$asset->getType().'/'.$asset->getFile();
+        }
     }
 
     /**

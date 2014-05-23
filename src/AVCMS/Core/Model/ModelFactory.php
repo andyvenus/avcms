@@ -12,6 +12,8 @@ class ModelFactory {
 
     protected $query_builder;
 
+    protected $aliases;
+
     /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcher
      */
@@ -23,11 +25,28 @@ class ModelFactory {
         $this->event_dispatcher = $event_dispatcher;
     }
 
+    public function addModelAlias($alias, $class)
+    {
+        $this->aliases[$alias] = $class;
+    }
+
     /**
      * @param $model_class
+     * @throws \Exception
      * @return Model
      */
-    public function create($model_class) {
+    public function create($model_class)
+    {
+
+        if (strpos($model_class,'@') !== false) {
+            $alias = str_replace('@', '', $model_class);
+            if (isset($this->aliases[$alias])) {
+                $model_class = $this->aliases[$alias];
+            }
+            else {
+                throw new \Exception("Model alias '$model_class' not found");
+            }
+        }
 
         $model = new $model_class($this->query_builder, $this->event_dispatcher);
 

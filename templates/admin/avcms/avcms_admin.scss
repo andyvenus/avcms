@@ -37,7 +37,6 @@ body {
   float: left;
   background-color: $main_menu_color;
   width: 180px;
-  min-height: 100%;
   color: lighten($main_menu_color, 60);
   display: none;
 
@@ -71,12 +70,11 @@ body {
   float: left;
   background-color: $finder_background;
   border-right: 1px solid darken($finder_background, 5);
-  min-height: 790px;
   display:none;
 }
 
 .finder-has-focus {
-  display: inherit;
+  display: inline;
   width: 100%;
 }
 
@@ -89,7 +87,7 @@ body {
   width: 220px;
 }
 
-.browser-finder-top {
+.browser-finder-filters {
   padding: 10px;
 
   h3 {
@@ -143,11 +141,11 @@ body {
   }
 }
 
-.finder-item-edited > .finder-item-title {
+.finder-item-edited .finder-item-title {
   color: $warning_color;
 }
 
-.finder-item-saved > .finder-item-title {
+.finder-item-saved .finder-item-title {
   color: $success_color;
 }
 
@@ -197,7 +195,7 @@ body {
     }
   }
 
-  .browser-finder-top {
+  .browser-finder-filters {
     max-width: 300px;
   }
 }

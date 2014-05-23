@@ -3,7 +3,7 @@
 <html>
 <head>
     {% block head %}
-        <title>{% block title %}{% endblock %} - AVCMS</title>
+        <title>{% block title %}{% endblock %}</title>
     {% endblock %}
 
     <link rel="stylesheet" type="text/css" href="{{ url }}/web/css/style.css" />
@@ -27,9 +27,12 @@
     {% endfor %}
 
     <!--[if lt IE 9]>
-    <script src="{{ url }}/web/js/html5shiv.js"></script>
-    <script src="{{ url }}/web/js/respond.js"></script>
+    <script src="{{ url }}/web/javascript/html5shiv.js"></script>
+    <script src="{{ url }}/web/javascript/respond.js"></script>
     <![endif]-->
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{{ url }}/web/javascript/avcms_admin.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -61,19 +64,6 @@
         {% block main_content %}{% endblock %}
     </section>
 </div>
-
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="{{ url }}/web/js/jquery.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="{{ url }}/web/js/bootstrap.min.js"></script>
-
-<script src="{{ url }}/web/js/bootstrap-markdown.js"></script>
-<script src="{{ url }}/web/js/markdown.js"></script>
-<script src="{{ url }}/web/js/to-markdown.js"></script>
-<script src="{{ url }}/web/js/select2.min.js"></script>
-<script src="{{ url }}/web/js/jquery.history.js"></script>
-<script src="{{ url }}/web/js/jquery.nanoscroller.min.js"></script>
-<script src="{{ url }}/web/js/avcms_admin.js"></script>
 
 </body>
 </html>

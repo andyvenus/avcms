@@ -6,11 +6,13 @@
  */
 namespace AVCMS\Core\AssetManager\Asset;
 
-interface BundleAsset
+interface BundleAssetInterface
 {
     public function getType();
 
     public function getBundle();
 
     public function getFile();
+
+    public function getDevUrl($prepend);
 }

@@ -11,6 +11,7 @@ use Assetic\Asset\AssetCollection;
 use Assetic\Asset\BaseAsset;
 use Assetic\AssetWriter;
 use Assetic\Filter\JSqueezeFilter;
+use AVCMS\Core\AssetManager\Asset\BundleAssetInterface;
 use AVCMS\Core\BundleManager\BundleManager;
 use Assetic\AssetManager as AsseticAssetManager;
 
@@ -46,22 +47,41 @@ class AssetManager
         }
     }
 
-    /**
-     * @param BaseAsset $asset
-     * @param string $environment
-     */
-    public function addJavaScript(BaseAsset $asset, $environment = self::SHARED)
+    public function add(BaseAsset $asset, $environment = self::SHARED, $priority = 10)
     {
-        $this->javascript[$environment][] = $asset;
+        if (!method_exists($asset, 'getType')) {
+            throw new \Exception('Assets passed to the add() method must implement the getType method');
+        }
+
+        if ($asset->getType() == 'javascript') {
+            $this->addJavaScript($asset, $environment, $priority);
+        }
+        elseif ($asset->getType() == 'css') {
+            $this->addCSS($asset, $environment, $priority);
+        }
+        else {
+            throw new \Exception('The asset manager does not support assets of type '.$asset->getType());
+        }
     }
 
     /**
      * @param BaseAsset $asset
      * @param string $environment
+     * @param int $priority
      */
-    public function addCSS(BaseAsset $asset, $environment = self::SHARED)
+    public function addJavaScript(BaseAsset $asset, $environment = self::SHARED, $priority = 10)
     {
-        $this->css[$environment][] = $asset;
+        $this->javascript[$environment][] = array('asset' => $asset, 'priority' => $priority);
+    }
+
+    /**
+     * @param BaseAsset $asset
+     * @param string $environment
+     * @param int $priority
+     */
+    public function addCSS(BaseAsset $asset, $environment = self::SHARED, $priority = 10)
+    {
+        $this->css[$environment][] =  array('asset' => $asset, 'priority' => $priority);
     }
 
     /**
@@ -98,7 +118,7 @@ class AssetManager
 
         foreach ($this->$type as $env_key => $environment) {
             foreach ($environment as $asset_key => $asset) {
-                if ($asset->getBundle() == $bundle && $asset->getFile() == $file) {
+                if ($asset instanceof BundleAssetInterface && $asset['asset']->getBundle() == $bundle && $asset['asset']->getFile() == $file) {
                     unset($this->{$type}[$env_key][$asset_key]);
 
                     $bundle_removed = true;
@@ -120,15 +140,61 @@ class AssetManager
         $writer->writeManagerAssets($assetic);
     }
 
+    public function getDevAssetUrls($asset_type, $environment)
+    {
+        $ordered_assets = $this->getOrderedAssets($asset_type, $environment);
+        $asset_urls = array();
+        foreach ($ordered_assets as $asset) {
+            $asset_urls[] = $asset['asset']->getDevUrl('front.php/');
+        }
+
+        return $asset_urls;
+    }
+
     public function createAsseticCollections(AsseticAssetManager $assetic, $type, $file_extension)
     {
         foreach ($this->$type as $environment => $assets) {
-            $asset_collection = new AssetCollection($assets, array(new JSqueezeFilter()));
-            $asset_collection->setTargetPath($environment.'.'.$file_extension);
+            if ($environment != self::SHARED) {
+                $ordered_assets = $this->getOrderedAssets($type, $environment, true);
 
-            $assetic->set($environment.'_'.$type, $asset_collection);
+                $asset_collection = new AssetCollection($ordered_assets, array(new JSqueezeFilter()));
+                $asset_collection->setTargetPath($environment.'.'.$file_extension);
+
+                $assetic->set($environment.'_'.$type, $asset_collection);
+            }
         }
 
         return $assetic;
+    }
+
+    protected function getOrderedAssets($type, $environment, $strip_priority = false)
+    {
+        if ($type != 'css' && $type != 'javascript') {
+            throw new \Exception('Asset type '.$type.' is not valid');
+        }
+
+        $assets = array();
+        $selected_assets = $this->$type;
+
+        if (isset($selected_assets[$environment])) {
+            $assets = array_merge($assets, $selected_assets[$environment]);
+        }
+        if (isset($selected_assets[AssetManager::SHARED])) {
+            $assets = array_merge($assets, $selected_assets[AssetManager::SHARED]);
+        }
+
+        usort($assets, function($a, $b) {
+            return $b['priority'] - $a['priority'];
+        });
+
+        if ($strip_priority) {
+            $stripped = array();
+            foreach ($assets as $asset) {
+                $stripped[] = $asset['asset'];
+            }
+            $assets = $stripped;
+        }
+
+        return $assets;
     }
 }

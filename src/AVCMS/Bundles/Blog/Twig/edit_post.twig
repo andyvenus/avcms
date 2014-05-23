@@ -1,12 +1,16 @@
 {% extends '@admin/edit_item.twig' %}
 
-{% block title %}
-    {% if item.id %}
-        Editing {{ item.title }}
-    {% else %}
-        New Post
-    {% endif %}
+
+{% block title -%}
+    {% spaceless %}
+        {% if item.id %}
+            Editing {{ item.title }}
+        {% else %}
+            New Post
+        {% endif %}
+    {% endspaceless  %}
 {% endblock %}
+
 
 {% block editor_title_edit %}
     <span class="light">Editing Post:</span> <span data-id="{{ item.id }}" data-field="title">{{ item.title }}</span>
