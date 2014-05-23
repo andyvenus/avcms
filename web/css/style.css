@@ -1,0 +1,29 @@
+.leaderboard {
+    background-color: darkslateblue;
+    color: white;
+
+    margin-bottom: 10px;
+}
+
+.leaderboard a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.leaderboard a:hover {
+    text-decoration: none;
+    color: #c7b9ff;
+}
+
+.blog_post_container {
+    border-bottom: 1px solid #a7a8cd;
+    margin-bottom: 10px;
+}
+
+footer {
+    margin-top: 10px;
+}
+
+select[name=author] {
+    width: 500px;
+}
