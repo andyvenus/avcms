@@ -7,7 +7,9 @@
 
 namespace AVCMS\Bundles\Blog\Controller;
 
+use AVCMS\Bundles\Blog\Finder\BlogPostsFinder;
 use AVCMS\Core\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class BlogController extends Controller {
@@ -36,8 +38,24 @@ class BlogController extends Controller {
         return new Response($this->render('blog_top_module.twig', array('posts' => $all_posts, 'user' => $user->getUser())));
     }
 
-    public function testBlogPageAction()
+    public function testBlogPageAction(Request $request)
     {
+        /*
+        $posts = new BlogPostsFinder($this->model('Posts'), $this->container->get('taxonomy.manager'));
+
+        $posts->handleRequest($request, array('tags' => 'crapp'));
+
+        $x = $posts->getQuery()->get();
+
+        var_dump($x);
+        */
+
+        $posts = $this->model('Posts');
+        $mypost = $posts->getOne(1);
+
+        $tax = $this->container->get('taxonomy.manager');
+        $tax->update('tags', 1, 'blog_post', ['one', 'two', 'three', 'four']);
+
         return new Response($this->render('@AVBlog/test.twig'));
     }
 }

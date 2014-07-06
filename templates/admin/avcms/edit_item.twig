@@ -11,7 +11,9 @@
 {%- endblock %}
 
 {% block editor_content %}
-    {{ form_start(form, {"data-item-id": item.id|default(0)}, 'bootstrap_form.twig') }}
+    {% block form_start %}
+        {{ form_start(form, {"data-item-id": item.id|default(0)}, 'bootstrap_form.twig') }}
+    {% endblock %}
 
     <div class="form-errors">
         {% for error in form.errors %}
@@ -23,8 +25,12 @@
         {{ form_rows(form) }}
     {% endblock %}
 
-    {{ form_submit_button(form) }}
-    <button type="button" class="btn btn-link reset-button">{% trans %}Revert Changes{% endtrans %}</button>
+    {% block form_buttons %}
+        {{ form_submit_button(form) }}
+        <button type="button" class="btn btn-link reset-button">{% trans %}Revert Changes{% endtrans %}</button>
+    {% endblock %}
 
-    {{ form_end(form) }}
+    {% block form_end %}
+        {{ form_end(form) }}
+    {% endblock %}
 {% endblock %}

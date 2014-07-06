@@ -7,6 +7,7 @@
 
 namespace AVCMS\Bundles\Assets\Controller;
 
+use Assetic\AssetWriter;
 use AVCMS\Core\AssetManager\Asset\BundleAssetInterface;
 use AVCMS\Core\AssetManager\Asset\TemplateAssetInterface;
 use AVCMS\Core\Controller\Controller;
@@ -56,7 +57,7 @@ class AssetsController extends Controller
     public function generateAssetsAction()
     {
         $asset_manager = $this->get('asset_manager');
-        $asset_manager->generateProductionAssets();
+        $asset_manager->generateProductionAssets(new AssetWriter('web/compiled'));
 
         return new Response('Assets generated');
     }

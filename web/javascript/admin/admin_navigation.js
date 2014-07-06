@@ -92,6 +92,7 @@ avcms.nav = {
 
                 avcms.nav.setPageTitle(full_url);
 
+                window.scrollTo(0, 0);
                 avcms.nav.onPageModified();
             });
         }
@@ -99,7 +100,9 @@ avcms.nav = {
 
     onPageModified: function() {
         $("textarea[name=body]").markdown({autofocus:false,savable:false});
-        $("select").select2();
+        $("select:not(.no_select2)").select2({
+            minimumResultsForSearch: 10
+        });
 
         $(".nano").nanoScroller({ iOSNativeScrolling: true });
 
@@ -108,8 +111,6 @@ avcms.nav = {
 
         // Finder
         avcms.browser.finder_loading = 0;
-        avcms.browser.finder_page = 1;
-
         avcms.event.fireEvent('page-modified');
     },
 

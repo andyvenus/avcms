@@ -21,7 +21,7 @@ class ExampleFormEvent implements EventSubscriberInterface
 
         if ($blueprint->getName() == 'blog_post_form') {
             $blueprint->add('something', 'text', array(
-                'label' => "WOOT",
+                'label' => "Extension Field",
             ));
         }
 

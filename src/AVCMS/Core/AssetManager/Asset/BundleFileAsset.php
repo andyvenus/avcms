@@ -20,6 +20,15 @@ class BundleFileAsset extends FileAsset implements BundleAssetInterface
 
     protected $source;
 
+    /**
+     * @param string $bundle
+     * @param array $type
+     * @param string $file
+     * @param array $filters
+     * @param null $sourceRoot
+     * @param null $sourcePath
+     * @param array $vars
+     */
     public function __construct($bundle, $type, $file, $filters = array(), $sourceRoot = null, $sourcePath = null, array $vars = array())
     {
         $this->bundle = $bundle;

@@ -8,6 +8,7 @@
 namespace AVCMS\Core\AssetManager\Tests;
 
 
+use Assetic\Asset\FileAsset;
 use AVCMS\Core\AssetManager\Asset\BundleFileAsset;
 use AVCMS\Core\AssetManager\AssetManager;
 
@@ -70,11 +71,45 @@ class AssetManagerTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(2, count($css_assets[AssetManager::FRONTEND]));
     }
 
+    public function testAddAsset()
+    {
+        $this->asset_manager->add($this->javascript_assets[0]);
+
+        $js = $this->asset_manager->getJavaScript();
+
+        $this->assertSame($this->javascript_assets[0], $js[AssetManager::SHARED][0]['asset']);
+
+        //
+
+        $this->asset_manager->add($this->css_assets[0]);
+
+        $css = $this->asset_manager->getCSS();
+
+        $this->assertSame($this->css_assets[0], $css[AssetManager::SHARED][0]['asset']);
+    }
+
+    public function testInvalidAssetType()
+    {
+        $this->setExpectedException('\Exception', 'The asset manager does not support assets of type weirdtype');
+
+        $asset = new BundleFileAsset('FakeBundle', 'weirdtype', 'file.xyz');
+
+        $this->asset_manager->add($asset);
+    }
+
+    public function testAddAssetGetTypeException()
+    {
+        $this->setExpectedException('\Exception', 'Assets passed to the add() method must implement the getType method');
+
+        $asset = new FileAsset('test.js');
+        $this->asset_manager->add($asset);
+    }
+
     public function testRemoveBundleAsset()
     {
         $this->addStandardAssets();
 
-        $this->asset_manager->removeBundleAsset('MockBundle', 'css', 'one.css');
+        $this->assertTrue($this->asset_manager->removeBundleAsset('MockBundle', 'css', 'one.css'));
 
         $js_assets = $this->asset_manager->getJavaScript();
 

@@ -49,14 +49,25 @@ $sc->register('active.user', 'AVCMS\Bundles\UsersBase\ActiveUser')
         'AVCMS\Bundles\UsersBase\Model\Sessions',
         'AVCMS\Bundles\UsersBase\Model\Groups',
         'AVCMS\Bundles\UsersBase\Model\GroupPermissions'
-    ));
+    ))
+;
 
-$sc->register('dispatcher', 'Symfony\Component\EventDispatcher\EventDispatcher')
+$sc->register('entity.date.maker', 'AVCMS\Core\Controller\Events\DateMaker');
+
+$sc->register('entity.author.assigner', 'AVCMS\Core\Controller\Events\AuthorAssigner')
+    ->setArguments(array(new Reference('active.user')))
+;
+
+$sc->register('dispatcher', 'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher')
+    ->setArguments([$sc])
     ->addMethodCall('addSubscriber', array(new Reference('listener.router')))
     ->addMethodCall('addSubscriber', array(new Reference('listener.response')))
     ->addMethodCall('addSubscriber', array(new Reference('listener.exception')))
     ->addMethodCall('addSubscriber', array(new Reference('active.user')))
     ->addMethodCall('addSubscriber', array(new Reference('listener.security.routes')))
+    ->addMethodCall('addSubscriber', array(new Reference('entity.date.maker')))
+    ->addMethodCall('addSubscriber', array(new Reference('entity.author.assigner')))
+    ->addMethodCall('addSubscriber', array(new Reference('update.tags')))
     ->addMethodCall('addSubscriber', array(new ExampleFormEvent()))
 ;
 $sc->register('framework', 'AVCMS\Core\Framework')
@@ -78,9 +89,6 @@ $request_context->fromRequest($request);
 
 $sc->register('routing.url.generator', 'Symfony\Component\Routing\Generator\UrlGenerator')
     ->setArguments(array('%routes%', $request_context));
-
-
-// Assets
 
 
 // Translation
@@ -152,13 +160,45 @@ $sc->register('asset_manager', 'AVCMS\Core\AssetManager\AssetManager')
     ->addMethodCall('add', array(new \AVCMS\Core\AssetManager\Asset\AppFileAsset('javascript', 'jquery.nanoscroller.min.js'), 'admin'))
     ->addMethodCall('add', array(new \AVCMS\Core\AssetManager\Asset\AppFileAsset('javascript', 'admin/admin_browser.js'), 'admin'))
     ->addMethodCall('add', array(new \AVCMS\Core\AssetManager\Asset\AppFileAsset('javascript', 'admin/admin_navigation.js'), 'admin'))
+    ->addMethodCall('add', array(new \AVCMS\Core\AssetManager\Asset\AppFileAsset('javascript', 'admin/admin_misc.js'), 'admin'))
     ->addMethodCall('add', array(new \AVCMS\Core\AssetManager\Asset\AppFileAsset('javascript', 'avcms_form.js'), 'admin'))
+    ->addMethodCall('add', array(new \AVCMS\Core\AssetManager\Asset\AppFileAsset('css', 'bootstrap-datetimepicker.css'), 'admin'))
+    ->addMethodCall('add', array(new \AVCMS\Core\AssetManager\Asset\AppFileAsset('javascript', 'bootstrap-datetimepicker.min.js'), 'admin'))
+    ->addMethodCall('add', array(new \AVCMS\Core\AssetManager\Asset\AppFileAsset('javascript', 'moment.min.js'), 'admin', 70))
+    ->addMethodCall('add', array(new \AVCMS\Core\AssetManager\Asset\AppFileAsset('javascript', 'avcms_config.js'), \AVCMS\Core\AssetManager\AssetManager::SHARED, 80))
 ;
 
 $sc->register('model.factory', 'AVCMS\Core\Model\ModelFactory')
     ->setArguments(array(new Reference('query_builder'), new Reference('dispatcher')))
     ->addMethodCall('addModelAlias', array('users', 'AVBlog\Bundles\Users\Model\Users'))
 ;
+
+$sc->register('taxonomy.manager', 'AVCMS\Core\Taxonomy\TaxonomyManager')
+    ->setArguments(array(new Reference('query_builder'), new Reference('dispatcher')))
+    ->addMethodCall('addTaxonomy', array('tags', new Reference('tags.taxonomy')))
+;
+
+$sc->register('tags.model', 'AVCMS\Bundles\Tags\Model\TagsModel')
+    ->setArguments(array('AVCMS\Bundles\Tags\Model\TagsModel'))
+    ->setFactoryService('model.factory')
+    ->setFactoryMethod('create')
+;
+
+$sc->register('tags.taxonomy.model', 'AVCMS\Bundles\Tags\Model\TagsTaxonomyModel')
+    ->setArguments(array('AVCMS\Bundles\Tags\Model\TagsTaxonomyModel'))
+    ->setFactoryService('model.factory')
+    ->setFactoryMethod('create')
+;
+
+$sc->register('tags.taxonomy', 'AVCMS\Bundles\Tags\Taxonomy\TagsTaxonomy')
+    ->setArguments(array(new Reference('tags.model'), new Reference('tags.taxonomy.model')))
+;
+
+$sc->register('form.transformer.manager', 'AVCMS\Core\Form\Transformer\TransformerManager')
+    ->addMethodCall('registerTransformer', array(new \AVCMS\Core\Form\Transformer\UnixTimestampTransformer()))
+;
+
+$sc->register('slug.generator', 'AVCMS\Core\SlugGenerator\SlugGenerator');
 
 // Database
 
@@ -181,10 +221,16 @@ $sc->register('query_builder', 'AVCMS\Core\Database\Connection') // TODO: change
 $bundles = array(
     'Blog' => array('namespace' => 'AVCMS\Bundles\Blog'),
     'Users' => array('namespace' => 'AVBlog\Bundles\Users'),
+    'Admin' => array('namespace' => 'AVCMS\Bundles\Admin'),
     'Assets' => array('namespace' => 'AVCMS\Bundles\Assets')
 );
 
 $sc->register('bundle_manager', 'AVCMS\Core\BundleManager\BundleManager')
     ->setArguments(array($bundles, '%container%'));
+
+// Tags
+$sc->register('update.tags', 'AVCMS\Bundles\Tags\Events\UpdateTags')
+    ->setArguments(array(new Reference('taxonomy.manager')))
+;
 
 return $sc;

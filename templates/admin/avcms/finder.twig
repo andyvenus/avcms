@@ -1,6 +1,12 @@
 {% for post in posts %}
     <div class="browser-finder-item" data-id="{{ post.id }}">
-        <div class="finder-item-main">
+
+        <div class="finder-item-checkbox-container">
+            <input type="checkbox" />
+        </div>
+
+        <div class="finder-item-main" style="padding-left: 20px">
+
             <div class="finder-item-title" data-field="title">
                 {{ post.title }}
             </div>
@@ -8,7 +14,21 @@
             <div class="btn-group">
                 <a class="btn btn-xs btn-default" href="{{ url('blog_edit_post', {'id': post.id}) }}"><span class="glyphicon glyphicon-edit"></span></a>
 
-                <a class="btn btn-xs btn-default" href="{{ url('blog_edit_post', {'id': post.id}) }}"><span class="glyphicon glyphicon-certificate"></span></a>
+                {% if post.published == 1 %}
+                    {% set published_btn_class = 'btn-default' %}
+                    {% set published_btn_icon = 'glyphicon-eye-open' %}
+                {% else %}
+                    {% set published_btn_class = 'btn-danger' %}
+                    {% set published_btn_icon = 'glyphicon-eye-close' %}
+                {% endif %}
+
+                <button class="btn btn-xs {{ published_btn_class }} avcms-toggle-published" data-toggle-publish-url="{{ url('blog_toggle_posts_published') }}">
+                    <span class="glyphicon {{ published_btn_icon }}"></span>
+                </button>
+
+                <button class="btn btn-xs btn-default avcms-delete-item" data-delete-url="{{ url('blog_delete_posts') }}">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
             </div>
         </div>
         <div class="finder-item-extended">
@@ -17,5 +37,7 @@
     </div>
 {% else %}
     <div style="display:none;">NORESULTS</div>
-    No results
+    <div class="finder-no-results">
+        {% trans %}No results{% endtrans %}
+    </div>
 {% endfor %}

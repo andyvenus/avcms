@@ -13,6 +13,8 @@ class MustNotExist extends Rule implements ModelRule {
 
     protected $column;
 
+    protected $exists_error = "The field '{param_name}' must be unique, value already exists";
+
     /**
      * @var \AVCMS\Core\Model\ModelFactory
      */
@@ -42,6 +44,7 @@ class MustNotExist extends Rule implements ModelRule {
             return true;
         }
         else {
+            $this->setError($this->exists_error);
             return false;
         }
     }

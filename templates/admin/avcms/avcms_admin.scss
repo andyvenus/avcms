@@ -6,11 +6,7 @@ $finder_background: #f2f2f2;
 $success_color: #5cb85c;
 $warning_color: #f0ad4e;
 
-html {
-  height: 100%;
-}
-
-body {
+html, body {
   height: 100%;
 }
 
@@ -62,8 +58,13 @@ body {
   }
 }
 
+.alert {
+  padding: 10px;
+}
+
 .browser {
   min-height: 100%;
+  overflow: auto;
 }
 
 .browser-finder {
@@ -104,7 +105,7 @@ body {
 }
 
 .browser-finder-results {
-  height: 400px;
+  overflow: auto;
 
   .nano {
     .nano-pane {
@@ -115,6 +116,13 @@ body {
         background: rgba(0,0,0,.3);
       }
     }
+  }
+
+  .finder-no-results {
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+    color: #545455;
   }
 }
 
@@ -139,6 +147,15 @@ body {
   .finder-item-options {
     display: none;
   }
+
+  .finder-item-checkbox-container {
+    float:left;
+    margin-top: 12px;
+  }
+}
+
+.browser-finder-item.unpublished {
+  color: #979799;
 }
 
 .finder-item-edited .finder-item-title {
@@ -147,6 +164,18 @@ body {
 
 .finder-item-saved .finder-item-title {
   color: $success_color;
+}
+
+.browser-finder-checked-options {
+  bottom: 0px;
+  position: fixed;
+  background-color: white;
+  border-top: 1px solid darken($finder_background, 5);
+  border-right: 1px solid darken($finder_background, 5);
+  width: inherit;padding: 5px;
+  display: none;
+  z-index: 10;
+  height: 68px;
 }
 
 .browser-editor {
@@ -174,8 +203,12 @@ body {
 }
 
 @media (min-width: 992px) {
+  html, body {
+    overflow: hidden;
+  }
+
   .browser-finder {
-    width: 220px;
+    width: 250px;
     display:inherit;
   }
 
@@ -188,7 +221,6 @@ body {
   }
 
   .browser-editor {
-    margin-left: 220px;
 
     .mobile-back {
       display: none;
@@ -198,18 +230,26 @@ body {
   .browser-finder-filters {
     max-width: 300px;
   }
+
+  .editor-content {
+    overflow-y: scroll;
+  }
 }
 
 @media (max-width: 992px) {
   // Disable Nano Scroller on Mobile Hack
+
   .nano {
-    overflow: inherit;
+    overflow: auto;
+    height: auto;
   }
 
   .nano > .nano-content {
-    overflow: visible;
+    overflow: auto;
     right: 0px!important;
     outline: none;
+    height: auto;
+    position: inherit!important;
   }
 
   .nano-pane {
@@ -237,4 +277,5 @@ body {
 
 .editor-content {
   padding: 12px 10px;
+  overflow-y: inherit;
 }

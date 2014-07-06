@@ -61,12 +61,19 @@ class BlogBundle extends Bundle
         $routes->add('blog_admin_home', new Route('/admin/blog', array(
             '_controller' => 'AVCMS\\Bundles\\Blog\\Controller\\BlogAdminController::blogHomeAction',
         )));
+
+        $routes->add('blog_delete_posts', new Route('/admin/blog/delete', array(
+            '_controller' => 'AVCMS\\Bundles\\Blog\\Controller\\BlogAdminController::deleteAction',
+        )));
+
+        $routes->add('blog_toggle_posts_published', new Route('/admin/blog/publish', array(
+            '_controller' => 'AVCMS\\Bundles\\Blog\\Controller\\BlogAdminController::togglePublishedAction',
+        )));
     }
 
     public function assets(AssetManager $asset_manager)
     {
         $asset_manager->addJavaScript(new BundleFileAsset('Blog', 'javascript', 'blog_js.js'));
-        //$asset_manager->addJavaScript(new BundleFileAsset('Blog', 'javascript', 'jquery.js'));
 
         $asset_manager->addCSS(new BundleFileAsset('Blog', 'css', 'test.scss', array(new ScssphpFilter())));
     }

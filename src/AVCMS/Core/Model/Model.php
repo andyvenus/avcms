@@ -3,6 +3,8 @@
 namespace AVCMS\Core\Model;
 
 use AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler;
+use AVCMS\Core\Model\Event\ModelInsertEvent;
+use AVCMS\Core\Model\Event\ModelUpdateEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
@@ -106,8 +108,12 @@ abstract class Model implements ModelInterface {
      * @return array|null|int
      * @throws \Exception
      */
-    public function save(Entity $entity, $column_match = null)
+    public function save($entity, $column_match = null)
     {
+        if (!is_callable(array($entity, 'getId'))) {
+            throw new \Exception("Cannot use save() on an entity without a getId method");
+        }
+
         if ($entity->getId()) {
             $this->update($entity, $column_match);
             return $entity->getId();
@@ -120,17 +126,15 @@ abstract class Model implements ModelInterface {
     /**
      * Insert the data from an entity into the database table
      *
-     * @param Entity $entity
+     * @param Entity|array $data The entity or an array of entities
      * @return array|string
      */
-    public function insert(Entity $entity)
+    public function insert($data)
     {
-        if (method_exists($entity, 'setDateAdded') && !$entity->getDateAdded()) {
-            $date = new \DateTime();
-            $entity->setDateAdded($date->getTimestamp());
-        }
+        $this->event_dispatcher->dispatch('model.insert', $event = new ModelInsertEvent($data));
+        $data = $event->getData();
 
-        return $this->query()->insert($entity);
+        return $this->query()->insert($data);
     }
 
     /**
@@ -144,6 +148,8 @@ abstract class Model implements ModelInterface {
      */
     public function update(Entity $entity, $column_match = null)
     {
+        $this->event_dispatcher->dispatch('model.update', new ModelUpdateEvent($entity));
+
         if (!$column_match) {
             $column_match = $this->identifier_column;
         }
@@ -229,6 +235,16 @@ abstract class Model implements ModelInterface {
     public function deleteById($id)
     {
         $this->query()->where($this->identifier_column, $id)->delete();
+    }
+
+    /**
+     * Delete multiple rows by ID
+     *
+     * @param $ids
+     */
+    public function deleteByIds(array $ids)
+    {
+        $this->query()->whereIn('id', $ids)->delete();
     }
 
     /**

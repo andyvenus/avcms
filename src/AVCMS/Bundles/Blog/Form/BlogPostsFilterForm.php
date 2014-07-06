@@ -15,8 +15,12 @@ class BlogPostsFilterForm extends FormBlueprint
     {
         $this->add('order', 'select', array(
             'choices' => array(
-                'newest' => 'Newest',
-                'oldest' => 'Oldest'
+                'newest' => 'Newest (by ID)',
+                'oldest' => 'Oldest (by ID)',
+                'publish_date_newest' => 'Newest (by publish date)',
+                'publish_date_oldest' => 'Oldest (by publish date)',
+                'a_z' => 'A-Z',
+                'z_a' => 'Z-A'
             )
         ));
 

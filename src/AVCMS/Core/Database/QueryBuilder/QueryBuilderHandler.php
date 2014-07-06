@@ -5,6 +5,7 @@ namespace AVCMS\Core\Database\QueryBuilder;
 use AVCMS\Core\Database\Connection;
 use AVCMS\Core\Database\Events\QueryBuilderModelJoinEvent;
 use AVCMS\Core\Model\Model;
+use AVCMS\Core\Taxonomy\Model\TaxonomyModel;
 use Pixie\QueryBuilder\QueryBuilderHandler as PixieQueryBuilderHandler;
 
 class QueryBuilderHandler extends PixieQueryBuilderHandler {
@@ -192,6 +193,21 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     }
 
     /**
+     * Get an array of column values
+     *
+     * @param $column
+     * @return mixed
+     */
+    public function getColumn($column)
+    {
+        $this->preparePdoStatement();
+
+        $result = $this->pdoStatement->fetchAll(\PDO::FETCH_COLUMN, $column);
+        $this->pdoStatement = null;
+        return $result;
+    }
+
+    /**
      * @param $fields
      * @param bool $join
      * @return $this
@@ -341,6 +357,23 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     }
 
     /**
+     * @param $taxonomy_model
+     * @param $equals
+     * @return $this
+     */
+    public function taxonomy(TaxonomyModel $taxonomy_model, array $equals)
+    {
+        $tax_table = $taxonomy_model->getTable();
+        $taxonomy_field_id = 'content_id';
+
+        $this->join($tax_table, $taxonomy_field_id, '=', $this->model->getTable().'.id', 'left')
+             ->where('content_type', $this->model->getSingular())
+             ->whereIn($tax_table.'.id', $equals);
+
+        return $this;
+    }
+
+    /**
      * Start a query based on data provided by a Model class
      *
      * @param Model $model
@@ -380,9 +413,22 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
             $data = $entity->toArray();
         }
 
+        // Possible array of data
+        if (is_array($data) && isset($data[0])) {
+            foreach ($data as $entity) {
+                if (is_a($entity, 'AVCMS\Core\Model\Entity')) {
+                    $entity_data[] = $entity->toArray();
+                }
+            }
+
+            if (isset($entity_data)) {
+                $data = $entity_data;
+            }
+        }
+
         $id = parent::insert($data);
 
-        // Set insert ID on entity
+        // Set insert ID on entity TODO: support batch insert
         if (isset($entity) && method_exists($entity, 'setId')) {
             $entity->setId($id);
         }

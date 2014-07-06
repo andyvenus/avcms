@@ -76,6 +76,9 @@ $(document).ready(function() {
     window.onresize = function(event) {
         avcms.adminTemplate.verticalDesign();
     };
+
+    avcms.event.addEvent('page-modified', avcms.adminTemplate.verticalDesign);
+    avcms.event.addEvent('submit-form-complete', avcms.adminTemplate.formSubmitScroll);
 });
 
 avcms.adminTemplate = {
@@ -84,19 +87,54 @@ avcms.adminTemplate = {
         var window_height = $(window).height();
         var target_height = window_height - header_height;
 
+        var window_width = $(window).width();
+
         $('.admin-menu').height(target_height);
+
         var finder = $('.browser-finder');
         if (finder) {
-            finder.height(target_height);
             var finder_top_height = finder.find('.browser-finder-top').height();
             var finder_results = finder.find('.browser-finder-results');
-            finder_results.height(target_height - finder_top_height - 3);
 
-            $(".nano").nanoScroller({ iOSNativeScrolling: true });
+            if (window_width < 992) {
+                finder.height('auto');
+                finder_results.height('auto');
+            }
+            else {
+                finder.height(target_height);
+                finder_results.height(target_height - finder_top_height - 3);
+            }
+
+                $(".nano").nanoScroller({ iOSNativeScrolling: true });
 
             if (finder_results.find('.nano-content').offsetHeight < finder_results.scrollHeight) {
                 console.log('something');
             }
         }
+
+        var editor = $('.editor-content');
+        if (editor) {
+            if (window_width < 992) {
+                editor.outerHeight('auto');
+            }
+            else {
+                var editor_header = $('.editor-header').filter(':visible');
+                var editor_target;
+
+                if (editor_header) {
+                    editor_target = target_height - editor_header.outerHeight();
+                }
+                else {
+                    editor_target = target_height;
+                }
+
+                editor.outerHeight(editor_target);
+            }
+        }
+    },
+
+    formSubmitScroll: function(form) {
+        console.log(form.parent('.editor-content'));
+        form.parent('.editor-content').scrollTop(0);
     }
 }

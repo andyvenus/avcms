@@ -53,7 +53,7 @@
 
 {% block select_field %}
     {% spaceless %}
-        <select name="{{ name }}">
+        <select name="{{ name }}" {{ block('attributes') }}>
             {% if options.choices is not empty %}
                 {% for choice_value, choice_name in options.choices %}
                     <option value="{{ choice_value }}" {% if choice_value == value %}selected="selected"{% endif %}>{{ choice_name }}</option>
@@ -67,7 +67,7 @@
     {% spaceless %}
         {% if options.choices is not empty %}
             {% for choice_value, choice_name in options.choices %}
-                <input type="radio" name="{{ name }}" value="{{ choice_value }}" id="{{ name }}_{{ choice_value }}" {% if choice_value == value %}checked="checked"{% endif %} /> <label for="{{ name }}_{{ choice_value }}">{{ choice_name }}</label>&nbsp;
+                <label><input type="radio" name="{{ name }}" value="{{ choice_value }}" id="{{ name }}_{{ choice_value }}" {% if choice_value == value %}checked="checked"{% endif %} /> &nbsp;{{ choice_name }}</label>&nbsp;
             {% endfor %}
         {% endif %}
     {% endspaceless %}
@@ -94,10 +94,10 @@
     {% endspaceless %}
 {% endblock %}
 
-{% block button %}
+{% block button_field %}
     {% spaceless %}
         {% set type = type|default('button') %}
-        <button type="{{ type }}">{{ label }}</button>
+        <button type="{{ type }}">{{ options.label }}</button>
     {% endspaceless %}
 {% endblock %}
 

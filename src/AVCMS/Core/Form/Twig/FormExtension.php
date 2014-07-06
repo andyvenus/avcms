@@ -79,6 +79,16 @@ class FormExtension extends \Twig_Extension
                     array($this, 'formRows'),
                     array('is_safe' => array('html')
                     )
+            ),
+            'form_rows_before' => new \Twig_SimpleFunction('form_rows_before',
+                    array($this, 'formRowsBefore'),
+                    array('is_safe' => array('html')
+                    )
+            ),
+            'form_rows_after' => new \Twig_SimpleFunction('form_rows_after',
+                    array($this, 'formRowsAfter'),
+                    array('is_safe' => array('html')
+                    )
             )
         );
     }
@@ -109,7 +119,24 @@ class FormExtension extends \Twig_Extension
     {
         $field_data['attr'] = $attributes;
 
-        $field = $this->base_template->renderBlock($field_data['type'].'_field', $field_data);
+        /*
+        if (isset($field_data['options']['field_template'])) {
+            $template = $field_data['options']['field_template'];
+        }
+        else {
+            $template = $field_data['type'].'_field';
+        }
+        */
+
+        if (isset($field_data['options']['field_template'])) {
+            $template = $this->environment->loadTemplate($field_data['options']['field_template']);
+
+            unset($field_data['options']['field_template']);
+            $field = $template->render(array('field' => $field_data));
+        }
+        else {
+            $field = $this->base_template->renderBlock($field_data['type'].'_field', $field_data);
+        }
 
         if (!$field) {
             return "<strong>Error:</strong> No template for field type '$field_data[type]'";
@@ -144,10 +171,48 @@ class FormExtension extends \Twig_Extension
         return $this->base_template->renderBlock($block, array('form_row' => $field, 'attr' => $attributes));
     }
 
-    public function formRows($form, $attributes = array())
+    public function formRows($form, $attributes = array(), $template_overrides = array())
     {
-        $rows = $form->getFields();
+        $fields = $form->getFields();
 
-        return $this->base_template->renderBlock('form_rows', array('form_rows' => $rows, 'attr' => $attributes));
+        return $this->base_template->renderBlock('form_rows', array('form_rows' => $fields, 'attr' => $attributes));
+    }
+
+    public function formRowsBefore($form, $before_field, $attributes = array())
+    {
+        $fields = $form->getFields();
+
+        $limited_fields = array();
+
+        foreach ($fields as $field_name => $field) {
+            if ($field_name == $before_field) {
+                break;
+            }
+            else {
+                $limited_fields[$field_name] = $field;
+            }
+        }
+
+        return $this->base_template->renderBlock('form_rows', array('form_rows' => $limited_fields, 'attr' => $attributes));
+    }
+
+    public function formRowsAfter($form, $before_field, $attributes = array())
+    {
+        $fields = $form->getFields();
+
+        $before_field_reached = false;
+        $limited_fields = array();
+
+        foreach ($fields as $field_name => $field) {
+            if ($before_field_reached) {
+                $limited_fields[$field_name] = $field;
+            }
+
+            if ($field_name == $before_field) {
+                $before_field_reached = true;
+            }
+        }
+
+        return $this->base_template->renderBlock('form_rows', array('form_rows' => $limited_fields, 'attr' => $attributes));
     }
 }

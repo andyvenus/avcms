@@ -39,7 +39,7 @@ avcms.form = {
                         avcms.nav.goToPage(data.redirect);
                     }
 
-                    messages.append('<div class="alert alert-success animated bounce">Saved!</div>');
+                    //messages.append('<div class="alert alert-success animated bounce">Saved</div>');
 
                     avcms.event.fireEvent('submit-form-success', [form, data]);
                 }

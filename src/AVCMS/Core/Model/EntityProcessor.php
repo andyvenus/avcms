@@ -7,13 +7,13 @@
 
 namespace AVCMS\Core\Model;
 
-use AVCMS\Core\Form\EntityProcessor\EntityProcessor;
+use AVCMS\Core\Form\EntityProcessor\EntityProcessor as FormEntityProcessor;
 
 /**
- * Class FormEntityProcessor
+ * Class EntityProcessor
  * @package AVCMS\Core\Model
  */
-class FormEntityProcessor implements EntityProcessor
+class EntityProcessor implements FormEntityProcessor
 {
     /**
      * Get data from an entity using getter methods. Check for 'sub-entities' and merge their data.
@@ -31,14 +31,14 @@ class FormEntityProcessor implements EntityProcessor
             $getter_name = "get".$this->dashesToCamelCase($field);
 
             if (($limit_fields == null || in_array($field, $limit_fields))) {
-                if (method_exists($entity, $getter_name) && ($value = $entity->$getter_name()) !== null) {
+                if (is_callable(array($entity, $getter_name)) && ($value = $entity->$getter_name()) !== null) {
                     $extracted_data[$field] = $value;
                 }
                 else {
                     $sub_entities = $entity->getAllSubEntities();
 
                     foreach ($sub_entities as $sub_entity) {
-                        if (!empty($sub_entities) && method_exists($sub_entity, $getter_name) && ($value = $sub_entity->$getter_name()) !== null) {
+                        if (!empty($sub_entities) && is_callable(array($sub_entity, $getter_name)) && ($value = $sub_entity->$getter_name()) !== null) {
                             $extracted_data[$field] = $value;
                         }
                     }
@@ -59,6 +59,7 @@ class FormEntityProcessor implements EntityProcessor
      */
     public function saveToEntity($entity, $form_data, $limit_fields = null)
     {
+        /*
         foreach($form_data as $field => $value) {
             $setter_name = "set".$this->dashesToCamelCase($field);
 
@@ -66,19 +67,19 @@ class FormEntityProcessor implements EntityProcessor
                 $entity->$setter_name($value);
             }
         }
-
+        */
         foreach($form_data as $field => $value) {
             $setter_name = "set".$this->dashesToCamelCase($field);
 
             if (($limit_fields == null || in_array($field, $limit_fields))) {
-                if (method_exists($entity, $setter_name)) {
+                if (is_callable(array($entity, $setter_name))) {
                     $entity->$setter_name($value);
                 }
                 else {
                     $sub_entities = $entity->getAllSubEntities();
 
                     foreach ($sub_entities as $sub_entity) {
-                        if (!empty($sub_entities) && method_exists($sub_entity, $setter_name)) {
+                        if (!empty($sub_entities) && is_callable(array($sub_entity, $setter_name))) {
                             $sub_entity->$setter_name($value);
                         }
                     }

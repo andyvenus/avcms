@@ -118,7 +118,7 @@ class AssetManager
 
         foreach ($this->$type as $env_key => $environment) {
             foreach ($environment as $asset_key => $asset) {
-                if ($asset instanceof BundleAssetInterface && $asset['asset']->getBundle() == $bundle && $asset['asset']->getFile() == $file) {
+                if ($asset['asset'] instanceof BundleAssetInterface && $asset['asset']->getBundle() == $bundle && $asset['asset']->getFile() == $file) {
                     unset($this->{$type}[$env_key][$asset_key]);
 
                     $bundle_removed = true;
@@ -129,14 +129,13 @@ class AssetManager
         return isset($bundle_removed);
     }
 
-    public function generateProductionAssets()
+    public function generateProductionAssets(AssetWriter $writer)
     {
         $assetic = new AsseticAssetManager();
 
         $this->createAsseticCollections($assetic, 'javascript', 'js');
         $this->createAsseticCollections($assetic, 'css', 'css');
 
-        $writer = new AssetWriter('web/compiled');
         $writer->writeManagerAssets($assetic);
     }
 

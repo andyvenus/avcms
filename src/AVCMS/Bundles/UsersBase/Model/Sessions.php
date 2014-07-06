@@ -35,7 +35,7 @@ class Sessions extends Model
         $session->setUserId($user_id);
         $session->setGenerated(time());
 
-        $this->save($session);
+        $this->insert($session);
 
         return $session;
     }

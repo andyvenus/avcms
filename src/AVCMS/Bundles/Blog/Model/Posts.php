@@ -7,9 +7,9 @@
 
 namespace AVCMS\Bundles\Blog\Model;
 
-use AVCMS\Core\Model\Model;
+use AVCMS\Core\Model\ContentModel;
 
-class Posts extends Model {
+class Posts extends ContentModel {
     public function getTable()
     {
         return 'blog_posts';

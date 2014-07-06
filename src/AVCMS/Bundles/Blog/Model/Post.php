@@ -7,11 +7,11 @@
 
 namespace AVCMS\Bundles\Blog\Model;
 
-use AVCMS\Core\Model\Entity;
+use AVCMS\Core\Model\ContentEntity;
 use AVCMS\Core\Validation\Rules\Length;
 use AVCMS\Core\Validation\Validator;
 
-class Post extends Entity {
+class Post extends ContentEntity {
     public function setTitle($value) {
         $this->setData('title', $value);
     }

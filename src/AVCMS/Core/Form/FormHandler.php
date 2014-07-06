@@ -13,6 +13,7 @@ use AVCMS\Core\Form\Event\FormHandlerConstructEvent;
 use AVCMS\Core\Form\Event\FormHandlerRequestEvent;
 use AVCMS\Core\Form\RequestHandler\RequestHandlerInterface;
 use AVCMS\Core\Form\RequestHandler\StandardRequestHandler;
+use AVCMS\Core\Form\Transformer\TransformerManager;
 use AVCMS\Core\Form\Type\TypeHandler;
 use AVCMS\Core\Form\Type\TypeInterface;
 use AVCMS\Core\Form\ValidatorExtension\ValidatorExtension;
@@ -100,6 +101,11 @@ class FormHandler
      * @var array
      */
     protected $errors = array();
+
+    /**
+     * @var TransformerManager
+     */
+    protected $transformer_manager;
 
     /**
      * @param FormBlueprintInterface $form
@@ -208,6 +214,8 @@ class FormHandler
 
         $entity_data = $this->entity_processor->getFromEntity($entity, array_keys($this->fields), $fields);
 
+        $entity_data = $this->transformToFormData($entity_data);
+
         $this->data = array_merge($this->data, $entity_data);
     }
 
@@ -279,8 +287,10 @@ class FormHandler
      */
     public function saveToEntities()
     {
+        $data = $this->transformFromFormData($this->data);
+
         foreach ($this->entities as $entity) {
-            $this->entity_processor->saveToEntity($entity['entity'], $this->data, $entity['fields']);
+            $this->entity_processor->saveToEntity($entity['entity'], $data, $entity['fields']);
         }
     }
 
@@ -379,18 +389,29 @@ class FormHandler
         return false;
     }
 
+    public function hasFieldWithName($field_name)
+    {
+        return isset($this->fields[$field_name]);
+    }
+
     /**
      * @param null $name
+     * @param bool $transform
      * @return mixed
      */
-    public function getData($name = null)
+    public function getData($name = null, $transform = true)
     {
+        $data = $this->data;
+        if ($transform == true) {
+            $data = $this->transformFromFormData($this->data);
+        }
+
         if ($name === null) {
-            return $this->data;
+            return $data;
         }
         else {
-            if (isset($this->data[$name])) {
-                return $this->data[$name];
+            if (isset($data[$name])) {
+                return $data[$name];
             }
             else {
                 return null;
@@ -588,7 +609,6 @@ class FormHandler
      */
     public function getValidationErrors()
     {
-
         $errors = $this->errors;
 
         if (isset($this->validator)) {
@@ -599,6 +619,12 @@ class FormHandler
         return $errors;
     }
 
+    public function getEntityProcessor()
+    {
+        return $this->entity_processor;
+    }
+
+    /*
     public function __get($name)
     {
         return $this->getData($name);
@@ -607,5 +633,32 @@ class FormHandler
     public function __isset($name)
     {
         return isset($this->data[$name]);
+    }
+    */
+
+    public function setTransformerManager(TransformerManager $transformer_manager)
+    {
+        $this->transformer_manager = $transformer_manager;
+    }
+
+    protected function transformToFormData($data)
+    {
+        return $this->transformData('to', $data);
+    }
+
+    protected function transformFromFormData($data)
+    {
+        return $this->transformData('from', $data);
+    }
+
+    protected function  transformData($type, $data)
+    {
+        foreach ($data as $field => $value) {
+            if (isset($this->fields[$field]['options']['transform'])) {
+                $data[$field] = $this->transformer_manager->{$type.'Form'}($value, $this->fields[$field]['options']['transform']);
+            }
+        }
+
+        return $data;
     }
 }

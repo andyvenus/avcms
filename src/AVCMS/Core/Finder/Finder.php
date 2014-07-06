@@ -8,6 +8,7 @@
 namespace AVCMS\Core\Finder;
 
 use AVCMS\Core\Model\Model;
+use AVCMS\Core\Taxonomy\TaxonomyManager;
 use Symfony\Component\HttpFoundation\Request;
 
 class Finder
@@ -37,9 +38,10 @@ class Finder
      */
     protected $filters = array();
 
-    public function __construct(Model $model)
+    public function __construct(Model $model, TaxonomyManager $taxonomy_manager = null)
     {
         $this->model = $model;
+        $this->taxonomy_manager = $taxonomy_manager;
 
         $this->sort_options = array(
             'newest' => 'id DESC',
@@ -61,7 +63,9 @@ class Finder
     {
         foreach ($filters as $filter => $default) {
             if (!method_exists($this, $filter)) {
-                throw new \Exception('No filter method found for filter '.$filter);
+                if (!$this->taxonomy_manager || !$this->taxonomy_manager->hasTaxonomy($filter)) {
+                    throw new \Exception('No filter method found for filter '.$filter);
+                }
             }
 
             $this->filters[$filter][] = $request->get($filter, $default);
@@ -132,7 +136,13 @@ class Finder
         foreach ($this->filters as $filter_name => $filters) {
             if (!in_array($filter_name, $ignored_filters)) {
                 foreach ($filters as $filter) {
-                    $this->$filter_name($filter);
+                    if (method_exists($this, $filter_name)) {
+                        $this->$filter_name($filter);
+                    }
+                    elseif ($this->taxonomy_manager && $this->taxonomy_manager->hasTaxonomy($filter_name) && $filter !== null) {
+                        $filter = (array) $filter;
+                        $this->taxonomy_manager->setTaxonomyJoin($filter_name, $this->model, $this->current_query, $filter);
+                    }
                 }
             }
         }

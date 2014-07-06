@@ -38,3 +38,9 @@
 {% block mobile_back_link %}
     {{ url('blog_admin_home') }}
 {% endblock %}
+
+{% block checked_options_buttons %}
+    <button type="button" class="btn btn-default btn-sm" data-bulk-delete-url="{{ url('blog_delete_posts') }}"><span class="glyphicon glyphicon-remove"></span></button>
+    <button type="button" class="btn btn-default btn-sm" data-toggle-published-url="{{ url('blog_toggle_posts_published') }}"><span class="glyphicon glyphicon-eye-open"></span></button>
+    <button type="button" class="btn btn-default btn-sm" data-toggle-unpublished-url="{{ url('blog_toggle_posts_published') }}"><span class="glyphicon glyphicon-eye-close"></span></button>
+{% endblock %}

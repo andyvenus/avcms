@@ -8,7 +8,7 @@ use AVCMS\Core\Form\FormHandler;
 use AVCMS\Core\Form\FormView;
 use AVCMS\Core\Form\RequestHandler\SymfonyRequestHandler;
 use AVCMS\Core\Form\ValidatorExtension\AVCMSValidatorExtension;
-use AVCMS\Core\Model\FormEntityProcessor;
+use AVCMS\Core\Model\EntityProcessor;
 use AVCMS\Core\Security\PermissionsError;
 use AVCMS\Core\Validation\Validator;
 use Symfony\Component\DependencyInjection\ContainerAware;
@@ -69,11 +69,12 @@ abstract class Controller extends ContainerAware {
 
     protected function buildForm(FormBlueprint $form, $entities = array(), $request = null)
     {
-        $form_handler = new FormHandler($form, new SymfonyRequestHandler(), new FormEntityProcessor(), null,  $this->container->get('dispatcher'));
+        $form_handler = new FormHandler($form, new SymfonyRequestHandler(), new EntityProcessor(), null,  $this->container->get('dispatcher'));
         $form_handler->setValidator(new AVCMSValidatorExtension($this->newValidator()));
         $form_view = new FormView();
         $form_view->setTranslator($this->translator);
         $form_handler->setFormView($form_view);
+        $form_handler->setTransformerManager($this->container->get('form.transformer.manager'));
 
         if (!is_array($entities)) {
             $entities = array($entities);
@@ -149,5 +150,13 @@ abstract class Controller extends ContainerAware {
                 throw new PermissionsError('You do not have authorisation to view this page', $permission);
             }
         }
+    }
+
+    /**
+     * @return \Symfony\Component\EventDispatcher\EventDispatcher
+     */
+    protected function getEventDispatcher()
+    {
+        return $this->container->get('dispatcher');
     }
 }

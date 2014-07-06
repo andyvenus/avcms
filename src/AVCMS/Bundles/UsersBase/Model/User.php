@@ -12,6 +12,20 @@ use AVCMS\Core\Model\Entity;
 
 class User extends Entity
 {
+    /**
+     * @param $value
+     */
+    public function setId($value) {
+        $this->setData('id', $value);
+    }
+
+    /**
+     * @return null
+     */
+    public function getId() {
+        return $this->data('id');
+    }
+
     public function setUsername($value) {
         $this->setData('username', $value);
     }

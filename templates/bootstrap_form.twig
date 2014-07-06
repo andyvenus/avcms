@@ -38,13 +38,48 @@
 {% block button %}
     {% spaceless %}
         {% set type = type|default('button') %}
-        <button type="{{ type }}" class="btn btn-success">{{ label }}</button>
+        <button type="{{ type }}" {{ block('attributes') }}>{% if label_icon %}<span class="{{ label_icon }}"></span>{% endif %} {{ label }}</button>
+    {% endspaceless %}
+{% endblock %}
+
+{% block button_field %}
+    {{ block('button') }}
+{% endblock %}
+
+{% block text_button_field %}
+    {% spaceless %}
+        <div class="input-group">
+            {% set type = 'text' %}
+            {{ block('input_field') }}
+            <span class="input-group-btn">
+                {{ form_field(options.button, options.button.attr) }}
+                {#
+                <button class="btn btn-default" type="button">
+                    {% if options.button_icon is defined %}
+                        <span class="{{ options.button_icon }}"></span>
+                    {% endif %}
+                    {% if options.button_label is defined %}
+                        {{ options.button_label }}
+                    {% endif %}
+                </button>#}
+            </span>
+        </div>
     {% endspaceless %}
 {% endblock %}
 
 {% block attributes %}
-    {% if type == 'input' or type == 'textarea' or type == 'text' or type == 'password' %}
+    {% if attr is not iterable %}
+        {% set attr = {} %}
+    {% endif %}
+
+    {% if type == 'input' or type == 'textarea' or type == 'text' or type == 'password' or type == 'text_button' %}
         {% set attr = attr|merge({class: attr.class ~ ' form-control'}) %}
+    {% endif %}
+    {% if type == 'button' %}
+        {% set attr = attr|merge({class: attr.class ~ ' btn btn-default'}) %}
+    {% endif %}
+    {% if type == 'submit' %}
+        {% set attr = attr|merge({class: attr.class ~ ' btn btn-success'}) %}
     {% endif %}
     {{ parent() }}
 {% endblock %}

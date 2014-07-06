@@ -8,6 +8,18 @@ $(document).ready(function() {
     body.on('keyup', 'form[name="filter_form"] input', avcms.browser.changeFinderFilters);
     body.on('click', '.clear-search', avcms.browser.clearSearch);
 
+    body.on('click', '.select-all-button', avcms.browser.selectAllFinderResults);
+    body.on('click', '.deselect-all-button', avcms.browser.deselectAllFinderResults);
+
+    body.on('click', '.finder-item-checkbox-container :checkbox', avcms.browser.checkFinderChecked);
+
+    body.on('click', '[data-bulk-delete-url]', avcms.browser.deleteCheckedResults);
+    body.on('click', '[data-toggle-published-url], [data-toggle-unpublished-url]', avcms.browser.togglePublishedCheckedResults);
+
+    body.on('click', '.avcms-delete-item', avcms.browser.deleteItemButton);
+
+    body.on('click', '.avcms-toggle-published', avcms.browser.togglePublishedButton);
+
     avcms.event.addEvent('page-modified', avcms.browser.setBrowserFocus);
     avcms.browser.setBrowserFocus();
 
@@ -34,7 +46,7 @@ avcms.browser = {
                         var field_value = form_field.find(":selected").text();
                     }
 
-                    $('[data-id="'+id+'"][data-field='+field_name+'], [data-id="'+id+'"] [data-field='+field_name+']').text(field_value).text();
+                    $('[data-id="'+id+'"][data-field="'+field_name+'"], [data-id="'+id+'"] [data-field="'+field_name+'"]').text(field_value).text();
                 });
 
                 if (id != 0) {
@@ -65,18 +77,25 @@ avcms.browser = {
                 avcms.browser.finder_page = 1;
             }
 
-            var new_page = avcms.browser.finder_page + 1;
+            var current_page = $(this).data('page');
+
+            if (!current_page) {
+                current_page = 1;
+            }
+
+            var new_page = current_page + 1;
 
             var form_serial = $('form[name="filter_form"]').serialize() + '&page=' + new_page;
 
             var finder = $(this).find('[data-url]');
+            var finder_div = $(this);
 
             $.get(finder.data('url') + '?' + form_serial, function(data) {
                 if (data) {
                     if(data.indexOf("NORESULTS") <= 0) {
                         finder.append(data);
                         avcms.browser.finder_loading = 0;
-                        avcms.browser.finder_page = new_page;
+                        finder_div.data('page', new_page);
 
                         $(".nano").nanoScroller({ iOSNativeScrolling: true });
                     }
@@ -95,7 +114,9 @@ avcms.browser = {
             if (data) {
                 finder.html(data);
                 avcms.browser.finder_loading = 0;
-                avcms.browser.finder_page = 1;
+                $('.finder-ajax').parents('.nano-content').data('page', 1);
+
+                $(".nano").nanoScroller({ iOSNativeScrolling: true });
             }
         })
     },
@@ -123,5 +144,170 @@ avcms.browser = {
     clearSearch: function() {
         $(this).closest('.input-group').find('input').val('');
         avcms.browser.changeFinderFilters();
+    },
+
+    checkFinderChecked: function() {
+        var total_checked = $('.finder-item-checkbox-container :checkbox:checked').length;
+        var checked_options_height = $('.browser-finder-checked-options').outerHeight();
+
+        if (total_checked) {
+            $('.browser-finder-checked-options').show();
+            $('.finder-ajax').css('padding-bottom', checked_options_height);
+        }
+        else {
+            $('.browser-finder-checked-options').hide();
+            $('.finder-ajax').css('padding-bottom', 0);
+        }
+
+        $('.selected-count').text(total_checked);
+        avcms.browser.getFinderSelectedIds()
+    },
+
+    selectAllFinderResults: function() {
+        $('.finder-item-checkbox-container :checkbox').prop('checked', true);
+        avcms.browser.checkFinderChecked();
+    },
+
+    deselectAllFinderResults: function() {
+        $('.finder-item-checkbox-container :checkbox').prop('checked', false);
+        avcms.browser.checkFinderChecked();
+    },
+
+    getFinderSelectedIds: function() {
+        var selected_ids = [];
+        $('.finder-item-checkbox-container :checkbox:checked').each(function() {
+            selected_ids.push($(this).parents('.browser-finder-item').data('id'));
+        });
+
+        return selected_ids;
+    },
+
+    deleteCheckedResults: function() {
+        if (confirm('Are you sure you want to delete these '+$('.selected-count').text()+' items?')) {
+            var url = $(this).data('bulk-delete-url');
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {'ids': avcms.browser.getFinderSelectedIds()},
+                dataType: 'json',
+                success: function(data) {
+                    $('.finder-item-checkbox-container :checkbox:checked').each(function() {
+                        $(this).parents('.browser-finder-item').remove();
+                        avcms.browser.checkFinderChecked();
+                    });
+                }
+            });
+        }
+    },
+
+    deleteItemButton: function() {
+        if (confirm('Are you sure you want to delete this item?')) {
+            var button = $(this);
+            var id = button.parents('[data-id]').data('id');
+
+            $.ajax({
+                type: "POST",
+                url: $(this).data('delete-url'),
+                data: {'id': id},
+                dataType: 'json',
+                success: function(data) {
+                    button.parents('[data-id]').remove();
+                    avcms.browser.checkFinderChecked();
+
+                    var current_editor_url = $('.ajax-editor-inner').filter(':visible').data('ajax-url');
+                    if (current_editor_url.indexOf(id) > -1) {
+                        avcms.nav.goToPage($('.add-item > a').attr('href'));
+                    }
+                }
+            })
+        }
+    },
+
+    deleteCheckedResults: function() {
+        if (confirm('Are you sure you want to delete these '+$('.selected-count').text()+' items?')) {
+            var url = $(this).data('bulk-delete-url');
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {'ids': avcms.browser.getFinderSelectedIds()},
+                dataType: 'json',
+                success: function(data) {
+                    $('.finder-item-checkbox-container :checkbox:checked').each(function() {
+                        $(this).parents('.browser-finder-item').remove();
+                        avcms.browser.checkFinderChecked();
+                    });
+                }
+            });
+        }
+    },
+
+    togglePublishedButton: function() {
+        var button = $(this);
+        var id = button.parents('[data-id]').data('id');
+        $(this).children('.glyphicon').toggleClass("glyphicon-eye-open glyphicon-eye-close");
+        $(this).toggleClass("btn-default btn-danger");
+
+        var published;
+        if ($(this).hasClass('btn-danger')) {
+            published = 0;
+        }
+        else {
+            published = 1;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: $(this).data('toggle-publish-url'),
+            data: {'id': id, 'published': published},
+            dataType: 'json',
+            success: function(data) {
+                var form = $('form[data-item-id="'+id+'"');
+                form.find('[name="published"][value="'+published+'"]').prop("checked", true);
+            }
+        })
+    },
+
+    togglePublishedCheckedResults: function() {
+        var url;
+        if ($(this).data('toggle-published-url')) {
+            url = $(this).data('toggle-published-url');
+            published = 1;
+        }
+        else {
+            url = $(this).data('toggle-unpublished-url');
+            published = 0;
+        }
+
+        var ids = avcms.browser.getFinderSelectedIds();
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {'ids': ids, 'published': published},
+            dataType: 'json',
+            success: function(data) {
+                $.each(ids, function(key, id) {
+                    var form = $('form[data-item-id="'+id+'"');
+                    form.find('[name="published"][value="'+published+'"]').prop("checked", true);
+
+                    var finder_item = $('.browser-finder-item[data-id='+id+']');
+                    var published_button = finder_item.find('.avcms-toggle-published');
+                    if (published === 1) {
+                        published_button.removeClass('btn-danger');
+                        published_button.addClass('btn-default');
+                        published_button.children('.glyphicon').removeClass('glyphicon-eye-close');
+                        published_button.children('.glyphicon').addClass('glyphicon-eye-open');
+                    }
+                    else {
+                        published_button.addClass('btn-danger');
+                        published_button.removeClass('btn-default');
+                        published_button.children('.glyphicon').addClass('glyphicon-eye-close');
+                        published_button.children('.glyphicon').removeClass('glyphicon-eye-open');
+                    }
+                })
+            }
+        });
     }
 }

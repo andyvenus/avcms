@@ -7,29 +7,32 @@
 
 namespace AVCMS\Bundles\Blog\Form;
 
-use AVCMS\Core\Form\FormBlueprint;
-use AVCMS\Core\Validation\Rules\Length;
-use AVCMS\Core\Validation\Validator;
+use AVCMS\Bundles\ContentBase\Form\AdminContentForm;
 
-class PostForm extends FormBlueprint {
-    public function __construct($username)
+class PostForm extends AdminContentForm
+{
+    public function __construct($item_id)
     {
         $this->add('title', 'text', array(
-            'label' => 'Title'
+            'label' => 'Title',
+            'required' => true
         ));
 
         $this->add('body', 'textarea', array(
             'label' => 'Post content'
         ));
 
-        $this->add('user_id', 'select', array(
+        $this->add('user_id', 'text', array(
             'label' => 'Author',
-            'default' => $username,
-            'choices' => array(
-                '1' => 'Andy'
-            )
+        ));
+
+        $this->add('tags', 'text', array(
+            'label' => 'Tags',
+            'default' => 'nanan, batman',
         ));
 
         $this->setName('blog_post_form');
+
+        parent::__construct($item_id);
     }
 }

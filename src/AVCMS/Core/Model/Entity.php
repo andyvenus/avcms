@@ -87,20 +87,6 @@ abstract class Entity implements Validatable
         $this->sub_entities[$name] = $entity;
     }
 
-    /**
-     * @param $value
-     */
-    public function setId($value) {
-        $this->setData('id', $value);
-    }
-
-    /**
-     * @return null
-     */
-    public function getId() {
-        return $this->data('id');
-    }
-
     public function getAllSubEntities()
     {
         return $this->sub_entities;

@@ -1,6 +1,5 @@
 {% extends '@admin/edit_item.twig' %}
 
-
 {% block title -%}
     {% spaceless %}
         {% if item.id %}
@@ -11,11 +10,19 @@
     {% endspaceless  %}
 {% endblock %}
 
-
 {% block editor_title_edit %}
     <span class="light">Editing Post:</span> <span data-id="{{ item.id }}" data-field="title">{{ item.title }}</span>
 {% endblock %}
 
 {% block editor_title_new %}
     New Post
+{% endblock %}
+
+{% block form_rows %}
+    {% set attributes = {
+        'title': {'data-slug-target': 'slug'},
+        'user_id': {'class': 'user_selector no_select2'},
+    }
+    %}
+    {{ form_rows(form, attributes) }}
 {% endblock %}
