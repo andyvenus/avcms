@@ -11,7 +11,15 @@ use AVCMS\Core\Form\FormHandler;
 use AVCMS\Core\Model\Entity;
 use AVCMS\Core\Model\Model;
 use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class AdminSaveContentEvent
+ * @package AVCMS\Core\Controller\Event
+ *
+ * Called AFTER content has been saved in the AdminController::edit method
+ * Good for doing post-save tasks like saving taxonomy values to the database
+ */
 class AdminSaveContentEvent extends Event
 {
     /**
@@ -29,11 +37,23 @@ class AdminSaveContentEvent extends Event
      */
     protected $form;
 
-    public function __construct(Entity $entity, Model $model, FormHandler $form)
+    /**
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
+    protected $request;
+
+    /**
+     * @param Entity $entity
+     * @param Model $model
+     * @param FormHandler $form
+     * @param Request $request
+     */
+    public function __construct(Entity $entity, Model $model, FormHandler $form, Request $request)
     {
         $this->entity = $entity;
         $this->model = $model;
         $this->form = $form;
+        $this->request = $request;
     }
 
     /**
@@ -58,5 +78,13 @@ class AdminSaveContentEvent extends Event
     public function getForm()
     {
         return $this->form;
+    }
+
+    /**
+     * @return Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
     }
 } 

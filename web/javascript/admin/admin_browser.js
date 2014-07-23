@@ -26,6 +26,14 @@ $(document).ready(function() {
     avcms.event.addEvent('submit-form-complete', avcms.browser.browserFormSubmitted)
 
     avcms.event.addEvent('submit-form-success', avcms.browser.editorAddItemFormSubmitEvent);
+
+    avcms.event.addEvent('page-modified', function() {
+        $('.nano-content').on('scroll', avcms.browser.finderLoadMore);
+        $(window).on('scroll', avcms.browser.finderLoadMore);
+
+        avcms.browser.finder_loading = 0;
+    });
+
 });
 
 avcms.browser = {
@@ -59,25 +67,60 @@ avcms.browser = {
     },
 
     setBrowserFocus: function() {
+        var finder = $('.browser-finder');
         if ($('.ajax-editor-inner').children().filter(':visible').length < 1) {
-            $('.browser-finder').addClass('finder-has-focus');
-            $('.browser-editor').removeClass('editor-has-focus');
+            if (!finder.hasClass('finder-has-focus')) {
+                finder.addClass('finder-has-focus');
+                $('.browser-editor').removeClass('editor-has-focus');
+            }
         }
         else {
-            $('.browser-finder').removeClass('finder-has-focus');
-            $('.browser-editor').addClass('editor-has-focus');
+            if (finder.hasClass('finder-has-focus')) {
+                finder.removeClass('finder-has-focus');
+                $('.browser-editor').addClass('editor-has-focus');
+                /*
+                var nano_content = finder.find('.nano-content');
+
+                var scroll_back = 0;
+
+                $('.browser-finder-header').each(function() {
+                    console.log($(this).height());
+                    scroll_back = scroll_back + $(this).height();
+                });
+
+                var new_scroll = nano_content.scrollTop() - scroll_back;
+
+                finder.find('.nano').nanoScroller({ scrollTop: new_scroll });
+                */
+            }
         }
     },
 
     finderLoadMore: function() {
-        if(($(this).scrollTop() + ($(this).innerHeight() + 300) >= $(this)[0].scrollHeight) && (window.avcms.browser.finder_loading != 1)) {
+        if ($('.browser-finder').length < 1) {
+            return;
+        }
+
+        var finder_div;
+        var scroll_height;
+        if (!$(this).hasClass('nano-content')) {
+            //console.log('loading more');
+            finder_div = $('.browser-finder-results').find('.nano-content');
+            scroll_height = $(document).height();
+        }
+        else {
+            finder_div = $(this);
+            scroll_height = $(this)[0].scrollHeight;
+        }
+
+        if(($(this).scrollTop() + ($(this).innerHeight() + 300) >= scroll_height) && (window.avcms.browser.finder_loading != 1)) {
             avcms.browser.finder_loading = 1;
 
             if (avcms.browser.finder_page === undefined) {
                 avcms.browser.finder_page = 1;
             }
 
-            var current_page = $(this).data('page');
+            var current_page = finder_div.data('page');
 
             if (!current_page) {
                 current_page = 1;
@@ -87,8 +130,8 @@ avcms.browser = {
 
             var form_serial = $('form[name="filter_form"]').serialize() + '&page=' + new_page;
 
-            var finder = $(this).find('[data-url]');
-            var finder_div = $(this);
+            var finder = finder_div.find('[data-url]');
+            //var finder_div = $(this);
 
             $.get(finder.data('url') + '?' + form_serial, function(data) {
                 if (data) {
@@ -294,6 +337,7 @@ avcms.browser = {
 
                     var finder_item = $('.browser-finder-item[data-id='+id+']');
                     var published_button = finder_item.find('.avcms-toggle-published');
+
                     if (published === 1) {
                         published_button.removeClass('btn-danger');
                         published_button.addClass('btn-default');

@@ -53,7 +53,7 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
     protected $basic_form_handler;
 
     /**
-     * @var \AVCMS\Core\Form\ValidatorExtension\ValidatorExtension
+     * @var \AVCMS\Core\Form\ValidatorExtension\ValidatorExtension|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $mock_validator;
 
@@ -308,7 +308,8 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
             'name' => 'name',
             'type' => 'text',
             'options' => array (
-                'label' => 'Name'
+                'label' => 'Name',
+                'required' => true
             ),
             'value' => 'Example Name',
             'has_error' => ''
@@ -330,7 +331,8 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
                 'name' => 'name',
                 'type' => 'text',
                 'options' => array (
-                    'label' => 'Name'
+                    'label' => 'Name',
+                    'required' => true
                 ),
                 'value' => 'Example Name',
                 'has_error' => ''
@@ -345,6 +347,56 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->basic_form_handler->getProcessedField('does-not-exist'));
     }
 
+    public function testFieldHasError()
+    {
+        $this->basic_form_handler->handleRequest();
+
+        $custom_error = new FormError('name', 'Name field has an error');
+
+        $this->basic_form_handler->addCustomErrors(array($custom_error));
+
+        $this->assertTrue($this->basic_form_handler->fieldHasError('name'));
+    }
+
+    public function testFieldHasValidatorError()
+    {
+        $this->mock_validator->expects($this->any())
+            ->method('fieldHasError')
+            ->will($this->returnValue(true));
+
+        $this->basic_form_handler->setValidator($this->mock_validator);
+        $this->basic_form_handler->handleRequest();
+
+        $this->assertTrue($this->basic_form_handler->fieldHasError('name'));
+    }
+
+    public function testFieldRequired()
+    {
+        $this->basic_form->add('no_label', 'text', array('required' => true));
+        $form = new FormHandler($this->basic_form);
+
+        $_POST['name'] = '';
+        $_POST['no_label'] = '';
+
+        $form->handleRequest();
+
+        $this->assertFalse($form->isValid());
+        $this->assertCount(2, $form->getValidationErrors());
+    }
+
+    public function testHasFieldWithName()
+    {
+        $this->assertTrue($this->basic_form_handler->hasFieldWithName('name'));
+        $this->assertFalse($this->basic_form_handler->hasFieldWithName('random_name'));
+    }
+
+    public function testSetData()
+    {
+        $this->basic_form_handler->setData('name', 'example-data');
+
+        $this->assertEquals('example-data', $this->basic_form_handler->getData('name'));
+    }
+
     public function testCreateView()
     {
         $form_handler = $this->basic_form_handler;
@@ -356,7 +408,8 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
 
         $form_handler->setValidator($mock_validator);
 
-        $form_handler->handleRequest($this->basic_form_request, 'standard');
+        $_POST = $this->basic_form_request;
+        $form_handler->handleRequest();
 
         $form_view = $form_handler->createView();
 
@@ -410,6 +463,15 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException('\Exception', 'Cannot get validator, no validator assigned');
         $this->basic_form_handler->getValidator();
+    }
+
+    public function testValidForm()
+    {
+        $form = $this->basic_form_handler;
+        $_POST['name'] = 'valid';
+        $form->handleRequest();
+
+        $this->assertTrue($form->isValid());
     }
 
     public function testArrayFields()
@@ -468,9 +530,9 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('colours[blue]', $form_view->colours['fields']['colours[blue]']['name']);
     }
 
-    public function testGetForm()
+    public function testGetFormBlueprint()
     {
-        $form = $this->standard_form_handler->getForm();
+        $form = $this->standard_form_handler->getFormBlueprint();
 
         $this->assertEquals($this->standard_form, $form);
     }
@@ -513,6 +575,33 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('\Exception', 'Custom errors must be AVCMS\Core\Form\FormError objects');
 
         $this->basic_form_handler->addCustomErrors(array('invalid'));
+    }
+
+    public function testGetEntityProcessor()
+    {
+        $ep = $this->basic_form_handler->getEntityProcessor();
+
+        $this->assertInstanceOf('AVCMS\Core\Form\EntityProcessor\GetterSetterEntityProcessor', $ep);
+    }
+
+    public function testDataTransform()
+    {
+        $blueprint = new FormBlueprint();
+        $blueprint->add('name', 'text', array('transform' => 'example'));
+        $form = new FormHandler($blueprint);
+
+        $transformer = $this->getMock('AVCMS\Core\Form\Transformer\TransformerManager');
+        $transformer->expects($this->any())
+            ->method('fromForm')
+            ->will($this->returnValue('transformed'));
+
+        $form->setTransformerManager($transformer);
+
+        $_POST = $this->basic_form_request;
+
+        $form->handleRequest();
+
+        $this->assertEquals('transformed', $form->getData('name'));
     }
 
     public function testFileFormEncoding()

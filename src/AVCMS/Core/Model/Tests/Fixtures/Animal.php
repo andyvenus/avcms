@@ -12,42 +12,42 @@ use AVCMS\Core\Model\Entity;
 class Animal extends Entity
 {
     public function setId($value) {
-        $this->setData('id', $value);
+        $this->set('id', $value);
     }
 
     public function getId() {
-        return $this->data('id');
+        return $this->get('id');
     }
 
     public function setName($value) {
-        $this->setData('name', $value);
+        $this->set('name', $value);
     }
 
     public function getName() {
-        return $this->data('name');
+        return $this->get('name');
     }
 
     public function setDescription($value) {
-        $this->setData('description', $value);
+        $this->set('description', $value);
     }
 
     public function getDescription() {
-        return $this->data('description');
+        return $this->get('description');
     }
 
     public function setViews($value) {
-        $this->setData('views', $value);
+        $this->set('views', $value);
     }
 
     public function getViews() {
-        return $this->data('views');
+        return $this->get('views');
     }
 
     public function setFoodItemId($value) {
-        $this->setData('food_item_id', $value);
+        $this->set('food_item_id', $value);
     }
 
     public function getFoodItemId() {
-        return $this->data('food_item_id');
+        return $this->get('food_item_id');
     }
 } 

@@ -122,5 +122,41 @@ class AssetManagerTest extends \PHPUnit_Framework_TestCase {
 
         $this->asset_manager->removeBundleAsset('MockBundle', 'invalidtype', 'example.js');
     }
+
+    public function testGenerateProductionAssets()
+    {
+        $writer = $this->getMockBuilder('Assetic\AssetWriter')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $writer->expects($this->once())
+            ->method('writeManagerAssets')
+            ->with($this->isInstanceOf('Assetic\AssetManager'));
+
+        $this->asset_manager->add($this->javascript_assets[0], AssetManager::ADMIN);
+        $this->asset_manager->add($this->javascript_assets[1], AssetManager::SHARED);
+
+        $this->asset_manager->generateProductionAssets($writer);
+    }
+
+    public function testGetDevAssetUrls()
+    {
+        $this->asset_manager->add($this->javascript_assets[0], AssetManager::ADMIN, 10);
+        $this->asset_manager->add($this->javascript_assets[1], AssetManager::SHARED, 50);
+
+        $assets = $this->asset_manager->getDevAssetUrls('javascript', AssetManager::ADMIN);
+
+        $expected = array(
+            "front.php/bundle_asset/MockBundle/javascript/two.js",
+            "front.php/bundle_asset/MockBundle/javascript/one.js"
+        );
+
+        $this->assertEquals($expected, $assets);
+    }
+
+    public function testInvalidAssetTypeException()
+    {
+        $this->setExpectedException('AVCMS\Core\AssetManager\Exception\AssetTypeException');
+
+        $this->asset_manager->getDevAssetUrls('fake_type', AssetManager::SHARED);
+    }
 }
- 

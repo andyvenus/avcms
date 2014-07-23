@@ -56,7 +56,7 @@ class Finder
 
     public function setJoin(Model $join_model, array $columns, $type = 'left', $join_to = null, $key = null, $operator = '=', $value = null)
     {
-
+        //todo this - or delete
     }
 
     public function handleRequest(Request $request, array $filters)
@@ -92,7 +92,7 @@ class Finder
 
     public function page($page)
     {
-        if ($page < 1) {
+        if ($page < 1 || !is_numeric($page)) {
             $page = 1;
         }
 
@@ -129,6 +129,26 @@ class Finder
         $this->search_fields = $fields;
     }
 
+    public function published()
+    {
+        $this->current_query->where('published', 1);
+    }
+
+    public function taxonomy($taxonomy, $values = null)
+    {
+        if (!$this->taxonomy_manager->hasTaxonomy($taxonomy)) {
+            throw new \Exception(sprintf("Taxonomy %s does not exist in the taxonomy manager", $taxonomy));
+        }
+
+        if ($values !== null) {
+            if (!is_array($values)) {
+                $values = explode('|', $values);
+            }
+
+            $this->taxonomy_manager->setTaxonomyJoin($taxonomy, $this->model, $this->current_query, $values);
+        }
+    }
+
     public function getQuery($ignored_filters = array())
     {
         $this->current_query = $this->model->query();
@@ -140,8 +160,7 @@ class Finder
                         $this->$filter_name($filter);
                     }
                     elseif ($this->taxonomy_manager && $this->taxonomy_manager->hasTaxonomy($filter_name) && $filter !== null) {
-                        $filter = (array) $filter;
-                        $this->taxonomy_manager->setTaxonomyJoin($filter_name, $this->model, $this->current_query, $filter);
+                        $this->taxonomy($filter_name, $filter);
                     }
                 }
             }

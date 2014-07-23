@@ -28,7 +28,7 @@ class BlogAdminController extends AdminController
     {
         $model = $this->model('Posts');
 
-        $form_blueprint = new PostForm($request->get('id', 0));
+        $form_blueprint = new PostForm($request->get('id', 0), $this->activeUser()->getUser()->getId());
 
         return $this->edit($request, $model, $form_blueprint, 'blog_edit_post', '@AVBlog/edit_post.twig', '@admin/blog_browser.twig', array('content_name' => 'Post'));
     }
@@ -48,7 +48,7 @@ class BlogAdminController extends AdminController
             ->modelJoin($users_model, array('username'))
             ->get();
 
-        return new Response($this->render('@admin/finder.twig', array('posts' => $posts)));
+        return new Response($this->render('@AVBlog/blog_finder.twig', array('items' => $posts, 'page' => $finder->getCurrentPage())));
     }
 
     public function deleteAction(Request $request)

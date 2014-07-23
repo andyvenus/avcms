@@ -13,19 +13,19 @@ class Tag extends Entity
 {
     public function setId($id)
     {
-        $this->setData('id', $id);
+        $this->set('id', $id);
     }
 
     public function getId()
     {
-        return $this->data('id');
+        return $this->get('id');
     }
 
     public function setName($name) {
-        $this->setData('name', $name);
+        $this->set('name', $name);
     }
 
     public function getName() {
-        return $this->data('name');
+        return $this->get('name');
     }
 } 

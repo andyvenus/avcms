@@ -14,195 +14,195 @@ use AVCMS\Core\Validation\Rules;
 
 class Game extends Entity implements Validatable {
     public function setName($value) {
-        $this->setData('name', $value);
+        $this->set('name', $value);
     }
 
     public function getName() {
-        return $this->data('name');
+        return $this->get('name');
     }
 
     public function setDescription($value) {
-        $this->setData('description', $value);
+        $this->set('description', $value);
     }
 
     public function getDescription() {
-        return $this->data('description');
+        return $this->get('description');
     }
 
     public function setUrl($value) {
-        $this->setData('url', $value);
+        $this->set('url', $value);
     }
 
     public function getUrl() {
-        return $this->data('url');
+        return $this->get('url');
     }
 
     public function setCategoryId($value) {
-        $this->setData('category_id', $value);
+        $this->set('category_id', $value);
     }
 
     public function getCategoryId() {
-        return $this->data('category_id');
+        return $this->get('category_id');
     }
 
     public function setCategoryParent($value) {
-        $this->setData('category_parent', $value);
+        $this->set('category_parent', $value);
     }
 
     public function getCategoryParent() {
-        return $this->data('category_parent');
+        return $this->get('category_parent');
     }
 
     public function setHits($value) {
-        $this->setData('hits', $value);
+        $this->set('hits', $value);
     }
 
     public function getHits() {
-        return $this->data('hits');
+        return $this->get('hits');
     }
 
     public function setPublished($value) {
-        $this->setData('published', $value);
+        $this->set('published', $value);
     }
 
     public function getPublished() {
-        return $this->data('published');
+        return $this->get('published');
     }
 
     public function setUserSubmit($value) {
-        $this->setData('user_submit', $value);
+        $this->set('user_submit', $value);
     }
 
     public function getUserSubmit() {
-        return $this->data('user_submit');
+        return $this->get('user_submit');
     }
 
     public function setWidth($value) {
-        $this->setData('width', $value);
+        $this->set('width', $value);
     }
 
     public function getWidth() {
-        return $this->data('width');
+        return $this->get('width');
     }
 
     public function setHeight($value) {
-        $this->setData('height', $value);
+        $this->set('height', $value);
     }
 
     public function getHeight() {
-        return $this->data('height');
+        return $this->get('height');
     }
 
     public function setImage($value) {
-        $this->setData('image', $value);
+        $this->set('image', $value);
     }
 
     public function getImage() {
-        return $this->data('image');
+        return $this->get('image');
     }
 
     public function setImport($value) {
-        $this->setData('import', $value);
+        $this->set('import', $value);
     }
 
     public function getImport() {
-        return $this->data('import');
+        return $this->get('import');
     }
 
     public function setFiletype($value) {
-        $this->setData('filetype', $value);
+        $this->set('filetype', $value);
     }
 
     public function getFiletype() {
-        return $this->data('filetype');
+        return $this->get('filetype');
     }
 
     public function setInstructions($value) {
-        $this->setData('instructions', $value);
+        $this->set('instructions', $value);
     }
 
     public function getInstructions() {
-        return $this->data('instructions');
+        return $this->get('instructions');
     }
 
     public function setMochi($value) {
-        $this->setData('mochi', $value);
+        $this->set('mochi', $value);
     }
 
     public function getMochi() {
-        return $this->data('mochi');
+        return $this->get('mochi');
     }
 
     public function setRating($value) {
-        $this->setData('rating', $value);
+        $this->set('rating', $value);
     }
 
     public function getRating() {
-        return $this->data('rating');
+        return $this->get('rating');
     }
 
     public function setFeatured($value) {
-        $this->setData('featured', $value);
+        $this->set('featured', $value);
     }
 
     public function getFeatured() {
-        return $this->data('featured');
+        return $this->get('featured');
     }
 
     public function setDateAdded($value) {
-        $this->setData('date_added', $value);
+        $this->set('date_added', $value);
     }
 
     public function getDateAdded() {
-        return $this->data('date_added');
+        return $this->get('date_added');
     }
 
     public function setAdvertId($value) {
-        $this->setData('advert_id', $value);
+        $this->set('advert_id', $value);
     }
 
     public function getAdvertId() {
-        return $this->data('advert_id');
+        return $this->get('advert_id');
     }
 
     public function setHighscores($value) {
-        $this->setData('highscores', $value);
+        $this->set('highscores', $value);
     }
 
     public function getHighscores() {
-        return $this->data('highscores');
+        return $this->get('highscores');
     }
 
     public function setMochiId($value) {
-        $this->setData('mochi_id', $value);
+        $this->set('mochi_id', $value);
     }
 
     public function getMochiId() {
-        return $this->data('mochi_id');
+        return $this->get('mochi_id');
     }
 
     public function setSeoUrl($value) {
-        $this->setData('seo_url', $value);
+        $this->set('seo_url', $value);
     }
 
     public function getSeoUrl() {
-        return $this->data('seo_url');
+        return $this->get('seo_url');
     }
 
     public function setSubmitter($value) {
-        $this->setData('submitter', $value);
+        $this->set('submitter', $value);
     }
 
     public function getSubmitter() {
-        return $this->data('submitter');
+        return $this->get('submitter');
     }
 
     public function setHtmlCode($value) {
-        $this->setData('html_code', $value);
+        $this->set('html_code', $value);
     }
 
     public function getHtmlCode() {
-        return $this->data('html_code');
+        return $this->get('html_code');
     }
 
     public function getValidationRules(Validator $validator)

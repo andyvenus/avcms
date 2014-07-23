@@ -13,34 +13,34 @@ use AVCMS\Core\Model\Entity;
 class Session extends Entity {
     public function setSessionId($value)
     {
-        $this->setData('session_id', $value);
+        $this->set('session_id', $value);
     }
 
     public function getSessionId() {
-        return $this->data('session_id');
+        return $this->get('session_id');
     }
 
     public function setUserId($value) {
-        $this->setData('user_id', $value);
+        $this->set('user_id', $value);
     }
 
     public function getUserId() {
-        return $this->data('user_id');
+        return $this->get('user_id');
     }
 
     public function setCsrf($value) {
-        $this->setData('csrf', $value);
+        $this->set('csrf', $value);
     }
 
     public function getCsrf() {
-        return $this->data('csrf');
+        return $this->get('csrf');
     }
 
     public function setGenerated($value) {
-        $this->setData('generated', $value);
+        $this->set('generated', $value);
     }
 
     public function getGenerated() {
-        return $this->data('generated');
+        return $this->get('generated');
     }
 } 

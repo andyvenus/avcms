@@ -1,0 +1,11 @@
+blog_edit_post:
+    path:     /admin/blog/edit/{id}
+    defaults: { _controller: 'AVCMS\Bundles\Blog\Controller\BlogAdminController::editPostAction', _permissions: {add_edit_save, adverts} }
+
+blog_home:
+    path:     '/'
+    defaults: { _controller: 'AVCMS\Bundles\Blog\Controller\BlogController::blogHomeAction' }
+
+blog_post:
+    path:     /{slug}
+    defaults: { _controller: 'AVCMS\Bundles\Blog\Controller\BlogController::blogPostAction' }

@@ -21,7 +21,7 @@ class ModelFactory {
 
     public function __construct($query_builder, $event_dispatcher)
     {
-        $this->query_builder = $query_builder->getQueryBuilder();
+        $this->query_builder = $query_builder;
         $this->event_dispatcher = $event_dispatcher;
     }
 

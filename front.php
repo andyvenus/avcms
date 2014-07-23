@@ -64,3 +64,5 @@ fwrite($file, 'Time: '.$total_time.' - Memory: Peak: '.bytesToSize(memory_get_pe
 fclose($file);
 
 //echo '// Time: '.$total_time.' &nbsp;Memory: Peak: '.bytesToSize(memory_get_peak_usage()). ' Now: '.bytesToSize(memory_get_usage()) ;
+
+$sc->get('framework')->terminate($request, $response);

@@ -50,7 +50,7 @@ class ChildValidatableObject implements Validatable {
         if ($scope == Validator::SCOPE_ALL) {
             return array(
                 'Child Error 1',
-                "Parameter 'child_parameter_five' not set",
+                "Parameter '{param_name}' not set",
                 'Shared Param Error 1 - Child'
             );
         }

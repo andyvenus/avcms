@@ -11,74 +11,74 @@ class ContentEntity extends Entity
 {
     public function setId($value)
     {
-        $this->setData('id', $value);
+        $this->set('id', $value);
     }
 
     public function getId() {
-        return $this->data('id');
+        return $this->get('id');
     }
 
     public function setPublished($value)
     {
-        $this->setData('published', $value);
+        $this->set('published', $value);
     }
 
     public function getPublished() {
-        return $this->data('published');
+        return $this->get('published');
     }
 
     public function setDateAdded($value)
     {
-        $this->setData('date_added', $value);
+        $this->set('date_added', $value);
     }
 
     public function getDateAdded() {
-        return $this->data('date_added');
+        return $this->get('date_added');
     }
 
     public function setDateEdited($value)
     {
-        $this->setData('date_edited', $value);
+        $this->set('date_edited', $value);
     }
 
     public function getDateEdited() {
-        return $this->data('date_edited');
+        return $this->get('date_edited');
     }
 
     public function setCreatorId($value)
     {
-        $this->setData('creator_id', $value);
+        $this->set('creator_id', $value);
     }
 
     public function getCreatorId() {
-        return $this->data('creator_id');
+        return $this->get('creator_id');
     }
 
     public function setEditorId($value)
     {
-        $this->setData('editor_id', $value);
+        $this->set('editor_id', $value);
     }
 
     public function getEditorId() {
-        return $this->data('editor_id');
+        return $this->get('editor_id');
     }
 
     public function setSlug($value)
     {
-        $this->setData('slug', $value);
+        $this->set('slug', $value);
     }
 
     public function getSlug() {
-        return $this->data('slug');
+        return $this->get('slug');
     }
 
     public function setPublishDate($value)
     {
-        $this->setData('publish_date', $value);
+        $this->set('publish_date', $value);
     }
 
     public function getPublishDate()
     {
-        return $this->data('publish_date');
+        return $this->get('publish_date');
     }
 } 

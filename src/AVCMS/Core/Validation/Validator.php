@@ -3,8 +3,10 @@
 namespace AVCMS\Core\Validation;
 
 use AVCMS\Core\Model\ModelFactory;
+use AVCMS\Core\Validation\Event\ValidatorFilterRuleEvent;
 use AVCMS\Core\Validation\Handlers\SelfValidatableHandler;
 use AVCMS\Core\Validation\Handlers\ValidatableHandler;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class Validator
@@ -56,11 +58,6 @@ class Validator
     protected $validation_obj;
 
     /**
-     * @var ModelFactory
-     */
-    protected $model_factory;
-
-    /**
      * @var array
      */
     protected $limited_params = array();
@@ -75,8 +72,15 @@ class Validator
      */
     protected $translator;
 
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $event_dispatcher;
 
-    public function __construct($validatable_handlers = null)
+    /**
+     * @param null|array $validatable_handlers
+     */
+    public function __construct(array $validatable_handlers = null)
     {
         if ($validatable_handlers) {
             $this->validatable_handlers = $validatable_handlers;
@@ -84,6 +88,14 @@ class Validator
         else {
             $this->addValidatableHandler(new SelfValidatableHandler());
         }
+    }
+
+    /**
+     * @param EventDispatcherInterface $event_dispatcher
+     */
+    public function setEventDispatcher(EventDispatcherInterface $event_dispatcher)
+    {
+        $this->event_dispatcher = $event_dispatcher;
     }
 
     /**
@@ -166,16 +178,11 @@ class Validator
 
                 // If the parameters to validate have been limited, make sure this parameter is one of those
                 if ( ( empty($this->limited_params) || in_array($rule['param_name'], $this->limited_params) )) {
-                    /** @var $rule_obj Rules\Rule */
+                    /** @var $rule_obj Rules\RuleInterface */
                     $rule_obj = $rule['rule'];
 
-                    if (method_exists($rule_obj, 'setModelFactory')) {
-                        if (isset($this->model_factory)) {
-                            $rule_obj->setModelFactory($this->model_factory);
-                        }
-                        else {
-                            throw new \Exception("A rule for parameter '{$rule['param_name']}' requires a model factory. Set using Validator::setModelFactory");
-                        }
+                    if (isset($this->event_dispatcher)) {
+                        $this->event_dispatcher->dispatch('validator.filter.rule', new ValidatorFilterRuleEvent($rule_obj));
                     }
 
                     if (!$rule_obj->assert($parameter_value)) {
@@ -262,8 +269,8 @@ class Validator
         {
             $validator = new Validator($this->validatable_handlers);
 
-            if (isset($this->model_factory)) {
-                $validator->setModelFactory($this->model_factory);
+            if (isset($this->event_dispatcher)) {
+                $validator->setEventDispatcher($this->event_dispatcher);
             }
             if (isset($this->translator)) {
                 $validator->setTranslator($this->translator);
@@ -330,13 +337,6 @@ class Validator
     {
         $name = $handler->getName();
         $this->validatable_handlers[$name] = $handler;
-    }
-
-    /**
-     * @param ModelFactory $model_factory
-     */
-    public function setModelFactory(ModelFactory $model_factory) {
-        $this->model_factory = $model_factory;
     }
 
     /**

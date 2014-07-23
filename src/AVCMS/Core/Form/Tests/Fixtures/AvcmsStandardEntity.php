@@ -16,7 +16,7 @@ class AvcmsStandardEntity extends Entity {
      */
     public function setCategory($category)
     {
-        $this->setData('category', $category);
+        $this->set('category', $category);
     }
 
     /**
@@ -24,7 +24,7 @@ class AvcmsStandardEntity extends Entity {
      */
     public function getCategory()
     {
-        return $this->data('category');
+        return $this->get('category');
     }
 
     /**
@@ -32,7 +32,7 @@ class AvcmsStandardEntity extends Entity {
      */
     public function setDescription($description)
     {
-        $this->setData('description', $description);
+        $this->set('description', $description);
     }
 
     /**
@@ -40,7 +40,7 @@ class AvcmsStandardEntity extends Entity {
      */
     public function getDescription()
     {
-        return $this->data('description');
+        return $this->get('description');
     }
 
     /**
@@ -48,7 +48,7 @@ class AvcmsStandardEntity extends Entity {
      */
     public function setName($name)
     {
-        $this->setData('name', $name);
+        $this->set('name', $name);
     }
 
     /**
@@ -56,7 +56,7 @@ class AvcmsStandardEntity extends Entity {
      */
     public function getName()
     {
-        return $this->data('name');
+        return $this->get('name');
     }
 
     /**
@@ -64,7 +64,7 @@ class AvcmsStandardEntity extends Entity {
      */
     public function setPassword($password)
     {
-        $this->setData('password', $password);
+        $this->set('password', $password);
     }
 
     /**
@@ -72,7 +72,7 @@ class AvcmsStandardEntity extends Entity {
      */
     public function getPassword()
     {
-        return $this->data('password');
+        return $this->get('password');
     }
 
     /**
@@ -80,7 +80,7 @@ class AvcmsStandardEntity extends Entity {
      */
     public function setPublished($published)
     {
-        $this->setData('published', $published);
+        $this->set('published', $published);
     }
 
     /**
@@ -88,6 +88,6 @@ class AvcmsStandardEntity extends Entity {
      */
     public function getPublished()
     {
-        return $this->data('published');
+        return $this->get('published');
     }
 }

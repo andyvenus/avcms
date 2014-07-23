@@ -8,22 +8,22 @@ class Category extends Entity {
 
     public function setName($value)
     {
-        $this->setData('name', $value);
+        $this->set('name', $value);
     }
 
     public function getName()
     {
-        return $this->data('name');
+        return $this->get('name');
     }
 
     public function setDescription($value)
     {
-        $this->setData('description', $value);
+        $this->set('description', $value);
     }
 
     public function getDescription()
     {
-        return $this->data('description');
+        return $this->get('description');
     }
 
 }

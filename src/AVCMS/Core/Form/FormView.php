@@ -7,6 +7,7 @@
 
 namespace AVCMS\Core\Form;
 
+use AVCMS\Core\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class FormView implements FormViewInterface
@@ -47,12 +48,14 @@ class FormView implements FormViewInterface
     protected $params;
 
     /**
-     * {@inheritdoc}
+     * @param array $fields
+     * @return mixed|void
+     * @throws Exception\InvalidArgumentException
      */
     public function setFields(array $fields)
     {
         if (array_key_exists('params', $fields)) {
-            throw new \Exception("Your form cannot contain a field called 'params' as it clashes with internal functions");
+            throw new InvalidArgumentException("Your form cannot contain a field called 'params' as it clashes with internal functions");
         }
 
         $this->fields = $this->doFieldTranslations($fields);

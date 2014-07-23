@@ -13,27 +13,27 @@ use AVCMS\Core\Validation\Validator;
 
 class Post extends ContentEntity {
     public function setTitle($value) {
-        $this->setData('title', $value);
+        $this->set('title', $value);
     }
 
     public function getTitle() {
-        return $this->data('title');
+        return $this->get('title');
     }
 
     public function setBody($value) {
-        $this->setData('body', $value);
+        $this->set('body', $value);
     }
 
     public function getBody() {
-        return $this->data('body');
+        return $this->get('body');
     }
 
     public function setUserId($value) {
-        $this->setData('user_id', $value);
+        $this->set('user_id', $value);
     }
 
     public function getUserId() {
-        return $this->data('user_id');
+        return $this->get('user_id');
     }
 
     public function validationRules(Validator $validator)

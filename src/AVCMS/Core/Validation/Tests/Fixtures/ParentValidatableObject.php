@@ -57,10 +57,10 @@ class ParentValidatableObject implements Validatable {
     {
         return array(
             'Parent Error 1',
-            "Parameter 'parent_parameter_five' not set",
+            "Parameter '{param_name}' not set",
             'Shared Param Error 1 - Parent',
             'Shared Param Error 3 - Parent',
-            "Parameter 'shared_parameter_four' not set"
+            "Parameter '{param_name}' not set"
         );
     }
 

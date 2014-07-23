@@ -16,9 +16,17 @@ avcms.form = {
         var data = $(this).serialize();
         var form = $(this);
 
+        var submit_url;
+        if (form.attr('action')) {
+            submit_url = form.attr('action');
+        }
+        else {
+            submit_url = document.URL;
+        }
+
         $.ajax({
             type: "POST",
-            url: avcms.nav.getCurrentUrl(), //todo: change to use form url or getCurrentUrl() depending on whether form url is set
+            url: submit_url,
             dataType: 'json',
             data: data,
             success: function(data) {

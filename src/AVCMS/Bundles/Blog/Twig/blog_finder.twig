@@ -1,0 +1,80 @@
+{% block finder_header %}
+    <div class="browser-finder-page">
+        Page {{ page }}
+    </div>
+    <div class="browser-finder-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 hidden-xs">
+                    Body
+                </div>
+                <div class="col-md-4 hidden-sm hidden-xs">
+                    Username
+                </div>
+                <div class="col-md-4 hidden-sm hidden-xs">
+                    Slug
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% for item in items %}
+    <div class="browser-finder-item" data-id="{{ item.id }}">
+
+        <div class="finder-item-checkbox-container">
+            <input type="checkbox" />
+        </div>
+
+        <div class="finder-item-main">
+
+            <div class="finder-item-title" data-field="title">
+                {{ item.title }}
+            </div>
+
+            <div class="btn-group">
+                <a class="btn btn-xs btn-default" href="{{ url('blog_edit_post', {'id': item.id}) }}"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+
+                {% if item.published == 1 %}
+                    {% set published_btn_class = 'btn-default' %}
+                    {% set published_btn_icon = 'glyphicon-eye-open' %}
+                {% else %}
+                    {% set published_btn_class = 'btn-danger' %}
+                    {% set published_btn_icon = 'glyphicon-eye-close' %}
+                {% endif %}
+
+                <button class="btn btn-xs {{ published_btn_class }} avcms-toggle-published" data-toggle-publish-url="{{ url('blog_toggle_posts_published') }}">
+                    <span class="glyphicon {{ published_btn_icon }}"></span>
+                </button>
+
+                <button class="btn btn-xs btn-default avcms-delete-item" data-delete-url="{{ url('blog_delete_posts') }}">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </div>
+
+            <a class="btn btn-xs btn-default" href="{{ url('blog_post', {slug: item.slug}) }}" target="_blank">
+                <span class="glyphicon glyphicon-new-window"></span>
+            </a>
+        </div>
+        <div class="finder-item-extended">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4 hidden-xs">
+                        {{ item.body|length > 100 ? item.body|slice(0, 100) ~ '...' : item.body  }}
+                    </div>
+                    <div class="col-md-4 hidden-sm hidden-xs">
+                        {{ item.user.username }}
+                    </div>
+                    <div class="col-md-4 hidden-sm hidden-xs">
+                        <a href="{{ url('blog_post', {slug: item.slug}) }}">{{ item.slug }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div style="display:none;">NORESULTS</div>
+    <div class="finder-no-results">
+        {% trans %}No results{% endtrans %}
+    </div>
+{% endfor %}

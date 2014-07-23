@@ -29,6 +29,9 @@ class MustNotExist extends Rule implements ModelRule {
 
     public function assert($param)
     {
+        if (!isset($this->model_factory)) {
+            throw new \Exception(sprintf("The rule %s requires a ModelFactory to be set using the RuleModelFactoryInjector subscriber", get_class($this)));
+        }
 
         $model = $this->model_factory->create($this->model);
 
@@ -49,6 +52,14 @@ class MustNotExist extends Rule implements ModelRule {
         }
     }
 
+    /**
+     * Injects the model factory into this rule.
+     *
+     * REQUIRES that the Events\RuleModelFactoryInjector subscriber is
+     * subscribed to the validator.filter.rule event in within the Validator
+     *
+     * @param ModelFactory $model_factory
+     */
     public function setModelFactory(ModelFactory $model_factory) {
         $this->model_factory = $model_factory;
     }

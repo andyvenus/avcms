@@ -30,7 +30,7 @@ abstract class Entity implements Validatable
      * @param $param
      * @return null
      */
-    protected function data($param)
+    protected function get($param)
     {
         if (isset($this->data[$param])) {
             return $this->data[$param];
@@ -44,7 +44,7 @@ abstract class Entity implements Validatable
      * @param $param
      * @param $value
      */
-    protected function setData($param, $value)
+    protected function set($param, $value)
     {
         $this->data[$param] = $value;
     }

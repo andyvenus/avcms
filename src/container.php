@@ -5,6 +5,7 @@ use Aptoma\Twig\Extension\MarkdownExtension;
 use AVCMS\Games\Event\ExampleFormEvent;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Routing\RequestContext;
@@ -68,10 +69,20 @@ $sc->register('dispatcher', 'Symfony\Component\EventDispatcher\ContainerAwareEve
     ->addMethodCall('addSubscriber', array(new Reference('entity.date.maker')))
     ->addMethodCall('addSubscriber', array(new Reference('entity.author.assigner')))
     ->addMethodCall('addSubscriber', array(new Reference('update.tags')))
-    ->addMethodCall('addSubscriber', array(new ExampleFormEvent()))
+    //->addMethodCall('addSubscriber', array(new ExampleFormEvent()))
+    ->addMethodCall('addSubscriber', array(new Reference('validator.model.injector')))
+    ->addMethodCall('addSubscriber', array(new Reference('controller.inject.bundle')))
+    ->addMethodCall('addSubscriber', array(new Reference('csrf.form.plugin')))
 ;
+
 $sc->register('framework', 'AVCMS\Core\Framework')
     ->setArguments(array(new Reference('dispatcher'), new Reference('resolver')))
+;
+
+$sc->register('csrf.token', 'AVCMS\Core\Security\CSRF\CsrfToken');
+
+$sc->register('csrf.form.plugin', 'AVCMS\Core\Security\Csrf\Events\CsrfFormPlugin')
+    ->setArguments(array(new Reference('csrf.token')))
 ;
 
 // Other HttpKernel components
@@ -90,6 +101,8 @@ $request_context->fromRequest($request);
 $sc->register('routing.url.generator', 'Symfony\Component\Routing\Generator\UrlGenerator')
     ->setArguments(array('%routes%', $request_context));
 
+$sc->register('controller.inject.bundle', 'AVCMS\Core\Bundle\Events\ControllerInjectBundle')
+    ->setArguments(array(new Reference('bundle_manager')));
 
 // Translation
 
@@ -108,6 +121,12 @@ $sc->register('translator', 'AVCMS\Core\Translation\Translator')
             'Blog Posts' => 'Meepz'
         ),*/
         'en_GB'))
+;
+
+// Some Validation things
+
+$sc->register('validator.model.injector', 'AVCMS\Core\Validation\Events\RuleModelFactoryInjector')
+    ->setArguments(array(new Reference('model.factory')))
 ;
 
 // Templates
@@ -158,8 +177,8 @@ $sc->register('asset_manager', 'AVCMS\Core\AssetManager\AssetManager')
     ->addMethodCall('add', array(new \AVCMS\Core\AssetManager\Asset\AppFileAsset('javascript', 'select2.min.js'), 'admin'))
     ->addMethodCall('add', array(new \AVCMS\Core\AssetManager\Asset\AppFileAsset('javascript', 'jquery.history.js'), 'admin'))
     ->addMethodCall('add', array(new \AVCMS\Core\AssetManager\Asset\AppFileAsset('javascript', 'jquery.nanoscroller.min.js'), 'admin'))
-    ->addMethodCall('add', array(new \AVCMS\Core\AssetManager\Asset\AppFileAsset('javascript', 'admin/admin_browser.js'), 'admin'))
     ->addMethodCall('add', array(new \AVCMS\Core\AssetManager\Asset\AppFileAsset('javascript', 'admin/admin_navigation.js'), 'admin'))
+    ->addMethodCall('add', array(new \AVCMS\Core\AssetManager\Asset\AppFileAsset('javascript', 'admin/admin_browser.js'), 'admin'))
     ->addMethodCall('add', array(new \AVCMS\Core\AssetManager\Asset\AppFileAsset('javascript', 'admin/admin_misc.js'), 'admin'))
     ->addMethodCall('add', array(new \AVCMS\Core\AssetManager\Asset\AppFileAsset('javascript', 'avcms_form.js'), 'admin'))
     ->addMethodCall('add', array(new \AVCMS\Core\AssetManager\Asset\AppFileAsset('css', 'bootstrap-datetimepicker.css'), 'admin'))
@@ -169,12 +188,11 @@ $sc->register('asset_manager', 'AVCMS\Core\AssetManager\AssetManager')
 ;
 
 $sc->register('model.factory', 'AVCMS\Core\Model\ModelFactory')
-    ->setArguments(array(new Reference('query_builder'), new Reference('dispatcher')))
+    ->setArguments(array(new Reference('query.builder'), new Reference('dispatcher')))
     ->addMethodCall('addModelAlias', array('users', 'AVBlog\Bundles\Users\Model\Users'))
 ;
 
 $sc->register('taxonomy.manager', 'AVCMS\Core\Taxonomy\TaxonomyManager')
-    ->setArguments(array(new Reference('query_builder'), new Reference('dispatcher')))
     ->addMethodCall('addTaxonomy', array('tags', new Reference('tags.taxonomy')))
 ;
 
@@ -202,7 +220,7 @@ $sc->register('slug.generator', 'AVCMS\Core\SlugGenerator\SlugGenerator');
 
 // Database
 
-$dbconfig = array(
+$sc->setParameter('query.builder.config', array(
     'driver'    => 'mysql', // Db driver
     'host'      => 'localhost',
     'database'  => 'avcms',
@@ -211,22 +229,21 @@ $dbconfig = array(
     'charset'   => 'utf8', // Optional
     'collation' => 'utf8_unicode_ci', // Optional
     'prefix'    => 'avms_', // Table prefix, optional
-);
+));
 
-$sc->register('query_builder', 'AVCMS\Core\Database\Connection') // TODO: change so ->getQueryBuilder doesn't have to be used
-    ->setArguments(array('mysql', $dbconfig, 'QB', null, new Reference('dispatcher')));
+$sc->register('query.builder.factory', 'AVCMS\Core\Database\Connection')
+    ->setArguments(array('mysql', '%query.builder.config%', 'QB', null, new Reference('dispatcher')));
+
+$sc->setDefinition('query.builder', new Definition('AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler'))
+    ->setFactoryService('query.builder.factory')
+    ->setFactoryMethod('getQueryBuilder');
 
 // Bundles
 
-$bundles = array(
-    'Blog' => array('namespace' => 'AVCMS\Bundles\Blog'),
-    'Users' => array('namespace' => 'AVBlog\Bundles\Users'),
-    'Admin' => array('namespace' => 'AVCMS\Bundles\Admin'),
-    'Assets' => array('namespace' => 'AVCMS\Bundles\Assets')
-);
+$bundles = array('Blog', 'Users', 'Admin', 'Assets');
 
-$sc->register('bundle_manager', 'AVCMS\Core\BundleManager\BundleManager')
-    ->setArguments(array($bundles, '%container%'));
+$sc->register('bundle_manager', 'AVCMS\Core\Bundle\BundleManager')
+    ->setArguments(array($bundles, array('AVCMS\Bundles', 'AVBlog\Bundles'), '%container%'));
 
 // Tags
 $sc->register('update.tags', 'AVCMS\Bundles\Tags\Events\UpdateTags')

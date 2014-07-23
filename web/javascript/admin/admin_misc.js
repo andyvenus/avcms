@@ -1,6 +1,6 @@
 $(document).ready(function() {
     avcms.event.addEvent('page-modified', function() {
-        $(".user_selector").select2({
+        $(".user_selector").filter(':visible').select2({
             placeholder: "Find user",
             minimumInputLength: 2,
             ajax: {
@@ -38,8 +38,7 @@ $(document).ready(function() {
         $("[name='tags']").select2({
             tags:[],
             tokenSeparators: [","],
-            width: '100%',
-            dropdownCssClass: 'select2-display-none'
+            width: '100%'
         });
 
     });
@@ -49,6 +48,26 @@ $(document).ready(function() {
     $('body').on('change', '[name=slug]', avcms.misc.disableAutoGenerateSlug);
 
     $('body').on('click', '.slug_refresh_button', avcms.misc.generateSlugButton);
+
+    $(document).ajaxSuccess(function(event, data) {
+        if (data.responseJSON !== undefined) {
+            if (data.responseJSON.error !== undefined) {
+                console.log(data.responseJSON.error);
+            }
+        }
+    });
+
+    $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+        if (options.type === "POST" && options.data.indexOf("csrf_token") < 1) {
+            if (options.data != '') {
+                options.data = options.data + '&';
+            }
+
+            var csrf_token = avcms.misc.getCookie('avcms_csrf_token');
+
+            options.data = options.data + '_csrf_token='+encodeURIComponent(csrf_token);
+        }
+    });
 })
 
 avcms.misc = {
@@ -57,6 +76,11 @@ avcms.misc = {
 
     autoGenerateSlug: function() {
         var input_field = avcms.misc.slugInput;
+
+        if (!input_field.val()) {
+            return;
+        }
+
         var input = encodeURIComponent(input_field.val());
         var target_field_name = input_field.data('slug-target');
         var target_field = input_field.closest('form').find('[name='+target_field_name+']');
@@ -93,5 +117,16 @@ avcms.misc = {
 
     disableAutoGenerateSlug: function() {
         $(this).data('modified', 'true');
+    },
+
+    getCookie: function(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
     }
 }

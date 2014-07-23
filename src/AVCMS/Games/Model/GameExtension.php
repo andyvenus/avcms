@@ -14,11 +14,11 @@ use AVCMS\Core\Validation\Validator;
 class GameExtension extends ExtensionEntity
 {
     public function setSomething($a) {
-        $this->setData('something', $a);
+        $this->set('something', $a);
     }
 
     public function getSomething() {
-        return $this->data('something');
+        return $this->get('something');
     }
 
     public function validationRules(Validator $validator)

@@ -13,37 +13,37 @@ class GroupPermission extends Entity
 {
     public function setGroup($value)
     {
-        $this->setData('group', $value);
+        $this->set('group', $value);
     }
 
     public function getGroup() {
-        return $this->data('group');
+        return $this->get('group');
     }
 
     public function setName($value)
     {
-        $this->setData('name', $value);
+        $this->set('name', $value);
     }
 
     public function getName() {
-        return $this->data('name');
+        return $this->get('name');
     }
 
     public function setType($value)
     {
-        $this->setData('type', $value);
+        $this->set('type', $value);
     }
 
     public function getType() {
-        return $this->data('type');
+        return $this->get('type');
     }
 
     public function setValue($value)
     {
-        $this->setData('value', $value);
+        $this->set('value', $value);
     }
 
     public function getValue() {
-        return $this->data('value');
+        return $this->get('value');
     }
 } 

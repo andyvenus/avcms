@@ -45,13 +45,13 @@ class AVCMSValidatorExtension implements ValidatorExtension {
     public function validate($scope = Validator::SCOPE_ALL, $options = null)
     {
         if (!$this->validation_run) {
-            $form = $this->form_handler->getForm();
+            $form = $this->form_handler->getFormBlueprint();
 
             if (method_exists($form, 'getValidationRules')) {
                 $form->getValidationRules($this->validator);
             }
 
-            $entities = $this->form_handler->getEntities();
+            $entities = $this->form_handler->saveToAndGetClonedEntities();
 
             if (!empty($entities)) {
                 foreach ($entities as $entity) {

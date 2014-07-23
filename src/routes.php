@@ -10,6 +10,11 @@ $routes->add('game', new Route('/game/{id}', array(
     '_controller' => 'AVCMS\\Games\\Controller\\GamesController::newModelAction',
 )));
 
+$routes->add('z', new Route('/z', array(
+    'id' => null,
+    '_controller' => 'AVCMS\\Test\\MaController::action',
+)));
+
 $routes->add('game_form', new Route('/game_form/{id}', array(
     'id' => null,
     '_controller' => 'AVCMS\\Games\\Controller\\GamesController::formAction',

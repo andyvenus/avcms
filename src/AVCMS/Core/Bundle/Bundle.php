@@ -9,15 +9,24 @@ namespace AVCMS\Core\Bundle;
 
 use AVCMS\Core\AssetManager\AssetManager;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\RouteCollection;
 
 abstract class Bundle implements BundleInterface {
 
     protected $container;
 
-    public function __construct(ContainerBuilder $container)
+    protected $config;
+
+    public function __construct(BundleConfig $config, ContainerBuilder $container)
     {
+        $this->config = $config;
         $this->container = $container;
+
+        $this->setUp();
+        // if $config->container === true
+        $this->modifyContainer($this->container);
+        $this->routes($this->container->getParameter('routes'));
     }
 
     public function setUp()
@@ -54,5 +63,15 @@ abstract class Bundle implements BundleInterface {
     {
         $this->container->getDefinition('twig.filesystem')
             ->addMethodCall('addPath', array($dir, $namespace));
+    }
+
+    protected function addEventListener($eventName, $listener, $priority = 0)
+    {
+        $this->container->get('dispatcher')->addListener($eventName, $listener, $priority = 0);
+    }
+
+    protected function addEventSubscriber(EventSubscriberInterface $subscriber)
+    {
+        $this->container->get('dispatcher')->addSubscriber($subscriber);
     }
 } 

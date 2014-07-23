@@ -63,7 +63,7 @@ abstract class ModelTestCase extends \PHPUnit_Extensions_Database_TestCase
 
                 $mock_dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcher');
 
-                self::$shared_model_factory = new ModelFactory(self::$shared_query_builder, $mock_dispatcher);
+                self::$shared_model_factory = new ModelFactory(self::$shared_query_builder->getQueryBuilder(), $mock_dispatcher);
             }
 
             $this->query_builder = self::$shared_query_builder;

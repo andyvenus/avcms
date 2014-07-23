@@ -106,8 +106,8 @@ class ActiveUser implements EventSubscriberInterface
         $session = $this->sessions_model->getSession($session_id, $user_id);
 
         if ($session !== null && $session->getSessionId() === $session_id) {
-            $this->user_logged_in = true;
             $this->user = $this->users_model->query()->modelJoin($this->groups_model, array('name'))->first($user_id);
+            $this->user_logged_in = true;
         }
 
         if (!isset($this->user) || !$this->user) {

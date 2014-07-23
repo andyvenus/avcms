@@ -12,7 +12,8 @@ use Assetic\Asset\BaseAsset;
 use Assetic\AssetWriter;
 use Assetic\Filter\JSqueezeFilter;
 use AVCMS\Core\AssetManager\Asset\BundleAssetInterface;
-use AVCMS\Core\BundleManager\BundleManager;
+use AVCMS\Core\AssetManager\Exception\AssetTypeException;
+use AVCMS\Core\Bundle\BundleManager;
 use Assetic\AssetManager as AsseticAssetManager;
 
 class AssetManager
@@ -169,7 +170,7 @@ class AssetManager
     protected function getOrderedAssets($type, $environment, $strip_priority = false)
     {
         if ($type != 'css' && $type != 'javascript') {
-            throw new \Exception('Asset type '.$type.' is not valid');
+            throw new AssetTypeException('Asset type '.$type.' is not valid');
         }
 
         $assets = array();

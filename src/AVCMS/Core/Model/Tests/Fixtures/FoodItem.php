@@ -12,10 +12,10 @@ use AVCMS\Core\Model\Entity;
 class FoodItem extends Entity
 {
     public function setName($value) {
-        $this->setData('name', $value);
+        $this->set('name', $value);
     }
 
     public function getName() {
-        return $this->data('name');
+        return $this->get('name');
     }
 } 

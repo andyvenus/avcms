@@ -3,6 +3,7 @@
 namespace AVCMS\Core\Controller;
 
 use AVCMS\Bundles\UsersBase\Exception\PermissionDeniedException;
+use AVCMS\Core\Bundle\BundleConfig;
 use AVCMS\Core\Form\FormBlueprint;
 use AVCMS\Core\Form\FormHandler;
 use AVCMS\Core\Form\FormView;
@@ -31,6 +32,11 @@ abstract class Controller extends ContainerAware {
      */
     protected $model_factory;
 
+    /**
+     * @var \AVCMS\Core\Bundle\BundleConfig
+     */
+    protected $bundle;
+
     // todo: do this proper
     protected $config = array('users_model' => 'AVBlog\Bundles\Users\Model\Users');
 
@@ -39,6 +45,11 @@ abstract class Controller extends ContainerAware {
         $this->container = $container;
         $this->model_factory = $container->get('model.factory');
         $this->translator = $container->get('translator');
+    }
+
+    public function setBundle(BundleConfig $bundle)
+    {
+        $this->bundle = $bundle;
     }
 
     /**
@@ -60,9 +71,9 @@ abstract class Controller extends ContainerAware {
     protected function newValidator()
     {
         $validator = new Validator();
-        $validator->setModelFactory($this->model_factory);
 
         $validator->setTranslator($this->translator);
+        $validator->setEventDispatcher($this->container->get('dispatcher'));
 
         return $validator;
     }
@@ -120,6 +131,10 @@ abstract class Controller extends ContainerAware {
 
     protected function render($template, array $context = array(), $return_response = false)
     {
+        if (isset($this->bundle)) {
+            $context['bundle'] = $this->bundle;
+        }
+
         $twig = $this->container->get('twig');
         $result = $twig->render($template, $context);
 

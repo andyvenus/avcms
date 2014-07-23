@@ -16,117 +16,117 @@ class User extends Entity
      * @param $value
      */
     public function setId($value) {
-        $this->setData('id', $value);
+        $this->set('id', $value);
     }
 
     /**
      * @return null
      */
     public function getId() {
-        return $this->data('id');
+        return $this->get('id');
     }
 
     public function setUsername($value) {
-        $this->setData('username', $value);
+        $this->set('username', $value);
     }
 
     public function getUsername() {
-        return $this->data('username');
+        return $this->get('username');
     }
 
     public function setPassword($value) {
-        $this->setData('password', $value);
+        $this->set('password', $value);
     }
 
     public function getPassword() {
-        return $this->data('password');
+        return $this->get('password');
     }
 
     public function setEmail($value) {
-        $this->setData('email', $value);
+        $this->set('email', $value);
     }
 
     public function getEmail() {
-        return $this->data('email');
+        return $this->get('email');
     }
 
     public function setActivate($value) {
-        $this->setData('activate', $value);
+        $this->set('activate', $value);
     }
 
     public function getActivate() {
-        return $this->data('activate');
+        return $this->get('activate');
     }
 
     public function setAbout($value) {
-        $this->setData('about', $value);
+        $this->set('about', $value);
     }
 
     public function getAbout() {
-        return $this->data('about');
+        return $this->get('about');
     }
 
     public function setGroupId($value) {
-        $this->setData('group_id', $value);
+        $this->set('group_id', $value);
     }
 
     public function getGroupId() {
-        return $this->data('group_id');
+        return $this->get('group_id');
     }
 
     public function setLocation($value) {
-        $this->setData('location', $value);
+        $this->set('location', $value);
     }
 
     public function getLocation() {
-        return $this->data('location');
+        return $this->get('location');
     }
 
     public function setInterests($value) {
-        $this->setData('interests', $value);
+        $this->set('interests', $value);
     }
 
     public function getInterests() {
-        return $this->data('interests');
+        return $this->get('interests');
     }
 
     public function setWebsite($value) {
-        $this->setData('website', $value);
+        $this->set('website', $value);
     }
 
     public function getWebsite() {
-        return $this->data('website');
+        return $this->get('website');
     }
 
     public function setAdmin($value) {
-        $this->setData('admin', $value);
+        $this->set('admin', $value);
     }
 
     public function getAdmin() {
-        return $this->data('admin');
+        return $this->get('admin');
     }
 
     public function setJoined($value) {
-        $this->setData('joined', $value);
+        $this->set('joined', $value);
     }
 
     public function getJoined() {
-        return $this->data('joined');
+        return $this->get('joined');
     }
 
     public function setAvatar($value) {
-        $this->setData('avatar', $value);
+        $this->set('avatar', $value);
     }
 
     public function getAvatar() {
-        return $this->data('avatar');
+        return $this->get('avatar');
     }
 
     public function setReferrer($value) {
-        $this->setData('referrer', $value);
+        $this->set('referrer', $value);
     }
 
     public function getReferrer() {
-        return $this->data('referrer');
+        return $this->get('referrer');
     }
 }

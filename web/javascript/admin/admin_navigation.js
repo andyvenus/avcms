@@ -106,11 +106,6 @@ avcms.nav = {
 
         $(".nano").nanoScroller({ iOSNativeScrolling: true });
 
-        $(document).trigger('pageModified');
-        $('.nano-content').on('scroll', avcms.browser.finderLoadMore);
-
-        // Finder
-        avcms.browser.finder_loading = 0;
         avcms.event.fireEvent('page-modified');
     },
 

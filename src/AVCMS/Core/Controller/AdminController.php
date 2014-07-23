@@ -7,6 +7,7 @@
 
 namespace AVCMS\Core\Controller;
 
+use AVCMS\Core\Controller\Event\AdminEditFormBuiltEvent;
 use AVCMS\Core\Controller\Event\AdminFilterEntityEvent;
 use AVCMS\Core\Controller\Event\AdminSaveContentEvent;
 use AVCMS\Core\Form\FormBlueprint;
@@ -73,13 +74,16 @@ class AdminController extends Controller
 
         $form = $this->buildForm($form_blueprint, $entity, $request);
 
+        $this->getEventDispatcher()->dispatch('admin.edit.form.built', new AdminEditFormBuiltEvent($entity, $model, $form, $request));
+
         if ($form->isSubmitted()) {
             $id = null;
             if ($form->isValid()) {
+                $form->saveToEntities();
                 $this->filterValidEntity($entity);
                 $id = $model->save($entity);
 
-                $this->getEventDispatcher()->dispatch('admin.save.content', new AdminSaveContentEvent($entity, $model, $form));
+                $this->getEventDispatcher()->dispatch('admin.save.content', new AdminSaveContentEvent($entity, $model, $form, $request));
             }
 
             return new JsonResponse(array(
@@ -99,6 +103,10 @@ class AdminController extends Controller
 
     protected function delete(Request $request, Model $model)
     {
+        if ($this->checkCsrfToken($request) === false) {
+            return $this->invalidCsrfTokenResponse();
+        }
+
         if ($request->request->has('ids') && is_array($request->request->get('ids'))) {
             $ids = $request->request->get('ids');
 
@@ -121,6 +129,10 @@ class AdminController extends Controller
 
     protected function togglePublished(Request $request, ContentModel $model)
     {
+        if ($this->checkCsrfToken($request) === false) {
+            return $this->invalidCsrfTokenResponse();
+        }
+
         $published = $request->request->get('published', 1);
         if ($published != 1 && $published != 0) {
             $published = 1;
@@ -151,5 +163,17 @@ class AdminController extends Controller
         $this->container->get('dispatcher')->dispatch('admin.controller.filter.entity', new AdminFilterEntityEvent($entity));
 
         return $entity;
+    }
+
+    protected function checkCsrfToken(Request $request)
+    {
+        $token_manager = $this->container->get('csrf.token');
+
+        return $token_manager->checkToken($request->get('_csrf_token'));
+    }
+
+    protected function invalidCsrfTokenResponse()
+    {
+        return new JsonResponse(array('success' => 0, 'error' => 'Invalid CSRF Token', 'error_code' => 'invalid_csrf_token'));
     }
 }

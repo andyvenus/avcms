@@ -16,7 +16,8 @@ class BasicForm extends FormBlueprint
         $this->setName('basic_form');
 
         $this->add('name', 'text', array(
-            'label' => 'Name'
+            'label' => 'Name',
+            'required' => true
         ));
     }
 } 

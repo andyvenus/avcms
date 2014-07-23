@@ -11,11 +11,12 @@ use AVCMS\Core\Form\EntityProcessor\EntityProcessor;
 use AVCMS\Core\Form\EntityProcessor\GetterSetterEntityProcessor;
 use AVCMS\Core\Form\Event\FormHandlerConstructEvent;
 use AVCMS\Core\Form\Event\FormHandlerRequestEvent;
+use AVCMS\Core\Form\Exception\BadMethodCallException;
+use AVCMS\Core\Form\Exception\InvalidArgumentException;
 use AVCMS\Core\Form\RequestHandler\RequestHandlerInterface;
 use AVCMS\Core\Form\RequestHandler\StandardRequestHandler;
 use AVCMS\Core\Form\Transformer\TransformerManager;
 use AVCMS\Core\Form\Type\TypeHandler;
-use AVCMS\Core\Form\Type\TypeInterface;
 use AVCMS\Core\Form\ValidatorExtension\ValidatorExtension;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -23,7 +24,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  * Class FormHandler
  * @package AVCMS\Core\FormBlueprint
  *
- * Handles form requests, form validation and allows forms to interact with entities
+ * Handles form requests, validation, data transformation and allows forms to interact with entities
  */
 class FormHandler
 {
@@ -166,8 +167,11 @@ class FormHandler
 
     /**
      *  Get the default options for the fields for their type
+     *
+     * @param $fields array An array of field data
+     * @return array The fields, updated with default data
      */
-    protected function getDefaultOptions($fields)
+    protected function getDefaultOptions(array $fields)
     {
         $fields_updated = array();
         foreach ($fields as $field_name => $field) {
@@ -178,13 +182,20 @@ class FormHandler
     }
 
     /**
+     * Get the form blueprint
+     *
      * @return FormBlueprintInterface
      */
-    public function getForm()
+    public function getFormBlueprint()
     {
         return $this->form;
     }
 
+    /**
+     * Set the default values of matching fields
+     *
+     * @param array $default_values
+     */
     public function setDefaultValues(array $default_values)
     {
         foreach ($default_values as $name => $value) {
@@ -207,7 +218,7 @@ class FormHandler
     public function bindEntity($entity, $fields = null, $validatable = true, $id = null)
     {
         if ($this->submitted) {
-            throw new \Exception("Entities cannot be assigned after FormHandler::handleRequest has been called");
+            throw new BadMethodCallException("Entities cannot be assigned after FormHandler::handleRequest has been called");
         }
 
         $this->entities[] = array('entity' => $entity, 'fields' => $fields, 'validatable' => $validatable);
@@ -292,6 +303,28 @@ class FormHandler
         foreach ($this->entities as $entity) {
             $this->entity_processor->saveToEntity($entity['entity'], $data, $entity['fields']);
         }
+    }
+
+    /**
+     * Save the form data to cloned entities and retrieve them.
+     *
+     * Useful for getting entities with the data assigned without affecting
+     * the original entities
+     *
+     * @return array
+     */
+    public function saveToAndGetClonedEntities()
+    {
+        $data = $this->transformFromFormData($this->data);
+
+        $cloned_entities = array();
+        foreach ($this->entities as $entity) {
+            $entity['entity'] = clone $entity['entity'];
+            $cloned_entities[] = $entity;
+            $this->entity_processor->saveToEntity($entity['entity'], $data, $entity['fields']);
+        }
+
+        return $cloned_entities;
     }
 
     /**
@@ -395,6 +428,8 @@ class FormHandler
     }
 
     /**
+     * Get the values of all the form fields or a single form field
+     *
      * @param null $name
      * @param bool $transform
      * @return mixed
@@ -419,6 +454,22 @@ class FormHandler
         }
     }
 
+    /**
+     * Set the value of a form field
+     *
+     * @param $name
+     * @param $value
+     */
+    public function setData($name, $value)
+    {
+        $this->data[$name] = $value;
+    }
+
+    /**
+     * Get the active type handler
+     *
+     * @return TypeHandler
+     */
     public function getTypeHandler()
     {
         return $this->type_handler;
@@ -428,13 +479,13 @@ class FormHandler
      * Set the form submission method
      *
      * @param $method string Value: POST/GET
-     * @throws \Exception
+     * @throws InvalidArgumentException
      */
     public function setMethod($method)
     {
         if ($method != 'POST' && $method != 'GET')
         {
-            throw new \Exception("Unknown method type '".$method);
+            throw new InvalidArgumentException("Unknown method type '".$method);
         }
         else {
             $this->method = $method;
@@ -442,6 +493,8 @@ class FormHandler
     }
 
     /**
+     * Get the form method e.g. GET or POST
+     *
      * @return string
      */
     public function getMethod()
@@ -450,7 +503,9 @@ class FormHandler
     }
 
     /**
-     * @param $action string The url the form will submit to
+     * Set the URL the form will submit to
+     *
+     * @param $action
      */
     public function setAction($action)
     {
@@ -458,6 +513,8 @@ class FormHandler
     }
 
     /**
+     * Get the URL the form will submit to
+     *
      * @return null|string
      */
     public function getAction()
@@ -474,6 +531,8 @@ class FormHandler
     }
 
     /**
+     * Get the form encoding
+     *
      * @return string
      */
     public function getEncoding()
@@ -525,13 +584,19 @@ class FormHandler
         $this->validator->setFormHandler($this);
     }
 
+    /**
+     * Get the assigned form validator
+     *
+     * @return ValidatorExtension
+     * @throws BadMethodCallException
+     */
     public function getValidator()
     {
         if (isset($this->validator)) {
             return $this->validator;
         }
         else {
-            throw new \Exception('Cannot get validator, no validator assigned');
+            throw new BadMethodCallException('Cannot get validator, no validator assigned to this form');
         }
     }
 
@@ -542,7 +607,6 @@ class FormHandler
      * @param null $scope
      * @param null $options
      * @return bool
-     * @throws \Exception
      */
     public function isValid($scope = null, $options = null)
     {
@@ -550,8 +614,7 @@ class FormHandler
             return false;
         }
 
-        $this->saveToEntities();
-
+        // Check for internal errors & validator errors
         if ((isset($this->validator) && $this->validator->isValid($scope, $options) && empty($this->errors)) || (!isset($this->validator) && empty($this->errors))) {
             return true;
         }
@@ -564,7 +627,7 @@ class FormHandler
      * Check each field to see if they're required. If they have no data set, assign the error
      * TODO: Recursive support for collection
      */
-    public function setRequiredFieldErrors()
+    protected function setRequiredFieldErrors()
     {
         foreach ($this->fields as $field) {
             if (isset($field['options']['required']) && $field['options']['required'] === true) {
@@ -585,14 +648,14 @@ class FormHandler
      * Add custom errors to the form. Must be an array of FormError objects
      *
      * @param $errors FormError[]
-     * @throws \Exception
+     * @throws InvalidArgumentException
      */
     public function addCustomErrors($errors)
     {
         if ($errors) {
             foreach ($errors as $error) {
                 if (!is_a($error, 'AVCMS\Core\Form\FormError')) {
-                    throw new \Exception('Custom errors must be AVCMS\Core\Form\FormError objects');
+                    throw new InvalidArgumentException('Custom errors must be AVCMS\Core\Form\FormError objects');
                 }
                 else {
                     $this->errors[] = $error;
@@ -605,7 +668,6 @@ class FormHandler
      * Get the errors from the validator
      *
      * @return mixed
-     * @throws \Exception
      */
     public function getValidationErrors()
     {
@@ -619,38 +681,55 @@ class FormHandler
         return $errors;
     }
 
+    /**
+     * Get the entity processor
+     *
+     * @return GetterSetterEntityProcessor
+     */
     public function getEntityProcessor()
     {
         return $this->entity_processor;
     }
 
-    /*
-    public function __get($name)
-    {
-        return $this->getData($name);
-    }
-
-    public function __isset($name)
-    {
-        return isset($this->data[$name]);
-    }
-    */
-
+    /**
+     * Set the transformer manager
+     *
+     * @param TransformerManager $transformer_manager
+     */
     public function setTransformerManager(TransformerManager $transformer_manager)
     {
         $this->transformer_manager = $transformer_manager;
     }
 
+    /**
+     * Transform raw/entity data into data suitable for the form
+     *
+     * @param $data
+     * @return mixed
+     */
     protected function transformToFormData($data)
     {
         return $this->transformData('to', $data);
     }
 
+    /**
+     * Transform form data into raw data and data suitable for entities
+     *
+     * @param $data
+     * @return mixed
+     */
     protected function transformFromFormData($data)
     {
         return $this->transformData('from', $data);
     }
 
+    /**
+     * Transform all given data that has an ['options']['transform'] value set
+     *
+     * @param $type
+     * @param $data
+     * @return mixed
+     */
     protected function  transformData($type, $data)
     {
         foreach ($data as $field => $value) {

@@ -2,13 +2,11 @@
 
 namespace AVCMS\Core\Validation\Rules;
 
-abstract class Rule {
+abstract class Rule implements RuleInterface {
 
     protected $rule_data;
 
     protected $error;
-
-    abstract public function assert($param);
 
     protected function setError($error)
     {

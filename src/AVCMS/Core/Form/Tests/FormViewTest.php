@@ -7,10 +7,11 @@
 
 namespace AVCMS\Core\Form\Tests;
 
-
+use AVCMS\Core\Form\FormError;
 use AVCMS\Core\Form\FormView;
 
-class FormViewTest extends \PHPUnit_Framework_TestCase {
+class FormViewTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var FormView
      */
@@ -106,6 +107,32 @@ class FormViewTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('GET', $params['method']);
     }
 
+    public function testEncoding()
+    {
+        $set = 'multipart/form-data';
+
+        $this->form_view->setEncoding($set);
+        $this->assertEquals($set, $this->form_view->getEncoding());
+    }
+
+    public function testHasErrors()
+    {
+        $this->assertNull($this->form_view->getErrors());
+
+        $this->form_view->setErrors(array(new FormError('name', 'test')));
+        $this->assertTrue($this->form_view->hasErrors());
+    }
+
+    public function testJsonResponse()
+    {
+        $this->form_view->setErrors(array(new FormError('name', 'test')));
+
+        $json_data = $this->form_view->getJsonResponseData();
+
+        $this->assertTrue($json_data['has_errors']);
+        $this->assertCount(1, $json_data['errors']);
+    }
+
     public function testTranslation()
     {
         $mock_translator = $this->getMockBuilder('\AVCMS\Core\Translation\Translator')
@@ -116,14 +143,16 @@ class FormViewTest extends \PHPUnit_Framework_TestCase {
             'Name Translated',
             'Category Translated',
             'One Translated',
-            'Submit Translated'
+            'Submit Translated',
+            'Error Translated'
         );
 
         $map = array(
             array('Name', array(), null, null, $expected_translation[0]),
             array('Category', array(), null, null, $expected_translation[1]),
             array("One", array(), null, null, $expected_translation[2]),
-            array("Submit Original", array(), null, null, $expected_translation[3])
+            array("Submit Original", array(), null, null, $expected_translation[3]),
+            array("Example Error", array(), null, null, $expected_translation[4])
         );
 
         $mock_translator->expects($this->any())
@@ -147,6 +176,16 @@ class FormViewTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($expected_translation[1], $fields['category']['options']['label']);
         $this->assertEquals($expected_translation[2], $fields['category']['options']['choices'][1]);
         $this->assertEquals($expected_translation[3], $this->form_view->getSubmitButtonLabel());
+
+        $form_errors = array(
+            new FormError('name', 'Example Error', true)
+        );
+
+        $this->form_view->setErrors($form_errors);
+
+        $translated_errors = $this->form_view->getErrors();
+
+        $this->assertEquals($expected_translation[4], $translated_errors[0]->getMessage());
     }
 }
  

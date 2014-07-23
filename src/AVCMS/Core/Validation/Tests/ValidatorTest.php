@@ -2,6 +2,7 @@
 
 namespace AVCMS\Core\Validation\Tests;
 
+use AVCMS\Core\Validation\Rules\MinLength;
 use AVCMS\Core\Validation\Tests\Fixtures\NestedArrayValidatableObject;
 use AVCMS\Core\Validation\Tests\Fixtures\ParentValidatableObject;
 use AVCMS\Core\Validation\Tests\Fixtures\SimpleValidatableObject;
@@ -83,6 +84,15 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $parent_validatable = new ParentValidatableObject();
         $child_validatable = $parent_validatable->getChildValidatable();
 
+        $this->validator->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'));
+
+        $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+        $translator->expects($this->any())
+            ->method('trans')
+            ->will($this->returnArgument(0));
+
+        $this->validator->setTranslator($translator);
+
         $this->validator->validate($parent_validatable, 'standard', $scope);
 
         $this->assertEquals($parent_validatable->expectedValid(), $this->validator->isValid());
@@ -103,6 +113,25 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
             $this->assertEquals($expected_errors, $error_messages);
         }
+    }
+
+    public function testArrayValidation()
+    {
+        $this->validator->addRule('name', new MinLength(50));
+
+        $this->validator->validate(array(
+            'name' => 'Too Short'
+        ));
+
+        $this->assertFalse($this->validator->isValid());
+        $this->assertCount(1, $this->validator->getErrors());
+    }
+
+    public function testInvalidHandlerException()
+    {
+        $this->setExpectedException('\Exception');
+
+        $this->validator->validate(new SimpleValidatableObject(), 'invalid');
     }
 
     public function providerScopes()
@@ -149,6 +178,18 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->assertEquals($expected_errors, $error_messages);
+    }
+
+    public function testEvents()
+    {
+        $mock_dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcher');
+
+        $mock_dispatcher->expects($this->any())
+            ->method('dispatch');
+
+        $this->validator->setEventDispatcher($mock_dispatcher);
+
+        $this->validator->validate(new SimpleValidatableObject());
     }
 }
  

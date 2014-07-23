@@ -7,6 +7,8 @@
 {% block finder_top -%}
     <h3>{% trans %}Blog Posts{% endtrans %}</h3>
 
+    <div class="expand-browser"><a href="{{ url('blog_admin_home') }}"><span class="glyphicon glyphicon-arrow-right"></span></a></div>
+
     {{ form_start(finder_filters_form) }}
 
     <div class="filter-form-row">{{ form_field(finder_filters_form.order) }}</div>

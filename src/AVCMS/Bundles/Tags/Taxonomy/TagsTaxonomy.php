@@ -12,6 +12,12 @@ use AVCMS\Core\Model\Model;
 use AVCMS\Core\Taxonomy\Model\TaxonomyModel;
 use AVCMS\Core\Taxonomy\Taxonomy;
 
+/**
+ * Class TagsTaxonomy
+ * @package AVCMS\Bundles\Tags\Taxonomy
+ *
+ * Add the ability to assign tags to content
+ */
 class TagsTaxonomy implements Taxonomy
 {
     /**
@@ -29,6 +35,10 @@ class TagsTaxonomy implements Taxonomy
      */
     protected $relations_model;
 
+    /**
+     * @param Model $tags_model The main model for the taxonomy that holds information about each tag
+     * @param TaxonomyModel $relations_model The model that provides the relational data linking the tag to the content
+     */
     public function __construct(Model $tags_model, TaxonomyModel $relations_model)
     {
         $this->relations_model = $relations_model;
@@ -53,6 +63,14 @@ class TagsTaxonomy implements Taxonomy
         return $query;
     }
 
+    /**
+     * Updates the tags assigned to a piece of content. Creates new tags as necessary and
+     * assigns them (and existing tags) to content using the relations table
+     *
+     * @param $content_id
+     * @param $content_type
+     * @param array $tags
+     */
     public function update($content_id, $content_type, array $tags)
     {
         $existing_tags = $this->tags->query()->whereIn($this->relation_column, $tags)->get();
@@ -98,11 +116,49 @@ class TagsTaxonomy implements Taxonomy
 
     }
 
+    /**
+     * Get the tags that are assigned to a piece of content
+     *
+     * @param $content_type
+     * @param $content_id
+     * @return mixed
+     */
+    public function get($content_id, $content_type)
+    {
+        return $this->tags->query()->join($this->relations_model->getTable(), 'taxonomy_id', '=', $this->tags->getTable().'.id', 'left')
+            ->where('content_type', $content_type)
+            ->where('content_id', $content_id)
+            ->get();
+    }
+
+    /**
+     *  Get the tags that are assigned to an entity and assign them to
+     *  that entity
+     *
+     * @param $entity
+     * @param $content_type
+     * @throws \Exception
+     */
+    public function assign($entity, $content_type)
+    {
+        if (!is_callable(array($entity, 'getId'))) {
+            throw new \Exception('Cannot assign taxonomy to an entity that doesn\'t have a getId methid');
+        }
+
+        $entity->tags = $this->get($entity->getId(), $content_type);
+    }
+
+    /**
+     * @return TaxonomyModel
+     */
     public function getRelationsModel()
     {
         return $this->relations_model;
     }
 
+    /**
+     * @return Model
+     */
     public function getModel()
     {
         return $this->tags;

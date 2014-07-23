@@ -36,7 +36,12 @@ abstract class Model implements ModelInterface {
     /**
      * @var string
      */
-    protected $identifier_column = 'id';
+    protected $number_identifier_column = 'id';
+
+    /**
+     * @var string
+     */
+    protected $text_identifier_column = 'slug';
 
     /**
      * @param QueryBuilderHandler $query_builder
@@ -66,7 +71,14 @@ abstract class Model implements ModelInterface {
      */
     public function find($id)
     {
-        return $this->query()->where($this->getTable().'.'.$this->identifier_column, $id);
+        if (is_numeric($id)) {
+            $column = $this->number_identifier_column;
+        }
+        else {
+            $column = $this->text_identifier_column;
+        }
+
+        return $this->query()->where($this->getTable().'.'.$column, $id);
     }
 
     /**
@@ -151,7 +163,7 @@ abstract class Model implements ModelInterface {
         $this->event_dispatcher->dispatch('model.update', new ModelUpdateEvent($entity));
 
         if (!$column_match) {
-            $column_match = $this->identifier_column;
+            $column_match = $this->number_identifier_column;
         }
 
         $query = $this->createWhereQuery($entity, $column_match);

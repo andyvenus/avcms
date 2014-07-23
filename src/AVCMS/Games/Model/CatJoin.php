@@ -13,11 +13,11 @@ class CatJoin extends Entity
 {
     public function getCow()
     {
-        return $this->data('cow');
+        return $this->get('cow');
     }
 
     public function setCow($cow)
     {
-        $this->setData('cow', $cow);
+        $this->set('cow', $cow);
     }
 } 

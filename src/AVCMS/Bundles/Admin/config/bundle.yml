@@ -1,0 +1,4 @@
+name: Admin
+
+namespace: AVCMS\Bundles\Admin
+setup_class: AdminBundle

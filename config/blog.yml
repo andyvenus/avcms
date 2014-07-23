@@ -1,0 +1,16 @@
+blog:
+  bundle: AVCMS\Bunldles\Blog
+
+  config:
+    default_routes: false
+    model: AVBlog\Model\DiffModel
+    edit_post_form: Blah\Blah
+
+  route_names:
+    blog_home: new_blog_home
+    blog_post: new_blog_post
+
+  routes:
+    new_blog_home:
+    path:      /blog
+    defaults:  { _controller: Blog:Blog:homeAction }

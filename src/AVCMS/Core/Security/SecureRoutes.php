@@ -16,7 +16,8 @@ use Symfony\Component\Routing\RouteCollection;
  * Class SecureRoutes
  * @package AVCMS\Core\Security
  *
- * Filters routes
+ * Checks routes to see if they're protected by a permission and validates
+ * the active user's permission to view the page
  */
 class SecureRoutes implements EventSubscriberInterface
 {

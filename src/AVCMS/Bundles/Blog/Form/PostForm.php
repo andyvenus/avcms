@@ -11,7 +11,7 @@ use AVCMS\Bundles\ContentBase\Form\AdminContentForm;
 
 class PostForm extends AdminContentForm
 {
-    public function __construct($item_id)
+    public function __construct($item_id, $user_id)
     {
         $this->add('title', 'text', array(
             'label' => 'Title',
@@ -22,13 +22,13 @@ class PostForm extends AdminContentForm
             'label' => 'Post content'
         ));
 
-        $this->add('user_id', 'text', array(
-            'label' => 'Author',
+        $this->add('tags', 'text', array(
+            'label' => 'Tags'
         ));
 
-        $this->add('tags', 'text', array(
-            'label' => 'Tags',
-            'default' => 'nanan, batman',
+        $this->add('user_id', 'text', array(
+            'label' => 'Credited Author',
+            'default' => $user_id
         ));
 
         $this->setName('blog_post_form');

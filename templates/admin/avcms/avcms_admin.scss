@@ -1,4 +1,4 @@
-$main_menu_color: #394f6f;
+$main_menu_color: #374353;
 $header_color: $main_menu_color;
 
 $finder_background: #f2f2f2;
@@ -6,8 +6,18 @@ $finder_background: #f2f2f2;
 $success_color: #5cb85c;
 $warning_color: #f0ad4e;
 
+$decal_color: #e06f29;
+
 html, body {
   height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: HelveticaNeue-Light, HelveticaNeue, sans-serif!important;
+}
+
+a {
+  color: $decal_color;
 }
 
 .admin-header {
@@ -31,19 +41,18 @@ html, body {
 
 .admin-menu {
   float: left;
-  background-color: $main_menu_color;
+  background-color: darken($main_menu_color, 10);
   width: 180px;
   color: lighten($main_menu_color, 60);
   display: none;
+  padding-top: 1px;
 
   ul {
     list-style: none;
     padding: 0px;
 
     li {
-      background-color: lighten($main_menu_color, 15);
-      margin-bottom: 1px;
-
+      margin-bottom: 2px;
       a {
         display: block;
         padding: 5px 0px 5px 8px;
@@ -53,7 +62,7 @@ html, body {
     }
 
     li:hover {
-      background-color: lighten($main_menu_color, 30);
+      background-color: lighten($main_menu_color, 5);
     }
   }
 }
@@ -77,6 +86,10 @@ html, body {
 .finder-has-focus {
   display: inline;
   width: 100%;
+
+  .expand-browser {
+    display: none;
+  }
 }
 
 .editor-has-focus {
@@ -90,6 +103,7 @@ html, body {
 
 .browser-finder-filters {
   padding: 10px;
+  position: relative;
 
   h3 {
     margin: 0px 0px 4px 0px;
@@ -101,6 +115,14 @@ html, body {
 
   .filter-form-row {
     margin-bottom: 4px;
+  }
+
+  .expand-browser {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 12px;
+    margin-top: 10px;
   }
 }
 
@@ -115,6 +137,22 @@ html, body {
       .nano-slider {
         background: rgba(0,0,0,.3);
       }
+    }
+
+    .browser-finder-page {
+      float:left;
+      margin-left: 24px;
+      font-weight: bold;
+      padding-top: 1px;
+    }
+
+    .browser-finder-header {
+      padding-left: 268px;
+      padding-right: 10px;
+      height: 22px;
+      margin-top: 2px;
+      font-weight: bold;
+      border-bottom: 1px solid #dddddd;
     }
   }
 
@@ -132,8 +170,21 @@ html, body {
 
 .browser-finder-item, .add-item {
   background-color: lighten($finder_background, 3);
-  margin-bottom: 2px;
+  border-bottom: 1px solid #e1e1e1;
   padding: 4px;
+
+  .finder-item-main {
+    padding-left: 8px;
+    float: left;
+    min-width: 220px;
+  }
+
+  .finder-item-extended {
+    padding-left: 30px;
+    height: 55px;
+    overflow: hidden;
+    display: none;
+  }
 
   .finder-item-title {
     overflow: hidden;
@@ -192,6 +243,15 @@ html, body {
   }
 }
 
+.finder-has-focus {
+  .browser-finder-header {
+    display: inherit!important;
+  }
+  .finder-item-extended {
+    display: inherit;
+  }
+}
+
 @media (min-width: 992px) {
   .admin-menu {
     display: inherit;
@@ -246,6 +306,7 @@ html, body {
 
   .nano > .nano-content {
     overflow: auto;
+    overflow-y: hidden;
     right: 0px!important;
     outline: none;
     height: auto;
@@ -265,13 +326,14 @@ html, body {
   background-color: #f5f5f5;
   padding: 10px 8px;
   font-size: 18px;
-  font-weight: 500;
   overflow-y: auto;
   overflow-x: hidden;
   border-bottom: 1px solid darken(#f5f5f5, 5);
+  color: $decal_color;
+  font-family: HelveticaNeue-Light, HelveticaNeue, sans-serif;
 
   .light {
-    color: #a0a0a0;
+    color: #a6a6a6;
   }
 }
 
