@@ -4,7 +4,7 @@ $(document).ready(function() {
             placeholder: "Find user",
             minimumInputLength: 2,
             ajax: {
-                url: "http://localhost:8888/avcms/admin/username_suggest",
+                url: avcms.config.site_url+"admin/username_suggest",
                 dataType: 'json',
                 data: function (term, page) {
                     return {
@@ -18,7 +18,7 @@ $(document).ready(function() {
             initSelection: function(element, callback) {
                 var id=$(element).val();
                 if (id!=="") {
-                    $.ajax("http://localhost:8888/avcms/admin/username_suggest", {
+                    $.ajax(avcms.config.site_url+"admin/username_suggest", {
                         data: {
                             q: id,
                             id_search: 1
@@ -86,7 +86,7 @@ avcms.misc = {
         var target_field = input_field.closest('form').find('[name='+target_field_name+']');
 
         $.ajax({
-            url: 'http://localhost:8888/avcms/admin/generate_slug/' + input,
+            url: avcms.config.site_url+"admin/generate_slug/" + input,
             dataType: 'json',
             success: function(data) {
                 target_field.val(data.slug);

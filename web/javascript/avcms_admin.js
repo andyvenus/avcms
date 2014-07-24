@@ -105,7 +105,7 @@ avcms.adminTemplate = {
                 finder_results.height(target_height - finder_top_height - 3);
             }
 
-                $(".nano").nanoScroller({ iOSNativeScrolling: true });
+                $(".nano").nanoScroller({ iOSNativeScrolling: false });
 
             if (finder_results.find('.nano-content').offsetHeight < finder_results.scrollHeight) {
                 console.log('something');
@@ -134,7 +134,6 @@ avcms.adminTemplate = {
     },
 
     formSubmitScroll: function(form) {
-        console.log(form.parent('.editor-content'));
         form.parent('.editor-content').scrollTop(0);
     }
 }

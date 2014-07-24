@@ -77,7 +77,7 @@ class AdminController extends Controller
         $this->getEventDispatcher()->dispatch('admin.edit.form.built', new AdminEditFormBuiltEvent($entity, $model, $form, $request));
 
         if ($form->isSubmitted()) {
-            $id = null;
+            $id = 0;
             if ($form->isValid()) {
                 $form->saveToEntities();
                 $this->filterValidEntity($entity);
@@ -88,7 +88,8 @@ class AdminController extends Controller
 
             return new JsonResponse(array(
                 'form' => $form->createView()->getJsonResponseData(),
-                'redirect' => $this->generateUrl($edit_redirect_url, array('id' => $id))
+                'redirect' => $this->generateUrl($edit_redirect_url, array('id' => $id)),
+                'id' => $id
             ));
         }
 

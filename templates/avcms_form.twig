@@ -47,7 +47,7 @@
 
 {% block textarea_field %}
     {% spaceless %}
-        <textarea name="{{ name }}">{% if value is not empty %}{{ value }}{% endif %}</textarea>
+        <textarea name="{{ name }}" {{ block('attributes') }}>{% if value is not empty %}{{ value }}{% endif %}</textarea>
     {% endspaceless %}
 {% endblock %}
 

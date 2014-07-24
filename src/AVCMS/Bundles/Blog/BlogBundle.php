@@ -42,27 +42,6 @@ class BlogBundle extends Bundle
             'id' => null,
             '_controller' => 'AVCMS\\Bundles\\Blog\\Controller\\BlogController::testBlogPageAction',
         )));
-
-        $routes->add('blog_add_post', new Route('/admin/blog/new', array(
-            '_controller' => 'AVCMS\\Bundles\\Blog\\Controller\\BlogAdminController::editPostAction',
-        )));
-
-        $routes->add('blog_finder', new Route('/admin/blog/finder/{page}', array(
-            'page' => '1',
-            '_controller' => 'AVCMS\\Bundles\\Blog\\Controller\\BlogAdminController::finderAction',
-        )));
-
-        $routes->add('blog_admin_home', new Route('/admin/blog', array(
-            '_controller' => 'AVCMS\\Bundles\\Blog\\Controller\\BlogAdminController::blogHomeAction',
-        )));
-
-        $routes->add('blog_delete_posts', new Route('/admin/blog/delete', array(
-            '_controller' => 'AVCMS\\Bundles\\Blog\\Controller\\BlogAdminController::deleteAction',
-        )));
-
-        $routes->add('blog_toggle_posts_published', new Route('/admin/blog/publish', array(
-            '_controller' => 'AVCMS\\Bundles\\Blog\\Controller\\BlogAdminController::togglePublishedAction',
-        )));
     }
 
     public function assets(AssetManager $asset_manager)

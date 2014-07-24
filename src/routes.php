@@ -5,6 +5,11 @@ use Symfony\Component\Routing\Route;
 
 $routes = new RouteCollection();
 
+$routes->add('home', new Route('/', array(
+    '_controller' => 'AVCMS\Bundles\Blog\Controller\BlogController::blogHomeAction',
+    '_bundle' => 'Blog'
+)));
+
 $routes->add('game', new Route('/game/{id}', array(
     'id' => null,
     '_controller' => 'AVCMS\\Games\\Controller\\GamesController::newModelAction',

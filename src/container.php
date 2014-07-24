@@ -188,12 +188,17 @@ $sc->register('asset_manager', 'AVCMS\Core\AssetManager\AssetManager')
 ;
 
 $sc->register('model.factory', 'AVCMS\Core\Model\ModelFactory')
-    ->setArguments(array(new Reference('query.builder'), new Reference('dispatcher')))
+    ->setArguments(array(new Reference('query.builder'), new Reference('dispatcher'), new Reference('taxonomy.manager')))
     ->addMethodCall('addModelAlias', array('users', 'AVBlog\Bundles\Users\Model\Users'))
 ;
 
-$sc->register('taxonomy.manager', 'AVCMS\Core\Taxonomy\TaxonomyManager')
-    ->addMethodCall('addTaxonomy', array('tags', new Reference('tags.taxonomy')))
+$sc->register('taxonomy.manager', 'AVCMS\Core\Taxonomy\ContainerAwareTaxonomyManager')
+    ->setArguments(array($sc))
+    ->addMethodCall('addContainerTaxonomy', array('tags', 'tags.taxonomy'))
+;
+
+$sc->register('tags.taxonomy', 'AVCMS\Bundles\Tags\Taxonomy\TagsTaxonomy')
+    ->setArguments(array(new Reference('tags.model'), new Reference('tags.taxonomy.model')))
 ;
 
 $sc->register('tags.model', 'AVCMS\Bundles\Tags\Model\TagsModel')
@@ -206,10 +211,6 @@ $sc->register('tags.taxonomy.model', 'AVCMS\Bundles\Tags\Model\TagsTaxonomyModel
     ->setArguments(array('AVCMS\Bundles\Tags\Model\TagsTaxonomyModel'))
     ->setFactoryService('model.factory')
     ->setFactoryMethod('create')
-;
-
-$sc->register('tags.taxonomy', 'AVCMS\Bundles\Tags\Taxonomy\TagsTaxonomy')
-    ->setArguments(array(new Reference('tags.model'), new Reference('tags.taxonomy.model')))
 ;
 
 $sc->register('form.transformer.manager', 'AVCMS\Core\Form\Transformer\TransformerManager')
@@ -240,7 +241,7 @@ $sc->setDefinition('query.builder', new Definition('AVCMS\Core\Database\QueryBui
 
 // Bundles
 
-$bundles = array('Blog', 'Users', 'Admin', 'Assets');
+$bundles = array('Users', 'Admin', 'Assets', 'Blog');
 
 $sc->register('bundle_manager', 'AVCMS\Core\Bundle\BundleManager')
     ->setArguments(array($bundles, array('AVCMS\Bundles', 'AVBlog\Bundles'), '%container%'));

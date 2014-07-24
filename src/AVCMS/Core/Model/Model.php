@@ -5,6 +5,7 @@ namespace AVCMS\Core\Model;
 use AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler;
 use AVCMS\Core\Model\Event\ModelInsertEvent;
 use AVCMS\Core\Model\Event\ModelUpdateEvent;
+use AVCMS\Core\Taxonomy\TaxonomyManager;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
@@ -44,6 +45,16 @@ abstract class Model implements ModelInterface {
     protected $text_identifier_column = 'slug';
 
     /**
+     * @var string
+     */
+    protected $finder = 'AVCMS\Core\Finder\Finder';
+
+    /**
+     * @var \AVCMS\Core\Taxonomy\TaxonomyManager
+     */
+    protected $taxonomy_manager = null;
+
+    /**
      * @param QueryBuilderHandler $query_builder
      * @param EventDispatcher $event_dispatcher
      */
@@ -51,6 +62,19 @@ abstract class Model implements ModelInterface {
     {
         $this->query_builder = $query_builder;
         $this->event_dispatcher = $event_dispatcher;
+    }
+
+    public function setTaxonomyManager(TaxonomyManager $taxonomy_manager)
+    {
+        $this->taxonomy_manager = $taxonomy_manager;
+    }
+
+    /**
+     * @return \AVCMS\Core\Finder\Finder|mixed
+     */
+    public function find()
+    {
+        return new $this->finder($this, $this->taxonomy_manager);
     }
 
     /**
@@ -69,7 +93,7 @@ abstract class Model implements ModelInterface {
      * @param $id
      * @return QueryBuilderHandler
      */
-    public function find($id)
+    public function findOne($id = null)
     {
         if (is_numeric($id)) {
             $column = $this->number_identifier_column;
@@ -87,7 +111,7 @@ abstract class Model implements ModelInterface {
      */
     public function getOne($id)
     {
-        $query = $this->find($id);
+        $query = $this->findOne($id);
 
         return $query->first();
     }
@@ -246,7 +270,7 @@ abstract class Model implements ModelInterface {
      */
     public function deleteById($id)
     {
-        $this->query()->where($this->identifier_column, $id)->delete();
+        $this->query()->where($this->number_identifier_column, $id)->delete();
     }
 
     /**

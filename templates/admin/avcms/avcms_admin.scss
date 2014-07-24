@@ -147,12 +147,21 @@ a {
     }
 
     .browser-finder-header {
-      padding-left: 268px;
-      padding-right: 10px;
       height: 22px;
       margin-top: 2px;
       font-weight: bold;
       border-bottom: 1px solid #dddddd;
+      overflow: hidden;
+
+        .page {
+          float:left;
+          margin-left: 24px;
+        }
+
+        .fields {
+          padding-left: 265px;
+          padding-right: 6px;
+        }
     }
   }
 
@@ -166,6 +175,7 @@ a {
 
 .browser-finder-item {
   height: 55px;
+  overflow: hidden;
 }
 
 .browser-finder-item, .add-item {

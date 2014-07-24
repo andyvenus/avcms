@@ -19,7 +19,10 @@ class PostForm extends AdminContentForm
         ));
 
         $this->add('body', 'textarea', array(
-            'label' => 'Post content'
+            'label' => 'Post content',
+            'attr' => array(
+                'rows' => 10,
+            )
         ));
 
         $this->add('tags', 'text', array(

@@ -104,7 +104,7 @@ avcms.nav = {
             minimumResultsForSearch: 10
         });
 
-        $(".nano").nanoScroller({ iOSNativeScrolling: true });
+        $(".nano").nanoScroller({ iOSNativeScrolling: false });
 
         avcms.event.fireEvent('page-modified');
     },

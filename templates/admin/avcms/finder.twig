@@ -1,74 +1,54 @@
-<div class="browser-finder-page">
-   Page {{ page }}
-</div>
-<div class="browser-finder-header">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-4 hidden-xs">
-                Body
-            </div>
-            <div class="col-md-4 hidden-sm hidden-xs">
-                Username
-            </div>
-            <div class="col-md-4 hidden-sm hidden-xs">
-                Slug
-            </div>
+{% import '@admin/mixins/finder_buttons.twig' as buttons %}
+
+{% block finder_header %}
+    <div class="browser-finder-header">
+        <div class="page">
+            Page {{ page }}
         </div>
-    </div>
-</div>
-
-{% for post in posts %}
-    <div class="browser-finder-item" data-id="{{ post.id }}">
-
-        <div class="finder-item-checkbox-container">
-            <input type="checkbox" />
-        </div>
-
-        <div class="finder-item-main">
-
-            <div class="finder-item-title" data-field="title">
-                {{ post.title }}
-            </div>
-
-            <div class="btn-group">
-                <a class="btn btn-xs btn-default" href="{{ url('blog_edit_post', {'id': post.id}) }}"><span class="glyphicon glyphicon-edit"></span></a>
-
-                {% if post.published == 1 %}
-                    {% set published_btn_class = 'btn-default' %}
-                    {% set published_btn_icon = 'glyphicon-eye-open' %}
-                {% else %}
-                    {% set published_btn_class = 'btn-danger' %}
-                    {% set published_btn_icon = 'glyphicon-eye-close' %}
-                {% endif %}
-
-                <button class="btn btn-xs {{ published_btn_class }} avcms-toggle-published" data-toggle-publish-url="{{ url('blog_toggle_posts_published') }}">
-                    <span class="glyphicon {{ published_btn_icon }}"></span>
-                </button>
-
-                <button class="btn btn-xs btn-default avcms-delete-item" data-delete-url="{{ url('blog_delete_posts') }}">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </button>
-            </div>
-        </div>
-        <div class="finder-item-extended">
+        <div class="fields">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-4 hidden-xs">
-                        {{ post.body|length > 100 ? post.body|slice(0, 100) ~ '...' : post.body  }}
-                    </div>
-                    <div class="col-md-4 hidden-sm hidden-xs">
-                        {{ post.user.username }}
-                    </div>
-                    <div class="col-md-4 hidden-sm hidden-xs">
-                        <a href="{{ url('blog_post', {slug: post.slug}) }}">{{ post.slug }}</a>
-                    </div>
+                    {% block finder_header_titles %}{% endblock %}
                 </div>
             </div>
         </div>
     </div>
-{% else %}
-    <div style="display:none;">NORESULTS</div>
-    <div class="finder-no-results">
-        {% trans %}No results{% endtrans %}
-    </div>
-{% endfor %}
+{% endblock %}
+
+{% block finder_items %}
+    {% for item in items %}
+        <div class="browser-finder-item" data-id="{{ item.id }}">
+            {% block item_checkbox %}
+                <div class="finder-item-checkbox-container">
+                    <input type="checkbox" />
+                </div>
+            {% endblock %}
+
+            <div class="finder-item-main">
+                {% block item_title %}
+                    <div class="finder-item-title" data-field="title">
+                        {{ item.title }}
+                    </div>
+                {% endblock %}
+
+                {% block item_options %}
+
+                {% endblock %}
+            </div>
+            <div class="finder-item-extended">
+                {% block item_extended %}
+                    <div class="container-fluid">
+                        <div class="row">
+                            {% block item_extended_inner %}{% endblock %}
+                        </div>
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+    {% else %}
+        <div style="display:none;">NORESULTS</div>
+        <div class="finder-no-results">
+            {% trans %}No results{% endtrans %}
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -37,16 +37,15 @@ class BlogAdminController extends AdminController
     {
         $posts_model = $this->model('Posts');
 
-        $finder = new BlogPostsFinder($posts_model, $this->container->get('taxonomy.manager'));
-        $finder->setSearchFields(array('title'));
-        $finder->setResultsPerPage(15);
-        $finder->handleRequest($request, array('page' => 1, 'order' => 'newest', 'search' => null, 'tags' => null));
-
         $users_model = $this->model('@users');
 
-        $posts = $finder->getQuery()
-            ->modelJoin($users_model, array('username'))
-            ->get();
+        $finder = $posts_model->find()
+            ->setSearchFields(array('title'))
+            ->setResultsPerPage(15)
+            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'search' => null, 'tags' => null, 'id' => null))
+            ->join($users_model, array('username'));
+
+        $posts = $finder->get();
 
         return new Response($this->render('@AVBlog/blog_finder.twig', array('items' => $posts, 'page' => $finder->getCurrentPage())));
     }

@@ -24,14 +24,12 @@ class BlogController extends Controller {
     {
         $posts = $this->model($this->bundle->model->posts);
 
-        $finder = new BlogPostsFinder($posts);
-        $finder->handleRequest($request, array('page' => 1, 'order' => 'newest'));
-
-        $all_posts = $finder->getQuery()->modelJoin($this->model($this->bundle->model->users), ['username'])->get();
-
-        foreach ($all_posts as $post) {
-            $this->container->get('taxonomy.manager')->assign('tags', $post, $posts->getSingular());
-        }
+        $finder = $posts->find();
+        $all_posts = $finder->published()
+            ->handleRequest($request, array('page' => 1, 'order' => 'newest'))
+            ->join($this->model($this->bundle->model->users), ['username'])
+            ->joinTaxonomy('tags')
+            ->get();
 
         $user = $this->activeUser();
 
@@ -42,7 +40,7 @@ class BlogController extends Controller {
     {
         $posts = $this->model($this->bundle->model->posts);
 
-        $post = $posts->find($request->get('slug'))
+        $post = $posts->findOne($request->get('slug'))
             ->modelJoin($this->model($this->bundle->model->users), ['username'])
             ->first();
 

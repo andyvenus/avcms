@@ -1,4 +1,5 @@
-{% set url = 'http://192.168.0.2:8888/avcms' %}
+{% set site_url = url('home') %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,33 +7,33 @@
         <title>{% block title %}{% endblock %}</title>
     {% endblock %}
 
-    <link rel="stylesheet" type="text/css" href="{{ url }}/web/css/style.css" />
-    <link href="{{ url }}/web/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ url }}/web/css/bootstrap-markdown.min.css" rel="stylesheet">
-    <link href="{{ url }}/web/css/select2.css" rel="stylesheet">
-    <link href="{{ url }}/web/css/select2-bootstrap.css" rel="stylesheet">
-    <link href="{{ url }}/templates/admin/avcms/animate.css" rel="stylesheet">
-    <link href="{{ url }}/web/css/nanoscroller.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ site_url }}web/css/style.css" />
+    <link href="{{ site_url }}web/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ site_url }}web/css/bootstrap-markdown.min.css" rel="stylesheet">
+    <link href="{{ site_url }}web/css/select2.css" rel="stylesheet">
+    <link href="{{ site_url }}web/css/select2-bootstrap.css" rel="stylesheet">
+    <link href="{{ site_url }}templates/admin/avcms/animate.css" rel="stylesheet">
+    <link href="{{ site_url }}web/css/nanoscroller.css" rel="stylesheet">
 
-    <link href="{{ url }}/templates/admin/avcms/avcms_admin.css" rel="stylesheet">
+    <link href="{{ site_url }}templates/admin/avcms/avcms_admin.css" rel="stylesheet">
 
     {% for css in css('admin') %}
-        <link href="{{ url }}/{{ css }}" rel="stylesheet">
+        <link href="{{ site_url }}{{ css }}" rel="stylesheet">
     {% endfor %}
 
-    <link href="{{ url }}/web/css/avcms-blocks.css" rel="stylesheet">
+    <link href="{{ site_url }}web/css/avcms-blocks.css" rel="stylesheet">
 
     {% for js in javascripts('admin') %}
-        <script type="text/javascript" src="{{ url }}/{{ js }}"></script>
+        <script type="text/javascript" src="{{ site_url }}{{ js }}"></script>
     {% endfor %}
 
     <!--[if lt IE 9]>
-    <script src="{{ url }}/web/javascript/html5shiv.js"></script>
-    <script src="{{ url }}/web/javascript/respond.js"></script>
+    <script src="{{ site_url }}web/javascript/html5shiv.js"></script>
+    <script src="{{ site_url }}web/javascript/respond.js"></script>
     <![endif]-->
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{{ url }}/web/javascript/avcms_admin.js"></script>
+    <script src="{{ site_url }}web/javascript/avcms_admin.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>

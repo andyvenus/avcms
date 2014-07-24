@@ -117,7 +117,12 @@ class FormExtension extends \Twig_Extension
 
     public function formField($field_data, $attributes = array())
     {
-        $field_data['attr'] = $attributes;
+        if (isset($field_data['options']['attr']) && is_array($field_data['options']['attr'])) {
+            $field_data['attr'] = array_merge($field_data['options']['attr'], $attributes);
+        }
+        else {
+            $field_data['attr'] = $attributes;
+        }
 
         /*
         if (isset($field_data['options']['field_template'])) {

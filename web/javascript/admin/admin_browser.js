@@ -63,6 +63,25 @@ avcms.browser = {
 
                 $('.browser-finder-item[data-id="'+id+'"]').addClass('finder-item-saved').removeClass('finder-item-edited');
             }
+
+            var finder_inner = $('.finder-ajax > [data-url]');
+            var finder_url = finder_inner.data('url');
+
+            $.get(finder_url + '?id=' + response_data.id , function(data) {
+                if (data) {
+                    if (id != 0) {
+                        var item_html = $($.parseHTML(data)).filter('[data-id="'+id+'"]').html();
+                        finder_inner.find('[data-id="'+id+'"]').html(item_html);
+                    }
+                    else {
+                        $('.remove-header').remove();
+                        var processed_data = $($.parseHTML(data));
+                        processed_data.filter('.browser-finder-header').addClass('remove-header');
+                        processed_data.find('.page').html('New');
+                        finder_inner.prepend(processed_data);
+                    }
+                }
+            })
         }
     },
 
@@ -140,7 +159,7 @@ avcms.browser = {
                         avcms.browser.finder_loading = 0;
                         finder_div.data('page', new_page);
 
-                        $(".nano").nanoScroller({ iOSNativeScrolling: true });
+                        $(".nano").nanoScroller({ iOSNativeScrolling: false });
                     }
                 }
             })
@@ -159,7 +178,7 @@ avcms.browser = {
                 avcms.browser.finder_loading = 0;
                 $('.finder-ajax').parents('.nano-content').data('page', 1);
 
-                $(".nano").nanoScroller({ iOSNativeScrolling: true });
+                $(".nano").nanoScroller({ iOSNativeScrolling: false });
             }
         })
     },

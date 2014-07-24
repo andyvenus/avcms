@@ -34,14 +34,22 @@ class Finder
     protected $search_fields = array();
 
     /**
+     * @var int
+     */
+    protected $current_page = 1;
+
+    /**
      * @var array
      */
     protected $filters = array();
+
+    protected $taxonomies = array();
 
     public function __construct(Model $model, TaxonomyManager $taxonomy_manager = null)
     {
         $this->model = $model;
         $this->taxonomy_manager = $taxonomy_manager;
+        $this->current_query = $model->query();
 
         $this->sort_options = array(
             'newest' => 'id DESC',
@@ -52,6 +60,8 @@ class Finder
     public function setResultsPerPage($results_per_page)
     {
         $this->results_per_page = $results_per_page;
+
+        return $this;
     }
 
     public function setJoin(Model $join_model, array $columns, $type = 'left', $join_to = null, $key = null, $operator = '=', $value = null)
@@ -62,13 +72,15 @@ class Finder
     public function handleRequest(Request $request, array $filters)
     {
         foreach ($filters as $filter => $default) {
-            if (!method_exists($this, $filter)) {
-                if (!$this->taxonomy_manager || !$this->taxonomy_manager->hasTaxonomy($filter)) {
-                    throw new \Exception('No filter method found for filter '.$filter);
-                }
+            if (method_exists($this, $filter)) {
+                $this->$filter($request->get($filter, $default));
             }
-
-            $this->filters[$filter][] = $request->get($filter, $default);
+            elseif ($this->taxonomy_manager && $this->taxonomy_manager->hasTaxonomy($filter)) {
+                $this->taxonomy($filter, $request->get($filter, $default));
+            }
+            else {
+                throw new \Exception('No filter method found for filter '.$filter);
+            }
         }
 
         return $this;
@@ -92,17 +104,21 @@ class Finder
 
     public function page($page)
     {
+        $this->current_page = $page;
+
         if ($page < 1 || !is_numeric($page)) {
             $page = 1;
         }
 
         $this->current_query->paginated($page, $this->results_per_page);
+
+        return $this;
     }
 
     public function search($term)
     {
         if (!$term) {
-            return;
+            return $this;
         }
 
         $search_fields = $this->search_fields;
@@ -122,16 +138,22 @@ class Finder
                 $q->$func($search_field, 'LIKE', '%'.$term.'%');
             }
         });
+
+        return $this;
     }
 
     public function setSearchFields(array $fields)
     {
         $this->search_fields = $fields;
+
+        return $this;
     }
 
     public function published()
     {
         $this->current_query->where('published', 1);
+
+        return $this;
     }
 
     public function taxonomy($taxonomy, $values = null)
@@ -147,25 +169,26 @@ class Finder
 
             $this->taxonomy_manager->setTaxonomyJoin($taxonomy, $this->model, $this->current_query, $values);
         }
+
+        return $this;
+    }
+
+    public function join(Model $join_model, array $columns, $type = 'left', $join_to = null, $key = null, $operator = '=', $value = null)
+    {
+        $this->current_query->modelJoin($join_model, $columns, $type, $join_to, $key, $operator, $value);
+
+        return $this;
+    }
+
+    public function joinTaxonomy($taxonomy)
+    {
+        $this->taxonomies[] = $taxonomy;
+
+        return $this;
     }
 
     public function getQuery($ignored_filters = array())
     {
-        $this->current_query = $this->model->query();
-
-        foreach ($this->filters as $filter_name => $filters) {
-            if (!in_array($filter_name, $ignored_filters)) {
-                foreach ($filters as $filter) {
-                    if (method_exists($this, $filter_name)) {
-                        $this->$filter_name($filter);
-                    }
-                    elseif ($this->taxonomy_manager && $this->taxonomy_manager->hasTaxonomy($filter_name) && $filter !== null) {
-                        $this->taxonomy($filter_name, $filter);
-                    }
-                }
-            }
-        }
-
         return $this->current_query;
     }
 
@@ -176,12 +199,58 @@ class Finder
         return ceil($query->count() / $this->results_per_page);
     }
 
-    public function getCurrentPage()
+    public function id($id = null)
     {
-        if (isset($this->filters['page'][0])) {
-            return $this->filters['page'][0];
+        if ($id !== null)
+            $this->current_query->where($this->model->getTable().'.id', $id);
+
+        return $this;
+    }
+
+    public function slug($slug = null)
+    {
+        if ($slug !== null)
+            $this->current_query->where($this->model->getTable().'.slug', $slug);
+
+        return $this;
+    }
+
+    public function first()
+    {
+        $result = $this->current_query->first();
+
+        $this->assignTaxonomies($result);
+
+        return $result;
+    }
+
+    public function get()
+    {
+        $results = $this->current_query->get();
+
+        if ($this->taxonomy_manager && !empty($this->taxonomies)) {
+            foreach ($results as $entity) {
+                $this->assignTaxonomies($entity);
+            }
         }
 
-        return null;
+        return $results;
+    }
+
+    protected function assignTaxonomies($entity)
+    {
+        if ($this->taxonomy_manager && !empty($this->taxonomies)) {
+            foreach ($this->taxonomies as $taxonomy) {
+                $this->taxonomy_manager->assign($taxonomy, $entity, $this->model->getSingular());
+            }
+        }
+    }
+
+    /**
+     * @return null
+     */
+    public function getCurrentPage()
+    {
+        return $this->current_page;
     }
 }

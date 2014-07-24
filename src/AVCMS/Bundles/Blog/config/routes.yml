@@ -1,9 +1,29 @@
 blog_edit_post:
     path:     /admin/blog/edit/{id}
-    defaults: { _controller: 'AVCMS\Bundles\Blog\Controller\BlogAdminController::editPostAction', _permissions: {add_edit_save, adverts} }
+    defaults: { _controller: 'AVCMS\Bundles\Blog\Controller\BlogAdminController::editPostAction' }
+
+blog_add_post:
+    path:     /admin/blog/new
+    defaults: { _controller: 'AVCMS\Bundles\Blog\Controller\BlogAdminController::editPostAction' }
+
+blog_delete_posts:
+    path:     /admin/blog/delete
+    defaults: { _controller: 'AVCMS\Bundles\Blog\Controller\BlogAdminController::deleteAction' }
+
+blog_toggle_posts_published:
+    path:     /admin/blog/publish
+    defaults: { _controller: 'AVCMS\Bundles\Blog\Controller\BlogAdminController::togglePublishedAction' }
+
+blog_admin_home:
+  path: /admin/blog
+  defaults: { _controller: 'AVCMS\Bundles\Blog\Controller\BlogAdminController::blogHomeAction' }
+
+blog_finder:
+  path: /admin/blog/finder/{page}
+  defaults: { page: 1, _controller: 'AVCMS\Bundles\Blog\Controller\BlogAdminController::finderAction' }
 
 blog_home:
-    path:     '/'
+    path:     '/blog'
     defaults: { _controller: 'AVCMS\Bundles\Blog\Controller\BlogController::blogHomeAction' }
 
 blog_post:

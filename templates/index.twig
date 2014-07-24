@@ -1,3 +1,5 @@
+{% set site_url = url('home') %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,20 +7,20 @@
         <title>{% block title %}{% endblock %} - My Webpage</title>
     {% endblock %}
 
-    <link rel="stylesheet" type="text/css" href="http://localhost:8888/avcms/web/css/style.css" />
-    <link href="http://localhost:8888/avcms/web/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://localhost:8888/avcms/web/css/bootstrap-markdown.min.css" rel="stylesheet">
-    <link href="http://localhost:8888/avcms/web/css/select2.css" rel="stylesheet">
-    <link href="http://localhost:8888/avcms/web/css/select2-bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ site_url }}web/css/style.css" />
+    <link href="{{ site_url }}web/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ site_url }}web/css/bootstrap-markdown.min.css" rel="stylesheet">
+    <link href="{{ site_url }}web/css/select2.css" rel="stylesheet">
+    <link href="{{ site_url }}web/css/select2-bootstrap.css" rel="stylesheet">
 
     {% for css in css('frontend') %}
-        <link href="http://localhost:8888/avcms/{{ css }}" rel="stylesheet">
+        <link href="{{ site_url }}{{ css }}" rel="stylesheet">
     {% endfor %}
 
-    <link href="http://localhost:8888/avcms/web/css/avcms-blocks.css" rel="stylesheet">
+    <link href="{{ site_url }}web/css/avcms-blocks.css" rel="stylesheet">
 
     {% for js in javascripts('frontend') %}
-        <script type="text/javascript" src="http://localhost:8888/avcms/{{ js }}"></script>
+        <script type="text/javascript" src="{{ site_url }}{{ js }}"></script>
     {% endfor %}
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,14 +55,14 @@
 </footer>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="http://localhost:8888/avcms/web/javascript/jquery.js"></script>
+<script src="{{ site_url }}web/javascript/jquery.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="http://localhost:8888/avcms/web/javascript/bootstrap.min.js"></script>
+<script src="{{ site_url }}web/javascript/bootstrap.min.js"></script>
 
-<script src="http://localhost:8888/avcms/web/javascript/bootstrap-markdown.js"></script>
-<script src="http://localhost:8888/avcms/web/javascript/markdown.js"></script>
-<script src="http://localhost:8888/avcms/web/javascript/to-markdown.js"></script>
-<script src="http://localhost:8888/avcms/web/javascript/select2.min.js"></script>
+<script src="{{ site_url }}web/javascript/bootstrap-markdown.js"></script>
+<script src="{{ site_url }}web/javascript/markdown.js"></script>
+<script src="{{ site_url }}web/javascript/to-markdown.js"></script>
+<script src="{{ site_url }}web/javascript/select2.min.js"></script>
 <script type="text/javascript">
     $("textarea[name=body]").markdown({autofocus:false,savable:false});
     $("select[name=author]").select2();

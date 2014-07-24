@@ -10,6 +10,9 @@ namespace AVCMS\Bundles\Blog\Model;
 use AVCMS\Core\Model\ContentModel;
 
 class Posts extends ContentModel {
+
+    protected $finder = 'AVCMS\Bundles\Blog\Finder\BlogPostsFinder';
+
     public function getTable()
     {
         return 'blog_posts';
