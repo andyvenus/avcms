@@ -15,7 +15,10 @@ class PostForm extends AdminContentForm
     {
         $this->add('title', 'text', array(
             'label' => 'Title',
-            'required' => true
+            'required' => true,
+            'attr' => array(
+                'data-slug-target' => 'slug'
+            )
         ));
 
         $this->add('body', 'textarea', array(
@@ -31,7 +34,10 @@ class PostForm extends AdminContentForm
 
         $this->add('user_id', 'text', array(
             'label' => 'Credited Author',
-            'default' => $user_id
+            'default' => $user_id,
+            'attr' => array(
+                'class' => 'user_selector no_select2'
+            )
         ));
 
         $this->setName('blog_post_form');

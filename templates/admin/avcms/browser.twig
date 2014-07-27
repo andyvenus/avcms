@@ -1,6 +1,10 @@
 {% extends ajax_depth ? '@admin/ajax_page.twig' : '@admin/index.twig' %}
 
-{% block title %}{% trans %}Browser{% endtrans %}{% endblock %}
+{% import '@admin/macros/finder_buttons.twig' as buttons %}
+
+{% block title %}
+    {{ block('finder_title') }}
+{% endblock %}
 
 {% block main_content %}
     <div class="browser">
@@ -8,12 +12,29 @@
             <div class="browser-finder-top">
                 <div class="browser-finder-filters">
                     {% block finder_top -%}
-                        <h3>{% trans %}Browser{% endtrans %}</h3>
+                        <h3>{% block finder_title %}Browser{% endblock %}</h3>
+
+                        {% block expand_finder_button %}{% endblock %}
+
+                        {% block finder_filters %}
+                            {{ form_start(finder_filters_form) }}
+
+                            {% block finder_order %}
+                                <div class="filter-form-row">{{ form_field(finder_filters_form.order) }}</div>
+                            {% endblock %}
+
+                            {% block finder_search %}
+                                <div class="input-group">
+                                    {{ form_field(finder_filters_form.search, {"class": "input-md", "placeholder": "Search", "autocomplete": "off"}) }}
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default clear-search" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+                                    </span>
+                                </div>
+                            {% endblock %}
+
+                            {{ form_end(finder_filters_form) }}
+                        {% endblock %}
                     {%- endblock %}
-                </div>
-
-                <div class="browser-finder-checked-options">
-
                 </div>
 
                 {% block add_item %}
@@ -44,20 +65,14 @@
                 </div><br/>
                 <div class="btn-group">
                     {% block checked_options_buttons %}
-                    <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-certificate"></span></button>
-                    <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-comment"></span></button>
-                    <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-refresh"></span></button>
-                    <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-certificate"></span></button>
-                    <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-comment"></span></button>
-                    <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-refresh"></span></button>
-                    <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-refresh"></span></button>
+
                     {% endblock %}
                 </div>
             </div>
         </div>
         <div class="browser-editor">
             <div class="mobile-back">
-                <a href="{% block mobile_back_link %}{% endblock %}" class="btn btn-link"><span class="glyphicon glyphicon-chevron-left"></span> {% trans %}Back To Finder{% endtrans %}</a>
+                <a href="{% block mobile_back_link %}#{% endblock %}" class="btn btn-link"><span class="glyphicon glyphicon-chevron-left"></span> {% trans %}Back To Finder{% endtrans %}</a>
             </div>
 
             <div class="ajax-editor">

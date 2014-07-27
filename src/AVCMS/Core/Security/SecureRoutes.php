@@ -6,7 +6,7 @@
  */
 
 namespace AVCMS\Core\Security;
-use AVCMS\Bundles\UsersBase\ActiveUser;
+use AVCMS\Bundles\Users\ActiveUser;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;

@@ -9,8 +9,6 @@ namespace AVCMS\Core\Bundle;
 
 class BundleConfig
 {
-    protected $route;
-
     public function __construct(BundleManager $bundle_manager, $config)
     {
         if (isset($config['parent_bundle']))
@@ -27,30 +25,40 @@ class BundleConfig
         }
 
         if ($app_config = $bundle_manager->getAppConfig($config['name'])) {
-            $config = array_merge($config, $app_config);
+            $config = array_replace_recursive($config, $app_config);
         }
 
-        $this->config = $config;
+        $this->config_array = $config;
+        $this->config = $this->arrayToObject($this->config_array);
+
+        if (!isset($this->config->route)) {
+            $this->config->route = $this->autoRouteConfig();
+        }
+        else {
+            $this->config->route = $this->autoRouteConfig($this->config_array['route']);
+        }
     }
 
     public function __get($name)
     {
-        if (!isset($this->config[$name])) {
+        if (!isset($this->config->$name)) {
             return null;
         }
-        if (is_array($this->config[$name])) {
-            return $this->arrayToObject($this->config[$name]);
-        }
 
-        return $this->config[$name];
+        return $this->config->$name;
     }
 
     public function __isset($name)
     {
-        return isset($this->config[$name]);
+        return isset($this->config->$name);
     }
 
     public function getConfigArray()
+    {
+        return $this->config_array;
+    }
+
+    public function getConfigObject()
     {
         return $this->config;
     }
@@ -64,4 +72,10 @@ class BundleConfig
             return $array;
         }
     }
+
+    protected function autoRouteConfig($route_names = array())
+    {
+        return new AutoRouteConfig($route_names);
+    }
+
 }

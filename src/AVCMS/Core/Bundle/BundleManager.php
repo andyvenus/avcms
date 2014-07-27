@@ -102,7 +102,9 @@ class BundleManager {
     public function getAppConfig($bundle)
     {
         return array(
-            'examplething' => 'REPLACED MODEL HERE BY APP'
+            'model' => array(
+                'users2' => 'Fak'
+            )
         );
     }
 
@@ -118,7 +120,7 @@ class BundleManager {
 
     public function hasBundle($bundle_name)
     {
-        return isset($this->bundles[$bundle_name]);
+        return isset($this->bundle_configs[$bundle_name]);
     }
 
     public function bundlesInitialized()

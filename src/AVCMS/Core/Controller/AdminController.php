@@ -72,7 +72,7 @@ class AdminController extends Controller
             throw $this->createNotFoundException($model->getSingular().' not found');
         }
 
-        $form = $this->buildForm($form_blueprint, $entity, $request);
+        $form = $this->buildForm($form_blueprint, $request, $entity);
 
         $this->getEventDispatcher()->dispatch('admin.edit.form.built', new AdminEditFormBuiltEvent($entity, $model, $form, $request));
 

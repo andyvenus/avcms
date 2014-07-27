@@ -1,0 +1,23 @@
+login:
+  path:     /login
+  defaults: { _controller: 'Users::UsersController::loginAction' }
+
+users_admin:
+  path: /admin/users
+  defaults: { _controller: 'Users::UsersAdminController::usersHomeAction' }
+
+users_finder:
+  path: /admin/users/finder
+  defaults: { _controller: 'Users::UsersAdminController::usersFinderAction' }
+
+edit_user:
+    path: /admin/users/edit/{id}
+    defaults: { _controller: 'Users::UsersAdminController::editUserAction' }
+
+add_user:
+    path: /admin/users/new
+    defaults: { _controller: 'Users::UsersAdminController::editUserAction' }
+
+delete_users:
+    path: /admin/users/delete
+    defaults: { _controller: 'Users::UsersAdminController::deleteUserAction' }

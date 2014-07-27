@@ -1,0 +1,15 @@
+directory_structure:
+  - config
+  - Controller
+  - Model
+  - Twig
+  - Form
+  - resources
+
+base_controller: AVCMS\Core\Controller\Controller
+admin_controller: AVCMS\Core\Controller\AdminController
+
+base_entity: AVCMS\Core\Model\Entity
+base_model: AVCMS\Core\Model\Model
+
+form_blueprint: AVCMS\Core\Form\FormBlueprint

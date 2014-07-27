@@ -15,9 +15,13 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 $request = Request::createFromGlobals();
 
-$sc = include __DIR__.'/src/container.php';
-$sc->setParameter('routes', include __DIR__.'/src/routes.php');
+$sc = include __DIR__ . '/app/container.php';
+$sc->setParameter('routes', include __DIR__ . '/app/routes.php');
 $sc->get('bundle_manager')->initBundles();
+
+/**
+ * @var $response Symfony\Component\HttpFoundation\Response
+ */
 $response = $sc->get('framework')->handle($request);
 
 $response->send();

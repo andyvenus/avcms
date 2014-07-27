@@ -22,9 +22,6 @@ class BlogBundle extends Bundle
     {
         $this->addTemplateDirectory('src/AVCMS/Bundles/Blog/Twig', 'AVBlog');
 
-        // LISTENER can be STRING for reference
-
-        // $this->addEventListener($eventName, $listener, $priority = 0, $inherit = 'once')
     }
 
     public function modifyContainer(ContainerBuilder $container)
@@ -34,10 +31,6 @@ class BlogBundle extends Bundle
 
     public function routes(RouteCollection $routes)
     {
-        $routes->add('stress', new Route('/stress', array(
-            '_controller' => 'AVCMS\\Games\\Controller\\GamesController::stressTestAction',
-        )));
-
         $routes->add('blog_test', new Route('/blog_test', array(
             'id' => null,
             '_controller' => 'AVCMS\\Bundles\\Blog\\Controller\\BlogController::testBlogPageAction',

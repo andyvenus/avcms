@@ -36,16 +36,31 @@ class BlogController extends Controller {
         return new Response($this->render($this->bundle->template->blog_home, array('posts' => $all_posts, 'user' => $user->getUser())));
     }
 
+    public function blogArchiveAction(Request $request)
+    {
+        $posts = $this->model($this->bundle->model->posts);
+
+        $finder = $posts->find();
+        $all_posts = $finder->published()
+            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'tags' => null))
+            ->join($this->model($this->bundle->model->users), ['username'])
+            ->get();
+
+        return new Response($this->render($this->bundle->template->blog_home, array('posts' => $all_posts)));
+    }
+
     public function blogPostAction(Request $request)
     {
         $posts = $this->model($this->bundle->model->posts);
 
-        $post = $posts->findOne($request->get('slug'))
-            ->modelJoin($this->model($this->bundle->model->users), ['username'])
+        $post = $posts->find()
+            ->slug($request->get('slug'))
+            ->published()
+            ->join($this->model($this->bundle->model->users), ['username'])
             ->first();
 
         if (!$post) {
-            throw $this->createNotFoundException($posts->getSingular().' not found');
+            throw $this->createNotFoundException(ucfirst($posts->getSingular()).' not found');
         }
 
         $this->container->get('taxonomy.manager')->assign('tags', $post, $posts->getSingular());

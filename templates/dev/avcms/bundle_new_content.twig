@@ -1,0 +1,11 @@
+{% extends '@dev/index.twig' %}
+
+{% block title %}Add Content To Bundle: {{ bundle_config.name }}{% endblock %}
+
+{% block content %}
+    {{ form_row(database_select_form.database_table, {style: 'width:100%', 'data-placeholder': 'Select a table'}) }}
+
+    <div id="database-columns">
+        {% block database_columns %}{% endblock %}
+    </div>
+{% endblock %}

@@ -1,40 +1,29 @@
 {% extends '@admin/finder.twig' %}
 
-{% block finder_header %}
-    <div class="browser-finder-header">
-        <div class="page">
-            Page {{ page }}
-        </div>
-        <div class="fields">
-            <div class="container-fluid">
-                <div class="row">
-                    {% block finder_header_titles %}
-                        <div class="col-md-7 hidden-xs">
-                            Body
-                        </div>
-                        <div class="col-md-2 hidden-sm hidden-xs">
-                            Author
-                        </div>
-                        <div class="col-md-3 hidden-sm hidden-xs">
-                            Slug
-                        </div>
-                    {% endblock %}
-                </div>
-            </div>
-        </div>
+
+{% block finder_header_titles %}
+    <div class="col-md-7 hidden-xs">
+        {% trans %}Body{% endtrans %}
+    </div>
+    <div class="col-md-2 hidden-sm hidden-xs">
+        {% trans %}Author{% endtrans %}
+    </div>
+    <div class="col-md-3 hidden-sm hidden-xs">
+        {% trans %}Slug{% endtrans %}
     </div>
 {% endblock %}
 
+
 {% block item_options %}
     <div class="btn-group">
-        {{ buttons.edit_button(bundle.route.blog_edit_post, item.id) }}
+        {{ buttons.edit(bundle.route.blog_edit_post, item.id) }}
 
-        {{ buttons.publish_button(item.published, 'blog_toggle_posts_published') }}
+        {{ buttons.publish(item.published, bundle.route.blog_toggle_posts_published) }}
 
-        {{ buttons.delete_button('blog_delete_posts') }}
+        {{ buttons.delete(bundle.route.blog_delete_posts) }}
     </div>
 
-    {{ buttons.view_button('blog_post', {slug: item.slug}) }}
+    {{ buttons.view(bundle.route.blog_post, {slug: item.slug}) }}
 {% endblock %}
 
 {% block item_extended_inner %}
@@ -45,6 +34,6 @@
         {{ item.user.username }}
     </div>
     <div class="col-md-3 hidden-sm hidden-xs">
-        <a href="{{ url('blog_post', {slug: item.slug}) }}">{{ item.slug }}</a>
+        <a href="{{ url(bundle.route.blog_post, {slug: item.slug}) }}">{{ item.slug }}</a>
     </div>
 {% endblock %}

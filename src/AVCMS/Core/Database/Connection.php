@@ -2,6 +2,7 @@
 
 namespace AVCMS\Core\Database;
 
+use Pixie\AliasFacade;
 use Pixie\Connection as PixieConnection;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Viocon\Container;

@@ -1,0 +1,63 @@
+{% macro edit(ajax_route, item_id) %}
+    <a class="btn btn-xs btn-default" href="{{ url(ajax_route, {'id': item_id}) }}">
+        <span class="glyphicon glyphicon-edit"></span> Edit
+    </a>
+{% endmacro %}
+
+{% macro publish(published, ajax_route) %}
+    {% if published == 1 %}
+        {% set published_btn_class = 'btn-default' %}
+        {% set published_btn_icon = 'glyphicon-eye-open' %}
+    {% else %}
+        {% set published_btn_class = 'btn-danger' %}
+        {% set published_btn_icon = 'glyphicon-eye-close' %}
+    {% endif %}
+
+    <button class="btn btn-xs {{ published_btn_class }} avcms-toggle-published" data-toggle-publish-url="{{ url(ajax_route) }}">
+        <span class="glyphicon {{ published_btn_icon }}"></span>
+    </button>
+{% endmacro %}
+
+{% macro delete(ajax_route) %}
+    <button class="btn btn-xs btn-default avcms-delete-item" data-delete-url="{{ url(ajax_route) }}">
+        <span class="glyphicon glyphicon-remove"></span>
+    </button>
+{% endmacro %}
+
+{% macro view(route, route_vars) %}
+    <a class="btn btn-xs btn-default" href="{{ url(route, route_vars) }}" target="_blank">
+        <span class="glyphicon glyphicon-new-window"></span>
+    </a>
+{% endmacro %}
+
+{% macro bulk_delete(ajax_route) %}
+    <button type="button" class="btn btn-default btn-sm" data-bulk-delete-url="{{ url(ajax_route) }}">
+        <span class="glyphicon glyphicon-remove"></span>
+    </button>
+{% endmacro %}
+
+{% macro bulk_publish(ajax_route) %}
+    <button type="button" class="btn btn-default btn-sm" data-toggle-published-url="{{ url(ajax_route) }}">
+        <span class="glyphicon glyphicon-eye-open"></span>
+    </button>
+{% endmacro %}
+
+{% macro bulk_unpublish(ajax_route) %}
+    <button type="button" class="btn btn-default btn-sm" data-toggle-unpublished-url="{{ url(ajax_route) }}">
+        <span class="glyphicon glyphicon-eye-close"></span>
+    </button>
+{% endmacro %}
+
+{% macro expand_finder(ajax_route) %}
+    <div class="expand-browser">
+        <a href="{{ url(ajax_route) }}"><span class="glyphicon glyphicon-arrow-right"></span></a>
+    </div>
+{% endmacro %}
+
+{% macro add_item(ajax_route, label) %}
+    <div class="add-item">
+        <a href="{{ url(ajax_route) }}">
+            <span class="glyphicon glyphicon-plus"></span> {{ label|trans }}
+        </a>
+    </div>
+{% endmacro %}

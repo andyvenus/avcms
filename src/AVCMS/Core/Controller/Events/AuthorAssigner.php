@@ -7,7 +7,7 @@
 
 namespace AVCMS\Core\Controller\Events;
 
-use AVCMS\Bundles\UsersBase\ActiveUser;
+use AVCMS\Bundles\Users\ActiveUser;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AuthorAssigner implements EventSubscriberInterface

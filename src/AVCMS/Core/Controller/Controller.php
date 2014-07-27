@@ -2,7 +2,7 @@
 
 namespace AVCMS\Core\Controller;
 
-use AVCMS\Bundles\UsersBase\Exception\PermissionDeniedException;
+use AVCMS\Bundles\Users\Exception\PermissionDeniedException;
 use AVCMS\Core\Bundle\BundleConfig;
 use AVCMS\Core\Form\FormBlueprint;
 use AVCMS\Core\Form\FormHandler;
@@ -14,6 +14,7 @@ use AVCMS\Core\Security\PermissionsError;
 use AVCMS\Core\Validation\Validator;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -53,6 +54,19 @@ abstract class Controller extends ContainerAware {
     }
 
     /**
+     * Returns a RedirectResponse to the given URL.
+     *
+     * @param string  $url    The URL to redirect to
+     * @param int     $status The status code to use for the Response
+     *
+     * @return RedirectResponse
+     */
+    public function redirect($url, $status = 302)
+    {
+        return new RedirectResponse($url, $status);
+    }
+
+    /**
      * @param $model_name
      * @return \AVCMS\Core\Model\Model|mixed
      */
@@ -78,7 +92,7 @@ abstract class Controller extends ContainerAware {
         return $validator;
     }
 
-    protected function buildForm(FormBlueprint $form, $entities = array(), $request = null)
+    protected function buildForm(FormBlueprint $form, $request = null, $entities = array())
     {
         $form_handler = new FormHandler($form, new SymfonyRequestHandler(), new EntityProcessor(), null,  $this->container->get('dispatcher'));
         $form_handler->setValidator(new AVCMSValidatorExtension($this->newValidator()));
@@ -113,7 +127,7 @@ abstract class Controller extends ContainerAware {
     }
 
     /**
-     * @return \AVCMS\Bundles\UsersBase\ActiveUser
+     * @return \AVCMS\Bundles\Users\ActiveUser
      */
     protected function activeUser()
     {

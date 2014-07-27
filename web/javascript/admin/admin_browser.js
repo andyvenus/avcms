@@ -87,30 +87,18 @@ avcms.browser = {
 
     setBrowserFocus: function() {
         var finder = $('.browser-finder');
+        var editor = $('.browser-editor');
         if ($('.ajax-editor-inner').children().filter(':visible').length < 1) {
             if (!finder.hasClass('finder-has-focus')) {
                 finder.addClass('finder-has-focus');
-                $('.browser-editor').removeClass('editor-has-focus');
+                editor.removeClass('editor-has-focus');
             }
         }
         else {
-            if (finder.hasClass('finder-has-focus')) {
+
+            if (!editor.hasClass('editor-has-focus')) {
                 finder.removeClass('finder-has-focus');
-                $('.browser-editor').addClass('editor-has-focus');
-                /*
-                var nano_content = finder.find('.nano-content');
-
-                var scroll_back = 0;
-
-                $('.browser-finder-header').each(function() {
-                    console.log($(this).height());
-                    scroll_back = scroll_back + $(this).height();
-                });
-
-                var new_scroll = nano_content.scrollTop() - scroll_back;
-
-                finder.find('.nano').nanoScroller({ scrollTop: new_scroll });
-                */
+                editor.addClass('editor-has-focus');
             }
         }
     },

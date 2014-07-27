@@ -39,10 +39,10 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
      * Get all rows
      *
      * @param string $class
-     * @internal param null $query_name
+     * @param int $fetch_type
      * @return mixed
      */
-    public function get($class = null)
+    public function get($class = null, $fetch_type = \PDO::FETCH_CLASS)
     {
         if ($class == null && isset($this->entity)) {
             $class = $this->entity;
@@ -53,10 +53,19 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
             return $this->getEntity($class);
         }
 
+        if ($class == null && $fetch_type === \PDO::FETCH_CLASS) {
+            $class = 'stdClass';
+        }
+
         $this->fireEvents('before-select');
         $this->preparePdoStatement();
 
-        $result = $this->pdoStatement->fetchAll(\PDO::FETCH_CLASS, $class);
+        if ($fetch_type === \PDO::FETCH_CLASS) {
+            $result = $this->pdoStatement->fetchAll($fetch_type, $class);
+        }
+        else {
+            $result = $this->pdoStatement->fetchAll($fetch_type);
+        }
         $this->pdoStatement = null;
         $this->fireEvents('after-select', $result);
         return $result;
@@ -484,5 +493,10 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
         $offset = $results_per_page * ($page - 1);
 
         return $this->limit($results_per_page)->offset($offset);
+    }
+
+    public function getTablePrefix()
+    {
+        return $this->tablePrefix;
     }
 } 

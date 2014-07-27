@@ -250,7 +250,7 @@ class FormHandler
 
         $request_data = $this->request_handler->handleRequest($this, $request);
 
-        foreach ($this->fields as $field) {
+        foreach ($this->fields as $field_name => $field) {
             $field_name = $field['name'];
             if (isset($request_data[ $field_name ])) {
                 $field_submitted = $this->type_handler->isValidRequestData($field, $request_data[$field_name]);
@@ -565,6 +565,7 @@ class FormHandler
         $this->form_view->setMethod($this->getMethod());
         $this->form_view->setName($this->getName());
         $this->form_view->setEncoding($this->getEncoding());
+        $this->form_view->setSubmitted($this->isSubmitted());
 
         if ($this->submitted && isset($this->validator)) {
             $this->form_view->setErrors($this->getValidationErrors());

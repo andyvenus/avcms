@@ -5,13 +5,13 @@
         {% if item.id %}
             Editing {{ item.title }}
         {% else %}
-            New Post
+            {% trans %}New Post{% endtrans %}
         {% endif %}
     {% endspaceless  %}
 {% endblock %}
 
 {% block editor_title_edit %}
-    <span class="light">Editing Post:</span> <span data-id="{{ item.id }}" data-field="title">{{ item.title }}</span>
+    <span class="light">{% trans %}Editing Post{% endtrans %}:</span> <span data-id="{{ item.id }}" data-field="title">{{ item.title }}</span>
 {% endblock %}
 
 {% block editor_title_new %}
@@ -19,10 +19,5 @@
 {% endblock %}
 
 {% block form_rows %}
-    {% set attributes = {
-        'title': {'data-slug-target': 'slug'},
-        'user_id': {'class': 'user_selector no_select2'},
-    }
-    %}
-    {{ form_rows(form, attributes) }}
+    {{ form_rows(form) }}
 {% endblock %}

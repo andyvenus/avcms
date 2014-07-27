@@ -43,7 +43,15 @@ class Finder
      */
     protected $filters = array();
 
+    /**
+     * @var array
+     */
     protected $taxonomies = array();
+
+    /**
+     * @var array The parameters that are extracted from the request
+     */
+    protected $valid_request_parameters;
 
     public function __construct(Model $model, TaxonomyManager $taxonomy_manager = null)
     {
@@ -71,6 +79,7 @@ class Finder
 
     public function handleRequest(Request $request, array $filters)
     {
+        $valid_request_parameters = array();
         foreach ($filters as $filter => $default) {
             if (method_exists($this, $filter)) {
                 $this->$filter($request->get($filter, $default));
@@ -81,7 +90,11 @@ class Finder
             else {
                 throw new \Exception('No filter method found for filter '.$filter);
             }
+
+            $valid_request_parameters[] = $filter;
         }
+
+        $this->valid_request_parameters = $valid_request_parameters;
 
         return $this;
     }

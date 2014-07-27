@@ -1,0 +1,10 @@
+<?php
+
+namespace {{namespace}}\Controller;
+
+use AVCMS\Core\Controller\AdminController;
+
+class {{uc_singular}}AdminController extends AdminController
+{
+    
+} 

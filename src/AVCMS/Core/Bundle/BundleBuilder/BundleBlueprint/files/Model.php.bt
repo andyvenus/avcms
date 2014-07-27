@@ -1,0 +1,23 @@
+<?php
+
+namespace {{namespace}}\Model;
+
+use AVCMS\Core\Model\ContentModel;
+
+class Posts extends ContentModel
+{
+    public function getTable()
+    {
+        return '{{database}}';
+    }
+
+    public function getSingular()
+    {
+        return '{{singular}}';
+    }
+
+    public function getEntity()
+    {
+        return '{{entity}}';
+    }
+}

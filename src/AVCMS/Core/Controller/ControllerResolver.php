@@ -2,6 +2,7 @@
 
 namespace AVCMS\Core\Controller;
 
+use AVCMS\Core\Bundle\BundleManager;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver as BaseControllerResolver;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -9,20 +10,32 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class ControllerResolver extends BaseControllerResolver
 {
 
-    public function __construct(ContainerInterface $container, LoggerInterface $logger = null)
+    public function __construct(ContainerInterface $container, BundleManager $bundle_manager, LoggerInterface $logger = null)
     {
         $this->container = $container;
+        $this->bundle_manager = $bundle_manager;
 
         parent::__construct($logger);
     }
 
     protected function createController($controller)
     {
-        if (false === strpos($controller, '::')) {
+        if (1 === $length = substr_count($controller, '::')) {
+            list($class, $method) = explode('::', $controller, 2);
+        }
+        elseif ($length === 2) {
+            list($bundle, $class, $method) = explode('::', $controller, 3);
+
+            if (!$this->bundle_manager->hasBundle($bundle)) {
+                throw new \Exception(sprintf("Cannot build controller %s - Bundle %s not initialised", $controller, $bundle));
+            }
+
+            $namespace = $this->bundle_manager->getBundleConfig($bundle)->namespace;
+            $class = $namespace.'\Controller\\'.$class;
+        }
+        else {
             throw new \InvalidArgumentException(sprintf('Unable to find controller "%s".', $controller));
         }
-
-        list($class, $method) = explode('::', $controller, 2);
 
         if (!class_exists($class)) {
             throw new \InvalidArgumentException(sprintf('Class "%s" does not exist.', $class));

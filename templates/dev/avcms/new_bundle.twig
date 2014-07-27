@@ -1,0 +1,23 @@
+{% extends '@dev/index.twig' %}
+
+{% block title %}Add New Bundle{% endblock %}
+
+{% block content %}
+    {% if form.errors is not empty %}
+        <div class="alert alert-danger">
+            {% for error in form.errors %}
+                {{ error.message }}<br />
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {{ form_start(form) }}
+
+    {{ form_rows(form) }}
+
+    <div style="text-align: right">
+        {{ form_submit_button(form) }}
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}

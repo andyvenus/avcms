@@ -1,0 +1,29 @@
+{% extends '@dev/index.twig' %}
+
+{% block title %}Manage Bundle: {{ bundle_config.name }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-8">
+            <strong>Name:</strong> {{ bundle_config.name }} &nbsp;&nbsp;<strong>Namespace:</strong> {{ bundle_config.namespace }}
+
+            <h4>Routes</h4>
+            <p>
+                {% for route_name, route in routes %}
+                    <strong>{{ route_name }}</strong>: {{ route.path }}<br/>
+                {% else %}
+                    No routes
+                {% endfor %}
+            </p>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="list-group">
+                <a href="{{ url('bundle_add_content', {'bundle': bundle_config.name}) }}" class="list-group-item"><span class="glyphicon glyphicon-plus-sign"></span> Add Content</a>
+                <a href="#" class="list-group-item">Morbi leo risus</a>
+                <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+                <a href="#" class="list-group-item">Vestibulum at eros</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends '@admin/browser.twig' %}
+
+{% block finder_title %}
+    {% trans %}Users{% endtrans %}
+{% endblock %}
+
+{% block expand_finder %}
+    {{ buttons.expand_browser(bundle.route.users_admin) }}
+{% endblock %}
+
+{% block add_item %}
+    {{ buttons.add_item(bundle.route.add_user, 'Add User') }}
+{% endblock %}
+
+{% block finder %}
+    <div data-url="{{ url(bundle.route.users_finder) }}">
+        {{ render(path(bundle.route.users_finder)) }}
+    </div>
+{% endblock %}
+
+{% block mobile_back_link %}
+    {{ url(bundle.route.users_admin) }}
+{% endblock %}
+
+{% block checked_options_buttons %}
+    {{ buttons.bulk_delete(bundle.route.delete_users) }}
+{% endblock %}

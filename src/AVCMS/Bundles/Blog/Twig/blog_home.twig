@@ -13,12 +13,12 @@
                     <h2><a href="{{ url(bundle.route.blog_post, {slug: post.slug}) }}">{{ post.title }}</a> <small>by {{ post.user.username }}</small></h2>
 
                     {% for tag in post.tags %}
-                        <a class="btn btn-default btn-xs">{{ tag.name }}</a>
+                        <a class="btn btn-default btn-xs" href="{{ url(bundle.route.blog_archive, {tags: tag.name}) }}">{{ tag.name }}</a>
                     {% endfor %}
 
                     <p>{{ post.body|markdown }}</p>
 
-                    <a class="btn btn-default btn-sm" href="{{ url(bundle.route.blog_edit_post, { id: post.id}) }}">Edit Post</a>
+                    <a class="btn btn-link btn-sm" href="{{ url(bundle.route.blog_edit_post, { id: post.id}) }}"><span class="glyphicon glyphicon-edit"></span> Edit Post</a>
                 </article>
             {% endfor %}
         {% endblock %}

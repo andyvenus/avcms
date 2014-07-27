@@ -1,9 +1,9 @@
-{% import '@admin/mixins/finder_buttons.twig' as buttons %}
+{% import '@admin/macros/finder_buttons.twig' as buttons %}
 
 {% block finder_header %}
     <div class="browser-finder-header">
         <div class="page">
-            Page {{ page }}
+            {% trans %}Page{% endtrans %} {{ page }}
         </div>
         <div class="fields">
             <div class="container-fluid">

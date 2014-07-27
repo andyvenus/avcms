@@ -48,6 +48,11 @@ class FormView implements FormViewInterface
     protected $params;
 
     /**
+     * @var bool
+     */
+    protected $submitted;
+
+    /**
      * @param array $fields
      * @return mixed|void
      * @throws Exception\InvalidArgumentException
@@ -64,7 +69,7 @@ class FormView implements FormViewInterface
     public function doFieldTranslations($fields) {
         $updated_fields = array();
 
-        foreach ($fields as $field) {
+        foreach ($fields as $field_name => $field) {
 
             if (isset($field['options']['label'])) {
                 $field['options']['label'] = $this->translate($field['options']['label']);
@@ -81,7 +86,7 @@ class FormView implements FormViewInterface
             }
 
             if (strpos($field['name'], '[]') === false) {
-                $updated_fields[$field['name']] = $field;
+                $updated_fields[$field_name] = $field;
             }
             else {
                 $updated_fields[] = $field;
@@ -150,6 +155,22 @@ class FormView implements FormViewInterface
     public function getSubmitButtonLabel()
     {
         return $this->translate($this->submit_button_label);
+    }
+
+    /**
+     * @param $submitted bool
+     */
+    public function setSubmitted($submitted)
+    {
+        $this->submitted = $submitted;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSubmitted()
+    {
+        return $this->submitted;
     }
 
     /**

@@ -72,7 +72,7 @@
         {% set attr = {} %}
     {% endif %}
 
-    {% if type == 'input' or type == 'textarea' or type == 'text' or type == 'password' or type == 'text_button' %}
+    {% if type == 'input' or type == 'textarea' or type == 'text' or type == 'password' or type == 'text_button' or type == 'select' %}
         {% set attr = attr|merge({class: attr.class ~ ' form-control'}) %}
     {% endif %}
     {% if type == 'button' %}

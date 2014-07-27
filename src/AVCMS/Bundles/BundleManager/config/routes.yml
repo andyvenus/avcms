@@ -1,0 +1,15 @@
+builder_home:
+  path: /dev/bundles
+  defaults: { _controller: 'BundleManager::BundleBuilderController::homeAction' }
+
+new_bundle:
+  path: /dev/bundles/new
+  defaults: { _controller: 'BundleManager::BundleBuilderController::newBundleAction' }
+
+bundle_add_content:
+  path: /dev/bundles/manage/{bundle}/add-content
+  defaults: { _controller: 'BundleManager::BundleBuilderController::addContentAction' }
+
+manage_bundle:
+  path: /dev/bundles/manage/{bundle}
+  defaults: { _controller: 'BundleManager::ManageBundlesController::manageBundleAction' }

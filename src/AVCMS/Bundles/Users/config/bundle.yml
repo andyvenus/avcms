@@ -1,0 +1,14 @@
+name: Users
+namespace: AVCMS\Bundles\Users
+
+model:
+  users: Users
+  groups: Groups
+  sessions: Sessions
+  group_permissions: GroupPermissions
+
+route:
+  login: login
+
+template:
+  users_browser: @Users/users_browser.twig

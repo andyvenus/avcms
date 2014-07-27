@@ -49,14 +49,16 @@ class CheckboxType implements TypeInterface
     {
         $field['value'] = (isset($field['options']['checked_value']) ? $field['options']['checked_value'] : 1);
 
-        //if ($form_handler->isSubmitted()) {
-            if (isset($all_form_data[$field['name']]) && $all_form_data[$field['name']] == $field['options']['checked_value']) {
-                $field['options']['checked'] = true;
-            }
-            else {
-                $field['options']['checked'] = false;
-            }
-        //}
+        if (isset($all_form_data[$field['name']]) && $all_form_data[$field['name']] == $field['options']['checked_value']) {
+            $field['options']['checked'] = true;
+        }
+        else {
+            $field['options']['checked'] = false;
+        }
+
+        if (isset($field['original_name'])) {
+            $field['name'] = $field['original_name'];
+        }
 
         return $field;
     }

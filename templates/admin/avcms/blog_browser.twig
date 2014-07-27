@@ -1,48 +1,29 @@
 {% extends '@admin/browser.twig' %}
 
-{% block title %}
+{% block finder_title %}
     {% trans %}Blog Posts{% endtrans %}
 {% endblock %}
 
-{% block finder_top -%}
-    <h3>{% trans %}Blog Posts{% endtrans %}</h3>
-
-    <div class="expand-browser"><a href="{{ url('blog_admin_home') }}"><span class="glyphicon glyphicon-arrow-right"></span></a></div>
-
-    {{ form_start(finder_filters_form) }}
-
-    <div class="filter-form-row">{{ form_field(finder_filters_form.order) }}</div>
-
-    <div class="input-group">
-        {{ form_field(finder_filters_form.search, {"class": "input-md", "placeholder": "Search", "autocomplete": "off"}) }}
-        <span class="input-group-btn">
-            <button class="btn btn-default clear-search" type="button"><span class="glyphicon glyphicon-remove"></span></button>
-        </span>
-    </div>
-
-    {{ form_end(finder_filters_form) }}
-{%- endblock %}
+{% block expand_finder %}
+    {{ buttons.expand_browser(bundle.route.blog_admin_home) }}
+{% endblock %}
 
 {% block add_item %}
-    <div class="add-item">
-        <a href="{{ url('blog_add_post') }}">
-            <span class="glyphicon glyphicon-plus"></span> {% trans %}Add Blog Post{% endtrans %}
-        </a>
-    </div>
+    {{ buttons.add_item(bundle.route.blog_add_post, 'Add Blog Post') }}
 {% endblock %}
 
 {% block finder %}
-    <div data-url="{{ url('blog_finder') }}">
-        {{ render(url('blog_finder')) }}
+    <div data-url="{{ url(bundle.route.blog_finder) }}">
+        {{ render(path(bundle.route.blog_finder)) }}
     </div>
 {% endblock %}
 
 {% block mobile_back_link %}
-    {{ url('blog_admin_home') }}
+    {{ url(bundle.route.blog_admin_home) }}
 {% endblock %}
 
 {% block checked_options_buttons %}
-    <button type="button" class="btn btn-default btn-sm" data-bulk-delete-url="{{ url('blog_delete_posts') }}"><span class="glyphicon glyphicon-remove"></span></button>
-    <button type="button" class="btn btn-default btn-sm" data-toggle-published-url="{{ url('blog_toggle_posts_published') }}"><span class="glyphicon glyphicon-eye-open"></span></button>
-    <button type="button" class="btn btn-default btn-sm" data-toggle-unpublished-url="{{ url('blog_toggle_posts_published') }}"><span class="glyphicon glyphicon-eye-close"></span></button>
+    {{ buttons.bulk_delete(bundle.route.blog_delete_posts) }}
+    {{ buttons.bulk_publish(bundle.route.blog_toggle_posts_published) }}
+    {{ buttons.bulk_unpublish(bundle.route.blog_toggle_posts_published) }}
 {% endblock %}

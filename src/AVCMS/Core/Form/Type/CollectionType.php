@@ -18,6 +18,13 @@ class CollectionType implements TypeInterface
 
     public function getDefaultOptions($field)
     {
+        $fields_updated = array();
+        foreach ($field['fields'] as $field_name => $inner_field) {
+            $fields_updated[$field_name] = $this->type_handler->getDefaultOptions($inner_field);
+        }
+
+        $field['fields'] = $fields_updated;
+
         return $field;
     }
 
@@ -76,6 +83,7 @@ class CollectionType implements TypeInterface
             }
             // Named array fields
             else {
+                $field_name = $field['name'];
                 $field = $this->type_handler->makeView($field, $data, $form_handler);
 
                 $field['has_error'] = false;
@@ -83,7 +91,7 @@ class CollectionType implements TypeInterface
                     $field['has_error'] = true;
                 }
 
-                $fields[$field['name']] = $field;
+                $fields[$field_name] = $field;
             }
         }
 
