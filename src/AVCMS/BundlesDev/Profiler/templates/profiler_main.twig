@@ -1,0 +1,41 @@
+{% extends '@dev/index.twig' %}
+
+{% block title %}Profiler{% endblock %}
+
+{% block content %}
+    <ul class="nav nav-pills">
+        <li class="active"><a href="#home" role="tab" data-toggle="tab">Main</a></li>
+        <li><a href="#time" role="tab" data-toggle="tab">Time</a></li>
+        <li><a href="#translations" role="tab" data-toggle="tab">Translations</a></li>
+        <li><a href="#request" role="tab" data-toggle="tab">Request</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="home">123</div>
+        <div class="tab-pane" id="time">
+            <h5>Total Time: {{ '%.0f'|format(time.duration) }} ms</h5>
+            <h5>Init Time: {{ '%.0f'|format(time.inittime) }} ms</h5>
+
+            {% for name, event in time.events %}
+                {{ name }}: {{ event.duration }}<br />
+            {% endfor %}
+        </div>
+        <div class="tab-pane" id="translations">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Raw String</th>
+                        <th>Translation</th>
+                    </tr>
+                </thead>
+                {% for id, translation in translations.translations %}
+                    <tr>
+                        <td>{{ id }}</td>
+                        <td>{{ translation.raw_translation }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="tab-pane" id="request">799</div>
+    </div>
+{% endblock %}

@@ -9,9 +9,11 @@ namespace AVCMS\Core\AssetManager;
 
 use Assetic\Asset\AssetCollection;
 use Assetic\Asset\BaseAsset;
+use Assetic\Asset\FileAsset;
 use Assetic\AssetWriter;
 use Assetic\Filter\JSqueezeFilter;
 use AVCMS\Core\AssetManager\Asset\BundleAssetInterface;
+use AVCMS\Core\AssetManager\Asset\BundleFileAsset;
 use AVCMS\Core\AssetManager\Exception\AssetTypeException;
 use AVCMS\Core\Bundle\BundleManager;
 use Assetic\AssetManager as AsseticAssetManager;
@@ -40,12 +42,9 @@ class AssetManager
      */
     public function __construct(BundleManager $bundle_manager, $debug = false)
     {
-        if ($bundle_manager->bundlesInitialized()) {
-            $bundles = $bundle_manager->getBundles();
-            foreach ($bundles as $bundle) {
-                $bundle['instance']->assets($this);
-            }
-        }
+        $this->bundle_manager = $bundle_manager;
+
+        $this->loadBundleAssets();
     }
 
     public function add(BaseAsset $asset, $environment = self::SHARED, $priority = 10)
@@ -54,35 +53,62 @@ class AssetManager
             throw new \Exception('Assets passed to the add() method must implement the getType method');
         }
 
-        if ($asset->getType() == 'javascript') {
-            $this->addJavaScript($asset, $environment, $priority);
+        $this->{$asset->getType()}[$environment][] = array('asset' => $asset, 'priority' => $priority);
+    }
+
+    public function addBundleAsset($bundle_name, $asset, $type, $environment = self::SHARED, $priority = 10)
+    {
+        $src = $this->bundle_manager->getBundleResource($bundle_name, $asset, $type);
+
+        if ($src) {
+            $this->{$type}[$environment][] = array(
+                'asset' => new BundleFileAsset($bundle_name, $type, $asset, $src),
+                'priority' => $priority
+            );
         }
-        elseif ($asset->getType() == 'css') {
-            $this->addCSS($asset, $environment, $priority);
+    }
+
+    public function loadBundleAssets()
+    {
+        $configs = $this->bundle_manager->getBundleConfigs();
+
+        foreach ($configs as $config) {
+            if (isset($config->assets)) {
+                $ca = $config->getConfigArray();
+                foreach($ca['assets'] as $asset_file => $asset) {
+                    if (!isset($asset['env'])) {
+                        $asset['env'] = 'shared';
+                    }
+                    if (!isset($asset['priority'])) {
+                        $asset['priority'] = 10;
+                    }
+                    if (!isset($asset['type'])) {
+                        $asset['type'] = $this->getFiletype($asset_file);
+                    }
+                    $this->addBundleAsset($config->name, $asset_file, $asset['type'], $asset['env'], $asset['priority']);
+                }
+            }
+        }
+    }
+
+    protected function getFiletype($file)
+    {
+        $ext = pathinfo($file, PATHINFO_EXTENSION);
+
+        if ($ext == 'js') {
+            return 'javascript';
+        }
+        else if (in_array($ext, array('css', 'scss', 'sass', 'less'))) {
+            return 'css';
         }
         else {
-            throw new \Exception('The asset manager does not support assets of type '.$asset->getType());
+            return 'unknown';
         }
     }
 
-    /**
-     * @param BaseAsset $asset
-     * @param string $environment
-     * @param int $priority
-     */
-    public function addJavaScript(BaseAsset $asset, $environment = self::SHARED, $priority = 10)
+    public function getAssets($type)
     {
-        $this->javascript[$environment][] = array('asset' => $asset, 'priority' => $priority);
-    }
-
-    /**
-     * @param BaseAsset $asset
-     * @param string $environment
-     * @param int $priority
-     */
-    public function addCSS(BaseAsset $asset, $environment = self::SHARED, $priority = 10)
-    {
-        $this->css[$environment][] =  array('asset' => $asset, 'priority' => $priority);
+        return $this->{$type};
     }
 
     /**
@@ -145,7 +171,9 @@ class AssetManager
         $ordered_assets = $this->getOrderedAssets($asset_type, $environment);
         $asset_urls = array();
         foreach ($ordered_assets as $asset) {
-            $asset_urls[] = $asset['asset']->getDevUrl('front.php/');
+            if (method_exists($asset['asset'], 'getDevUrl')) {
+                $asset_urls[] = $asset['asset']->getDevUrl();
+            }
         }
 
         return $asset_urls;
@@ -157,7 +185,7 @@ class AssetManager
             if ($environment != self::SHARED) {
                 $ordered_assets = $this->getOrderedAssets($type, $environment, true);
 
-                $asset_collection = new AssetCollection($ordered_assets, array(new JSqueezeFilter()));
+                $asset_collection = new AssetCollection($ordered_assets, array(new JSqueezeFilter())); //todo: CSS minifiy rather than always JS
                 $asset_collection->setTargetPath($environment.'.'.$file_extension);
 
                 $assetic->set($environment.'_'.$type, $asset_collection);

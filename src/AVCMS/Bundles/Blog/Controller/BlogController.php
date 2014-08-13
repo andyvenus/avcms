@@ -16,26 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Yaml\Yaml;
 
-class BlogController extends Controller {
-
-    protected $parent_namespace = 'AVCMS\Bundles\Blog';
-
-    public function blogHomeAction(Request $request)
-    {
-        $posts = $this->model($this->bundle->model->posts);
-
-        $finder = $posts->find();
-        $all_posts = $finder->published()
-            ->handleRequest($request, array('page' => 1, 'order' => 'newest'))
-            ->join($this->model($this->bundle->model->users), ['username'])
-            ->joinTaxonomy('tags')
-            ->get();
-
-        $user = $this->activeUser();
-
-        return new Response($this->render($this->bundle->template->blog_home, array('posts' => $all_posts, 'user' => $user->getUser())));
-    }
-
+class BlogController extends Controller
+{
     public function blogArchiveAction(Request $request)
     {
         $posts = $this->model($this->bundle->model->posts);
@@ -63,7 +45,7 @@ class BlogController extends Controller {
             throw $this->createNotFoundException(ucfirst($posts->getSingular()).' not found');
         }
 
-        $this->container->get('taxonomy.manager')->assign('tags', $post, $posts->getSingular());
+        $this->container->get('taxonomy_manager')->assign('tags', $post, $posts->getSingular());
 
         return new Response($this->render($this->bundle->template->blog_post, array('post' => $post)));
     }
@@ -83,6 +65,6 @@ class BlogController extends Controller {
     {
         echo $this->bundle->name;
 
-        return new Response($this->render('@AVBlog/test.twig'));
+        return new Response($this->render('@Blog/test.twig'));
     }
 }

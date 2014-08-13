@@ -1,0 +1,22 @@
+{% extends '@dev/index.twig' %}
+
+{% block title %}Manage Bundles{% endblock %}
+
+{% block content %}
+    <div class="list-group">
+        {% for bundle_config in bundles %}
+            {% if bundle_config.active %}
+                {% set btn_color = 'success' %}
+            {% else %}
+                {% set btn_color = 'warning' %}
+            {% endif %}
+
+            <a href="{{ url(bundle.route.manage_bundle, {bundle: bundle_config.name}) }}" class="list-group-item">
+                <h4 class="list-group-item-heading">{{ bundle_config.name }}</h4>
+                {% if bundle_config.active %}{% set enabled_text = "Active" %}{% else %}{% set enabled_text = "Inactive" %}{% endif %}
+                <strong id="status">Status: <span class="text-{{ btn_color }}">{{ enabled_text }}</span></strong> &nbsp;&nbsp;
+                <strong>Location: </strong>{{ bundle_config.directory }}
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

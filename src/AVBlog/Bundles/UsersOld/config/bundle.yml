@@ -1,5 +1,0 @@
-name: Users
-
-namespace: AVBlog\Bundles\Users
-
-setup_class: UsersBundle

@@ -7,8 +7,8 @@
 
 namespace AVCMS\Bundles\Tags\Events;
 
-use AVCMS\Core\Controller\Event\AdminEditFormBuiltEvent;
-use AVCMS\Core\Controller\Event\AdminSaveContentEvent;
+use AVCMS\Bundles\Admin\Event\AdminEditFormBuiltEvent;
+use AVCMS\Bundles\Admin\Event\AdminSaveContentEvent;
 use AVCMS\Core\Taxonomy\TaxonomyManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

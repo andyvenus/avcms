@@ -7,10 +7,23 @@
 
 namespace AVCMS\Core\Translation;
 
+use Symfony\Component\Translation\MessageSelector;
 use Symfony\Component\Translation\Translator as TranslatorBase;
 
 class Translator extends TranslatorBase
 {
+
+    protected $translated_strings = array();
+
+    protected $debug;
+
+    public function __construct($locale, MessageSelector $selector = null, $debug = false)
+    {
+        $this->debug = $debug;
+
+        parent::__construct($locale, $selector);
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -35,6 +48,22 @@ class Translator extends TranslatorBase
             $params['{'.$placeholder.'}'] = $value;
         }
 
-        return strtr($this->catalogues[$locale]->get((string) $id, $domain), $params);
+        $raw_translation = $this->catalogues[$locale]->get((string) $id, $domain);
+        $translation = strtr($raw_translation, $params);
+
+        if ($this->debug === true) {
+            $this->translated_strings[$id] = array(
+                'translation' => $translation,
+                'raw_translation' => $raw_translation,
+                'parameters' => $parameters
+            );
+        }
+
+        return $translation;
+    }
+
+    public function getTranslationStrings()
+    {
+        return $this->translated_strings;
     }
 } 

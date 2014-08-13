@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>AVCMS Dev</title>
+    <title>{{ block('title') }}</title>
     <meta name="description" content="The AVCMS developer section">
     <meta name="author" content="AV Scripts">
 
@@ -16,6 +16,7 @@
     <script src="{{ url('home') }}web/javascript/bootstrap.min.js"></script>
     <script src="{{ url('home') }}web/javascript/select2.min.js"></script>
     <script src="{{ url('home') }}web/javascript/avcms_dev.js"></script>
+    <script src="{{ url('home') }}web/javascript/avcms_config.js"></script>
 
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -39,31 +40,13 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bundles <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{ url(bundle.route.new_bundle) }}">Add New</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">One more separated link</a></li>
-                    </ul>
-                </li>
+                <li><a href="{{ url(bundle.route.manage_bundles) }}"><span class="glyphicon glyphicon-th-list"></span> Manage Bundles</a></li>
+                <li><a href="{{ url(bundle.route.new_bundle) }}"><span class="glyphicon glyphicon-plus-sign"></span> New Bundle</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Link</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>
-                </li>
+                <li><a href="{{ url('home') }}">Frontend</a></li>
+                <li><a href="#">Admin</a></li>
+                <li><a href="#">Logout</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

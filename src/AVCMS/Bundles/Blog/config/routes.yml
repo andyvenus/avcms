@@ -24,7 +24,7 @@ blog_finder:
 
 blog_home:
     path:     '/blog'
-    defaults: { _controller: 'Blog::BlogController::blogHomeAction' }
+    defaults: { _controller: 'Blog::BlogController::blogArchiveAction' }
 
 blog_archive:
     path:     '/blog/archive'

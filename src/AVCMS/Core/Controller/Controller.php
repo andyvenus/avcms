@@ -22,10 +22,11 @@ use Symfony\Component\Translation\Loader\ArrayLoader;
 use Symfony\Component\Translation\MessageSelector;
 use AVCMS\Core\Translation\Translator;
 
-abstract class Controller extends ContainerAware {
-
-    protected $parent_namespace = "";
-
+abstract class Controller extends ContainerAware
+{
+    /**
+     * @var
+     */
     protected $translator;
 
     /**
@@ -44,7 +45,7 @@ abstract class Controller extends ContainerAware {
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
-        $this->model_factory = $container->get('model.factory');
+        $this->model_factory = $container->get('model_factory');
         $this->translator = $container->get('translator');
     }
 
@@ -99,7 +100,7 @@ abstract class Controller extends ContainerAware {
         $form_view = new FormView();
         $form_view->setTranslator($this->translator);
         $form_handler->setFormView($form_view);
-        $form_handler->setTransformerManager($this->container->get('form.transformer.manager'));
+        $form_handler->setTransformerManager($this->container->get('form.transformer_manager'));
 
         if (!is_array($entities)) {
             $entities = array($entities);
@@ -123,7 +124,7 @@ abstract class Controller extends ContainerAware {
      */
     protected function generateUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
-        return $this->container->get('routing.url.generator')->generate($route, $parameters, $referenceType);
+        return $this->container->get('routing.url_generator')->generate($route, $parameters, $referenceType);
     }
 
     /**
@@ -148,6 +149,8 @@ abstract class Controller extends ContainerAware {
         if (isset($this->bundle)) {
             $context['bundle'] = $this->bundle;
         }
+
+        $context['user'] = $this->activeUser()->getUser();
 
         $twig = $this->container->get('twig');
         $result = $twig->render($template, $context);

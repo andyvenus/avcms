@@ -1,0 +1,18 @@
+Users:
+    enabled: true
+Admin:
+    enabled: true
+Assets:
+    enabled: true
+Blog:
+    enabled: true
+BundleManager:
+    enabled: true
+Generated:
+    enabled: true
+Porn:
+    enabled: false
+Profiler:
+    enabled: true
+Tags:
+    enabled: true

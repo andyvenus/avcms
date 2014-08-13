@@ -4,12 +4,12 @@
     {% trans %}{{uc_plural}}{% endtrans %}
 {% endblock %}
 
-{% block expand_finder %}
-    {{ buttons.expand_browser(bundle.route.{{admin_home_route}}) }}
+{% block expand_finder_button %}
+    {{ buttons.expand_finder(bundle.route.{{admin_home_route}}) }}
 {% endblock %}
 
 {% block add_item %}
-    {{ buttons.add_item(bundle.route.blog_add_post, 'Add {{uc_singular}}') }}
+    {{ buttons.add_item(bundle.route.{{admin_add_route}}, 'Add {{uc_singular}}') }}
 {% endblock %}
 
 {% block finder %}

@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\Users\Controller;
 
-use AVCMS\Core\Controller\AdminController;
+use AVCMS\Bundles\Admin\Controller\AdminController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

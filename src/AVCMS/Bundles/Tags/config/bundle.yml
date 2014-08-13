@@ -1,0 +1,5 @@
+name: Tags
+namespace: AVCMS\Bundles\Tags
+
+services:
+  - TagsServices

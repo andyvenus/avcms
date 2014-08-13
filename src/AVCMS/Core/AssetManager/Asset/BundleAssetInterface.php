@@ -12,7 +12,7 @@ interface BundleAssetInterface
 
     public function getBundle();
 
-    public function getFile();
+    public function getFilename();
 
     public function getDevUrl($prepend);
 }

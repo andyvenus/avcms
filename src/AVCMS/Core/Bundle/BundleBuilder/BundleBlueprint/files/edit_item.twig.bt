@@ -1,0 +1,23 @@
+{% extends '@admin/edit_item.twig' %}
+
+{% block title -%}
+    {% spaceless %}
+        {% if item.id %}
+            Editing {{ item.{{title_field}} }}
+        {% else %}
+            {% trans %}New {{uc_singular}}{% endtrans %}
+        {% endif %}
+    {% endspaceless  %}
+{% endblock %}
+
+{% block editor_title_edit %}
+    <span class="light">{% trans %}Editing {{uc_singular}}{% endtrans %}:</span> <span data-id="{{ item.id }}" data-field="{{title_field}}">{{ item.{{title_field}} }}</span>
+{% endblock %}
+
+{% block editor_title_new %}
+    New {{uc_singular}}
+{% endblock %}
+
+{% block form_rows %}
+    {{ form_rows(form) }}
+{% endblock %}

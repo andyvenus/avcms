@@ -83,9 +83,10 @@ $(document).ready(function() {
 
 avcms.adminTemplate = {
     verticalDesign: function() {
-        var header_height = $('.admin-header').height();
+        var header_height = $('.admin-header').innerHeight();
         var window_height = $(window).height();
-        var target_height = window_height - header_height;
+        var dev_bar_height = $('.dev-bar-inner').innerHeight();
+        var target_height = window_height - header_height - dev_bar_height;
 
         var window_width = $(window).width();
 

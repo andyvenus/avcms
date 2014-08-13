@@ -4,14 +4,14 @@ namespace AVCMS\Core\Database;
 
 use Pixie\AliasFacade;
 use Pixie\Connection as PixieConnection;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Viocon\Container;
 
 class Connection extends PixieConnection {
 
     protected $event_dispatcher;
 
-    public function __construct($adapter, array $adapterConfig, $alias = null, Container $container = null, EventDispatcher $event_dispatcher = null)
+    public function __construct($adapter, array $adapterConfig, $alias = null, Container $container = null, EventDispatcherInterface $event_dispatcher = null)
     {
         parent::__construct($adapter, $adapterConfig, $alias, $container);
 
@@ -43,7 +43,7 @@ class Connection extends PixieConnection {
     }
 
     /**
-     * @return null|EventDispatcher
+     * @return null|EventDispatcherInterface
      */
     public function getEventDispatcher()
     {

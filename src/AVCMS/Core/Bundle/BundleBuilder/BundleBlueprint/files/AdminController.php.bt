@@ -2,9 +2,63 @@
 
 namespace {{namespace}}\Controller;
 
-use AVCMS\Core\Controller\AdminController;
+use AVCMS\Bundles\{{bundle}}\Form\{{cc_plural}}AdminFiltersForm;
+use AVCMS\Bundles\{{bundle}}\Form\{{cc_singular}}AdminForm;
+use AVCMS\Bundles\Admin\Controller\AdminController;
 
-class {{uc_singular}}AdminController extends AdminController
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+
+class {{cc_plural}}AdminController extends AdminController
 {
-    
+    public function homeAction(Request $request)
+    {
+       return $this->manage($request, '@{{bundle}}/{{plural}}_browser.twig');
+    }
+
+    public function editAction(Request $request)
+    {
+        $model = $this->model('{{model_class}}');
+
+        $form_blueprint = new {{cc_singular}}AdminForm();
+
+        return $this->edit($request, $model, $form_blueprint, '{{admin_edit_route}}', '@{{bundle}}/edit_{{singular}}.twig', '@{{bundle}}/{{plural}}_browser.twig', array('content_name' => '{{uc_singular}}'));
+    }
+
+    public function finderAction(Request $request)
+    {
+        $model = $this->model('{{model_class}}');
+
+        $finder = $model->find()
+            ->setSearchFields(array('{{title_field}}'))
+            ->setResultsPerPage(15)
+            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
+        $items = $finder->get();
+
+        return new Response($this->render('@{{bundle}}/{{plural}}_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));
+    }
+
+    public function deleteAction(Request $request)
+    {
+        $model = $this->model('{{model_class}}');
+
+        return $this->delete($request, $model);
+    }
+
+    public function togglePublishedAction(Request $request)
+    {
+        $model = $this->model('{{model_class}}');
+
+        return $this->togglePublished($request, $model);
+    }
+
+    protected function getSharedTemplateVars($ajax_depth)
+    {
+        $template_vars = parent::getSharedTemplateVars($ajax_depth);
+
+        $template_vars['finder_filters_form'] = $this->buildForm(new {{cc_plural}}AdminFiltersForm())->createView();
+
+        return $template_vars;
+    }
 } 

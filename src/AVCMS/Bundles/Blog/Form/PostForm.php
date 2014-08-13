@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\Blog\Form;
 
-use AVCMS\Bundles\ContentBase\Form\AdminContentForm;
+use AVCMS\Bundles\Admin\Form\AdminContentForm;
 
 class PostForm extends AdminContentForm
 {

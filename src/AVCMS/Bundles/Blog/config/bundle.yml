@@ -1,14 +1,15 @@
 name: Blog
 namespace: AVCMS\Bundles\Blog
 
+required_bundles:
+  - Admin
+
 model:
   posts: Posts
   users: AVCMS\Bundles\Users\Model\Users
 
-setup_class: BlogBundle
-
 parent_bundle: Assets
 
 template:
-  blog_post: @AVBlog/blog_post.twig
-  blog_home: @AVBlog/blog_home.twig
+  blog_post: @Blog/blog_post.twig
+  blog_home: @Blog/blog_home.twig

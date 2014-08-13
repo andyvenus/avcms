@@ -40,7 +40,7 @@ class AppFileAsset extends FileAsset implements AppAssetInterface
         return $this->file;
     }
 
-    public function getDevUrl($prepend)
+    public function getDevUrl($prepend = null)
     {
         return $this->source;
     }

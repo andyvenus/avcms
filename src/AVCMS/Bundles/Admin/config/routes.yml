@@ -1,0 +1,7 @@
+username_suggest:
+  path: /admin/username_suggest
+  defaults: {_controller: 'AVCMS\Bundles\Admin\Controller\AdminHelpersController::usernameSuggestAction' }
+
+generate_slug:
+  path: /admin/generate_slug/{title}
+  defaults: { _controller: 'AVCMS\Bundles\Admin\Controller\AdminHelpersController::slugGeneratorAction' }

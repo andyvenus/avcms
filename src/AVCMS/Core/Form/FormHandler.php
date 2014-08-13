@@ -19,6 +19,7 @@ use AVCMS\Core\Form\Transformer\TransformerManager;
 use AVCMS\Core\Form\Type\TypeHandler;
 use AVCMS\Core\Form\ValidatorExtension\ValidatorExtension;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class FormHandler
@@ -113,14 +114,14 @@ class FormHandler
      * @param \AVCMS\Core\Form\RequestHandler\RequestHandlerInterface|null $request_handler
      * @param EntityProcessor $entity_processor
      * @param \AVCMS\Core\Form\Type\TypeHandler $type_handler
-     * @param \Symfony\Component\EventDispatcher\EventDispatcher $event_dispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $event_dispatcher
      */
     public function __construct(
         FormBlueprintInterface $form,
         RequestHandlerInterface $request_handler = null,
         EntityProcessor $entity_processor = null,
         TypeHandler $type_handler = null,
-        EventDispatcher $event_dispatcher = null
+        EventDispatcherInterface $event_dispatcher = null
     )
     {
         $this->form = $form;

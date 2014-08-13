@@ -1,0 +1,29 @@
+{% extends '@admin/browser.twig' %}
+
+{% block finder_title %}
+    {% trans %}Blog Posts{% endtrans %}
+{% endblock %}
+
+{% block expand_finder_button %}
+    {{ buttons.expand_finder(bundle.route.blog_admin_home) }}
+{% endblock %}
+
+{% block add_item %}
+    {{ buttons.add_item(bundle.route.blog_add_post, 'Add Blog Post') }}
+{% endblock %}
+
+{% block finder %}
+    <div data-url="{{ url(bundle.route.blog_finder) }}">
+        {{ render(path(bundle.route.blog_finder)) }}
+    </div>
+{% endblock %}
+
+{% block mobile_back_link %}
+    {{ url(bundle.route.blog_admin_home) }}
+{% endblock %}
+
+{% block checked_options_buttons %}
+    {{ buttons.bulk_delete(bundle.route.blog_delete_posts) }}
+    {{ buttons.bulk_publish(bundle.route.blog_toggle_posts_published) }}
+    {{ buttons.bulk_unpublish(bundle.route.blog_toggle_posts_published) }}
+{% endblock %}

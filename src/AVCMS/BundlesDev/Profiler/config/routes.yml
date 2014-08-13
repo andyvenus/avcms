@@ -1,0 +1,7 @@
+dev_bar:
+  path: /dev/dev-bar
+  defaults: { _controller: 'Profiler::DevBarController::devBarAction' }
+
+profiler:
+  path: /dev/profiler/{token}
+  defaults: { _controller: 'Profiler::ProfilerController::profilerHomeAction' }

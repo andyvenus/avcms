@@ -1,0 +1,23 @@
+new_bundle:
+  path: /dev/bundles/new
+  defaults: { _controller: 'BundleManager::BundleBuilderController::newBundleAction' }
+
+bundle_add_content:
+  path: /dev/bundles/{bundle}/add-content
+  defaults: { _controller: 'BundleManager::BundleBuilderController::addContentAction' }
+
+bundle_edit_content:
+  path: /dev/bundles/{bundle}/edit-content/{content_name}
+  defaults: { _controller: 'BundleManager::BundleBuilderController::editContentAction' }
+
+manage_bundles:
+  path: /dev/bundles
+  defaults: { _controller: 'BundleManager::ManageBundlesController::homeAction' }
+
+manage_bundle:
+  path: /dev/bundles/{bundle}
+  defaults: { _controller: 'BundleManager::ManageBundlesController::manageBundleAction' }
+
+toggle_bundle_enabled:
+  path: /dev/bundles/{bundle}/enable
+  defaults: { status: enable, _controller: 'BundleManager::ManageBundlesController::toggleBundleEnabledAction' }

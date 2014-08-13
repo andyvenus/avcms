@@ -1,0 +1,21 @@
+
+
+{{admin_edit_route}}:
+    path:     /admin/{{plural}}/edit/{id}
+    defaults: { _controller: '{{admin_controller}}::editAction' }
+
+{{admin_add_route}}:
+    path:     /admin/{{plural}}/new
+    defaults: { _controller: '{{admin_controller}}::editAction' }
+
+{{admin_delete_route}}:
+    path:     /admin/{{plural}}/delete
+    defaults: { _controller: '{{admin_controller}}::deleteAction' }
+
+{{admin_home_route}}:
+  path: /admin/{{plural}}
+  defaults: { _controller: '{{admin_controller}}::homeAction' }
+
+{{admin_finder_route}}:
+  path: /admin/{{plural}}/finder/{page}
+  defaults: { page: 1, _controller: '{{admin_controller}}::finderAction' }

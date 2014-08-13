@@ -1,0 +1,64 @@
+{% extends '@dev/index.twig' %}
+
+{% block title %}Manage Bundle: {{ bundle_config.name }}{% endblock %}
+
+{% block content %}
+    {% if bundle_enabled %}
+        {% set btn_color = 'success' %}
+    {% else %}
+        {% set btn_color = 'warning' %}
+    {% endif %}
+    <div class="row">
+        <div class="col-sm-8">
+            {% if bundle_enabled %}{% set enabled_text = "Active" %}{% else %}{% set enabled_text = "Inactive" %}{% endif %}
+            <strong id="status">Status: <span class="text-{{ btn_color }}">{{ enabled_text }}</span></strong> &nbsp;&nbsp;
+            <strong>Namespace:</strong> {{ bundle_config.namespace }}
+
+            <h4>Routes</h4>
+            <p>
+                {% for route_name, route in routes %}
+                    <strong>{{ route_name }}</strong>:
+                    {% if route.link_route %}
+                        <a href="{{ url(route_name) }}">{{ route.path }}</a>
+                    {% else %}
+                        {{ route.path }}
+                    {% endif %}
+                    <br/>
+                {% else %}
+                    No routes
+                {% endfor %}
+            </p>
+
+            <p>
+            <h4>Manage Generated Content</h4>
+            <div class="content-types">
+                {% for content_name, content in bundle_content %}
+                    <a href="{{ url(bundle.route.bundle_edit_content, {bundle: bundle_config.name, content_name: content_name}) }}" class="btn btn-{{ btn_color }}">
+                        {{ content.uc_plural }}
+                    </a>
+                {% else %}
+                    No generated content
+                {% endfor %}
+            </div>
+            </p>
+        </div>
+
+        <div class="col-sm-4">
+            {% if bundle_config.name != 'BundleManager' %}
+                <div class="list-group">
+                    {% if bundle_enabled %}{% set enabled_button = "Bundle Active" %}{% else %}{% set enabled_button = "Bundle Inactive" %}{% endif %}
+
+                    <a data-bundle-name="{{ bundle_config.name }}" href="#" class="status-button list-group-item list-group-item-{{ btn_color }}">
+                        <span class="glyphicon glyphicon-unchecked"></span> {{ enabled_button }}
+                    </a>
+
+                    <a href="{{ url('bundle_add_content', {'bundle': bundle_config.name}) }}" class="list-group-item"><span class="glyphicon glyphicon-plus-sign"></span> Add Content</a>
+                    <!--<a href="#" class="list-group-item">Morbi leo risus</a>
+                    <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+                    <a href="#" class="list-group-item">Vestibulum at eros</a>
+                    -->
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

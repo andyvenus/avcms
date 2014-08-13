@@ -32,7 +32,7 @@ class UsersController extends Controller
 
         if (!isset($response)) {
             $response = new Response();
-            $response->setContent($this->render('login.twig', array('login_form' => $login_form->createView())));
+            $response->setContent($this->render('@Users/login.twig', array('login_form' => $login_form->createView())));
         }
 
         return $response;

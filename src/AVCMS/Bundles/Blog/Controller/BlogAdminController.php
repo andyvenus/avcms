@@ -7,21 +7,18 @@
 
 namespace AVCMS\Bundles\Blog\Controller;
 
-use AVCMS\Bundles\Blog\Finder\BlogPostsFinder;
 use AVCMS\Bundles\Blog\Form\BlogPostsFilterForm;
 use AVCMS\Bundles\Blog\Form\PostForm;
-use AVCMS\Core\Controller\AdminController;
+use AVCMS\Bundles\Admin\Controller\AdminController;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class BlogAdminController extends AdminController
 {
-
     public function blogHomeAction(Request $request)
     {
-       return $this->manage($request, '@admin/blog_browser.twig');
+       return $this->manage($request, '@Blog/blog_browser.twig');
     }
 
     public function editPostAction(Request $request)
@@ -30,7 +27,7 @@ class BlogAdminController extends AdminController
 
         $form_blueprint = new PostForm($request->get('id', 0), $this->activeUser()->getUser()->getId());
 
-        return $this->edit($request, $model, $form_blueprint, 'blog_edit_post', '@AVBlog/edit_post.twig', '@admin/blog_browser.twig', array('content_name' => 'Post'));
+        return $this->edit($request, $model, $form_blueprint, 'blog_edit_post', '@Blog/edit_post.twig', '@Blog/blog_browser.twig', array('content_name' => 'Post'));
     }
 
     public function finderAction(Request $request)
@@ -47,7 +44,7 @@ class BlogAdminController extends AdminController
 
         $posts = $finder->get();
 
-        return new Response($this->render('@AVBlog/blog_finder.twig', array('items' => $posts, 'page' => $finder->getCurrentPage())));
+        return new Response($this->render('@Blog/blog_finder.twig', array('items' => $posts, 'page' => $finder->getCurrentPage())));
     }
 
     public function deleteAction(Request $request)

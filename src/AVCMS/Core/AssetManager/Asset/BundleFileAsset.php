@@ -16,26 +16,28 @@ class BundleFileAsset extends FileAsset implements BundleAssetInterface
 
     protected $type;
 
-    protected $file;
+    protected $filename;
 
     protected $source;
 
     /**
      * @param string $bundle
      * @param array $type
-     * @param string $file
+     * @param null|string $filename
+     * @param null|string $file_location
      * @param array $filters
      * @param null $sourceRoot
      * @param null $sourcePath
      * @param array $vars
+     * @internal param string $file
      */
-    public function __construct($bundle, $type, $file, $filters = array(), $sourceRoot = null, $sourcePath = null, array $vars = array())
+    public function __construct($bundle, $type, $filename, $file_location, $filters = array(), $sourceRoot = null, $sourcePath = null, array $vars = array())
     {
         $this->bundle = $bundle;
         $this->type = $type;
-        $this->file = $file;
+        $this->filename = $filename;
 
-        $this->source = 'src/AVCMS/Bundles/'.$bundle.'/resources/'.$type.'/'.$file;
+        $this->source = $file_location;
 
         parent::__construct($this->source, $filters, $sourceRoot, $sourcePath, $vars);
     }
@@ -50,13 +52,13 @@ class BundleFileAsset extends FileAsset implements BundleAssetInterface
         return $this->type;
     }
 
-    public function getFile()
+    public function getFilename()
     {
-        return $this->file;
+        return $this->filename;
     }
 
-    public function getDevUrl($prepend)
+    public function getDevUrl($prepend = null)
     {
-        return $prepend.'bundle_asset/'.$this->getBundle().'/'.$this->getType().'/'.$this->getFile();
+        return $prepend.'bundle_asset?bundle='.$this->getBundle().'&type='.$this->getType().'&asset_file='.$this->getFilename();
     }
 }

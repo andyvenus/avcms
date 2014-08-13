@@ -1,0 +1,62 @@
+{% extends is_ajax ? '@dev/bundle_new_content_empty.twig' : '@dev/bundle_new_content.twig' %}
+
+{% block title %}
+    {% if editing_content %}
+        {{ bundle_config.name }}: Update {{ content.uc_plural }}
+    {% else %}
+        {{ bundle_config.name }}: Add New Content
+    {% endif %}
+{% endblock %}
+
+{% block manage_content %}
+    {{ form_start(database_columns_form) }}
+
+    {{ form_rows_before(database_columns_form, 'columns') }}
+
+    <table class="table">
+        <tr>
+            <th>Database Field</th>
+            <th>Options</th>
+            <th>Entity *</th>
+            <th>Form Field *</th>
+            <th>Form Label</th>
+        </tr>
+        {% for column_name, column in columns %}
+            {% set base_field = database_columns_form.columns.fields[column_name].fields %}
+            <tr>
+                <td><h5>{{ column_name }}</h5></td>
+                <td>
+                    {% if not editing_content %}
+                        <label><input type="radio" name="title_field" value="{{ column_name }}" {% if column_name == 'title' or column_name == 'name' %}checked="checked"{% endif %}/> Use as title</label>
+                    {% endif %}
+                </td>
+                <td>
+                    {{ form_row(base_field.entity) }}
+                    {% if column.entity == true %}
+                        Already Set
+                    {% endif %}
+                </td>
+                <td>
+                    {{ form_field(base_field.form_field, {class: 'input-sm'}) }}
+                    {% if column.form == 1 %}
+                        Already Set
+                    {% endif %}
+                </td>
+
+                <td>
+                    {% if column.form == 0 %}
+                        {{ form_field(base_field.form_label, {class: 'input-sm'}) }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {{  form_rows_after(database_columns_form, 'columns') }}
+
+    <div style="text-align: right">
+        {{ form_submit_button(database_columns_form) }}
+    </div>
+
+    {{ form_end(database_columns_form) }}
+{% endblock %}

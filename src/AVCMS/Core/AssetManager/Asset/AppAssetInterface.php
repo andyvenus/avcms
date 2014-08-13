@@ -12,5 +12,5 @@ interface AppAssetInterface
 
     public function getFile();
 
-    public function getDevUrl($prepend);
+    public function getDevUrl($prepend = null);
 }

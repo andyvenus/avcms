@@ -6,7 +6,7 @@ use AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler;
 use AVCMS\Core\Model\Event\ModelInsertEvent;
 use AVCMS\Core\Model\Event\ModelUpdateEvent;
 use AVCMS\Core\Taxonomy\TaxonomyManager;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class Model
@@ -56,9 +56,9 @@ abstract class Model implements ModelInterface {
 
     /**
      * @param QueryBuilderHandler $query_builder
-     * @param EventDispatcher $event_dispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $event_dispatcher
      */
-    public  function __construct(QueryBuilderHandler $query_builder, EventDispatcher $event_dispatcher)
+    public  function __construct(QueryBuilderHandler $query_builder, EventDispatcherInterface $event_dispatcher)
     {
         $this->query_builder = $query_builder;
         $this->event_dispatcher = $event_dispatcher;

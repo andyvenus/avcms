@@ -1,0 +1,38 @@
+<style type="text/css">
+    .dev-bar-inner {
+        height: 40px;
+        background-color: #e7e7e7;
+        position:fixed;
+        bottom: 0px;
+        right:0px;
+        width: 100%;
+        color: #333;
+    }
+
+    .profile-block {
+        float: left;
+        margin-right: 5px;
+        border-right: 1px solid #dddddd;
+        padding: 10px;
+    }
+
+    .dev-bar-inner a {
+        text-decoration: underline;
+        color: #333;
+    }
+</style>
+
+<div class="dev-bar-inner animated fadeIn">
+    <div class="profile-block">
+        <a href="{{ url('profiler', {token: token}) }}">{{ token }}</a>
+    </div>
+    <div class="profile-block">
+        {{ request.controller.class|abbr_class }} :: {{ request.controller.method }} <i>via</i> {{ request.route }}
+    </div>
+    <div class="profile-block">
+        {{ '%.1f'|format(memory.memory / 1024 / 1024) }} MB / {{ '%.0f ms'|format(time.duration) }}
+    </div>
+    <div class="profile-block">
+        <a href="{{ url('profiler', {token: token}) }}#translations">{{ translations.translations|length }} Translation Strings</a>
+    </div>
+</div>

@@ -11,6 +11,7 @@
         "symfony/twig-bridge": "2.5.*",
         "symfony/config": "2.5.*",
         "symfony/yaml": "2.5.*",
+        "symfony/stopwatch": "2.5.*",
         "usmanhalalit/pixie": "1.*@dev",
         "twig/twig": "1.*",
         "swiftmailer/swiftmailer": "5.*",

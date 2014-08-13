@@ -1,0 +1,13 @@
+<div id="devbar"></div>
+
+<script type="text/javascript">
+    $.get(avcms.config.site_url+'dev/dev-bar', {token: '{{ token }}'}, function(data) {
+        var devbar = $('#devbar');
+        devbar.html(data);
+        devbar.height( $(devbar).find('.dev-bar-inner').innerHeight() );
+
+        if (avcms !== undefined && avcms.adminTemplate !== undefined) {
+            avcms.adminTemplate.verticalDesign();
+        }
+    });
+</script>

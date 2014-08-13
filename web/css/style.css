@@ -15,6 +15,11 @@
     color: #c7b9ff;
 }
 
+.leaderboard h1 {
+    font-family: HelveticaNeue-Light, HelveticaNeue, sans-serif!important;
+
+}
+
 .blog_post_container {
     border-bottom: 1px solid #a7a8cd;
     margin-bottom: 10px;

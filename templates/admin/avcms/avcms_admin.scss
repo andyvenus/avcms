@@ -178,10 +178,18 @@ a {
   overflow: hidden;
 }
 
-.browser-finder-item, .add-item {
+.add-item a {
+  padding: 10px 4px 10px 10px;
+  display: block;
+}
+
+.browser-finder-item {
+  padding: 4px;
+}
+
+.browser-finder-item, .add-item a {
   background-color: lighten($finder_background, 3);
   border-bottom: 1px solid #e1e1e1;
-  padding: 4px;
 
   .finder-item-main {
     padding-left: 8px;

@@ -2,9 +2,9 @@
 
 namespace {{namespace}}\Model;
 
-use AVCMS\Core\Model\ContentModel;
+use AVCMS\Core\Model\Model;
 
-class Posts extends ContentModel
+class {{model_class}} extends Model
 {
     public function getTable()
     {
