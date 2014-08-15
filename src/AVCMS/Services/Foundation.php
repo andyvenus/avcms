@@ -23,10 +23,10 @@ class Foundation implements Service
         $container->register('context', 'Symfony\Component\Routing\RequestContext');
 
         $container->register('matcher', 'Symfony\Component\Routing\Matcher\UrlMatcher')
-            ->setArguments(array('%routes%', new Reference('context')))
+            ->setArguments(array(new Reference('routes'), new Reference('context')))
         ;
         $container->register('resolver', 'AVCMS\Core\Controller\ControllerResolver')
-            ->setArguments(array('%container%', new Reference('bundle_manager')));
+            ->setArguments(array(new Reference('service_container'), new Reference('bundle_manager')));
 
         $container->register('listener.router', 'Symfony\Component\HttpKernel\EventListener\RouterListener')
             ->setArguments(array(new Reference('matcher')))
@@ -41,10 +41,12 @@ class Foundation implements Service
             ->addTag('event.subscriber')
         ;
         $container->register('listener.security.routes', 'AVCMS\Core\Security\SecureRoutes')
-            ->setArguments(array(new Reference('active.user'), '%routes%'))
+            ->setArguments(array(new Reference('active.user'), new Reference('routes')))
             ->addMethodCall('addRouteMatcherPermission', array('/^\/admin/', 'admin'))
             ->addTag('event.subscriber')
         ;
+
+        $container->register('request_matcher', 'Symfony\Component\HttpFoundation\RequestMatcher');
 
         // Request
 
@@ -58,7 +60,7 @@ class Foundation implements Service
             ->setArguments(array(new Reference('http_kernel')));
 
         $container->register('routing.url_generator', 'Symfony\Component\Routing\Generator\UrlGenerator')
-            ->setArguments(array('%routes%', new Reference('context')))
+            ->setArguments(array(new Reference('routes'), new Reference('context')))
             ->addMethodCall('setStrictRequirements', array(false))
         ;
         
@@ -67,7 +69,21 @@ class Foundation implements Service
         $container->addCompilerPass(new RegisterListenersPass('dispatcher', 'event.listener', 'event.subscriber'));
 
         $container->register('dispatcher', 'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher')
-            ->setArguments(array('%container%'))
+            ->setArguments(array(new Reference('service_container')))
+        ;
+        
+        // Routes
+
+        $container->register('routes', 'Symfony\Component\Routing\RouteCollection')
+            ->setArguments(array(new Reference('service_container')))
+            ->addMethodCall('add', array('home', new Reference('home_route')))
+        ;
+        
+        $container->register('home_route', 'Symfony\Component\Routing\Route')
+            ->setArguments(array('/', array(
+                '_controller' => 'AVCMS\Bundles\Blog\Controller\BlogController::blogArchiveAction',
+                '_bundle' => 'Blog'
+            )))
         ;
     }
 }

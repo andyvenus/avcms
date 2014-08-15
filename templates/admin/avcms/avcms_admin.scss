@@ -309,7 +309,7 @@ a {
     max-width: 300px;
   }
 
-  .editor-content {
+  .editor-content, .simple-content {
     overflow-y: scroll;
   }
 }
@@ -340,7 +340,7 @@ a {
   overflow-x: hidden;
 }
 
-.editor-header {
+.editor-header, .simple-header {
   background-color: #f5f5f5;
   padding: 10px 8px;
   font-size: 18px;
@@ -355,7 +355,7 @@ a {
   }
 }
 
-.editor-content {
+.editor-content, .simple-content {
   padding: 12px 10px;
-  overflow-y: inherit;
+  overflow-y: scroll;
 }

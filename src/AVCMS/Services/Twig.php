@@ -7,8 +7,6 @@
 
 namespace AVCMS\Services;
 
-use Aptoma\Twig\Extension\MarkdownEngine\MichelfMarkdownEngine;
-use Aptoma\Twig\Extension\MarkdownExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
@@ -21,14 +19,13 @@ class Twig implements Service
                 new Reference('twig.filesystem'),
                 array('cache' => 'cache/twig', 'debug' => '%dev_mode%')
             ))
-            ->addMethodCall('addExtension', array(new \AVCMS\Core\View\TwigModuleExtension()))
-            ->addMethodCall('addExtension', array(new \AVCMS\Core\Form\Twig\FormExtension()))
-            ->addMethodCall('addExtension', array(new MarkdownExtension(new MichelfMarkdownEngine())))
+            ->addMethodCall('addExtension', array(new Reference('twig.form.extension')))
+            ->addMethodCall('addExtension', array(new Reference('twig.markdown.extension')))
             ->addMethodCall('addExtension', array(new Reference('twig.routing.extension')))
             ->addMethodCall('addExtension', array(new Reference('twig.asset_manager.extension')))
             ->addMethodCall('addExtension', array(new Reference('twig.http.kernel.extension')))
             ->addMethodCall('addExtension', array(new Reference('twig.translation.extension')))
-            ->addMethodCall('addExtension', array(new \Symfony\Bridge\Twig\Extension\CodeExtension(null, '/', 'UTF-8')))
+            ->addMethodCall('addExtension', array(new Reference('twig.code.extension')))
         ;
 
         $container->register('twig.filesystem', 'AVCMS\Core\View\TwigLoaderFilesystem')
@@ -47,8 +44,18 @@ class Twig implements Service
         $container->register('twig.translation.extension', 'Symfony\Bridge\Twig\Extension\TranslationExtension')
             ->setArguments(array(new Reference('translator')));
 
+        $container->register('twig.form.extension', 'AVCMS\Core\Form\Twig\FormExtension');
+
         $container->register('twig.asset_manager.extension', 'AVCMS\Core\AssetManager\Twig\AssetManagerExtension')
             ->setArguments(array('%dev_mode%'));
+
+        $container->register('twig.markdown.extension', 'Aptoma\Twig\Extension\MarkdownExtension')
+            ->setArguments(array(new Reference('markdown_engine')));
+
+        $container->register('twig.code.extension', 'Symfony\Bridge\Twig\Extension\CodeExtension')
+            ->setArguments(array(null, '/', 'UTF-8'));
+
+        $container->register('markdown_engine', 'Aptoma\Twig\Extension\MarkdownEngine\MichelfMarkdownEngine');
 
         if ($container->getParameter('dev_mode') == true) {
             $container->register('twig.asset_manager.extension.developer', 'AVCMS\Core\AssetManager\Twig\AssetManagerExtension')

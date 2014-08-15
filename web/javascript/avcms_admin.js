@@ -113,13 +113,13 @@ avcms.adminTemplate = {
             }
         }
 
-        var editor = $('.editor-content');
+        var editor = $('.editor-content, .simple-content');
         if (editor) {
             if (window_width < 992) {
                 editor.outerHeight('auto');
             }
             else {
-                var editor_header = $('.editor-header').filter(':visible');
+                var editor_header = $('.editor-header, .simple-header').filter(':visible');
                 var editor_target;
 
                 if (editor_header) {

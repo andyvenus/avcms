@@ -2,7 +2,7 @@ directory_structure:
   - config
   - Controller
   - Model
-  - Twig
+  - templates
   - Form
   - resources
   - Services

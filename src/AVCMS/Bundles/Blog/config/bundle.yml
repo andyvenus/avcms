@@ -13,3 +13,16 @@ parent_bundle: Assets
 template:
   blog_post: @Blog/blog_post.twig
   blog_home: @Blog/blog_home.twig
+
+user_settings:
+  blog_posts_per_page:
+      type: text
+      label: Blog Posts Per Page
+      help: The number of blog posts displayed on each page
+      section: main
+  newnewnew:
+      type: text
+      label: Blog Posts Per Page
+      help: The number of blog posts displayed on each page
+      section: main
+      default: RoflMao

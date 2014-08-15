@@ -1,0 +1,13 @@
+{% extends ajax_depth ? '@admin/ajax_page.twig' : '@admin/index.twig' %}
+
+{% block title %}Settings{% endblock %}
+
+{% block main_content %}
+    <div class="simple-header">
+        <div class="simple-header-inner animated fadeInRight">
+            {% block content_header %}Hello{% endblock %}
+        </div>
+    </div>
+
+    <div class="simple-content animated fadeInRight">{% block content_body %}Hallooo{% endblock %}</div>
+{% endblock %}

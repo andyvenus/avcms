@@ -7,9 +7,7 @@
 
 namespace AVCMS\Core\Taxonomy;
 
-use AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler;
-use AVCMS\Core\Model\Model;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class TaxonomyManager
@@ -21,7 +19,7 @@ class ContainerAwareTaxonomyManager extends TaxonomyManager
 {
     protected $container;
 
-    public function __construct(ContainerBuilder $container)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }

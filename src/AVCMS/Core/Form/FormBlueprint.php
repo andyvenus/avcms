@@ -31,6 +31,13 @@ class FormBlueprint implements FormBlueprintInterface
     protected $name = '';
 
     /**
+     * @var array Sections for grouping fields together for the view
+     */
+    protected $sections = array();
+
+    protected $success_message;
+
+    /**
      * {@inheritdoc}
      */
     public function add($name, $type, $options = array())
@@ -156,6 +163,36 @@ class FormBlueprint implements FormBlueprintInterface
         else {
             return null;
         }
+    }
+
+    public function addSection($id, $label)
+    {
+        $this->sections[$id] = array('label' => $label);
+    }
+
+    public function removeSection($id)
+    {
+        unset($this->sections[$id]);
+    }
+
+    public function hasSection($id)
+    {
+        return isset($this->sections[$id]);
+    }
+
+    public function getSections()
+    {
+        return $this->sections;
+    }
+
+    public function setSuccessMessage($message)
+    {
+        $this->success_message = $message;
+    }
+
+    public function getSuccessMessage()
+    {
+        return (isset($this->success_message) ? $this->success_message : null);
     }
 
     /**

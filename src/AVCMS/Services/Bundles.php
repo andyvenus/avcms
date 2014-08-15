@@ -15,12 +15,10 @@ class Bundles implements Service
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
-        $bundles = Yaml::parse(file_get_contents('app/config/bundles.yml'));
-
         $container->register('bundle_manager', 'AVCMS\Core\Bundle\BundleManager')
-            ->setArguments(array($bundles, array('AVCMS\Bundles', 'AVBlog\Bundles'), '%container%'));
+            ->setArguments(array('%dev_mode%'));
 
-        $container->register('listener.controller.inject.bundle', 'AVCMS\Core\Bundle\Events\ControllerInjectBundle')
+        $container->register('listener.controller.inject.bundle', 'AVCMS\Core\Bundle\Listeners\ControllerInjectBundle')
             ->setArguments(array(new Reference('bundle_manager')))
             ->addTag('event.subscriber')
         ;

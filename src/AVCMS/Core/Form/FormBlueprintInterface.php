@@ -159,4 +159,12 @@ interface FormBlueprintInterface
      * @return mixed
      */
     public function setName($name);
+
+    public function addSection($id, $label);
+
+    public function removeSection($id);
+
+    public function hasSection($id);
+
+    public function getSections();
 }

@@ -8,13 +8,14 @@
 namespace AVCMS\Services;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 
 class Taxonomy implements Service
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('taxonomy_manager', 'AVCMS\Core\Taxonomy\ContainerAwareTaxonomyManager')
-            ->setArguments(array('%container%'))
+            ->setArguments(array(new Reference('service_container')))
             ->addMethodCall('addContainerTaxonomy', array('tags', 'taxonomy.tags'))
         ;
     }

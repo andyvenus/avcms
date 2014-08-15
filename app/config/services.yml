@@ -1,4 +1,0 @@
-foundation:
-  class: AVCMS\Services\Foundation
-  config:
-    blah: something

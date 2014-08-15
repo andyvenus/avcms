@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\HttpFoundation\Request;
-use AVCMS\Core\AVCMS;
+use AVCMS\Core\Kernel\AVCMS;
 
 require_once __DIR__.'/vendor/autoload.php';
 

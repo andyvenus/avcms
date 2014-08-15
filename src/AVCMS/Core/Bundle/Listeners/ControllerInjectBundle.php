@@ -5,7 +5,7 @@
  * Time: 19:16
  */
 
-namespace AVCMS\Core\Bundle\Events;
+namespace AVCMS\Core\Bundle\Listeners;
 
 use AVCMS\Core\Bundle\BundleManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

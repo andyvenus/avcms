@@ -42,11 +42,17 @@ abstract class Controller extends ContainerAware
     // todo: do this proper
     protected $config = array('users_model' => 'AVBlog\Bundles\Users\Model\Users');
 
+    /**
+     * @var \AVCMS\Core\SettingsManager\SettingsManager
+     */
+    protected $settings;
+
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
         $this->model_factory = $container->get('model_factory');
         $this->translator = $container->get('translator');
+        $this->settings = $container->get('settings_manager');
     }
 
     public function setBundle(BundleConfig $bundle)
@@ -151,6 +157,7 @@ abstract class Controller extends ContainerAware
         }
 
         $context['user'] = $this->activeUser()->getUser();
+        $context['settings'] = $this->settings;
 
         $twig = $this->container->get('twig');
         $result = $twig->render($template, $context);
@@ -182,6 +189,15 @@ abstract class Controller extends ContainerAware
                 throw new PermissionsError('You do not have authorisation to view this page', $permission);
             }
         }
+    }
+
+    /**
+     * @param $name
+     * @return mixed
+     */
+    protected function setting($name)
+    {
+        return $this->settings->getSetting($name);
     }
 
     /**

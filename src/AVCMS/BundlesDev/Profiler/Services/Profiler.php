@@ -5,11 +5,11 @@
  * Time: 14:22
  */
 
-namespace AVCMS\Services;
+namespace AVCMS\BundlesDev\Profiler\Services;
 
+use AVCMS\Services\Service;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\HttpFoundation\RequestMatcher;
 use Symfony\Component\HttpKernel\DataCollector\MemoryDataCollector;
 
 class Profiler implements Service
@@ -18,7 +18,7 @@ class Profiler implements Service
     {
         $container->register('profiler', 'Symfony\Component\HttpKernel\Profiler\Profiler')
             ->setArguments(array(new Reference('profiler.file_storage')))
-            ->addMethodCall('add', array(new MemoryDataCollector()))
+            ->addMethodCall('add', array(new Reference('profiler.memory')))
             ->addMethodCall('add', array(new Reference('profiler.time')))
             ->addMethodCall('add', array(new Reference('profiler.translations')))
             ->addMethodCall('add', array(new Reference('profiler.request')))
@@ -36,13 +36,30 @@ class Profiler implements Service
             ->setArguments(array(null, new Reference('debug.stopwatch')))
         ;
 
+        $container->register('profiler.memory', 'Symfony\Component\HttpKernel\DataCollector\MemoryDataCollector');
+
         $container->register('profiler.file_storage', 'Symfony\Component\HttpKernel\Profiler\FileProfilerStorage')
-            ->setArguments(array("file:".__DIR__."/../../../cache/profiler"))
+            ->setArguments(array("file:".__DIR__."/../../../../../cache/profiler"))
         ;
 
         $container->register('listener.profiler', 'Symfony\Component\HttpKernel\EventListener\ProfilerListener')
-            ->setArguments(array(new Reference('profiler'), new RequestMatcher))
+            ->setArguments(array(new Reference('profiler'), new Reference('request_matcher')))
             ->addTag('event.subscriber')
+        ;
+
+        $container->register('listener.dev_bar', 'AVCMS\BundlesDev\Profiler\Events\DevBarListener')
+            ->setArguments(array(new Reference('twig')))
+            ->addTag('event.subscriber')
+        ;
+
+        $container->register('debug.stopwatch', 'Symfony\Component\Stopwatch\Stopwatch');
+
+        // Replace the event dispatcher with a traceable dispatcher
+
+        $container->register('traceable_dispatcher', 'Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher')
+            ->setArguments(array(new Reference('traceable_dispatcher.inner'), new Reference('debug.stopwatch')))
+            ->setPublic(false)
+            ->setDecoratedService('dispatcher')
         ;
     }
 }

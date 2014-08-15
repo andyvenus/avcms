@@ -53,6 +53,16 @@ class FormView implements FormViewInterface
     protected $submitted;
 
     /**
+     * @var array
+     */
+    protected $sections;
+
+    /**
+     * @var FormBlueprint
+     */
+    protected $form_blueprint;
+
+    /**
      * @param array $fields
      * @return mixed|void
      * @throws Exception\InvalidArgumentException
@@ -64,6 +74,33 @@ class FormView implements FormViewInterface
         }
 
         $this->fields = $this->doFieldTranslations($fields);
+    }
+
+    public function setSections(array $sections)
+    {
+        foreach ($sections as $section_id => $section) {
+            $this->sections[$section_id]['label'] = $this->translate($section['label']);
+        }
+    }
+
+    public function getSections()
+    {
+        return $this->sections;
+    }
+
+    public function setFormBlueprint(FormBlueprintInterface $form_blueprint)
+    {
+        $this->form_blueprint = $form_blueprint;
+    }
+
+    public function getSuccessMessage()
+    {
+        if ($this->submitted) {
+            return $this->form_blueprint->getSuccessMessage();
+        }
+        else {
+            return null;
+        }
     }
 
     public function doFieldTranslations($fields) {
@@ -102,6 +139,22 @@ class FormView implements FormViewInterface
     public function getFields()
     {
         return $this->fields;
+    }
+
+    /**
+     * @param $section
+     * @return array
+     */
+    public function getSectionFields($section)
+    {
+        $matched_fields = array();
+        foreach ($this->fields as $field_name => $field) {
+            if (isset($field['options']['section']) && $field['options']['section'] == $section) {
+                $matched_fields[$field_name] = $field;
+            }
+        }
+
+        return $matched_fields;
     }
 
     /**
@@ -240,6 +293,7 @@ class FormView implements FormViewInterface
     {
         $json['errors'] = $this->errors;
         $json['has_errors'] = $this->hasErrors();
+        $json['success_message'] = $this->getSuccessMessage();
 
         return $json;
     }

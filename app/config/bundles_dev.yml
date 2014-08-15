@@ -1,0 +1,6 @@
+Assets:
+  enabled: true
+Profiler:
+  enabled: true
+BundleManager:
+  enabled: true

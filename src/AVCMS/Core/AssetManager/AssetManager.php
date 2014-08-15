@@ -12,6 +12,7 @@ use Assetic\Asset\BaseAsset;
 use Assetic\Asset\FileAsset;
 use Assetic\AssetWriter;
 use Assetic\Filter\JSqueezeFilter;
+use AVCMS\Core\AssetManager\Asset\AppFileAsset;
 use AVCMS\Core\AssetManager\Asset\BundleAssetInterface;
 use AVCMS\Core\AssetManager\Asset\BundleFileAsset;
 use AVCMS\Core\AssetManager\Exception\AssetTypeException;
@@ -68,14 +69,21 @@ class AssetManager
         }
     }
 
+    public function addAppAsset($asset, $type, $environment = self::SHARED, $priority = 10)
+    {
+        $this->{$type}[$environment][] = array(
+            'asset' => new AppFileAsset($type, $asset),
+            'priority' => $priority
+        );
+    }
+
     public function loadBundleAssets()
     {
         $configs = $this->bundle_manager->getBundleConfigs();
 
         foreach ($configs as $config) {
             if (isset($config->assets)) {
-                $ca = $config->getConfigArray();
-                foreach($ca['assets'] as $asset_file => $asset) {
+                foreach($config['assets'] as $asset_file => $asset) {
                     if (!isset($asset['env'])) {
                         $asset['env'] = 'shared';
                     }

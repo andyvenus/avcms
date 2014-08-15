@@ -1,0 +1,36 @@
+{% extends '@admin/simple_page.twig' %}
+
+{% block content_header %}Settings{% endblock %}
+
+{% block content_body %}
+    {{ form_start(form) }}
+
+    {{ form_messages(form) }}
+
+    <div class="container-fluid">
+        {% for section_id, section in form.sections %}
+            <h4>{{ section.label }}</h4>
+            {% for field in form.sectionFields(section_id) %}
+                {% if loop.index is odd %}
+                    <div class="row">
+                {% endif %}
+
+                <div class="col-sm-6">{{ form_row(field) }}</div>
+
+                {% if loop.index is even or loop.last %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                {{ form_submit_button(form) }}
+            </div>
+        </div>
+
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}

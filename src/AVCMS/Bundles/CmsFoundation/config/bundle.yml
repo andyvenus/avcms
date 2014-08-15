@@ -1,0 +1,5 @@
+name: CmsFoundation
+namespace: AVCMS\Bundles\CmsFoundation
+
+services:
+  - Settings

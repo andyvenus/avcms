@@ -89,7 +89,12 @@ class FormExtension extends \Twig_Extension
                     array($this, 'formRowsAfter'),
                     array('is_safe' => array('html')
                     )
-            )
+            ),
+            'form_messages' => new \Twig_SimpleFunction('form_messages',
+                    array($this, 'formMessages'),
+                    array('is_safe' => array('html')
+                    )
+                )
         );
     }
 
@@ -219,5 +224,10 @@ class FormExtension extends \Twig_Extension
         }
 
         return $this->base_template->renderBlock('form_rows', array('form_rows' => $limited_fields, 'attr' => $attributes));
+    }
+
+    public function formMessages($form)
+    {
+        return $this->base_template->renderBlock('messages', array('form' => $form));
     }
 }

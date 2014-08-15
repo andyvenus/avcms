@@ -1,0 +1,23 @@
+{% extends '@admin/edit_item.twig' %}
+
+{% block title -%}
+    {% spaceless %}
+        {% if item.id %}
+            Editing {{ item.name }}
+        {% else %}
+            {% trans %}New Playtomic{% endtrans %}
+        {% endif %}
+    {% endspaceless  %}
+{% endblock %}
+
+{% block editor_title_edit %}
+    <span class="light">{% trans %}Editing Playtomic{% endtrans %}:</span> <span data-id="{{ item.id }}" data-field="name">{{ item.name }}</span>
+{% endblock %}
+
+{% block editor_title_new %}
+    New Playtomic
+{% endblock %}
+
+{% block form_rows %}
+    {{ form_rows(form) }}
+{% endblock %}

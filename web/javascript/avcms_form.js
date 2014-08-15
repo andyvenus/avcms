@@ -32,7 +32,7 @@ avcms.form = {
             success: function(data) {
                 form.find('.has-error').removeClass('has-error');
 
-                var messages = $(form).find('.form-errors');
+                var messages = $(form).find('.form-messages');
                 messages.html('');
 
                 if (data.form.has_errors === true) {
@@ -47,7 +47,10 @@ avcms.form = {
                         avcms.nav.goToPage(data.redirect);
                     }
 
-                    //messages.append('<div class="alert alert-success animated bounce">Saved</div>');
+                    if (data.form.success_message != undefined && data.form.success_message != null) {
+
+                        messages.append('<div class="alert alert-success animated bounce">'+data.form.success_message+'</div>');
+                    }
 
                     avcms.event.fireEvent('submit-form-success', [form, data]);
                 }
@@ -55,7 +58,7 @@ avcms.form = {
                 avcms.event.fireEvent('submit-form-complete', [form, data]);
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                var messages = $(form).find('.form-errors');
+                var messages = $(form).find('.form-messages');
                 messages.html('<div class="alert alert-danger animated bounce">Save Error: '+errorThrown+'</div>');
             }
         });

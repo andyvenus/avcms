@@ -1,0 +1,3 @@
+avcms_settings:
+  path: /admin/settings
+  defaults: { _controller: CmsFoundation::AdminSettingsController::indexAction }

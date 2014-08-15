@@ -67,6 +67,17 @@
     {% endspaceless %}
 {% endblock %}
 
+{% block messages %}
+    <div class="form-messages">
+        {% for error in form.errors %}
+            <div class="alert alert-danger">{{ error.message }}</div>
+        {% endfor %}
+        {% if form.successMessage is not null %}
+            <div class="alert alert-success">{{ form.successMessage }}</div>
+        {% endif %}
+    </div>
+{% endblock %}
+
 {% block attributes %}
     {% if attr is not iterable %}
         {% set attr = {} %}

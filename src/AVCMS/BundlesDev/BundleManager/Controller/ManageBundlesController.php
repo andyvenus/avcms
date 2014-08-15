@@ -97,7 +97,7 @@ class ManageBundlesController extends BundleBaseController
 
         $app_bundles_config[$bundle] = $bundle_config;
 
-        file_put_contents('app/config/bundles.yml', Yaml::dump($app_bundles_config));
+        file_put_contents('app/config/bundles.yml', Yaml::dump($app_bundles_config, 10));
 
         return new Response('');
     }

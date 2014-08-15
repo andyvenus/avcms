@@ -15,11 +15,7 @@
         {{ form_start(form, {"data-item-id": item.id|default(0)}, 'bootstrap_form.twig') }}
     {% endblock %}
 
-    <div class="form-errors">
-        {% for error in form.errors %}
-            <div class="alert alert-danger">{{ error.message }}</div>
-        {% endfor %}
-    </div>
+    {{ form_messages(form) }}
 
     {% block form_rows %}
         {{ form_rows(form) }}

@@ -44,12 +44,12 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
      */
     public function get($class = null, $fetch_type = \PDO::FETCH_CLASS)
     {
-        if ($class == null && isset($this->entity)) {
+        if ($class == null && isset($this->entity) && $this->entity !== null) {
             $class = $this->entity;
         }
 
         // If we have sub-entities, do the more complex method including joins
-        if (isset($this->model) && $class != 'stdClass') {
+        if (isset($this->model) && $class != 'stdClass' && $class != null) {
             return $this->getEntity($class);
         }
 

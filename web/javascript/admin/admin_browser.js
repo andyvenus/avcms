@@ -40,6 +40,10 @@ avcms.browser = {
     finder_loading: 0,
 
     browserFormSubmitted: function(form, response_data) {
+        if ($('.browser').length < 1) {
+            return;
+        }
+
         if (response_data.form.has_errors === false) {
             var id = form.attr('data-item-id')
             if (id !== undefined) {
@@ -187,7 +191,7 @@ avcms.browser = {
 
         if (item_id === 0) {
             form[0].reset();
-            form.find('.form-errors').html('');
+            form.find('.form-messages').html('');
         }
     },
 

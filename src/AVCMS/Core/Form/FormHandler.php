@@ -30,7 +30,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class FormHandler
 {
     /**
-     * @var FormBlueprint
+     * @var FormBlueprintInterface
      */
     protected $form;
 
@@ -466,6 +466,11 @@ class FormHandler
         $this->data[$name] = $value;
     }
 
+    public function mergeData($data)
+    {
+        $this->data = array_merge($this->data, $data);
+    }
+
     /**
      * Get the active type handler
      *
@@ -562,7 +567,9 @@ class FormHandler
             $this->form_view = new FormView();
         }
 
+        $this->form_view->setFormBlueprint($this->form);
         $this->form_view->setFields($this->getProcessedFields());
+        $this->form_view->setSections($this->form->getSections());
         $this->form_view->setMethod($this->getMethod());
         $this->form_view->setName($this->getName());
         $this->form_view->setEncoding($this->getEncoding());
