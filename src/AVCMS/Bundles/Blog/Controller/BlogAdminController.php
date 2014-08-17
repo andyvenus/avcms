@@ -23,18 +23,18 @@ class BlogAdminController extends AdminController
 
     public function editPostAction(Request $request)
     {
-        $model = $this->model('Posts');
+        $model = $this->model($this->bundle->model->posts);
 
         $form_blueprint = new PostForm($request->get('id', 0), $this->activeUser()->getUser()->getId());
 
-        return $this->edit($request, $model, $form_blueprint, 'blog_edit_post', '@Blog/edit_post.twig', '@Blog/blog_browser.twig', array('content_name' => 'Post'));
+        return $this->edit($request, $model, $form_blueprint, 'blog_edit_post', '@Blog/edit_post.twig', '@Blog/blog_browser.twig', array());
     }
 
     public function finderAction(Request $request)
     {
-        $posts_model = $this->model('Posts');
+        $posts_model = $this->model($this->bundle->model->posts);
 
-        $users_model = $this->model('@users');
+        $users_model = $this->model($this->bundle->model->users);
 
         $finder = $posts_model->find()
             ->setSearchFields(array('title'))
@@ -49,14 +49,14 @@ class BlogAdminController extends AdminController
 
     public function deleteAction(Request $request)
     {
-        $posts_model = $this->model('Posts');
+        $posts_model = $this->model($this->bundle->model->posts);
 
         return $this->delete($request, $posts_model);
     }
 
     public function togglePublishedAction(Request $request)
     {
-        $posts_model = $this->model('Posts');
+        $posts_model = $this->model($this->bundle->model->posts);
 
         return $this->togglePublished($request, $posts_model);
     }

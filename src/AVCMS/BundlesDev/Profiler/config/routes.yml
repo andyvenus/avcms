@@ -2,6 +2,10 @@ dev_bar:
   path: /dev/dev-bar
   defaults: { _controller: 'Profiler::DevBarController::devBarAction' }
 
+profiler_search:
+  path: /dev/profiler
+  defaults: { _controller: 'Profiler::ProfilerController::profilerSearchAction' }
+
 profiler:
   path: /dev/profiler/{token}
   defaults: { _controller: 'Profiler::ProfilerController::profilerHomeAction' }

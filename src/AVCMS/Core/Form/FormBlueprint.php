@@ -7,7 +7,6 @@
 
 namespace AVCMS\Core\Form;
 
-
 class FormBlueprint implements FormBlueprintInterface
 {
     /**

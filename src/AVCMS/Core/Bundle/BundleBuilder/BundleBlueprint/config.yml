@@ -2,9 +2,9 @@ directory_structure:
   - config
   - Controller
   - Model
-  - templates
   - Form
   - resources
+  - resources/templates
   - Services
 
 base_controller: AVCMS\Core\Controller\Controller

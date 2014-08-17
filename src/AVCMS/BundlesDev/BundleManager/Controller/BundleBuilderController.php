@@ -108,9 +108,9 @@ class BundleBuilderController extends BundleBaseController
                 $fm = new FileMaker($config, $base_table, $form->getData('plural'), $form->getData('singular'), $title_field);
                 $fm->setFileBasePath('src/AVCMS/Core/Bundle/BundleBuilder/BundleBlueprint/files');
                 $fm->addFile('AdminController.php.bt', 'Controller/{{cc_plural}}AdminController.php');
-                $fm->addFile('browser.twig.bt', 'Twig/{{plural}}_browser.twig');
-                $fm->addFile('edit_item.twig.bt', 'Twig/edit_{{singular}}.twig');
-                $fm->addFile('finder.twig.bt', 'Twig/{{plural}}_finder.twig');
+                $fm->addFile('browser.twig.bt', 'resources/templates/{{plural}}_browser.twig');
+                $fm->addFile('edit_item.twig.bt', 'resources/templates/edit_{{singular}}.twig');
+                $fm->addFile('finder.twig.bt', 'resources/templates/{{plural}}_finder.twig');
                 $fm->addFile('Model.php.bt', 'Model/{{model_class}}.php');
                 $fm->addFile('routes.yml.bt', 'config/routes.yml', FileMaker::APPEND);
                 $fm->processAndSaveFiles(true);

@@ -50,3 +50,8 @@ DirectoryIndex front.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
+
+<Files ~ "\.(yml|twig)$">
+    order deny,allow
+    deny from all
+</Files>

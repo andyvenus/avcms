@@ -29,7 +29,7 @@ class Twig implements Service
         ;
 
         $container->register('twig.filesystem', 'AVCMS\Core\View\TwigLoaderFilesystem')
-            ->setArguments(array('templates', array('original.twig' => 'replacement.twig')))
+            ->setArguments(array(new Reference('bundle.resource_locator'), new Reference('settings_manager')))
             ->addMethodCall('addPath', array('templates/admin/avcms', 'admin'))
             ->addMethodCall('addPath', array('templates/dev/avcms', 'dev'))
         ;

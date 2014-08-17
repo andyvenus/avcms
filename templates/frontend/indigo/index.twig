@@ -4,7 +4,7 @@
 <html>
 <head>
     {% block head %}
-        <title>{% block title %}{% endblock %} - My Web Page</title>
+        <title>{% block title %}{% endblock %} - {{ settings.site_name }}</title>
     {% endblock %}
 
     <link rel="stylesheet" type="text/css" href="{{ site_url }}web/css/style.css" />
@@ -30,11 +30,17 @@
 <header class="leaderboard">
     <div class="container">
         <div class="row">
-            <div class="col-md-2"><a href="{{ url('login') }}">Login</a> / <a href="">Register</a></div>
+            <div class="col-md-2">
+                {% if user.loggedIn %}
+                    Hello <strong>{{ user.username }}</strong>
+                {% else %}
+                   <a href="{{ url('login') }}">Login</a> / <a href="">Register</a>
+                {% endif %}
+            </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <a href="{{ url('home') }}"><h1>My New Blog</h1></a>
+                <a href="{{ url('home') }}"><h1>{{ settings.site_name }}</h1></a>
             </div>
         </div>
     </div>

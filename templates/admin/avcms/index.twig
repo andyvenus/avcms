@@ -39,14 +39,44 @@
 </head>
 <body>
 
-<header class="admin-header">
+<div class="lightbar">
+    <div class="inner">
+
+    </div>
+</div>
+
+<header class="admin-header navbar">
+
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-2"><a href="{{ url('login') }}">Login</a> / <a href="">Register</a></div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <a href="{{ url('blog_home') }}"><h1>AVCMS Blog</h1></a>
+            <div class="col-xs-4">
+                   <ul class="nav navbar-nav">
+                       <li class="dropdown">
+                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ random(['Namaste', 'Hello', 'Hola', 'Bonjour', 'Saluton', 'Hallo']) }} {{ user.username }}</a>
+                           <ul class="dropdown-menu" role="menu">
+                               <li><a href="#">Profile</a></li>
+                               <li class="divider"></li>
+                               <li><a href="#">Log-out</a></li>
+                           </ul>
+                       </li>
+                   </ul>
+            </div>
+            <div class="col-xs-4">
+                <div class="text-center">
+                    <div class="admin-header-logo">
+                        <img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAeCAYAAABaKIzgAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpDRDNFMjNGRDFENkQxMUU0OEJCM0U0RTgzOENDMUM1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpDRDNFMjNGRTFENkQxMUU0OEJCM0U0RTgzOENDMUM1NyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkNEM0UyM0ZCMUQ2RDExRTQ4QkIzRTRFODM4Q0MxQzU3IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkNEM0UyM0ZDMUQ2RDExRTQ4QkIzRTRFODM4Q0MxQzU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+8n9M2QAAA1dJREFUeNq0mNtvzEEUx2d3f7uaoEGlCOpJEJeUxqUtEaoNFbe69MEf4NWrR29C4pUHJBIkngirqEtQD4RSDREvpEFJI0hkl921u75nc1Z+ncycmd8mPckn7c6Z3+x3Z+acOfOL5fN55WPlclklEonj4BA+/qImrUscTAEnwVH9efqeXC6nYrGY7grAGbAafONxqlYC9WA4RgI8rQG847+SjYDl/GPGWSaTUaVSSRfbAp47xjwRV/623UMk2QLQrTcWCgWTSLLNjvF+gwtRhPZG6LtXb0gmkyoejyttBen7NzjGGgSvfYU2g40RhHaCRR79FnoITdNe9RXaAyZHEDrNNKsGW899bZYBN5UWYTYjgbtUdKMfl3L06Xb4H4A3vkI3gRU1CG3hGbNZI2hzjHEbFH2F9qjaTQrAdjBb8I+Bu+Goi5xqQnYRXBb8uwUxWx3fPQDe+grdA2YJ/vMsVlreA4b26R5C+/Q8ZrNJYJ/g/0r5jfkh9KMx6rS2DtAkPPMF3PIV2grWCP5HPOAHXiabrWXCyb7DMZv3waivUMqDScF/J/T/DaFfivdq5XTivNkeZdkloY2OhD2mCU1z5SNljhlBENCs0kotE/q+59XyEkoFyBzH0oyEPo+aZiFkTShIOql64iIk5hj7k4/QhCOIyK4b2q5KD6Bq2kIzir+tHme78hG60lGAUDVzydB+BbwQhDZjj3bxtrIZBeZDkyMwtO10FCAfueKZGqryy1xAfAarLM8txf48BeYaatLwSv00/lCtPqSrxDOwWBBaELKB5FPFYlFls9nqDOvuv2CHnj9tS9/lEKkcKUvy0Z1LceSb3C9N0W4Tul9NsJFQi90DWR+hS7gyn3ChNLParObANfE5rZppcNwuj3EODAzX5eo+ox9/BMyzRH9FrHZ1HnTdRKtC6zxy5zlw2nPi6C50WJpV7X1CmgNRuZa+jYsQa8CC/ggr3McvD6xBFbqRZh2n2jihvY5jbUBK5pb+Q2LqQIHCQp9wqegUSvtym6Mf5bZ8BKF/bEdhWCjtUYj9fy9yCT0I5gt9SnzJimp9jrOf9moexUo/zayLgF8UDHOVngi/FwMzwWPwqgahFMlnwTrwXdtaNHZ9KpV6iqAaohNLOFYr9k+AAQDLyvelKiMr6QAAAABJRU5ErkJggg==" />
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-xs-4">
+
+                <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="{{ url('home') }}"><span class="glyphicon glyphicon-new-window"></span> View Site</a>
+                        </li>
+                    </ul>
             </div>
         </div>
     </div>

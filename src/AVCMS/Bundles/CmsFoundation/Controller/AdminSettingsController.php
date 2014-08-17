@@ -26,6 +26,12 @@ class AdminSettingsController extends AdminController
         foreach ($bundle_configs as $bundle_config) {
             if ($bundle_settings = $bundle_config['user_settings']) {
                 $settings_form->createSettingsFieldsFromArray($bundle_settings);
+
+                if ($bundle_sections = $bundle_config['user_settings_sections']) {
+                    foreach ($bundle_config['user_settings_sections'] as $id => $label) {
+                        $settings_form->addSection($id, $label);
+                    }
+                }
             }
         }
 

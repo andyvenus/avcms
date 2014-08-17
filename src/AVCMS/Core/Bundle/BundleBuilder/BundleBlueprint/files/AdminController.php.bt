@@ -23,7 +23,7 @@ class {{cc_plural}}AdminController extends AdminController
 
         $form_blueprint = new {{cc_singular}}AdminForm();
 
-        return $this->edit($request, $model, $form_blueprint, '{{admin_edit_route}}', '@{{bundle}}/edit_{{singular}}.twig', '@{{bundle}}/{{plural}}_browser.twig', array('content_name' => '{{uc_singular}}'));
+        return $this->edit($request, $model, $form_blueprint, '{{admin_edit_route}}', '@{{bundle}}/edit_{{singular}}.twig', '@{{bundle}}/{{plural}}_browser.twig', array());
     }
 
     public function finderAction(Request $request)

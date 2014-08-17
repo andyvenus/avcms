@@ -98,7 +98,7 @@ class ModelTest extends ModelTestCase
 
         $food = $this->model_factory->create('AVCMS\Core\Model\Tests\Fixtures\Food');
 
-        $animal = $this->model->find(1)->modelJoin($food, array('name'))->first();
+        $animal = $this->model->findOne(1)->modelJoin($food, array('name'))->first();
 
         $this->assertEquals('Meat', $animal->food_item->getName());
     }
@@ -106,6 +106,21 @@ class ModelTest extends ModelTestCase
     protected function getDataSet()
     {
         return $this->createXmlDataSet(dirname(__FILE__).'/data/test_data.xml');
+    }
+
+    public function testOneOrNew()
+    {
+        $exists = $this->model->getOneOrNew(1);
+
+        $this->assertEquals(1, $exists->getId());
+
+        $new = $this->model->getOneOrNew(null);
+
+        $this->assertNull($new->getId());
+
+        $not_exists = $this->model->getOneOrNew(12345677);
+
+        $this->assertNull($not_exists);
     }
 }
  

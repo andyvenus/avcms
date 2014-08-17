@@ -1,16 +1,19 @@
+CmsFoundation:
+    enabled: true
 Users:
     enabled: true
 Admin:
     enabled: true
 Blog:
     enabled: true
-    config:
-        user_settings:
-            blog_posts_per_page:
-                label: 'MY NEW LABEL'
+    config: { user_settings: { blog_posts_per_page: { label: 'MY NEW LABEL' } } }
 Generated:
     enabled: true
 Tags:
     enabled: true
-CmsFoundation:
-    enabled: true
+Delbun:
+    enabled: false
+VenusFrameworkBundle:
+    enabled: false
+VenusFramework:
+    enabled: false

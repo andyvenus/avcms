@@ -155,8 +155,7 @@ abstract class Controller extends ContainerAware
         if (isset($this->bundle)) {
             $context['bundle'] = $this->bundle;
         }
-
-        $context['user'] = $this->activeUser()->getUser();
+        $context['user'] = $this->activeUser();
         $context['settings'] = $this->settings;
 
         $twig = $this->container->get('twig');

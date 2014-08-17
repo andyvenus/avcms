@@ -13,19 +13,6 @@ class SettingsForm extends FormBlueprint
 {
     public function __construct()
     {
-        $this->addSection('main', 'Main');
-        $this->addSection('boss', 'Secondary');
-
-        $this->add('site_name', 'text', array('label' => 'Site Name', 'section' => 'main'));
-        $this->add('template', 'select', array(
-            'label' => 'Template',
-            'section' => 'main',
-            'choices' => array(
-                'indigo' => 'Indigo',
-                'something' => 'Something'
-            )
-        ));
-
         $this->setSuccessMessage("Settings Saved");
     }
 
@@ -43,6 +30,13 @@ class SettingsForm extends FormBlueprint
             }
             else {
                 $field['options']['section'] = 'main';
+            }
+
+            if (isset($field['choices_provider'])) {
+                if (class_exists($field['choices_provider']['class'])) {
+                    $choices_provider = new $field['choices_provider']['class']();
+                    $field['options']['choices'] = call_user_func(array($choices_provider, 'getChoices'));
+                }
             }
 
             $this->add($field_name, $field['type'], $field['options']);

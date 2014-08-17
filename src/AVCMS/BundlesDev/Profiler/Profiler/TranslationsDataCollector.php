@@ -5,7 +5,7 @@
  * Time: 11:02
  */
 
-namespace AVCMS\Core\Profiler;
+namespace AVCMS\BundlesDev\Profiler\Profiler;
 
 use AVCMS\Core\Translation\Translator;
 use Symfony\Component\HttpFoundation\Request;

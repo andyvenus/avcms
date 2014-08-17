@@ -8,34 +8,45 @@
 namespace AVCMS\Core\View;
 
 
-class TwigLoaderFilesystem extends \Twig_Loader_Filesystem {
+use AVCMS\Core\Bundle\ResourceLocator;
+use AVCMS\Core\SettingsManager\SettingsManager;
+use Twig_Error_Loader;
 
-    /**
-     * @var array
-     */
-    protected $overrides;
-
-    public function __construct($paths = array(), $overrides = array())
+class TwigLoaderFilesystem extends \Twig_Loader_Filesystem
+{
+    public function __construct(ResourceLocator $resource_locator, SettingsManager $settings_manager)
     {
-        if ($paths) {
-            $this->setPaths($paths);
-        }
-
-        if ($overrides) {
-            $this->overrides = $overrides;
-        }
-    }
-
-    public function setOverride($original, $replacement) {
-        $this->overrides[$original] = $replacement;
+        $this->resource_locator = $resource_locator;
+        $this->settings_manager = $settings_manager;
+        $this->setPaths(array($settings_manager->getSetting('template'), 'templates'));
     }
 
     protected function findTemplate($name)
     {
-        if (isset($this->overrides[$name])) {
-            $name = $this->overrides[$name];
+        $name = $this->normalizeName($name);
+
+        if (isset($this->cache[$name])) {
+            return $this->cache[$name];
         }
 
-        return parent::findTemplate($name);
+        $this->validateName($name);
+
+        list($namespace, $shortname) = $this->parseName($name);
+
+        if ($this->resource_locator->bundleExists($namespace)) {
+            return $this->resource_locator->findFileDirectory($namespace, $shortname, 'templates');
+        }
+
+        if (!isset($this->paths[$namespace])) {
+            throw new Twig_Error_Loader(sprintf('There are no registered paths for namespace "%s".', $namespace));
+        }
+
+        foreach ($this->paths[$namespace] as $path) {
+            if (is_file($path.'/'.$shortname)) {
+                return $this->cache[$name] = $path.'/'.$shortname;
+            }
+        }
+
+        throw new Twig_Error_Loader(sprintf('Unable to find template "%s" (looked into: %s).', $name, implode(', ', $this->paths[$namespace])));
     }
 } 

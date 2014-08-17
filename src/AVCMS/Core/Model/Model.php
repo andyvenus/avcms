@@ -47,7 +47,7 @@ abstract class Model implements ModelInterface {
     /**
      * @var string
      */
-    protected $finder = 'AVCMS\Core\Finder\Finder';
+    protected $finder = 'AVCMS\Core\Model\Finder';
 
     /**
      * @var \AVCMS\Core\Taxonomy\TaxonomyManager
@@ -70,7 +70,7 @@ abstract class Model implements ModelInterface {
     }
 
     /**
-     * @return \AVCMS\Core\Finder\Finder|mixed
+     * @return \AVCMS\Core\Model\Finder|mixed
      */
     public function find()
     {
@@ -205,7 +205,7 @@ abstract class Model implements ModelInterface {
     public function delete(Entity $entity, $column_match = null)
     {
         if (!$column_match) {
-            $column_match = $this->identifier_column;
+            $column_match = $this->number_identifier_column;
         }
 
         $query = $this->createWhereQuery($entity, $column_match);

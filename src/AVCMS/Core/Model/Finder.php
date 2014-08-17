@@ -5,7 +5,7 @@
  * Time: 12:45
  */
 
-namespace AVCMS\Core\Finder;
+namespace AVCMS\Core\Model;
 
 use AVCMS\Core\Model\Model;
 use AVCMS\Core\Taxonomy\TaxonomyManager;

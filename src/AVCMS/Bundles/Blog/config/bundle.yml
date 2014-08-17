@@ -21,8 +21,12 @@ user_settings:
       help: The number of blog posts displayed on each page
       section: main
   newnewnew:
-      type: text
-      label: Blog Posts Per Page
-      help: The number of blog posts displayed on each page
-      section: main
-      default: RoflMao
+        type: text
+        label: Blog Posts Per Page
+        help: The number of blog posts displayed on each page
+        section: main
+        default: RoflMao
+  zing:
+    type: text
+    default: rofl
+    section: main

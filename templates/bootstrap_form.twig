@@ -90,7 +90,19 @@
         {% set attr = attr|merge({class: attr.class ~ ' btn btn-default'}) %}
     {% endif %}
     {% if type == 'submit' %}
-        {% set attr = attr|merge({class: attr.class ~ ' btn btn-success'}) %}
+        {% set attr = attr|merge({class: attr.class ~ ' btn btn-primary'}) %}
     {% endif %}
     {{ parent() }}
+{% endblock %}
+
+{% block form_complete %}
+    {{ form_start(form) }}
+
+    {{ form_messages(form) }}
+
+    {{ form_rows(form, attributes) }}
+
+    {{ form_submit_button(form) }}
+
+    {{ form_end(form) }}
 {% endblock %}

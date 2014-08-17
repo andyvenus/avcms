@@ -1,5 +1,2 @@
-assets:
-  javascript:
-    jquery.js:
-      section: shared
-      priority: 90
+parameters:
+  cache_dir: cache

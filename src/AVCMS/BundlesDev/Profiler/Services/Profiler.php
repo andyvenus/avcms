@@ -28,7 +28,7 @@ class Profiler implements Service
             ->addTag('event.subscriber')
         ;
 
-        $container->register('profiler.translations', 'AVCMS\Core\Profiler\TranslationsDataCollector')
+        $container->register('profiler.translations', 'AVCMS\BundlesDev\Profiler\Profiler\TranslationsDataCollector')
             ->setArguments(array(new Reference('translator')))
         ;
 
@@ -39,7 +39,7 @@ class Profiler implements Service
         $container->register('profiler.memory', 'Symfony\Component\HttpKernel\DataCollector\MemoryDataCollector');
 
         $container->register('profiler.file_storage', 'Symfony\Component\HttpKernel\Profiler\FileProfilerStorage')
-            ->setArguments(array("file:".__DIR__."/../../../../../cache/profiler"))
+            ->setArguments(array("file:cache/profiler"))
         ;
 
         $container->register('listener.profiler', 'Symfony\Component\HttpKernel\EventListener\ProfilerListener')

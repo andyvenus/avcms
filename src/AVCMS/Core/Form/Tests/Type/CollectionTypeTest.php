@@ -126,7 +126,7 @@ class CollectionTypeTest extends \PHPUnit_Framework_TestCase
 
         $view = $this->default_type->makeView($this->collection_field, $data, $form_handler);
 
-        $this->assertEquals('123', $view['fields']['collection_field[named_field1]']['value']);
-        $this->assertEquals('456', $view['fields']['collection_field[named_field2]']['value']);
+        $this->assertEquals('123', $view['fields']['named_field1']['value']);
+        $this->assertEquals('456', $view['fields']['named_field2']['value']);
     }
 }

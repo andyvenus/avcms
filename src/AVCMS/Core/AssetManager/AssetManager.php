@@ -18,6 +18,7 @@ use AVCMS\Core\AssetManager\Asset\BundleFileAsset;
 use AVCMS\Core\AssetManager\Exception\AssetTypeException;
 use AVCMS\Core\Bundle\BundleManager;
 use Assetic\AssetManager as AsseticAssetManager;
+use AVCMS\Core\Bundle\ResourceLocator;
 
 class AssetManager
 {
@@ -39,11 +40,13 @@ class AssetManager
 
     /**
      * @param BundleManager $bundle_manager
+     * @param \AVCMS\Core\Bundle\ResourceLocator $resource_locator
      * @param bool $debug
      */
-    public function __construct(BundleManager $bundle_manager, $debug = false)
+    public function __construct(BundleManager $bundle_manager, ResourceLocator $resource_locator, $debug = false)
     {
         $this->bundle_manager = $bundle_manager;
+        $this->resource_locator = $resource_locator;
 
         $this->loadBundleAssets();
     }
@@ -59,7 +62,7 @@ class AssetManager
 
     public function addBundleAsset($bundle_name, $asset, $type, $environment = self::SHARED, $priority = 10)
     {
-        $src = $this->bundle_manager->getBundleResource($bundle_name, $asset, $type);
+        $src = $this->resource_locator->findFileDirectory($bundle_name, $asset, $type);
 
         if ($src) {
             $this->{$type}[$environment][] = array(

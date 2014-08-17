@@ -526,8 +526,8 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $form_view = $form_handler->createView();
 
         $this->assertEquals(3, count($form_view->colours['fields']));
-        $this->assertEquals('colours[red]', $form_view->colours['fields']['colours[red]']['name']);
-        $this->assertEquals('colours[blue]', $form_view->colours['fields']['colours[blue]']['name']);
+        $this->assertEquals('colours[red]', $form_view->colours['fields']['red']['name']);
+        $this->assertEquals('colours[blue]', $form_view->colours['fields']['blue']['name']);
     }
 
     public function testGetFormBlueprint()

@@ -94,6 +94,14 @@ avcms.misc = {
         });
     },
 
+    mainLoaderOn: function() {
+        $('.lightbar .inner').show();
+    },
+
+    mainLoaderOff: function() {
+        $('.lightbar .inner').fadeOut(2000);
+    },
+
     generateSlugDelay: function() {
         avcms.misc.slugInput = $(this);
         var input_field = $(this);

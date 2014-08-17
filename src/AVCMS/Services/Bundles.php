@@ -22,5 +22,9 @@ class Bundles implements Service
             ->setArguments(array(new Reference('bundle_manager')))
             ->addTag('event.subscriber')
         ;
+
+        $container->register('bundle.resource_locator', 'AVCMS\Core\Bundle\ResourceLocator')
+            ->setArguments(array(new Reference('bundle_manager'), new Reference('settings_manager')))
+        ;
     }
 }

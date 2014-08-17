@@ -191,4 +191,16 @@ class ActiveUser implements EventSubscriberInterface
             KernelEvents::REQUEST => array('kernelRequestEvent', 10),
         );
     }
+
+    public function __get($param) {
+        return $this->user->{'get'.$param}();
+    }
+
+    public function __isset($param) {
+        if (method_exists($this->user, 'get'.$param) && $this->user->{'get'.$param}() !== null) {
+            return true;
+        }
+
+        return false;
+    }
 }

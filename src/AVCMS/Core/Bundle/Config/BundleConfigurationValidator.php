@@ -45,6 +45,8 @@ class BundleConfigurationValidator implements ConfigurationInterface
                 ->end()
                 ->variableNode('directory')
                 ->end()
+                ->variableNode('user_settings_sections')
+                ->end()
             ->end();
 
         return $tree_builder;

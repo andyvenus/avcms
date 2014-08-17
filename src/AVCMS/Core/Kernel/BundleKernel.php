@@ -4,14 +4,16 @@ namespace AVCMS\Core\Kernel;
 
 use AVCMS\Core\Kernel\Events\KernelBootEvent;
 use Symfony\Component\Config\ConfigCache;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\TerminableInterface;
 
-class AVCMS implements HttpKernelInterface, TerminableInterface
+class BundleKernel implements HttpKernelInterface, TerminableInterface
 {
     /**
      * @var bool
@@ -84,6 +86,9 @@ class AVCMS implements HttpKernelInterface, TerminableInterface
         if (!$container_config_cache->isFresh()) {
             $container = new ContainerBuilder();
             $container->setParameter('dev_mode', $this->debug);
+
+            $loader = new YamlFileLoader($container, new FileLocator('app/config'));
+            $loader->load('app.yml');
 
             $services = array(
                 'AVCMS\Services\Foundation',

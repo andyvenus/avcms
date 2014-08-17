@@ -3,3 +3,20 @@ namespace: AVCMS\Bundles\CmsFoundation
 
 services:
   - Settings
+
+user_settings_sections:
+  main: Main
+
+user_settings:
+  site_name:
+    type: text
+    label: Site Name
+    default: My AVCMS Site
+    section: main
+  template:
+    type: select
+    choices_provider: {class: AVCMS\Bundles\CmsFoundation\Settings\TemplateChoicesProvider }
+    label: Template
+    help: The frontend template
+    section: main
+    default: indigo

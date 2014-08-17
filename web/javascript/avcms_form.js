@@ -24,12 +24,15 @@ avcms.form = {
             submit_url = document.URL;
         }
 
+        avcms.misc.mainLoaderOn();
+
         $.ajax({
             type: "POST",
             url: submit_url,
             dataType: 'json',
             data: data,
             success: function(data) {
+                avcms.misc.mainLoaderOff();
                 form.find('.has-error').removeClass('has-error');
 
                 var messages = $(form).find('.form-messages');

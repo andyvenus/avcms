@@ -1,0 +1,46 @@
+{% extends '@dev/index.twig' %}
+
+{% block title %}Profiler{% endblock %}
+
+{% block content %}
+
+    <ul class="nav nav-pills">
+        <li><a href="#search" role="tab" data-toggle="tab">Search</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane {% if form.submitted %}active{% endif %}" id="search">
+            {{ form(form) }}
+        </div>
+    </div>
+
+
+    {% if tokens %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Token</th>
+                <th scope="col">IP</th>
+                <th scope="col">Method</th>
+                <th scope="col">URL</th>
+                <th scope="col">Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for elements in tokens %}
+                <tr>
+                    <td><a href="{{ path('profiler', { 'token': elements.token }) }}">{{ elements.token }}</a></td>
+                    <td>{{ elements.ip }}</td>
+                    <td>{{ elements.method }}</td>
+                    <td>{{ elements.url }}</td>
+                    <td>{{ elements.time|date('r') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>
+            <em>The query returned no result.</em>
+        </p>
+    {% endif %}
+{% endblock %}

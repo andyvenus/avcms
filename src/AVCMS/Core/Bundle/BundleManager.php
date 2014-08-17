@@ -29,7 +29,7 @@ class BundleManager {
 
     protected $bundles_initialized = false;
 
-    protected $bundle_locations = array('src/AVCMS/Bundles', 'src/AVCMS/BundlesDev');
+    protected $bundle_locations = array('src/AVCMS/Bundles', 'src/AVCMS/BundlesDev', 'src/Venus/Bundles');
 
     protected $bundle_configs;
 
@@ -42,8 +42,6 @@ class BundleManager {
     //todo: add bundle_locations to construct
     public function __construct($debug = false, ConfigurationInterface $config_validator = null)
     {
-        $this->resource_locator = new BundleResourceLocator(null, null);
-
         if ($config_validator == null) {
             $config_validator = new BundleConfigurationValidator();
         }
@@ -84,8 +82,6 @@ class BundleManager {
             $this->initBundles();
         }
 
-        $twig_container = $container->getDefinition('twig.filesystem');
-
         foreach ($this->bundle_configs as $bundle_name => $bundle_config) {
             # Services
             if ($bundle_config->services && !empty($bundle_config->services) && $bundle_config->ignore_services !== true) {
@@ -97,10 +93,6 @@ class BundleManager {
                 }
             }
 
-            # Templates folder
-            if (file_exists($bundle_config->directory.'/templates')) {
-                $twig_container->addMethodCall('addPath', array($bundle_config->directory.'/templates', $bundle_config->name));
-            }
         }
     }
 
@@ -272,25 +264,6 @@ class BundleManager {
     public function getBundleLocations()
     {
         return $this->bundle_locations;
-    }
-
-    /**
-     * Finds a bundle resource by hierarchy:
-     *      Template
-     *      App
-     *      Bundle
-     *      Bundle Parent
-     *
-     * @param $bundle_name
-     * @param $file
-     * @param $type
-     * @return string
-     */
-    public function getBundleResource($bundle_name, $file, $type)
-    {
-        $config = $this->getBundleConfig($bundle_name);
-
-        return $this->resource_locator->findFileDirectory($config, $file, $type);
     }
 
     /**

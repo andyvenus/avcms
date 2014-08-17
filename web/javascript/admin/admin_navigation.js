@@ -84,6 +84,7 @@ avcms.nav = {
         }
 
         if (ajax_required === true) {
+            avcms.misc.mainLoaderOn();
             $.get(full_url_wqm+'&ajax_depth='+ajax_depth, function(data) {
                 $('.ajax-'+ajax_depth+'-inner').hide();
                 content_container[func_name](data);
@@ -94,6 +95,7 @@ avcms.nav = {
 
                 window.scrollTo(0, 0);
                 avcms.nav.onPageModified();
+                avcms.misc.mainLoaderOff();
             });
         }
     },
