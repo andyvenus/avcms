@@ -2,7 +2,7 @@
 
 namespace AVCMS\Core\Controller;
 
-use AVCMS\Core\Bundle\BundleManager;
+use AVCMS\Core\Bundle\BundleManagerInterface;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver as BaseControllerResolver;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class ControllerResolver extends BaseControllerResolver
 {
 
-    public function __construct(ContainerInterface $container, BundleManager $bundle_manager, LoggerInterface $logger = null)
+    public function __construct(ContainerInterface $container, BundleManagerInterface $bundle_manager, LoggerInterface $logger = null)
     {
         $this->container = $container;
         $this->bundle_manager = $bundle_manager;

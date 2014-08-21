@@ -15,8 +15,7 @@ class Bundles implements Service
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
-        $container->register('bundle_manager', 'AVCMS\Core\Bundle\BundleManager')
-            ->setArguments(array('%dev_mode%'));
+        $container->register('bundle_manager', 'AVCMS\Core\Bundle\BundleManagerAlias');
 
         $container->register('listener.controller.inject.bundle', 'AVCMS\Core\Bundle\Listeners\ControllerInjectBundle')
             ->setArguments(array(new Reference('bundle_manager')))

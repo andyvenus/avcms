@@ -30,3 +30,7 @@ user_settings:
     type: text
     default: rofl
     section: main
+  bobcat:
+    type: text
+    default: GTA Vice City
+    section: main

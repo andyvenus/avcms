@@ -33,7 +33,7 @@ class Assets implements Service
             ->addMethodCall('addAppAsset', array('bootstrap-datetimepicker.min.js', 'javascript', AssetManager::ADMIN))
             ->addMethodCall('addAppAsset', array('bootstrap-datetimepicker.css', 'css', AssetManager::ADMIN))
             ->addMethodCall('addAppAsset', array('moment.min.js', 'javascript', AssetManager::ADMIN, 70))
-            ->addMethodCall('addAppAsset', array('avcms_config.js', 'javascript', AssetManager::SHARED, 80))
+            //->addMethodCall('addAppAsset', array('avcms_config.js', 'javascript', AssetManager::SHARED, 80))
         ;
     }
 }

@@ -391,11 +391,12 @@ $lightbar-offset: 2000px;
 $lightbar-color: 255,255,255;
 
 .lightbar {
-  height: 10px;
+  height: 5px;
   top:0px;
   width: 100%;
   z-index: 30;
   position: fixed;
+  display: none;
 }
 
 .lightbar .inner {
@@ -437,7 +438,6 @@ $lightbar-color: 255,255,255;
   background-repeat: no-repeat;
   background-size: 100% 100%;
   color: #fff;
-  display: none;
 }
 
 @keyframes masked-animation {

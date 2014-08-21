@@ -466,6 +466,11 @@ class FormHandler
         $this->data[$name] = $value;
     }
 
+    /**
+     * Merge an array of data with the existing data
+     *
+     * @param $data
+     */
     public function mergeData($data)
     {
         $this->data = array_merge($this->data, $data);

@@ -12,11 +12,18 @@
     <link rel="stylesheet" href="{{ url('home') }}web/css/select2-bootstrap.css">
     <link rel="stylesheet" href="{{ url('home') }}templates/dev/avcms/dev.css">
 
+    <script type="text/javascript">
+        var avcms = avcms || {};
+
+        avcms.config = {
+            site_url: '{{ site_url }}'
+        }
+    </script>
+
     <script src="{{ url('home') }}web/javascript/jquery.js"></script>
     <script src="{{ url('home') }}web/javascript/bootstrap.min.js"></script>
     <script src="{{ url('home') }}web/javascript/select2.min.js"></script>
     <script src="{{ url('home') }}web/javascript/avcms_dev.js"></script>
-    <script src="{{ url('home') }}web/javascript/avcms_config.js"></script>
 
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>

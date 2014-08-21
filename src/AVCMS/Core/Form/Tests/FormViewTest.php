@@ -7,6 +7,7 @@
 
 namespace AVCMS\Core\Form\Tests;
 
+use AVCMS\Core\Form\FormBlueprint;
 use AVCMS\Core\Form\FormError;
 use AVCMS\Core\Form\FormView;
 
@@ -186,6 +187,40 @@ class FormViewTest extends \PHPUnit_Framework_TestCase
         $translated_errors = $this->form_view->getErrors();
 
         $this->assertEquals($expected_translation[4], $translated_errors[0]->getMessage());
+    }
+
+    public function testSections()
+    {
+        $sections = array('my_section' => array('label' => 'My Section'));
+        $fields = array('example_field' => array('name' => 'example_field', 'options' => array('section' => 'my_section')));
+
+        $this->form_view->setSections($sections);
+
+        $this->form_view->setFields($fields);
+
+        $this->assertEquals($sections, $this->form_view->getSections());
+
+        $resulting_fields = $this->form_view->getSectionFields('my_section');
+
+        $this->assertArrayHasKey('example_field', $resulting_fields);
+    }
+
+    public function testSuccessMessage()
+    {
+        $form_blueprint = new FormBlueprint();
+        $form_blueprint->setSuccessMessage('Form Submitted Message');
+
+        $this->form_view->setFormBlueprint($form_blueprint);
+        $this->form_view->setSubmitted(true);
+
+        $this->assertEquals('Form Submitted Message', $this->form_view->getSuccessMessage('Form Submitted Message'));
+    }
+
+    public function testSubmitted()
+    {
+        $this->form_view->setSubmitted(true);
+
+        $this->assertTrue($this->form_view->isSubmitted());
     }
 }
  

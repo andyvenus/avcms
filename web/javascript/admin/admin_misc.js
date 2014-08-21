@@ -95,11 +95,11 @@ avcms.misc = {
     },
 
     mainLoaderOn: function() {
-        $('.lightbar .inner').show();
+        $('.lightbar').show();
     },
 
     mainLoaderOff: function() {
-        $('.lightbar .inner').fadeOut(2000);
+        $('.lightbar').fadeOut(1000);
     },
 
     generateSlugDelay: function() {

@@ -16,7 +16,7 @@ class Settings implements Service
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('settings_manager', 'AVCMS\Core\SettingsManager\SettingsManager')
-            ->setArguments(array(new Reference('settings_model')))
+            ->setArguments(array(new Reference('settings_model'), new Reference('bundle_manager')))
         ;
 
         $container->register('settings_model', 'AVCMS\Bundles\CmsFoundation\Model\Settings')

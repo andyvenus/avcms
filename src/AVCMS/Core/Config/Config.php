@@ -68,4 +68,10 @@ class Config implements \ArrayAccess
             return $array;
         }
     }
+
+    public function setSetting($name, $value)
+    {
+        $this->config_array[$name] = $value;
+        $this->config->$name = $this->arrayToObject($value);
+    }
 } 

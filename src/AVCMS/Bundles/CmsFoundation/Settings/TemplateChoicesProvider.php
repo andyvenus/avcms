@@ -19,7 +19,7 @@ class TemplateChoicesProvider implements ChoicesProviderInterface
         $choices = array();
         foreach ($dirs as $dir) {
             if (is_dir($template_dir.'/'.$dir) && $dir != '.' && $dir != '..') {
-                $choices[$dir] = $dir;
+                $choices['templates/frontend/'.$dir] = $dir;
             }
         }
 

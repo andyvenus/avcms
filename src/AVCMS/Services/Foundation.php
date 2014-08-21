@@ -22,14 +22,23 @@ class Foundation implements Service
 
         $container->register('context', 'Symfony\Component\Routing\RequestContext');
 
-        $container->register('matcher', 'Symfony\Component\Routing\Matcher\UrlMatcher')
-            ->setArguments(array(new Reference('routes'), new Reference('context')))
+        $container->register('router', 'AVCMS\Core\Kernel\Router')
+            ->setArguments(array(new Reference('router.loader.yaml'), 'routes.yml', array('cache_dir' => 'cache'), new Reference('bundle_manager')))
         ;
+
+        $container->register('app_config.file_locator', 'Symfony\Component\Config\FileLocator')
+            ->setArguments(array('app/config'))
+        ;
+
+        $container->register('router.loader.yaml', 'Symfony\Component\Routing\Loader\YamlFileLoader')
+            ->setArguments(array(new Reference('app_config.file_locator')))
+        ;
+
         $container->register('resolver', 'AVCMS\Core\Controller\ControllerResolver')
             ->setArguments(array(new Reference('service_container'), new Reference('bundle_manager')));
 
         $container->register('listener.router', 'Symfony\Component\HttpKernel\EventListener\RouterListener')
-            ->setArguments(array(new Reference('matcher')))
+            ->setArguments(array(new Reference('router'), null, null, new Reference('request.stack')))
             ->addTag('event.subscriber')
         ;
         $container->register('listener.response', 'Symfony\Component\HttpKernel\EventListener\ResponseListener')
@@ -40,8 +49,9 @@ class Foundation implements Service
             ->setArguments(array('AVCMS\\ErrorController::exceptionAction'))
             ->addTag('event.subscriber')
         ;
+
         $container->register('listener.security.routes', 'AVCMS\Core\Security\SecureRoutes')
-            ->setArguments(array(new Reference('active.user'), new Reference('routes')))
+            ->setArguments(array(new Reference('active.user')))
             ->addMethodCall('addRouteMatcherPermission', array('/^\/admin/', 'admin'))
             ->addTag('event.subscriber')
         ;
@@ -75,7 +85,6 @@ class Foundation implements Service
         // Routes
 
         $container->register('routes', 'Symfony\Component\Routing\RouteCollection')
-            ->setArguments(array(new Reference('service_container')))
             ->addMethodCall('add', array('home', new Reference('home_route')))
         ;
         

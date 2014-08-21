@@ -1,0 +1,23 @@
+details:
+  name: Indigo
+  description: A new version of the classic indigo theme
+  version: 0.1
+  author: Andy Venus
+
+assets:
+  test.js:
+    env: shared
+    priority: 60
+  kk/l.js:
+    env: shared
+    priority: 60
+
+config:
+
+
+user_settings:
+  bacon:
+      type: text
+      default: rofl
+      section: main
+      label: Bacon

@@ -9,15 +9,14 @@ namespace AVCMS\Core\AssetManager;
 
 use Assetic\Asset\AssetCollection;
 use Assetic\Asset\BaseAsset;
-use Assetic\Asset\FileAsset;
 use Assetic\AssetWriter;
 use Assetic\Filter\JSqueezeFilter;
 use AVCMS\Core\AssetManager\Asset\AppFileAsset;
 use AVCMS\Core\AssetManager\Asset\BundleAssetInterface;
 use AVCMS\Core\AssetManager\Asset\BundleFileAsset;
 use AVCMS\Core\AssetManager\Exception\AssetTypeException;
-use AVCMS\Core\Bundle\BundleManager;
 use Assetic\AssetManager as AsseticAssetManager;
+use AVCMS\Core\Bundle\BundleManagerInterface;
 use AVCMS\Core\Bundle\ResourceLocator;
 
 class AssetManager
@@ -39,11 +38,11 @@ class AssetManager
     protected $css = array();
 
     /**
-     * @param BundleManager $bundle_manager
+     * @param \AVCMS\Core\Bundle\BundleManagerInterface $bundle_manager
      * @param \AVCMS\Core\Bundle\ResourceLocator $resource_locator
      * @param bool $debug
      */
-    public function __construct(BundleManager $bundle_manager, ResourceLocator $resource_locator, $debug = false)
+    public function __construct(BundleManagerInterface $bundle_manager, ResourceLocator $resource_locator, $debug = false)
     {
         $this->bundle_manager = $bundle_manager;
         $this->resource_locator = $resource_locator;

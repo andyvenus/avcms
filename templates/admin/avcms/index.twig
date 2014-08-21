@@ -1,5 +1,3 @@
-{% set site_url = url('home') %}
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +20,14 @@
     {% endfor %}
 
     <link href="{{ site_url }}web/css/avcms-blocks.css" rel="stylesheet">
+
+    <script type="text/javascript">
+        var avcms = avcms || {};
+
+        avcms.config = {
+            site_url: '{{ site_url }}'
+        }
+    </script>
 
     {% for js in javascripts('admin') %}
         <script type="text/javascript" src="{{ site_url }}{{ js }}"></script>

@@ -16,7 +16,7 @@ class ResourceLocator
 
     protected $template_dir;
 
-    public function __construct(BundleManager $bundle_manager, SettingsManager $settings_manager, $app_dir = 'app') {
+    public function __construct(BundleManagerInterface $bundle_manager, SettingsManager $settings_manager, $app_dir = 'app') {
         $this->bundle_manager = $bundle_manager;
         $this->app_dir = $app_dir;
         $this->template_dir = $settings_manager->getSetting('template');

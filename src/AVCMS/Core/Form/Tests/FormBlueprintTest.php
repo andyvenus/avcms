@@ -177,5 +177,23 @@ class FormBlueprintTest extends \PHPUnit_Framework_TestCase {
     {
         $this->assertNull($this->form->get('non-existant'));
     }
+
+    public function testSections()
+    {
+        $this->form->addSection('my_section', 'My Section');
+
+        $this->assertTrue($this->form->hasSection('my_section'));
+
+        $this->form->removeSection('my_section');
+
+        $this->assertFalse($this->form->hasSection('my_section'));
+    }
+
+    public function testSuccessMessage()
+    {
+        $this->form->setSuccessMessage('Done!!');
+
+        $this->assertEquals('Done!!', $this->form->getSuccessMessage());
+    }
 }
  

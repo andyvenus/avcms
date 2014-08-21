@@ -11,6 +11,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class SecureRoutes
@@ -26,10 +27,9 @@ class SecureRoutes implements EventSubscriberInterface
      */
     protected $secure_url_matches = array();
 
-    public function __construct(ActiveUser $active_user, RouteCollection $routes)
+    public function __construct(ActiveUser $active_user)
     {
         $this->active_user = $active_user;
-        $this->routes = $routes;
     }
 
     public function addRouteMatcherPermission($regex, $permission)
@@ -45,9 +45,7 @@ class SecureRoutes implements EventSubscriberInterface
             return;
         }
 
-        $route = $this->routes->get($request->attributes->get(('_route')));
-        $route_path = $route->getPath();
-
+        $route_path = $request->getPathInfo();
 
         // Regex protected routes
         foreach ($this->secure_url_matches as $match) {

@@ -8,6 +8,8 @@
 namespace AVCMS\Core\Bundle;
 
 use AVCMS\Core\Bundle\Config\BundleConfigurationValidator;
+use AVCMS\Core\Bundle\Exception\NotFoundException;
+use AVCMS\Core\SettingsManager\SettingsManager;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Processor;
@@ -16,10 +18,15 @@ use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
+use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Yaml\Yaml;
 
-class BundleManager {
+class BundleManager implements BundleManagerInterface
+{
 
+    /**
+     * @var array
+     */
     protected $bundles;
 
     /**
@@ -27,30 +34,67 @@ class BundleManager {
      */
     protected $container;
 
+    /**
+     * @var bool
+     */
     protected $bundles_initialized = false;
 
-    protected $bundle_locations = array('src/AVCMS/Bundles', 'src/AVCMS/BundlesDev', 'src/Venus/Bundles');
+    /**
+     * @var array
+     */
+    protected $bundle_locations;
 
+    /**
+     * @var array
+     */
     protected $bundle_configs;
 
-    protected $routes;
-
+    /**
+     * @var bool
+     */
     protected $cache_fresh = true;
 
+    /**
+     * @var ConfigurationInterface
+     */
     protected $config_validator;
 
-    //todo: add bundle_locations to construct
-    public function __construct($debug = false, ConfigurationInterface $config_validator = null)
+    /**
+     * @var bool
+     */
+    protected $debug = false;
+
+    /**
+     * @var string
+     */
+    protected $cache_dir;
+
+    /**
+     * @var ConfigCache
+     */
+    protected $config_cache;
+
+    public function __construct(array $bundle_locations, $config_dir = 'app/config', $cache_dir = 'cache', ConfigurationInterface $config_validator = null)
     {
+        $this->bundle_locations = $bundle_locations;
+        $this->config_dir = $config_dir;
+        $this->cache_dir = $cache_dir;
+
         if ($config_validator == null) {
             $config_validator = new BundleConfigurationValidator();
         }
 
         $this->config_validator = $config_validator;
+    }
 
+    public function setDebug($debug)
+    {
         $this->debug = $debug;
+    }
 
-        $this->initBundles();
+    public function isDebug()
+    {
+        return $this->debug;
     }
 
     /**
@@ -75,6 +119,7 @@ class BundleManager {
      * Add required services to the container
      *
      * @param ContainerBuilder $container
+     * @throws Exception\NotFoundException
      */
     public function decorateContainer(ContainerBuilder $container)
     {
@@ -82,53 +127,72 @@ class BundleManager {
             $this->initBundles();
         }
 
-        foreach ($this->bundle_configs as $bundle_name => $bundle_config) {
+        foreach ($this->bundle_configs as $bundle_config) {
             # Services
             if ($bundle_config->services && !empty($bundle_config->services) && $bundle_config->ignore_services !== true) {
                 foreach ($bundle_config->services as $service_class) {
                     $fq_class = $bundle_config->namespace.'\\Services\\'.$service_class;
-                    $service = new $fq_class();
-                    $service->getServices(array(), $container);
-                    $container->addObjectResource($fq_class);
+                    if (class_exists($fq_class)) {
+                        $service = new $fq_class();
+                        $service->getServices(array(), $container);
+                        $container->addObjectResource($fq_class);
+                    }
+                    else {
+                        throw new NotFoundException(sprintf("Service class %s not found", $fq_class));
+                    }
                 }
             }
-
         }
+    }
+
+    public function setConfigCache(ConfigCache $config_cache)
+    {
+        $this->config_cache = $config_cache;
     }
 
     /**
      * Load all bundle configuration files (config/bundle.yml)
      * from yaml or from config cache.
      *
+     * @throws Exception\NotFoundException
      * @return array|mixed
      */
     public function loadAppBundleConfig()
     {
+        if (!file_exists($this->config_dir.'/bundles.yml')) {
+            throw new NotFoundException(sprintf("Bundles config could not be found: %", $this->config_dir));
+        }
+
         if ($this->debug) {
             $filename_append = '_dev';
 
-            if (file_exists('cache/bundle_config.php')) {
-                unlink('cache/bundle_config.php');
+            if (file_exists($this->cache_dir.'/bundle_config.php')) {
+                unlink($this->cache_dir.'/bundle_config.php');
             }
         }
         else {
             $filename_append = '';
         }
 
-        $cache_path = 'cache/bundle_config'.$filename_append.'.php';
+        $cache_path = $this->cache_dir.'/bundle_config'.$filename_append.'.php';
 
-        $bundle_config_cache = new ConfigCache($cache_path, $this->debug);
+        if (!$this->config_cache) {
+            $this->config_cache = new ConfigCache($cache_path, $this->debug);
+        }
+
         $bundles_config_array = array();
 
-        if (!$bundle_config_cache->isFresh()) {
+        if (!$this->config_cache->isFresh()) {
             $this->cache_fresh = false;
-            $app_bundles_config = Yaml::parse('app/config/bundles.yml');
+            $app_bundles_config = Yaml::parse($this->config_dir.'/bundles.yml');
 
             if ($this->debug) {
-                $app_bundles_config = array_replace_recursive($app_bundles_config, Yaml::parse('app/config/bundles_dev.yml'));
+                if (file_exists($this->config_dir.'/bundles_dev.yml')) {
+                    $app_bundles_config = array_replace_recursive($app_bundles_config, Yaml::parse($this->config_dir.'/bundles_dev.yml'));
+                }
             }
 
-            $resources = array(new FileResource('app/config/bundles.yml'), new FileResource('app/config/bundles_dev.yml'));
+            $resources = array(new FileResource($this->config_dir.'/bundles.yml'), new FileResource($this->config_dir.'/bundles_dev.yml'));
 
             foreach ($app_bundles_config as $bundle_name => $app_bundle_config) {
                 if ($app_bundle_config['enabled'] == true) {
@@ -141,11 +205,9 @@ class BundleManager {
                     $bundle_config['enabled'] = true;
                     $bundle_config['directory'] = $bundle_location;
 
+                    $app_bundle_config_overrides = array();
                     if (isset($app_bundle_config['config'])) {
                         $app_bundle_config_overrides = $app_bundle_config['config'];
-                    }
-                    else {
-                        $app_bundle_config_overrides = array();
                     }
 
                     // todo: parent bundle outside of BundleConfig for caching
@@ -164,7 +226,7 @@ class BundleManager {
                 }
             }
 
-            $bundle_config_cache->write('<?php return '.var_export($bundles_config_array, true).';', $resources);
+            $this->config_cache->write('<?php return '.var_export($bundles_config_array, true).';', $resources);
         }
         else {
             $bundles_config_array = require $cache_path;
@@ -177,16 +239,20 @@ class BundleManager {
      * Finds a bundle by searching the bundle locations
      *
      * @param $bundle_name
+     * @throws Exception\NotFoundException
      * @return string
      */
     public function findBundleDirectory($bundle_name)
     {
         foreach ($this->bundle_locations as $location) {
             $config_location = $location.'/'.$bundle_name.'/config/bundle.yml';
+
             if (file_exists($config_location)) {
                 return $location.'/'.$bundle_name;
             }
         }
+
+        throw new NotFoundException(sprintf("Bundle directory not found for bundle %s", $bundle_name));
     }
 
     /**
@@ -194,7 +260,7 @@ class BundleManager {
      *
      * @param $bundle
      * @return BundleConfig|null
-     * @throws \Exception
+     * @throws NotFoundException
      */
     public function loadBundleConfig($bundle)
     {
@@ -202,19 +268,14 @@ class BundleManager {
 
         $config_location = $directory.'/config/bundle.yml';
 
+        $config = Yaml::parse($config_location);
+        $config['directory'] = $directory;
+        $bundle_config = new BundleConfig($this, $config);
 
-        if (!isset($config_location)) {
-            throw new \Exception(sprintf('Cannot find bundle %s or the bundle\'s configuration file /config/bundle.yml does not exist', $bundle));
-        }
+        $this->bundle_configs[$bundle] = $bundle_config;
 
-        if (isset($config_location)) {
-            $config = Yaml::parse($config_location);
-            $config['directory'] = $directory;
-            return new BundleConfig($this, $config);
-        }
-        else {
-            return null;
-        }
+        return $bundle_config;
+
     }
 
     /**
@@ -274,12 +335,9 @@ class BundleManager {
         return $this->cache_fresh;
     }
 
-    public function onKernelBoot(ContainerInterface $container)
+    public function getBundleSettings(SettingsManager $settings_manager)
     {
-        // Update User Settings if the cache was not fresh on request
         if ($this->cache_fresh === false) {
-            $settings_manager = $container->get('settings_manager');
-
             foreach ($this->bundle_configs as $bundle_config) {
                 if (isset($bundle_config['user_settings']) && !empty($bundle_config['user_settings'])) {
 
@@ -292,11 +350,11 @@ class BundleManager {
                 }
             }
         }
+    }
 
-        $routes = $container->get('routes');
-
+    public function getBundleRoutes(RouteCollection $routes)
+    {
         foreach ($this->bundle_configs as $bundle_config) {
-            # Routes
             if (file_exists($bundle_config->directory . '/config/routes.yml') && $bundle_config->ignore_routes !== true) {
                 $locator = new FileLocator(array($bundle_config->directory . '/config'));
                 $loader = new YamlFileLoader($locator);

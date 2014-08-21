@@ -22,7 +22,7 @@ class BundleFileAsset extends FileAsset implements BundleAssetInterface
 
     /**
      * @param string $bundle
-     * @param array $type
+     * @param string $type
      * @param null|string $filename
      * @param null|string $file_location
      * @param array $filters

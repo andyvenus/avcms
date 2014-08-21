@@ -2,11 +2,13 @@
 
 namespace AVCMS\Core\Kernel;
 
+use AVCMS\Core\Bundle\BundleManager;
 use AVCMS\Core\Kernel\Events\KernelBootEvent;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
+use Symfony\Component\DependencyInjection\Dumper\XmlDumper;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,16 +32,22 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
      */
     private $debug;
 
-    public function __construct($debug)
+    public function __construct(BundleManager $bundle_manager, $debug)
     {
+        $bundle_manager->setDebug($debug);
+
+        $this->bundle_manager = $bundle_manager;
         $this->debug = $debug;
     }
 
     public function boot()
     {
+        $this->bundle_manager->initBundles();
+
         $this->buildContainer();
 
-        $this->container->get('bundle_manager')->onKernelBoot($this->container);
+        // Set BundleManager alias
+        $this->container->get('bundle_manager')->setBundleManager($this->getBundleManager());
 
         $event_dispatcher = $this->container->get('dispatcher');
         $event_dispatcher->dispatch('kernel.boot', new KernelBootEvent($this->container));
@@ -72,7 +80,7 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
         if ($this->debug) {
             $filename_append = '_dev';
 
-            if (file_exists('cache/bundle_config.php')) {
+            if (file_exists('cache/container.php')) {
                 unlink('cache/container.php');
             }
         }
@@ -126,13 +134,16 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
                 $dumper->dump(),
                 $this->container->getResources()
             );
+
+            if ($this->debug) {
+                $xmldumper = new XmlDumper($this->container);
+                file_put_contents('cache/debugContainer.xml', $xmldumper->dump());
+            }
         }
         else {
             require $container_cache_file;
             $this->container = new \ProjectServiceContainer();
         }
-
-        //$container->setParameter('container', $container);
     }
 
     /**
@@ -140,7 +151,7 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
      */
     private function getBundleManager()
     {
-        return $this->container->get('bundle_manager');
+        return $this->bundle_manager;
     }
 
     private function getHttpKernel()

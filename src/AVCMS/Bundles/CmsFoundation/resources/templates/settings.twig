@@ -3,11 +3,13 @@
 {% block content_header %}Settings{% endblock %}
 
 {% block content_body %}
-    {{ form_start(form) }}
-
-    {{ form_messages(form) }}
-
     <div class="container-fluid">
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="col-sm-12">{{ form_messages(form) }}</div>
+        </div>
+
         {% for section_id, section in form.sections %}
             <h4>{{ section.label }}</h4>
             {% for field in form.sectionFields(section_id) %}
@@ -30,7 +32,6 @@
             </div>
         </div>
 
+        {{ form_end(form) }}
     </div>
-
-    {{ form_end(form) }}
 {% endblock %}

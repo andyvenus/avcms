@@ -33,7 +33,8 @@ class CheckboxTypeTest extends \PHPUnit_Framework_TestCase
                 'checked' => false,
                 'checked_value' => 1,
                 'unchecked_value' => 0
-            )
+            ),
+            'original_name' => 'basic_field_original'
         );
     }
 
@@ -97,6 +98,7 @@ class CheckboxTypeTest extends \PHPUnit_Framework_TestCase
         $checked_view = $this->default_type->makeView($this->basic_field, array('basic_field' => '1'), $form_handler);
 
         $this->assertTrue($checked_view['options']['checked']);
+        $this->assertEquals('basic_field_original', $checked_view['name']);
     }
 }
  

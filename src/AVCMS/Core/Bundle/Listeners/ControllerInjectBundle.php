@@ -7,14 +7,14 @@
 
 namespace AVCMS\Core\Bundle\Listeners;
 
-use AVCMS\Core\Bundle\BundleManager;
+use AVCMS\Core\Bundle\BundleManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class ControllerInjectBundle implements EventSubscriberInterface
 {
-    public function __construct(BundleManager $bundle_manager)
+    public function __construct(BundleManagerInterface $bundle_manager)
     {
         $this->bundle_manager = $bundle_manager;
     }

@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Symfony2PluginSettings">
+    <option name="pathToUrlGenerator" value="cache/ProjectUrlGenerator.php" />
+    <option name="pluginEnabled" value="true" />
+    <option name="objectRepositoryTypeProvider" value="false" />
+    <option name="objectRepositoryResultTypeProvider" value="false" />
+    <option name="objectManagerFindTypeProvider" value="false" />
+    <option name="twigAnnotateAsset" value="false" />
+    <option name="twigAnnotateAssetTags" value="false" />
+    <option name="twigNamespaces">
+      <list>
+        <twig_namespace custom="true" namespace="Blog" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Blog/resources/templates" />
+        <twig_namespace custom="true" namespace="admin" namespaceType="ADD_PATH" path="templates/admin/avcms" />
+      </list>
+    </option>
     <option name="containerFiles">
       <list>
-        <container_file path="app/cache/dev/appDevDebugProjectContainer.xml" />
+        <container_file path="cache/debugContainer.xml" />
       </list>
     </option>
   </component>

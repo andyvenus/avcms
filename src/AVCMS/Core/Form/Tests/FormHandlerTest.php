@@ -262,6 +262,25 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('', $entity_two->getPassword());
     }
 
+    public function testSaveToAndGetClonedEntities()
+    {
+        $entity = new StandardFormEntity();
+        $entity->setName('Name One');
+        $entity->setDescription('Description One');
+        $entity->setCategory('5');
+        $entity->setPassword('Secure One');
+
+        $this->standard_form_handler->bindEntity($entity);
+
+        $_POST = $this->standard_form_request;
+        $this->standard_form_handler->handleRequest();
+
+        $clones = $this->standard_form_handler->saveToAndGetClonedEntities();
+
+        $this->assertEquals('Name One', $entity->getName());
+        $this->assertEquals('Example Name', $clones[0]['entity']->getName());
+    }
+
     public function testBindEntityException()
     {
         $this->setExpectedException('\Exception');

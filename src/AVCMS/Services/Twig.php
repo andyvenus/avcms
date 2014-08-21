@@ -26,6 +26,7 @@ class Twig implements Service
             ->addMethodCall('addExtension', array(new Reference('twig.http.kernel.extension')))
             ->addMethodCall('addExtension', array(new Reference('twig.translation.extension')))
             ->addMethodCall('addExtension', array(new Reference('twig.code.extension')))
+            ->addMethodCall('addExtension', array(new Reference('twig.globals.extension')))
         ;
 
         $container->register('twig.filesystem', 'AVCMS\Core\View\TwigLoaderFilesystem')
@@ -39,7 +40,7 @@ class Twig implements Service
         ;
 
         $container->register('twig.routing.extension', 'Symfony\Bridge\Twig\Extension\RoutingExtension')
-            ->setArguments(array(new Reference('routing.url_generator')));
+            ->setArguments(array(new Reference('router')));
 
         $container->register('twig.translation.extension', 'Symfony\Bridge\Twig\Extension\TranslationExtension')
             ->setArguments(array(new Reference('translator')));
@@ -54,6 +55,9 @@ class Twig implements Service
 
         $container->register('twig.code.extension', 'Symfony\Bridge\Twig\Extension\CodeExtension')
             ->setArguments(array(null, '/', 'UTF-8'));
+
+        $container->register('twig.globals.extension', 'AVCMS\Core\View\Extension\GlobalVarsTwigExtension')
+            ->setArguments(array(new Reference('request.stack')));
 
         $container->register('markdown_engine', 'Aptoma\Twig\Extension\MarkdownEngine\MichelfMarkdownEngine');
 

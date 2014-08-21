@@ -59,15 +59,6 @@ class EntityProcessor implements FormEntityProcessor
      */
     public function saveToEntity($entity, $form_data, $limit_fields = null)
     {
-        /*
-        foreach($form_data as $field => $value) {
-            $setter_name = "set".$this->dashesToCamelCase($field);
-
-            if (($limit_fields == null || in_array($field, $limit_fields)) && method_exists($entity, $setter_name)) {
-                $entity->$setter_name($value);
-            }
-        }
-        */
         foreach($form_data as $field => $value) {
             $setter_name = "set".$this->dashesToCamelCase($field);
 
