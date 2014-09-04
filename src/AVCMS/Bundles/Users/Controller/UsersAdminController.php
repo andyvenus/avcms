@@ -7,15 +7,15 @@
 
 namespace AVCMS\Bundles\Users\Controller;
 
-use AVCMS\Bundles\Admin\Controller\AdminController;
+use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UsersAdminController extends AdminController
+class UsersAdminController extends AdminBaseController
 {
     public function usersHomeAction(Request $request)
     {
-        return $this->manage($request, $this->bundle->tpl->users_browser);
+        return $this->createManageResponse($request, $this->bundle->tpl->users_browser);
     }
 
     public function usersFinderAction(Request $request)

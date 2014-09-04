@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rofl</title>
+
+    <script type="text/javascript">
+        var avcms = avcms || {};
+
+        avcms.config = {
+            site_url: '{{ site_url }}'
+        }
+    </script>
+
+    {% for js in javascripts('frontend') %}
+        <script type="text/javascript" src="{{ site_url }}{{ js }}"></script>
+    {% endfor %}
+</head>
+<body>
+<ul>
+    {% for menu_item in menu('admin') %}
+        <li><a href="{{ menu_item.url }}"><span class="glyphicon glyphicon-{{ menu_item.icon }}"></span> {{ menu_item.label }}</a></li>
+    {% endfor %}
+</ul>
+</body>
+</html>

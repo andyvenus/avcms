@@ -7,8 +7,6 @@
 
 namespace AVCMS\Core\Security\CSRF;
 
-use Symfony\Component\HttpFoundation\Request;
-
 class CsrfToken
 {
     protected $prefix = 'avcms_';

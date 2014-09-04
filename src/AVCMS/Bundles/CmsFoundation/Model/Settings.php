@@ -10,8 +10,7 @@ namespace AVCMS\Bundles\CmsFoundation\Model;
 use AVCMS\Core\Model\Model;
 use AVCMS\Core\SettingsManager\SettingsModelInterface;
 
-class
-Settings extends Model implements SettingsModelInterface
+class Settings extends Model implements SettingsModelInterface
 {
     public function getTable()
     {
@@ -42,23 +41,14 @@ Settings extends Model implements SettingsModelInterface
 
     public function saveSettings(array $settings, $existing_settings = null)
     {
-        if ($existing_settings == null) {
-            $existing_settings = $this->getSettings();
-        }
-
         foreach ($settings as $name => $value) {
-            $setting = array('name' => $name, 'value' => $value);
-            if (isset($existing_settings[$name])) {
-                $this->query()->where('name', $name)->update($setting);
-            }
-            else {
-                $this->query()->insert($setting);
-            }
+            $setting = array('value' => $value);
+            $this->query()->where('name', $name)->update($setting);
         }
     }
 
-    public function addSetting($name, $value)
+    public function addSetting($name, $value, $loader, $owner)
     {
-        $this->query()->insert(array('name' => $name, 'value' => $value));
+        $this->query()->insert(array('name' => $name, 'value' => $value, 'loader' => $loader, 'owner' => $owner));
     }
 }

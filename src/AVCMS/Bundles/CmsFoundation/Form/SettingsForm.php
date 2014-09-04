@@ -42,4 +42,11 @@ class SettingsForm extends FormBlueprint
             $this->add($field_name, $field['type'], $field['options']);
         }
     }
+
+    public function createSectionsFromArray(array $sections)
+    {
+        foreach ($sections as $id => $section) {
+            $this->addSection($id, $section['label']);
+        }
+    }
 } 

@@ -34,7 +34,10 @@ class FormBlueprint implements FormBlueprintInterface
      */
     protected $sections = array();
 
-    protected $success_message;
+    /**
+     * @var string A message to display when the form is submitted & valid
+     */
+    protected $successMessage;
 
     /**
      * {@inheritdoc}
@@ -52,18 +55,18 @@ class FormBlueprint implements FormBlueprintInterface
 
             $field['original_name'] = $field['name'];
 
-            $exploded_name = $this->explodeFieldNameArray($field['name']);
+            $explodedName = $this->explodeFieldNameArray($field['name']);
 
             // Unnamed array
             if (strpos($name, '[]') !== false) {
                 $field['name'] = null;
-                $exploded_name[] = 'unnamed';
+                $explodedName[] = 'unnamed';
             }
             else {
-                $field['name'] = end($exploded_name);
+                $field['name'] = end($explodedName);
             }
 
-            $this->fields = $this->recursiveAddToFields($exploded_name, $field);
+            $this->fields = $this->recursiveAddToFields($explodedName, $field);
         }
         else {
 
@@ -164,21 +167,35 @@ class FormBlueprint implements FormBlueprintInterface
         }
     }
 
+    /**
+     * @param $id
+     * @param $label
+     */
     public function addSection($id, $label)
     {
         $this->sections[$id] = array('label' => $label);
     }
 
+    /**
+     * @param $id
+     */
     public function removeSection($id)
     {
         unset($this->sections[$id]);
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function hasSection($id)
     {
         return isset($this->sections[$id]);
     }
 
+    /**
+     * @return array
+     */
     public function getSections()
     {
         return $this->sections;
@@ -186,12 +203,12 @@ class FormBlueprint implements FormBlueprintInterface
 
     public function setSuccessMessage($message)
     {
-        $this->success_message = $message;
+        $this->successMessage = $message;
     }
 
     public function getSuccessMessage()
     {
-        return (isset($this->success_message) ? $this->success_message : null);
+        return (isset($this->successMessage) ? $this->successMessage : null);
     }
 
     /**
@@ -276,13 +293,13 @@ class FormBlueprint implements FormBlueprintInterface
     /**
      * {@inheritdoc}
      */
-    public function insertAfterKey(array $array, $key, $data = array(), $insert_before = false)
+    public function insertAfterKey(array $array, $key, $data = array(), $insertBefore = false)
     {
         if (($offset = array_search($key, array_keys($array))) === false) { // if the key doesn't exist
             $offset = count($array);
         }
 
-        if ($insert_before == false) {
+        if ($insertBefore == false) {
             $offset = $offset + 1;
         }
 
@@ -306,15 +323,15 @@ class FormBlueprint implements FormBlueprintInterface
     }
 
     /**
-     * @param $field_name
+     * @param $fieldName
      * @return array
      *
      * Example: $field_name = "example[one][two]"
      *          return array('example', 'one', 'two')
      */
-    protected function explodeFieldNameArray($field_name)
+    protected function explodeFieldNameArray($fieldName)
     {
-        $name = str_replace('][', '.', $field_name);
+        $name = str_replace('][', '.', $fieldName);
         $name = str_replace(array('[', ']'), '.', $name);
 
         $name = rtrim($name, '.');
@@ -325,7 +342,7 @@ class FormBlueprint implements FormBlueprintInterface
     /**
      * @param array $exploded The exploded (explodeFieldNameArray) field name
      * @param array $field The new field's data
-     * @param null $fields_array
+     * @param null $fieldsArray
      * @return array
      *
      * Recursively adds a field to the fields array.
@@ -333,32 +350,32 @@ class FormBlueprint implements FormBlueprintInterface
      * For example, will add a field "parent[sub_name]" as
      * $this->fields['parent']['fields']['sub_name']
      */
-    protected  function recursiveAddToFields($exploded, $field, $fields_array = null) {
-        if ($fields_array === null) {
-            $fields_array = $this->fields;
+    protected  function recursiveAddToFields($exploded, $field, $fieldsArray = null) {
+        if ($fieldsArray === null) {
+            $fieldsArray = $this->fields;
         }
 
         $field_name = array_shift($exploded);
 
         if (!empty($exploded)) {
-            if (!isset($fields_array[$field_name])) {
-                $fields_array[$field_name] = array(
+            if (!isset($fieldsArray[$field_name])) {
+                $fieldsArray[$field_name] = array(
                     'name' => $field_name,
                     'type' => 'collection',
                     'fields' => array()
                 );
             }
-            $fields_array[$field_name]['fields'] = $this->recursiveAddToFields($exploded, $field, $fields_array[$field_name]['fields']);
+            $fieldsArray[$field_name]['fields'] = $this->recursiveAddToFields($exploded, $field, $fieldsArray[$field_name]['fields']);
         }
         else {
             if ($field_name == 'unnamed') {
-                $fields_array[] = $field;
+                $fieldsArray[] = $field;
             }
             else {
-                $fields_array[$field_name] = $field;
+                $fieldsArray[$field_name] = $field;
             }
         }
 
-        return $fields_array;
+        return $fieldsArray;
     }
 } 

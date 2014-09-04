@@ -20,14 +20,13 @@ class TemplateFileAsset extends FileAsset implements TemplateAssetInterface
 
     protected $source;
 
-    public function __construct($environment, $template, $type, $file, $filters = array(), $sourceRoot = null, $sourcePath = null, array $vars = array())
+    public function __construct($template, $type, $file, $filters = array(), $sourceRoot = null, $sourcePath = null, array $vars = array())
     {
         $this->template = $template;
         $this->type = $type;
         $this->file = $file;
-        $this->environment = $environment;
 
-        $this->source = 'templates/'.$environment.'/'.$template.'/'.$type.'/'.$file;
+        $this->source = $template.'/'.$type.'/'.$file;
 
         parent::__construct($this->source, $filters, $sourceRoot, $sourcePath, $vars);
     }
@@ -42,18 +41,13 @@ class TemplateFileAsset extends FileAsset implements TemplateAssetInterface
         return $this->type;
     }
 
-    public function getFile()
+    public function getFilename()
     {
         return $this->file;
     }
 
-    public function getEnvironment()
+    public function getDevUrl($prepend = null)
     {
-        return $this->environment;
-    }
-
-    public function getDevUrl($prepend)
-    {
-        return $prepend.'template_asset/'.$this->getEnvironment().'/'.$this->getTemplate().'/'.$this->getType().'/'.$this->getFile();
+        return $this->source;
     }
 }

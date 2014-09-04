@@ -1,14 +1,9 @@
 name: Blog
 namespace: AVCMS\Bundles\Blog
 
-required_bundles:
-  - Admin
-
 model:
   posts: Posts
   users: AVCMS\Bundles\Users\Model\Users
-
-parent_bundle: Assets
 
 template:
   blog_post: @Blog/blog_post.twig
@@ -20,17 +15,19 @@ user_settings:
       label: Blog Posts Per Page
       help: The number of blog posts displayed on each page
       section: main
-  newnewnew:
-        type: text
-        label: Blog Posts Per Page
-        help: The number of blog posts displayed on each page
-        section: main
-        default: RoflMao
-  zing:
-    type: text
-    default: rofl
-    section: main
-  bobcat:
-    type: text
-    default: GTA Vice City
-    section: main
+
+assets:
+  bootstrap-markdown.js:
+    env: admin
+  markdown.js:
+    env: admin
+  to-markdown.js:
+    env: admin
+
+  bootstrap-markdown.min.css:
+    env: admin
+
+require:
+  - CmsFoundation
+  - Admin
+  - Users

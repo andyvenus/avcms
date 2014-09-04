@@ -4,13 +4,13 @@ namespace {{namespace}}\Controller;
 
 use AVCMS\Bundles\{{bundle}}\Form\{{cc_plural}}AdminFiltersForm;
 use AVCMS\Bundles\{{bundle}}\Form\{{cc_singular}}AdminForm;
-use AVCMS\Bundles\Admin\Controller\AdminController;
+use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 
-class {{cc_plural}}AdminController extends AdminController
+class {{cc_plural}}AdminController extends AdminBaseController
 {
     public function homeAction(Request $request)
     {

@@ -13,12 +13,16 @@
         float: left;
         margin-right: 5px;
         border-right: 1px solid #dddddd;
-        padding: 10px;
+        padding: 10px 15px 10px 10px;
     }
 
     .dev-bar-inner a {
         text-decoration: underline;
         color: #333;
+    }
+
+    .browser-finder-checked-options {
+        margin-bottom: 40px!important;
     }
 </style>
 
@@ -34,5 +38,8 @@
     </div>
     <div class="profile-block">
         <a href="{{ url('profiler', {token: token}) }}#translations">{{ translations.translations|length }} Translation Strings</a>
+    </div>
+    <div class="profile-block">
+        <input type="checkbox" name="asset_move" id="asset_move" />
     </div>
 </div>

@@ -12,6 +12,7 @@ use AVCMS\Core\Bundle\Exception\NotFoundException;
 use AVCMS\Core\SettingsManager\SettingsManager;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Resource\FileResource;
@@ -128,7 +129,6 @@ class BundleManager implements BundleManagerInterface
         }
 
         foreach ($this->bundle_configs as $bundle_config) {
-            # Services
             if ($bundle_config->services && !empty($bundle_config->services) && $bundle_config->ignore_services !== true) {
                 foreach ($bundle_config->services as $service_class) {
                     $fq_class = $bundle_config->namespace.'\\Services\\'.$service_class;
@@ -142,6 +142,8 @@ class BundleManager implements BundleManagerInterface
                     }
                 }
             }
+
+            $container->addResource(new FileResource($bundle_config->directory.'/config/bundle.yml'));
         }
     }
 
@@ -154,10 +156,12 @@ class BundleManager implements BundleManagerInterface
      * Load all bundle configuration files (config/bundle.yml)
      * from yaml or from config cache.
      *
+     * @param bool $force_cache_refresh
      * @throws Exception\NotFoundException
+     * @throws \Exception
      * @return array|mixed
      */
-    public function loadAppBundleConfig()
+    public function loadAppBundleConfig($force_cache_refresh = false)
     {
         if (!file_exists($this->config_dir.'/bundles.yml')) {
             throw new NotFoundException(sprintf("Bundles config could not be found: %", $this->config_dir));
@@ -182,8 +186,10 @@ class BundleManager implements BundleManagerInterface
 
         $bundles_config_array = array();
 
-        if (!$this->config_cache->isFresh()) {
-            $this->cache_fresh = false;
+        $this->cache_fresh = $this->config_cache->isFresh();
+
+        if ((!$this->cache_fresh) || $force_cache_refresh === true) {
+
             $app_bundles_config = Yaml::parse($this->config_dir.'/bundles.yml');
 
             if ($this->debug) {
@@ -220,7 +226,13 @@ class BundleManager implements BundleManagerInterface
                     $configs = array($merged_config);
 
                     $processor = new Processor();
-                    $final_bundle_config = $processor->processConfiguration($this->config_validator, $configs);
+
+                    try {
+                        $final_bundle_config = $processor->processConfiguration($this->config_validator, $configs);
+                    }
+                    catch (\Exception $e) {
+                        throw new \Exception("Config for bundle {$bundle_config['name']} not configured correctly: ".$e->getMessage());
+                    }
 
                     $bundles_config_array[$bundle_name] = $final_bundle_config;
                 }
@@ -272,7 +284,7 @@ class BundleManager implements BundleManagerInterface
         $config['directory'] = $directory;
         $bundle_config = new BundleConfig($this, $config);
 
-        $this->bundle_configs[$bundle] = $bundle_config;
+        //$this->bundle_configs[$bundle] = $bundle_config;
 
         return $bundle_config;
 
@@ -335,23 +347,9 @@ class BundleManager implements BundleManagerInterface
         return $this->cache_fresh;
     }
 
-    public function getBundleSettings(SettingsManager $settings_manager)
-    {
-        if ($this->cache_fresh === false) {
-            foreach ($this->bundle_configs as $bundle_config) {
-                if (isset($bundle_config['user_settings']) && !empty($bundle_config['user_settings'])) {
-
-                    $bundle_settings = array();
-                    foreach ($bundle_config['user_settings'] as $setting_name => $setting) {
-                        $bundle_settings[$setting_name] = (isset($setting['default']) ? $setting['default'] : '');
-                    }
-
-                    $settings_manager->addSettings($bundle_settings);
-                }
-            }
-        }
-    }
-
+    /**
+     * @param RouteCollection $routes
+     */
     public function getBundleRoutes(RouteCollection $routes)
     {
         foreach ($this->bundle_configs as $bundle_config) {

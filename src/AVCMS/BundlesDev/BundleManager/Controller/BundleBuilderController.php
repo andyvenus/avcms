@@ -102,17 +102,27 @@ class BundleBuilderController extends BundleBaseController
 
             // Step 3 - Generate the files
             if ($form->isValid()) {
-                $title_field = $this->dashesToCamelCase($request->get('title_field'));
+                if ($request->get('title_field')) {
+                    $title_field = $this->dashesToCamelCase($request->get('title_field'));
+                }
+                else {
+                    $title_field = 'id';
+                }
                 // Make files from templates
                 $base_table = str_replace($qb->getTablePrefix(), '', $table);
                 $fm = new FileMaker($config, $base_table, $form->getData('plural'), $form->getData('singular'), $title_field);
                 $fm->setFileBasePath('src/AVCMS/Core/Bundle/BundleBuilder/BundleBlueprint/files');
-                $fm->addFile('AdminController.php.bt', 'Controller/{{cc_plural}}AdminController.php');
-                $fm->addFile('browser.twig.bt', 'resources/templates/{{plural}}_browser.twig');
-                $fm->addFile('edit_item.twig.bt', 'resources/templates/edit_{{singular}}.twig');
-                $fm->addFile('finder.twig.bt', 'resources/templates/{{plural}}_finder.twig');
+
                 $fm->addFile('Model.php.bt', 'Model/{{model_class}}.php');
-                $fm->addFile('routes.yml.bt', 'config/routes.yml', FileMaker::APPEND);
+
+                if ($form->getData('admin_sections') == 1) {
+                    $fm->addFile('AdminController.php.bt', 'Controller/{{cc_plural}}AdminController.php');
+                    $fm->addFile('browser.twig.bt', 'resources/templates/{{plural}}_browser.twig');
+                    $fm->addFile('edit_item.twig.bt', 'resources/templates/edit_{{singular}}.twig');
+                    $fm->addFile('finder.twig.bt', 'resources/templates/{{plural}}_finder.twig');
+                    $fm->addFile('content_routes.yml.bt', 'config/routes.yml', FileMaker::APPEND);
+                }
+
                 $fm->processAndSaveFiles(true);
 
                 // Make entity using CodeGenerator
@@ -146,39 +156,40 @@ class BundleBuilderController extends BundleBaseController
                     }
                 }
 
-                // Admin Edit Form Class
-                $form_class = new PhpClass();
-                $form_class->setName($config->namespace.'\Form\\'.$fm->getVar('cc_singular').'AdminForm');
-                $form_class->setUseStatements(array('FormBlueprint' => 'AVCMS\Core\Form\FormBlueprint'));
-                $form_class->setParentClassName('FormBlueprint');
-
-                $construct = new PhpMethod('__construct');
-                $construct->setBody($form_construct_body);
-
-                $form_class->setMethod($construct);
-
-                // Admin Filters Form Class
-                $filters_form_class = new PhpClass();
-                $filters_form_class->setName($config->namespace.'\Form\\'.$fm->getVar('cc_plural').'AdminFiltersForm');
-                $filters_form_class->setUseStatements(array('AdminFiltersForm' => 'AVCMS\Bundles\Admin\Form\AdminFiltersForm'));
-                $filters_form_class->setParentClassName('AdminFiltersForm');
-
-                $filters_construct = new PhpMethod('__construct');
-                $filters_construct->setBody($form_construct_body);
-
-                //$filters_form_class->setMethod($construct);
-
-                // Save forms & Entity
+                // Save Entity
                 $gen = new DefaultGeneratorStrategy(new Visitor());
                 $gen->setMethodSortFunc($this->orderMethodsClosure());
 
                 $entity = $gen->generate($entity_class);
-                $admin_form = $gen->generate($form_class);
-                $filters_form = $gen->generate($filters_form_class);
-
                 file_put_contents($config->directory.'/Model/'.$fm->getVar('cc_singular').'.php', "<?php\n\n".$entity);
-                file_put_contents($config->directory.'/Form/'.$fm->getVar('cc_singular').'AdminForm.php', "<?php\n\n".$admin_form);
-                file_put_contents($config->directory.'/Form/'.$fm->getVar('cc_plural').'AdminFiltersForm.php', "<?php\n\n".$filters_form);
+
+                if ($form->getData('admin_sections') == 1) {
+                    // Admin Edit Form Class
+                    $form_class = new PhpClass();
+                    $form_class->setName($config->namespace.'\Form\\'.$fm->getVar('cc_singular').'AdminForm');
+                    $form_class->setUseStatements(array('FormBlueprint' => 'AVCMS\Core\Form\FormBlueprint'));
+                    $form_class->setParentClassName('FormBlueprint');
+
+                    $construct = new PhpMethod('__construct');
+                    $construct->setBody($form_construct_body);
+
+                    $form_class->setMethod($construct);
+
+                    // Admin Filters Form Class
+                    $filters_form_class = new PhpClass();
+                    $filters_form_class->setName($config->namespace.'\Form\\'.$fm->getVar('cc_plural').'AdminFiltersForm');
+                    $filters_form_class->setUseStatements(array('AdminFiltersForm' => 'AVCMS\Bundles\Admin\Form\AdminFiltersForm'));
+                    $filters_form_class->setParentClassName('AdminFiltersForm');
+
+                    $filters_construct = new PhpMethod('__construct');
+                    $filters_construct->setBody($form_construct_body);
+
+                    $admin_form = $gen->generate($form_class);
+                    $filters_form = $gen->generate($filters_form_class);
+
+                    file_put_contents($config->directory.'/Form/'.$fm->getVar('cc_singular').'AdminForm.php', "<?php\n\n".$admin_form);
+                    file_put_contents($config->directory.'/Form/'.$fm->getVar('cc_plural').'AdminFiltersForm.php', "<?php\n\n".$filters_form);
+                }
 
                 $content_types_file = $config->directory.'/config/generated_content.yml';
 

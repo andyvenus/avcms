@@ -9,38 +9,54 @@ namespace AVCMS\Bundles\Blog\Controller;
 
 use AVCMS\Bundles\Blog\Form\BlogPostsFilterForm;
 use AVCMS\Bundles\Blog\Form\PostForm;
-use AVCMS\Bundles\Admin\Controller\AdminController;
+use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class BlogAdminController extends AdminController
+class BlogAdminController extends AdminBaseController
 {
+    /**
+     * @var \AVCMS\Bundles\Blog\Model\Posts
+     */
+    protected $blogPosts;
+
+    protected $browserTemplate = '@Blog/blog_browser.twig';
+
+    public function setUp()
+    {
+        $this->blogPosts = $this->model('Posts');
+    }
+
     public function blogHomeAction(Request $request)
     {
-       return $this->manage($request, '@Blog/blog_browser.twig');
+       return $this->createManageResponse($request, '@Blog/blog_browser.twig');
     }
 
     public function editPostAction(Request $request)
     {
-        $model = $this->model($this->bundle->model->posts);
+        $form = $this->buildForm(new PostForm($request->get('id', 0), $this->activeUser()->getUser()->getId()));
 
-        $form_blueprint = new PostForm($request->get('id', 0), $this->activeUser()->getUser()->getId());
+        $helper = $this->editContentHelper($this->blogPosts, $form);
 
-        return $this->edit($request, $model, $form_blueprint, 'blog_edit_post', '@Blog/edit_post.twig', '@Blog/blog_browser.twig', array());
+        $helper->handleRequestAndSave($request);
+
+        if (!$helper->contentExists()) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->createEditResponse($helper, $request, '@Blog/edit_post.twig', $this->browserTemplate, array('blog_edit_post', array('id' => $helper->getEntity()->getId())));
     }
 
     public function finderAction(Request $request)
     {
-        $posts_model = $this->model($this->bundle->model->posts);
+        $usersModel = $this->model($this->bundle->model->users);
 
-        $users_model = $this->model($this->bundle->model->users);
-
-        $finder = $posts_model->find()
+        $finder = $this->blogPosts->find()
             ->setSearchFields(array('title'))
             ->setResultsPerPage(15)
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'search' => null, 'tags' => null, 'id' => null))
-            ->join($users_model, array('username'));
+            ->join($usersModel, array('username'));
 
         $posts = $finder->get();
 
@@ -49,24 +65,20 @@ class BlogAdminController extends AdminController
 
     public function deleteAction(Request $request)
     {
-        $posts_model = $this->model($this->bundle->model->posts);
-
-        return $this->delete($request, $posts_model);
+        return $this->delete($request, $this->blogPosts);
     }
 
     public function togglePublishedAction(Request $request)
     {
-        $posts_model = $this->model($this->bundle->model->posts);
-
-        return $this->togglePublished($request, $posts_model);
+        return $this->togglePublished($request, $this->blogPosts);
     }
 
-    protected function getSharedTemplateVars($ajax_depth)
+    protected function getSharedTemplateVars($ajaxDepth)
     {
-        $template_vars = parent::getSharedTemplateVars($ajax_depth);
+        $templateVars = parent::getSharedTemplateVars($ajaxDepth);
 
-        $template_vars['finder_filters_form'] = $this->buildForm(new BlogPostsFilterForm())->createView();
+        $templateVars['finder_filters_form'] = $this->buildForm(new BlogPostsFilterForm())->createView();
 
-        return $template_vars;
+        return $templateVars;
     }
 }

@@ -1,5 +1,49 @@
 name: Admin
 namespace: AVCMS\Bundles\Admin
 
+require:
+  - Framework
+  - CmsFoundation
+  - Users
+
+assets:
+  select2.min.js:
+    env: admin
+  select2.css:
+    env: admin
+    priority: 10
+  select2-bootstrap.css:
+    env: admin
+    priority: 5
+  jquery.history.js:
+    env: admin
+  jquery.nanoscroller.min.js:
+    env: admin
+  nanoscroller.css:
+    env: admin
+  moment.min.js:
+    env: admin
+    priority: 15
+  bootstrap-datetimepicker.min.js:
+    env: admin
+  bootstrap-datetimepicker.css:
+    env: admin
+  jquery-ui.min.js:
+    env: admin
+    priority: 20
+  jquery.mjs.nestedSortable.js:
+    env: admin
+
+  admin_navigation.js:
+      env: admin
+  admin_browser.js:
+      env: admin
+      priority: 15
+  admin_misc.js:
+      env: admin
+  admin_sortable.js:
+    env: admin
+
+
 services:
   - AdminServices

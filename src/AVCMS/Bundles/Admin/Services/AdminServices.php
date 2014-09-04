@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\Admin\Services;
 
-use AVCMS\Services\Service;
+use AVCMS\Core\Service\Service;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 

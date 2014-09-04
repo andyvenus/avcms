@@ -17,32 +17,32 @@ abstract class Model implements ModelInterface {
     /**
      * @var $query_builder QueryBuilderHandler
      */
-    protected $query_builder;
+    protected $queryBuilder;
 
     /**
      * @var integer
      */
-    protected $last_insert_id;
+    protected $lastInsertId;
 
     /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcher
      */
-    protected $event_dispatcher;
+    protected $eventDispatcher;
 
     /**
      * @var array Sub entities that are auto-added to the base entity when newEntity() is called
      */
-    protected $sub_entities = array();
+    protected $subEntities = array();
 
     /**
      * @var string
      */
-    protected $number_identifier_column = 'id';
+    protected $numberIdentifierColumn = 'id';
 
     /**
      * @var string
      */
-    protected $text_identifier_column = 'slug';
+    protected $textIdentifierColumn = 'id';
 
     /**
      * @var string
@@ -52,21 +52,26 @@ abstract class Model implements ModelInterface {
     /**
      * @var \AVCMS\Core\Taxonomy\TaxonomyManager
      */
-    protected $taxonomy_manager = null;
+    protected $taxonomyManager = null;
 
     /**
-     * @param QueryBuilderHandler $query_builder
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $event_dispatcher
+     * @param QueryBuilderHandler $queryBuilder
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
-    public  function __construct(QueryBuilderHandler $query_builder, EventDispatcherInterface $event_dispatcher)
+    public  function __construct(QueryBuilderHandler $queryBuilder, EventDispatcherInterface $eventDispatcher)
     {
-        $this->query_builder = $query_builder;
-        $this->event_dispatcher = $event_dispatcher;
+        $this->queryBuilder = $queryBuilder;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function setTaxonomyManager(TaxonomyManager $taxonomy_manager)
+    /**
+     * Set a taxonomy manager allowing records to be found by assigned taxonomy
+     *
+     * @param TaxonomyManager $taxonomyManager
+     */
+    public function setTaxonomyManager(TaxonomyManager $taxonomyManager)
     {
-        $this->taxonomy_manager = $taxonomy_manager;
+        $this->taxonomyManager = $taxonomyManager;
     }
 
     /**
@@ -74,7 +79,7 @@ abstract class Model implements ModelInterface {
      */
     public function find()
     {
-        return new $this->finder($this, $this->taxonomy_manager);
+        return new $this->finder($this, $this->taxonomyManager);
     }
 
     /**
@@ -84,28 +89,32 @@ abstract class Model implements ModelInterface {
      */
     public function query()
     {
-        $query = $this->query_builder->modelQuery($this);
+        $query = $this->queryBuilder->modelQuery($this);
 
         return $query;
     }
 
     /**
+     * Find a row by ID, return the query builder for further modification
+     *
      * @param $id
      * @return QueryBuilderHandler
      */
     public function findOne($id = null)
     {
         if (is_numeric($id)) {
-            $column = $this->number_identifier_column;
+            $column = $this->numberIdentifierColumn;
         }
         else {
-            $column = $this->text_identifier_column;
+            $column = $this->textIdentifierColumn;
         }
 
         return $this->query()->where($this->getTable().'.'.$column, $id);
     }
 
     /**
+     * Find a row by ID and return the matching entity
+     *
      * @param $id
      * @return Entity|mixed
      */
@@ -124,11 +133,11 @@ abstract class Model implements ModelInterface {
      */
     public function getOneOrNew($id)
     {
-        if (!$id) {
-            return $this->newEntity();
+        if ($id) {
+            return $this->getOne($id);
         }
         else {
-            return $this->getOne($id);
+            return $this->newEntity();
         }
     }
 
@@ -146,13 +155,19 @@ abstract class Model implements ModelInterface {
      */
     public function save($entity, $column_match = null)
     {
-        if (!is_callable(array($entity, 'getId'))) {
-            throw new \Exception("Cannot use save() on an entity without a getId method");
+        if (is_callable(array($entity, 'get'.$this->numberIdentifierColumn))) {
+            $idMethod = 'get'.$this->numberIdentifierColumn;
+        }
+        elseif (is_callable(array($entity, 'get'.$this->textIdentifierColumn))) {
+            $idMethod = 'get'.$this->textIdentifierColumn;
+        }
+        else {
+            throw new \Exception("Cannot save, entity does not have a valid getter for {$this->numberIdentifierColumn} or {$this->textIdentifierColumn}");
         }
 
-        if ($entity->getId()) {
+        if ($entity->$idMethod()) {
             $this->update($entity, $column_match);
-            return $entity->getId();
+            return $entity->$idMethod();
         }
         else {
             return $this->insert($entity);
@@ -167,7 +182,7 @@ abstract class Model implements ModelInterface {
      */
     public function insert($data)
     {
-        $this->event_dispatcher->dispatch('model.insert', $event = new ModelInsertEvent($data));
+        $this->eventDispatcher->dispatch('model.insert', $event = new ModelInsertEvent($data));
         $data = $event->getData();
 
         return $this->query()->insert($data);
@@ -177,20 +192,20 @@ abstract class Model implements ModelInterface {
      * Use the data from an entity to update the database table
      *
      * @param Entity $entity
-     * @param string|array $column_match Set the columns that must match to update on.
+     * @param string|array $columnMatch Set the columns that must match to update on.
      *        By default will update row with matching 'id' field
      *
      * @throws \Exception
      */
-    public function update(Entity $entity, $column_match = null)
+    public function update(Entity $entity, $columnMatch = null)
     {
-        $this->event_dispatcher->dispatch('model.update', new ModelUpdateEvent($entity));
+        $this->eventDispatcher->dispatch('model.update', new ModelUpdateEvent($entity));
 
-        if (!$column_match) {
-            $column_match = $this->number_identifier_column;
+        if (!$columnMatch) {
+            $columnMatch = $this->numberIdentifierColumn;
         }
 
-        $query = $this->createWhereQuery($entity, $column_match);
+        $query = $this->createWhereQuery($entity, $columnMatch);
 
         $query->update($entity);
     }
@@ -199,16 +214,16 @@ abstract class Model implements ModelInterface {
      * Delete a row from the database using the matching parameter(s) of an entity
      *
      * @param Entity $entity
-     * @param string $column_match
+     * @param string $columnMatch
      * @throws \Exception
      */
-    public function delete(Entity $entity, $column_match = null)
+    public function delete(Entity $entity, $columnMatch = null)
     {
-        if (!$column_match) {
-            $column_match = $this->number_identifier_column;
+        if (!$columnMatch) {
+            $columnMatch = $this->numberIdentifierColumn;
         }
 
-        $query = $this->createWhereQuery($entity, $column_match);
+        $query = $this->createWhereQuery($entity, $columnMatch);
 
         $query->delete();
     }
@@ -220,16 +235,16 @@ abstract class Model implements ModelInterface {
      * a WHERE will be generated for WHERE id = $entity->getId();
      *
      * @param $entity
-     * @param $column_match
+     * @param $columnMatch
      *
      * @throws \Exception
      * @return QueryBuilderHandler
      */
-    protected function createWhereQuery($entity, $column_match)
+    protected function createWhereQuery($entity, $columnMatch)
     {
         $query = $this->query();
 
-        $columns = (array) $column_match;
+        $columns = (array) $columnMatch;
 
         foreach ($columns as $column) {
             $getter = 'get'.str_replace('_', '', $column);
@@ -252,13 +267,13 @@ abstract class Model implements ModelInterface {
      */
     public function newEntity()
     {
-        $entity_name = $this->getEntity();
-        $entity = new $entity_name();
+        $entityName = $this->getEntity();
+        $entity = new $entityName();
 
-        foreach ($this->sub_entities as $sub_entity_name => $sub_entity) {
-            $sub_entity_instance = new $sub_entity['class']();
+        foreach ($this->subEntities as $subEntityName => $sub_entity) {
+            $subEntityInstance = new $sub_entity['class']();
 
-            $entity->addSubEntity($sub_entity_name, $sub_entity_instance, true);
+            $entity->addSubEntity($subEntityName, $subEntityInstance, true);
         }
         return $entity;
     }
@@ -266,21 +281,12 @@ abstract class Model implements ModelInterface {
     /**
      * Delete a row by ID
      *
-     * @param $id
-     */
-    public function deleteById($id)
-    {
-        $this->query()->where($this->number_identifier_column, $id)->delete();
-    }
-
-    /**
-     * Delete multiple rows by ID
-     *
      * @param $ids
      */
-    public function deleteByIds(array $ids)
+    public function deleteById($ids)
     {
-        $this->query()->whereIn('id', $ids)->delete();
+        $ids = (array) $ids;
+        $this->query()->whereIn($this->numberIdentifierColumn, $ids)->delete();
     }
 
     /**
@@ -299,11 +305,11 @@ abstract class Model implements ModelInterface {
      * Add a sub-entity that will contain data that has been added to the table
      * using an extension
      *
-     * @param $overflow_name
-     * @param $class_name
+     * @param $overflowName
+     * @param $className
      */
-    public function addOverflowEntity($overflow_name, $class_name)
+    public function addOverflowEntity($overflowName, $className)
     {
-        $this->sub_entities[$overflow_name] = array('class' => $class_name, 'type' => 'overflow');
+        $this->subEntities[$overflowName] = array('class' => $className, 'type' => 'overflow');
     }
 }

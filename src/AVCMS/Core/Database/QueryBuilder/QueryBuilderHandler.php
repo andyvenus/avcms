@@ -16,55 +16,56 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
 
     protected $entity;
 
-    protected $sub_entities;
+    protected $subEntities;
 
     /**
      * @var null|\Symfony\Component\EventDispatcher\EventDispatcher
      */
-    protected $event_dispatcher = null;
+    protected $eventDispatcher = null;
 
     /**
      * @var Model[]
      */
-    protected $model_joins = array();
+    protected $modelJoins = array();
+
+    protected $selectMade;
 
     public function __construct(Connection $connection = null)
     {
         parent::__construct($connection);
 
-        $this->event_dispatcher = $connection->getEventDispatcher();
+        $this->eventDispatcher = $connection->getEventDispatcher();
     }
 
     /**
      * Get all rows
      *
      * @param string $class
-     * @param int $fetch_type
+     * @param int $fetchType
      * @return mixed
      */
-    public function get($class = null, $fetch_type = \PDO::FETCH_CLASS)
+    public function get($class = null, $fetchType = \PDO::FETCH_CLASS)
     {
         if ($class == null && isset($this->entity) && $this->entity !== null) {
             $class = $this->entity;
         }
 
-        // If we have sub-entities, do the more complex method including joins
         if (isset($this->model) && $class != 'stdClass' && $class != null) {
             return $this->getEntity($class);
         }
 
-        if ($class == null && $fetch_type === \PDO::FETCH_CLASS) {
+        if ($class == null && $fetchType === \PDO::FETCH_CLASS) {
             $class = 'stdClass';
         }
 
         $this->fireEvents('before-select');
         $this->preparePdoStatement();
 
-        if ($fetch_type === \PDO::FETCH_CLASS) {
-            $result = $this->pdoStatement->fetchAll($fetch_type, $class);
+        if ($fetchType === \PDO::FETCH_CLASS) {
+            $result = $this->pdoStatement->fetchAll($fetchType, $class);
         }
         else {
-            $result = $this->pdoStatement->fetchAll($fetch_type);
+            $result = $this->pdoStatement->fetchAll($fetchType);
         }
         $this->pdoStatement = null;
         $this->fireEvents('after-select', $result);
@@ -84,54 +85,54 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
 
         $result = array();
 
-        while ($row_array = $this->pdoStatement->fetch(\PDO::FETCH_ASSOC)) {
+        while ($rowArray = $this->pdoStatement->fetch(\PDO::FETCH_ASSOC)) {
             $entity = $this->model->newEntity();
 
-            if (!empty($this->model_joins)) {
-                foreach ($this->model_joins as $join_name => $join_model) {
+            if (!empty($this->modelJoins)) {
+                foreach ($this->modelJoins as $joinName => $joinModel) {
 
-                    if (strpos($join_name, '__') !== false) {
-                        $selected_entity = $this->findSubEntityFromColumn($entity, $join_name);
-                        $join_name_explode = explode('__', $join_name);
-                        $join_name = array_pop($join_name_explode);
+                    if (strpos($joinName, '__') !== false) {
+                        $selectedEntity = $this->findSubEntityFromColumn($entity, $joinName);
+                        $joinNameExplode = explode('__', $joinName);
+                        $joinName = array_pop($joinNameExplode);
                     }
                     else {
-                        $selected_entity = $entity;
+                        $selectedEntity = $entity;
                     }
-                    $sub_entity = $join_model->newEntity();
+                    $subEntity = $joinModel->newEntity();
 
-                    $selected_entity->addSubEntity($join_name, $sub_entity);
+                    $selectedEntity->addSubEntity($joinName, $subEntity);
                 }
             }
 
-            foreach ($row_array as $column_name => $column_value) {
+            foreach ($rowArray as $columnName => $columnValue) {
 
-                $column_value_used = false;
+                $columnValueUsed = false;
 
-                if (strpos($column_name, '__') !== false) {
+                if (strpos($columnName, '__') !== false) {
 
-                    $selected_entity = $this->findSubEntityFromColumn($entity, $column_name);
-                    $sub_entities = explode('__', $column_name);
-                    $column = array_pop($sub_entities);
+                    $selectedEntity = $this->findSubEntityFromColumn($entity, $columnName);
+                    $subEntities = explode('__', $columnName);
+                    $column = array_pop($subEntities);
 
-                    if ($selected_entity != null) {
-                        $setter_method_name = 'set'.$this->dashesToCamelCase($column, true);
-                        if (method_exists($selected_entity, $setter_method_name)) {
-                            $selected_entity->$setter_method_name($column_value);
-                            $column_value_used = true;
+                    if ($selectedEntity != null) {
+                        $setterMethodName = 'set'.str_replace('_', '', $column);
+                        if (method_exists($selectedEntity, $setterMethodName)) {
+                            $selectedEntity->$setterMethodName($columnValue);
+                            $columnValueUsed = true;
                         }
                     }
                 }
                 else {
-                    $setter_method_name = 'set'.$this->dashesToCamelCase($column_name, true);
+                    $setterMethodName = 'set'.str_replace('_', '', $columnName);
 
-                    if (method_exists($entity, $setter_method_name)) {
-                        $entity->$setter_method_name($column_value);
-                        $column_value_used = true;
+                    if (method_exists($entity, $setterMethodName)) {
+                        $entity->$setterMethodName($columnValue);
+                        $columnValueUsed = true;
                     }
                 }
 
-                if ($column_value_used == false) {
+                if ($columnValueUsed == false) {
                     // TODO: LOG IN DEV MODE
                 }
             }
@@ -150,29 +151,29 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
         return $result;
     }
 
-    protected function findSubEntityFromColumn($entity, $column_name, $ignore_last = true)
+    protected function findSubEntityFromColumn($entity, $columnName, $ignoreLast = true)
     {
-        $sub_entities = explode('__', $column_name);
+        $subEntities = explode('__', $columnName);
 
-        if ($ignore_last) {
-            array_pop($sub_entities);
+        if ($ignoreLast) {
+            array_pop($subEntities);
         }
 
-        $selected_entity = $entity;
+        $selectedEntity = $entity;
 
         // Track down the right sub-entity recursively
-        foreach ($sub_entities as $sub_entity_name) {
-            if (isset($selected_entity->$sub_entity_name)) {
-                $selected_entity = $selected_entity->$sub_entity_name;
+        foreach ($subEntities as $subEntityName) {
+            if (isset($selectedEntity->$subEntityName)) {
+                $selectedEntity = $selectedEntity->$subEntityName;
             }
             else {
                 // No matching sub-entity
-                $selected_entity = null;
+                $selectedEntity = null;
                 break;
             }
         }
 
-        return $selected_entity;
+        return $selectedEntity;
     }
 
     /**
@@ -224,7 +225,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     public function select($fields, $join = false)
     {
         if ($join == false) {
-            $this->select_made = true;
+            $this->selectMade = true;
         }
 
         // If this is a model-based select, we automatically add the table to the fields
@@ -250,7 +251,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     public function getQuery($type = 'select', $dataToBePassed = array())
     {
         // Automatically generating the "SELECT *" here instead of deeper down
-        if (!isset($this->select_made)) {
+        if (!isset($this->selectMade)) {
             $fields[] = '*';
             $this->select($fields);
         }
@@ -284,13 +285,13 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     /**
      * Add a sub-entity that allows extension of the main entity
      *
-     * @param $entity_name
-     * @param $join_id
+     * @param $entityName
+     * @param $joinId
      * @return $this
      */
-    public function addSubEntity($entity_name, $join_id)
+    public function addSubEntity($entityName, $joinId)
     {
-        $this->sub_entities[] = array('class' => $entity_name, 'id' => $join_id);
+        $this->subEntities[] = array('class' => $entityName, 'id' => $joinId);
 
         return $this;
     }
@@ -298,10 +299,10 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     /**
      * Do a one-to-one join based on data provided by a model
      *
-     * @param Model $join_model The model used to create the join
+     * @param Model $joinModel The model used to create the join
      * @param array $columns The columns to join
      * @param string $type SQL Join type
-     * @param null $join_to Select a sub-entity to join to
+     * @param null $joinTo Select a sub-entity to join to
      * @param null|string $key Join 'on' operation key
      * @param null|string $operator Join 'on' operation operator
      * @param null $value Join 'on' operation value
@@ -310,53 +311,53 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
      *
      * @return QueryBuilderHandler
      */
-    public function modelJoin(Model $join_model, array $columns, $type = 'left', $join_to = null, $key = null, $operator = '=', $value = null)
+    public function modelJoin(Model $joinModel, array $columns, $type = 'left', $joinTo = null, $key = null, $operator = '=', $value = null)
     {
-        if ($this->event_dispatcher) {
-            $event = new QueryBuilderModelJoinEvent($join_model, $columns, $type);
-            $this->event_dispatcher->dispatch('query_builder.model_join', $event);
+        if ($this->eventDispatcher) {
+            $event = new QueryBuilderModelJoinEvent($joinModel, $columns, $type);
+            $this->eventDispatcher->dispatch('query_builder.model_join', $event);
             $columns = $event->getColumns();
             $type = $event->getType();
         }
 
-        if ($join_to == null) {
-            $this_table = $this->model->getTable();
+        if ($joinTo == null) {
+            $thisTable = $this->model->getTable();
         }
         else {
-            if (!isset($this->model_joins[$join_to])) {
-                throw new \Exception('Cannot join model '.get_class($join_model).' to '.$join_to.' because '.$join_to.' has not been joined to this query yet');
+            if (!isset($this->modelJoins[$joinTo])) {
+                throw new \Exception('Cannot join model '.get_class($joinModel).' to '.$joinTo.' because '.$joinTo.' has not been joined to this query yet');
             }
 
-            $this_table = $this->model_joins[$join_to]->getTable();
+            $thisTable = $this->modelJoins[$joinTo]->getTable();
         }
 
-        $join_singular = $join_model->getSingular();
+        $joinSingular = $joinModel->getSingular();
 
-        if ($join_to) {
-            $join_singular = $join_to.'__'.$join_singular;
+        if ($joinTo) {
+            $joinSingular = $joinTo.'__'.$joinSingular;
         }
 
-        $join_table = $join_model->getTable();
-        $join_column = $join_model->getJoinColumn($this_table);
+        $joinTable = $joinModel->getTable();
+        $joinColumn = $joinModel->getJoinColumn($thisTable);
 
-        $columns_updated = array();
+        $columnsUpdated = array();
 
         foreach ($columns as $column) {
-            $columns_updated[] = "{$join_table}.{$column}` as `{$join_singular}__{$column}"; // @todo do this better?
+            $columnsUpdated[] = "{$joinTable}.{$column}` as `{$joinSingular}__{$column}"; // @todo do this better?
         }
 
-        $this->select($columns_updated, true);
+        $this->select($columnsUpdated, true);
 
         if ($key == null && $value == null) {
-            $key = $join_table.'.id';
-            $value = $this_table.'.'.$join_column;
+            $key = $joinTable.'.id';
+            $value = $thisTable.'.'.$joinColumn;
         }
 
-        $this->join($join_table, $key, $operator, $value, $type);
+        $this->join($joinTable, $key, $operator, $value, $type);
 
-        $this->addSubEntity($join_model->getEntity(), $join_singular);
+        $this->addSubEntity($joinModel->getEntity(), $joinSingular);
 
-        $this->model_joins[$join_singular] = $join_model;
+        $this->modelJoins[$joinSingular] = $joinModel;
 
         /*
         $a = $this->getQuery();
@@ -366,18 +367,18 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     }
 
     /**
-     * @param $taxonomy_model
+     * @param $taxonomyModel
      * @param $equals
      * @return $this
      */
-    public function taxonomy(TaxonomyModel $taxonomy_model, array $equals)
+    public function taxonomy(TaxonomyModel $taxonomyModel, array $equals)
     {
-        $tax_table = $taxonomy_model->getTable();
-        $taxonomy_field_id = 'content_id';
+        $taxTable = $taxonomyModel->getTable();
+        $taxonomyFieldId = 'content_id';
 
-        $this->join($tax_table, $taxonomy_field_id, '=', $this->model->getTable().'.id', 'left')
+        $this->join($taxTable, $taxonomyFieldId, '=', $this->model->getTable().'.id', 'left')
              ->where('content_type', $this->model->getSingular())
-             ->whereIn($tax_table.'.id', $equals);
+             ->whereIn($taxTable.'.id', $equals);
 
         return $this;
     }
@@ -426,41 +427,23 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
         if (is_array($data) && isset($data[0])) {
             foreach ($data as $entity) {
                 if (is_a($entity, 'AVCMS\Core\Model\Entity')) {
-                    $entity_data[] = $entity->toArray();
+                    $entityData[] = $entity->toArray();
                 }
             }
 
-            if (isset($entity_data)) {
-                $data = $entity_data;
+            if (isset($entityData)) {
+                $data = $entityData;
             }
         }
 
         $id = parent::insert($data);
 
         // Set insert ID on entity TODO: support batch insert
-        if (isset($entity) && method_exists($entity, 'setId')) {
+        if (isset($entity) && method_exists($entity, 'setId') && (!method_exists($entity, 'getId') || $entity->getId() === null)) {
             $entity->setId($id);
         }
 
         return $id;
-    }
-
-    /**
-     * Convert something_like_this to somethingLikeThis
-     *
-     * @param $string
-     * @param bool $capitalize_first_character
-     * @return mixed
-     */
-    protected function dashesToCamelCase($string, $capitalize_first_character = false)
-    {
-        $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
-
-        if (!$capitalize_first_character) {
-            $str[0] = strtolower($str[0]);
-        }
-
-        return $str;
     }
 
     /**
@@ -489,10 +472,10 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     }
 
 
-    public function paginated($page, $results_per_page) {
-        $offset = $results_per_page * ($page - 1);
+    public function paginated($page, $resultsPerPage) {
+        $offset = $resultsPerPage * ($page - 1);
 
-        return $this->limit($results_per_page)->offset($offset);
+        return $this->limit($resultsPerPage)->offset($offset);
     }
 
     public function getTablePrefix()

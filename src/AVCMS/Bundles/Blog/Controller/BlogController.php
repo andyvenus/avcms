@@ -63,8 +63,6 @@ class BlogController extends Controller
 
     public function testBlogPageAction(Request $request)
     {
-        echo $this->bundle->name;
-
-        return new Response($this->render('@Blog/test.twig'));
+        return new Response($this->render('@Blog/test2.twig'));
     }
 }

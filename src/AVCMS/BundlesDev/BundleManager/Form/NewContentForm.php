@@ -25,6 +25,15 @@ class NewContentForm extends FormBlueprint
                 'label' => 'Content Plural Name (like "posts", "comments", "forum_posts")',
                 'required' => true
             ));
+
+            $this->add('admin_sections', 'radio', array(
+                'label' => 'Generate Admin Section (form, templates, controller)',
+                'choices' => array(
+                    '1' => 'Yes',
+                    '0' => 'No'
+                ),
+                'default' => '1'
+            ));
         }
     }
 

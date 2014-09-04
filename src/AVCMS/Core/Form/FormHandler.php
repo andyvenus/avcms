@@ -57,12 +57,12 @@ class FormHandler
     /**
      * @var GetterSetterEntityProcessor The entity processor to set and get values from an entity
      */
-    protected $entity_processor;
+    protected $entityProcessor;
 
     /**
      * @var FormView A FormView instance that helps render the form
      */
-    protected $form_view;
+    protected $formView;
 
     /**
      * @var ValidatorExtension A validator object
@@ -77,7 +77,7 @@ class FormHandler
     /**
      * @var string
      */
-    protected $form_name;
+    protected $formName;
 
     /**
      * @var array The form fields
@@ -92,12 +92,12 @@ class FormHandler
     /**
      * @var RequestHandler\StandardRequestHandler
      */
-    protected $request_handler;
+    protected $requestHandler;
 
     /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcher
      */
-    protected $event_dispatcher;
+    protected $eventDispatcher;
 
     /**
      * @var array
@@ -107,50 +107,55 @@ class FormHandler
     /**
      * @var TransformerManager
      */
-    protected $transformer_manager;
+    protected $transformerManager;
+
+    /**
+     * @var Type\TypeHandler
+     */
+    protected $typeHandler;
 
     /**
      * @param FormBlueprintInterface $form
-     * @param \AVCMS\Core\Form\RequestHandler\RequestHandlerInterface|null $request_handler
-     * @param EntityProcessor $entity_processor
-     * @param \AVCMS\Core\Form\Type\TypeHandler $type_handler
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $event_dispatcher
+     * @param \AVCMS\Core\Form\RequestHandler\RequestHandlerInterface|null $requestHandler
+     * @param EntityProcessor $entityProcessor
+     * @param \AVCMS\Core\Form\Type\TypeHandler $typeHandler
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         FormBlueprintInterface $form,
-        RequestHandlerInterface $request_handler = null,
-        EntityProcessor $entity_processor = null,
-        TypeHandler $type_handler = null,
-        EventDispatcherInterface $event_dispatcher = null
+        RequestHandlerInterface $requestHandler = null,
+        EntityProcessor $entityProcessor = null,
+        TypeHandler $typeHandler = null,
+        EventDispatcherInterface $eventDispatcher = null
     )
     {
         $this->form = $form;
 
-        if ($entity_processor) {
-            $this->entity_processor = $entity_processor;
+        if ($entityProcessor) {
+            $this->entityProcessor = $entityProcessor;
         }
         else {
-            $this->entity_processor = new GetterSetterEntityProcessor();
+            $this->entityProcessor = new GetterSetterEntityProcessor();
         }
 
-        if ($request_handler) {
-            $this->request_handler = $request_handler;
+        if ($requestHandler) {
+            $this->requestHandler = $requestHandler;
         }
         else {
-            $this->request_handler = new StandardRequestHandler();
+            $this->requestHandler = new StandardRequestHandler();
         }
 
-        if ($type_handler) {
-            $this->type_handler = $type_handler;
+        if ($typeHandler) {
+            $this->typeHandler = $typeHandler;
         }
         else {
-            $this->type_handler = new TypeHandler();
+            $this->typeHandler = new TypeHandler();
         }
 
-        if ($event_dispatcher) {
-            $this->event_dispatcher = $event_dispatcher;
+        if ($eventDispatcher) {
+            $this->eventDispatcher = $eventDispatcher;
             $event = new FormHandlerConstructEvent($this, $this->form);
-            $this->event_dispatcher->dispatch('form_handler.construct', $event);
+            $this->eventDispatcher->dispatch('form_handler.construct', $event);
             $this->form = $event->getFormBlueprint();
         }
 
@@ -159,7 +164,7 @@ class FormHandler
 
         $this->method = $form->getMethod();
         $this->action = $form->getAction();
-        $this->form_name = $form->getName();
+        $this->formName = $form->getName();
 
         if ($this->hasFieldOfType('file')) {
             $this->encoding = 'multipart/form-data';
@@ -176,7 +181,7 @@ class FormHandler
     {
         $fields_updated = array();
         foreach ($fields as $field_name => $field) {
-            $fields_updated[$field_name] = $this->type_handler->getDefaultOptions($field);
+            $fields_updated[$field_name] = $this->typeHandler->getDefaultOptions($field);
         }
 
         return $fields_updated;
@@ -195,11 +200,11 @@ class FormHandler
     /**
      * Set the default values of matching fields
      *
-     * @param array $default_values
+     * @param array $defaultValues
      */
-    public function setDefaultValues(array $default_values)
+    public function setDefaultValues(array $defaultValues)
     {
-        foreach ($default_values as $name => $value) {
+        foreach ($defaultValues as $name => $value) {
             if (isset($this->fields[$name])) {
                 $this->data[$name] = $value;
             }
@@ -224,11 +229,11 @@ class FormHandler
 
         $this->entities[] = array('entity' => $entity, 'fields' => $fields, 'validatable' => $validatable);
 
-        $entity_data = $this->entity_processor->getFromEntity($entity, array_keys($this->fields), $fields);
+        $entityData = $this->entityProcessor->getFromEntity($entity, array_keys($this->fields), $fields);
 
-        $entity_data = $this->transformToFormData($entity_data);
+        $entityData = $this->transformToFormData($entityData);
 
-        $this->data = array_merge($this->data, $entity_data);
+        $this->data = array_merge($this->data, $entityData);
     }
 
     /**
@@ -249,15 +254,15 @@ class FormHandler
     {
         $this->submitted = true;
 
-        $request_data = $this->request_handler->handleRequest($this, $request);
+        $requestData = $this->requestHandler->handleRequest($this, $request);
 
-        foreach ($this->fields as $field_name => $field) {
-            $field_name = $field['name'];
-            if (isset($request_data[ $field_name ])) {
-                $field_submitted = $this->type_handler->isValidRequestData($field, $request_data[$field_name]);
+        foreach ($this->fields as $field) {
+            $fieldName = $field['name'];
+            if (isset($requestData[ $fieldName ])) {
+                $field_submitted = $this->typeHandler->isValidRequestData($field, $requestData[$fieldName]);
             }
             else {
-                $field_submitted = $this->type_handler->allowUnsetRequest($field);
+                $field_submitted = $this->typeHandler->allowUnsetRequest($field);
             }
 
             // Form was not submitted
@@ -266,30 +271,30 @@ class FormHandler
                 break;
             }
             else {
-                if (isset($request_data[$field_name])) {
-                    $valid_request_data[$field_name] = $this->type_handler->processRequestData($field, $request_data[$field_name]);
+                if (isset($requestData[$fieldName])) {
+                    $validRequestData[$fieldName] = $this->typeHandler->processRequestData($field, $requestData[$fieldName]);
                 }
                 else {
-                    $data = $this->type_handler->getUnsetRequestData($field);
+                    $data = $this->typeHandler->getUnsetRequestData($field);
 
                     if ($data !== null) {
-                        $valid_request_data[$field_name] = $data;
+                        $validRequestData[$fieldName] = $data;
                     }
                 }
             }
         }
 
-        if ($this->submitted == true && isset($valid_request_data)) {
-            $this->data = $valid_request_data;
+        if ($this->submitted == true && isset($validRequestData)) {
+            $this->data = $validRequestData;
             $this->setRequiredFieldErrors();
         }
         else {
             $this->submitted = false;
         }
 
-        if (isset($this->event_dispatcher)) {
+        if (isset($this->eventDispatcher)) {
             $event = new FormHandlerRequestEvent($this, $request, $this->data);
-            $this->event_dispatcher->dispatch('form_handler.request', $event);
+            $this->eventDispatcher->dispatch('form_handler.request', $event);
             $this->data = $event->getFormData();
         }
     }
@@ -302,7 +307,7 @@ class FormHandler
         $data = $this->transformFromFormData($this->data);
 
         foreach ($this->entities as $entity) {
-            $this->entity_processor->saveToEntity($entity['entity'], $data, $entity['fields']);
+            $this->entityProcessor->saveToEntity($entity['entity'], $data, $entity['fields']);
         }
     }
 
@@ -322,7 +327,7 @@ class FormHandler
         foreach ($this->entities as $entity) {
             $entity['entity'] = clone $entity['entity'];
             $cloned_entities[] = $entity;
-            $this->entity_processor->saveToEntity($entity['entity'], $data, $entity['fields']);
+            $this->entityProcessor->saveToEntity($entity['entity'], $data, $entity['fields']);
         }
 
         return $cloned_entities;
@@ -357,8 +362,8 @@ class FormHandler
     public function getProcessedFields()
     {
         $fields = array();
-        foreach ($this->fields as $field_name => $field) {
-            $fields[$field_name] = $this->getProcessedField($field_name);
+        foreach ($this->fields as $fieldName => $field) {
+            $fields[$fieldName] = $this->getProcessedField($fieldName);
         }
 
         return $fields;
@@ -367,40 +372,40 @@ class FormHandler
     /**
      * Process a field and return it
      *
-     * @param $field_name
+     * @param $fieldName
      * @return bool
      */
-    public function getProcessedField($field_name)
+    public function getProcessedField($fieldName)
     {
-        if (!isset($this->fields[$field_name])) {
+        if (!isset($this->fields[$fieldName])) {
             return false;
         }
 
-        $field = $this->fields[$field_name];
+        $field = $this->fields[$fieldName];
 
-        $field['has_error'] = $this->fieldHasError($field_name);
+        $field['has_error'] = $this->fieldHasError($fieldName);
 
-        return $this->type_handler->makeView($field, $this->data, $this);
+        return $this->typeHandler->makeView($field, $this->data, $this);
     }
 
     /**
      * Check if a field has an error
      *
-     * @param $field_name
+     * @param $fieldName
      * @return bool
      */
-    public function fieldHasError($field_name)
+    public function fieldHasError($fieldName)
     {
         if (!$this->isSubmitted()) {
             return false;
         }
 
-        if (isset($this->validator) && $this->validator->fieldHasError($field_name)) {
+        if (isset($this->validator) && $this->validator->fieldHasError($fieldName)) {
             return true;
         }
 
         foreach ($this->errors as $error) {
-            if ($error->getParam() == $field_name) {
+            if ($error->getParam() == $fieldName) {
                 return true;
             }
         }
@@ -409,13 +414,13 @@ class FormHandler
     /**
      * Check if the form contains any fields of a certain type like "select" or "textarea"
      *
-     * @param $field_type
+     * @param $fieldType
      * @return bool
      */
-    public function hasFieldOfType($field_type)
+    public function hasFieldOfType($fieldType)
     {
         foreach ($this->fields as $field) {
-            if ($field['type'] == $field_type) {
+            if ($field['type'] == $fieldType) {
                 return true;
             }
         }
@@ -423,9 +428,9 @@ class FormHandler
         return false;
     }
 
-    public function hasFieldWithName($field_name)
+    public function hasFieldWithName($fieldName)
     {
-        return isset($this->fields[$field_name]);
+        return isset($this->fields[$fieldName]);
     }
 
     /**
@@ -483,7 +488,7 @@ class FormHandler
      */
     public function getTypeHandler()
     {
-        return $this->type_handler;
+        return $this->typeHandler;
     }
 
     /**
@@ -538,7 +543,7 @@ class FormHandler
      */
     public function getName()
     {
-        return $this->form_name;
+        return $this->formName;
     }
 
     /**
@@ -558,7 +563,7 @@ class FormHandler
      */
     public function setFormView(FormViewInterface $view)
     {
-        $this->form_view = $view;
+        $this->formView = $view;
     }
 
     /**
@@ -568,23 +573,23 @@ class FormHandler
      */
     public function createView()
     {
-        if (!$this->form_view) {
-            $this->form_view = new FormView();
+        if (!$this->formView) {
+            $this->formView = new FormView();
         }
 
-        $this->form_view->setFormBlueprint($this->form);
-        $this->form_view->setFields($this->getProcessedFields());
-        $this->form_view->setSections($this->form->getSections());
-        $this->form_view->setMethod($this->getMethod());
-        $this->form_view->setName($this->getName());
-        $this->form_view->setEncoding($this->getEncoding());
-        $this->form_view->setSubmitted($this->isSubmitted());
+        $this->formView->setFormBlueprint($this->form);
+        $this->formView->setFields($this->getProcessedFields());
+        $this->formView->setSections($this->form->getSections());
+        $this->formView->setMethod($this->getMethod());
+        $this->formView->setName($this->getName());
+        $this->formView->setEncoding($this->getEncoding());
+        $this->formView->setSubmitted($this->isSubmitted());
 
         if ($this->submitted && isset($this->validator)) {
-            $this->form_view->setErrors($this->getValidationErrors());
+            $this->formView->setErrors($this->getValidationErrors());
         }
 
-        return $this->form_view;
+        return $this->formView;
     }
 
     /**
@@ -702,17 +707,17 @@ class FormHandler
      */
     public function getEntityProcessor()
     {
-        return $this->entity_processor;
+        return $this->entityProcessor;
     }
 
     /**
      * Set the transformer manager
      *
-     * @param TransformerManager $transformer_manager
+     * @param TransformerManager $transformerManager
      */
-    public function setTransformerManager(TransformerManager $transformer_manager)
+    public function setTransformerManager(TransformerManager $transformerManager)
     {
-        $this->transformer_manager = $transformer_manager;
+        $this->transformerManager = $transformerManager;
     }
 
     /**
@@ -748,7 +753,7 @@ class FormHandler
     {
         foreach ($data as $field => $value) {
             if (isset($this->fields[$field]['options']['transform'])) {
-                $data[$field] = $this->transformer_manager->{$type.'Form'}($value, $this->fields[$field]['options']['transform']);
+                $data[$field] = $this->transformerManager->{$type.'Form'}($value, $this->fields[$field]['options']['transform']);
             }
         }
 

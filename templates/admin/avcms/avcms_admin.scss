@@ -75,7 +75,7 @@ a {
       margin-bottom: 2px;
       a {
         display: block;
-        padding: 5px 0px 5px 8px;
+        padding: 4px 0px 4px 8px;
         color: lighten($main_menu_color, 60);
         text-decoration: none;
       }
@@ -376,6 +376,15 @@ a {
 
   .light {
     color: #a6a6a6;
+
+    a {
+      color: #a6a6a6;
+      text-decoration: underline;
+    }
+
+    a:hover {
+      color: $decal_color;
+    }
   }
 }
 
@@ -384,6 +393,35 @@ a {
   overflow-y: scroll;
 }
 
+// Sortable
+.sortable {
+  padding: 0px;
+  width: 97%;
+}
+
+.sortable li {
+  list-style-type: none;
+  padding: 4px;
+  margin-bottom: 5px;
+  border: 1px solid #cccccc;
+  width: 100%;
+
+  ul {
+    margin-top: 8px;
+  }
+}
+
+.sortable-item {
+  .handle {
+    cursor: move;
+    color: #d1d1d1;
+  }
+}
+
+.mjs-nestedSortable-error {
+  border: 1px solid red!important;
+  visibility: visible!important;
+}
 
 // ANIMATION
 

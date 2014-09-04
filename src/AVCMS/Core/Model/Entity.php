@@ -24,7 +24,7 @@ abstract class Entity implements Validatable
     /**
      * @var Entity[] Any entities assigned via the magic __get method
      */
-    protected $sub_entities = array();
+    protected $subEntities = array();
 
     /**
      * @param $param
@@ -54,12 +54,12 @@ abstract class Entity implements Validatable
      */
     public function toArray()
     {
-        if (empty($this->sub_entities)) {
+        if (empty($this->subEntities)) {
             return $this->data;
         }
         else {
             $data = $this->data;
-            foreach ($this->sub_entities as $sub_entity) {
+            foreach ($this->subEntities as $sub_entity) {
                 if (is_a($sub_entity, 'AVCMS\Core\Model\ExtensionEntity')) {
 
                     $sub_data = $sub_entity->toArray();
@@ -77,6 +77,19 @@ abstract class Entity implements Validatable
         }
     }
 
+    public function fromArray(array $data)
+    {
+        foreach ($data as $key => $value) {
+            $key = str_replace('_', '', $key);
+
+            if (!method_exists($this, 'set'.$key)) {
+                throw new \Exception("This entity does not have a method for the data named $key");
+            }
+
+            $this->{'set'.$key}($value);
+        }
+    }
+
     /**
      * @param $name
      * @param Entity $entity
@@ -84,21 +97,21 @@ abstract class Entity implements Validatable
      */
     public function addSubEntity($name, Entity $entity, $extension = false)
     {
-        $this->sub_entities[$name] = $entity;
+        $this->subEntities[$name] = $entity;
     }
 
     public function getAllSubEntities()
     {
-        return $this->sub_entities;
+        return $this->subEntities;
     }
 
     public function getValidationRules(Validator $validator)
     {
         $this->validationRules($validator);
 
-        foreach ($this->sub_entities as $sub_entity) {
-            if (is_a($sub_entity, 'AVCMS\Core\Validation\Validatable')) {
-                $validator->addSubValidation($sub_entity);
+        foreach ($this->subEntities as $subEntity) {
+            if (is_a($subEntity, 'AVCMS\Core\Validation\Validatable')) {
+                $validator->addSubValidation($subEntity);
             }
         }
     }
@@ -119,7 +132,7 @@ abstract class Entity implements Validatable
      */
     public function __set($name, $value)
     {
-        $this->sub_entities[$name] = $value;
+        $this->subEntities[$name] = $value;
     }
 
     /**
@@ -128,7 +141,7 @@ abstract class Entity implements Validatable
      */
     public function __get($name)
     {
-        return $this->sub_entities[$name];
+        return $this->subEntities[$name];
     }
 
     /**
@@ -137,13 +150,13 @@ abstract class Entity implements Validatable
      */
     public function __isset($name)
     {
-        return isset($this->sub_entities[$name]);
+        return isset($this->subEntities[$name]);
     }
 
     public function __clone()
     {
-        foreach($this->sub_entities as $name => $obj) {
-            $this->sub_entities[$name] = clone $obj;
+        foreach($this->subEntities as $name => $obj) {
+            $this->subEntities[$name] = clone $obj;
         }
     }
 }

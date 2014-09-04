@@ -1,0 +1,43 @@
+{% extends '@admin/edit_item.twig' %}
+
+{% block title -%}
+    {% spaceless %}
+        {% if item.id %}
+            Editing {{ item.label }}
+        {% else %}
+            {% trans %}New Menu{% endtrans %}
+        {% endif %}
+    {% endspaceless  %}
+{% endblock %}
+
+{% block editor_title_edit %}
+    <span class="light">{% trans %}Editing Menu{% endtrans %}:</span> <span data-id="{{ item.id }}" data-field="label">{{ item.label }}</span>
+{% endblock %}
+
+{% block editor_title_new %}
+    New Menu
+{% endblock %}
+
+{% block editor_content %}
+
+    <p><a href="{{ url('menu_items_add', {menu: item.id}) }}" class="btn btn-default">{% trans %}Add Menu Item{% endtrans %}</a></p>
+
+    <div class="sortable-container">
+        <ul class="sortable" style="position: absolute;" data-ajax-action="{{ url('menus_save_order', {id: item.id}) }}">
+            {% for menu_item in menu_items %}
+            <li id="menu_order_{{ menu_item.id }}">
+                <div class="sortable-item"><span class="glyphicon glyphicon-align-justify handle"></span> {{ menu_item.label }} <a class="btn btn-xs btn-default" href="{{ url('menu_items_edit', {menu: item.id, id: menu_item.id}) }}">Edit</a> </div>
+                {% if menu_item.children %}
+                <ul>
+                    {% for menu_item in menu_item.children %}
+                        <li id="menu_order_{{ menu_item.id }}">
+                            <div class="sortable-item"><span class="glyphicon glyphicon-align-justify handle"></span> {{ menu_item.label }}</div>
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

@@ -1,8 +1,18 @@
 name: CmsFoundation
 namespace: AVCMS\Bundles\CmsFoundation
 
+core: true
+
 services:
-  - Settings
+  - SettingsServices
+  - TemplateServices
+  - DatabaseServices
+  - TwigServices
+  - BundleServices
+  - TranslationServices
+  - TaxonomyServices
+  - FormServices
+  - MenuServices
 
 user_settings_sections:
   main: Main
@@ -15,8 +25,34 @@ user_settings:
     section: main
   template:
     type: select
-    choices_provider: {class: AVCMS\Bundles\CmsFoundation\Settings\TemplateChoicesProvider }
+    choices_provider: { class: AVCMS\Bundles\CmsFoundation\Settings\TemplateChoicesProvider }
     label: Template
     help: The frontend template
     section: main
     default: indigo
+
+assets:
+  jquery.js:
+    env: shared
+    priority: 90
+  bootstrap.min.js:
+    env: shared
+  bootstrap.min.css:
+    env: shared
+  avcms_form.js:
+    env: shared
+  avcms_event.js:
+    env: shared
+    priority: 89
+
+menu_items:
+  admin:
+    something:
+      target: something
+      icon: my_icon
+      type: routesx
+      label: Rofl
+
+require:
+  - Framework
+  - NonExistant

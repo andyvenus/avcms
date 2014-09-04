@@ -14,11 +14,24 @@
             <strong id="status">Status: <span class="text-{{ btn_color }}">{{ enabled_text }}</span></strong> &nbsp;&nbsp;
             <strong>Namespace:</strong> {{ bundle_config.namespace }}
 
+            {% if bundle_config.require %}
+                <p><strong>Required Bundles:</strong>
+                    {% for bundle in bundle_config.require %}
+                        {% if bundle_manager.hasBundle(bundle) %}
+                            {% set text = 'text-success' %}
+                        {% else %}
+                            {% set text = 'text-danger' %}
+                        {% endif %}
+                        <span class="{{ text }}">{{ bundle }}</span>&nbsp;&nbsp;
+                    {% endfor %}
+                </p>
+            {% endif %}
+
             <h4>Routes</h4>
             <p>
                 {% for route_name, route in routes %}
                     <strong>{{ route_name }}</strong>:
-                    {% if route.link_route %}
+                    {% if route.link_route and bundle_enabled %}
                         <a href="{{ url(route_name) }}">{{ route.path }}</a>
                     {% else %}
                         {{ route.path }}
@@ -29,36 +42,40 @@
                 {% endfor %}
             </p>
 
-            <p>
-            <h4>Manage Generated Content</h4>
-            <div class="content-types">
-                {% for content_name, content in bundle_content %}
-                    <a href="{{ url(bundle.route.bundle_edit_content, {bundle: bundle_config.name, content_name: content_name}) }}" class="btn btn-{{ btn_color }}">
-                        {{ content.uc_plural }}
-                    </a>
-                {% else %}
-                    No generated content
-                {% endfor %}
-            </div>
-            </p>
+            {% if bundle_config.disable_content == false %}
+                <p>
+                    <h4>Manage Generated Content</h4>
+                    <div class="content-types">
+                        {% for content_name, content in bundle_content %}
+                            <a href="{{ url(bundle.route.bundle_edit_content, {bundle: bundle_config.name, content_name: content_name}) }}" class="btn btn-{{ btn_color }}">
+                                {{ content.uc_plural }}
+                            </a>
+                        {% else %}
+                            No generated content
+                        {% endfor %}
+                    </div>
+                </p>
+            {% endif %}
         </div>
 
         <div class="col-sm-4">
-            {% if bundle_config.name != 'BundleManager' %}
-                <div class="list-group">
-                    {% if bundle_enabled %}{% set enabled_button = "Bundle Active" %}{% else %}{% set enabled_button = "Bundle Inactive" %}{% endif %}
+            <div class="list-group">
+                {% if bundle_enabled %}{% set enabled_button = "Bundle Active" %}{% else %}{% set enabled_button = "Bundle Inactive" %}{% endif %}
 
+                {% if bundle_config.core == false %}
                     <a data-bundle-name="{{ bundle_config.name }}" href="#" class="status-button list-group-item list-group-item-{{ btn_color }}">
                         <span class="glyphicon glyphicon-unchecked"></span> {{ enabled_button }}
                     </a>
+                {% endif %}
 
-                    <a href="{{ url('bundle_add_content', {'bundle': bundle_config.name}) }}" class="list-group-item"><span class="glyphicon glyphicon-plus-sign"></span> Add Content</a>
-                    <!--<a href="#" class="list-group-item">Morbi leo risus</a>
-                    <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-                    <a href="#" class="list-group-item">Vestibulum at eros</a>
-                    -->
-                </div>
-            {% endif %}
+                {% if bundle_config.disable_content != true %}
+                <a href="{{ url('bundle_add_content', {'bundle': bundle_config.name}) }}" class="list-group-item"><span class="glyphicon glyphicon-plus-sign"></span> Add Content</a>
+                {% endif %}
+                <!--<a href="#" class="list-group-item">Morbi leo risus</a>
+                <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+                <a href="#" class="list-group-item">Vestibulum at eros</a>
+                -->
+            </div>
         </div>
     </div>
 {% endblock %}

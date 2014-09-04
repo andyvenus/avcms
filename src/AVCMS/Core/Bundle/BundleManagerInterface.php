@@ -100,10 +100,4 @@ interface BundleManagerInterface
      * @param RouteCollection $route_collection
      */
     public function getBundleRoutes(RouteCollection $route_collection);
-
-    /**
-     * @param SettingsManager $settings_manager
-     * @return mixed
-     */
-    public function getBundleSettings(SettingsManager $settings_manager);
 }

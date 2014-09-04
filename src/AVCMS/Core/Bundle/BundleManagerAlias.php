@@ -51,7 +51,7 @@ final class BundleManagerAlias implements BundleManagerInterface
 
     public function isDebug()
     {
-        $this->getBundleManager()->isDebug();
+        return $this->getBundleManager()->isDebug();
     }
 
     public function hasBundle($bundle_name)
@@ -117,10 +117,5 @@ final class BundleManagerAlias implements BundleManagerInterface
     public function getBundleRoutes(RouteCollection $route_collection)
     {
         return $this->getBundleManager()->getBundleRoutes($route_collection);
-    }
-
-    public function getBundleSettings(SettingsManager $settings_manager)
-    {
-        return $this->getBundleManager()->getBundleSettings($settings_manager);
     }
 }

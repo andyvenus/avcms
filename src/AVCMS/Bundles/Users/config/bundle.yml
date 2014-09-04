@@ -1,6 +1,11 @@
 name: Users
 namespace: AVCMS\Bundles\Users
 
+services:
+  - UserServices
+
+core: true
+
 model:
   users: Users
   groups: Groups

@@ -98,31 +98,6 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
             $loader = new YamlFileLoader($container, new FileLocator('app/config'));
             $loader->load('app.yml');
 
-            $services = array(
-                'AVCMS\Services\Foundation',
-                'AVCMS\Services\Bundles',
-                'AVCMS\Services\Twig',
-                'AVCMS\Services\Database',
-                'AVCMS\Services\Form',
-                'AVCMS\Services\User',
-                'AVCMS\Services\Translation',
-                'AVCMS\Services\Assets',
-                'AVCMS\Services\Taxonomy',
-            );
-
-            if ($this->debug) {
-                $services = array_merge($services, array(
-                    'AVCMS\Services\Developer',
-                ));
-            }
-
-            foreach ($services as $service) {
-                $service_class = new $service();
-                $service_class->getServices(array(), $container);
-
-                $container->addObjectResource($service);
-            }
-
             $this->container = $container;
 
             $this->getBundleManager()->decorateContainer($container);

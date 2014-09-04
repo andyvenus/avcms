@@ -1,25 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    {% block head %}
+    {% block head -%}
         <title>{% block title %}{% endblock %}</title>
     {% endblock %}
 
-    <link rel="stylesheet" type="text/css" href="{{ site_url }}web/css/style.css" />
-    <link href="{{ site_url }}web/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ site_url }}web/css/bootstrap-markdown.min.css" rel="stylesheet">
-    <link href="{{ site_url }}web/css/select2.css" rel="stylesheet">
-    <link href="{{ site_url }}web/css/select2-bootstrap.css" rel="stylesheet">
-    <link href="{{ site_url }}templates/admin/avcms/animate.css" rel="stylesheet">
-    <link href="{{ site_url }}web/css/nanoscroller.css" rel="stylesheet">
-
-    <link href="{{ site_url }}templates/admin/avcms/avcms_admin.css" rel="stylesheet">
-
-    {% for css in css('admin') %}
+    {% for css in css('admin') -%}
         <link href="{{ site_url }}{{ css }}" rel="stylesheet">
     {% endfor %}
 
-    <link href="{{ site_url }}web/css/avcms-blocks.css" rel="stylesheet">
+    <link href="{{ site_url }}templates/admin/avcms/animate.css" rel="stylesheet">
+    <link href="{{ site_url }}templates/admin/avcms/avcms_admin.css" rel="stylesheet">
 
     <script type="text/javascript">
         var avcms = avcms || {};
@@ -29,7 +20,7 @@
         }
     </script>
 
-    {% for js in javascripts('admin') %}
+    {% for js in javascripts('admin') -%}
         <script type="text/javascript" src="{{ site_url }}{{ js }}"></script>
     {% endfor %}
 
@@ -90,9 +81,9 @@
 
 <aside class="admin-menu">
     <ul>
-        <li><a href="#"><span class="glyphicon glyphicon-th"></span> Dashboard</a></li>
-        <li><a href="{{ url('blog_admin_home') }}"><span class="glyphicon glyphicon-pencil"></span> Blog</a></li>
-        <li><a href="{{ url('avcms_settings') }}"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+        {% for menu_item in menu('admin') %}
+            <li><a href="{{ menu_item.url }}"><span class="glyphicon glyphicon-{{ menu_item.icon }}"></span> {{ menu_item.label }}</a></li>
+        {% endfor %}
     </ul>
 </aside>
 

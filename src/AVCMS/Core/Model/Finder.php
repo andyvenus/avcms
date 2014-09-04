@@ -155,6 +155,11 @@ class Finder
         return $this;
     }
 
+    public function where($key, $operator = null, $value = null)
+    {
+        $this->current_query->where($key, $operator, $value);
+    }
+
     public function setSearchFields(array $fields)
     {
         $this->search_fields = $fields;
@@ -162,6 +167,7 @@ class Finder
         return $this;
     }
 
+    // todo: time-based published
     public function published()
     {
         $this->current_query->where('published', 1);

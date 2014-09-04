@@ -2,7 +2,6 @@
 
 namespace AVCMS\Core\Validation;
 
-use AVCMS\Core\Model\ModelFactory;
 use AVCMS\Core\Validation\Event\ValidatorFilterRuleEvent;
 use AVCMS\Core\Validation\Handlers\SelfValidatableHandler;
 use AVCMS\Core\Validation\Handlers\ValidatableHandler;

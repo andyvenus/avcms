@@ -140,10 +140,10 @@ interface FormBlueprintInterface
      * @param array $array The starting array
      * @param string $key The key to add the new value before or after
      * @param array $data The new value(s) to be added
-     * @param bool $insert_before Set to insert before, default is after
+     * @param bool $insertBefore Set to insert before, default is after
      * @return array
      */
-    public function insertAfterKey(array $array, $key, $data = array(), $insert_before = false);
+    public function insertAfterKey(array $array, $key, $data = array(), $insertBefore = false);
 
     /**
      * Get the name of the form

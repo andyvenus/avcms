@@ -1,0 +1,23 @@
+{% extends '@admin/edit_item.twig' %}
+
+{% block title -%}
+    {% spaceless %}
+        {% if item.id %}
+            Editing {{ item.label }}
+        {% else %}
+            {% trans %}New Menu{% endtrans %}
+        {% endif %}
+    {% endspaceless  %}
+{% endblock %}
+
+{% block editor_title_edit %}
+    <span class="light">{% trans %}Editing Menu{% endtrans %}:</span> <span data-id="{{ item.id }}" data-field="label">{{ item.label }}</span>
+{% endblock %}
+
+{% block editor_title_new %}
+    New Menu
+{% endblock %}
+
+{% block form_rows %}
+    {{ form_rows(form) }}
+{% endblock %}

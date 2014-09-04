@@ -17,13 +17,16 @@ class BundleConfigurationValidator implements ConfigurationInterface
         $tree_builder = new TreeBuilder();
         $root_node = $tree_builder->root('model');
 
-        $root_node->
-            children()
+        $root_node
+            ->addDefaultsIfNotSet()
+            ->children()
                 ->variableNode('name')
                     ->isRequired()
                 ->end()
                 ->variableNode('namespace')
                     ->isRequired()
+                ->end()
+                ->variableNode('require')
                 ->end()
                 ->variableNode('model')
                 ->end()
@@ -35,6 +38,12 @@ class BundleConfigurationValidator implements ConfigurationInterface
                 ->end()
                 ->variableNode('services')
                 ->end()
+                ->booleanNode('core')
+                    ->defaultFalse()
+                ->end()
+                ->booleanNode('disable_content')
+                    ->defaultFalse()
+                ->end()
                 ->variableNode('required_bundles')
                 ->end()
                 ->variableNode('parent_bundle')
@@ -42,6 +51,8 @@ class BundleConfigurationValidator implements ConfigurationInterface
                 ->variableNode('user_settings')
                 ->end()
                 ->variableNode('assets')
+                ->end()
+                ->variableNode('menu_items')
                 ->end()
                 ->variableNode('directory')
                 ->end()

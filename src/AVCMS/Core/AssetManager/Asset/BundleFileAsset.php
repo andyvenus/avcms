@@ -24,20 +24,19 @@ class BundleFileAsset extends FileAsset implements BundleAssetInterface
      * @param string $bundle
      * @param string $type
      * @param null|string $filename
-     * @param null|string $file_location
      * @param array $filters
      * @param null $sourceRoot
      * @param null $sourcePath
      * @param array $vars
      * @internal param string $file
      */
-    public function __construct($bundle, $type, $filename, $file_location, $filters = array(), $sourceRoot = null, $sourcePath = null, array $vars = array())
+    public function __construct($bundle, $type, $filename, $filters = array(), $sourceRoot = null, $sourcePath = null, array $vars = array())
     {
         $this->bundle = $bundle;
         $this->type = $type;
         $this->filename = $filename;
 
-        $this->source = $file_location;
+        $this->source = 'web/resources/'.$bundle.'/'.$type.'/'.$filename;
 
         parent::__construct($this->source, $filters, $sourceRoot, $sourcePath, $vars);
     }
@@ -59,6 +58,6 @@ class BundleFileAsset extends FileAsset implements BundleAssetInterface
 
     public function getDevUrl($prepend = null)
     {
-        return $prepend.'bundle_asset?bundle='.$this->getBundle().'&type='.$this->getType().'&asset_file='.$this->getFilename();
+        return 'web/resources/'.$this->getBundle().'/'.$this->getType().'/'.$this->getFilename();
     }
 }

@@ -6,14 +6,15 @@ Admin:
     enabled: true
 Blog:
     enabled: true
-    config: { user_settings: { blog_posts_per_page: { label: 'MY NEW LABEL' } } }
-Generated:
-    enabled: true
+    config:
+        user_settings:
+            blog_posts_per_page:
+                label: 'MY NEW LABEL'
 Tags:
     enabled: true
-Delbun:
+Framework:
+    enabled: true
+Generated2:
     enabled: false
-VenusFrameworkBundle:
-    enabled: false
-VenusFramework:
-    enabled: false
+KOKS:
+    enabled: true

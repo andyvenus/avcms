@@ -1,3 +1,39 @@
 avcms_settings:
   path: /admin/settings
-  defaults: { _controller: CmsFoundation::AdminSettingsController::indexAction }
+  defaults: { _controller: CmsFoundation::SettingsAdminController::indexAction }
+
+menus_admin_edit:
+    path:     /admin/menus/edit/{id}
+    defaults: { _controller: 'CmsFoundation::MenusAdminController::editMenuAction' }
+
+menus_admin_add:
+    path:     /admin/menus/new
+    defaults: { _controller: 'CmsFoundation::MenusAdminController::editMenuAction' }
+
+menus_admin_delete:
+    path:     /admin/menus/delete
+    defaults: { _controller: 'CmsFoundation::MenusAdminController::deleteMenuAction' }
+
+menus_admin_home:
+  path: /admin/menus
+  defaults: { _controller: 'CmsFoundation::MenusAdminController::homeAction' }
+
+menus_admin_finder:
+  path: /admin/menus/finder/{page}
+  defaults: { page: 1, _controller: 'CmsFoundation::MenusAdminController::finderAction' }
+
+menus_admin_manage_items:
+    path:     /admin/menus/manage/{id}
+    defaults: { _controller: 'CmsFoundation::MenusAdminController::manageMenuItemsAction' }
+
+menus_save_order:
+  path: /admin/menus/save-order/{id}
+  defaults: { _controller: CmsFoundation::MenusAdminController::saveOrderAction }
+
+menu_items_add:
+  path: /admin/menus/{menu}/new-item
+  defaults: { _controller: CmsFoundation::MenusAdminController::editMenuItemAction }
+
+menu_items_edit:
+  path: /admin/menus/{menu}/{id}
+  defaults: { _controller: CmsFoundation::MenusAdminController::editMenuItemAction }

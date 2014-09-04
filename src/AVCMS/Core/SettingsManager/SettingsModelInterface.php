@@ -14,5 +14,5 @@ interface SettingsModelInterface
 
     public function saveSettings(array $settings, $existing_settings = null);
 
-    public function addSetting($name, $value);
+    public function addSetting($name, $value, $loader, $owner);
 } 

@@ -41,7 +41,7 @@ class ResourceLocator
     {
         $dirs = array(
             $this->template_dir.'/'.$bundle_config->name,
-            $this->app_dir.'/bundles/'.$bundle_config->name,
+            $this->app_dir.'/resources/'.$bundle_config->name,
             $bundle_config->directory.'/resources/'.$resource_type,
         );
 

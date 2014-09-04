@@ -1,0 +1,1 @@
+var BANJA = { z: 'a' };

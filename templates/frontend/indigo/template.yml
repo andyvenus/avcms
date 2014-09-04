@@ -5,19 +5,14 @@ details:
   author: Andy Venus
 
 assets:
-  test.js:
-    env: shared
-    priority: 60
-  kk/l.js:
-    env: shared
-    priority: 60
+  template_asset.js:
 
-config:
-
+user_settings_sections:
+  template: Template Settings
 
 user_settings:
   bacon:
       type: text
       default: rofl
-      section: main
+      section: template
       label: Bacon

@@ -33,3 +33,7 @@ blog_archive:
 blog_post:
     path:     /blog/{slug}
     defaults: { _controller: 'Blog::BlogController::blogPostAction' }
+
+test:
+  path: /test
+  defaults: { _controller: 'Blog::BlogController::testBlogPageAction' }

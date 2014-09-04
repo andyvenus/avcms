@@ -1,0 +1,31 @@
+{% extends '@admin/browser.twig' %}
+
+{% block finder_title %}
+    {% trans %}Menus{% endtrans %}
+{% endblock %}
+
+{% block expand_finder_button %}
+    {{ buttons.expand_finder(bundle.route.menus_admin_home) }}
+{% endblock %}
+
+{% block add_item %}
+    {{ buttons.add_item(bundle.route.menus_admin_add, 'Add Menu') }}
+{% endblock %}
+
+{% block finder_filters %}
+
+{% endblock %}
+
+{% block finder %}
+    <div data-url="{{ url(bundle.route.menus_admin_finder) }}">
+        {{ render(path(bundle.route.menus_admin_finder)) }}
+    </div>
+{% endblock %}
+
+{% block mobile_back_link %}
+    {{ url(bundle.route.menus_admin_home) }}
+{% endblock %}
+
+{% block checked_options_buttons %}
+    {{ buttons.bulk_delete(bundle.route.menus_admin_delete) }}
+{% endblock %}

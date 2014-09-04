@@ -32,29 +32,32 @@ abstract class Controller extends ContainerAware
     /**
      * @var \AVCMS\Core\Model\ModelFactory
      */
-    protected $model_factory;
+    protected $modelFactory;
 
     /**
      * @var \AVCMS\Core\Bundle\BundleConfig
      */
     protected $bundle;
 
-    // todo: do this proper
-    protected $config = array('users_model' => 'AVBlog\Bundles\Users\Model\Users');
-
     /**
      * @var \AVCMS\Core\SettingsManager\SettingsManager
      */
     protected $settings;
 
+    /**
+     * @param ContainerInterface $container
+     */
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
-        $this->model_factory = $container->get('model_factory');
+        $this->modelFactory = $container->get('model_factory');
         $this->translator = $container->get('translator');
         $this->settings = $container->get('settings_manager');
     }
 
+    /**
+     * @param BundleConfig $bundle
+     */
     public function setBundle(BundleConfig $bundle)
     {
         $this->bundle = $bundle;
@@ -86,7 +89,7 @@ abstract class Controller extends ContainerAware
 
             $model_name = "$namespace\\Model\\$model_name";
         }
-        return $this->model_factory->create($model_name);
+        return $this->modelFactory->create($model_name);
     }
 
     protected function newValidator()
@@ -99,25 +102,15 @@ abstract class Controller extends ContainerAware
         return $validator;
     }
 
+    /**
+     * @param FormBlueprint $form
+     * @param null $request
+     * @param array $entities
+     * @return FormHandler
+     */
     protected function buildForm(FormBlueprint $form, $request = null, $entities = array())
     {
-        $form_handler = new FormHandler($form, new SymfonyRequestHandler(), new EntityProcessor(), null,  $this->container->get('dispatcher'));
-        $form_handler->setValidator(new AVCMSValidatorExtension($this->newValidator()));
-        $form_view = new FormView();
-        $form_view->setTranslator($this->translator);
-        $form_handler->setFormView($form_view);
-        $form_handler->setTransformerManager($this->container->get('form.transformer_manager'));
-
-        if (!is_array($entities)) {
-            $entities = array($entities);
-        }
-        foreach ($entities as $entity) {
-            $form_handler->bindEntity($entity);
-        }
-
-        if ($request) {
-            $form_handler->handleRequest($request);
-        }
+        $form_handler = $this->get('form.builder')->buildForm($form, $request, $entities);
 
         return $form_handler;
     }
@@ -130,7 +123,7 @@ abstract class Controller extends ContainerAware
      */
     protected function generateUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
-        return $this->container->get('routing.url_generator')->generate($route, $parameters, $referenceType);
+        return $this->container->get('router')->getGenerator()->generate($route, $parameters, $referenceType);
     }
 
     /**
@@ -169,6 +162,10 @@ abstract class Controller extends ContainerAware
         }
     }
 
+    /**
+     * @param $service
+     * @return object
+     */
     protected function get($service)
     {
         return $this->container->get($service);

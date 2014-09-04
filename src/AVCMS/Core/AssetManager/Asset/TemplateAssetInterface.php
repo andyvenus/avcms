@@ -10,11 +10,9 @@ interface TemplateAssetInterface
 {
     public function getType();
 
-    public function getEnvironment();
-
     public function getTemplate();
 
-    public function getFile();
+    public function getFilename();
 
     public function getDevUrl($prepend);
 }

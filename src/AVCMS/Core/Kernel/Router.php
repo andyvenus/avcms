@@ -10,6 +10,7 @@ namespace AVCMS\Core\Kernel;
 use AVCMS\Core\Bundle\BundleManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Router as BaseRouter;
 
@@ -35,6 +36,9 @@ class Router extends BaseRouter
             $this->collection = $this->loader->load($this->resource, $this->options['resource_type']);
 
             $this->bundle_manager->getBundleRoutes($this->collection);
+
+            $this->collection->addResource(new FileResource('app/config/bundles.yml'));
+            $this->collection->addResource(new FileResource('app/config/bundles_dev.yml'));
         }
 
         return $this->collection;

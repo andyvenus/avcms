@@ -3,6 +3,7 @@
 namespace AVCMS\Core\Controller;
 
 use AVCMS\Core\Bundle\BundleManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver as BaseControllerResolver;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -47,5 +48,17 @@ class ControllerResolver extends BaseControllerResolver
         }
 
         return array($controller, $method);
+    }
+
+    public function getArguments(Request $request, $controller)
+    {
+        if (is_callable(array($controller, 'setUp'))) {
+            $controller->setUp($request);
+        }
+        elseif (is_array($controller) && is_callable(array($controller[0], 'setUp'))) {
+            $controller[0]->setUp($request);
+        }
+
+        return parent::getArguments($request, $controller);
     }
 }

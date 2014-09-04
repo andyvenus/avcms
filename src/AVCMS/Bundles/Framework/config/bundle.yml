@@ -1,0 +1,7 @@
+name: Framework
+namespace: AVCMS\Bundles\Framework
+
+disable_content: true
+
+services:
+  - FrameworkServices

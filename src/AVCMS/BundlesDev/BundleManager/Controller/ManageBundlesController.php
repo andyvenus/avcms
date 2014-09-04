@@ -75,7 +75,9 @@ class ManageBundlesController extends BundleBaseController
             'bundle_enabled' => $bundle_enabled,
             'bundle_config' => $bundle_config,
             'routes' => $bundle_routes,
-            'bundle_content' => $content)));
+            'bundle_content' => $content,
+            'bundle_manager' => $bundle_manager
+        )));
     }
 
     public function toggleBundleEnabledAction(Request $request)

@@ -8,16 +8,10 @@
     {% endblock %}
 
     <link rel="stylesheet" type="text/css" href="{{ site_url }}web/css/style.css" />
-    <link href="{{ site_url }}web/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ site_url }}web/css/bootstrap-markdown.min.css" rel="stylesheet">
-    <link href="{{ site_url }}web/css/select2.css" rel="stylesheet">
-    <link href="{{ site_url }}web/css/select2-bootstrap.css" rel="stylesheet">
 
     {% for css in css('frontend') %}
         <link href="{{ site_url }}{{ css }}" rel="stylesheet">
     {% endfor %}
-
-    <link href="{{ site_url }}web/css/avcms-blocks.css" rel="stylesheet">
 
     <script type="text/javascript">
         var avcms = avcms || {};
@@ -68,18 +62,5 @@
     {% endblock %}
 </footer>
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="{{ site_url }}web/javascript/jquery.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="{{ site_url }}web/javascript/bootstrap.min.js"></script>
-
-<script src="{{ site_url }}web/javascript/bootstrap-markdown.js"></script>
-<script src="{{ site_url }}web/javascript/markdown.js"></script>
-<script src="{{ site_url }}web/javascript/to-markdown.js"></script>
-<script src="{{ site_url }}web/javascript/select2.min.js"></script>
-<script type="text/javascript">
-    $("textarea[name=body]").markdown({autofocus:false,savable:false});
-    $("select[name=author]").select2();
-</script>
 </body>
 </html>
