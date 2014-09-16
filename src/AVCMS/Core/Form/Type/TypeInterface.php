@@ -20,5 +20,5 @@ interface TypeInterface
 
     public function processRequestData($field, $data);
 
-    public function makeView($field, $data, FormHandler $form_handler);
+    public function makeView($field, $data, FormHandler $formHandler);
 }

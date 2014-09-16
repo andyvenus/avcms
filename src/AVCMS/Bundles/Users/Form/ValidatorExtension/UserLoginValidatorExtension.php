@@ -28,9 +28,9 @@ class UserLoginValidatorExtension implements ValidatorExtension
         $this->login_handler = $login_handler;
     }
 
-    public function setFormHandler(FormHandler $form_handler)
+    public function setFormHandler(FormHandler $formHandler)
     {
-       $this->form_handler = $form_handler;
+       $this->form_handler = $formHandler;
     }
 
     public function validate($scope = null, $options = null)

@@ -67,11 +67,11 @@ class TagsTaxonomy implements Taxonomy
      * Updates the tags assigned to a piece of content. Creates new tags as necessary and
      * assigns them (and existing tags) to content using the relations table
      *
-     * @param $content_id
-     * @param $content_type
+     * @param $contentId
+     * @param $contentType
      * @param array $tags
      */
-    public function update($content_id, $content_type, array $tags)
+    public function update($contentId, $contentType, array $tags)
     {
         $existing_tags = $this->tags->query()->whereIn($this->relation_column, $tags)->get();
 
@@ -111,23 +111,23 @@ class TagsTaxonomy implements Taxonomy
 
         $tag_ids = array_merge($existing_tag_ids, $new_tag_ids);
 
-        $this->relations_model->deleteContentTaxonomy($content_id, $content_type);
-        $this->relations_model->addContentTaxonomy($content_id, $content_type, $tag_ids);
+        $this->relations_model->deleteContentTaxonomy($contentId, $contentType);
+        $this->relations_model->addContentTaxonomy($contentId, $contentType, $tag_ids);
 
     }
 
     /**
      * Get the tags that are assigned to a piece of content
      *
-     * @param $content_type
-     * @param $content_id
+     * @param $contentType
+     * @param $contentId
      * @return mixed
      */
-    public function get($content_id, $content_type)
+    public function get($contentId, $contentType)
     {
         return $this->tags->query()->join($this->relations_model->getTable(), 'taxonomy_id', '=', $this->tags->getTable().'.id', 'left')
-            ->where('content_type', $content_type)
-            ->where('content_id', $content_id)
+            ->where('content_type', $contentType)
+            ->where('content_id', $contentId)
             ->get();
     }
 
@@ -136,16 +136,16 @@ class TagsTaxonomy implements Taxonomy
      *  that entity
      *
      * @param $entity
-     * @param $content_type
+     * @param $contentType
      * @throws \Exception
      */
-    public function assign($entity, $content_type)
+    public function assign($entity, $contentType)
     {
         if (!is_callable(array($entity, 'getId'))) {
             throw new \Exception('Cannot assign taxonomy to an entity that doesn\'t have a getId methid');
         }
 
-        $entity->tags = $this->get($entity->getId(), $content_type);
+        $entity->tags = $this->get($entity->getId(), $contentType);
     }
 
     /**

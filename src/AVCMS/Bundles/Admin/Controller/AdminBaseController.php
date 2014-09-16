@@ -23,6 +23,14 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class AdminBaseController extends Controller
 {
 
+    /**
+     * Renders an admin template with the shared context vars
+     *
+     * @param $template
+     * @param null $ajaxDepth
+     * @param array $context
+     * @return string|Response
+     */
     protected function renderAdminSection($template, $ajaxDepth = null, $context = array())
     {
         $vars = $this->getSharedTemplateVars($ajaxDepth);
@@ -32,12 +40,18 @@ abstract class AdminBaseController extends Controller
         return $this->render($template, $context);
     }
 
+    /**
+     * Get the shared template context and automatically set the browser template if set
+     *
+     * @param $ajaxDepth
+     * @return array
+     */
     protected function getSharedTemplateVars($ajaxDepth)
     {
         $templateVars = array('ajax_depth' => $ajaxDepth);
 
-        if (isset($this->browser_template)) {
-            $templateVars['browser_template'] = $this->browser_template;
+        if (isset($this->browserTemplate)) {
+            $templateVars['browser_template'] = $this->browserTemplate;
         }
 
         if ($ajaxDepth == 'editor') {
@@ -46,7 +60,15 @@ abstract class AdminBaseController extends Controller
         return $templateVars;
     }
 
-    protected function createManageResponse(Request $request, $template, $templateVars = array())
+    /**
+     * Handle a simple request for a manage content section
+     *
+     * @param Request $request
+     * @param $template
+     * @param array $templateVars
+     * @return Response
+     */
+    protected function handleManage(Request $request, $template, $templateVars = array())
     {
         if ($request->get('ajax_depth') == 'editor') {
             return new Response('');
@@ -60,66 +82,67 @@ abstract class AdminBaseController extends Controller
     }
 
     /**
-     * General all purpose edit item
+     * Handle editing a content item and return a response
      *
      * @param Request $request
      * @param Model $model
-     * @param FormBlueprint $form_blueprint
-     * @param string $edit_redirect_url
-     * @param string $edit_template
-     * @param string $browser_template
-     * @param array $template_vars
+     * @param FormBlueprint $formBlueprint
+     * @param string $editRedirectUrl
+     * @param string $editTemplate
+     * @param string $browserTemplate
+     * @param array $templateVars
      * @param null $entity
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @return JsonResponse|Response
      * @depreciated
      */
-    protected function edit(Request $request, Model $model, FormBlueprint $form_blueprint, $edit_redirect_url, $edit_template, $browser_template, $template_vars = array(), $entity = null)
+    protected function handleEdit(Request $request, Model $model, FormBlueprint $formBlueprint, $editRedirectUrl, $editTemplate, $browserTemplate, $templateVars = array(), $entity = null)
     {
-        if (!$entity) {
-            $entity = $model->getOneOrNew($request->attributes->get('id', 0));
+        $form = $this->buildForm($formBlueprint);
 
-            if (!$entity) {
-                throw $this->createNotFoundException($model->getSingular().' not found');
-            }
+        $helper = $this->editContentHelper($model, $form, $entity);
+
+        $helper->handleRequestAndSave($request);
+
+        if (!$helper->contentExists()) {
+            throw $this->createNotFoundException(ucfirst($model->getSingular()).' not found');
         }
 
-        $form = $this->buildForm($form_blueprint, $request, $entity);
-
-        $this->getEventDispatcher()->dispatch('admin.edit.form.built', new AdminEditFormBuiltEvent($entity, $model, $form, $request));
-
-        if ($form->isSubmitted()) {
-            $id = 0;
-            if ($form->isValid()) {
-                $form->saveToEntities();
-                $this->filterValidEntity($entity);
-                $id = $model->save($entity);
-
-                $this->getEventDispatcher()->dispatch('admin.save.content', new AdminSaveContentEvent($entity, $model, $form, $request));
-            }
-
-            return new JsonResponse(array(
-                'form' => $form->createView()->getJsonResponseData(),
-                'redirect' => $this->generateUrl($edit_redirect_url, array('id' => $id)),
-                'id' => $id
-            ));
-        }
-
-        $template_vars = array_merge($template_vars,  array('item' => $entity, 'form' => $form->createView(), 'browser_template' => $browser_template));
-
-        return new Response($this->renderAdminSection(
-                $edit_template,
-                $request->get('ajax_depth'),
-                $template_vars)
+        return $this->createEditResponse(
+            $helper,
+            $request,
+            $editTemplate,
+            $browserTemplate,
+            array($editRedirectUrl, array('id' => $helper->getEntity()->getId())),
+            $templateVars
         );
     }
 
+    /**
+     * Get an edit content helper
+     *
+     * @param Model $model
+     * @param FormHandler $form
+     * @param null $entity
+     * @return EditContentHelper
+     */
     protected function editContentHelper(Model $model, FormHandler $form, $entity = null)
     {
-        return new EditContentHelper($model, $form, $entity);
+        $eventDispatcher = $this->container->get('dispatcher');
+        return new EditContentHelper($model, $form, $entity, $eventDispatcher);
     }
 
-
+    /**
+     * Create a response for editing content. Returns a JsonResponse when the form is submitted.
+     *
+     * @param EditContentHelper $helper
+     * @param $request
+     * @param $template
+     * @param $browserTemplate
+     * @param $successRedirect
+     * @param array $templateVars
+     * @return JsonResponse|Response
+     */
     protected function createEditResponse(EditContentHelper $helper, $request, $template, $browserTemplate, $successRedirect, $templateVars = array())
     {
         if ($helper->formSubmitted()) {
@@ -138,7 +161,11 @@ abstract class AdminBaseController extends Controller
             return new JsonResponse($helper->jsonResponseData($redirectUrl));
         }
         else {
-            $templateVars = array_merge(array('item' => $helper->getEntity(), 'form' => $helper->getForm()->createView(), 'browser_template' => $browserTemplate), $templateVars);
+            $templateVars = array_merge(array(
+                'item' => $helper->getEntity(),
+                'form' => $helper->getForm()->createView(),
+                'browser_template' => $browserTemplate
+            ), $templateVars);
 
             return new Response($this->renderAdminSection(
                 $template,
@@ -148,18 +175,39 @@ abstract class AdminBaseController extends Controller
         }
     }
 
-    protected function delete($ids, Model $model)
+    /**
+     * Handle deletion of one or more items, return a JsonResponse indicating
+     * whether it was successful
+     *
+     * @param $request
+     * @param Model $model
+     * @return JsonResponse
+     */
+    protected function handleDelete($request, Model $model)
     {
+        if (!$this->checkCsrfToken($request)) {
+            return $this->invalidCsrfTokenJsonResponse();
+        }
+
+        $ids = $request->request->get('ids');
+
         if (!$ids) {
-            return array('success' => 0, 'error' => 'No ids set');
+            return new JsonResponse(array('success' => 0, 'error' => 'No ids set'));
         }
 
         $model->deleteById($ids);
 
-        return array('success' => 1);
+        return new JsonResponse(array('success' => 1));
     }
 
-    protected function togglePublished(Request $request, ContentModel $model)
+    /**
+     * Handle toggling one or more items published
+     *
+     * @param Request $request
+     * @param ContentModel $model
+     * @return JsonResponse
+     */
+    protected function handleTogglePublished(Request $request, ContentModel $model)
     {
         if ($this->checkCsrfToken($request) === false) {
             return $this->invalidCsrfTokenJsonResponse();
@@ -190,13 +238,10 @@ abstract class AdminBaseController extends Controller
         return new JsonResponse(array('success' => 1));
     }
 
-    protected function filterValidEntity($entity)
-    {
-        $this->container->get('dispatcher')->dispatch('admin.controller.filter.entity', new AdminFilterEntityEvent($entity));
-
-        return $entity;
-    }
-
+    /**
+     * @param Request $request
+     * @return bool
+     */
     protected function checkCsrfToken(Request $request)
     {
         $token_manager = $this->container->get('csrf.token');
@@ -204,6 +249,9 @@ abstract class AdminBaseController extends Controller
         return $token_manager->checkToken($request->get('_csrf_token'));
     }
 
+    /**
+     * @return JsonResponse
+     */
     protected function invalidCsrfTokenJsonResponse()
     {
         return new JsonResponse(array('success' => 0, 'error' => 'Invalid CSRF Token', 'error_code' => 'invalid_csrf_token'));

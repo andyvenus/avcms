@@ -69,6 +69,10 @@ class TwigServices implements Service
             ->addTag('twig.extension')
         ;
 
+        $container->register('twig.optimiser_extension', 'Twig_Extension_Optimizer')
+            ->addTag('twig.extension.disabledad')
+        ;
+
         $container->register('markdown_engine', 'Aptoma\Twig\Extension\MarkdownEngine\MichelfMarkdownEngine');
 
         if ($container->getParameter('dev_mode') == true) {

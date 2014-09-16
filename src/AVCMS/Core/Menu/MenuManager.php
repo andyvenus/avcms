@@ -21,21 +21,13 @@ class MenuManager
     /**
      * @var \AVCMS\Core\Model\Model
      */
-    protected $items_model;
+    protected $itemsModel;
 
-    public function __construct(UrlGeneratorInterface $url_generator, Model $menus_model, Model $items_model)
+    public function __construct(UrlGeneratorInterface $url_generator, Model $menusModel, Model $itemsModel)
     {
-        $this->url_generator = $url_generator;
-        $this->model = $menus_model;
-        $this->items_model = $items_model;
-    }
-
-    /**
-     * @param MenuLoaderInterface $loader
-     */
-    public function load(MenuLoaderInterface $loader)
-    {
-        $loader->loadMenuItems($this);
+        $this->urlGenerator = $url_generator;
+        $this->model = $menusModel;
+        $this->itemsModel = $itemsModel;
     }
 
     public function getModel()
@@ -45,35 +37,35 @@ class MenuManager
 
     public function getItemsModel()
     {
-        return $this->items_model;
+        return $this->itemsModel;
     }
 
-    public function saveMenuItem(MenuItem $menu_item)
+    public function saveMenuItem(MenuItem $menuItem)
     {
-        $this->items_model->save($menu_item);
+        $this->itemsModel->save($menuItem);
     }
 
-    public function getMenuItems($menu_id)
+    public function getMenuItems($menuId)
     {
         /**
          * @var $items object[]
          */
-        $items =  $this->items_model->query()->where('menu', $menu_id)->orderBy('order')->get();
-        $child_items = $sorted_items = array();
+        $items =  $this->itemsModel->query()->where('menu', $menuId)->orderBy('order')->get();
+        $childItems = $sortedItems = array();
 
         foreach ($items as $item) {
             $item->children = array();
 
             if ($item->getParent()) {
-                $child_items[$item->getParent()][$item->getId()] = $item;
+                $childItems[$item->getParent()][$item->getId()] = $item;
             }
             else {
-                $sorted_items[$item->getId()] = $item;
+                $sortedItems[$item->getId()] = $item;
             }
 
             if ($item->getType() == 'route') {
                 try {
-                    $item->setUrl($this->url_generator->generate($item->getTarget()));
+                    $item->setUrl($this->urlGenerator->generate($item->getTarget()));
                 }
                 catch (RouteNotFoundException $e) {
                     $item->setUrl('#route-'.$item->getTarget().'-not-found');
@@ -84,12 +76,12 @@ class MenuManager
             }
         }
 
-        foreach ($child_items as $parent => $child_item_array) {
-            if (isset($sorted_items[$parent])) {
-                $sorted_items[$parent]->children = $child_item_array;
+        foreach ($childItems as $parent => $child_item_array) {
+            if (isset($sortedItems[$parent])) {
+                $sortedItems[$parent]->children = $child_item_array;
             }
         }
 
-        return $sorted_items;
+        return $sortedItems;
     }
 }

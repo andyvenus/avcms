@@ -16,18 +16,19 @@ class TypeHandler implements TypeInterface
         $this->types = array(
             'checkbox' => new CheckboxType(),
             'collection' => new CollectionType($this),
-            'default' => new DefaultType()
+            'default' => new DefaultType(),
+            'select' => new SelectType()
         );
     }
 
     /**
-     * @param $field_type
+     * @param $fieldType
      * @return TypeInterface
      */
-    public function getType($field_type)
+    public function getType($fieldType)
     {
-        if (isset($this->types[$field_type])) {
-            return $this->types[$field_type];
+        if (isset($this->types[$fieldType])) {
+            return $this->types[$fieldType];
         }
         else {
             return $this->types['default'];
@@ -74,10 +75,10 @@ class TypeHandler implements TypeInterface
         return $type->getUnsetRequestData($field);
     }
 
-    public function makeView($field, $all_form_data, FormHandler $form_handler)
+    public function makeView($field, $allFormData, FormHandler $formHandler)
     {
         $type = $this->getType($field['type']);
 
-        return $type->makeView($field, $all_form_data, $form_handler);
+        return $type->makeView($field, $allFormData, $formHandler);
     }
 } 

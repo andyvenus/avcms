@@ -62,10 +62,12 @@ a {
 .admin-menu {
   float: left;
   background-color: darken($main_menu_color, 10);
-  width: 180px;
+  width: 100%;
   color: lighten($main_menu_color, 60);
-  display: none;
   padding-top: 1px;
+  position: relative;
+  z-index: 100;
+  display: none;
 
   ul {
     list-style: none;
@@ -75,7 +77,8 @@ a {
       margin-bottom: 2px;
       a {
         display: block;
-        padding: 4px 0px 4px 8px;
+        padding: 6px 0px 6px 8px;
+        font-size: 16px;
         color: lighten($main_menu_color, 60);
         text-decoration: none;
       }
@@ -85,6 +88,10 @@ a {
       background-color: lighten($main_menu_color, 5);
     }
   }
+}
+
+.admin-menu-focused {
+  display: inherit;
 }
 
 .alert {
@@ -293,6 +300,17 @@ a {
 @media (min-width: 992px) {
   .admin-menu {
     display: inherit;
+    position: inherit;
+    width: 180px;
+
+    ul {
+      li {
+        a {
+          padding: 4px 0px 4px 8px;
+          font-size: 14px;
+        }
+      }
+    }
   }
 
   .main {
@@ -379,7 +397,7 @@ a {
 
     a {
       color: #a6a6a6;
-      text-decoration: underline;
+      text-decoration: none;
     }
 
     a:hover {

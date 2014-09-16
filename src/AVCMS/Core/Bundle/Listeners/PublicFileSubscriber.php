@@ -15,20 +15,20 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class PublicFileSubscriber implements EventSubscriberInterface
 {
-    protected $bundle_manager;
+    protected $bundleManager;
 
-    public function __construct(BundleManagerInterface $bundle_manager)
+    public function __construct(BundleManagerInterface $bundleManager)
     {
-        $this->bundle_manager = $bundle_manager;
+        $this->bundleManager = $bundleManager;
     }
 
     public function moveFiles(GetResponseEvent $event)
     {
         $request = $event->getRequest();
 
-        if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST && $this->bundle_manager->isDebug()) {
+        if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST && $this->bundleManager->isDebug()) {
 
-            $bundles = $this->bundle_manager->getBundleConfigs();
+            $bundles = $this->bundleManager->getBundleConfigs();
 
             foreach ($bundles as $bundle) {
                 if (file_exists($bundle->directory.'/resources')) {

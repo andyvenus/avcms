@@ -14,69 +14,69 @@ class TaxonomyManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @var TaxonomyManager
      */
-    private $taxonomy_manager;
+    private $taxonomyManager;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|\AVCMS\Core\Taxonomy\Taxonomy
      */
-    private $mock_taxonomy;
+    private $mockTaxonomy;
 
     public function setUp()
     {
-        $this->taxonomy_manager = new TaxonomyManager();
-        $this->mock_taxonomy = $this->getMock('AVCMS\Core\Taxonomy\Taxonomy');
+        $this->taxonomyManager = new TaxonomyManager();
+        $this->mockTaxonomy = $this->getMock('AVCMS\Core\Taxonomy\Taxonomy');
     }
 
     public function testAddRetrieveTaxonomy()
     {
-        $this->taxonomy_manager->addTaxonomy('tags', $this->mock_taxonomy);
+        $this->taxonomyManager->addTaxonomy('tags', $this->mockTaxonomy);
 
-        $this->assertTrue($this->taxonomy_manager->hasTaxonomy('tags'));
+        $this->assertTrue($this->taxonomyManager->hasTaxonomy('tags'));
 
-        $result = $this->taxonomy_manager->getTaxonomy('tags');
+        $result = $this->taxonomyManager->getTaxonomy('tags');
 
-        $this->assertEquals($this->mock_taxonomy, $result);
+        $this->assertEquals($this->mockTaxonomy, $result);
 
         $this->setExpectedException('\Exception');
 
-        $this->taxonomy_manager->getTaxonomy('non_existant');
+        $this->taxonomyManager->getTaxonomy('non_existant');
     }
 
     public function testSetTaxonomyJoin()
     {
-        $mock_query_builder = $this->getMockBuilder('AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler')
+        $mockQueryBuilder = $this->getMockBuilder('AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler')
             ->disableOriginalConstructor()
             ->getMock();
-        $mock_model = $this->getMockBuilder('AVCMS\Core\Model\Model')
+        $mockModel = $this->getMockBuilder('AVCMS\Core\Model\Model')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->mock_taxonomy->expects($this->once())
+        $this->mockTaxonomy->expects($this->once())
             ->method('setTaxonomyJoin');
 
-        $this->taxonomy_manager->addTaxonomy('tags', $this->mock_taxonomy);
+        $this->taxonomyManager->addTaxonomy('tags', $this->mockTaxonomy);
 
-        $this->taxonomy_manager->setTaxonomyJoin('tags', $mock_model, $mock_query_builder, ['example', 'example2']);
+        $this->taxonomyManager->setTaxonomyJoin('tags', $mockModel, $mockQueryBuilder, ['example', 'example2']);
     }
 
     public function testUpdate()
     {
-        $this->mock_taxonomy->expects($this->once())
+        $this->mockTaxonomy->expects($this->once())
             ->method('update');
 
-        $this->taxonomy_manager->addTaxonomy('tags', $this->mock_taxonomy);
+        $this->taxonomyManager->addTaxonomy('tags', $this->mockTaxonomy);
 
-        $this->taxonomy_manager->update('tags', 1, 'content', [1, 2]);
+        $this->taxonomyManager->update('tags', 1, 'content', [1, 2]);
     }
 
     public function testGet()
     {
-        $this->mock_taxonomy->expects($this->once())
+        $this->mockTaxonomy->expects($this->once())
             ->method('get');
 
-        $this->taxonomy_manager->addTaxonomy('tags', $this->mock_taxonomy);
+        $this->taxonomyManager->addTaxonomy('tags', $this->mockTaxonomy);
 
-        $this->taxonomy_manager->get('tags', 1, 'content');
+        $this->taxonomyManager->get('tags', 1, 'content');
     }
 }
  

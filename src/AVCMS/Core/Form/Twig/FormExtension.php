@@ -23,13 +23,13 @@ class FormExtension extends \Twig_Extension
     /**
      * @var \Twig_Template
      */
-    protected $base_template;
+    protected $baseTemplate;
 
     public function initRuntime(\Twig_Environment $environment)
     {
         $this->environment = $environment;
         $this->compiler = $environment->getCompiler();
-        $this->base_template = $this->environment->loadTemplate('bootstrap_form.twig');
+        $this->baseTemplate = $this->environment->loadTemplate('bootstrap_form.twig');
     }
 
     /**
@@ -104,23 +104,23 @@ class FormExtension extends \Twig_Extension
     public function formStart($form, $attributes = array(), $template = null)
     {
         if ($template == null) {
-            $this->base_template = $this->environment->loadTemplate('bootstrap_form.twig');
+            $this->baseTemplate = $this->environment->loadTemplate('bootstrap_form.twig');
         }
         else {
-            $this->base_template = $this->environment->loadTemplate($template);
+            $this->baseTemplate = $this->environment->loadTemplate($template);
         }
 
-        return $this->base_template->renderBlock('form_start', array('form' => $form, 'attr' => $attributes));
+        return $this->baseTemplate->renderBlock('form_start', array('form' => $form, 'attr' => $attributes));
     }
 
     public function setFormTemplate($template)
     {
-        $this->base_template = $this->environment->loadTemplate($template);
+        $this->baseTemplate = $this->environment->loadTemplate($template);
     }
 
     public function formEnd($form)
     {
-        return $this->base_template->renderBlock('form_end', array('form' => $form));
+        return $this->baseTemplate->renderBlock('form_end', array('form' => $form));
     }
 
     public function formField($field_data, $attributes = array())
@@ -148,7 +148,7 @@ class FormExtension extends \Twig_Extension
             $field = $template->render(array('field' => $field_data));
         }
         else {
-            $field = $this->base_template->renderBlock($field_data['type'].'_field', $field_data);
+            $field = $this->baseTemplate->renderBlock($field_data['type'].'_field', $field_data);
         }
 
         if (!$field) {
@@ -158,15 +158,15 @@ class FormExtension extends \Twig_Extension
         return $field;
     }
 
-    public function formLabel($field_data)
+    public function formLabel($fieldData)
     {
-        return $this->base_template->renderBlock('form_label', $field_data);
+        return $this->baseTemplate->renderBlock('form_label', $fieldData);
     }
 
     public function formSubmitButton($form)
     {
         $label = $form->getSubmitButtonLabel();
-        return $this->base_template->renderBlock('submit_button', array('label' => $label));
+        return $this->baseTemplate->renderBlock('submit_button', array('label' => $label));
     }
 
     public function formRow($field, $attributes = array())
@@ -181,61 +181,61 @@ class FormExtension extends \Twig_Extension
             $block = 'form_label_row';
         }
 
-        return $this->base_template->renderBlock($block, array('form_row' => $field, 'attr' => $attributes));
+        return $this->baseTemplate->renderBlock($block, array('form_row' => $field, 'attr' => $attributes));
     }
 
     public function formRows($form, $attributes = array(), $template_overrides = array())
     {
         $fields = $form->getFields();
 
-        return $this->base_template->renderBlock('form_rows', array('form_rows' => $fields, 'attr' => $attributes));
+        return $this->baseTemplate->renderBlock('form_rows', array('form_rows' => $fields, 'attr' => $attributes));
     }
 
-    public function formRowsBefore($form, $before_field, $attributes = array())
+    public function formRowsBefore($form, $beforeField, $attributes = array())
     {
         $fields = $form->getFields();
 
-        $limited_fields = array();
+        $limitedFields = array();
 
         foreach ($fields as $field_name => $field) {
-            if ($field_name == $before_field) {
+            if ($field_name == $beforeField) {
                 break;
             }
             else {
-                $limited_fields[$field_name] = $field;
+                $limitedFields[$field_name] = $field;
             }
         }
 
-        return $this->base_template->renderBlock('form_rows', array('form_rows' => $limited_fields, 'attr' => $attributes));
+        return $this->baseTemplate->renderBlock('form_rows', array('form_rows' => $limitedFields, 'attr' => $attributes));
     }
 
-    public function formRowsAfter($form, $before_field, $attributes = array())
+    public function formRowsAfter($form, $beforeField, $attributes = array())
     {
         $fields = $form->getFields();
 
-        $before_field_reached = false;
-        $limited_fields = array();
+        $beforeFieldReached = false;
+        $limitedFields = array();
 
         foreach ($fields as $field_name => $field) {
-            if ($before_field_reached) {
-                $limited_fields[$field_name] = $field;
+            if ($beforeFieldReached) {
+                $limitedFields[$field_name] = $field;
             }
 
-            if ($field_name == $before_field) {
-                $before_field_reached = true;
+            if ($field_name == $beforeField) {
+                $beforeFieldReached = true;
             }
         }
 
-        return $this->base_template->renderBlock('form_rows', array('form_rows' => $limited_fields, 'attr' => $attributes));
+        return $this->baseTemplate->renderBlock('form_rows', array('form_rows' => $limitedFields, 'attr' => $attributes));
     }
 
     public function form($form, $attributes = array())
     {
-        return $this->base_template->renderBlock('form_complete', array('form' => $form, 'attributes' => $attributes));
+        return $this->baseTemplate->renderBlock('form_complete', array('form' => $form, 'attributes' => $attributes));
     }
 
     public function formMessages($form)
     {
-        return $this->base_template->renderBlock('messages', array('form' => $form));
+        return $this->baseTemplate->renderBlock('messages', array('form' => $form));
     }
 }

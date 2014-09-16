@@ -9,13 +9,13 @@ use Viocon\Container;
 
 class Connection extends PixieConnection {
 
-    protected $event_dispatcher;
+    protected $eventDispatcher;
 
-    public function __construct($adapter, array $adapterConfig, $alias = null, Container $container = null, EventDispatcherInterface $event_dispatcher = null)
+    public function __construct($adapter, array $adapterConfig, $alias = null, Container $container = null, EventDispatcherInterface $eventDispatcher = null)
     {
         parent::__construct($adapter, $adapterConfig, $alias, $container);
 
-        $this->event_dispatcher = $event_dispatcher;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -47,7 +47,7 @@ class Connection extends PixieConnection {
      */
     public function getEventDispatcher()
     {
-        return $this->event_dispatcher;
+        return $this->eventDispatcher;
     }
 
 }

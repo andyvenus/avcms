@@ -16,19 +16,19 @@ interface EntityProcessor
      * Save an array of form data to an entity
      *
      * @param $entity
-     * @param $form_data
-     * @param null $limit_fields
+     * @param $formData
+     * @param null $limitFields
      * @return mixed
      */
-    public function saveToEntity($entity, $form_data, $limit_fields = null);
+    public function saveToEntity($entity, $formData, $limitFields = null);
 
     /**
      * Get an array of data from an entity
      *
      * @param $entity
-     * @param array $form_parameters
-     * @param null $limit_fields
+     * @param array $formParameters
+     * @param null $limitFields
      * @return mixed
      */
-    public function getFromEntity($entity, array $form_parameters, $limit_fields = null);
+    public function getFromEntity($entity, array $formParameters, $limitFields = null);
 }

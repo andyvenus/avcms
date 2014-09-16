@@ -12,13 +12,13 @@ use AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler;
 interface Taxonomy {
     public function getModel();
 
-    public function get($content_id, $content_type);
+    public function get($contentId, $contentType);
 
     public function getRelationsModel();
 
-    public function update($content_id, $content_type, array $tags);
+    public function update($contentId, $contentType, array $tags);
 
     public function setTaxonomyJoin($model, QueryBuilderHandler $query, array $tags);
 
-    public function assign($entity, $content_type);
-} 
+    public function assign($entity, $contentType);
+}

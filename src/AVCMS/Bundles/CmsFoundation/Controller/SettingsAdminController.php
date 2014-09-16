@@ -9,6 +9,7 @@ namespace AVCMS\Bundles\CmsFoundation\Controller;
 
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use AVCMS\Bundles\CmsFoundation\Form\SettingsForm;
+use AVCMS\Core\Form\FormBlueprint;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,12 +18,13 @@ class SettingsAdminController extends AdminBaseController
 {
     public function indexAction(Request $request)
     {
-        $settings_form = new SettingsForm();
+        $settings_form = new FormBlueprint();
+        $settings_form->setSuccessMessage("Settings Saved");
         $settings_model = $this->model('Settings');
 
         $settings_manager = $this->get('settings_manager');
-        $settings_form->createSettingsFieldsFromArray($settings_manager->getFields());
 
+        $settings_form->createFieldsFromArray($settings_manager->getFields());
         $settings_form->createSectionsFromArray($settings_manager->getSections());
 
         $form = $this->buildForm($settings_form);

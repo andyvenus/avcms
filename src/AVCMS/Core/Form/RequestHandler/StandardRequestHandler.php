@@ -18,18 +18,18 @@ use AVCMS\Core\Form\FormHandler;
 class StandardRequestHandler implements RequestHandlerInterface
 {
     /**
-     * @param $form_handler
+     * @param $formHandler
      * @param $request null Unused, global vars used to get data
      * @return array
      * @throws \Exception
      */
-    public function handleRequest(FormHandler $form_handler, $request)
+    public function handleRequest(FormHandler $formHandler, $request)
     {
-        if ($form_handler->getMethod() == "GET") {
+        if ($formHandler->getMethod() == "GET") {
             return $_GET;
         }
         else {
-            if ($form_handler->hasFieldOfType('file')) {
+            if ($formHandler->hasFieldOfType('file')) {
                 return array_merge_recursive($_POST, $_FILES);
             }
             else {

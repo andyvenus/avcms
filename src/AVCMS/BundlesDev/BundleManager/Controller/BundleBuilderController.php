@@ -254,7 +254,8 @@ class BundleBuilderController extends BundleBaseController
         $new_content_form = new NewContentForm(false, $table);
         $new_content_form->addColumnsFields($columns);
 
-        $form = $this->buildForm($new_content_form, $request);
+        $form = $this->buildForm($new_content_form);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $form_column_data = $form->getData('columns');
@@ -288,7 +289,7 @@ class BundleBuilderController extends BundleBaseController
 
             file_put_contents($config->directory.'/Model/'.$content['uc_singular'].'.php', "<?php\n\n".$gen->generate($entity_class));
 
-            if ($content['admin_form'] !== null) {
+            if ($content['admin_form'] !== null && class_exists($content['admin_form']) && $form_construct_body) {
                 $form_class = PhpClass::fromReflection(new \ReflectionClass($content['admin_form']), false);
 
                 $construct = $form_class->getMethod('__construct');
@@ -301,6 +302,10 @@ class BundleBuilderController extends BundleBaseController
 
                 file_put_contents($config->directory.'/Form/'.$content['uc_singular'].'AdminForm.php', "<?php\n\n".$gen->generate($form_class));
             }
+
+            //$content_types[$content_name]['columns'] = $content_types[$content_name]['columns'];
+
+            var_dump($content_types[$content_name]['columns']);
         }
 
         return new Response($this->render('@BundleManager/bundle_new_content_part2.twig', array(

@@ -38,27 +38,27 @@ class BundleManager implements BundleManagerInterface
     /**
      * @var bool
      */
-    protected $bundles_initialized = false;
+    protected $bundlesInitialized = false;
 
     /**
      * @var array
      */
-    protected $bundle_locations;
+    protected $bundleLocations;
 
     /**
      * @var array
      */
-    protected $bundle_configs;
+    protected $bundleConfigs;
 
     /**
      * @var bool
      */
-    protected $cache_fresh = true;
+    protected $cacheIsFresh = true;
 
     /**
      * @var ConfigurationInterface
      */
-    protected $config_validator;
+    protected $configValidator;
 
     /**
      * @var bool
@@ -68,24 +68,24 @@ class BundleManager implements BundleManagerInterface
     /**
      * @var string
      */
-    protected $cache_dir;
+    protected $cacheDir;
 
     /**
      * @var ConfigCache
      */
-    protected $config_cache;
+    protected $configCache;
 
-    public function __construct(array $bundle_locations, $config_dir = 'app/config', $cache_dir = 'cache', ConfigurationInterface $config_validator = null)
+    public function __construct(array $bundleLocations, $configDir = 'app/config', $cacheDir = 'cache', ConfigurationInterface $configValidator = null)
     {
-        $this->bundle_locations = $bundle_locations;
-        $this->config_dir = $config_dir;
-        $this->cache_dir = $cache_dir;
+        $this->bundleLocations = $bundleLocations;
+        $this->configDir = $configDir;
+        $this->cacheDir = $cacheDir;
 
-        if ($config_validator == null) {
-            $config_validator = new BundleConfigurationValidator();
+        if ($configValidator == null) {
+            $configValidator = new BundleConfigurationValidator();
         }
 
-        $this->config_validator = $config_validator;
+        $this->configValidator = $configValidator;
     }
 
     public function setDebug($debug)
@@ -104,16 +104,16 @@ class BundleManager implements BundleManagerInterface
      */
     public function initBundles()
     {
-        $bundles_config = $this->loadAppBundleConfig();
+        $bundlesConfig = $this->loadAppBundleConfig();
 
-        foreach ($bundles_config as $bundle_name => $bundle) {
+        foreach ($bundlesConfig as $bundleName => $bundle) {
             if (isset($bundle['enabled']) && $bundle['enabled'] === true) {
                 $bundle_config = new BundleConfig($this, $bundle);
-                $this->bundle_configs[$bundle_name] = $bundle_config;
+                $this->bundleConfigs[$bundleName] = $bundle_config;
             }
         }
 
-        $this->bundles_initialized = true;
+        $this->bundlesInitialized = true;
     }
 
     /**
@@ -124,32 +124,32 @@ class BundleManager implements BundleManagerInterface
      */
     public function decorateContainer(ContainerBuilder $container)
     {
-        if ($this->bundles_initialized == false) {
+        if ($this->bundlesInitialized == false) {
             $this->initBundles();
         }
 
-        foreach ($this->bundle_configs as $bundle_config) {
-            if ($bundle_config->services && !empty($bundle_config->services) && $bundle_config->ignore_services !== true) {
-                foreach ($bundle_config->services as $service_class) {
-                    $fq_class = $bundle_config->namespace.'\\Services\\'.$service_class;
-                    if (class_exists($fq_class)) {
-                        $service = new $fq_class();
+        foreach ($this->bundleConfigs as $bundleConfig) {
+            if ($bundleConfig->services && !empty($bundleConfig->services) && $bundleConfig->ignore_services !== true) {
+                foreach ($bundleConfig->services as $service_class) {
+                    $fullyQualifiedClass = $bundleConfig->namespace.'\\Services\\'.$service_class;
+                    if (class_exists($fullyQualifiedClass)) {
+                        $service = new $fullyQualifiedClass();
                         $service->getServices(array(), $container);
-                        $container->addObjectResource($fq_class);
+                        $container->addObjectResource($fullyQualifiedClass);
                     }
                     else {
-                        throw new NotFoundException(sprintf("Service class %s not found", $fq_class));
+                        throw new NotFoundException(sprintf("Service class %s not found", $fullyQualifiedClass));
                     }
                 }
             }
 
-            $container->addResource(new FileResource($bundle_config->directory.'/config/bundle.yml'));
+            $container->addResource(new FileResource($bundleConfig->directory.'/config/bundle.yml'));
         }
     }
 
-    public function setConfigCache(ConfigCache $config_cache)
+    public function setConfigCache(ConfigCache $configCache)
     {
-        $this->config_cache = $config_cache;
+        $this->configCache = $configCache;
     }
 
     /**
@@ -163,108 +163,108 @@ class BundleManager implements BundleManagerInterface
      */
     public function loadAppBundleConfig($force_cache_refresh = false)
     {
-        if (!file_exists($this->config_dir.'/bundles.yml')) {
-            throw new NotFoundException(sprintf("Bundles config could not be found: %", $this->config_dir));
+        if (!file_exists($this->configDir.'/bundles.yml')) {
+            throw new NotFoundException(sprintf("Bundles config could not be found: %", $this->configDir));
         }
 
         if ($this->debug) {
-            $filename_append = '_dev';
+            $filenameAppend = '_dev';
 
-            if (file_exists($this->cache_dir.'/bundle_config.php')) {
-                unlink($this->cache_dir.'/bundle_config.php');
+            if (file_exists($this->cacheDir.'/bundle_config.php')) {
+                unlink($this->cacheDir.'/bundle_config.php');
             }
         }
         else {
-            $filename_append = '';
+            $filenameAppend = '';
         }
 
-        $cache_path = $this->cache_dir.'/bundle_config'.$filename_append.'.php';
+        $cachePath = $this->cacheDir.'/bundle_config'.$filenameAppend.'.php';
 
-        if (!$this->config_cache) {
-            $this->config_cache = new ConfigCache($cache_path, $this->debug);
+        if (!$this->configCache) {
+            $this->configCache = new ConfigCache($cachePath, $this->debug);
         }
 
-        $bundles_config_array = array();
+        $bundlesConfigArray = array();
 
-        $this->cache_fresh = $this->config_cache->isFresh();
+        $this->cacheIsFresh = $this->configCache->isFresh();
 
-        if ((!$this->cache_fresh) || $force_cache_refresh === true) {
+        if ((!$this->cacheIsFresh) || $force_cache_refresh === true) {
 
-            $app_bundles_config = Yaml::parse($this->config_dir.'/bundles.yml');
+            $appBundlesConfig = Yaml::parse($this->configDir.'/bundles.yml');
 
             if ($this->debug) {
-                if (file_exists($this->config_dir.'/bundles_dev.yml')) {
-                    $app_bundles_config = array_replace_recursive($app_bundles_config, Yaml::parse($this->config_dir.'/bundles_dev.yml'));
+                if (file_exists($this->configDir.'/bundles_dev.yml')) {
+                    $appBundlesConfig = array_replace_recursive($appBundlesConfig, Yaml::parse($this->configDir.'/bundles_dev.yml'));
                 }
             }
 
-            $resources = array(new FileResource($this->config_dir.'/bundles.yml'), new FileResource($this->config_dir.'/bundles_dev.yml'));
+            $resources = array(new FileResource($this->configDir.'/bundles.yml'), new FileResource($this->configDir.'/bundles_dev.yml'));
 
-            foreach ($app_bundles_config as $bundle_name => $app_bundle_config) {
-                if ($app_bundle_config['enabled'] == true) {
-                    $bundle_location = $this->findBundleDirectory($bundle_name);
-                    $bundle_config_location = $bundle_location.'/config/bundle.yml';
+            foreach ($appBundlesConfig as $bundleName => $appBundleConfig) {
+                if ($appBundleConfig['enabled'] == true) {
+                    $bundle_location = $this->findBundleDirectory($bundleName);
+                    $bundleConfigLocation = $bundle_location.'/config/bundle.yml';
 
-                    $resources[] = new FileResource($bundle_config_location);
+                    $resources[] = new FileResource($bundleConfigLocation);
 
-                    $bundle_config = Yaml::parse(file_get_contents($bundle_config_location));
-                    $bundle_config['enabled'] = true;
-                    $bundle_config['directory'] = $bundle_location;
+                    $bundleConfig = Yaml::parse(file_get_contents($bundleConfigLocation));
+                    $bundleConfig['enabled'] = true;
+                    $bundleConfig['directory'] = $bundle_location;
 
-                    $app_bundle_config_overrides = array();
-                    if (isset($app_bundle_config['config'])) {
-                        $app_bundle_config_overrides = $app_bundle_config['config'];
+                    $appBundleConfigOverrides = array();
+                    if (isset($appBundleConfig['config'])) {
+                        $appBundleConfigOverrides = $appBundleConfig['config'];
                     }
 
                     // todo: parent bundle outside of BundleConfig for caching
-                    if (isset($bundle_config['parent_bundle'])) {
+                    if (isset($bundleConfig['parent_bundle'])) {
 
                     }
 
-                    $merged_config = array_replace_recursive($bundle_config, $app_bundle_config_overrides);
+                    $merged_config = array_replace_recursive($bundleConfig, $appBundleConfigOverrides);
 
                     $configs = array($merged_config);
 
                     $processor = new Processor();
 
                     try {
-                        $final_bundle_config = $processor->processConfiguration($this->config_validator, $configs);
+                        $finalBundleConfig = $processor->processConfiguration($this->configValidator, $configs);
                     }
                     catch (\Exception $e) {
-                        throw new \Exception("Config for bundle {$bundle_config['name']} not configured correctly: ".$e->getMessage());
+                        throw new \Exception("Config for bundle {$bundleConfig['name']} not configured correctly: ".$e->getMessage());
                     }
 
-                    $bundles_config_array[$bundle_name] = $final_bundle_config;
+                    $bundlesConfigArray[$bundleName] = $finalBundleConfig;
                 }
             }
 
-            $this->config_cache->write('<?php return '.var_export($bundles_config_array, true).';', $resources);
+            $this->configCache->write('<?php return '.var_export($bundlesConfigArray, true).';', $resources);
         }
         else {
-            $bundles_config_array = require $cache_path;
+            $bundlesConfigArray = require $cachePath;
         }
 
-        return $bundles_config_array;
+        return $bundlesConfigArray;
     }
 
     /**
      * Finds a bundle by searching the bundle locations
      *
-     * @param $bundle_name
+     * @param $bundleName
      * @throws Exception\NotFoundException
      * @return string
      */
-    public function findBundleDirectory($bundle_name)
+    public function findBundleDirectory($bundleName)
     {
-        foreach ($this->bundle_locations as $location) {
-            $config_location = $location.'/'.$bundle_name.'/config/bundle.yml';
+        foreach ($this->bundleLocations as $location) {
+            $configLocation = $location.'/'.$bundleName.'/config/bundle.yml';
 
-            if (file_exists($config_location)) {
-                return $location.'/'.$bundle_name;
+            if (file_exists($configLocation)) {
+                return $location.'/'.$bundleName;
             }
         }
 
-        throw new NotFoundException(sprintf("Bundle directory not found for bundle %s", $bundle_name));
+        throw new NotFoundException(sprintf("Bundle directory not found for bundle %s", $bundleName));
     }
 
     /**
@@ -278,13 +278,11 @@ class BundleManager implements BundleManagerInterface
     {
         $directory = $this->findBundleDirectory($bundle);
 
-        $config_location = $directory.'/config/bundle.yml';
+        $configLocation = $directory.'/config/bundle.yml';
 
-        $config = Yaml::parse($config_location);
+        $config = Yaml::parse($configLocation);
         $config['directory'] = $directory;
         $bundle_config = new BundleConfig($this, $config);
-
-        //$this->bundle_configs[$bundle] = $bundle_config;
 
         return $bundle_config;
 
@@ -298,8 +296,8 @@ class BundleManager implements BundleManagerInterface
      */
     public function getBundleConfig($bundle)
     {
-        if (isset($this->bundle_configs[$bundle])) {
-            return $this->bundle_configs[$bundle];
+        if (isset($this->bundleConfigs[$bundle])) {
+            return $this->bundleConfigs[$bundle];
         }
         else {
             return $this->loadBundleConfig($bundle);
@@ -311,16 +309,16 @@ class BundleManager implements BundleManagerInterface
      */
     public function getBundleConfigs()
     {
-        return $this->bundle_configs;
+        return $this->bundleConfigs;
     }
 
     /**
-     * @param $bundle_name
+     * @param $bundleName
      * @return bool
      */
-    public function hasBundle($bundle_name)
+    public function hasBundle($bundleName)
     {
-        return isset($this->bundle_configs[$bundle_name]);
+        return isset($this->bundleConfigs[$bundleName]);
     }
 
     /**
@@ -328,7 +326,7 @@ class BundleManager implements BundleManagerInterface
      */
     public function bundlesInitialized()
     {
-        return $this->bundles_initialized;
+        return $this->bundlesInitialized;
     }
 
     /**
@@ -336,7 +334,7 @@ class BundleManager implements BundleManagerInterface
      */
     public function getBundleLocations()
     {
-        return $this->bundle_locations;
+        return $this->bundleLocations;
     }
 
     /**
@@ -344,7 +342,7 @@ class BundleManager implements BundleManagerInterface
      */
     public function cacheIsFresh()
     {
-        return $this->cache_fresh;
+        return $this->cacheIsFresh;
     }
 
     /**
@@ -352,13 +350,13 @@ class BundleManager implements BundleManagerInterface
      */
     public function getBundleRoutes(RouteCollection $routes)
     {
-        foreach ($this->bundle_configs as $bundle_config) {
-            if (file_exists($bundle_config->directory . '/config/routes.yml') && $bundle_config->ignore_routes !== true) {
-                $locator = new FileLocator(array($bundle_config->directory . '/config'));
+        foreach ($this->bundleConfigs as $bundleConfig) {
+            if (file_exists($bundleConfig->directory . '/config/routes.yml') && $bundleConfig->ignore_routes !== true) {
+                $locator = new FileLocator(array($bundleConfig->directory . '/config'));
                 $loader = new YamlFileLoader($locator);
                 $collection = $loader->load('routes.yml');
 
-                $collection->addDefaults(array('_bundle' => $bundle_config->name));
+                $collection->addDefaults(array('_bundle' => $bundleConfig->name));
 
                 $routes->addCollection($collection);
             }

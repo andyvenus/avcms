@@ -15,10 +15,10 @@ interface ValidatorExtension {
     /**
      * Sets the form handler
      *
-     * @param FormHandler $form_handler
+     * @param FormHandler $formHandler
      * @return mixed
      */
-    public function setFormHandler(FormHandler $form_handler);
+    public function setFormHandler(FormHandler $formHandler);
 
     /**
      * Validate the form

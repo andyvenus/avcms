@@ -13,63 +13,69 @@ use AVCMS\Core\SettingsManager\SettingsManager;
 
 class BundleSettingsLoader implements SettingsLoaderInterface
 {
-    protected $bundle_settings;
+    protected $bundleSettings;
 
-    protected $bundle_fields = array();
+    protected $bundleFields = array();
 
-    protected $field_sections = array();
+    protected $fieldSections = array();
 
-    public function __construct(BundleManagerInterface $bundle_manager)
+    public function __construct(BundleManagerInterface $bundleManager)
     {
-        $this->bundle_manager = $bundle_manager;
+        $this->bundleManager = $bundleManager;
     }
 
-    public function getSettings(SettingsManager $settings_manager)
+    public function getSettings(SettingsManager $settingsManager)
     {
-        $settings_manager->addSettings($this->loadSettings());
+        if (!$this->bundleManager->cacheIsFresh()) {
+            $settingsManager->addSettings($this->loadSettings());
+        }
     }
 
     protected function loadSettings()
     {
-        if (isset($this->bundle_settings)) {
-            return $this->bundle_settings;
+        if (isset($this->bundleSettings)) {
+            return $this->bundleSettings;
         }
 
-        $bundle_settings = array();
-        $bundle_configs = $this->bundle_manager->getBundleConfigs();
-        foreach ($bundle_configs as $bundle_config) {
-            if (isset($bundle_config['user_settings']) && !empty($bundle_config['user_settings'])) {
-                foreach ($bundle_config['user_settings'] as $setting_name => $setting) {
-                    $bundle_settings[$setting_name] = array('value' => (isset($setting['default']) ? $setting['default'] : ''), 'loader' => self::getId(), 'owner' => $bundle_config->name);
-                    $this->bundle_fields[$setting_name] = $setting;
+        $bundleSettings = array();
+        $bundleConfigs = $this->bundleManager->getBundleConfigs();
+        foreach ($bundleConfigs as $bundleConfig) {
+            if (isset($bundleConfig['user_settings']) && !empty($bundleConfig['user_settings'])) {
+                foreach ($bundleConfig['user_settings'] as $settingName => $setting) {
+                    $bundleSettings[$settingName] = array('value' => (isset($setting['default']) ? $setting['default'] : ''), 'loader' => self::getId(), 'owner' => $bundleConfig->name);
+                    $this->bundleFields[$settingName] = $setting;
                 }
 
-                if ($bundle_sections = $bundle_config['user_settings_sections']) {
-                    foreach ($bundle_config['user_settings_sections'] as $id => $label) {
-                        $this->field_sections[$id] = array('label' => $label);
+                if ($bundleConfig['user_settings_sections']) {
+                    foreach ($bundleConfig['user_settings_sections'] as $id => $label) {
+                        $this->fieldSections[$id] = array('label' => $label);
                     }
                 }
             }
         }
 
-        $this->bundle_settings = $bundle_settings;
-        return $this->bundle_settings;
+        $this->bundleSettings = $bundleSettings;
+        return $this->bundleSettings;
     }
 
 
     public function getFields()
     {
-        return $this->bundle_fields;
+        $this->loadSettings();
+
+        return $this->bundleFields;
     }
 
     public function getSections()
     {
-        return $this->field_sections;
+        $this->loadSettings();
+
+        return $this->fieldSections;
     }
 
     public function hasOwner($owner)
     {
-        return $this->bundle_manager->hasBundle($owner);
+        return $this->bundleManager->hasBundle($owner);
     }
 
     public static function getId()

@@ -18,24 +18,26 @@ abstract class TaxonomyModel extends Model
         return $ids;
     }
 
-    public function addContentTaxonomy($content_id, $content_type, $values)
+    public function addContentTaxonomy($contentId, $contentType, $values)
     {
         if (empty($values)) return;
 
         foreach ($values as $value) {
-            $db_values[] = array(
-                'content_id' => $content_id,
-                'content_type' => $content_type,
+            $dbValues[] = array(
+                'content_id' => $contentId,
+                'content_type' => $contentType,
                 'taxonomy_id' => $value
             );
         }
 
-        $this->query()->where('content_id', $content_id)->where('content_type', $content_type)->insert($db_values);
+        if (isset($dbValues)) {
+            $this->query()->where('content_id', $contentId)->where('content_type', $contentType)->insert($dbValues);
+        }
     }
 
-    public function deleteContentTaxonomy($content_id, $content_type)
+    public function deleteContentTaxonomy($contentId, $contentType)
     {
-        $this->query()->where('content_id', $content_id)->where('content_type', $content_type)->delete();
+        $this->query()->where('content_id', $contentId)->where('content_type', $contentType)->delete();
     }
 
     public function getEntity()

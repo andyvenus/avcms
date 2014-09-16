@@ -7,6 +7,7 @@
 
 namespace AVCMS\Bundles\CmsFoundation\Subscribers;
 
+use AVCMS\Bundles\CmsFoundation\Model\MenuItem;
 use AVCMS\Core\Bundle\BundleManagerInterface;
 use AVCMS\Core\Menu\MenuManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -14,30 +15,34 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class UpdateMenusSubscriber implements EventSubscriberInterface
 {
-    protected $bundle_manager;
+    protected $bundleManager;
 
-    public function __construct(MenuManager $menu_manager, BundleManagerInterface $bundle_manager)
+    public function __construct(MenuManager $menuManager, BundleManagerInterface $bundleManager)
     {
-        $this->bundle_manager = $bundle_manager;
-        $this->menu_manager = $menu_manager;
+        $this->bundleManager = $bundleManager;
+        $this->menuManager = $menuManager;
     }
 
     public function updateMenus()
     {
         // Only update menu items if bundle configs have been modified
-        if (!$this->bundle_manager->cacheIsFresh()) {
-            foreach ($this->bundle_manager->getBundleConfigs() as $bundle) {
+        if (!$this->bundleManager->cacheIsFresh()) {
+            foreach ($this->bundleManager->getBundleConfigs() as $bundle) {
                 if (isset($bundle['menu_items']) && is_array($bundle['menu_items'])) {
-                    foreach ($bundle['menu_items'] as $menu => $menu_items) {
-                        foreach ($menu_items as $item_id => $menu_item_config) {
-                            $menu_item = $this->menu_manager->getItemsModel()->getOneOrNew($item_id);
+                    foreach ($bundle['menu_items'] as $menu => $menuItems) {
+                        foreach ($menuItems as $itemId => $menuItemConfig) {
+                            $menuItem = $this->menuManager->getItemsModel()->getOne($itemId);
 
-                            $menu_item->fromArray($menu_item_config);
-                            $menu_item->setMenu($menu);
-                            $menu_item->setId($item_id);
-                            $menu_item->setOwner($bundle->name);
+                            if (!$menuItem) {
+                                $menuItem = new MenuItem();
+                            }
 
-                            $this->menu_manager->saveMenuItem($menu_item);
+                            $menuItem->fromArray($menuItemConfig);
+                            $menuItem->setMenu($menu);
+                            $menuItem->setId($itemId);
+                            $menuItem->setOwner($bundle->name);
+
+                            $this->menuManager->saveMenuItem($menuItem);
                         }
                     }
                 }

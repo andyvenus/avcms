@@ -26,7 +26,7 @@ class Finder
     /**
      * @var int
      */
-    protected $results_per_page = 10;
+    protected $results_per_page = 0;
 
     /**
      * @var array
@@ -115,8 +115,19 @@ class Finder
         return $this;
     }
 
+    public function customOrder($field, $type = 'ASC')
+    {
+        $this->current_query->orderBy($field, $type);
+
+        return $this;
+    }
+
     public function page($page)
     {
+        if ($this->results_per_page === 0) {
+            return $this;
+        }
+
         $this->current_page = $page;
 
         if ($page < 1 || !is_numeric($page)) {
@@ -157,7 +168,14 @@ class Finder
 
     public function where($key, $operator = null, $value = null)
     {
+        if (func_num_args() == 2) {
+            $value = $operator;
+            $operator = '=';
+        }
+
         $this->current_query->where($key, $operator, $value);
+
+        return $this;
     }
 
     public function setSearchFields(array $fields)

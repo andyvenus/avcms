@@ -37,3 +37,35 @@ menu_items_add:
 menu_items_edit:
   path: /admin/menus/{menu}/{id}
   defaults: { _controller: CmsFoundation::MenusAdminController::editMenuItemAction }
+
+modules_admin_edit:
+    path:     /admin/modules/edit/{id}
+    defaults: { _controller: 'CmsFoundation::ModulesAdminController::addSelectedModuleAction' }
+
+modules_admin_add:
+    path:     /admin/modules/{position}/add
+    defaults: { _controller: 'CmsFoundation::ModulesAdminController::addModuleAction' }
+
+modules_admin_add_selected:
+    path:     /admin/modules/{position}/add/{module}
+    defaults: { _controller: 'CmsFoundation::ModulesAdminController::addSelectedModuleAction' }
+
+modules_admin_delete:
+    path:     /admin/modules/delete
+    defaults: { _controller: 'CmsFoundation::ModulesAdminController::deleteAction' }
+
+modules_admin_home:
+  path: /admin/modules
+  defaults: { _controller: 'CmsFoundation::ModulesAdminController::homeAction' }
+
+modules_admin_finder:
+  path: /admin/modules/finder/{page}
+  defaults: { page: 1, _controller: 'CmsFoundation::ModulesAdminController::finderAction' }
+
+modules_manage_position:
+  path: /admin/modules/{id}
+  defaults: { _controller: 'CmsFoundation::ModulesAdminController::managePositionModulesAction' }
+
+modules_save_order:
+  path: /admin/modules/save-order/{position}
+  defaults: { _controller: 'CmsFoundation::ModulesAdminController::saveOrderAction' }

@@ -15,7 +15,7 @@ class UsersAdminController extends AdminBaseController
 {
     public function usersHomeAction(Request $request)
     {
-        return $this->createManageResponse($request, $this->bundle->tpl->users_browser);
+        return $this->handleManage($request, $this->bundle->tpl->users_browser);
     }
 
     public function usersFinderAction(Request $request)

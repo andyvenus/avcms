@@ -11,6 +11,7 @@ use AVCMS\Bundles\Blog\Form\BlogPostsFilterForm;
 use AVCMS\Bundles\Blog\Form\PostForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -30,22 +31,14 @@ class BlogAdminController extends AdminBaseController
 
     public function blogHomeAction(Request $request)
     {
-       return $this->createManageResponse($request, '@Blog/blog_browser.twig');
+       return $this->handleManage($request, '@Blog/blog_browser.twig');
     }
 
     public function editPostAction(Request $request)
     {
-        $form = $this->buildForm(new PostForm($request->get('id', 0), $this->activeUser()->getUser()->getId()));
+        $form_blueprint = new PostForm($request->get('id', 0), $this->activeUser()->getUser()->getId());
 
-        $helper = $this->editContentHelper($this->blogPosts, $form);
-
-        $helper->handleRequestAndSave($request);
-
-        if (!$helper->contentExists()) {
-            throw $this->createNotFoundException();
-        }
-
-        return $this->createEditResponse($helper, $request, '@Blog/edit_post.twig', $this->browserTemplate, array('blog_edit_post', array('id' => $helper->getEntity()->getId())));
+        return $this->handleEdit($request, $this->blogPosts, $form_blueprint, 'blog_edit_post', '@Blog/edit_post.twig', '@Blog/blog_browser.twig', array());
     }
 
     public function finderAction(Request $request)
@@ -65,12 +58,12 @@ class BlogAdminController extends AdminBaseController
 
     public function deleteAction(Request $request)
     {
-        return $this->delete($request, $this->blogPosts);
+        return $this->handleDelete($request, $this->blogPosts);
     }
 
     public function togglePublishedAction(Request $request)
     {
-        return $this->togglePublished($request, $this->blogPosts);
+        return $this->handleTogglePublished($request, $this->blogPosts);
     }
 
     protected function getSharedTemplateVars($ajaxDepth)

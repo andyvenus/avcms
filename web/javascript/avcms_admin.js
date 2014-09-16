@@ -104,5 +104,6 @@ avcms.adminTemplate = {
 
     formSubmitScroll: function(form) {
         form.parent('.editor-content').scrollTop(0);
+        window.scrollTo(0,0);
     }
 }

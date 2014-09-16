@@ -45,10 +45,10 @@ class DefaultType implements TypeInterface
         return $data;
     }
 
-    public function makeView($field, $all_form_data, FormHandler $form_handler)
+    public function makeView($field, $allFormData, FormHandler $formHandler)
     {
-        if (isset($all_form_data[$field['name']])) {
-            $field['value'] = $all_form_data[$field['name']];
+        if (isset($allFormData[$field['name']])) {
+            $field['value'] = $allFormData[$field['name']];
         }
 
         if (isset($field['original_name'])) {

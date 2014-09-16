@@ -14,10 +14,10 @@ class BundleConfigurationValidator implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
-        $tree_builder = new TreeBuilder();
-        $root_node = $tree_builder->root('model');
+        $treeBuilder = new TreeBuilder();
+        $rootNode = $treeBuilder->root('model');
 
-        $root_node
+        $rootNode
             ->addDefaultsIfNotSet()
             ->children()
                 ->variableNode('name')
@@ -28,8 +28,10 @@ class BundleConfigurationValidator implements ConfigurationInterface
                 ->end()
                 ->variableNode('require')
                 ->end()
-                ->variableNode('model')
-                ->end()
+            ->variableNode('model')
+            ->end()
+            ->variableNode('modules')
+            ->end()
                 ->variableNode('route')
                 ->end()
                 ->variableNode('template')
@@ -60,6 +62,6 @@ class BundleConfigurationValidator implements ConfigurationInterface
                 ->end()
             ->end();
 
-        return $tree_builder;
+        return $treeBuilder;
     }
 }

@@ -11,10 +11,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class ControllerResolver extends BaseControllerResolver
 {
 
-    public function __construct(ContainerInterface $container, BundleManagerInterface $bundle_manager, LoggerInterface $logger = null)
+    public function __construct(ContainerInterface $container, BundleManagerInterface $bundleManager, LoggerInterface $logger = null)
     {
         $this->container = $container;
-        $this->bundle_manager = $bundle_manager;
+        $this->bundleManager = $bundleManager;
 
         parent::__construct($logger);
     }
@@ -27,11 +27,12 @@ class ControllerResolver extends BaseControllerResolver
         elseif ($length === 2) {
             list($bundle, $class, $method) = explode('::', $controller, 3);
 
-            if (!$this->bundle_manager->hasBundle($bundle)) {
+            if (!$this->bundleManager->hasBundle($bundle)) {
                 throw new \Exception(sprintf("Cannot build controller %s - Bundle %s not initialised", $controller, $bundle));
             }
 
-            $namespace = $this->bundle_manager->getBundleConfig($bundle)->namespace;
+            $bundleConfig = $this->bundleManager->getBundleConfig($bundle);
+            $namespace = $bundleConfig->namespace;
             $class = $namespace.'\Controller\\'.$class;
         }
         else {
@@ -45,6 +46,10 @@ class ControllerResolver extends BaseControllerResolver
         $controller = new $class();
         if ($controller instanceof ContainerAwareInterface) {
             $controller->setContainer($this->container);
+        }
+
+        if (isset($bundleConfig) && is_callable(array($controller, 'setBundle'))) {
+            $controller->setBundle($bundleConfig);
         }
 
         return array($controller, $method);

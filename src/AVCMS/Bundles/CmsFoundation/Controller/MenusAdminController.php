@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MenusAdminController extends AdminBaseController
 {
-    protected $browser_template = '@Admin/menus_browser.twig';
+    protected $browserTemplate = '@Admin/menus_browser.twig';
 
     /**
      * @var \AVCMS\Bundles\CmsFoundation\Model\Menus
@@ -24,17 +24,17 @@ class MenusAdminController extends AdminBaseController
     /**
      * @var \AVCMS\Bundles\CmsFoundation\Model\MenuItems
      */
-    protected $menu_items;
+    protected $menuItems;
 
     public function setUp()
     {
         $this->menus = $this->model('Menus');
-        $this->menu_items  = $this->model('MenuItems');
+        $this->menuItems  = $this->model('MenuItems');
     }
 
     public function homeAction(Request $request)
     {
-       return $this->createManageResponse($request, $this->browser_template);
+       return $this->handleManage($request, $this->browserTemplate);
     }
 
     public function editMenuAction(Request $request)
@@ -49,7 +49,7 @@ class MenusAdminController extends AdminBaseController
             throw $this->createNotFoundException();
         }
 
-        return $this->createEditResponse($helper, $request, '@Admin/edit_menu.twig', $this->browser_template, array('menus_admin_edit', array('id' => $helper->getEntity()->getId())));
+        return $this->createEditResponse($helper, $request, '@Admin/edit_menu.twig', $this->browserTemplate, array('menus_admin_edit', array('id' => $helper->getEntity()->getId())));
     }
 
     public function editMenuItemAction(Request $request)
@@ -62,17 +62,15 @@ class MenusAdminController extends AdminBaseController
 
         $form = $this->buildForm(new MenuItemAdminForm($request->attributes->get('id', 0)));
 
-        $menu_items = $this->menu_items;
+        $menuItem = $this->menuItems->getOneOrNew($request->attributes->get('id', 0));
 
-        $menu_item = $menu_items->getOneOrNew($request->attributes->get('id', 0));
-
-        if (!$menu_item) {
+        if (!$menuItem) {
             throw $this->createNotFoundException('Menu Item Not Found');
         }
 
-        $menu_item->setMenu($menu->getId());
+        $menuItem->setMenu($menu->getId());
 
-        $helper = $this->editContentHelper($this->model('MenuItems'), $form, $menu_item);
+        $helper = $this->editContentHelper($this->model('MenuItems'), $form, $menuItem);
 
         $helper->handleRequestAndSave($request);
 
@@ -84,7 +82,7 @@ class MenusAdminController extends AdminBaseController
             $helper,
             $request,
             '@CmsFoundation/edit_menu_item.twig',
-            $this->browser_template,
+            $this->browserTemplate,
             array('menus_admin_manage_items', array('id' => $menu->getId())),
             array('menu' => $menu))
         ;
@@ -93,15 +91,15 @@ class MenusAdminController extends AdminBaseController
 
     public function manageMenuItemsAction(Request $request)
     {
-        $menu_manager = $this->container->get('menu_manager');
+        $menuManager = $this->container->get('menu_manager');
 
-        $menu = $menu_manager->getModel()->getOneOrNew($request->get('id', 0));
+        $menu = $menuManager->getModel()->getOneOrNew($request->get('id', 0));
 
         if (!$menu) {
             throw $this->createNotFoundException('Menu Not Found');
         }
 
-        $menu_items = $menu_manager->getMenuItems($menu->getId());
+        $menu_items = $menuManager->getMenuItems($menu->getId());
 
         return new Response($this->renderAdminSection('@Admin/manage_menu_items.twig', $request->get('ajax_depth'), array(
             'item' => $menu,
@@ -130,13 +128,9 @@ class MenusAdminController extends AdminBaseController
             return new JsonResponse(array('success' => 0, 'error' => 'No ids set'));
         }
 
-        $model = $this->model('Menus');
+        $this->menus->query()->where('custom', 1)->whereIn('id', (array) $request->request->get('ids'))->delete();
 
-        $model->query()->where('custom', 1)->whereIn('id', (array) $request->request->get('ids'));
-
-        $menu_items = $this->model('MenuItems');
-
-        $menu_items->query()->where('owner', 'user')->whereIn('menu', (array) $request->request->get('ids'))->delete();
+        $this->menuItems->query()->where('owner', 'user')->whereIn('menu', (array) $request->request->get('ids'))->delete();
 
         return new JsonResponse(array('success' => 1));
     }
@@ -147,19 +141,18 @@ class MenusAdminController extends AdminBaseController
             throw $this->createNotFoundException("No menu ordering data found in request");
         }
 
-        $menu_items_model = $this->model('MenuItems');
-        $menu_items = $menu_items_model->query()->where('menu', $id)->get();
+        $menuItems = $this->menuItems->query()->where('menu', $id)->get();
         $order = $request->get('menu_order');
 
         $i = 0;
         foreach ($order as $id => $parent) {
             $i++;
 
-            if (isset($menu_items[$id])) {
+            if (isset($menuItems[$id])) {
                 /**
                  * @var $menu_item \AVCMS\Bundles\CmsFoundation\Model\MenuItem
                  */
-                $menu_item = $menu_items[$id];
+                $menu_item = $menuItems[$id];
 
                 if ($parent == 'null') {
                     $parent = null;
@@ -168,7 +161,7 @@ class MenusAdminController extends AdminBaseController
                 $menu_item->setParent($parent);
                 $menu_item->setOrder($i);
 
-                $menu_items_model->update($menu_item);
+                $this->menuItems->update($menu_item);
             }
         }
 

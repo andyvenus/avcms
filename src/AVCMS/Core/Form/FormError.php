@@ -13,14 +13,14 @@ class FormError
     public $param;
     public $message;
     protected $translate;
-    protected $translation_params;
+    protected $translationParams;
 
-    public function __construct($param, $message, $translate = false, $translation_params = array())
+    public function __construct($param, $message, $translate = false, $translationParams = array())
     {
         $this->param = $param;
         $this->message = $message;
         $this->translate = $translate;
-        $this->translation_params = $translation_params;
+        $this->translationParams = $translationParams;
     }
 
     public function setParam($param)
@@ -55,11 +55,11 @@ class FormError
 
     public function setTranslationParams($translation_params)
     {
-        $this->translation_params = $translation_params;
+        $this->translationParams = $translation_params;
     }
 
     public function getTranslationParams()
     {
-        return $this->translation_params;
+        return $this->translationParams;
     }
 }

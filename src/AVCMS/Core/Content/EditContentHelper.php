@@ -7,9 +7,12 @@
 
 namespace AVCMS\Core\Content;
 
+use AVCMS\Bundles\Admin\Event\AdminEditFormBuiltEvent;
+use AVCMS\Bundles\Admin\Event\AdminSaveContentEvent;
 use AVCMS\Core\Form\FormHandler;
 use AVCMS\Core\Model\Entity;
 use AVCMS\Core\Model\Model;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class EditContentHelper
@@ -33,13 +36,16 @@ class EditContentHelper
 
     protected $form_submitted = false;
 
-    protected $form_valid = false;
+    protected $formValid = false;
 
-    public function __construct(Model $model, FormHandler $form, Entity $entity = null)
+    protected $eventDispatcher;
+
+    public function __construct(Model $model, FormHandler $form, Entity $entity = null, EventDispatcherInterface $eventDispatcher)
     {
         $this->model = $model;
         $this->form = $form;
         $this->entity = $entity;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function handleRequest(Request $request)
@@ -51,8 +57,11 @@ class EditContentHelper
             $this->entity = $this->model->getOneOrNew($id);
         }
 
-        if ($this->form !== null) {
+        if ($this->form !== null && $this->entity !== null) {
             $this->form->bindEntity($this->entity);
+
+            $this->eventDispatcher->dispatch('admin.edit.form.built', new AdminEditFormBuiltEvent($this->entity, $this->model, $this->form, $request));
+
             $this->form->handleRequest($request);
         }
     }
@@ -73,6 +82,8 @@ class EditContentHelper
         if ($this->form->isValid() && $this->contentExists()) {
             $this->form->saveToEntities();
             $this->model->save($this->entity);
+
+            $this->eventDispatcher->dispatch('admin.save.content', new AdminSaveContentEvent($this->entity, $this->model, $this->form));
 
             return true;
         }

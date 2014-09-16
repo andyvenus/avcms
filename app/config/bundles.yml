@@ -6,15 +6,9 @@ Admin:
     enabled: true
 Blog:
     enabled: true
-    config:
-        user_settings:
-            blog_posts_per_page:
-                label: 'MY NEW LABEL'
 Tags:
     enabled: true
 Framework:
     enabled: true
-Generated2:
-    enabled: false
-KOKS:
+TestBundle:
     enabled: true

@@ -48,7 +48,8 @@
         <div class="row">
             <div class="col-xs-4">
                    <ul class="nav navbar-nav">
-                       <li class="dropdown">
+                       <li class="visible-xs-inline visible-sm-inline"><a href="#" id="menu_toggle"><span class="glyphicon glyphicon-align-justify"></span> {% trans %}Navigation{% endtrans %}</a></li>
+                       <li class="dropdown visible-md-inline visible-lg-inline">
                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ random(['Namaste', 'Hello', 'Hola', 'Bonjour', 'Saluton', 'Hallo']) }} {{ user.username }}</a>
                            <ul class="dropdown-menu" role="menu">
                                <li><a href="#">Profile</a></li>
@@ -82,7 +83,7 @@
 <aside class="admin-menu">
     <ul>
         {% for menu_item in menu('admin') %}
-            <li><a href="{{ menu_item.url }}"><span class="glyphicon glyphicon-{{ menu_item.icon }}"></span> {{ menu_item.label }}</a></li>
+            <li><a href="{{ menu_item.url }}"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}</a></li>
         {% endfor %}
     </ul>
 </aside>

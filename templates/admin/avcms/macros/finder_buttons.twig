@@ -4,6 +4,12 @@
     </a>
 {% endmacro %}
 
+{% macro manage(ajax_route, item_id) %}
+    <a class="btn btn-xs btn-default" href="{{ url(ajax_route, {'id': item_id}) }}">
+        <span class="glyphicon glyphicon-th-list"></span> {% trans %}Manage{% endtrans %}
+    </a>
+{% endmacro %}
+
 {% macro publish(published, ajax_route) %}
     {% if published == 1 %}
         {% set published_btn_class = 'btn-default' %}

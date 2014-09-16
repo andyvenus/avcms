@@ -14,10 +14,10 @@ use Symfony\Component\Routing\RouteCollection;
 interface BundleManagerInterface
 {
     /**
-     * @param $bundle_name
+     * @param $bundleName
      * @return bool
      */
-    public function hasBundle($bundle_name);
+    public function hasBundle($bundleName);
 
     /**
      * @return array
@@ -86,10 +86,10 @@ interface BundleManagerInterface
     /**
      * Finds a bundle by searching the bundle locations
      *
-     * @param $bundle_name
+     * @param $bundleName
      * @return string
      */
-    public function findBundleDirectory($bundle_name);
+    public function findBundleDirectory($bundleName);
 
     /**
      * @return bool
@@ -97,7 +97,7 @@ interface BundleManagerInterface
     public function cacheIsFresh();
 
     /**
-     * @param RouteCollection $route_collection
+     * @param RouteCollection $routeCollection
      */
-    public function getBundleRoutes(RouteCollection $route_collection);
+    public function getBundleRoutes(RouteCollection $routeCollection);
 }

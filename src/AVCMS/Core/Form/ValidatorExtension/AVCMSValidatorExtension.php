@@ -15,7 +15,7 @@ class AVCMSValidatorExtension implements ValidatorExtension {
     /**
      * @var FormHandler
      */
-    protected $form_handler;
+    protected $formHandler;
 
     /**
      * @var \AVCMS\Core\Validation\Validator
@@ -25,33 +25,33 @@ class AVCMSValidatorExtension implements ValidatorExtension {
     /**
      * @var boolean
      */
-    protected $validation_run = false;
+    protected $validationRun = false;
 
     /**
      * @var array
      */
-    protected $invalid_params;
+    protected $invalidParams;
 
-    public function __construct(Validator $validator, $entity_handler = null)
+    public function __construct(Validator $validator, $entityHandler = null)
     {
         $this->validator = $validator;
     }
 
-    public function setFormHandler(FormHandler $form_handler)
+    public function setFormHandler(FormHandler $formHandler)
     {
-        $this->form_handler = $form_handler;
+        $this->formHandler = $formHandler;
     }
 
     public function validate($scope = Validator::SCOPE_ALL, $options = null)
     {
-        if (!$this->validation_run) {
-            $form = $this->form_handler->getFormBlueprint();
+        if (!$this->validationRun) {
+            $form = $this->formHandler->getFormBlueprint();
 
             if (method_exists($form, 'getValidationRules')) {
                 $form->getValidationRules($this->validator);
             }
 
-            $entities = $this->form_handler->saveToAndGetClonedEntities();
+            $entities = $this->formHandler->saveToAndGetClonedEntities();
 
             if (!empty($entities)) {
                 foreach ($entities as $entity) {
@@ -59,9 +59,9 @@ class AVCMSValidatorExtension implements ValidatorExtension {
                 }
             }
 
-            $this->validator->validate($this->form_handler->getData(), 'standard', $scope);
+            $this->validator->validate($this->formHandler->getData(), 'standard', $scope);
 
-            $this->validation_run = true;
+            $this->validationRun = true;
         }
         else {
             throw new \Exception("Can't validate twice, use existing validation result");
@@ -74,7 +74,7 @@ class AVCMSValidatorExtension implements ValidatorExtension {
             $scope = Validator::SCOPE_ALL;
         }
 
-        if (!$this->validation_run) {
+        if (!$this->validationRun) {
             $this->validate($scope, $options);
         }
 
@@ -85,42 +85,42 @@ class AVCMSValidatorExtension implements ValidatorExtension {
     {
         $errors = $this->validator->getErrors();
 
-        $error_objects = array();
+        $errorObjects = array();
         // Errors must be converted to FormError objects
         foreach ($errors as $error) {
-            $error_objects[] = new FormError($error['param_name'], $error['error_message'], false);
+            $errorObjects[] = new FormError($error['param_name'], $error['error_message'], false);
         }
 
-        return $error_objects;
+        return $errorObjects;
     }
 
     public function fieldHasError($field)
     {
-        if (!isset($this->invalid_params)) {
-            $invalid_params = array();
+        if (!isset($this->invalidParams)) {
+            $invalidParams = array();
             $errors = $this->validator->getErrors();
 
             foreach ($errors as $error) {
                 // Convert error parameter name from a.string.like.this to a[string][like][this]
                 if (strpos($error['param_name'], '.') !== false) {
-                    $exploded_name = explode('.', $error['param_name']);
+                    $explodedName = explode('.', $error['param_name']);
 
-                    $param_name = array_shift($exploded_name);
+                    $paramName = array_shift($explodedName);
 
-                    foreach ($exploded_name as $name_param) {
-                        $param_name .= '['.$name_param.']';
+                    foreach ($explodedName as $nameParam) {
+                        $paramName .= '['.$nameParam.']';
                     }
                 }
                 else {
-                    $param_name = $error['param_name'];
+                    $paramName = $error['param_name'];
                 }
 
-                $invalid_params[] = $param_name;
+                $invalidParams[] = $paramName;
             }
 
-            $this->invalid_params = $invalid_params;
+            $this->invalidParams = $invalidParams;
         }
 
-        return in_array($field, $this->invalid_params);
+        return in_array($field, $this->invalidParams);
     }
 }

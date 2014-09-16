@@ -20,16 +20,16 @@ class CsrfFormPlugin implements EventSubscriberInterface
      */
     protected $token;
 
-    public function __construct(CsrfToken $csrf_token)
+    public function __construct(CsrfToken $csrfToken)
     {
-        $this->token = $csrf_token;
+        $this->token = $csrfToken;
     }
 
     public function addTokenField(FormHandlerConstructEvent $event)
     {
-        $form_blueprint = $event->getFormBlueprint();
+        $formBlueprint = $event->getFormBlueprint();
 
-        $form_blueprint->add('_csrf_token', 'hidden', array(
+        $formBlueprint->add('_csrf_token', 'hidden', array(
             'default' => $this->token->getToken()
         ));
     }
@@ -39,8 +39,8 @@ class CsrfFormPlugin implements EventSubscriberInterface
         $token = $event->getFormData()['_csrf_token'];
 
         if ($this->token->checkToken($token) === false) {
-            $form_handler = $event->getFormHandler();
-            $form_handler->addCustomErrors(array(new FormError('_csrf_token', 'Invalid CSRF token')));
+            $formHandler = $event->getFormHandler();
+            $formHandler->addCustomErrors(array(new FormError('_csrf_token', 'Invalid CSRF token')));
         }
     }
 

@@ -11,8 +11,8 @@ class Config implements \ArrayAccess
 {
     public function __construct(array $config)
     {
-        $this->config_array = $config;
-        $this->config = $this->arrayToObject($this->config_array);
+        $this->configArray = $config;
+        $this->config = $this->arrayToObject($this->configArray);
     }
 
     public function __get($name)
@@ -31,12 +31,12 @@ class Config implements \ArrayAccess
 
     public function offsetExists($offset)
     {
-        return isset($this->config_array[$offset]);
+        return isset($this->configArray[$offset]);
     }
 
     public function offsetGet($offset)
     {
-        return (isset($this->config_array[$offset]) ? $this->config_array[$offset] : null);
+        return (isset($this->configArray[$offset]) ? $this->configArray[$offset] : null);
     }
 
     public function offsetSet($offset, $value)
@@ -51,7 +51,7 @@ class Config implements \ArrayAccess
 
     public function getConfigArray()
     {
-        return $this->config_array;
+        return $this->configArray;
     }
 
     public function getConfigObject()
@@ -71,7 +71,7 @@ class Config implements \ArrayAccess
 
     public function setSetting($name, $value)
     {
-        $this->config_array[$name] = $value;
+        $this->configArray[$name] = $value;
         $this->config->$name = $this->arrayToObject($value);
     }
 } 

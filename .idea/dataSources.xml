@@ -6,10 +6,6 @@
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:8889/avms</jdbc-url>
-      <user-name>root</user-name>
-      <user-password>dfd8dfc5dfc5dfde</user-password>
-      <schema-pattern>avcms.* avcms_test.*</schema-pattern>
-      <default-schemas>avcms.* avms.*</default-schemas>
       <libraries>
         <library>
           <url>jar://$USER_HOME$/Dev/PHPStorm/mysql-connector-java-5.1.26-bin.jar!/</url>

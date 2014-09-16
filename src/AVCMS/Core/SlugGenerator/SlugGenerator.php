@@ -9,16 +9,16 @@ namespace AVCMS\Core\SlugGenerator;
 
 class SlugGenerator
 {
-    public function generate($slug_input)
+    public function generate($slugInput)
     {
-        $slug_output = stripslashes($slug_input);
-        $slug_output = strtolower($slug_output);
-        $slug_output = str_replace("&", "and", $slug_output);
-        $slug_output = str_replace(" ", "-", $slug_output);
-        $slug_output = preg_replace("/[\.,\";<>@#%&?\/'\:]/", "", $slug_output);
-        $slug_output = str_replace("---", "-", $slug_output);
-        $slug_output = str_replace("--", "-", $slug_output);
+        $slugOutput = stripslashes($slugInput);
+        $slugOutput = strtolower($slugOutput);
+        $slugOutput = str_replace("&", "and", $slugOutput);
+        $slugOutput = str_replace(" ", "-", $slugOutput);
+        $slugOutput = preg_replace("/[\.,\";<>@#%&?\/'\:]/", "", $slugOutput);
+        $slugOutput = str_replace("---", "-", $slugOutput);
+        $slugOutput = str_replace("--", "-", $slugOutput);
 
-        return $slug_output;
+        return $slugOutput;
     }
 } 

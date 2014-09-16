@@ -11,7 +11,7 @@ use AVCMS\Core\SettingsManager\SettingsManager;
 
 interface SettingsLoaderInterface
 {
-    public function getSettings(SettingsManager $settings_manager);
+    public function getSettings(SettingsManager $settingsManager);
 
     public function hasOwner($owner);
 

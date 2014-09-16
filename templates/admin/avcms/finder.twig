@@ -4,7 +4,9 @@
 {% block finder_header %}
     <div class="browser-finder-header">
         <div class="page">
-            {% trans %}Page{% endtrans %} {{ page }}
+            {% block page_inner %}
+                {% trans %}Page{% endtrans %} {{ page }}
+            {% endblock %}
         </div>
         <div class="fields">
             <div class="container-fluid">

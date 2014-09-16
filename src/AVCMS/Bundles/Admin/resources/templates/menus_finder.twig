@@ -12,7 +12,7 @@
 
 {% block item_options %}
     <div class="btn-group">
-        <a class="btn btn-default btn-xs" href="{{ url('menus_admin_manage_items', {id: item.id}) }}"><span class="glyphicon glyphicon-th-list"></span> {% trans %}Manage{% endtrans %}</a>
+        {{ buttons.manage(bundle.route.menus_admin_manage_items, item.id) }}
         {{ buttons.edit(bundle.route.menus_admin_edit, item.id) }}
         {% if item.custom == 1 %}
             {{ buttons.delete(bundle.route.menus_admin_delete) }}

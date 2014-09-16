@@ -18,16 +18,16 @@ class FormHandlerFactory
 {
     protected $translator;
 
-    public function __construct(RequestHandlerInterface $request_handler, EntityProcessor $entity_processor, TransformerManager $transformer_manager, EventDispatcherInterface $event_dispatcher = null, TypeHandler $type_handler = null)
+    public function __construct(RequestHandlerInterface $requestHandler, EntityProcessor $entityProcessor, TransformerManager $transformerManager, EventDispatcherInterface $eventDispatcher = null, TypeHandler $typeHandler = null)
     {
-        $this->request_handler = $request_handler;
-        $this->entity_processor = $entity_processor;
-        $this->transformer_manager = $transformer_manager;
-        $this->event_dispatcher = $event_dispatcher;
-        $this->type_handler = $type_handler;
+        $this->request_handler = $requestHandler;
+        $this->entity_processor = $entityProcessor;
+        $this->transformer_manager = $transformerManager;
+        $this->event_dispatcher = $eventDispatcher;
+        $this->type_handler = $typeHandler;
     }
 
-    public function buildForm(FormBlueprint $form, FormViewInterface $form_view = null, ValidatorExtension $validator = null)
+    public function buildForm(FormBlueprint $form, FormViewInterface $formView = null, ValidatorExtension $validator = null)
     {
         $form_handler = new FormHandler($form, $this->request_handler, $this->entity_processor, $this->type_handler, $this->event_dispatcher);
 
@@ -35,11 +35,11 @@ class FormHandlerFactory
             $form_handler->setValidator($validator);
         }
 
-        if (!$form_view) {
-            $form_view = new FormView();
+        if (!$formView) {
+            $formView = new FormView();
         }
 
-        $form_handler->setFormView($form_view);
+        $form_handler->setFormView($formView);
         $form_handler->setTransformerManager($this->transformer_manager);
 
         return $form_handler;

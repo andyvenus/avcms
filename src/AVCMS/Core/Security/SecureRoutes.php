@@ -25,16 +25,16 @@ class SecureRoutes implements EventSubscriberInterface
     /**
      * @var array
      */
-    protected $secure_url_matches = array();
+    protected $secureUrlRoutes = array();
 
-    public function __construct(ActiveUser $active_user)
+    public function __construct(ActiveUser $activeUser)
     {
-        $this->active_user = $active_user;
+        $this->activeUser = $activeUser;
     }
 
     public function addRouteMatcherPermission($regex, $permission)
     {
-        $this->secure_url_matches[] = array('regex' => $regex, 'permission' => $permission);
+        $this->secureUrlRoutes[] = array('regex' => $regex, 'permission' => $permission);
     }
 
     public function handleRequest(GetResponseEvent $event)
@@ -45,12 +45,12 @@ class SecureRoutes implements EventSubscriberInterface
             return;
         }
 
-        $route_path = $request->getPathInfo();
+        $routePath = $request->getPathInfo();
 
         // Regex protected routes
-        foreach ($this->secure_url_matches as $match) {
-            if (preg_match($match['regex'], $route_path)) {
-                if ($this->active_user->hasPermission($match['permission']) == false) {
+        foreach ($this->secureUrlRoutes as $match) {
+            if (preg_match($match['regex'], $routePath)) {
+                if ($this->activeUser->hasPermission($match['permission']) == false) {
                     throw new PermissionsError('You don\'t have permission to access this page (regex secure).');
                 }
             }
@@ -61,7 +61,7 @@ class SecureRoutes implements EventSubscriberInterface
             $permissions = (array) $request->attributes->get('_permissions');
 
             foreach ($permissions as $permission) {
-                if ($this->active_user->hasPermission($permission) == false) {
+                if ($this->activeUser->hasPermission($permission) == false) {
                     throw new PermissionsError('You don\'t have permission to access this page (explicitly secure route).');
                 }
             }

@@ -12,25 +12,28 @@ use Symfony\Component\HttpFoundation\Response;
 
 class {{cc_plural}}AdminController extends AdminBaseController
 {
+    protected ${{model_var_name}};
+
+    public function setUp(Request $request)
+    {
+        $this->{{model_var_name}} = $this->model('{{model_class}}');
+    }
+
     public function homeAction(Request $request)
     {
-       return $this->manage($request, '@{{bundle}}/{{plural}}_browser.twig');
+       return $this->handleManage($request, '@{{bundle}}/{{plural}}_browser.twig');
     }
 
     public function editAction(Request $request)
     {
-        $model = $this->model('{{model_class}}');
+        $formBlueprint = new {{cc_singular}}AdminForm();
 
-        $form_blueprint = new {{cc_singular}}AdminForm();
-
-        return $this->edit($request, $model, $form_blueprint, '{{admin_edit_route}}', '@{{bundle}}/edit_{{singular}}.twig', '@{{bundle}}/{{plural}}_browser.twig', array());
+        return $this->handleEdit($request, $this->{{model_var_name}}, $formBlueprint, '{{admin_edit_route}}', '@{{bundle}}/edit_{{singular}}.twig', '@{{bundle}}/{{plural}}_browser.twig', array());
     }
 
     public function finderAction(Request $request)
     {
-        $model = $this->model('{{model_class}}');
-
-        $finder = $model->find()
+        $finder = $this->{{model_var_name}}->find()
             ->setSearchFields(array('{{title_field}}'))
             ->setResultsPerPage(15)
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
@@ -41,16 +44,12 @@ class {{cc_plural}}AdminController extends AdminBaseController
 
     public function deleteAction(Request $request)
     {
-        $model = $this->model('{{model_class}}');
-
-        return $this->delete($request, $model);
+        return $this->handleDelete($request, $this->{{model_var_name}});
     }
 
     public function togglePublishedAction(Request $request)
     {
-        $model = $this->model('{{model_class}}');
-
-        return $this->togglePublished($request, $model);
+        return $this->handleTogglePublished($request, $this->{{model_var_name}});
     }
 
     protected function getSharedTemplateVars($ajax_depth)

@@ -51,7 +51,7 @@ class FormBlueprint implements FormBlueprintInterface
         );
 
         if (strpos($name, '[') !== false) {
-            preg_match('/\[([^\]]+)\]/', $name, $sub_field);
+            preg_match('/\[([^\]]+)\]/', $name, $subField);
 
             $field['original_name'] = $field['name'];
 
@@ -86,7 +86,7 @@ class FormBlueprint implements FormBlueprintInterface
      */
     public function addBefore($offset, $name, $type, $options = array())
     {
-        $new_field = array(
+        $newField = array(
             $name => array(
                 'name' => $name,
                 'type' => $type,
@@ -94,7 +94,7 @@ class FormBlueprint implements FormBlueprintInterface
             )
         );
 
-        $this->fields = $this->insertAfterKey($this->fields, $offset, $new_field, true);
+        $this->fields = $this->insertAfterKey($this->fields, $offset, $newField, true);
 
         return $this;
     }
@@ -105,7 +105,7 @@ class FormBlueprint implements FormBlueprintInterface
      */
     public function addAfter($offset, $name, $type, $options = array())
     {
-        $new_field = array(
+        $newField = array(
             $name => array(
                 'name' => $name,
                 'type' => $type,
@@ -113,7 +113,7 @@ class FormBlueprint implements FormBlueprintInterface
             )
         );
 
-        $this->fields = $this->insertAfterKey($this->fields, $offset, $new_field);
+        $this->fields = $this->insertAfterKey($this->fields, $offset, $newField);
 
         return $this;
     }
@@ -121,9 +121,9 @@ class FormBlueprint implements FormBlueprintInterface
     /**
      * {@inheritdoc}
      */
-    public function replace($name, $type, $options = array(), $add_if_not_exist = false)
+    public function replace($name, $type, $options = array(), $addIfNotExist = false)
     {
-        if (!isset($this->fields[$name]) && $add_if_not_exist == false) {
+        if (!isset($this->fields[$name]) && $addIfNotExist == false) {
             throw new \Exception("Can't replace field, field '$name' doesn't exist");
         }
 
@@ -228,22 +228,22 @@ class FormBlueprint implements FormBlueprintInterface
             $fields = $this->fields;
         }
 
-        $default_data = array();
+        $defaultData = array();
         foreach ($fields as $field) {
             if (isset($field['options']['default'])) {
                 if ($field['name'] === null) {
-                    $default_data[] = $field['options']['default'];
+                    $defaultData[] = $field['options']['default'];
                 }
                 else {
-                    $default_data[$field['name']] = $field['options']['default'];
+                    $defaultData[$field['name']] = $field['options']['default'];
                 }
             }
             elseif ($field['type'] == 'collection') {
-                $default_data[$field['name']] = $this->getDefaultData($field['fields']);
+                $defaultData[$field['name']] = $this->getDefaultData($field['fields']);
             }
         }
 
-        return $default_data;
+        return $defaultData;
     }
 
     /**
@@ -323,6 +323,38 @@ class FormBlueprint implements FormBlueprintInterface
     }
 
     /**
+     * @param array $fields
+     * @param $group null|string Add a prefix to all field names
+     */
+    public function createFieldsFromArray(array $fields, $group = null)
+    {
+        foreach ($fields as $field_name => $field) {
+            $field_type = ($field['type'] ? $field['type'] : 'text');
+            unset($field['type']);
+
+            if (!isset($field['section'])) {
+                $field['section'] = 'main';
+            }
+
+            if ($group) {
+                $field_name = $group.'['.$field_name.']';
+            }
+
+            $this->add($field_name, $field_type, $field);
+        }
+    }
+
+    /**
+     * @param array $sections
+     */
+    public function createSectionsFromArray(array $sections)
+    {
+        foreach ($sections as $id => $section) {
+            $this->addSection($id, $section['label']);
+        }
+    }
+
+    /**
      * @param $fieldName
      * @return array
      *
@@ -355,24 +387,24 @@ class FormBlueprint implements FormBlueprintInterface
             $fieldsArray = $this->fields;
         }
 
-        $field_name = array_shift($exploded);
+        $fieldName = array_shift($exploded);
 
         if (!empty($exploded)) {
-            if (!isset($fieldsArray[$field_name])) {
-                $fieldsArray[$field_name] = array(
-                    'name' => $field_name,
+            if (!isset($fieldsArray[$fieldName])) {
+                $fieldsArray[$fieldName] = array(
+                    'name' => $fieldName,
                     'type' => 'collection',
                     'fields' => array()
                 );
             }
-            $fieldsArray[$field_name]['fields'] = $this->recursiveAddToFields($exploded, $field, $fieldsArray[$field_name]['fields']);
+            $fieldsArray[$fieldName]['fields'] = $this->recursiveAddToFields($exploded, $field, $fieldsArray[$fieldName]['fields']);
         }
         else {
-            if ($field_name == 'unnamed') {
+            if ($fieldName == 'unnamed') {
                 $fieldsArray[] = $field;
             }
             else {
-                $fieldsArray[$field_name] = $field;
+                $fieldsArray[$fieldName] = $field;
             }
         }
 

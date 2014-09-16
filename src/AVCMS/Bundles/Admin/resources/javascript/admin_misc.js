@@ -49,6 +49,8 @@ $(document).ready(function() {
 
     $('body').on('click', '.slug_refresh_button', avcms.misc.generateSlugButton);
 
+    $('body').on('click', '#menu_toggle, .admin-menu a', avcms.misc.toggleMenu);
+
     $(document).ajaxSuccess(function(event, data) {
         if (data.responseJSON !== undefined) {
             if (data.responseJSON.error !== undefined) {
@@ -58,7 +60,7 @@ $(document).ready(function() {
     });
 
     $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
-        if (options.type === "POST" && (options.data == undefined || options.data.indexOf("csrf_token") < 1)) {
+        if (options.type.toUpperCase() === "POST" && (options.data == undefined || options.data.indexOf("csrf_token") < 1)) {
             if (options.data != '') {
                 options.data = options.data + '&';
             }
@@ -136,5 +138,9 @@ avcms.misc = {
             if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
         }
         return null;
+    },
+
+    toggleMenu: function() {
+        $('.admin-menu').toggleClass('admin-menu-focused');
     }
 }

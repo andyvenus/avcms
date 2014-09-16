@@ -15,7 +15,7 @@ class QueryBuilderModelJoinEvent extends Event
     /**
      * @var \AVCMS\Core\Model\Model
      */
-    private $join_model;
+    private $joinModel;
 
     /**
      * @var array
@@ -27,9 +27,9 @@ class QueryBuilderModelJoinEvent extends Event
      */
     private $type;
 
-    public function __construct(Model $join_model, array $columns, $type)
+    public function __construct(Model $joinModel, array $columns, $type)
     {
-        $this->join_model = $join_model;
+        $this->joinModel = $joinModel;
         $this->columns = $columns;
         $this->type = $type;
     }
@@ -51,11 +51,11 @@ class QueryBuilderModelJoinEvent extends Event
     }
 
     /**
-     * @param Model $join_model
+     * @param Model $joinModel
      */
-    public function setJoinModel($join_model)
+    public function setJoinModel($joinModel)
     {
-        $this->join_model = $join_model;
+        $this->joinModel = $joinModel;
     }
 
     /**
@@ -63,7 +63,7 @@ class QueryBuilderModelJoinEvent extends Event
      */
     public function getJoinModel()
     {
-        return $this->join_model;
+        return $this->joinModel;
     }
 
     /**

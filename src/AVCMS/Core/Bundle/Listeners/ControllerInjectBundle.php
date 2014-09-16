@@ -14,9 +14,9 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class ControllerInjectBundle implements EventSubscriberInterface
 {
-    public function __construct(BundleManagerInterface $bundle_manager)
+    public function __construct(BundleManagerInterface $bundleManager)
     {
-        $this->bundle_manager = $bundle_manager;
+        $this->bundleManager = $bundleManager;
     }
 
     public function injectBundle(FilterControllerEvent $event)
@@ -29,9 +29,9 @@ class ControllerInjectBundle implements EventSubscriberInterface
 
         $bundle = $request->get('_bundle');
 
-        $bundle_config = $this->bundle_manager->getBundleConfig($bundle);
+        $bundleConfig = $this->bundleManager->getBundleConfig($bundle);
 
-        $event->getController()[0]->setBundle($bundle_config);
+        $event->getController()[0]->setBundle($bundleConfig);
     }
 
     public static function getSubscribedEvents()

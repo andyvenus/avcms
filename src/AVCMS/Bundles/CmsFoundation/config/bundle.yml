@@ -13,6 +13,7 @@ services:
   - TaxonomyServices
   - FormServices
   - MenuServices
+  - ModuleServices
 
 user_settings_sections:
   main: Main
@@ -47,11 +48,23 @@ assets:
 
 menu_items:
   admin:
-    something:
-      target: something
-      icon: my_icon
-      type: routesx
-      label: Rofl
+    modules:
+      target: modules_admin_home
+      icon: glyphicon glyphicon-list-alt
+      type: route
+      label: Modules
+
+modules:
+  my_module:
+    controller: 'CmsFoundation::BaseModulesController::firstModuleAction'
+    name: My New Module
+    description: This is my first module and it's pretty great huh?
+    user_settings:
+            my_settings:
+              type: text
+              default: Lol
+              label: A custom setting
+              required: true
 
 require:
   - Framework

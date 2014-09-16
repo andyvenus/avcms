@@ -47,16 +47,9 @@ avcms.nav = {
         var current_attr = full_url.substring(full_url.indexOf("admin/") + 6).split('/');
         var prev_attr = previous_url.substring(previous_url.indexOf("admin/") + 6).split('/');
 
-        //var prev_attr = previous_url.split('admin/').pop().split('/');
-        //var current_attr = full_url.split('admin/').pop().split('/');
-
-        //console.log(prev_attr);
-
         var prev_attr_clean = avcms.fn.removeAllAfter('?', prev_attr[0]);
 
         var func_name, ajax_depth;
-
-        //console.log('prev: ' + $.trim(prev_attr_clean) + ' cur: '+ $.trim(current_attr[0]) + 'editor length: ' + $('.ajax-editor').length);
 
         if ($.trim(prev_attr_clean) == $.trim(current_attr[0]) && $('.ajax-editor').length > 0) {
             ajax_depth = 'editor';
@@ -67,7 +60,6 @@ avcms.nav = {
             func_name = 'html';
         }
 
-
         var content_container = $('.ajax-'+ajax_depth);
 
         var ajax_required = true;
@@ -76,7 +68,7 @@ avcms.nav = {
             var existing_editor = $('div[data-ajax-url="'+full_url+'"]');
 
             if (existing_editor.length > 0) {
-                $('.ajax-editor-inner').hide();
+                avcms.nav.hideOrRemovePreviousPage(ajax_depth);
                 existing_editor.show();
                 avcms.nav.setPageTitle(full_url);
                 avcms.browser.setBrowserFocus();
@@ -90,8 +82,8 @@ avcms.nav = {
 
         if (ajax_required === true) {
             avcms.misc.mainLoaderOn();
-            $.get(full_url_wqm+'&ajax_depth='+ajax_depth, function(data) {
-                $('.ajax-'+ajax_depth+'-inner').hide();
+            $.get(full_url_wqm+'&ajax_depth='+ajax_depth, function(data, textStatus, xhr) {
+                avcms.nav.hideOrRemovePreviousPage(ajax_depth);
                 content_container[func_name](data);
 
                 avcms.nav.setDataAjaxUrl(content_container, ajax_depth);
@@ -101,7 +93,21 @@ avcms.nav = {
                 window.scrollTo(0, 0);
                 avcms.nav.onPageModified();
                 avcms.misc.mainLoaderOff();
+            }).fail(function(xhr) {
+                alert('Could not load page. Error: '+xhr.status);
+                avcms.misc.mainLoaderOff();
+                History.back();
             });
+        }
+    },
+
+    hideOrRemovePreviousPage: function(ajax_depth) {
+        var current_page = $('.ajax-'+ajax_depth+'-inner').filter(':visible')
+
+        current_page.hide();
+
+        if (ajax_depth == 'editor' && current_page.find('.always-refresh').length > 0) {
+            current_page.remove();
         }
     },
 

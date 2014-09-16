@@ -3,17 +3,17 @@
 {% block editor %}
     <div class="editor-container">
         <div class="editor-header">
-            <div class="animated fadeIn">
-                <div class="pull-left">
+            <div class="pull-left">
+                {% block editor_title %}
                     {% if item.id %}
                         {% block editor_title_edit %}{% endblock %}
                     {% else %}
                         {% block editor_title_new %}{% endblock %}
                     {% endif %}
-                </div>
-                <div class="pull-right header-label-container">
-                   &nbsp;
-                </div>
+                {% endblock %}
+            </div>
+            <div class="pull-right header-label-container">
+               &nbsp;
             </div>
         </div>
 

@@ -22,29 +22,29 @@ class FormHandlerConstructEvent extends Event
     /**
      * @var FormHandler
      */
-    protected $form_handler;
+    protected $formHandler;
 
     /**
      * @var FormBlueprintInterface
      */
-    protected $form_blueprint;
+    protected $formBlueprint;
 
     /**
-     * @param FormHandler $form_handler
-     * @param FormBlueprintInterface $form_blueprint
+     * @param FormHandler $formHandler
+     * @param FormBlueprintInterface $formBlueprint
      */
-    public function __construct(FormHandler $form_handler, FormBlueprintInterface $form_blueprint)
+    public function __construct(FormHandler $formHandler, FormBlueprintInterface $formBlueprint)
     {
-        $this->setFormHandler($form_handler);
-        $this->setFormBlueprint($form_blueprint);
+        $this->setFormHandler($formHandler);
+        $this->setFormBlueprint($formBlueprint);
     }
 
     /**
-     * @param FormHandler $form_handler
+     * @param FormHandler $formHandler
      */
-    public function setFormHandler(FormHandler $form_handler)
+    public function setFormHandler(FormHandler $formHandler)
     {
-        $this->form_handler = $form_handler;
+        $this->formHandler = $formHandler;
     }
 
     /**
@@ -52,15 +52,15 @@ class FormHandlerConstructEvent extends Event
      */
     public function getFormHandler()
     {
-        return $this->form_handler;
+        return $this->formHandler;
     }
 
     /**
-     * @param FormBlueprintInterface $form_blueprint
+     * @param FormBlueprintInterface $formBlueprint
      */
-    public function setFormBlueprint(FormBlueprintInterface $form_blueprint)
+    public function setFormBlueprint(FormBlueprintInterface $formBlueprint)
     {
-        $this->form_blueprint = $form_blueprint;
+        $this->formBlueprint = $formBlueprint;
     }
 
     /**
@@ -68,6 +68,6 @@ class FormHandlerConstructEvent extends Event
      */
     public function getFormBlueprint()
     {
-        return $this->form_blueprint;
+        return $this->formBlueprint;
     }
 }

@@ -12,21 +12,21 @@ use AVCMS\Core\SettingsManager\SettingsManager;
 
 class ResourceLocator
 {
-    protected $app_dir = 'app';
+    protected $appDir = 'app';
 
-    protected $template_dir;
+    protected $templateDir;
 
-    public function __construct(BundleManagerInterface $bundle_manager, SettingsManager $settings_manager, $app_dir = 'app') {
-        $this->bundle_manager = $bundle_manager;
-        $this->app_dir = $app_dir;
-        $this->template_dir = $settings_manager->getSetting('template');
+    public function __construct(BundleManagerInterface $bundleManager, SettingsManager $settingsManager, $appDir = 'app') {
+        $this->bundle_manager = $bundleManager;
+        $this->appDir = $appDir;
+        $this->templateDir = $settingsManager->getSetting('template');
     }
 
-    public function findFileDirectory($bundle_name, $file, $type)
+    public function findFileDirectory($bundleName, $file, $type)
     {
-        $bundle_config = $this->bundle_manager->getBundleConfig($bundle_name);
+        $bundleConfig = $this->bundle_manager->getBundleConfig($bundleName);
 
-        foreach ($this->getResourceDirs($bundle_config, $type) as $dir) {
+        foreach ($this->getResourceDirs($bundleConfig, $type) as $dir) {
             $dir = $dir.'/'.$file;
 
             if (file_exists($dir)) {
@@ -34,19 +34,19 @@ class ResourceLocator
             }
         }
 
-        throw new NotFoundException(sprintf('File %s not found in bundle %s', $file, $bundle_config->name));
+        throw new NotFoundException(sprintf('File %s not found in bundle %s', $file, $bundleConfig->name));
     }
 
-    private function getResourceDirs($bundle_config, $resource_type)
+    private function getResourceDirs($bundleConfig, $resourceType)
     {
         $dirs = array(
-            $this->template_dir.'/'.$bundle_config->name,
-            $this->app_dir.'/resources/'.$bundle_config->name,
-            $bundle_config->directory.'/resources/'.$resource_type,
+            $this->templateDir.'/'.$bundleConfig->name,
+            $this->appDir.'/resources/'.$bundleConfig->name,
+            $bundleConfig->directory.'/resources/'.$resourceType,
         );
 
-        if (isset($bundle_config->parent_config)) {
-            $dirs[] = $bundle_config->parent_config->directory.'/resources/'.$resource_type;
+        if (isset($bundleConfig->parent_config)) {
+            $dirs[] = $bundleConfig->parent_config->directory.'/resources/'.$resourceType;
         }
 
         return $dirs;

@@ -62,7 +62,7 @@ class FrameworkServices implements Service
         // Request
 
         $container->register('fragment_handler', 'Symfony\Component\HttpKernel\Fragment\FragmentHandler')
-            ->setArguments(array(array(new Reference('inline_fragment_renderer')), false, new Reference('request.stack')))
+            ->setArguments(array(array(new Reference('inline_fragment_renderer')), '%dev_mode%', new Reference('request.stack')))
         ;
 
         $container->register('request.stack', 'Symfony\Component\HttpFoundation\RequestStack');

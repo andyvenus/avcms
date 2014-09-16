@@ -24,11 +24,11 @@ final class BundleManagerAlias implements BundleManagerInterface
     /**
      * @var BundleManagerInterface
      */
-    private $bundle_manager;
+    private $bundleManager;
 
     public function setBundleManager(BundleManagerInterface $bundle_manager)
     {
-        $this->bundle_manager = $bundle_manager;
+        $this->bundleManager = $bundle_manager;
     }
 
     /**
@@ -37,11 +37,11 @@ final class BundleManagerAlias implements BundleManagerInterface
      */
     public function getBundleManager()
     {
-        if (!isset($this->bundle_manager)) {
+        if (!isset($this->bundleManager)) {
             throw new \Exception("BundleManager not set");
         }
 
-        return $this->bundle_manager;
+        return $this->bundleManager;
     }
 
     public function setDebug($debug)
@@ -54,9 +54,9 @@ final class BundleManagerAlias implements BundleManagerInterface
         return $this->getBundleManager()->isDebug();
     }
 
-    public function hasBundle($bundle_name)
+    public function hasBundle($bundleName)
     {
-        return $this->getBundleManager()->hasBundle($bundle_name);
+        return $this->getBundleManager()->hasBundle($bundleName);
     }
 
     public function getBundleLocations()
@@ -104,9 +104,9 @@ final class BundleManagerAlias implements BundleManagerInterface
         return $this->getBundleManager()->bundlesInitialized();
     }
 
-    public function findBundleDirectory($bundle_name)
+    public function findBundleDirectory($bundleName)
     {
-        return $this->getBundleManager()->findBundleDirectory($bundle_name);
+        return $this->getBundleManager()->findBundleDirectory($bundleName);
     }
 
     public function cacheIsFresh()
@@ -114,8 +114,8 @@ final class BundleManagerAlias implements BundleManagerInterface
         return $this->getBundleManager()->cacheIsFresh();
     }
 
-    public function getBundleRoutes(RouteCollection $route_collection)
+    public function getBundleRoutes(RouteCollection $routeCollection)
     {
-        return $this->getBundleManager()->getBundleRoutes($route_collection);
+        return $this->getBundleManager()->getBundleRoutes($routeCollection);
     }
 }

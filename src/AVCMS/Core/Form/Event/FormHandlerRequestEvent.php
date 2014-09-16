@@ -21,7 +21,7 @@ class FormHandlerRequestEvent extends Event
     /**
      * @var FormHandler
      */
-    protected $form_handler;
+    protected $formHandler;
 
     /**
      * @var Request
@@ -31,27 +31,27 @@ class FormHandlerRequestEvent extends Event
     /**
      * @var array
      */
-    protected $form_data;
+    protected $formData;
 
     /**
-     * @param FormHandler $form_handler
+     * @param FormHandler $formHandler
      * @param mixed $request
-     * @param $form_data
+     * @param $formData
      * @internal param \AVCMS\Core\Form\FormBlueprintInterface $form_blueprint
      */
-    public function __construct(FormHandler $form_handler, $request, $form_data)
+    public function __construct(FormHandler $formHandler, $request, $formData)
     {
-        $this->setFormHandler($form_handler);
+        $this->setFormHandler($formHandler);
         $this->setRequest($request);
-        $this->setFormData($form_data);
+        $this->setFormData($formData);
     }
 
     /**
-     * @param FormHandler $form_handler
+     * @param FormHandler $formHandler
      */
-    public function setFormHandler(FormHandler $form_handler)
+    public function setFormHandler(FormHandler $formHandler)
     {
-        $this->form_handler = $form_handler;
+        $this->formHandler = $formHandler;
     }
 
     /**
@@ -59,7 +59,7 @@ class FormHandlerRequestEvent extends Event
      */
     public function getFormHandler()
     {
-        return $this->form_handler;
+        return $this->formHandler;
     }
 
     /**
@@ -79,11 +79,11 @@ class FormHandlerRequestEvent extends Event
     }
 
     /**
-     * @param array $form_data
+     * @param array $formData
      */
-    public function setFormData(array $form_data)
+    public function setFormData(array $formData)
     {
-        $this->form_data = $form_data;
+        $this->formData = $formData;
     }
 
     /**
@@ -91,6 +91,6 @@ class FormHandlerRequestEvent extends Event
      */
     public function getFormData()
     {
-        return $this->form_data;
+        return $this->formData;
     }
 }

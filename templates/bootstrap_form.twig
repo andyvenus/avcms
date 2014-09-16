@@ -53,15 +53,6 @@
             {{ block('input_field') }}
             <span class="input-group-btn">
                 {{ form_field(options.button, options.button.attr) }}
-                {#
-                <button class="btn btn-default" type="button">
-                    {% if options.button_icon is defined %}
-                        <span class="{{ options.button_icon }}"></span>
-                    {% endif %}
-                    {% if options.button_label is defined %}
-                        {{ options.button_label }}
-                    {% endif %}
-                </button>#}
             </span>
         </div>
     {% endspaceless %}

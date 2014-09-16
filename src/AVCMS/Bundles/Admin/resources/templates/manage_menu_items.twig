@@ -1,4 +1,4 @@
-{% extends '@admin/edit_item.twig' %}
+{% extends '@admin/editor.twig' %}
 
 {% block title -%}
     {% spaceless %}
@@ -19,11 +19,11 @@
 {% endblock %}
 
 {% block editor_content %}
-
+    <span class="always-refresh"></span>
     <p><a href="{{ url('menu_items_add', {menu: item.id}) }}" class="btn btn-default">{% trans %}Add Menu Item{% endtrans %}</a></p>
 
     <div class="sortable-container">
-        <ul class="sortable" style="position: absolute;" data-ajax-action="{{ url('menus_save_order', {id: item.id}) }}">
+        <ul class="sortable" style="position: absolute;" data-sortable-levels="2" data-ajax-action="{{ url('menus_save_order', {id: item.id}) }}">
             {% for menu_item in menu_items %}
             <li id="menu_order_{{ menu_item.id }}">
                 <div class="sortable-item"><span class="glyphicon glyphicon-align-justify handle"></span> {{ menu_item.label }} <a class="btn btn-xs btn-default" href="{{ url('menu_items_edit', {menu: item.id, id: menu_item.id}) }}">Edit</a> </div>

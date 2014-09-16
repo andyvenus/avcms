@@ -58,27 +58,27 @@ class TaxonomyManager
     /**
      * Modify a given query to select content matching an array of taxonomy values
      *
-     * @param $taxonomy_name
+     * @param $taxonomyName
      * @param Model $model The model that provided the original query
      * @param QueryBuilderHandler $query
      * @param array $values
      */
-    public function setTaxonomyJoin($taxonomy_name, Model $model, QueryBuilderHandler $query, array $values)
+    public function setTaxonomyJoin($taxonomyName, Model $model, QueryBuilderHandler $query, array $values)
     {
-        $this->getTaxonomy($taxonomy_name)->setTaxonomyJoin($model, $query, $values);
+        $this->getTaxonomy($taxonomyName)->setTaxonomyJoin($model, $query, $values);
     }
 
     /**
      * Save the taxonomy belonging to a content type
      *
      * @param $taxonomy
-     * @param $content_id
-     * @param $content_type
+     * @param $contentId
+     * @param $contentType
      * @param $values
      */
-    public function update($taxonomy, $content_id, $content_type, $values)
+    public function update($taxonomy, $contentId, $contentType, $values)
     {
-        $this->getTaxonomy($taxonomy)->update($content_id, $content_type, $values);
+        $this->getTaxonomy($taxonomy)->update($contentId, $contentType, $values);
     }
 
     /**
@@ -87,24 +87,24 @@ class TaxonomyManager
      *
      * @param $taxonomy
      * @param $entity
-     * @param $content_type
+     * @param $contentType
      * @throws \Exception
      */
-    public function assign($taxonomy, $entity, $content_type)
+    public function assign($taxonomy, $entity, $contentType)
     {
-        $this->getTaxonomy($taxonomy)->assign($entity, $content_type);
+        $this->getTaxonomy($taxonomy)->assign($entity, $contentType);
     }
 
     /**
      * Get the taxonomy assigned to a piece of content
      *
      * @param $taxonomy
-     * @param $content_id
-     * @param $content_type
+     * @param $contentId
+     * @param $contentType
      * @return mixed
      */
-    public function get($taxonomy, $content_id, $content_type)
+    public function get($taxonomy, $contentId, $contentType)
     {
-        return $this->getTaxonomy($taxonomy)->get($content_id, $content_type);
+        return $this->getTaxonomy($taxonomy)->get($contentId, $contentType);
     }
 } 

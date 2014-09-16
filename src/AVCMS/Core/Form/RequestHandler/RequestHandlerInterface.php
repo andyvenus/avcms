@@ -13,9 +13,9 @@ interface RequestHandlerInterface
     /**
      * Return an array of request data
      *
-     * @param $form_handler
+     * @param $formHandler
      * @param $request mixed
      * @return array
      */
-    public function handleRequest(FormHandler $form_handler, $request);
+    public function handleRequest(FormHandler $formHandler, $request);
 }

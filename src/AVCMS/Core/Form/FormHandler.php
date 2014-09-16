@@ -233,7 +233,7 @@ class FormHandler
 
         $entityData = $this->transformToFormData($entityData);
 
-        $this->data = array_merge($this->data, $entityData);
+        $this->data = array_replace_recursive($this->data, $entityData);
     }
 
     /**

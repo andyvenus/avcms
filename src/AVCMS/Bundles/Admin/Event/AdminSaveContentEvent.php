@@ -46,14 +46,12 @@ class AdminSaveContentEvent extends Event
      * @param Entity $entity
      * @param Model $model
      * @param FormHandler $form
-     * @param Request $request
      */
-    public function __construct(Entity $entity, Model $model, FormHandler $form, Request $request)
+    public function __construct(Entity $entity, Model $model, FormHandler $form)
     {
         $this->entity = $entity;
         $this->model = $model;
         $this->form = $form;
-        $this->request = $request;
     }
 
     /**
@@ -79,12 +77,4 @@ class AdminSaveContentEvent extends Event
     {
         return $this->form;
     }
-
-    /**
-     * @return Request
-     */
-    public function getRequest()
-    {
-        return $this->request;
-    }
-} 
+}

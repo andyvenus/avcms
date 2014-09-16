@@ -24,6 +24,7 @@ class BlogController extends Controller
 
         $finder = $posts->find();
         $all_posts = $finder->published()
+            ->setResultsPerPage(10)
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'tags' => null))
             ->join($this->model($this->bundle->model->users), ['username'])
             ->get();
@@ -61,8 +62,8 @@ class BlogController extends Controller
         return new Response($this->render('blog_top_module.twig', array('posts' => $all_posts, 'user' => $user->getUser())));
     }
 
-    public function testBlogPageAction(Request $request)
+    public function testBlogPageAction($widgetConfig)
     {
-        return new Response($this->render('@Blog/test2.twig'));
+        return new Response($widgetConfig);
     }
 }

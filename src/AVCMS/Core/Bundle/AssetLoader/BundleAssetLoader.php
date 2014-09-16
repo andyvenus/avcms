@@ -22,13 +22,13 @@ use AVCMS\Core\Bundle\ResourceLocator;
 class BundleAssetLoader extends AssetLoader
 {
     /**
-     * @param BundleManagerInterface $bundle_manager
-     * @param ResourceLocator $resource_locator
+     * @param BundleManagerInterface $bundleManager
+     * @param ResourceLocator $resourceLocator
      */
-    public function __construct(BundleManagerInterface $bundle_manager, ResourceLocator $resource_locator)
+    public function __construct(BundleManagerInterface $bundleManager, ResourceLocator $resourceLocator)
     {
-        $this->bundle_manager = $bundle_manager;
-        $this->resource_locator = $resource_locator;
+        $this->bundle_manager = $bundleManager;
+        $this->resource_locator = $resourceLocator;
     }
 
     /**
@@ -40,7 +40,7 @@ class BundleAssetLoader extends AssetLoader
 
         foreach ($configs as $config) {
             if (isset($config->assets)) {
-                foreach($config['assets'] as $asset_file => $asset) {
+                foreach($config['assets'] as $assetFile => $asset) {
                     if (!isset($asset['env'])) {
                         $asset['env'] = 'shared';
                     }
@@ -48,12 +48,12 @@ class BundleAssetLoader extends AssetLoader
                         $asset['priority'] = 10;
                     }
                     if (!isset($asset['type'])) {
-                        $asset['type'] = $this->getFiletype($asset_file);
+                        $asset['type'] = $this->getFiletype($assetFile);
                     }
 
-                    $asset_class = new BundleFileAsset($config->name, $asset['type'], $asset_file);
+                    $assetClass = new BundleFileAsset($config->name, $asset['type'], $assetFile);
 
-                    $asset_manager->add($asset_class, $asset['env'], $asset['priority']);
+                    $asset_manager->add($assetClass, $asset['env'], $asset['priority']);
                 }
             }
         }

@@ -48,13 +48,13 @@ class CollectionType implements TypeInterface
         return $data;
     }
 
-    public function makeView($field, $data, FormHandler $form_handler)
+    public function makeView($field, $data, FormHandler $formHandler)
     {
         if (isset($data[$field['name']])) {
             $field['value'] = $data[$field['name']];
         }
 
-        $field['fields'] = $this->processFieldsCollection($field['fields'], $field['value'], $form_handler);
+        $field['fields'] = $this->processFieldsCollection($field['fields'], (isset($field['value']) ? $field['value'] : null), $formHandler);
 
         return $field;
     }

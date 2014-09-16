@@ -32,17 +32,17 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
      */
     private $debug;
 
-    public function __construct(BundleManager $bundle_manager, $debug)
+    public function __construct(BundleManager $bundleManager, $debug)
     {
-        $bundle_manager->setDebug($debug);
+        $bundleManager->setDebug($debug);
 
-        $this->bundle_manager = $bundle_manager;
+        $this->bundleManager = $bundleManager;
         $this->debug = $debug;
     }
 
     public function boot()
     {
-        $this->bundle_manager->initBundles();
+        $this->bundleManager->initBundles();
 
         $this->buildContainer();
 
@@ -72,24 +72,24 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
 
     public function terminate(Request $request, Response $response)
     {
-        return $this->getHttpKernel()->terminate($request, $response);
+        $this->getHttpKernel()->terminate($request, $response);
     }
 
     private function buildContainer()
     {
         if ($this->debug) {
-            $filename_append = '_dev';
+            $filenameAppend = '_dev';
 
             if (file_exists('cache/container.php')) {
                 unlink('cache/container.php');
             }
         }
         else {
-            $filename_append = '';
+            $filenameAppend = '';
         }
 
-        $container_cache_file = 'cache/container'.$filename_append.'.php';
-        $container_config_cache = new ConfigCache($container_cache_file, $this->debug);
+        $containerCacheFile = 'cache/container'.$filenameAppend.'.php';
+        $container_config_cache = new ConfigCache($containerCacheFile, $this->debug);
 
         if (!$container_config_cache->isFresh()) {
             $container = new ContainerBuilder();
@@ -116,7 +116,7 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
             }
         }
         else {
-            require $container_cache_file;
+            require $containerCacheFile;
             $this->container = new \ProjectServiceContainer();
         }
     }
@@ -126,7 +126,7 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
      */
     private function getBundleManager()
     {
-        return $this->bundle_manager;
+        return $this->bundleManager;
     }
 
     private function getHttpKernel()

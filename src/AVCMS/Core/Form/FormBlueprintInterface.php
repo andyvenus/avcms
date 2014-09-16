@@ -53,11 +53,11 @@ interface FormBlueprintInterface
      * @param string $name
      * @param string $type
      * @param array $options
-     * @param bool $add_if_not_exist
+     * @param bool $addIfNotExist
      * @return $this
      * @throws \Exception
      */
-    public function replace($name, $type, $options = array(), $add_if_not_exist = false);
+    public function replace($name, $type, $options = array(), $addIfNotExist = false);
 
     /**
      * Remove a field from the form
