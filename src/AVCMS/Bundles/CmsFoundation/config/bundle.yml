@@ -59,6 +59,7 @@ modules:
     controller: 'CmsFoundation::BaseModulesController::firstModuleAction'
     name: My New Module
     description: This is my first module and it's pretty great huh?
+    template_style: plain
     user_settings:
             my_settings:
               type: text

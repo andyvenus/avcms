@@ -7,14 +7,32 @@
 
 namespace AVCMS\Core\Form\Type;
 
+use AVCMS\Core\Form\ChoicesProviderInterface;
+
 class SelectType extends DefaultType
 {
+    public function isValidRequestData($field, $data)
+    {
+        if (is_array($data) && !isset($field['options']['attr']['multiple'])) {
+            return false;
+        }
+        elseif ($data !== null) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public function getDefaultOptions($field)
     {
         if (isset($field['options']['choices_provider'])) {
-            if (class_exists($field['options']['choices_provider']['class'])) {
-                $choices_provider = new $field['options']['choices_provider']['class']();
-                $field['options']['choices'] = call_user_func(array($choices_provider, 'getChoices'));
+            if (is_object($field['options']['choices_provider']) && $field['options']['choices_provider'] instanceof ChoicesProviderInterface) {
+                $field['options']['choices'] = $field['options']['choices_provider']->getChoices();
+            }
+            elseif (isset($field['options']['choices_provider']['class']) && class_exists($field['options']['choices_provider']['class'])) {
+                $choicesProvider = new $field['options']['choices_provider']['class']();
+                $field['options']['choices'] = call_user_func(array($choicesProvider, 'getChoices'));
             }
         }
 

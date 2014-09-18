@@ -3,28 +3,19 @@
 {% block title %}Blog Homepage{% endblock %}
 
 {% block content %}
-    <div class="row">
+    {% block blog_posts %}
+        {% for post in posts %}
+            <article class="blog_post_container">
+                <h2><a href="{{ url(bundle.route.blog_post, {slug: post.slug}) }}">{{ post.title }}</a> <small>by {{ post.user.username }}</small></h2>
 
-        <div class="col-md-8">
-        {% block blog_posts %}
-            {% for post in posts %}
-                <article class="blog_post_container">
-                    <h2><a href="{{ url(bundle.route.blog_post, {slug: post.slug}) }}">{{ post.title }}</a> <small>by {{ post.user.username }}</small></h2>
+                {% for tag in post.tags %}
+                    <a class="btn btn-default btn-xs" href="{{ url(bundle.route.blog_archive, {tags: tag.name}) }}">{{ tag.name }}</a>
+                {% endfor %}
 
-                    {% for tag in post.tags %}
-                        <a class="btn btn-default btn-xs" href="{{ url(bundle.route.blog_archive, {tags: tag.name}) }}">{{ tag.name }}</a>
-                    {% endfor %}
+                <p>{{ post.body|markdown }}</p>
 
-                    <p>{{ post.body|markdown }}</p>
-
-                    <a class="btn btn-link btn-sm" href="{{ url(bundle.route.blog_edit_post, { id: post.id}) }}"><span class="glyphicon glyphicon-edit"></span> Edit Post</a>
-                </article>
-            {% endfor %}
-        {% endblock %}
-        </div>
-
-        <div class="col-md-4">
-            {{ modules('left_sidebar') }}
-        </div>
-    </div>
+                <a class="btn btn-link btn-sm" href="{{ url(bundle.route.blog_edit_post, { id: post.id}) }}"><span class="glyphicon glyphicon-edit"></span> Edit Post</a>
+            </article>
+        {% endfor %}
+    {% endblock %}
 {% endblock %}

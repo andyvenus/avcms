@@ -3,3 +3,4 @@ home:
   defaults:
     _controller: AVCMS\Bundles\Blog\Controller\BlogController::blogArchiveAction
     _bundle: Blog
+    _avcms_env: frontend

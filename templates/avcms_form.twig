@@ -57,7 +57,7 @@
             {% if attribute(attr, 'data-placeholder') is defined %}<option></option>{% endif %}
             {% if options.choices is not empty %}
                 {% for choice_value, choice_name in options.choices %}
-                    <option value="{{ choice_value }}" {% if choice_value == value %}selected="selected"{% endif %}>{{ choice_name }}</option>
+                    <option value="{{ choice_value }}" {% if choice_value == value or choice_value in value %}selected="selected"{% endif %}>{{ choice_name }}</option>
                 {% endfor %}
             {% endif %}
         </select>

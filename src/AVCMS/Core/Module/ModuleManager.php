@@ -9,6 +9,7 @@ namespace AVCMS\Core\Module;
 
 use AVCMS\Core\Model\Model;
 use AVCMS\Core\Module\Exception\ModuleNotFoundException;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
 use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 
@@ -21,11 +22,12 @@ class ModuleManager
      */
     protected $providers = array();
 
-    public function __construct(FragmentHandler $fragmentHandler, Model $moduleModel, Model $modulePositionsModel, $cacheDir)
+    public function __construct(FragmentHandler $fragmentHandler, Model $moduleModel, Model $modulePositionsModel, RequestStack $requestStack, $cacheDir)
     {
         $this->fragmentHandler = $fragmentHandler;
         $this->moduleModel = $moduleModel;
         $this->modulePositionsModel = $modulePositionsModel;
+        $this->requestStack = $requestStack;
         $this->cacheDir = $cacheDir;
     }
 
@@ -45,7 +47,7 @@ class ModuleManager
 
     public function getModuleContent($moduleConfig, $section)
     {
-        $module = $this->getModule($moduleConfig->getModule());
+        $module = $moduleConfig->getModuleInfo();
 
         if (!$module) return null;
 
@@ -72,24 +74,44 @@ class ModuleManager
         return $this->fragmentHandler->render($controller, 'inline');
     }
 
-    public function getPositionModules($position)
+    /**
+     * @param $position
+     * @param bool $limitByRequest
+     * @return \AVCMS\Bundles\CmsFoundation\Model\Module[]
+     */
+    public function getPositionModules($position, $limitByRequest = false)
     {
         $configs = $this->loadModuleConfigs($position);
 
-        foreach ($configs as $moduleConfig) {
-            try {
-                $content = $this->getModuleContent($moduleConfig, $position);
-            }
-            catch (ModuleNotFoundException $e) {
-                $content = $e->getMessage();
+        foreach ($configs as $i => $moduleConfig) {
+            $routes = $moduleConfig->getLimitRoutesArray();
+            
+            if ($limitByRequest == true && is_array($routes) && !empty($routes)) {
+                if (!in_array($this->requestStack->getCurrentRequest()->attributes->get('_route'), $routes)) {
+                    unset($configs[$i]);
+                }
             }
 
-            $moduleConfig->setContent($content);
+            if (isset($configs[$i])) {
+                try {
+                    $moduleConfig->setModuleInfo($this->getModule($moduleConfig->getModule()));
+                    $content = $this->getModuleContent($moduleConfig, $position);
+                } catch (ModuleNotFoundException $e) {
+                    $content = $e->getMessage();
+                }
+
+                $moduleConfig->setContent($content);
+            }
         }
 
         return $configs;
     }
 
+    /**
+     * @param $moduleId
+     * @throws ModuleNotFoundException
+     * @return array
+     */
     public function getModule($moduleId)
     {
         foreach ($this->providers as $provider) {

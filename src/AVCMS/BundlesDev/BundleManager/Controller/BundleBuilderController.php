@@ -49,6 +49,7 @@ class BundleBuilderController extends BundleBaseController
 
                 file_put_contents($bundle_location.'/config/bundle.yml', Yaml::dump($yaml));
                 file_put_contents($bundle_location.'/config/routes.yml', '');
+                file_put_contents($bundle_location.'/config/admin_routes.yml', '');
 
                 $app_bundles_config = Yaml::parse(file_get_contents('app/config/bundles.yml'));
                 $app_bundles_config[ucfirst($yaml['name'])] = array('enabled' => false);
@@ -120,7 +121,7 @@ class BundleBuilderController extends BundleBaseController
                     $fm->addFile('browser.twig.bt', 'resources/templates/{{plural}}_browser.twig');
                     $fm->addFile('edit_item.twig.bt', 'resources/templates/edit_{{singular}}.twig');
                     $fm->addFile('finder.twig.bt', 'resources/templates/{{plural}}_finder.twig');
-                    $fm->addFile('content_routes.yml.bt', 'config/routes.yml', FileMaker::APPEND);
+                    $fm->addFile('content_routes.yml.bt', 'config/admin_routes.yml', FileMaker::APPEND);
                 }
 
                 $fm->processAndSaveFiles(true);

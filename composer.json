@@ -26,8 +26,8 @@
         "ircmaxell/password-compat": "dev-master"
     },
     "require-dev": {
-        "phpunit/phpunit": "3.7.*",
-        "phpunit/dbunit": "1.3.1",
+        "phpunit/phpunit": "4.2.*",
+        "phpunit/dbunit": "1.3.*",
         "phpmd/phpmd" : "1.4.*",
         "jms/cg": "1.1.*@dev",
         "mikey179/vfsStream": "1.3.*@dev"

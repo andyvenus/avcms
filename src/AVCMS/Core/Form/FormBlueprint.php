@@ -50,7 +50,17 @@ class FormBlueprint implements FormBlueprintInterface
             'options' => $options
         );
 
-        if (strpos($name, '[') !== false) {
+        if (strpos($name, '[') !== false && (isset($options['attr']['multiple']) || isset($options['accept_array']))) {
+            $field['original_name'] = $field['name'];
+            $field['name'] = str_replace('[]', '', $field['name']);
+            $field['options']['allow_unset'] = true;
+            if (!isset($field['options']['unset_value'])) {
+                $field['options']['unset_value'] = null;
+            }
+
+            $this->fields[$field['name']] = $field;
+        }
+        elseif (strpos($name, '[') !== false) {
             preg_match('/\[([^\]]+)\]/', $name, $subField);
 
             $field['original_name'] = $field['name'];
@@ -69,7 +79,6 @@ class FormBlueprint implements FormBlueprintInterface
             $this->fields = $this->recursiveAddToFields($explodedName, $field);
         }
         else {
-
             if (isset($this->fields[$name])) {
                 throw new \Exception("Can't add field, field '$name' already exists");
             }

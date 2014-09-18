@@ -2,6 +2,7 @@
 
 namespace AVCMS\Bundles\CmsFoundation\Controller;
 
+use AVCMS\Bundles\CmsFoundation\Form\ChoicesProvider\RouteChoicesProvider;
 use AVCMS\Bundles\CmsFoundation\Form\ModulePositionsAdminFiltersForm;
 use AVCMS\Bundles\CmsFoundation\Form\ModulePositionAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
@@ -81,7 +82,7 @@ class ModulesAdminController extends AdminBaseController
             throw $this->createNotFoundException("Module not found");
         }
 
-        $form = new AdminModuleForm();
+        $form = new AdminModuleForm(new RouteChoicesProvider($this->get('router'), 'frontend'));
         if (isset($module['user_settings'])) {
             $form->createFieldsFromArray($module['user_settings'], 'settings_array');
         }
@@ -123,7 +124,7 @@ class ModulesAdminController extends AdminBaseController
             throw $this->createNotFoundException('Module position not found');
         }
 
-        $modules = $this->modules->find()->where('position', $request->get('id'))->customOrder('order', 'asc')->get();
+        $modules = $this->container->get('module_manager')->getPositionModules($request->get('id'));
 
         return new Response($this->renderAdminSection('@CmsFoundation/manage_position_modules.twig', $request->get('ajax_depth'), array(
             'item' => $position,

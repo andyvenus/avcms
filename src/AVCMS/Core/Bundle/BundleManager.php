@@ -354,11 +354,17 @@ class BundleManager implements BundleManagerInterface
             if (file_exists($bundleConfig->directory . '/config/routes.yml') && $bundleConfig->ignore_routes !== true) {
                 $locator = new FileLocator(array($bundleConfig->directory . '/config'));
                 $loader = new YamlFileLoader($locator);
+
                 $collection = $loader->load('routes.yml');
-
-                $collection->addDefaults(array('_bundle' => $bundleConfig->name));
-
+                $collection->addDefaults(array('_bundle' => $bundleConfig->name, '_avcms_env' => 'frontend'));
                 $routes->addCollection($collection);
+
+                if (file_exists($bundleConfig->directory . '/config/admin_routes.yml')) {
+                    $adminCollection = $loader->load('admin_routes.yml');
+                    $adminCollection->addDefaults(array('_bundle' => $bundleConfig->name, '_avcms_env' => 'admin'));
+                    $adminCollection->addPrefix('admin');
+                    $routes->addCollection($adminCollection);
+                }
             }
         }
     }

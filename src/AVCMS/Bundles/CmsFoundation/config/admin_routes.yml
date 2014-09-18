@@ -1,0 +1,71 @@
+avcms_settings:
+  path: /settings
+  defaults: { _controller: CmsFoundation::SettingsAdminController::indexAction }
+
+menus_admin_edit:
+    path:     /menus/edit/{id}
+    defaults: { _controller: 'CmsFoundation::MenusAdminController::editMenuAction' }
+
+menus_admin_add:
+    path:     /menus/new
+    defaults: { _controller: 'CmsFoundation::MenusAdminController::editMenuAction' }
+
+menus_admin_delete:
+    path:     /menus/delete
+    defaults: { _controller: 'CmsFoundation::MenusAdminController::deleteMenuAction' }
+
+menus_admin_home:
+  path: /menus
+  defaults: { _controller: 'CmsFoundation::MenusAdminController::homeAction' }
+
+menus_admin_finder:
+  path: /menus/finder/{page}
+  defaults: { page: 1, _controller: 'CmsFoundation::MenusAdminController::finderAction' }
+
+menus_admin_manage_items:
+    path:     /menus/manage/{id}
+    defaults: { _controller: 'CmsFoundation::MenusAdminController::manageMenuItemsAction' }
+
+menus_save_order:
+  path: /menus/save-order/{id}
+  defaults: { _controller: CmsFoundation::MenusAdminController::saveOrderAction }
+
+menu_items_add:
+  path: /menus/{menu}/new-item
+  defaults: { _controller: CmsFoundation::MenusAdminController::editMenuItemAction }
+
+menu_items_edit:
+  path: /menus/{menu}/{id}
+  defaults: { _controller: CmsFoundation::MenusAdminController::editMenuItemAction }
+
+modules_admin_edit:
+    path:     /modules/edit/{id}
+    defaults: { _controller: 'CmsFoundation::ModulesAdminController::addSelectedModuleAction' }
+
+modules_admin_add:
+    path:     /modules/{position}/add
+    defaults: { _controller: 'CmsFoundation::ModulesAdminController::addModuleAction' }
+
+modules_admin_add_selected:
+    path:     /modules/{position}/add/{module}
+    defaults: { _controller: 'CmsFoundation::ModulesAdminController::addSelectedModuleAction' }
+
+modules_admin_delete:
+    path:     /modules/delete
+    defaults: { _controller: 'CmsFoundation::ModulesAdminController::deleteAction' }
+
+modules_admin_home:
+  path: /modules
+  defaults: { _controller: 'CmsFoundation::ModulesAdminController::homeAction' }
+
+modules_admin_finder:
+  path: /modules/finder/{page}
+  defaults: { page: 1, _controller: 'CmsFoundation::ModulesAdminController::finderAction' }
+
+modules_manage_position:
+  path: /modules/{id}
+  defaults: { _controller: 'CmsFoundation::ModulesAdminController::managePositionModulesAction' }
+
+modules_save_order:
+  path: /modules/save-order/{position}
+  defaults: { _controller: 'CmsFoundation::ModulesAdminController::saveOrderAction' }
