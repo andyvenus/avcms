@@ -15,5 +15,52 @@ model:
 route:
   login: login
 
+user_settings_sections:
+  users: Users
+
+user_settings:
+  validate_email_addresses:
+    label: Validate Emails
+    help: If on, a user will need to validate their email address when registering
+    type: checkbox
+    default: 1
+    section: users
+
+assets:
+  profile.css:
+    env: frontend
+
+module_positions:
+  user_profile_main:
+      name: User Profile Main
+      description: User profile main section
+      type: user
+      global_modules: 1
+  user_profile_sidebar:
+    name: User Profile Sidebar
+    description: User profile sidebar
+    type: user
+    global_modules: 1
+
+modules:
+  users_example:
+    name: Users Example
+    description: Just a test
+    controller: Users::UserModulesController::exampleUserModuleAction
+    default_cache_time: 600
+    type: user
+
+menu_items:
+  admin:
+    users_admin:
+      icon: glyphicon glyphicon-user
+      label: Users
+      type: route
+      target: users_admin_home
+
 template:
   users_browser: @Users/users_browser.twig
+
+config:
+  avatar_dir: web/avatars
+  avatar_path: web/avatars

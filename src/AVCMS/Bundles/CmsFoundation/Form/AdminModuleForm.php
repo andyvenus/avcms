@@ -12,7 +12,7 @@ use AVCMS\Core\Form\FormBlueprint;
 
 class AdminModuleForm extends FormBlueprint
 {
-    public function __construct(RouteChoicesProvider $routesProvider)
+    public function __construct(RouteChoicesProvider $routesProvider = null, $templateList = array())
     {
         $this->add('title', 'text', array(
             'label' => 'Heading / Title',
@@ -28,15 +28,11 @@ class AdminModuleForm extends FormBlueprint
         $this->add('template_style', 'select', array(
             'label' => 'Template Style',
             'required' => true,
-            'choices' => array(
-                'plain' => 'Plain',
-                'contained' => 'Container',
-                'none' => 'None'
-            )
+            'choices' => $templateList
         ));
 
         $this->add('limit_routes_array[]', 'select', array(
-            'label' => 'Limit to routes (leave blank for all routes)',
+            'label' => 'Limit to pages (leave blank for all pages)',
             'choices_provider' => $routesProvider,
             'attr' => array(
                 'multiple' => 'multiple'

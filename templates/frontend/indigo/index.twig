@@ -24,17 +24,21 @@
     {% endfor %}
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta charset="UTF-8">
+    <meta name="description" content="{% block meta_description %}{{ settings.site_description }}{% endblock %}">
 </head>
 <body>
 
 <header class="leaderboard">
     <div class="container">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-4">
                 {% if user.loggedIn %}
-                    Hello <strong>{{ user.username }}</strong>
+                    Hello <strong><a href="{{ url('user_profile', {slug: user.slug}) }}">{{ user.username }}</a></strong>
+                    - <a href="{{ url('logout') }}">{% trans %}Logout{% endtrans %}</a>
                 {% else %}
-                   <a href="{{ url('login') }}">Login</a> / <a href="">Register</a>
+                   <a href="{{ url('login') }}">{% trans %}Login{% endtrans %}</a> / <a href="{{ url('register') }}">{% trans %}Register{% endtrans %}</a>
                 {% endif %}
             </div>
         </div>
@@ -46,8 +50,10 @@
     </div>
 </header>
 
+{% block full_width_content %}
 <section class="container avcms-main">
-    <div class="row">
+
+        <div class="row">
         <div class="col-md-8">
             {% block content %}{% endblock %}
         </div>
@@ -59,6 +65,7 @@
         </div>
     </div>
 </section>
+{% endblock %}
 
 <footer class="container">
     {% block footer %}

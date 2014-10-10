@@ -4,7 +4,5 @@
             <h3 class="panel-title">{{ module.title }}</h3>
         </div>
     {% endif %}
-    <div class="panel-body">
-        {{ module.content }}
-    </div>
+    {{ module.content|raw }}
 </div>

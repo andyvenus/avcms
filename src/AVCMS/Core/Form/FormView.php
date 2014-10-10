@@ -165,6 +165,11 @@ class FormView implements FormViewInterface
         $this->params['action'] = $url;
     }
 
+    public function getAction()
+    {
+        return (isset($this->params['action']) ? $this->params['action'] : null);
+    }
+
     /**
      * {@inheritdoc}
      */

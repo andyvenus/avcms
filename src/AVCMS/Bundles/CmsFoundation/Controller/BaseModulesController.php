@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BaseModulesController extends Controller
 {
-    public function firstModuleAction($module) {
-        return new Response('Here is the content: '.$module->getTitle());
+    public function htmlModule($userSettings) {
+        return new Response((isset($userSettings['html']) ? $userSettings['html'] : null));
     }
 }

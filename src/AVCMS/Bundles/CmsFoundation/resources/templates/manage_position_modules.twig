@@ -10,7 +10,11 @@
 
 {% block editor_content %}
     <span class="always-refresh"></span>
-    <p><a href="{{ url('modules_admin_add', {position: item.id}) }}" class="btn btn-default">{% trans %}Add Module{% endtrans %}</a></p>
+    {% if item.active %}
+        <p><a href="{{ url('modules_admin_add', {position: item.id}) }}" class="btn btn-default">{% trans %}Add Module{% endtrans %}</a></p>
+    {% else %}
+        <p><span class="label label-warning">{% trans %}Inactive{% endtrans %}</span> {% trans %}This section is not currently active on your site{% endtrans %}</p>
+    {% endif %}
 
     <div class="sortable-container">
         <ul class="sortable" style="position: absolute;" data-sortable-levels="1" data-ajax-action="{{ url('modules_save_order', {position: item.id}) }}" data-ajax-delete-action="{{ url('modules_admin_delete') }}">
@@ -19,12 +23,18 @@
                 <div class="sortable-item">
                     <span class="glyphicon glyphicon-align-justify handle"></span> {{ module.title }}
                     <div class="pull-right">
-                        {{ module.moduleInfo.name }} &nbsp;
-                        <a class="btn btn-xs btn-default" href="{{ url('modules_admin_edit', {id: module.id}) }}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                        {% if module.moduleInfo %}
+                            {{ module.moduleInfo.name }} &nbsp;
+                            <a class="btn btn-xs btn-default" href="{{ url('modules_admin_edit', {id: module.id}) }}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                        {% else %}
+                            <span class="label label-danger">Module type "{{ module.module }}" missing</span>
+                        {% endif %}
                         <button class="btn btn-xs btn-danger delete-item"><span class="glyphicon glyphicon-remove"></span></button>
                     </div>
                 </div>
             </li>
+            {% else %}
+                {% trans %}No modules currently assigned to this position{% endtrans %}
             {% endfor %}
         </ul>
     </div>

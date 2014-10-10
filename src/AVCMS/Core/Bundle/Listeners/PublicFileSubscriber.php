@@ -27,7 +27,6 @@ class PublicFileSubscriber implements EventSubscriberInterface
         $request = $event->getRequest();
 
         if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST && $this->bundleManager->isDebug()) {
-
             $bundles = $this->bundleManager->getBundleConfigs();
 
             foreach ($bundles as $bundle) {

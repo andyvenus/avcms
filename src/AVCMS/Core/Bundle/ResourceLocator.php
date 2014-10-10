@@ -17,14 +17,14 @@ class ResourceLocator
     protected $templateDir;
 
     public function __construct(BundleManagerInterface $bundleManager, SettingsManager $settingsManager, $appDir = 'app') {
-        $this->bundle_manager = $bundleManager;
+        $this->bundleManager = $bundleManager;
         $this->appDir = $appDir;
         $this->templateDir = $settingsManager->getSetting('template');
     }
 
     public function findFileDirectory($bundleName, $file, $type)
     {
-        $bundleConfig = $this->bundle_manager->getBundleConfig($bundleName);
+        $bundleConfig = $this->bundleManager->getBundleConfig($bundleName);
 
         foreach ($this->getResourceDirs($bundleConfig, $type) as $dir) {
             $dir = $dir.'/'.$file;
@@ -40,6 +40,7 @@ class ResourceLocator
     private function getResourceDirs($bundleConfig, $resourceType)
     {
         $dirs = array(
+            $this->templateDir.'/'.$resourceType.'/'.$bundleConfig->name,
             $this->templateDir.'/'.$bundleConfig->name,
             $this->appDir.'/resources/'.$bundleConfig->name,
             $bundleConfig->directory.'/resources/'.$resourceType,
@@ -54,6 +55,6 @@ class ResourceLocator
 
     public function bundleExists($bundle)
     {
-        return $this->bundle_manager->hasBundle($bundle);
+        return $this->bundleManager->hasBundle($bundle);
     }
 }

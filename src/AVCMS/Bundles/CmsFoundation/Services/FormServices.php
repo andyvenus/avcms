@@ -17,6 +17,7 @@ class FormServices implements Service
     {
         $container->register('form.builder', 'AVCMS\Bundles\CmsFoundation\Form\Factory\FormBuilder')
             ->setArguments(array(new Reference('form.handler_factory'), new Reference('translator'), new Reference('dispatcher')))
+            ->addMethodCall('setContainer', array(new Reference('service_container')))
         ;
 
         $container->register('form.handler_factory', 'AVCMS\Core\Form\FormHandlerFactory')

@@ -8,8 +8,11 @@
 namespace AVCMS\Bundles\Users\Model;
 
 use AVCMS\Core\Model\Model;
+use Symfony\Component\Security\Core\Authentication\RememberMe\PersistentTokenInterface;
+use Symfony\Component\Security\Core\Authentication\RememberMe\TokenProviderInterface;
+use Symfony\Component\Security\Core\Exception\TokenNotFoundException;
 
-class Sessions extends Model
+class Sessions extends Model implements TokenProviderInterface
 {
     public function getTable()
     {
@@ -44,4 +47,72 @@ class Sessions extends Model
     {
         return $this->query()->where('session_id', $session_id)->where('user_id', $user_id)->first();
     }
-} 
+
+    /**
+     * Loads the active token for the given series.
+     *
+     * @param string $series
+     *
+     * @return PersistentTokenInterface
+     *
+     * @throws TokenNotFoundException if the token is not found
+     */
+    public function loadTokenBySeries($series)
+    {
+        $token = $this->query()->where('series', $series)->first();
+
+        if (!$token) {
+            throw new TokenNotFoundException;
+        }
+
+        return $token;
+    }
+
+    /**
+     * Deletes all tokens belonging to series.
+     *
+     * @param string $series
+     */
+    public function deleteTokenBySeries($series)
+    {
+        $this->query()->where('series', $series)->delete();
+    }
+
+    /**
+     * Updates the token according to this data.
+     *
+     * @param string $series
+     * @param string $tokenValue
+     * @param \DateTime $lastUsed
+     * @throws TokenNotFoundException if the token is not found
+     */
+    public function updateToken($series, $tokenValue, \DateTime $lastUsed)
+    {
+        $session = new Session();
+        $session->setSeries($series);
+        $session->setTokenValue($tokenValue);
+        $session->setLastUsed($lastUsed);
+
+        $this->query()->where('series', $series)->update($session);
+    }
+
+    /**
+     * Creates a new token.
+     *
+     * @param PersistentTokenInterface $token
+     */
+    public function createNewToken(PersistentTokenInterface $token)
+    {
+        $paramValues = array(
+            'class' => $token->getClass(),
+            'username' => $token->getUsername(),
+            'series'   => $token->getSeries(),
+            'token_value'    => $token->getTokenValue(),
+            'lastUsed' => $token->getLastUsed()
+        );
+        $session = new Session();
+        $session->fromArray($paramValues);
+
+        $this->insert($session);
+    }
+}

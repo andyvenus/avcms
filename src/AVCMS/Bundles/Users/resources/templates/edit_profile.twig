@@ -1,0 +1,12 @@
+{% extends 'index.twig' %}
+
+{% block title %}{% trans %}Edit Profile{% endtrans %}{% endblock %}
+
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url('user_profile', {slug: user.slug}) }}">{{ user.username }}</a></li>
+        <li class="active">{% trans %}Edit Profile{% endtrans %}</li>
+    </ol>
+
+    {{ form(form) }}
+{% endblock %}

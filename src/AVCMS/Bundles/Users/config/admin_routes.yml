@@ -1,0 +1,19 @@
+users_admin_edit:
+  path:     /users/edit/{id}
+  defaults: { _controller: 'Users::UsersAdminController::editAction' }
+
+users_admin_delete:
+  path:     /users/delete
+  defaults: { _controller: 'Users::UsersAdminController::deleteAction' }
+
+users_admin_home:
+  path: /users
+  defaults: { _controller: 'Users::UsersAdminController::homeAction' }
+
+users_admin_finder:
+  path: /users/finder/{page}
+  defaults: { page: 1, _controller: 'Users::UsersAdminController::finderAction' }
+
+users_admin_change_password:
+  path: /users/change-password/{id}
+  defaults: { _controller: Users::UsersAdminController::changePasswordAction }

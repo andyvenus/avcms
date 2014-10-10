@@ -11,6 +11,8 @@ class Numeric extends Rule {
 
     private $type;
 
+    protected $error = "{param_name} must be a number";
+
     public function __construct($type = self::INTEGER)
     {
         $this->type = $type;
@@ -25,7 +27,5 @@ class Numeric extends Rule {
         }
 
         return is_numeric($param);
-
-        //return (filter_var($param, FILTER_VALIDATE_INT) !== FALSE);
     }
 } 

@@ -10,8 +10,12 @@ namespace AVCMS\Core\Form\ValidatorExtension;
 use AVCMS\Core\Form\FormError;
 use AVCMS\Core\Form\FormHandler;
 use AVCMS\Core\Validation\Validator;
+use ReflectionClass;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class AVCMSValidatorExtension implements ValidatorExtension {
+class AVCMSValidatorExtension implements ValidatorExtension, ContainerAwareInterface
+{
     /**
      * @var FormHandler
      */
@@ -32,6 +36,11 @@ class AVCMSValidatorExtension implements ValidatorExtension {
      */
     protected $invalidParams;
 
+    /**
+     * @var $container ContainerInterface
+     */
+    protected $container;
+
     public function __construct(Validator $validator, $entityHandler = null)
     {
         $this->validator = $validator;
@@ -50,6 +59,8 @@ class AVCMSValidatorExtension implements ValidatorExtension {
             if (method_exists($form, 'getValidationRules')) {
                 $form->getValidationRules($this->validator);
             }
+
+            $this->doFieldValidationRules($form->getAll());
 
             $entities = $this->formHandler->saveToAndGetClonedEntities();
 
@@ -122,5 +133,54 @@ class AVCMSValidatorExtension implements ValidatorExtension {
         }
 
         return in_array($field, $this->invalidParams);
+    }
+
+    protected function doFieldValidationRules($fields)
+    {
+        foreach ($fields as $field) {
+            if (isset($field['options']['validation'])) {
+                foreach ($field['options']['validation'] as $validation) {
+                    // $validation['class'], $validation['arguments']
+                    if (isset($validation['class']) && class_exists($validation['class'])) {
+                        $class = $validation['class'];
+                    }
+                    elseif (isset($validation['rule']) && class_exists('AVCMS\Core\Validation\Rules\\'.$validation['rule'])) {
+                        $class = 'AVCMS\Core\Validation\Rules\\' . $validation['rule'];
+                    }
+                    else {
+                        continue;
+                    }
+
+                    $validation['arguments'] = (isset($validation['arguments']) ? $validation['arguments'] : array());
+
+                    foreach ($validation['arguments'] as $key => $argument) {
+                        if (is_string($argument) && false !== strpos($argument, '%')) {
+                            $serviceName = explode('%', $argument)[1];
+                            if ($this->container->has($serviceName)) {
+                                $validation['arguments'][$key] = $this->container->get($serviceName);
+                            }
+                            else {
+                                throw new \Exception(sprintf('Service %s not found for use in validation', $serviceName));
+                            }
+                        }
+                    }
+
+                    $r = new ReflectionClass($class);
+                    $rule = $r->newInstanceArgs($validation['arguments']);
+
+                    $errorMessage = (isset($validation['error_message']) ? $validation['error_message'] : null);
+                    //$ignoreUnset = (isset($validation['ignore_unset']) ? $validation['ignore_unset'] : false);
+                    $ignoreUnset = true; // true because
+                    $label = (isset($field['options']['label']) ? $field['options']['label'] : null);
+
+                    $this->validator->addRule($field['name'], $rule, $errorMessage, $ignoreUnset, false, $label);
+                }
+            }
+        }
+    }
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
     }
 }

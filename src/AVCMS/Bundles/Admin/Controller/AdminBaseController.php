@@ -244,9 +244,9 @@ abstract class AdminBaseController extends Controller
      */
     protected function checkCsrfToken(Request $request)
     {
-        $token_manager = $this->container->get('csrf.token');
+        $tokenManager = $this->container->get('csrf.token');
 
-        return $token_manager->checkToken($request->get('_csrf_token'));
+        return $tokenManager->checkToken($request->get('_csrf_token'));
     }
 
     /**

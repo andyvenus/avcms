@@ -32,6 +32,8 @@ class BundleConfigurationValidator implements ConfigurationInterface
             ->end()
             ->variableNode('modules')
             ->end()
+            ->variableNode('module_positions')
+            ->end()
                 ->variableNode('route')
                 ->end()
                 ->variableNode('template')
@@ -58,8 +60,10 @@ class BundleConfigurationValidator implements ConfigurationInterface
                 ->end()
                 ->variableNode('directory')
                 ->end()
-                ->variableNode('user_settings_sections')
-                ->end()
+            ->variableNode('user_settings_sections')
+            ->end()
+            ->variableNode('config')
+            ->end()
             ->end();
 
         return $treeBuilder;

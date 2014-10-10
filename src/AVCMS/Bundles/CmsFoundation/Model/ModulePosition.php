@@ -6,19 +6,14 @@ use AVCMS\Core\Model\Entity;
 
 class ModulePosition extends Entity
 {
-    public function getActive()
-    {
-        return $this->get("active");
-    }
-
     public function setActive($value)
     {
         $this->set("active", $value);
     }
 
-    public function getDescription()
+    public function getActive()
     {
-        return $this->get("description");
+        return $this->get("active");
     }
 
     public function setDescription($value)
@@ -26,9 +21,19 @@ class ModulePosition extends Entity
         $this->set("description", $value);
     }
 
-    public function getId()
+    public function getDescription()
     {
-        return $this->get("id");
+        return $this->get("description");
+    }
+
+    public function getGlobalModules()
+    {
+        return $this->get("global_modules");
+    }
+
+    public function setGlobalModules($value)
+    {
+        $this->set("global_modules", $value);
     }
 
     public function setId($value)
@@ -36,14 +41,19 @@ class ModulePosition extends Entity
         $this->set("id", $value);
     }
 
-    public function getName()
+    public function getId()
     {
-        return $this->get("name");
+        return $this->get("id");
     }
 
     public function setName($value)
     {
         $this->set("name", $value);
+    }
+
+    public function getName()
+    {
+        return $this->get("name");
     }
 
     public function setOwner($value)
@@ -56,13 +66,23 @@ class ModulePosition extends Entity
         return $this->get("owner");
     }
 
+    public function setProvider($value)
+    {
+        $this->set("provider", $value);
+    }
+
     public function getProvider()
     {
         return $this->get("provider");
     }
 
-    public function setProvider($value)
+    public function getType()
     {
-        $this->set("provider", $value);
+        return $this->get("type");
+    }
+
+    public function setType($value)
+    {
+        $this->set("type", $value);
     }
 }

@@ -36,7 +36,9 @@
         <div class="error-container">
 
                 <div class="error-status-code">
-                    {% if error.statusCode != 200 %}
+                    {% if code %}
+                        {{ code }}
+                    {% elseif error.statusCode != 200 %}
                         {{ error.statusCode }}
                     {% else %}
                         :(

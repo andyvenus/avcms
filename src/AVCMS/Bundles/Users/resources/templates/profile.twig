@@ -1,0 +1,47 @@
+{% extends 'index.twig' %}
+
+{% block title %}{% trans with {username: profile_user.username} %}{username}'s profile{% endtrans %}{% endblock %}
+
+{% block meta_description %}{% trans with {username: profile_user.username} %}'s profile{% endtrans %}{% endblock %}
+
+{% block full_width_content %}
+    <div class="user-profile-header" style="background-image: url('{{ site_url }}/{{ bundle.config.avatar_path }}/{{ profile_user.coverImage }}')">
+        <div class="container">
+            <div class="user-profile-username">
+                {{ profile_user.username }}
+            </div>
+
+            <div class="user-profile-avatar">
+                <img src="{{ site_url }}/{{ bundle.config.avatar_path }}/{{ profile_user.avatar }}" width="100px" height="100px" />
+            </div>
+        </div>
+        <div class="user-profile-info">
+            <div class="container">
+                <div class="pull-left">
+                    {% trans %}Joined{% endtrans %}: {{ profile_user.joined|date(settings.date_format) }}
+                </div>
+
+                <div class="pull-right">
+                    {% if users_own_profile %}
+                        <a class="btn btn-sm btn-default" href="{{ url('edit_user_profile') }}">{% trans %}Edit profile{% endtrans %}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                {% for module in modules('user_profile_main', {user: user}) %}
+                    {% include module.template %}
+                {% endfor %}
+            </div>
+            <div class="col-md-4">
+                {% for module in modules('user_profile_sidebar', {user: user}) %}
+                    {% include module.template %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

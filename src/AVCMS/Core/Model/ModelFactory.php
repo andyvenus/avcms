@@ -57,7 +57,7 @@ class ModelFactory {
             $model->setTaxonomyManager($this->taxonomy_manager);
         }
 
-        $new_model_event = new CreateModelEvent($model);
+        $new_model_event = new CreateModelEvent($model, $model_class);
         $this->event_dispatcher->dispatch('model.create', $new_model_event);
 
         return $model;

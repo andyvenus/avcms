@@ -41,9 +41,24 @@ assets:
       priority: 15
   admin_misc.js:
       env: admin
+      priority: 15
   admin_sortable.js:
     env: admin
+    priority: 15
 
+module_positions:
+  admin_dashboard:
+    name: Admin Dashboard
+    description: The admin dashboard
+    type: admin
+
+menu_items:
+  admin:
+    admin_dashboard:
+      target: admin_dashboard
+      icon: glyphicon glyphicon-dashboard
+      type: route
+      label: Dashboard
 
 services:
   - AdminServices

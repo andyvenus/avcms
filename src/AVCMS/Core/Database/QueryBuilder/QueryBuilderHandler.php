@@ -165,8 +165,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
         foreach ($subEntities as $subEntityName) {
             if (isset($selectedEntity->$subEntityName)) {
                 $selectedEntity = $selectedEntity->$subEntityName;
-            }
-            else {
+            } else {
                 // No matching sub-entity
                 $selectedEntity = null;
                 break;

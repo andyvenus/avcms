@@ -52,11 +52,11 @@ class AssetManagerTest extends \PHPUnit_Framework_TestCase {
 
     protected function addStandardAssets()
     {
-        $this->asset_manager->addJavascript($this->javascript_assets[0], AssetManager::FRONTEND);
-        $this->asset_manager->addJavascript($this->javascript_assets[1], AssetManager::SHARED);
+        $this->asset_manager->add($this->javascript_assets[0], AssetManager::FRONTEND);
+        $this->asset_manager->add($this->javascript_assets[1], AssetManager::SHARED);
 
-        $this->asset_manager->addCSS($this->css_assets[0], AssetManager::FRONTEND);
-        $this->asset_manager->addCSS($this->css_assets[1], AssetManager::FRONTEND);
+        $this->asset_manager->add($this->css_assets[0], AssetManager::FRONTEND);
+        $this->asset_manager->add($this->css_assets[1], AssetManager::FRONTEND);
     }
 
     public function testEnvironments()
@@ -90,9 +90,9 @@ class AssetManagerTest extends \PHPUnit_Framework_TestCase {
 
     public function testInvalidAssetType()
     {
-        $this->setExpectedException('\Exception', 'The asset manager does not support assets of type weirdtype');
+        $this->setExpectedException('\Exception', 'Assets passed to the add() method must implement the getType method');
 
-        $asset = new BundleFileAsset('FakeBundle', 'weirdtype', 'file.xyz');
+        $asset = new FileAsset('my_file');
 
         $this->asset_manager->add($asset);
     }
@@ -150,7 +150,11 @@ class AssetManagerTest extends \PHPUnit_Framework_TestCase {
             "front.php/bundle_asset/MockBundle/javascript/one.js"
         );
 
-        $this->assertEquals($expected, $assets);
+        $this->assertCount(2, $assets);
+
+        foreach ($assets as $asset) {
+            $this->assertContains('.js', $asset);
+        }
     }
 
     public function testInvalidAssetTypeException()

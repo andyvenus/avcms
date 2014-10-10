@@ -1,0 +1,81 @@
+
+
+Mexico_admin_edit:
+    path:     /admin/Mexico/edit/{id}
+    defaults: { _controller: 'TestBundle::MexicoAdminController::editAction' }
+
+Mexico_admin_add:
+    path:     /admin/Mexico/new
+    defaults: { _controller: 'TestBundle::MexicoAdminController::editAction' }
+
+Mexico_admin_delete:
+    path:     /admin/Mexico/delete
+    defaults: { _controller: 'TestBundle::MexicoAdminController::deleteAction' }
+
+Mexico_admin_home:
+  path: /admin/Mexico
+  defaults: { _controller: 'TestBundle::MexicoAdminController::homeAction' }
+
+Mexico_admin_finder:
+  path: /admin/Mexico/finder/{page}
+  defaults: { page: 1, _controller: 'TestBundle::MexicoAdminController::finderAction' }
+
+Mexi_admin_edit:
+    path:     /admin/Mexi/edit/{id}
+    defaults: { _controller: 'TestBundle::MexiAdminController::editAction' }
+
+Mexi_admin_add:
+    path:     /admin/Mexi/new
+    defaults: { _controller: 'TestBundle::MexiAdminController::editAction' }
+
+Mexi_admin_delete:
+    path:     /admin/Mexi/delete
+    defaults: { _controller: 'TestBundle::MexiAdminController::deleteAction' }
+
+Mexi_admin_home:
+  path: /admin/Mexi
+  defaults: { _controller: 'TestBundle::MexiAdminController::homeAction' }
+
+Mexi_admin_finder:
+  path: /admin/Mexi/finder/{page}
+  defaults: { page: 1, _controller: 'TestBundle::MexiAdminController::finderAction' }
+
+Zeds_admin_edit:
+    path:     /admin/Zeds/edit/{id}
+    defaults: { _controller: 'TestBundle::ZedsAdminController::editAction' }
+
+Zeds_admin_add:
+    path:     /admin/Zeds/new
+    defaults: { _controller: 'TestBundle::ZedsAdminController::editAction' }
+
+Zeds_admin_delete:
+    path:     /admin/Zeds/delete
+    defaults: { _controller: 'TestBundle::ZedsAdminController::deleteAction' }
+
+Zeds_admin_home:
+  path: /admin/Zeds
+  defaults: { _controller: 'TestBundle::ZedsAdminController::homeAction' }
+
+Zeds_admin_finder:
+  path: /admin/Zeds/finder/{page}
+  defaults: { page: 1, _controller: 'TestBundle::ZedsAdminController::finderAction' }
+
+Lols_admin_edit:
+    path:     /admin/Lols/edit/{id}
+    defaults: { _controller: 'TestBundle::LolsAdminController::editAction' }
+
+Lols_admin_add:
+    path:     /admin/Lols/new
+    defaults: { _controller: 'TestBundle::LolsAdminController::editAction' }
+
+Lols_admin_delete:
+    path:     /admin/Lols/delete
+    defaults: { _controller: 'TestBundle::LolsAdminController::deleteAction' }
+
+Lols_admin_home:
+  path: /admin/Lols
+  defaults: { _controller: 'TestBundle::LolsAdminController::homeAction' }
+
+Lols_admin_finder:
+  path: /admin/Lols/finder/{page}
+  defaults: { page: 1, _controller: 'TestBundle::LolsAdminController::finderAction' }

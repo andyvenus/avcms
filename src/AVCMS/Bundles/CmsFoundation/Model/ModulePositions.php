@@ -20,4 +20,26 @@ class ModulePositions extends Model
     {
         return 'AVCMS\Bundles\CmsFoundation\Model\ModulePosition';
     }
+
+    public function disablePositionsByProvider($provider)
+    {
+        $this->query()->where('provider', $provider)->update(['active' => 0]);
+    }
+
+    public function getPositionsByProvider($provider)
+    {
+        return $this->query()->where('provider', $provider)->get();
+    }
+
+    public function save($entity, $column = null)
+    {
+        $id = $entity->getId();
+
+        if ($this->query()->where('id', $id)->count() >= 1) {
+            return $this->update($entity);
+        }
+        else {
+            return $this->insert($entity);
+        }
+    }
 }

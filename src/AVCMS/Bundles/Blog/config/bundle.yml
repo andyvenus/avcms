@@ -15,6 +15,9 @@ user_settings:
       label: Blog Posts Per Page
       help: The number of blog posts displayed on each page
       section: main
+      validation:
+        numeric:
+          rule: Numeric
 
 assets:
   bootstrap-markdown.js:
@@ -26,6 +29,39 @@ assets:
 
   bootstrap-markdown.min.css:
     env: admin
+
+modules:
+  blog_posts:
+    name: Blog Posts
+    description: A sortable list of blog posts
+    controller: Blog::BlogModulesController::blogPostsModule
+    cachable: true
+    default_cache_time: 10
+    accepted_template_styles: [list_panel, none]
+    user_settings:
+      order:
+        type: select
+        label: Order
+        choices:
+          newest: Newest Posts
+          popular: Popular Posts
+        default: newest
+      limit:
+        type: text
+        label: Number of posts to display
+        default: 5
+      show_date:
+        type: checkbox
+        label: Show Date
+        default: false
+
+menu_items:
+  admin:
+    admin_blog_posts:
+      target: blog_admin_home
+      icon: glyphicon glyphicon-pencil
+      type: route
+      label: Blog
 
 require:
   - CmsFoundation

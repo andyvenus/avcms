@@ -5,6 +5,6 @@ namespace AVCMS\Core\Validation\Rules;
 
 use AVCMS\Core\Model\ModelFactory;
 
-interface ModelRule {
+interface ModelRuleInterface {
     public function setModelFactory(ModelFactory $model_factory);
 } 

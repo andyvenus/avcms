@@ -9,14 +9,15 @@ namespace AVCMS\Bundles\Admin\Listeners;
 
 use AVCMS\Bundles\Users\ActiveUser;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class AuthorAssigner implements EventSubscriberInterface
 {
-    protected $active_user;
+    protected $securityContext;
 
-    public function __construct(ActiveUser $active_user)
+    public function __construct(SecurityContextInterface $securityContext)
     {
-        $this->active_user = $active_user;
+        $this->securityContext = $securityContext;
     }
 
     public function setDates($event)
@@ -27,14 +28,14 @@ class AuthorAssigner implements EventSubscriberInterface
             return;
         }
 
-        $user_id = $this->active_user->getUser()->getId();
+        $userId = $this->securityContext->getToken()->getUser()->getId();
 
         if ($entity->getId() === null && is_callable(array($entity, 'setCreatorId')) && is_callable(array($entity, 'getCreatorId')) && $entity->getCreatorId() === null) {
-            $entity->setCreatorId($user_id);
+            $entity->setCreatorId($userId);
         }
 
         if ($entity->getId() !== null && is_callable(array($entity, 'setEditorId'))) {
-            $entity->setEditorId($user_id);
+            $entity->setEditorId($userId);
         }
     }
 

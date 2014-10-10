@@ -135,6 +135,11 @@ class MenusAdminController extends AdminBaseController
         return new JsonResponse(array('success' => 1));
     }
 
+    public function deleteMenuItemAction(Request $request)
+    {
+        return $this->handleDelete($request, $this->menuItems);
+    }
+
     public function saveOrderAction(Request $request, $id)
     {
         if (!$request->get('menu_order')) {
@@ -147,6 +152,8 @@ class MenusAdminController extends AdminBaseController
         $i = 0;
         foreach ($order as $id => $parent) {
             $i++;
+
+            $id = str_replace('UNDERSCORE', '_', $id);
 
             if (isset($menuItems[$id])) {
                 /**

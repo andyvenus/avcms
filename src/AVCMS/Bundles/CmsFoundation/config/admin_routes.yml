@@ -38,9 +38,13 @@ menu_items_edit:
   path: /menus/{menu}/{id}
   defaults: { _controller: CmsFoundation::MenusAdminController::editMenuItemAction }
 
+menus_admin_delete_item:
+  path: /menus/delete-item
+  defaults: { _controller: CmsFoundation::MenusAdminController::deleteMenuItemAction }
+
 modules_admin_edit:
     path:     /modules/edit/{id}
-    defaults: { _controller: 'CmsFoundation::ModulesAdminController::addSelectedModuleAction' }
+    defaults: { _controller: 'CmsFoundation::ModulesAdminController::manageSelectedModuleAction' }
 
 modules_admin_add:
     path:     /modules/{position}/add
@@ -48,7 +52,7 @@ modules_admin_add:
 
 modules_admin_add_selected:
     path:     /modules/{position}/add/{module}
-    defaults: { _controller: 'CmsFoundation::ModulesAdminController::addSelectedModuleAction' }
+    defaults: { _controller: 'CmsFoundation::ModulesAdminController::manageSelectedModuleAction' }
 
 modules_admin_delete:
     path:     /modules/delete
@@ -63,9 +67,13 @@ modules_admin_finder:
   defaults: { page: 1, _controller: 'CmsFoundation::ModulesAdminController::finderAction' }
 
 modules_manage_position:
-  path: /modules/{id}
+  path: /modules/manage/{id}
   defaults: { _controller: 'CmsFoundation::ModulesAdminController::managePositionModulesAction' }
 
 modules_save_order:
   path: /modules/save-order/{position}
   defaults: { _controller: 'CmsFoundation::ModulesAdminController::saveOrderAction' }
+
+modules_delete_position:
+  path: /modules/delete-position
+  defaults: { _controller: 'CmsFoundation::ModulesAdminController::deletePositionAction' }

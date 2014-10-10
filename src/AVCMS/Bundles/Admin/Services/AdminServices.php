@@ -22,7 +22,7 @@ class AdminServices implements Service
         ;
 
         $container->register('listener.entity.author', 'AVCMS\Bundles\Admin\Listeners\AuthorAssigner')
-            ->setArguments(array(new Reference('active.user')))
+            ->setArguments(array(new Reference('security.context')))
             ->addTag('event.subscriber')
         ;
     }

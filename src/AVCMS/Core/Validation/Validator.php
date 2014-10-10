@@ -44,27 +44,27 @@ class Validator
     /**
      * @var array
      */
-    protected $fields_with_errors = array();
+    protected $fieldsWithErrors = array();
 
     /**
      * @var array
      */
-    protected $sub_validation_objects = array();
+    protected $subValidationObjects = array();
 
     /**
      * @var mixed The object we are validating
      */
-    protected $validation_obj;
+    protected $validationObj;
 
     /**
      * @var array
      */
-    protected $limited_params = array();
+    protected $limitedParams = array();
 
     /**
      * @var ValidatableHandler[]
      */
-    protected $validatable_handlers;
+    protected $validatableHandlers;
 
     /**
      * @var TranslatorInterface
@@ -74,15 +74,15 @@ class Validator
     /**
      * @var EventDispatcherInterface
      */
-    protected $event_dispatcher;
+    protected $eventDispatcher;
 
     /**
-     * @param null|array $validatable_handlers
+     * @param null|array $validatableHandlers
      */
-    public function __construct(array $validatable_handlers = null)
+    public function __construct(array $validatableHandlers = null)
     {
-        if ($validatable_handlers) {
-            $this->validatable_handlers = $validatable_handlers;
+        if ($validatableHandlers) {
+            $this->validatableHandlers = $validatableHandlers;
         }
         else {
             $this->addValidatableHandler(new SelfValidatableHandler());
@@ -94,7 +94,7 @@ class Validator
      */
     public function setEventDispatcher(EventDispatcherInterface $event_dispatcher)
     {
-        $this->event_dispatcher = $event_dispatcher;
+        $this->eventDispatcher = $event_dispatcher;
     }
 
     /**
@@ -104,7 +104,7 @@ class Validator
      * @param bool $ignore_unset
      * @param bool $stop_propagation
      */
-    public function addRule($param_names, Rules\Rule $rule, $error_message = null, $ignore_unset = false, $stop_propagation = false)
+    public function addRule($param_names, Rules\Rule $rule, $error_message = null, $ignore_unset = false, $stop_propagation = false, $readableName = null)
     {
         if (!is_array($param_names)) {
             $param_names = array($param_names);
@@ -117,6 +117,7 @@ class Validator
                 'error_message' => $error_message,
                 'stop_propagation' => $stop_propagation,
                 'ignore_unset' => $ignore_unset,
+                'readable_name' => $readableName
             );
         }
     }
@@ -128,7 +129,7 @@ class Validator
      */
     public function addSubValidation($validatable, $limit_parameters = null, $validatable_handler = 'standard')
     {
-        $this->sub_validation_objects[] = array(
+        $this->subValidationObjects[] = array(
             'object' => $validatable,
             'limited_params' => $limit_parameters,
             'handler' => $validatable_handler
@@ -140,7 +141,7 @@ class Validator
      */
     public function limitValidationParams($limited_params = array())
     {
-        $this->limited_params = $limited_params;
+        $this->limitedParams = $limited_params;
     }
 
     /**
@@ -153,18 +154,18 @@ class Validator
     public function validate($validatable, $handler = 'standard', $scope = Validator::SCOPE_ALL, $ignore_unset = false)
     {
         $this->resetParameters(); // TODO: Is this a good idea at all?
-        $this->validation_obj = $validatable;
+        $this->validationObj = $validatable;
 
         if (is_array($validatable)) {
             $this->parameters = $validatable;
         }
         else {
-            if (!isset($this->validatable_handlers[$handler])) {
+            if (!isset($this->validatableHandlers[$handler])) {
                 throw new \Exception("The validation handler $handler does not exist in this validator");
             }
 
-            $this->validatable_handlers[$handler]->getValidationRules($validatable, $this);
-            $this->parameters = $this->validatable_handlers[$handler]->getValidationData($validatable, $this);
+            $this->validatableHandlers[$handler]->getValidationRules($validatable, $this);
+            $this->parameters = $this->validatableHandlers[$handler]->getValidationData($validatable, $this);
         }
 
         $sub_validation_ignore = array();
@@ -176,12 +177,12 @@ class Validator
             if ($parameter_value !== false) {
 
                 // If the parameters to validate have been limited, make sure this parameter is one of those
-                if ( ( empty($this->limited_params) || in_array($rule['param_name'], $this->limited_params) )) {
+                if ( ( empty($this->limitedParams) || in_array($rule['param_name'], $this->limitedParams) )) {
                     /** @var $rule_obj Rules\RuleInterface */
                     $rule_obj = $rule['rule'];
 
-                    if (isset($this->event_dispatcher)) {
-                        $this->event_dispatcher->dispatch('validator.filter.rule', new ValidatorFilterRuleEvent($rule_obj));
+                    if (isset($this->eventDispatcher)) {
+                        $this->eventDispatcher->dispatch('validator.filter.rule', new ValidatorFilterRuleEvent($rule_obj));
                     }
 
                     if (!$rule_obj->assert($parameter_value)) {
@@ -192,14 +193,16 @@ class Validator
                             }
                         }
 
-                        $rule['error_message'] = $this->processError($rule['error_message'], $rule_obj->getRuleData() + array('param_name' => $rule['param_name']));
+                        $readableName = (isset($rule['readable_name']) ? $rule['readable_name'] : $rule['param_name']);
+
+                        $rule['error_message'] = $this->processError($rule['error_message'], $rule_obj->getRuleData() + array('param_name' => $readableName));
 
                         if ($rule['stop_propagation'] == true) {
                             $sub_validation_ignore[] = $rule['param_name'];
                         }
 
                         $this->errors[] = $rule;
-                        $this->fields_with_errors[] = $rule['param_name'];
+                        $this->fieldsWithErrors[] = $rule['param_name'];
                     }
                 }
 
@@ -214,7 +217,7 @@ class Validator
                 }
 
                 $this->errors[] = $rule;
-                $this->fields_with_errors[] = $rule['param_name'];
+                $this->fieldsWithErrors[] = $rule['param_name'];
             }
         }
 
@@ -264,12 +267,12 @@ class Validator
             return null;
         }
 
-        foreach($this->sub_validation_objects as $validatable)
+        foreach($this->subValidationObjects as $validatable)
         {
-            $validator = new Validator($this->validatable_handlers);
+            $validator = new Validator($this->validatableHandlers);
 
-            if (isset($this->event_dispatcher)) {
-                $validator->setEventDispatcher($this->event_dispatcher);
+            if (isset($this->eventDispatcher)) {
+                $validator->setEventDispatcher($this->eventDispatcher);
             }
             if (isset($this->translator)) {
                 $validator->setTranslator($this->translator);
@@ -335,7 +338,7 @@ class Validator
     public function addValidatableHandler(ValidatableHandler $handler)
     {
         $name = $handler->getName();
-        $this->validatable_handlers[$name] = $handler;
+        $this->validatableHandlers[$name] = $handler;
     }
 
     /**

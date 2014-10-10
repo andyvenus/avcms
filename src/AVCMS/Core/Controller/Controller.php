@@ -14,6 +14,7 @@ use AVCMS\Core\Security\PermissionsError;
 use AVCMS\Core\Validation\Validator;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -25,7 +26,7 @@ use AVCMS\Core\Translation\Translator;
 abstract class Controller extends ContainerAware
 {
     /**
-     * @var
+     * @var \AVCMS\Core\Translation\Translator
      */
     protected $translator;
 
@@ -66,13 +67,20 @@ abstract class Controller extends ContainerAware
     /**
      * Returns a RedirectResponse to the given URL.
      *
-     * @param string  $url    The URL to redirect to
-     * @param int     $status The status code to use for the Response
+     * @param string $url The URL to redirect to
+     * @param int $status The status code to use for the Response
      *
+     * @param null $flashMessageType
+     * @param null $flashMessage
      * @return RedirectResponse
      */
-    public function redirect($url, $status = 302)
+    public function redirect($url, $status = 302, $flashMessageType = null, $flashMessage = null)
     {
+        if ($flashMessage && $flashMessageType) {
+            $this->container->get('session');
+            $this->get('session')->getFlashBag()->add($flashMessageType, $flashMessage);
+        }
+
         return new RedirectResponse($url, $status);
     }
 
@@ -105,7 +113,7 @@ abstract class Controller extends ContainerAware
     /**
      * @param FormBlueprint $form
      * @param null $request
-     * @param array $entities
+     * @param array|mixed $entities
      * @return FormHandler
      */
     protected function buildForm(FormBlueprint $form, $request = null, $entities = array())
@@ -127,11 +135,11 @@ abstract class Controller extends ContainerAware
     }
 
     /**
-     * @return \AVCMS\Bundles\Users\ActiveUser
+     * @return mixed
      */
     protected function activeUser()
     {
-        return $this->container->get('active.user');
+        return $this->container->get('security.context')->getToken()->getUser();
     }
 
     protected function checkPermission($permission)
@@ -148,7 +156,7 @@ abstract class Controller extends ContainerAware
         if (isset($this->bundle)) {
             $context['bundle'] = $this->bundle;
         }
-        $context['user'] = $this->activeUser();
+        $context['user'] = $this->container->get('security.context')->getToken()->getUser();
         $context['settings'] = $this->settings;
 
         $twig = $this->container->get('twig');
@@ -197,10 +205,22 @@ abstract class Controller extends ContainerAware
     }
 
     /**
+     * @param $name
+     * @param Event $event
      * @return \Symfony\Component\EventDispatcher\EventDispatcher
      */
-    protected function getEventDispatcher()
+    protected function dispatchEvent($name, Event $event)
     {
-        return $this->container->get('dispatcher');
+        return $this->container->get('dispatcher')->dispatch($name, $event);
+    }
+
+    protected function permission($attributes, $object = null)
+    {
+        return $this->container->get('security.context')->isGranted($attributes, $object);
+    }
+
+    protected function trans($id, $parameters = array(), $domain = null, $locale = null)
+    {
+        return $this->translator->trans($id, $parameters, $domain, $locale);
     }
 }

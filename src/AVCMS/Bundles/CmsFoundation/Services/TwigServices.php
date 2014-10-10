@@ -69,6 +69,11 @@ class TwigServices implements Service
             ->addTag('twig.extension')
         ;
 
+        $container->register('twig.security.extension', 'Symfony\Bridge\Twig\Extension\SecurityExtension')
+            ->setArguments(array(new Reference('security.context')))
+            ->addTag('twig.extension')
+        ;
+
         $container->register('twig.optimiser_extension', 'Twig_Extension_Optimizer')
             ->addTag('twig.extension.disabledad')
         ;

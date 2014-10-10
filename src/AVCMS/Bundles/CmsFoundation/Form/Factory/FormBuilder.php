@@ -12,11 +12,15 @@ use AVCMS\Core\Form\FormHandlerFactory;
 use AVCMS\Core\Form\FormView;
 use AVCMS\Core\Form\ValidatorExtension\AVCMSValidatorExtension;
 use AVCMS\Core\Validation\Validator;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class FormBuilder
+class FormBuilder implements ContainerAwareInterface
 {
+    protected $container;
+
     public function __construct(FormHandlerFactory $form_handler_factory, TranslatorInterface $translator, EventDispatcherInterface $event_dispatcher)
     {
         $this->form_handler_factory = $form_handler_factory;
@@ -36,6 +40,10 @@ class FormBuilder
         $validator->setEventDispatcher($this->event_dispatcher);
         $validator_ex = new AVCMSValidatorExtension($validator);
 
+        if (isset($this->container)) {
+            $validator_ex->setContainer($this->container);
+        }
+
         $form_handler = $this->form_handler_factory->buildForm($form, $form_view, $validator_ex);
 
         if (!is_array($entities)) {
@@ -51,4 +59,16 @@ class FormBuilder
 
         return $form_handler;
     }
-} 
+
+    /**
+     * Sets the Container.
+     *
+     * @param ContainerInterface|null $container A ContainerInterface instance or null
+     *
+     * @api
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+}

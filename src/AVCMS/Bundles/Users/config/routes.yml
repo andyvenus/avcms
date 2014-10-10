@@ -1,23 +1,25 @@
 login:
   path:     /login
-  defaults: { _controller: 'Users::UsersController::loginAction' }
+  defaults: { _controller: 'Users::UserAuthController::loginAction' }
 
-users_admin:
-  path: /admin/users
-  defaults: { _controller: 'Users::UsersAdminController::usersHomeAction' }
+login_check:
+  path:     /login_check
 
-users_finder:
-  path: /admin/users/finder
-  defaults: { _controller: 'Users::UsersAdminController::usersFinderAction' }
+logout:
+  path:     /logout
 
-edit_user:
-    path: /admin/users/edit/{id}
-    defaults: { _controller: 'Users::UsersAdminController::editUserAction' }
+register:
+  path:     /register
+  defaults: { _controller: 'Users::UserAuthController::registerAction' }
 
-add_user:
-    path: /admin/users/new
-    defaults: { _controller: 'Users::UsersAdminController::editUserAction' }
+validate_email:
+  path:     /validate-email/{userId}/{code}
+  defaults: { _controller: 'Users::UserAuthController::validateEmailAction' }
 
-delete_users:
-    path: /admin/users/delete
-    defaults: { _controller: 'Users::UsersAdminController::deleteUserAction' }
+user_profile:
+  path: /profile/{slug}
+  defaults: { _controller: Users::UserProfileController::userProfileAction }
+
+edit_user_profile:
+  path: /edit-profile
+  defaults: { _controller: Users::UserProfileController::editUserProfileAction }

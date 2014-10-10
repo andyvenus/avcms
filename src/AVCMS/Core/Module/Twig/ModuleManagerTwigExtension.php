@@ -20,11 +20,7 @@ class ModuleManagerTwigExtension extends \Twig_Extension
     {
         $this->moduleManager = $moduleManager;
 
-        $this->templates = array(
-            'plain' => array('template' => '@CmsFoundation/plain_module.twig'),
-            'contained' => array('template' => '@CmsFoundation/contained_module.twig'),
-            'none' => array('template' => '@CmsFoundation/blank_module.twig'),
-        );
+        $this->templates = $moduleManager->getTemplateStyles();
     }
 
     public function initRuntime(\Twig_Environment $environment)
@@ -43,16 +39,16 @@ class ModuleManagerTwigExtension extends \Twig_Extension
         );
     }
 
-    public function getModules($position)
+    public function getModules($position, $vars = array())
     {
-        $modules = $this->moduleManager->getPositionModules($position, true);
+        $modules = $this->moduleManager->getPositionModules($position, $vars, true);
 
         foreach ($modules as $module) {
             if (isset($this->templates[ $module->getTemplateStyle() ])) {
-                $template = $this->templates[ $module->getTemplateStyle() ]['template'];
+                $template = $this->templates[ $module->getTemplateStyle() ]['default_template'];
             }
             else {
-                $template = '@CmsFoundation/plain_module.twig';
+                $template = '@CmsFoundation/blank_module.twig';
             }
 
             $module->setTemplate($template);

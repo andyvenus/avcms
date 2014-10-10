@@ -334,15 +334,20 @@ class FormBlueprint implements FormBlueprintInterface
     /**
      * @param array $fields
      * @param $group null|string Add a prefix to all field names
+     * @param null $section
+     * @throws \Exception
      */
-    public function createFieldsFromArray(array $fields, $group = null)
+    public function createFieldsFromArray(array $fields, $group = null, $section = null)
     {
         foreach ($fields as $field_name => $field) {
             $field_type = ($field['type'] ? $field['type'] : 'text');
             unset($field['type']);
 
-            if (!isset($field['section'])) {
+            if (!isset($field['section']) && $section == null) {
                 $field['section'] = 'main';
+            }
+            elseif (!isset($field['section'])) {
+                $field['section'] = $section;
             }
 
             if ($group) {

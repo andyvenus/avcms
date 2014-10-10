@@ -9,15 +9,18 @@
 {% endblock %}
 
 {% block editor_content %}
-    {% for module_id, module in modules %}
-        <div class="well well-sm clearfix">
-                    <div class="pull-left">
-                        <strong>{{ module.name }}</strong><br/>
-                        {{ module.description }}
-                    </div>
-                    <div class="pull-right" style="margin-top:3px;">
-                        <a href="{{ url('modules_admin_add_selected', { position: item.id, module: module_id}) }}" class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span> Add</a>
-                    </div>
-        </div>
+    {% for module_position, modules in module_positions %}
+        <h4>{{ module_position|capitalize }}</h4>
+        {% for module_id, module in modules %}
+            <div class="well well-sm clearfix">
+                <div class="pull-left">
+                    <strong>{{ module.name }}</strong><br/>
+                    {{ module.description }}
+                </div>
+                <div class="pull-right" style="margin-top:3px;">
+                    <a href="{{ url('modules_admin_add_selected', { position: item.id, module: module_id}) }}" class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span> Add</a>
+                </div>
+            </div>
+        {% endfor %}
     {% endfor %}
 {% endblock %}

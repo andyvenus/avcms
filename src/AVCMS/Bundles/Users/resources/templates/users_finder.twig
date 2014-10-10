@@ -1,0 +1,37 @@
+{% extends '@admin/finder.twig' %}
+
+{% block finder_header_titles %}
+    <div class="col-md-3">{% trans %}Join Date{% endtrans %}</div>
+
+    <div class="col-md-3">{% trans %}Last Active{% endtrans %}</div>
+
+    <div class="col-md-3">{% trans %}Last IP{% endtrans %}</div>
+
+    <div class="col-md-3">{% trans %}Email address{% endtrans %}</div>
+{% endblock %}
+
+{% block item_title %}
+    <div class="finder-item-title" data-field="username">
+        {{ item.username }}
+    </div>
+{% endblock %}
+
+{% block item_options %}
+    <div class="btn-group">
+        {{ buttons.edit('users_admin_edit', item.id) }}
+        <a class="btn btn-default btn-xs" href="{{ url('users_admin_change_password', {id: item.id}) }}" title="{% trans %}Change Password{% endtrans %}"><span class="glyphicon glyphicon-lock"></span> </a>
+        {{ buttons.delete('users_admin_delete') }}
+    </div>
+
+    {{ buttons.view('user_profile', {slug: item.slug}) }}
+{% endblock %}
+
+{% block item_extended_inner %}
+    <div class="col-md-3">{{ item.joined|date(settings.date_format) }}</div>
+
+    <div class="col-md-3">{{ item.lastActive|date(settings.date_format) }}</div>
+
+    <div class="col-md-3">{{ item.lastIp|default('None') }}</div>
+
+    <div class="col-md-3">{{ item.email }}</div>
+{% endblock %}

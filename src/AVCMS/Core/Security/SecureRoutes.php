@@ -6,12 +6,10 @@
  */
 
 namespace AVCMS\Core\Security;
-use AVCMS\Bundles\Users\ActiveUser;
+use AVCMS\Core\Security\User\ActiveUser;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class SecureRoutes

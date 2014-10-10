@@ -20,14 +20,14 @@ class AdminHelpersController extends Controller
         $users = $this->model('@users');
 
         if ($request->query->has('id_search')) {
-            $matched_users[] = $users->getOne($query);
+            $matchedUsers[] = $users->getOne($query);
         }
         else {
-            $matched_users = $users->query()->where('username', 'LIKE', '%'.$query.'%')->get();
+            $matchedUsers = $users->query()->where('username', 'LIKE', '%'.$query.'%')->get();
         }
 
         $paired_users = array();
-        foreach ($matched_users as $user) {
+        foreach ($matchedUsers as $user) {
             $paired_users[] = array('id' => $user->getId(), 'text' => $user->getUsername());
         }
 
@@ -36,9 +36,9 @@ class AdminHelpersController extends Controller
 
     public function slugGeneratorAction(Request $request)
     {
-        $slug_generator = $this->container->get('slug.generator');
+        $slugGenerator = $this->container->get('slug.generator');
 
-        $slug = $slug_generator->generate($request->get('title'));
+        $slug = $slugGenerator->generate($request->get('title'));
 
         return new JsonResponse(array('slug' => $slug));
     }

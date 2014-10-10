@@ -9,6 +9,10 @@ namespace AVCMS\Core\Config;
 
 class Config implements \ArrayAccess
 {
+    protected $config;
+
+    protected $configArray;
+
     public function __construct(array $config)
     {
         $this->configArray = $config;

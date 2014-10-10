@@ -1,8 +1,6 @@
 .leaderboard {
     background-color: darkslateblue;
     color: white;
-
-    margin-bottom: 10px;
 }
 
 .leaderboard a {
@@ -20,7 +18,7 @@
 
 }
 
-.blog_post_container {
+.blog-post-container {
     border-bottom: 1px solid #a7a8cd;
     margin-bottom: 10px;
     padding-bottom: 5px;
@@ -32,4 +30,8 @@ footer {
 
 select[name=author] {
     width: 500px;
+}
+
+.avcms-main {
+    margin-top: 10px;
 }

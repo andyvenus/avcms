@@ -23,12 +23,10 @@ class BundleAssetLoader extends AssetLoader
 {
     /**
      * @param BundleManagerInterface $bundleManager
-     * @param ResourceLocator $resourceLocator
      */
-    public function __construct(BundleManagerInterface $bundleManager, ResourceLocator $resourceLocator)
+    public function __construct(BundleManagerInterface $bundleManager)
     {
-        $this->bundle_manager = $bundleManager;
-        $this->resource_locator = $resourceLocator;
+        $this->bundleManager = $bundleManager;
     }
 
     /**
@@ -36,7 +34,7 @@ class BundleAssetLoader extends AssetLoader
      */
     public function loadAssets(AssetManager $asset_manager)
     {
-        $configs = $this->bundle_manager->getBundleConfigs();
+        $configs = $this->bundleManager->getBundleConfigs();
 
         foreach ($configs as $config) {
             if (isset($config->assets)) {

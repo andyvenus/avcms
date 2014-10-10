@@ -8,9 +8,11 @@
 namespace AVCMS\Bundles\Users\Model;
 
 use AVCMS\Core\Model\Entity;
+use Symfony\Component\Security\Core\Role\Role;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 
-class User extends Entity
+class User extends Entity implements UserInterface
 {
     /**
      * @param $value
@@ -50,12 +52,12 @@ class User extends Entity
         return $this->get('email');
     }
 
-    public function setActivate($value) {
-        $this->set('activate', $value);
+    public function setEmailValidated($value) {
+        $this->set('email_validated', $value);
     }
 
-    public function getActivate() {
-        return $this->get('activate');
+    public function getEmailValidated() {
+        return $this->get('email_validated');
     }
 
     public function setAbout($value) {
@@ -122,11 +124,101 @@ class User extends Entity
         return $this->get('avatar');
     }
 
+    public function setCoverImage($value) {
+        $this->set('cover_image', $value);
+    }
+
+    public function getCoverImage() {
+        return $this->get('cover_image');
+    }
+
     public function setReferrer($value) {
         $this->set('referrer', $value);
     }
 
     public function getReferrer() {
         return $this->get('referrer');
+    }
+
+    public function setSlug($value) {
+        $this->set('slug', $value);
+    }
+
+    public function getSlug() {
+        return $this->get('slug');
+    }
+
+    public function getRoleList()
+    {
+        return $this->get('role_list');
+    }
+
+    public function getLastIp() {
+        return $this->get('last_ip');
+    }
+
+    public function setLastIp($value) {
+        $this->set('last_ip', $value);
+    }
+
+    public function setRoleList($roleList)
+    {
+        $this->set('role_list', $roleList);
+    }
+
+    /**
+     * Returns the roles granted to the user.
+     *
+     * <code>
+     * public function getRoles()
+     * {
+     *     return array('ROLE_USER');
+     * }
+     * </code>
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return Role[] The user roles
+     */
+    public function getRoles()
+    {
+        $rolesArray = explode(',', $this->get('role_list'));
+
+        $roles = array();
+        foreach ($rolesArray as $roleStr) {
+            $roles[] = new Role($roleStr);
+        }
+
+        return $roles;
+    }
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        return null;
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        return;
+    }
+
+    public function isLoggedIn()
+    {
+        return $this->getId();
     }
 }

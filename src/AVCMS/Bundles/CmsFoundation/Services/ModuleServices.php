@@ -10,13 +10,14 @@ namespace AVCMS\Bundles\CmsFoundation\Services;
 use AVCMS\Core\Service\Service;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 class ModuleServices implements Service
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('module_manager', 'AVCMS\Core\Module\ModuleManager')
-            ->setArguments(array(new Reference('fragment_handler'), new Reference('module.model'), new Reference('module.positions_model'), new Reference('request.stack'), 'cache'))
+            ->setArguments(array(new Reference('fragment_handler'), new Reference('module.model'), new Reference('module_positions_manager'), new Reference('request.stack'), 'cache/modules'))
             ->addMethodCall('setProvider', array(new Reference('module.bundle_provider')))
         ;
 
@@ -39,6 +40,16 @@ class ModuleServices implements Service
         $container->register('modules.twig_extension', 'AVCMS\Core\Module\Twig\ModuleManagerTwigExtension')
             ->setArguments(array(new Reference('module_manager')))
             ->addTag('twig.extension')
+        ;
+
+        $container->register('module_positions_manager', 'AVCMS\Core\Module\ModulePositionsManager')
+            ->setArguments(array(new Reference('module.positions_model')))
+            ->addMethodCall('setProvider', [new Reference('module.bundle_positions_provider')])
+            ->addTag('event.listener', ['event' => KernelEvents::REQUEST, 'method' => 'updatePositions'])
+        ;
+
+        $container->register('module.bundle_positions_provider', 'AVCMS\Core\Bundle\ModuleProvider\BundleModulePositionsProvider')
+            ->setArguments([new Reference('bundle_manager')])
         ;
     }
 }

@@ -4,7 +4,7 @@ namespace AVCMS\Core\Validation\Rules;
 
 use AVCMS\Core\Model\ModelFactory;
 
-class MustNotExist extends Rule implements ModelRule {
+class MustNotExist extends Rule implements ModelRuleInterface {
 
     /**
      * @var string
@@ -29,11 +29,16 @@ class MustNotExist extends Rule implements ModelRule {
 
     public function assert($param)
     {
-        if (!isset($this->model_factory)) {
+        if (!is_object($this->model) && !isset($this->model_factory)) {
             throw new \Exception(sprintf("The rule %s requires a ModelFactory to be set using the RuleModelFactoryInjector subscriber", get_class($this)));
         }
 
-        $model = $this->model_factory->create($this->model);
+        if (!is_object($this->model)) {
+            $model = $this->model_factory->create($this->model);
+        }
+        else {
+            $model = $this->model;
+        }
 
         $query = $model->query()->where($this->column, $param);
 

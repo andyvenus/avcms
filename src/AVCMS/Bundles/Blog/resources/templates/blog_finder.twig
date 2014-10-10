@@ -16,14 +16,14 @@
 
 {% block item_options %}
     <div class="btn-group">
-        {{ buttons.edit(bundle.route.blog_edit_post, item.id) }}
+        {{ buttons.edit('blog_edit_post', item.id) }}
 
-        {{ buttons.publish(item.published, bundle.route.blog_toggle_posts_published) }}
+        {{ buttons.publish(item.published, 'blog_toggle_posts_published') }}
 
-        {{ buttons.delete(bundle.route.blog_delete_posts) }}
+        {{ buttons.delete('blog_delete_posts') }}
     </div>
 
-    {{ buttons.view(bundle.route.blog_post, {slug: item.slug}) }}
+    {{ buttons.view('blog_post', {slug: item.slug}) }}
 {% endblock %}
 
 {% block item_extended_inner %}
@@ -34,6 +34,6 @@
         {{ item.user.username }}
     </div>
     <div class="col-md-3 hidden-sm hidden-xs">
-        <a href="{{ url(bundle.route.blog_post, {slug: item.slug}) }}">{{ item.slug }}</a>
+        <a href="{{ url('blog_post', {slug: item.slug}) }}">{{ item.slug }}</a>
     </div>
 {% endblock %}

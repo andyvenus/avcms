@@ -36,6 +36,10 @@ class CsrfFormPlugin implements EventSubscriberInterface
 
     public function validateToken(FormHandlerRequestEvent $event)
     {
+        if (!$event->getFormHandler()->isSubmitted()) {
+            return;
+        }
+
         $token = $event->getFormData()['_csrf_token'];
 
         if ($this->token->checkToken($token) === false) {

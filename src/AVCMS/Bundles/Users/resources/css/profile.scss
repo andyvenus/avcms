@@ -1,0 +1,46 @@
+.user-profile-header {
+  height: 200px;
+  position: relative;
+
+  background: -webkit-linear-gradient(#707070, #3b3b3b) no-repeat center center;
+  background-size: cover;
+
+  margin-bottom: 30px;
+}
+
+.user-profile-username {
+  color: white;
+  position: absolute;
+  bottom: 0px;
+  margin-bottom: 40px;
+  font-size: 40px;
+  text-shadow: 2px 2px 4px #000000;
+  margin-left: 120px;
+}
+
+.user-profile-avatar {
+  background-color: white;
+  padding: 2px;
+  border-radius: 2px;
+  position: absolute;
+  bottom: 0px;
+  margin-bottom: 10px;
+  z-index: 10;
+}
+
+.user-profile-info {
+  background-color: rgba(0, 0, 0, 0.59);
+  color: white;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+
+  .pull-left {
+    padding: 10px 0px;
+    margin-left: 120px;
+  }
+
+  .pull-right {
+    padding-top: 4px;
+  }
+}

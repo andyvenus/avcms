@@ -5,16 +5,18 @@
 {% block content %}
     {% block blog_posts %}
         {% for post in posts %}
-            <article class="blog_post_container">
-                <h2><a href="{{ url(bundle.route.blog_post, {slug: post.slug}) }}">{{ post.title }}</a> <small>by {{ post.user.username }}</small></h2>
+            <article class="blog-post-container">
+                <h2><a href="{{ url('blog_post', {slug: post.slug}) }}">{{ post.title }}</a> <small>by {{ post.user.username }}</small></h2>
 
                 {% for tag in post.tags %}
-                    <a class="btn btn-default btn-xs" href="{{ url(bundle.route.blog_archive, {tags: tag.name}) }}">{{ tag.name }}</a>
+                    <a class="btn btn-default btn-xs" href="{{ url('blog_archive', {tags: tag.name}) }}">{{ tag.name }}</a>
                 {% endfor %}
 
                 <p>{{ post.body|markdown }}</p>
 
-                <a class="btn btn-link btn-sm" href="{{ url(bundle.route.blog_edit_post, { id: post.id}) }}"><span class="glyphicon glyphicon-edit"></span> Edit Post</a>
+                {% if is_granted('PERM_ADMIN_BLOG')  %}
+                    <a class="btn btn-link btn-sm" href="{{ url('blog_edit_post', { id: post.id}) }}"><span class="glyphicon glyphicon-edit"></span> {% trans %}Edit Post{% endtrans %}</a>
+                {% endif %}
             </article>
         {% endfor %}
     {% endblock %}

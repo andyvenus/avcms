@@ -16,11 +16,11 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @var \AVCMS\Core\Bundle\BundleManager
      */
-    private $bundle_manager;
+    private $bundleManager;
 
     private $root;
 
-    private $bundle_locations;
+    private $bundleLocations;
 
     public function setUp()
     {
@@ -42,7 +42,8 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
                                 )
                             )
                         ),
-                        'routes.yml' => Yaml::dump(array('my_route' => array('path' => '/path')))
+                        'routes.yml' => Yaml::dump(array('my_route' => array('path' => '/path'))),
+                        'admin_routes.yml' => Yaml::dump(array('my_admin_route' => array('path' => '/admin-path')))
                     )
                 ),
                 'FakeDevBundle' => array(
@@ -68,8 +69,8 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
             )
         ));
 
-        $this->bundle_locations = array(vfsStream::url('root/Bundles'));
-        $this->bundle_manager = new BundleManager($this->bundle_locations, vfsStream::url('root/config'), vfsStream::url('root/cache'));
+        $this->bundleLocations = array(vfsStream::url('root/Bundles'));
+        $this->bundleManager = new BundleManager($this->bundleLocations, vfsStream::url('root/config'), vfsStream::url('root/cache'));
     }
 
     public function tearDown()
@@ -87,50 +88,50 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
     public function testInjectConfiguaration()
     {
         $config = $this->getMock('Symfony\Component\Config\Definition\ConfigurationInterface');
-        $bundle_manager = new BundleManager(array(vfsStream::url('root/Bundles')), $config);
+        $bundleManager = new BundleManager(array(vfsStream::url('root/Bundles')), $config);
     }
 
     public function testSetDebug()
     {
-        $this->assertFalse($this->bundle_manager->isDebug());
+        $this->assertFalse($this->bundleManager->isDebug());
 
-        $this->bundle_manager->setDebug(true);
+        $this->bundleManager->setDebug(true);
 
-        $this->assertTrue($this->bundle_manager->isDebug());
+        $this->assertTrue($this->bundleManager->isDebug());
     }
 
     public function testLoadAppBundleConfigNotFresh()
     {
-        $bm = $this->bundle_manager;
+        $bm = $this->bundleManager;
 
-        $config_cache = $this->getMockBuilder('Symfony\Component\Config\ConfigCache')
+        $configCache = $this->getMockBuilder('Symfony\Component\Config\ConfigCache')
             ->disableOriginalConstructor()
             ->getMock();
-        $config_cache->expects($this->once())
+        $configCache->expects($this->once())
             ->method('isFresh')->will($this->returnValue(false));
-        $config_cache->expects($this->once())->method('write')
+        $configCache->expects($this->once())->method('write')
             ->will($this->returnCallback(function($contents) {
                 \PHPUnit_Framework_Assert::assertStringStartsWith('<?php', $contents);
                 $config_array = eval(str_replace('<?php', '', $contents));
                 \PHPUnit_Framework_Assert::assertArrayHasKey('FakeBundle', $config_array);
             }));
 
-        $bm->setConfigCache($config_cache);
+        $bm->setConfigCache($configCache);
         $bm->loadAppBundleConfig();
     }
 
     public function testLoadAppBundleConfigFresh()
     {
-        $bm = new BundleManager($this->bundle_locations, vfsStream::url('root/config'), __DIR__.'/Resource');
+        $bm = new BundleManager($this->bundleLocations, vfsStream::url('root/config'), __DIR__.'/Resource');
 
-        $config_cache = $this->getMockBuilder('Symfony\Component\Config\ConfigCache')
+        $configCache = $this->getMockBuilder('Symfony\Component\Config\ConfigCache')
             ->disableOriginalConstructor()
             ->getMock();
-        $config_cache->expects($this->once())
+        $configCache->expects($this->once())
             ->method('isFresh')->will($this->returnValue(true));
-        $config_cache->expects($this->never())->method('write');
+        $configCache->expects($this->never())->method('write');
 
-        $bm->setConfigCache($config_cache);
+        $bm->setConfigCache($configCache);
         $config = $bm->loadAppBundleConfig();
 
         $this->assertArrayHasKey('FakeBundle', $config);
@@ -149,19 +150,19 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
     public function testLoadAppBundleConfigDev()
     {
         $cache_dir = __DIR__.'/Resource';
-        $bm = new BundleManager($this->bundle_locations, vfsStream::url('root/config'), $cache_dir);
+        $bm = new BundleManager($this->bundleLocations, vfsStream::url('root/config'), $cache_dir);
 
         $bm->setDebug(true);
 
         $this->assertFileExists($cache_dir.'/bundle_config.php');
 
-        $config_cache = $this->getMockBuilder('Symfony\Component\Config\ConfigCache')
+        $configCache = $this->getMockBuilder('Symfony\Component\Config\ConfigCache')
             ->disableOriginalConstructor()
             ->getMock();
-        $config_cache->expects($this->once())
+        $configCache->expects($this->once())
             ->method('isFresh')->will($this->returnValue(false));
 
-        $bm->setConfigCache($config_cache);
+        $bm->setConfigCache($configCache);
         $bm->loadAppBundleConfig();
     }
 
@@ -170,14 +171,14 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
         // We get an exception because Symfony's Filesystem doesn't support vfsStream
         $this->setExpectedException('Symfony\Component\Filesystem\Exception\IOException');
 
-        $this->bundle_manager->loadAppBundleConfig();
+        $this->bundleManager->loadAppBundleConfig();
     }
 
     public function testFindBundleDirectoryException()
     {
         $this->setExpectedException('AVCMS\Core\Bundle\Exception\NotFoundException');
 
-        $this->bundle_manager->findBundleDirectory('BadBundle');
+        $this->bundleManager->findBundleDirectory('BadBundle');
     }
 
     public function testDecorateContainer()
@@ -186,26 +187,26 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
         $mock_container->expects($this->once())
             ->method('register');
 
-        $config_cache = $this->getMockBuilder('Symfony\Component\Config\ConfigCache')
+        $configCache = $this->getMockBuilder('Symfony\Component\Config\ConfigCache')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->bundle_manager->setConfigCache($config_cache);
-        $this->bundle_manager->decorateContainer($mock_container);
+        $this->bundleManager->setConfigCache($configCache);
+        $this->bundleManager->decorateContainer($mock_container);
 
-        $this->assertTrue($this->bundle_manager->bundlesInitialized());
+        $this->assertTrue($this->bundleManager->bundlesInitialized());
     }
 
     public function testNonExistantServiceException()
     {
         $this->setExpectedException('AVCMS\Core\Bundle\Exception\NotFoundException', "Service class");
 
-        $config_cache = $this->getMockBuilder('Symfony\Component\Config\ConfigCache')
+        $configCache = $this->getMockBuilder('Symfony\Component\Config\ConfigCache')
             ->disableOriginalConstructor()
             ->getMock();
 
         $bm = new BundleManager(array(vfsStream::url('root/BadBundles')), vfsStream::url('root/BadBundles/config'), vfsStream::url('root/BadBundles/cache'));
-        $bm->setConfigCache($config_cache);
+        $bm->setConfigCache($configCache);
 
         $mock_container = $this->getMock('Symfony\Component\DependencyInjection\ContainerBuilder');
 
@@ -214,70 +215,63 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadBundleConfig()
     {
-        $config = $this->bundle_manager->loadBundleConfig('FakeBundle');
+        $config = $this->bundleManager->loadBundleConfig('FakeBundle');
 
         $this->assertEquals('FakeBundle', $config['name']);
     }
 
-    public function testGetBundleConfig()
+    public function testGetBundleConfigPreloaded()
     {
-        $config = $this->bundle_manager->getBundleConfig('FakeBundle');
+        $configCache = $this->getMockBuilder('Symfony\Component\Config\ConfigCache')
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $this->assertCount(1, $this->bundle_manager->getBundleConfigs());
+        $this->bundleManager->setConfigCache($configCache);
+
+        $this->bundleManager->initBundles();
+
+        $config = $this->bundleManager->getBundleConfig('FakeBundle');
+
+        $this->assertCount(1, $this->bundleManager->getBundleConfigs());
 
         $this->assertEquals('FakeBundle', $config['name']);
 
-        $this->assertTrue($this->bundle_manager->hasBundle('FakeBundle'));
+        $this->assertTrue($this->bundleManager->hasBundle('FakeBundle'));
 
-        $config_cached = $this->bundle_manager->getBundleConfig('FakeBundle');
+        $configCached = $this->bundleManager->getBundleConfig('FakeBundle');
 
-        $this->assertEquals('FakeBundle', $config_cached['name']);
+        $this->assertEquals('FakeBundle', $configCached['name']);
+    }
+
+    public function testGetBundleConfigOnDemand()
+    {
+        $config = $this->bundleManager->getBundleConfig('FakeBundle');
+
+        $this->assertEquals('FakeBundle', $config['name']);
     }
 
     public function testGetBundleLocations()
     {
-        $this->assertEquals(array(vfsStream::url('root/Bundles')), $this->bundle_manager->getBundleLocations());
-    }
-
-    public function testGetBundleSettings()
-    {
-        $bm = new BundleManager($this->bundle_locations, vfsStream::url('root/config'), __DIR__.'/Resource');
-
-        $config_cache = $this->getMockBuilder('Symfony\Component\Config\ConfigCache')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $config_cache->expects($this->once())
-            ->method('isFresh')->will($this->returnValue(false));
-
-        $bm->setConfigCache($config_cache);
-
-        $bm->initBundles();
-
-        $mock_settings = $this->getMockBuilder('AVCMS\Core\SettingsManager\SettingsManager')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $mock_settings->expects($this->once())->method('addSettings');
-
-        $bm->getBundleSettings($mock_settings);
+        $this->assertEquals(array(vfsStream::url('root/Bundles')), $this->bundleManager->getBundleLocations());
     }
 
     public function testGetBundleRoutes()
     {
-        $bm = new BundleManager($this->bundle_locations, vfsStream::url('root/config'), __DIR__.'/Resource');
+        $bm = new BundleManager($this->bundleLocations, vfsStream::url('root/config'), __DIR__.'/Resource');
 
-        $config_cache = $this->getMockBuilder('Symfony\Component\Config\ConfigCache')
+        $configCache = $this->getMockBuilder('Symfony\Component\Config\ConfigCache')
             ->disableOriginalConstructor()
             ->getMock();
-        $config_cache->expects($this->once())
+        $configCache->expects($this->once())
             ->method('isFresh')->will($this->returnValue(true));
-        $config_cache->expects($this->never())->method('write');
+        $configCache->expects($this->never())->method('write');
 
-        $bm->setConfigCache($config_cache);
+        $bm->setConfigCache($configCache);
 
         $bm->initBundles();
 
         $mock_collection = $this->getMock('Symfony\Component\Routing\RouteCollection');
-        $mock_collection->expects($this->once())->method('addCollection');
+        $mock_collection->expects($this->exactly(2))->method('addCollection');
 
         $bm->getBundleRoutes($mock_collection);
     }

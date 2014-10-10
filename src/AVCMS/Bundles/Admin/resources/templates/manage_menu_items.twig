@@ -23,10 +23,16 @@
     <p><a href="{{ url('menu_items_add', {menu: item.id}) }}" class="btn btn-default">{% trans %}Add Menu Item{% endtrans %}</a></p>
 
     <div class="sortable-container">
-        <ul class="sortable" style="position: absolute;" data-sortable-levels="2" data-ajax-action="{{ url('menus_save_order', {id: item.id}) }}">
+        <ul class="sortable" style="position: absolute;" data-sortable-levels="2" data-ajax-action="{{ url('menus_save_order', {id: item.id}) }}" data-ajax-delete-action="{{ url('menus_admin_delete_item') }}">
             {% for menu_item in menu_items %}
-            <li id="menu_order_{{ menu_item.id }}">
-                <div class="sortable-item"><span class="glyphicon glyphicon-align-justify handle"></span> {{ menu_item.label }} <a class="btn btn-xs btn-default" href="{{ url('menu_items_edit', {menu: item.id, id: menu_item.id}) }}">Edit</a> </div>
+            <li id="menu_order_{{ menu_item.id|replace({'_': 'UNDERSCORE'}) }}" data-item-id="{{ menu_item.id }}">
+                <div class="sortable-item"><span class="glyphicon glyphicon-align-justify handle"></span> {{ menu_item.label }}
+
+                    <div class="pull-right">
+                        <a class="btn btn-xs btn-default" href="{{ url('menu_items_edit', {menu: item.id, id: menu_item.id}) }}">{% trans %}Edit{% endtrans %}</a>
+                        <button class="btn btn-danger btn-xs delete-item"><span class="glyphicon glyphicon-remove"></span></button>
+                    </div>
+                </div>
                 {% if menu_item.children %}
                 <ul>
                     {% for menu_item in menu_item.children %}

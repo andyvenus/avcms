@@ -14,6 +14,7 @@ services:
   - FormServices
   - MenuServices
   - ModuleServices
+  - EmailServices
 
 user_settings_sections:
   main: Main
@@ -24,13 +25,19 @@ user_settings:
     label: Site Name
     default: My AVCMS Site
     section: main
+    validation:
+      min_length:
+        class: AVCMS\Core\Validation\Rules\Length
+        arguments:
+          - 5
+
   template:
     type: select
     choices_provider: { class: AVCMS\Bundles\CmsFoundation\Settings\TemplateChoicesProvider }
     label: Template
     help: The frontend template
     section: main
-    default: indigo
+    default: templates/frontend/indigo
 
 assets:
   jquery.js:
@@ -55,16 +62,17 @@ menu_items:
       label: Modules
 
 modules:
-  my_module:
-    controller: 'CmsFoundation::BaseModulesController::firstModuleAction'
-    name: My New Module
-    description: This is my first module and it's pretty great huh?
+  html_module:
+    controller: 'CmsFoundation::BaseModulesController::htmlModule'
+    name: HTML Snippet
+    description: Add a HTML block to this position
     template_style: plain
+    cachable: true
+    default_cache_time: 600
     user_settings:
-            my_settings:
-              type: text
-              default: Lol
-              label: A custom setting
+            html:
+              type: textarea
+              label: HTML
               required: true
 
 require:

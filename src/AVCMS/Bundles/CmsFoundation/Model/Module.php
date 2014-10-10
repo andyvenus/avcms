@@ -3,8 +3,9 @@
 namespace AVCMS\Bundles\CmsFoundation\Model;
 
 use AVCMS\Core\Model\Entity;
+use AVCMS\Core\Module\ModuleConfigInterface;
 
-class Module extends Entity
+class Module extends Entity implements ModuleConfigInterface
 {
     protected $template;
     protected $moduleInfo;
@@ -20,14 +21,24 @@ class Module extends Entity
         return $this->get("active");
     }
 
-    public function setContent($content)
+    public function setCacheTime($value)
     {
-        $this->content = $content;
+        $this->set("cache_time", $value);
+    }
+
+    public function getCacheTime()
+    {
+        return $this->get("cache_time");
     }
 
     public function getContent()
     {
         return $this->content;
+    }
+
+    public function setContent($content)
+    {
+        $this->content = $content;
     }
 
     public function getId()
@@ -40,14 +51,14 @@ class Module extends Entity
         $this->set("id", $value);
     }
 
-    public function getLimitRoutes()
-    {
-        return $this->get("limit_routes");
-    }
-
     public function setLimitRoutes($value)
     {
         $this->set("limit_routes", $value);
+    }
+
+    public function getLimitRoutes()
+    {
+        return $this->get("limit_routes");
     }
 
     public function getLimitRoutesArray()
@@ -71,14 +82,14 @@ class Module extends Entity
         $this->setLimitRoutes($value);
     }
 
-    public function getModule()
-    {
-        return $this->get("module");
-    }
-
     public function setModule($value)
     {
         $this->set("module", $value);
+    }
+
+    public function getModule()
+    {
+        return $this->get("module");
     }
 
     public function setModuleInfo($moduleInfo)
@@ -91,19 +102,14 @@ class Module extends Entity
         return $this->moduleInfo;
     }
 
-    public function getOrder()
-    {
-        return $this->get("order");
-    }
-
     public function setOrder($value)
     {
         $this->set("order", $value);
     }
 
-    public function getPosition()
+    public function getOrder()
     {
-        return $this->get("position");
+        return $this->get("order");
     }
 
     public function setPosition($value)
@@ -111,9 +117,9 @@ class Module extends Entity
         $this->set("position", $value);
     }
 
-    public function setSettings($value)
+    public function getPosition()
     {
-        $this->set("settings", $value);
+        return $this->get("position");
     }
 
     public function getSettings()
@@ -121,14 +127,9 @@ class Module extends Entity
         return $this->get("settings");
     }
 
-    /**
-     * Unserializes and gets an array of config data
-     *
-     * @return mixed
-     */
-    public function getSettingsArray()
+    public function setSettings($value)
     {
-        return unserialize($this->get("settings"));
+        $this->set("settings", $value);
     }
 
     /**
@@ -140,6 +141,21 @@ class Module extends Entity
     public function setSettingsArray($value)
     {
         $this->set("settings", serialize($value));
+    }
+
+    /**
+     * Unserializes and gets an array of config data
+     *
+     * @return mixed
+     */
+    public function getSettingsArray()
+    {
+        if (is_array($settings = unserialize($this->get("settings")))) {
+            return $settings;
+        }
+        else {
+            return array();
+        }
     }
 
     public function setShowHeader($value)
@@ -162,23 +178,23 @@ class Module extends Entity
         $this->template = $template;
     }
 
-    public function getTemplateStyle()
-    {
-        return $this->get("template_style");
-    }
-
     public function setTemplateStyle($value)
     {
         $this->set("template_style", $value);
     }
 
-    public function getTitle()
+    public function getTemplateStyle()
     {
-        return $this->get("title");
+        return $this->get("template_style");
     }
 
     public function setTitle($value)
     {
         $this->set("title", $value);
+    }
+
+    public function getTitle()
+    {
+        return $this->get("title");
     }
 }

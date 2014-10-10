@@ -4,24 +4,22 @@
     {% trans %}Users{% endtrans %}
 {% endblock %}
 
-{% block expand_finder %}
-    {{ buttons.expand_browser(bundle.route.users_admin) }}
-{% endblock %}
-
-{% block add_item %}
-    {{ buttons.add_item(bundle.route.add_user, 'Add User') }}
+{% block expand_finder_button %}
+    {{ buttons.expand_finder('users_admin_home') }}
 {% endblock %}
 
 {% block finder %}
-    <div data-url="{{ url(bundle.route.users_finder) }}">
-        {{ render(path(bundle.route.users_finder)) }}
+    <div data-url="{{ url('users_admin_finder') }}">
+        {{ render(path('users_admin_finder')) }}
     </div>
 {% endblock %}
 
 {% block mobile_back_link %}
-    {{ url(bundle.route.users_admin) }}
+    {{ url('users_admin_home') }}
 {% endblock %}
 
 {% block checked_options_buttons %}
-    {{ buttons.bulk_delete(bundle.route.delete_users) }}
+    {{ buttons.bulk_delete('users_admin_delete') }}
+
+    
 {% endblock %}

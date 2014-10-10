@@ -17,7 +17,8 @@ class TypeHandler implements TypeInterface
             'checkbox' => new CheckboxType(),
             'collection' => new CollectionType($this),
             'default' => new DefaultType(),
-            'select' => new SelectType()
+            'select' => new SelectType(),
+            'file' => new FileType()
         );
     }
 

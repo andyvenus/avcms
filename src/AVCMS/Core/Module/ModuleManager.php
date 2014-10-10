@@ -22,13 +22,14 @@ class ModuleManager
      */
     protected $providers = array();
 
-    public function __construct(FragmentHandler $fragmentHandler, Model $moduleModel, Model $modulePositionsModel, RequestStack $requestStack, $cacheDir)
+    public function __construct(FragmentHandler $fragmentHandler, ModuleConfigModelInterface $moduleModel, ModulePositionsManager $modulePositionsManager, RequestStack $requestStack, $cacheDir, $devMode = false)
     {
         $this->fragmentHandler = $fragmentHandler;
         $this->moduleModel = $moduleModel;
-        $this->modulePositionsModel = $modulePositionsModel;
+        $this->modulePositionsManager = $modulePositionsManager;
         $this->requestStack = $requestStack;
         $this->cacheDir = $cacheDir;
+        $this->devMode = $devMode;
     }
 
     public function setProvider(ModuleProviderInterface $moduleProviders)
@@ -45,19 +46,19 @@ class ModuleManager
         return $this->loadedModuleConfigs[$section][$moduleId];
     }
 
-    public function getModuleContent($moduleConfig, $section)
+    public function getModuleContent(ModuleConfigInterface $moduleConfig, $position, $vars = array())
     {
         $module = $moduleConfig->getModuleInfo();
 
         if (!$module) return null;
 
-        if (isset($module['cachable']) && $module['cachable']) {
-            $cacheFile = $this->cacheDir.'/'.$moduleConfig->getModule().'-'.$section.'.php';
+        $cacheFile = $this->cacheDir.'/'.$moduleConfig->getModule().'-'.$moduleConfig->getId().'-'.$position.'.php';
 
+        if ($module->isCachable() && $this->devMode == false) {
             if (!file_exists($cacheFile)) {
                 $cacheFresh = false;
             }
-            elseif (filemtime($cacheFile) < (time() - $moduleConfig->getCacheTime())) {
+            elseif (filemtime($cacheFile) <= (time() - $moduleConfig->getCacheTime())) {
                 $cacheFresh = false;
             }
             else {
@@ -69,48 +70,96 @@ class ModuleManager
             }
         }
 
-        $controller = new ControllerReference($module['controller'], array('module' => $moduleConfig));
+        $userSettingDefaults = array();
 
-        return $this->fragmentHandler->render($controller, 'inline');
+        foreach ($module->getUserSettings() as $settingName => $userSetting) {
+            $userSettingDefaults[$settingName] = (isset($userSetting['default']) ? $userSetting['default'] : null);
+        }
+
+        $userSettings = array_replace($userSettingDefaults, $moduleConfig->getSettingsArray());
+        $moduleConfig->setSettingsArray($userSettings);
+
+        $vars = array_merge($vars, array('module' => $moduleConfig, 'userSettings' => $userSettings));
+
+        $controller = new ControllerReference($module->getController(), $vars);
+
+        try {
+            $content = $this->fragmentHandler->render($controller, 'inline');
+        } catch (\InvalidArgumentException $e) {
+            return $e->getMessage();
+        }
+
+        if ($module->isCachable() && $moduleConfig->getCacheTime()) {
+            file_put_contents($cacheFile, $content);
+        }
+
+        return $content;
     }
 
     /**
-     * @param $position
+     * @param $positionId
+     * @param $vars
      * @param bool $limitByRequest
+     * @param bool $getContent
      * @return \AVCMS\Bundles\CmsFoundation\Model\Module[]
      */
-    public function getPositionModules($position, $limitByRequest = false)
+    public function getPositionModules($positionId, $vars = array(), $limitByRequest = false, $getContent = true)
     {
-        $configs = $this->loadModuleConfigs($position);
+        $configs = $this->loadModuleConfigs($positionId);
 
-        foreach ($configs as $i => $moduleConfig) {
+        foreach ($configs as $configId => $moduleConfig) {
             $routes = $moduleConfig->getLimitRoutesArray();
             
             if ($limitByRequest == true && is_array($routes) && !empty($routes)) {
                 if (!in_array($this->requestStack->getCurrentRequest()->attributes->get('_route'), $routes)) {
-                    unset($configs[$i]);
+                    unset($configs[$configId]);
                 }
             }
 
-            if (isset($configs[$i])) {
+            if (isset($configs[$configId])) {
                 try {
-                    $moduleConfig->setModuleInfo($this->getModule($moduleConfig->getModule()));
-                    $content = $this->getModuleContent($moduleConfig, $position);
+                    $moduleInfo = $this->getModule($moduleConfig->getModule());
                 } catch (ModuleNotFoundException $e) {
-                    $content = $e->getMessage();
+                    $moduleInfo = null;
                 }
 
-                $moduleConfig->setContent($content);
+                $moduleConfig->setModuleInfo($moduleInfo);
+
+                if ($getContent) {
+                    try {
+                        $content = $this->getModuleContent($moduleConfig, $positionId, $vars);
+                    } catch (ModuleNotFoundException $e) {
+                        $content = $e->getMessage();
+                    }
+
+                    $moduleConfig->setContent($content);
+                }
             }
         }
 
         return $configs;
     }
 
+    public function getPositionModuleCount($position)
+    {
+        return count($this->loadModuleConfigs($position));
+    }
+
+    public function getPosition($position)
+    {
+        foreach ($this->providers as $provider) {
+            if ($provider->hasPosition($position)) {
+                return $provider->getPosition($position);
+            }
+        }
+
+        return null;
+    }
+
     /**
      * @param $moduleId
      * @throws ModuleNotFoundException
-     * @return array
+     * @return Module
      */
     public function getModule($moduleId)
     {
@@ -133,12 +182,35 @@ class ModuleManager
         return $modules;
     }
 
+    /**
+     * @param $position
+     * @return ModuleConfigInterface[]
+     */
     protected function loadModuleConfigs($position)
     {
         if (!isset($this->loadedModuleConfigs[$position])) {
-            $this->loadedModuleConfigs[$position] = $this->moduleModel->find()->where('position', $position)->customOrder('order')->get();
+            $this->loadedModuleConfigs[$position] = $this->moduleModel->getPositionModuleConfigs($position);
         }
 
         return $this->loadedModuleConfigs[$position];
+    }
+
+    public function clearCaches()
+    {
+        $files = new \DirectoryIterator($this->cacheDir);
+        foreach($files as $file) {
+            if ($file->isFile()) {
+                unlink($file->getPathName());
+            }
+        }
+    }
+
+    public function getTemplateStyles()
+    {
+        return array(
+            'panel' => array('default_template' => '@CmsFoundation/panel_module.twig', 'name' => 'Panel'),
+            'list_panel' => array('default_template' => '@CmsFoundation/list_panel_module.twig', 'name' => 'List Panel'),
+            'none' => array('default_template' => '@CmsFoundation/blank_module.twig', 'name' => 'None'),
+        );
     }
 } 

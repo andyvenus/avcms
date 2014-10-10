@@ -11,9 +11,9 @@ use AVCMS\Bundles\Blog\Form\BlogPostsFilterForm;
 use AVCMS\Bundles\Blog\Form\PostForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class BlogAdminController extends AdminBaseController
 {
@@ -27,16 +27,20 @@ class BlogAdminController extends AdminBaseController
     public function setUp()
     {
         $this->blogPosts = $this->model('Posts');
+
+        if (!$this->permission('PERM_ADMIN_BLOG')) {
+            throw new AccessDeniedException;
+        }
     }
 
     public function blogHomeAction(Request $request)
     {
-       return $this->handleManage($request, '@Blog/blog_browser.twig');
+        return $this->handleManage($request, '@Blog/blog_browser.twig');
     }
 
     public function editPostAction(Request $request)
     {
-        $form_blueprint = new PostForm($request->get('id', 0), $this->activeUser()->getUser()->getId());
+        $form_blueprint = new PostForm($request->get('id', 0), $this->activeUser()->getId());
 
         return $this->handleEdit($request, $this->blogPosts, $form_blueprint, 'blog_edit_post', '@Blog/edit_post.twig', '@Blog/blog_browser.twig', array());
     }

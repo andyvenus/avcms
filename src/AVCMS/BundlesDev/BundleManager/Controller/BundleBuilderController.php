@@ -288,7 +288,7 @@ class BundleBuilderController extends BundleBaseController
             $gen = new DefaultGeneratorStrategy(new Visitor());
             $gen->setMethodSortFunc($this->orderMethodsClosure());
 
-            file_put_contents($config->directory.'/Model/'.$content['uc_singular'].'.php', "<?php\n\n".$gen->generate($entity_class));
+            file_put_contents($config->directory.'/Model/'.$content['cc_singular'].'.php', "<?php\n\n".$gen->generate($entity_class));
 
             if ($content['admin_form'] !== null && class_exists($content['admin_form']) && $form_construct_body) {
                 $form_class = PhpClass::fromReflection(new \ReflectionClass($content['admin_form']), false);

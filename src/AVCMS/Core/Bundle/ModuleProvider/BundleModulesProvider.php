@@ -8,13 +8,12 @@
 namespace AVCMS\Core\Bundle\ModuleProvider;
 
 use AVCMS\Core\Bundle\BundleManagerInterface;
+use AVCMS\Core\Module\Module;
 use AVCMS\Core\Module\ModuleProviderInterface;
 
 class BundleModulesProvider implements ModuleProviderInterface
 {
     protected $modules;
-
-    protected $positions = array();
 
     public function __construct(BundleManagerInterface $bundleManager)
     {
@@ -32,13 +31,8 @@ class BundleModulesProvider implements ModuleProviderInterface
         foreach ($this->bundleManager->getBundleConfigs() as $bundleConfig) {
             if (isset($bundleConfig['modules'])) {
                 foreach ($bundleConfig['modules'] as $moduleId => $module) {
-                    $this->modules[$moduleId] = $module;
-                }
-            }
-
-            if (isset($bundleConfig['module_positions'])) {
-                foreach ($bundleConfig['module_positions'] as $positionId) {
-                    $this->positions[] = $positionId;
+                    $this->modules[$moduleId] = $moduleObj = new Module($module);
+                    $moduleObj->setId($moduleId);
                 }
             }
         }
@@ -64,12 +58,6 @@ class BundleModulesProvider implements ModuleProviderInterface
         else {
             throw new \Exception(sprintf('Module %s not found. Check that the module exists using has() before trying to retrieve a module.', $moduleName));
         }
-    }
-
-    public function getModuleSettingsForm($moduleName)
-	{
-        // read bundle config
-        // build form from blueprint
     }
 
     public function getProviderId()

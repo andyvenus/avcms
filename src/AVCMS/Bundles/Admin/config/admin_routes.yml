@@ -1,0 +1,3 @@
+admin_dashboard:
+  path: /
+  defaults: { _controller: Admin::AdminDashboardController::dashboardAction }

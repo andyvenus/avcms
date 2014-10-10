@@ -5,25 +5,25 @@
 {% endblock %}
 
 {% block expand_finder_button %}
-    {{ buttons.expand_finder(bundle.route.{{admin_home_route}}) }}
+    {{ buttons.expand_finder('{{admin_home_route}}') }}
 {% endblock %}
 
 {% block add_item %}
-    {{ buttons.add_item(bundle.route.{{admin_add_route}}, 'Add {{uc_singular}}') }}
+    {{ buttons.add_item('{{admin_add_route}}', 'Add {{uc_singular}}') }}
 {% endblock %}
 
 {% block finder %}
-    <div data-url="{{ url(bundle.route.{{admin_finder_route}}) }}">
-        {{ render(path(bundle.route.{{admin_finder_route}})) }}
+    <div data-url="{{ url('{{admin_finder_route}}') }}">
+        {{ render(path('{{admin_finder_route}}')) }}
     </div>
 {% endblock %}
 
 {% block mobile_back_link %}
-    {{ url(bundle.route.{{admin_home_route}}) }}
+    {{ url('{{admin_home_route}}') }}
 {% endblock %}
 
 {% block checked_options_buttons %}
-    {{ buttons.bulk_delete(bundle.route.{{admin_delete_route}}) }}
+    {{ buttons.bulk_delete('{{admin_delete_route}}') }}
 
     {{finder_item_extra_buttons}}
 {% endblock %}

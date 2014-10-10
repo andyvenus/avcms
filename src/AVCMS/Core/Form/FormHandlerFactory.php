@@ -8,6 +8,7 @@
 namespace AVCMS\Core\Form;
 
 use AVCMS\Core\Form\EntityProcessor\EntityProcessor;
+use AVCMS\Core\Form\Event\FilterNewFormEvent;
 use AVCMS\Core\Form\RequestHandler\RequestHandlerInterface;
 use AVCMS\Core\Form\Transformer\TransformerManager;
 use AVCMS\Core\Form\Type\TypeHandler;
@@ -20,28 +21,37 @@ class FormHandlerFactory
 
     public function __construct(RequestHandlerInterface $requestHandler, EntityProcessor $entityProcessor, TransformerManager $transformerManager, EventDispatcherInterface $eventDispatcher = null, TypeHandler $typeHandler = null)
     {
-        $this->request_handler = $requestHandler;
-        $this->entity_processor = $entityProcessor;
-        $this->transformer_manager = $transformerManager;
-        $this->event_dispatcher = $eventDispatcher;
-        $this->type_handler = $typeHandler;
+        $this->requestHandler = $requestHandler;
+        $this->entityProcessor = $entityProcessor;
+        $this->transformerManager = $transformerManager;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->typeHandler = $typeHandler;
     }
 
-    public function buildForm(FormBlueprint $form, FormViewInterface $formView = null, ValidatorExtension $validator = null)
+    public function buildForm(FormBlueprintInterface $form, FormViewInterface $formView = null, ValidatorExtension $validator = null)
     {
-        $form_handler = new FormHandler($form, $this->request_handler, $this->entity_processor, $this->type_handler, $this->event_dispatcher);
+        if ($this->eventDispatcher !== null) {
+            $event = new FilterNewFormEvent($form, $formView, $validator);
+            $this->eventDispatcher->dispatch('create.form', $event);
+
+            $form = $event->getFormBlueprint();
+            $formView = $event->getFormView();
+            $validator = $event->getValidator();
+        }
+
+        $formHandler = new FormHandler($form, $this->requestHandler, $this->entityProcessor, $this->typeHandler, $this->eventDispatcher);
 
         if ($validator) {
-            $form_handler->setValidator($validator);
+            $formHandler->setValidator($validator);
         }
 
         if (!$formView) {
             $formView = new FormView();
         }
 
-        $form_handler->setFormView($formView);
-        $form_handler->setTransformerManager($this->transformer_manager);
+        $formHandler->setFormView($formView);
+        $formHandler->setTransformerManager($this->transformerManager);
 
-        return $form_handler;
+        return $formHandler;
     }
 } 

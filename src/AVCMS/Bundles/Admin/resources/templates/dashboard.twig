@@ -1,0 +1,25 @@
+{% extends '@admin/simple_page.twig' %}
+
+{% block title %}{% trans %}Dashboard{% endtrans %}{% endblock %}
+
+{% block content_header %}{% trans %}Dashboard{% endtrans %}{% endblock %}
+
+{% block content_body %}
+    {% set modules = modules('admin_dashboard') %}
+
+    <div class="container-fluid">
+        <div class="row">
+        {% for i in 1..3 %}
+            <div class="col-md-4">
+                {% set start = i %}
+                {% for module in modules %}
+                    {% if loop.index == start %}
+                        {% include module.template %}
+                        {% set start = start + 3 %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}

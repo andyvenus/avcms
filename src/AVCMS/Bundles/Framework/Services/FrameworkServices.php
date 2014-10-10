@@ -51,13 +51,19 @@ class FrameworkServices implements Service
             ->addTag('event.subscriber')
         ;
 
+        /*
         $container->register('listener.security.routes', 'AVCMS\Core\Security\SecureRoutes')
             ->setArguments(array(new Reference('active.user')))
             ->addMethodCall('addRouteMatcherPermission', array('/^\/admin/', 'admin'))
             ->addTag('event.subscriber')
         ;
+        */
 
         $container->register('request_matcher', 'Symfony\Component\HttpFoundation\RequestMatcher');
+
+        $container->register('http.utils', 'Symfony\Component\Security\Http\HttpUtils')
+            ->setArguments(array(new Reference('router'), new Reference('router')))
+        ;
 
         // Request
 
@@ -76,6 +82,15 @@ class FrameworkServices implements Service
 
         $container->register('dispatcher', 'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher')
             ->setArguments(array(new Reference('service_container')))
+        ;
+
+        // Sessions
+
+        $container->register('session', 'Symfony\Component\HttpFoundation\Session\Session');
+
+        $container->register('listener.session', 'AVCMS\Core\Security\Subscriber\SessionSubscriber')
+            ->setArguments([new Reference('service_container')])
+            ->addTag('event.subscriber')
         ;
     }
 }

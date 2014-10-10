@@ -12,9 +12,9 @@
 
 {% block item_options %}
     <div class="btn-group">
-        {{ buttons.edit(bundle.route.{{admin_edit_route}}, item.id) }}
+        {{ buttons.edit('{{admin_edit_route}}', item.id) }}
 
-        {{ buttons.delete(bundle.route.{{admin_delete_route}}) }}
+        {{ buttons.delete('{{admin_delete_route}}') }}
     </div>
 {% endblock %}
 

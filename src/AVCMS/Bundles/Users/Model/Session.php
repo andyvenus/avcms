@@ -9,38 +9,70 @@ namespace AVCMS\Bundles\Users\Model;
 
 
 use AVCMS\Core\Model\Entity;
+use Symfony\Component\Security\Core\Authentication\RememberMe\PersistentTokenInterface;
 
-class Session extends Entity {
-    public function setSessionId($value)
+class Session extends Entity implements PersistentTokenInterface
+{
+    public function getClass()
     {
-        $this->set('session_id', $value);
+        return $this->get("class");
     }
 
-    public function getSessionId() {
-        return $this->get('session_id');
+    public function setClass($value)
+    {
+        $this->set("class", $value);
     }
 
-    public function setUserId($value) {
-        $this->set('user_id', $value);
+    public function getLastUsedTimestamp()
+    {
+        return $this->get("last_used_timestamp");
     }
 
-    public function getUserId() {
-        return $this->get('user_id');
+    public function setLastUsedTimestamp($value)
+    {
+        $this->set("last_used_timestamp", $value);
     }
 
-    public function setCsrf($value) {
-        $this->set('csrf', $value);
+    public function getLastUsed()
+    {
+        $lastUsed = new \DateTime();
+        $lastUsed->setTimestamp($this->get("last_used_timestamp"));
+
+        return $lastUsed;
     }
 
-    public function getCsrf() {
-        return $this->get('csrf');
+    public function setLastUsed(\DateTime $dateTime)
+    {
+        $this->set("last_used_timestamp", $dateTime->getTimestamp());
     }
 
-    public function setGenerated($value) {
-        $this->set('generated', $value);
+    public function setSeries($value)
+    {
+        $this->set("series", $value);
     }
 
-    public function getGenerated() {
-        return $this->get('generated');
+    public function getSeries()
+    {
+        return $this->get("series");
     }
-} 
+
+    public function getTokenValue()
+    {
+        return $this->get("token_value");
+    }
+
+    public function setTokenValue($value)
+    {
+        $this->set("token_value", $value);
+    }
+
+    public function getUsername()
+    {
+        return $this->get("username");
+    }
+
+    public function setUsername($value)
+    {
+        $this->set("username", $value);
+    }
+}

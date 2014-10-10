@@ -16,16 +16,9 @@ class DatabaseServices implements Service
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
-        $container->setParameter('query_builder.config', array(
-            'driver'    => 'mysql', // Db driver
-            'host'      => 'localhost',
-            'database'  => 'avcms',
-            'username'  => 'root',
-            'password'  => 'root',
-            'charset'   => 'utf8', // Optional
-            'collation' => 'utf8_unicode_ci', // Optional
-            'prefix'    => 'avms_', // Table prefix, optional
-        ));
+        $queryBuilderConfig = include 'app/config/database.php';
+
+        $container->setParameter('query_builder.config', $queryBuilderConfig);
 
         $container->register('query_builder.factory', 'AVCMS\Core\Database\Connection')
             ->setArguments(array('mysql', '%query_builder.config%', 'QB', null, new Reference('dispatcher')));

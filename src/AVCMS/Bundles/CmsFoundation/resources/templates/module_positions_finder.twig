@@ -22,8 +22,16 @@
 
 {% block item_options %}
     <div class="btn-group">
-        {{ buttons.manage(bundle.route.modules_manage_position, item.id) }}
+        {{ buttons.manage('modules_manage_position', item.id) }}
+
+        {% if item.active == 0 %}
+            {{ buttons.delete('modules_delete_position') }}
+        {% endif %}
     </div>
+
+    {% if item.active == false %}
+        <div class="label label-warning">{% trans %}Inactive{% endtrans %}</div>
+    {% endif %}
 {% endblock %}
 
 {% block item_extended_inner %}

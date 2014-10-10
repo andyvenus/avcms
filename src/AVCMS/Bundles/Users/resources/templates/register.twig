@@ -1,0 +1,17 @@
+{% extends 'index.twig' %}
+
+{% block title %}{% trans %}Register{% endtrans %}{% endblock %}
+
+{% block meta_description %}{% trans %}Register to our website!{% endtrans %}{% endblock %}
+
+{% block content %}
+    {% if registration.errors is not empty %}
+        <div class="alert alert-danger">
+            {% for error in login_form.errors %}
+                {{ error.message }}<br />
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {{ form(registration_form) }}
+{% endblock %}

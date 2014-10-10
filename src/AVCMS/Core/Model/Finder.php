@@ -115,6 +115,13 @@ class Finder
         return $this;
     }
 
+    public function limit($limit)
+    {
+        $this->current_query->limit($limit);
+
+        return $this;
+    }
+
     public function customOrder($field, $type = 'ASC')
     {
         $this->current_query->orderBy($field, $type);

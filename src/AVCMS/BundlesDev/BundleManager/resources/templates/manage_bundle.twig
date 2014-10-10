@@ -47,7 +47,7 @@
                     <h4>Manage Generated Content</h4>
                     <div class="content-types">
                         {% for content_name, content in bundle_content %}
-                            <a href="{{ url(bundle.route.bundle_edit_content, {bundle: bundle_config.name, content_name: content_name}) }}" class="btn btn-{{ btn_color }}">
+                            <a href="{{ url('bundle_edit_content', {bundle: bundle_config.name, content_name: content_name}) }}" class="btn btn-{{ btn_color }}">
                                 {{ content.uc_plural }}
                             </a>
                         {% else %}

@@ -120,7 +120,7 @@ class AssetManager
 
         foreach ($this->$type as $env_key => $environment) {
             foreach ($environment as $asset_key => $asset) {
-                if ($asset['asset'] instanceof BundleAssetInterface && $asset['asset']->getBundle() == $bundle && $asset['asset']->getFile() == $file) {
+                if ($asset['asset'] instanceof BundleAssetInterface && $asset['asset']->getBundle() == $bundle && $asset['asset']->getFilename() == $file) {
                     unset($this->{$type}[$env_key][$asset_key]);
 
                     $bundle_removed = true;

@@ -30,7 +30,7 @@ $(document).ready(function() {
         });
 
 
-        $('[name=publish_date]').datetimepicker({
+        $('[name=publish_date], [data-date-selector]').datetimepicker({
             format: 'YYYY-MM-DD HH:mm',
             defaultDate: new Date()
         });

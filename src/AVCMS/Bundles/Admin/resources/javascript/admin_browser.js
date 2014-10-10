@@ -258,7 +258,7 @@ avcms.browser = {
 
                         var current_editor_url = $('.ajax-editor-inner').filter(':visible').data('ajax-url');
                         if (current_editor_url.indexOf(id) > -1) {
-                            avcms.nav.goToPage($('.add-item > a').attr('href'));
+                            avcms.nav.goToPage($('.expand-browser > a').attr('href'));
                         }
                     }
                 }

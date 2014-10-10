@@ -16,6 +16,14 @@ class UnixTimestampTransformer implements TransformerInterface
 
     public function toForm($value)
     {
+        if (!$value) {
+            return $value;
+        }
+
+        if (!is_numeric($value)) {
+            $value = strtotime($value);
+        }
+
         $time = new \DateTime();
         $time->setTimestamp($value);
 
@@ -24,6 +32,10 @@ class UnixTimestampTransformer implements TransformerInterface
 
     public function fromForm($value)
     {
+        if (!$value) {
+            $value = 'now';
+        }
+
         $time = new \DateTime($value);
 
         return $time->getTimestamp();

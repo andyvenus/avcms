@@ -48,12 +48,19 @@ class ModulesAdminController extends AdminBaseController
         }
 
         $moduleManager = $this->container->get('module_manager');
-        $modules = $moduleManager->getAllModules();
+        $allModules = $moduleManager->getAllModules();
 
-        return new Response($this->renderAdminSection('@CmsFoundation\add_module.twig', $request->get('ajax_depth'), array('item' => $position, 'modules' => $modules)));
+        $modulePositions = [$position->getType() => array()];
+        foreach ($allModules as $moduleId => $module) {
+            if ($module->getType() == $position->getType() || ($position->getGlobalModules() == 1 && $module->getType() == 'standard')) {
+                $modulePositions[$module->getType()][$moduleId] = $module;
+            }
+        }
+
+        return new Response($this->renderAdminSection('@CmsFoundation\add_module.twig', $request->get('ajax_depth'), array('item' => $position, 'module_positions' => $modulePositions)));
     }
 
-    public function addSelectedModuleAction(Request $request)
+    public function manageSelectedModuleAction(Request $request)
     {
         if ($id = $request->attributes->get('id')) {
             $moduleConfig = $this->modules->getOne($id);
@@ -82,10 +89,22 @@ class ModulesAdminController extends AdminBaseController
             throw $this->createNotFoundException("Module not found");
         }
 
-        $form = new AdminModuleForm(new RouteChoicesProvider($this->get('router'), 'frontend'));
-        if (isset($module['user_settings'])) {
-            $form->createFieldsFromArray($module['user_settings'], 'settings_array');
+        $templateStyles = $moduleManager->getTemplateStyles();
+
+        $acceptedTemplates = $module->getAcceptedTemplateStyles();
+        foreach ($acceptedTemplates as $acceptedTemplate) {
+            if (isset($templateStyles[$acceptedTemplate])) {
+                $templateList[$acceptedTemplate] = $templateStyles[$acceptedTemplate]['name'];
+            }
         }
+
+        $form = new AdminModuleForm(new RouteChoicesProvider($this->get('router'), 'frontend'), $templateList);
+
+        if ($module->isCachable()) {
+            $form->add('cache_time', 'text', array('label' => "Seconds until cache expires (0 for no cache)", 'default' => $module->getDefaultCacheTime()));
+        }
+
+        $form->createFieldsFromArray($module->getUserSettings(), 'settings_array');
 
         $formHandler = $this->buildForm($form, $request, $moduleConfig);
 
@@ -94,6 +113,8 @@ class ModulesAdminController extends AdminBaseController
                 $formHandler->saveToEntities();
                 $this->modules->save($moduleConfig);
             }
+
+            $this->container->get('module_manager')->clearCaches();
 
             return new JsonResponse(array(
                 'form' => $formHandler->createView()->getJsonResponseData(),
@@ -124,12 +145,33 @@ class ModulesAdminController extends AdminBaseController
             throw $this->createNotFoundException('Module position not found');
         }
 
-        $modules = $this->container->get('module_manager')->getPositionModules($request->get('id'));
+        $modules = $this->container->get('module_manager')->getPositionModules($request->get('id'), array(), false, false);
 
         return new Response($this->renderAdminSection('@CmsFoundation/manage_position_modules.twig', $request->get('ajax_depth'), array(
             'item' => $position,
             'modules' => $modules,
         )));
+    }
+
+    public function deletePositionAction(Request $request)
+    {
+        $id = $request->request->get('ids');
+
+        $position = $this->modulePositions->getOne($id);
+
+        if (!$position) {
+            throw $this->createNotFoundException();
+        }
+
+        if ($position->getActive() == 1) {
+            return new JsonResponse(['success' => false, 'error' => 'Cannot delete active position']);
+        }
+
+        $this->modulePositions->delete($position);
+
+        $this->modules->query()->where('position', $id)->delete();
+
+        return new JsonResponse(['success' => true]);
     }
 
     public function saveOrderAction(Request $request, $position)

@@ -11,7 +11,7 @@ use AVCMS\Core\Config\Config;
 
 class BundleConfig extends Config
 {
-    public function __construct(BundleManager $bundleManager, $config)
+    public function __construct(BundleManagerInterface $bundleManager, $config)
     {
         if (isset($config['parent_bundle']))
         {
@@ -28,17 +28,6 @@ class BundleConfig extends Config
 
         $this->configArray = $config;
         $this->config = $this->arrayToObject($this->configArray);
-
-        if (!isset($this->config->route)) {
-            $this->config->route = $this->autoRouteConfig();
-        }
-        else {
-            $this->config->route = $this->autoRouteConfig($this->configArray['route']);
-        }
     }
 
-    protected function autoRouteConfig($routeNames = array())
-    {
-        return new AutoRouteConfig($routeNames);
-    }
 }

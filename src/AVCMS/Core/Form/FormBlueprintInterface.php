@@ -107,7 +107,7 @@ interface FormBlueprintInterface
     /**
      * Set the URL and HTTP method the form will submit to
      *
-     * @param $url The submit URL
+     * @param $url string The submit URL
      * @return $this
      */
     public function setAction($url);
