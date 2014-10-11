@@ -23,3 +23,7 @@ user_profile:
 edit_user_profile:
   path: /edit-profile
   defaults: { _controller: Users::UserProfileController::editUserProfileAction }
+
+user_email_password:
+  path: /email-password
+  defaults: { _controller: Users::UserProfileController::manageEmailPasswordAction }

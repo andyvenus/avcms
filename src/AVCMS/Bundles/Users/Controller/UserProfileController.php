@@ -7,8 +7,10 @@
 
 namespace AVCMS\Bundles\Users\Controller;
 
+use AVCMS\Bundles\Users\Form\ChangePasswordForm;
 use AVCMS\Bundles\Users\Form\EditProfileForm;
 use AVCMS\Core\Controller\Controller;
+use AVCMS\Core\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
@@ -80,5 +82,31 @@ class UserProfileController extends Controller
         }
 
         return new Response($this->render('@Users/edit_profile.twig', ['form' => $form->createView()]));
+    }
+
+    public function manageEmailPasswordAction(Request $request)
+    {
+        $context = $this->container->get('security.context');
+
+        if (!$context->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw new InsufficientAuthenticationException;
+        }
+
+        $form = $this->buildForm(new ChangePasswordForm(), $request);
+
+        if ($form->isSubmitted()) {
+            if ($form->getData('password1') === $form->getData('password2')) {
+                $encodedPassword = $this->container->get('users.bcrypt_encoder')->encodePassword($form->getData('password1'), null);
+                $user = $this->activeUser();
+                $user->setPassword($encodedPassword);
+
+                $this->model('Users')->save($user);
+            }
+            else {
+                $form->addCustomErrors([new FormError('password2', 'The entered passwords do not match', true)]);
+            }
+        }
+
+        return new Response($this->render('@Users/manage_email_password.twig', ['password_form' => $form->createView()]));
     }
 }
