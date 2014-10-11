@@ -63,6 +63,12 @@ menu_items:
       type: route
       label: Blog
 
+permissions:
+  ADMIN_BLOG:
+    default: deny
+    name: Blog Administration
+    description: Ability to manage blog posts
+
 require:
   - CmsFoundation
   - Admin

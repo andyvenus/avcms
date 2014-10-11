@@ -1,0 +1,29 @@
+{% extends '@admin/browser.twig' %}
+
+{% block finder_title %}
+    {% trans %}User Groups{% endtrans %}
+{% endblock %}
+
+{% block expand_finder_button %}
+    {{ buttons.expand_finder('user_groups_admin_home') }}
+{% endblock %}
+
+{% block add_item %}
+    {{ buttons.add_item('user_groups_admin_add', 'Add User Group') }}
+{% endblock %}
+
+{% block finder %}
+    <div data-url="{{ url('user_groups_admin_finder') }}">
+        {{ render(path('user_groups_admin_finder')) }}
+    </div>
+{% endblock %}
+
+{% block mobile_back_link %}
+    {{ url('user_groups_admin_home') }}
+{% endblock %}
+
+{% block checked_options_buttons %}
+    {{ buttons.bulk_delete('user_groups_admin_delete') }}
+
+    
+{% endblock %}

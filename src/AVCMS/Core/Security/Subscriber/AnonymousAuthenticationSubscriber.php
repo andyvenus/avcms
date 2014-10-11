@@ -36,7 +36,7 @@ class AnonymousAuthenticationSubscriber implements EventSubscriberInterface
 
         $user = new User();
         $user->setUsername("Unregistered");
-        $user->setRoleList('ROLE_ANONYMOUS');
+        $user->setRoleList('ROLE_UNREGISTERED');
 
         $this->context->setToken(new AnonymousToken($this->key, $user, array()));
 

@@ -28,8 +28,14 @@ class UserServices implements Service
             ->setFactoryMethod('create')
         ;
 
-        $container->register('users.groups_model', 'AVCMS\Bundles\Users\Model\Groups')
-            ->setArguments(array('AVCMS\Bundles\Users\Model\Groups'))
+        $container->register('users.groups_model', 'AVCMS\Bundles\Users\Model\UserGroups')
+            ->setArguments(array('AVCMS\Bundles\Users\Model\UserGroups'))
+            ->setFactoryService('model_factory')
+            ->setFactoryMethod('create')
+        ;
+
+        $container->register('users.permissions_model', 'AVCMS\Bundles\Users\Model\Permissions')
+            ->setArguments(array('AVCMS\Bundles\Users\Model\Permissions'))
             ->setFactoryService('model_factory')
             ->setFactoryMethod('create')
         ;
@@ -63,17 +69,6 @@ class UserServices implements Service
 
         $container->register('users.auth_manager', 'Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager')
             ->setArguments(array(array(new Reference('users.dao_auth_provider'), new Reference('users.remember_me_auth_provider'))))
-        ;
-
-
-        $container->register('auth.access_decision_manager', 'Symfony\Component\Security\Core\Authorization\AccessDecisionManager')
-            ->setArguments(array(
-                array(new Reference('auth.authenticated_voter'))
-            ))
-        ;
-
-        $container->register('auth.authenticated_voter', 'Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter')
-            ->setArguments(array(new Reference('auth.trust_resolver')))
         ;
 
         $container->register('auth.context_listener', 'AVCMS\Core\Security\Subscriber\ContextListener')
@@ -145,7 +140,7 @@ class UserServices implements Service
 
         // AUTHORIZATION
         $container->register('auth.access_decision_manager', 'Symfony\Component\Security\Core\Authorization\AccessDecisionManager')
-            ->setArguments(array(array(new Reference('auth.voter.authenticated'), new Reference('auth.voter.permissions'))))
+            ->setArguments(array(array(new Reference('auth.voter.authenticated'), new Reference('auth.voter.permissions'), new Reference('auth.voter.role'))))
         ;
 
         $container->register('auth.voter.permissions', 'AVCMS\Core\Security\Permissions\PermissionsVoter')
@@ -155,6 +150,8 @@ class UserServices implements Service
         $container->register('auth.voter.authenticated', 'Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter')
             ->setArguments(array(new Reference('auth.trust_resolver')))
         ;
+
+        $container->register('auth.voter.role', 'AVCMS\Core\Security\Voter\RoleVoter');
 
         $container->register('auth.trust_resolver', 'Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver')
             ->setArguments(array('Symfony\Component\Security\Core\Authentication\Token\AnonymousToken', 'Symfony\Component\Security\Core\Authentication\Token\RememberMeToken'))
@@ -182,6 +179,12 @@ class UserServices implements Service
 
         $container->register('auth.form_entry_point', 'Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint')
             ->setArguments([new Reference('http_kernel'), new Reference('http.utils'), '/login'])
+        ;
+
+        // UPDATE PERMISSION SUBSCRIBER
+        $container->register('subscriber.user.update_permissions', 'AVCMS\Bundles\Users\Subscriber\UpdateBundlePermissionsSubscriber')
+            ->setArguments([new Reference('bundle_manager'), new Reference('users.permissions_model')])
+            ->addTag('event.subscriber')
         ;
     }
 }

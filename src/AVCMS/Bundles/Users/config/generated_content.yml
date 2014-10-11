@@ -48,3 +48,75 @@ email_validations_keys:
     model_var_name: emailValidationsKeys
     title_field: id
     columns: { user_id: { entity: '1', form_field: none, form_label: 'User Id' }, code: { entity: '1', form_field: none, form_label: Code }, generated: { entity: '1', form_field: none, form_label: Generated } }
+users:
+    bundle: Users
+    namespace: AVCMS\Bundles\Users
+    singular: user
+    plural: users
+    uc_singular: User
+    uc_plural: Users
+    cc_singular: User
+    cc_plural: Users
+    dash_singular: user
+    dash_plural: users
+    admin_home_route: users_admin_home
+    admin_finder_route: users_admin_finder
+    admin_delete_route: users_admin_delete
+    admin_edit_route: users_admin_edit
+    admin_add_route: users_admin_add
+    admin_controller: 'Users::UsersAdminController'
+    finder_item_extra_buttons: ''
+    database: users
+    entity: AVCMS\Bundles\Users\Model\User
+    admin_form: AVCMS\Bundles\Users\Form\UserAdminForm
+    model_class: Users
+    model_var_name: users
+    title_field: username
+permissions:
+    bundle: Users
+    namespace: AVCMS\Bundles\Users
+    singular: permission
+    plural: permissions
+    uc_singular: Permission
+    uc_plural: Permissions
+    cc_singular: Permission
+    cc_plural: Permissions
+    dash_singular: permission
+    dash_plural: permissions
+    admin_home_route: permissions_admin_home
+    admin_finder_route: permissions_admin_finder
+    admin_delete_route: permissions_admin_delete
+    admin_edit_route: permissions_admin_edit
+    admin_add_route: permissions_admin_add
+    admin_controller: 'Users::PermissionsAdminController'
+    finder_item_extra_buttons: ''
+    database: permissions
+    entity: AVCMS\Bundles\Users\Model\Permission
+    admin_form: AVCMS\Bundles\Users\Form\PermissionAdminForm
+    model_class: Permissions
+    model_var_name: permissions
+    title_field: id
+user_groups:
+    bundle: TestBundle
+    namespace: AVCMS\Bundles\TestBundle
+    singular: user_group
+    plural: user_groups
+    uc_singular: 'User Group'
+    uc_plural: 'User Groups'
+    cc_singular: UserGroup
+    cc_plural: UserGroups
+    dash_singular: user-group
+    dash_plural: user-groups
+    admin_home_route: user_groups_admin_home
+    admin_finder_route: user_groups_admin_finder
+    admin_delete_route: user_groups_admin_delete
+    admin_edit_route: user_groups_admin_edit
+    admin_add_route: user_groups_admin_add
+    admin_controller: 'TestBundle::UserGroupsAdminController'
+    finder_item_extra_buttons: ''
+    database: groups
+    entity: AVCMS\Bundles\TestBundle\Model\UserGroup
+    admin_form: AVCMS\Bundles\TestBundle\Form\UserGroupAdminForm
+    model_class: UserGroups
+    model_var_name: userGroups
+    title_field: name

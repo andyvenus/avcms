@@ -17,3 +17,24 @@ users_admin_finder:
 users_admin_change_password:
   path: /users/change-password/{id}
   defaults: { _controller: Users::UsersAdminController::changePasswordAction }
+
+
+user_groups_admin_edit:
+    path:     /user-groups/edit/{id}
+    defaults: { _controller: 'Users::UserGroupsAdminController::editAction' }
+
+user_groups_admin_add:
+    path:     /user-groups/new
+    defaults: { _controller: 'Users::UserGroupsAdminController::editAction' }
+
+user_groups_admin_delete:
+    path:     /user-groups/delete
+    defaults: { _controller: 'Users::UserGroupsAdminController::deleteAction' }
+
+user_groups_admin_home:
+  path: /user-groups
+  defaults: { _controller: 'Users::UserGroupsAdminController::homeAction' }
+
+user_groups_admin_finder:
+  path: /user-groups/finder/{page}
+  defaults: { page: 1, _controller: 'Users::UserGroupsAdminController::finderAction' }

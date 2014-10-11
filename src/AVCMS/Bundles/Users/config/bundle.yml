@@ -57,6 +57,11 @@ menu_items:
       label: Users
       type: route
       target: users_admin_home
+    user_groups_admin:
+      icon: glyphicon glyphicon-user
+      label: Groups
+      type: route
+      target: user_groups_admin_home
 
 template:
   users_browser: @Users/users_browser.twig

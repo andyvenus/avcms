@@ -200,7 +200,6 @@ class BundleBuilderController extends BundleBaseController
                 }
 
                 $content_types[$form->getData('plural')] = $fm->getVars();
-                $content_types[$form->getData('plural')]['columns'] = $form->getData()['columns'];
 
                 file_put_contents($content_types_file, Yaml::dump($content_types));
 
@@ -303,10 +302,6 @@ class BundleBuilderController extends BundleBaseController
 
                 file_put_contents($config->directory.'/Form/'.$content['uc_singular'].'AdminForm.php', "<?php\n\n".$gen->generate($form_class));
             }
-
-            //$content_types[$content_name]['columns'] = $content_types[$content_name]['columns'];
-
-            var_dump($content_types[$content_name]['columns']);
         }
 
         return new Response($this->render('@BundleManager/bundle_new_content_part2.twig', array(

@@ -14,7 +14,7 @@
 
                 <p>{{ post.body|markdown }}</p>
 
-                {% if is_granted('PERM_ADMIN_BLOG')  %}
+                {% if is_granted('ADMIN_BLOG')  %}
                     <a class="btn btn-link btn-sm" href="{{ url('blog_edit_post', { id: post.id}) }}"><span class="glyphicon glyphicon-edit"></span> {% trans %}Edit Post{% endtrans %}</a>
                 {% endif %}
             </article>

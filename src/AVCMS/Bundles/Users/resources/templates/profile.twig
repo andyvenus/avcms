@@ -22,6 +22,10 @@
                 </div>
 
                 <div class="pull-right">
+                    {% if is_granted('ADMIN_USERS') %}
+                        <a class="btn btn-sm btn-default" href="{{ url('users_admin_edit', {id: profile_user.id}) }}">{% trans %}Edit user{% endtrans %}</a>
+                    {% endif %}
+
                     {% if users_own_profile %}
                         <a class="btn btn-sm btn-default" href="{{ url('edit_user_profile') }}">{% trans %}Edit profile{% endtrans %}</a>
                     {% endif %}
@@ -33,12 +37,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                {% for module in modules('user_profile_main', {user: user}) %}
+                {% for module in modules('user_profile_main', {user: profile_user}) %}
                     {% include module.template %}
                 {% endfor %}
             </div>
             <div class="col-md-4">
-                {% for module in modules('user_profile_sidebar', {user: user}) %}
+                {% for module in modules('user_profile_sidebar', {user: profile_user}) %}
                     {% include module.template %}
                 {% endfor %}
             </div>

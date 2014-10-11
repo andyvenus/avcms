@@ -16,17 +16,20 @@ class PermissionsVoter implements VoterInterface
 
     protected $prefix;
 
+    protected $adminPrefix;
+
     protected $permissions;
 
-    public function __construct(RolePermissionsProviderInterface $permissionsModel, $prefix = 'PERM_')
+    public function __construct(RolePermissionsProviderInterface $permissionsModel, $prefix = 'PERM_', $adminPrefix = 'ADMIN_')
     {
         $this->permissionsModel = $permissionsModel;
         $this->prefix = $prefix;
+        $this->adminPrefix = $adminPrefix;
     }
 
     public function supportsAttribute($attribute)
     {
-        return 0 === strpos($attribute, $this->prefix);
+        return (0 === strpos($attribute, $this->prefix) || 0 === strpos($attribute, $this->adminPrefix));
     }
 
     public function supportsClass($class)
@@ -57,10 +60,14 @@ class PermissionsVoter implements VoterInterface
     {
         $roles = $token->getUser()->getRoles();
 
-        // Admins always have permission
         foreach ($roles as $role) {
-            if ($role->getRole() == 'ROLE_ADMIN') {
+            // Super admins always have permission
+            if ($role->getRole() == 'ROLE_SUPER_ADMIN') {
                 return true;
+            }
+            // Banned users are always denied
+            elseif ($role->getRole() == 'ROLE_BANNED') {
+                return false;
             }
         }
 

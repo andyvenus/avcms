@@ -38,7 +38,8 @@ class UserAdminForm extends FormBlueprint
                 'ROLE_USER' => 'User',
                 'ROLE_NOT_VALIDATED' => 'Not Validated',
                 'ROLE_BANNED' => 'Banned',
-                'ROLE_ADMIN' => 'Admin'
+                'ROLE_ADMIN' => 'Admin',
+                'ROLE_SUPER_ADMIN' => 'Super Admin'
             )
         ));
         
