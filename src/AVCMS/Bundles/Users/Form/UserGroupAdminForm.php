@@ -19,8 +19,8 @@ class UserGroupAdminForm extends FormBlueprint
         $this->add('admin_default', 'radio', array(
             'label' => 'Default Admin Permission',
             'choices' => [
-                '0' => 'Deny',
-                '1' => 'Allow'
+                'deny' => 'Deny',
+                'allow' => 'Allow'
             ],
             'default' => '0'
         ));
@@ -28,8 +28,8 @@ class UserGroupAdminForm extends FormBlueprint
         $this->add('perm_default', 'radio', array(
             'label' => 'Default General Permission',
             'choices' => [
-                '0' => 'Deny',
-                '1' => 'Allow'
+                'deny' => 'Deny',
+                'allow' => 'Allow'
             ],
             'default' => '1'
         ));
