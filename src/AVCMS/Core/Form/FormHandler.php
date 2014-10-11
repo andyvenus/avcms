@@ -478,7 +478,7 @@ class FormHandler
      */
     public function mergeData($data)
     {
-        $this->data = array_merge($this->data, $data);
+        $this->data = array_replace_recursive($this->data, $data);
     }
 
     /**
