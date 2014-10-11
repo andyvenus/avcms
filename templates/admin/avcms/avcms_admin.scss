@@ -87,6 +87,11 @@ a {
     li:hover {
       background-color: lighten($main_menu_color, 5);
     }
+
+    .sub-menu-item a {
+      font-size: 12px;
+      padding-left: 20px;
+    }
   }
 }
 
