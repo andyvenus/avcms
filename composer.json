@@ -14,7 +14,7 @@
         "symfony/stopwatch": "2.5.*",
         "symfony/security": "2.5.*",
         "usmanhalalit/pixie": "1.*@dev",
-        "twig/twig": "1.*",
+        "twig/twig": "1.16",
         "swiftmailer/swiftmailer": "5.*",
         "kriswallsmith/assetic": "1.2.*-dev",
         "aptoma/twig-markdown": "0.2.*",
