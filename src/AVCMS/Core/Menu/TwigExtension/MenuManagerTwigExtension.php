@@ -11,9 +11,9 @@ use AVCMS\Core\Menu\MenuManager;
 
 class MenuManagerTwigExtension extends \Twig_Extension
 {
-    public function __construct(MenuManager $menu_manager)
+    public function __construct(MenuManager $menuManager)
     {
-        $this->menu_manager = $menu_manager;
+        $this->menuManager = $menuManager;
     }
 
     public function getFunctions()
@@ -26,9 +26,10 @@ class MenuManagerTwigExtension extends \Twig_Extension
         );
     }
 
-    public function getMenuItems($menu_id)
+    public function getMenuItems($menuId)
     {
-        return $this->menu_manager->getMenuItems($menu_id);
+        $a = $this->menuManager->getMenuItems($menuId);
+        return $this->menuManager->getMenuItems($menuId);
     }
 
     public function getName()

@@ -154,6 +154,7 @@ class MenusAdminController extends AdminBaseController
             $i++;
 
             $id = str_replace('UNDERSCORE', '_', $id);
+            $parent = str_replace('UNDERSCORE', '_', $parent);
 
             if (isset($menuItems[$id])) {
                 /**

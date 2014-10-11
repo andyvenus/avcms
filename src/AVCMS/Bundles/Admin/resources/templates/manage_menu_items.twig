@@ -26,18 +26,23 @@
         <ul class="sortable" style="position: absolute;" data-sortable-levels="2" data-ajax-action="{{ url('menus_save_order', {id: item.id}) }}" data-ajax-delete-action="{{ url('menus_admin_delete_item') }}">
             {% for menu_item in menu_items %}
             <li id="menu_order_{{ menu_item.id|replace({'_': 'UNDERSCORE'}) }}" data-item-id="{{ menu_item.id }}">
-                <div class="sortable-item"><span class="glyphicon glyphicon-align-justify handle"></span> {{ menu_item.label }}
-
-                    <div class="pull-right">
-                        <a class="btn btn-xs btn-default" href="{{ url('menu_items_edit', {menu: item.id, id: menu_item.id}) }}">{% trans %}Edit{% endtrans %}</a>
-                        <button class="btn btn-danger btn-xs delete-item"><span class="glyphicon glyphicon-remove"></span></button>
-                    </div>
+                <div class="sortable-item">
+                    <span class="glyphicon glyphicon-align-justify handle"></span> {{ menu_item.label }}
+                    {% block menu_item_buttons %}
+                        <div class="pull-right">
+                            <a class="btn btn-xs btn-default" href="{{ url('menu_items_edit', {menu: item.id, id: menu_item.id}) }}">{% trans %}Edit{% endtrans %}</a>
+                            <button class="btn btn-danger btn-xs delete-item"><span class="glyphicon glyphicon-remove"></span></button>
+                        </div>
+                    {% endblock %}
                 </div>
                 {% if menu_item.children %}
                 <ul>
                     {% for menu_item in menu_item.children %}
                         <li id="menu_order_{{ menu_item.id }}">
-                            <div class="sortable-item"><span class="glyphicon glyphicon-align-justify handle"></span> {{ menu_item.label }}</div>
+                            <div class="sortable-item">
+                                <span class="glyphicon glyphicon-align-justify handle"></span> {{ menu_item.label }}
+                                {{ block('menu_item_buttons') }}
+                            </div>
                         </li>
                     {% endfor %}
                 </ul>
