@@ -11,12 +11,19 @@ use AVCMS\Bundles\Users\Form\UserGroupsAdminFiltersForm;
 use AVCMS\Bundles\Users\Form\UserGroupAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 
+use AVCMS\Core\Form\FormBlueprint;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserGroupsAdminController extends AdminBaseController
 {
+    /**
+     * @var \AVCMS\Bundles\Users\Model\UserGroups
+     */
     protected $userGroups;
+
+    protected $browserTemplate = '@Users/user_groups_browser.twig';
 
     public function setUp(Request $request)
     {
@@ -51,9 +58,54 @@ class UserGroupsAdminController extends AdminBaseController
         return $this->handleDelete($request, $this->userGroups);
     }
 
-    public function togglePublishedAction(Request $request)
+    public function manageGroupPermissionsAction(Request $request)
     {
-        return $this->handleTogglePublished($request, $this->userGroups);
+        $userGroup = $this->userGroups->getOne($request->get('id'));
+
+        if (!$userGroup) {
+            throw $this->createNotFoundException();
+        }
+
+        $permissionsModel = $this->model('Permissions');
+        $permissions = $permissionsModel->getAll();
+
+        $groupPermissionsModel = $this->model('GroupPermissions');
+        $groupPermissions = $groupPermissionsModel->getRolePermissions($userGroup->getId());
+
+        $formBlueprint = new FormBlueprint();
+        $formBlueprint->setSuccessMessage('Permissions Updated');
+
+        foreach ($permissions as $permission) {
+            $formBlueprint->add("permissions[{$permission->getId()}]", 'radio', [
+                'label' => $permission->getName(),
+                'choices' => [
+                    'default' => 'Default',
+                    '1' => 'Allow',
+                    '0' => 'Deny'
+                ],
+                'default' => 'default'
+            ]);
+        }
+
+        $form = $this->buildForm($formBlueprint);
+        $form->mergeData(['permissions' => $groupPermissions]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $groupPermissionsModel->deleteRolePermissions($userGroup->getId());
+
+            foreach ($form->getData('permissions') as $permissionId => $permissionValue) {
+                if ($permissionValue != 'default') {
+                    $groupPermissionsModel->insertPermission($userGroup->getId(), $permissionId, $permissionValue);
+                }
+            }
+
+            return new JsonResponse(['form' => $form->createView()->getJsonResponseData()]);
+        }
+
+        return new Response($this->renderAdminSection('@Users/manage_user_group_permissions.twig', $request->get('ajax_depth'),
+            ['form' => $form->createView(), 'permissions' => $permissions, 'item' => $userGroup]
+        ));
     }
 
     protected function getSharedTemplateVars($ajax_depth)

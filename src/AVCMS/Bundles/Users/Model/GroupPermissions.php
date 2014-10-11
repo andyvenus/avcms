@@ -53,15 +53,25 @@ class GroupPermissions extends Model implements RolePermissionsProviderInterface
         $permissions = $query->get(null, \PDO::FETCH_ASSOC);
 
         $filteredPermissions = array();
-        foreach ($permissions as $role) {
-            if (isset($filteredPermissions[$role['name']]) && $role['value'] == 1) {
-                $filteredPermissions[$role['name']] = $role['value'];
+        foreach ($permissions as $permission) {
+            if (isset($filteredPermissions[$permission['name']]) && $permission['value'] == 1) {
+                $filteredPermissions[$permission['name']] = intval($permission['value']);
             }
-            elseif (!isset($filteredPermissions[$role['name']])) {
-                $filteredPermissions[$role['name']] = $role['value'];
+            elseif (!isset($filteredPermissions[$permission['name']])) {
+                $filteredPermissions[$permission['name']] = intval($permission['value']);
             }
         }
 
         return $filteredPermissions;
+    }
+
+    public function insertPermission($role, $permissionId, $value)
+    {
+        $this->query()->insert(['role' => $role, 'name' => $permissionId, 'value' => $value]);
+    }
+
+    public function deleteRolePermissions($role)
+    {
+        $this->query()->where('role', $role)->delete();
     }
 }

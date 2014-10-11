@@ -97,8 +97,8 @@ permissions:
     model_var_name: permissions
     title_field: id
 user_groups:
-    bundle: TestBundle
-    namespace: AVCMS\Bundles\TestBundle
+    bundle: Users
+    namespace: AVCMS\Bundles\Users
     singular: user_group
     plural: user_groups
     uc_singular: 'User Group'
@@ -112,11 +112,11 @@ user_groups:
     admin_delete_route: user_groups_admin_delete
     admin_edit_route: user_groups_admin_edit
     admin_add_route: user_groups_admin_add
-    admin_controller: 'TestBundle::UserGroupsAdminController'
+    admin_controller: 'Users::UserGroupsAdminController'
     finder_item_extra_buttons: ''
     database: groups
-    entity: AVCMS\Bundles\TestBundle\Model\UserGroup
-    admin_form: AVCMS\Bundles\TestBundle\Form\UserGroupAdminForm
+    entity: AVCMS\Bundles\Users\Model\UserGroup
+    admin_form: AVCMS\Bundles\Users\Form\UserGroupAdminForm
     model_class: UserGroups
     model_var_name: userGroups
     title_field: name

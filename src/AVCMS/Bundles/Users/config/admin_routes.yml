@@ -38,3 +38,7 @@ user_groups_admin_home:
 user_groups_admin_finder:
   path: /user-groups/finder/{page}
   defaults: { page: 1, _controller: 'Users::UserGroupsAdminController::finderAction' }
+
+user_groups_admin_manage_permissions:
+  path: /user-groups/permissions/{id}
+  defaults: { _controller: 'Users::UserGroupsAdminController::manageGroupPermissionsAction' }

@@ -1,0 +1,26 @@
+{% extends '@admin/editor.twig' %}
+
+{% block title %}{% trans %}Editing permissions{% endtrans %}: {{ item.name }}{% endblock %}
+
+{% block editor_title %}<span class="light">{% trans %}Editing permissions{% endtrans %}:</span> {{ item.name }}{% endblock %}
+
+{% block editor_content %}
+    {{ form_start(form) }}
+
+    {{ form_rows_before(form, 'permissions') }}
+
+    {% set permission_fields = form.permissions.fields %}
+
+    {% for permission in permissions %}
+        <div class="well well-sm">
+            <strong>{{ permission.name }}</strong> -  {{ permission.description }}<br/>
+            {{ form_field(permission_fields[permission.id]) }}
+        </div>
+    {% endfor %}
+
+    {{ form_rows_after(form, 'permissions') }}
+
+    {{ form_submit_button(form) }}
+
+    {{ form_end(form) }}
+{% endblock %}

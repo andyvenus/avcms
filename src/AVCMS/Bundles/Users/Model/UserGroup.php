@@ -16,14 +16,24 @@ class UserGroup extends Entity
         $this->set("admin_default", $value);
     }
 
-    public function getFloodControlTime()
+    public function getCustomPermissions()
     {
-        return $this->get("flood_control_time");
+        return $this->get("custom_permissions");
+    }
+
+    public function setCustomPermissions($value)
+    {
+        $this->set("custom_permissions", $value);
     }
 
     public function setFloodControlTime($value)
     {
         $this->set("flood_control_time", $value);
+    }
+
+    public function getFloodControlTime()
+    {
+        return $this->get("flood_control_time");
     }
 
     public function getId()
@@ -46,23 +56,23 @@ class UserGroup extends Entity
         $this->set("name", $value);
     }
 
-    public function setOwner($value)
-    {
-        $this->set("owner", $value);
-    }
-
     public function getOwner()
     {
         return $this->get("owner");
     }
 
-    public function getPermDefault()
+    public function setOwner($value)
     {
-        return $this->get("perm_default");
+        $this->set("owner", $value);
     }
 
     public function setPermDefault($value)
     {
         $this->set("perm_default", $value);
+    }
+
+    public function getPermDefault()
+    {
+        return $this->get("perm_default");
     }
 }
