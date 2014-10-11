@@ -10,5 +10,3 @@ Tags:
     enabled: true
 Framework:
     enabled: true
-TestBundle:
-    enabled: true
