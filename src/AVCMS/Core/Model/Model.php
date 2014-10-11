@@ -312,4 +312,9 @@ abstract class Model implements ModelInterface {
     {
         $this->subEntities[$overflowName] = array('class' => $className, 'type' => 'overflow');
     }
+
+    public function getAll()
+    {
+        return $this->query()->get();
+    }
 }
