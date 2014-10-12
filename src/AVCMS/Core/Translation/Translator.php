@@ -53,6 +53,7 @@ class Translator extends TranslatorBase
 
         if ($this->debug === true) {
             $this->translated_strings[$id] = array(
+                'raw' => $id,
                 'translation' => $translation,
                 'raw_translation' => $raw_translation,
                 'parameters' => $parameters
