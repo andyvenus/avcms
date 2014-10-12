@@ -4,10 +4,10 @@
 
 {% block main_content %}
     <div class="simple-header">
-        <div class="simple-header-inner animated fadeIn">
+        <div class="simple-header-inner">
             {% block content_header %}{% endblock %}
         </div>
     </div>
 
-    <div class="simple-content animated fadeInRight">{% block content_body %}{% endblock %}</div>
+    <div class="simple-content {% block animation_style %}animated fadeInRight{% endblock %}">{% block content_body %}{% endblock %}</div>
 {% endblock %}
