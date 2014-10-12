@@ -1,6 +1,19 @@
-{% for string, usages in translation_strings %}
-    {{ string }} - {{ usages|length }}<br/>
-    {% for usage in usages %}
-        <span style="font-size:8px;">{{ usage.file }}</span><br>
+{% extends '@dev/index.twig' %}
+
+{% block title %}Review Translations{% endblock %}
+
+{% block content %}
+
+    {% for string, usages in translation_strings %}
+        {% if usages|length > 0 %}
+            {% set class = 'text-success' %}
+        {% else %}
+            {% set class = 'text-danger' %}
+        {% endif %}
+        <span class="{{ class }}">{{ string }} - {{ usages|length }}</span><br/>
+        {% for usage in usages %}
+            <span style="font-size:8px;">{{ usage.file }}</span><br>
+        {% endfor %}
     {% endfor %}
-{% endfor %}
+
+{% endblock %}
