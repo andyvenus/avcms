@@ -28,7 +28,7 @@ class StringFinder
 
         $pattern = implode('\|', $stringVariants);
 
-        $command = 'grep -nr "'.$pattern.'" '.$path;
+        $command = 'grep -nr "'.$pattern.'" '.$path.' --exclude="*.txt"';
 
         $output = array();
         exec($command, $output);
