@@ -17,6 +17,8 @@ use Symfony\Component\HttpKernel\TerminableInterface;
 
 class BundleKernel implements HttpKernelInterface, TerminableInterface
 {
+    private $rootDir;
+
     /**
      * @var bool
      */
@@ -32,12 +34,13 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
      */
     private $debug;
 
-    public function __construct(BundleManager $bundleManager, $debug)
+    public function __construct(BundleManager $bundleManager, $debug, $rootDir)
     {
         $bundleManager->setDebug($debug);
 
         $this->bundleManager = $bundleManager;
         $this->debug = $debug;
+        $this->rootDir = $rootDir;
     }
 
     public function boot()
@@ -94,6 +97,7 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
         if (!$container_config_cache->isFresh()) {
             $container = new ContainerBuilder();
             $container->setParameter('dev_mode', $this->debug);
+            $container->setParameter('root_dir', $this->rootDir);
 
             $loader = new YamlFileLoader($container, new FileLocator('app/config'));
             $loader->load('app.yml');
