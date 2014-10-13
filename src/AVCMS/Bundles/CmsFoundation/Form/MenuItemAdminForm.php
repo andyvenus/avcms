@@ -12,6 +12,8 @@ class MenuItemAdminForm extends FormBlueprint
     {
         $this->id = $id;
 
+        $this->setName('menu_item_form');
+
         if ($id === 0) {
             $this->add('id', 'text', array(
                 'label' => 'Identifier (permanent)'
@@ -27,6 +29,7 @@ class MenuItemAdminForm extends FormBlueprint
             'choices' => array(
                 'url' => 'URL',
                 'route' => 'Route Name',
+                'category' => 'Category',
             )
         ));
 

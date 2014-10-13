@@ -52,6 +52,8 @@ assets:
   avcms_event.js:
     env: shared
     priority: 89
+  avcms_menus_admin.js:
+    env: admin
 
 menu_items:
   admin:
