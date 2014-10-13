@@ -46,7 +46,6 @@ class UserGroupsAdminController extends AdminBaseController
     {
         $finder = $this->userGroups->find()
             ->setSearchFields(array('name'))
-            ->setResultsPerPage(15)
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
         $items = $finder->get();
 
