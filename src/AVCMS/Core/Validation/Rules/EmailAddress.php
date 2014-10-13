@@ -9,7 +9,7 @@ namespace AVCMS\Core\Validation\Rules;
 
 class EmailAddress extends Rule
 {
-    protected $error = 'Field "{param_name}" requires a valid email address';
+    protected $error = "Field '{param_name}' requires a valid email address";
 
     function assert($param)
     {
