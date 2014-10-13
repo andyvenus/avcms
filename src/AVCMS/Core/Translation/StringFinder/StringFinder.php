@@ -18,12 +18,13 @@ class StringFinder
 
         $stringVariants = [];
 
-        $stringVariants[] = "'{$string}'";
-        $stringVariants[] = "{% trans %}$string{% endtrans %}";
-        $stringVariants[] = ': '.$string;
-
         if (str_word_count($string) > 1) {
             $stringVariants[] = $string;
+        }
+        else {
+            $stringVariants[] = "'{$string}'";
+            $stringVariants[] = "{% trans %}$string{% endtrans %}";
+            $stringVariants[] = ': '.$string;
         }
 
         $pattern = implode('\|', $stringVariants);
