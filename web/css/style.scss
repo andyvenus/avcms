@@ -1,0 +1,53 @@
+.leaderboard {
+    background-color: darkslateblue;
+    color: white;
+}
+
+.leaderboard a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.leaderboard a:hover {
+    text-decoration: none;
+    color: #c7b9ff;
+}
+
+.leaderboard h1 {
+    font-family: HelveticaNeue-Light, HelveticaNeue, sans-serif!important;
+
+}
+
+.blog-post-container {
+    border-bottom: 1px solid #a7a8cd;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+footer {
+    margin-top: 10px;
+}
+
+select[name=author] {
+    width: 500px;
+}
+
+.avcms-main {
+    margin-top: 10px;
+}
+
+.main-menu {
+  margin-bottom: 0px;
+  background-color: lighten(darkslateblue, 5);
+  color: white;
+  border-bottom: 0px;
+
+  .navbar-nav>li>a, .navbar-nav>li>a:hover, .navbar-nav>li>a:focus {
+    color: white;
+  }
+
+  .navbar-nav>.open>a, .navbar-nav>.open>a:hover, .navbar-nav>.open>a:focus {
+    background-color: lighten(darkslateblue, 10);
+    color: white;
+  }
+}

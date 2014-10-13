@@ -5,11 +5,11 @@
         <title>{% block title %}{% endblock %} - {{ settings.site_name }}</title>
     {% endblock %}
 
-    <link rel="stylesheet" type="text/css" href="{{ site_url }}web/css/style.css" />
-
     {% for css in css('frontend') %}
         <link href="{{ site_url }}{{ css }}" rel="stylesheet">
     {% endfor %}
+
+    <link rel="stylesheet" type="text/css" href="{{ site_url }}web/css/style.css" />
 
     <script type="text/javascript">
         var avcms = avcms || {};
@@ -52,6 +52,31 @@
         </div>
     </div>
 </header>
+
+<nav class="navbar navbar-default navbar-static-top main-menu" role="navigation">
+    <div class="container">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                {% for menu_item in menu('frontend') %}
+                    {% if menu_item.children|length == 0 %}
+                        <li><a href="{{ menu_item.url }}"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}</a></li>
+                    {% else %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }} <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                {% for sub_menu_item in menu_item.children %}
+                                    <li class="sub-menu-item"><a href="{{ sub_menu_item.url }}"><span class="{{ sub_menu_item.icon }}"></span> {{ sub_menu_item.label }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+
+                    {% endif %}
+
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</nav>
 
 {% block full_width_content %}
 <section class="container avcms-main">

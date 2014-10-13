@@ -1,37 +1,39 @@
 .leaderboard {
-    background-color: darkslateblue;
-    color: white;
-}
+  background-color: darkslateblue;
+  color: white; }
 
 .leaderboard a {
-    color: #fff;
-    text-decoration: none;
-}
+  color: #fff;
+  text-decoration: none; }
 
 .leaderboard a:hover {
-    text-decoration: none;
-    color: #c7b9ff;
-}
+  text-decoration: none;
+  color: #c7b9ff; }
 
 .leaderboard h1 {
-    font-family: HelveticaNeue-Light, HelveticaNeue, sans-serif!important;
-
-}
+  font-family: HelveticaNeue-Light, HelveticaNeue, sans-serif !important; }
 
 .blog-post-container {
-    border-bottom: 1px solid #a7a8cd;
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-}
+  border-bottom: 1px solid #a7a8cd;
+  margin-bottom: 10px;
+  padding-bottom: 5px; }
 
 footer {
-    margin-top: 10px;
-}
+  margin-top: 10px; }
 
 select[name=author] {
-    width: 500px;
-}
+  width: 500px; }
 
 .avcms-main {
-    margin-top: 10px;
-}
+  margin-top: 10px; }
+
+.main-menu {
+  margin-bottom: 0px;
+  background-color: #51459d;
+  color: white;
+  border-bottom: 0px; }
+  .main-menu .navbar-nav > li > a, .main-menu .navbar-nav > li > a:hover, .main-menu .navbar-nav > li > a:focus {
+    color: white; }
+  .main-menu .navbar-nav > .open > a, .main-menu .navbar-nav > .open > a:hover, .main-menu .navbar-nav > .open > a:focus {
+    background-color: #5a4dae;
+    color: white; }
