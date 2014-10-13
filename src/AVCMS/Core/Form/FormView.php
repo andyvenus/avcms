@@ -63,6 +63,11 @@ class FormView implements FormViewInterface
     protected $form_blueprint;
 
     /**
+     * @var bool
+     */
+    protected $valid;
+
+    /**
      * @param array $fields
      * @return mixed|void
      * @throws Exception\InvalidArgumentException
@@ -229,6 +234,22 @@ class FormView implements FormViewInterface
     public function isSubmitted()
     {
         return $this->submitted;
+    }
+
+    /**
+     * @param $valid bool
+     */
+    public function setValid($valid)
+    {
+        $this->valid = $valid;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValid()
+    {
+        return $this->valid;
     }
 
     /**

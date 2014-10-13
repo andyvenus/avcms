@@ -585,6 +585,7 @@ class FormHandler
         $this->formView->setEncoding($this->getEncoding());
         $this->formView->setAction($this->getAction());
         $this->formView->setSubmitted($this->isSubmitted());
+        $this->formView->setValid($this->isValid());
 
         //if ($this->submitted && isset($this->validator)) {
             $this->formView->setErrors($this->getValidationErrors());

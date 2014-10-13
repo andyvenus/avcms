@@ -63,7 +63,7 @@
         {% for error in form.errors %}
             <div class="alert alert-danger">{{ error.message }}</div>
         {% endfor %}
-        {% if form.successMessage is not null %}
+        {% if form.isValid and form.successMessage is not null %}
             <div class="alert alert-success">{{ form.successMessage }}</div>
         {% endif %}
     </div>
