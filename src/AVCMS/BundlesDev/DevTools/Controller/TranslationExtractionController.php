@@ -31,17 +31,23 @@ class TranslationExtractionController extends Controller
 
         $stringFinder = new StringFinder();
 
-        $translationStrings = [];
+        $usedTranslationStrings = [];
+        $unusedTranslationStrings = [];
         foreach ($foundStrings as $string) {
             $usages = $stringFinder->getResults($string, $bundleDir);
 
             if ($usages === null) {
-                $translationStrings[$string . ' - String contains quotations so cannot be validated'] = '1';
+                $usedTranslationStrings[$string . ' - String contains quotations so cannot be validated'] = '1';
+            }
+            elseif (count($usages) > 0) {
+                $usedTranslationStrings[$string] = $usages;
             }
             else {
-                $translationStrings[$string] = $usages;
+                $unusedTranslationStrings[$string] = $usages;
             }
         }
+
+        $translationStrings = $usedTranslationStrings + $unusedTranslationStrings;
 
         return new Response($this->render('@DevTools/review_translations.twig', ['translation_strings' => $translationStrings]));
     }
