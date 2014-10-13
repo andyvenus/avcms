@@ -2,7 +2,7 @@
 
 {% block title %}{% trans with {username: profile_user.username} %}{username}'s profile{% endtrans %}{% endblock %}
 
-{% block meta_description %}{% trans with {username: profile_user.username} %}'s profile{% endtrans %}{% endblock %}
+{% block meta_description %}{% trans with {username: profile_user.username} %}{username}'s profile{% endtrans %}{% endblock %}
 
 {% block full_width_content %}
     <div class="user-profile-header" style="background-image: url('{{ site_url }}/{{ bundle.config.avatar_path }}/{{ profile_user.coverImage }}')">

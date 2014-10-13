@@ -26,7 +26,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta charset="UTF-8">
-    <meta name="description" content="{% block meta_description %}{{ settings.site_description }}{% endblock %}">
+
+    {% set meta_description = block('meta_description') %}
+    {% if meta_description is not empty %}
+        <meta name="description" content="{{ meta_description }}">
+    {% endif %}
 </head>
 <body>
 
