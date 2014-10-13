@@ -18,7 +18,8 @@ class TypeHandler implements TypeInterface
             'collection' => new CollectionType($this),
             'default' => new DefaultType(),
             'select' => new SelectType(),
-            'file' => new FileType()
+            'file' => new FileType(),
+            'radio' => new RadioType()
         );
     }
 
