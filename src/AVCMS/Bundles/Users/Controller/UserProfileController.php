@@ -7,6 +7,7 @@
 
 namespace AVCMS\Bundles\Users\Controller;
 
+use AVCMS\Bundles\Users\Form\ChangeEmailForm;
 use AVCMS\Bundles\Users\Form\ChangePasswordForm;
 use AVCMS\Bundles\Users\Form\EditProfileForm;
 use AVCMS\Core\Controller\Controller;
@@ -92,21 +93,28 @@ class UserProfileController extends Controller
             throw new InsufficientAuthenticationException;
         }
 
-        $form = $this->buildForm(new ChangePasswordForm(), $request);
+        $user = $this->activeUser();
 
-        if ($form->isSubmitted()) {
-            if ($form->getData('password1') === $form->getData('password2')) {
-                $encodedPassword = $this->container->get('users.bcrypt_encoder')->encodePassword($form->getData('password1'), null);
-                $user = $this->activeUser();
+        $passwordForm = $this->buildForm(new ChangePasswordForm(), $request);
+
+        if ($passwordForm->isSubmitted()) {
+            if ($passwordForm->getData('password1') === $passwordForm->getData('password2')) {
+                $encodedPassword = $this->container->get('users.bcrypt_encoder')->encodePassword($passwordForm->getData('password1'), null);
                 $user->setPassword($encodedPassword);
-
-                $this->model('Users')->save($user);
+                $this->model('Users')->update($user);
             }
             else {
-                $form->addCustomErrors([new FormError('password2', 'The entered passwords do not match', true)]);
+                $passwordForm->addCustomErrors([new FormError('password2', 'The entered passwords do not match', true)]);
             }
         }
 
-        return new Response($this->render('@Users/manage_email_password.twig', ['password_form' => $form->createView()]));
+        $emailForm = $this->buildForm(new ChangeEmailForm(), $request, $user);
+
+        if ($emailForm->isValid()) {
+            $emailForm->saveToEntities();
+            $this->model('Users')->update($user);
+        }
+
+        return new Response($this->render('@Users/manage_email_password.twig', ['password_form' => $passwordForm->createView(), 'email_form' => $emailForm->createView()]));
     }
 }
