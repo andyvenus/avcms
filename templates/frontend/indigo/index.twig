@@ -55,7 +55,10 @@
 
 <nav class="navbar navbar-default navbar-static-top main-menu" role="navigation">
     <div class="container">
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-collapse">
+            {% trans %}Main Menu{% endtrans %}
+        </button>
+        <div class="collapse navbar-collapse" id="main-menu-collapse">
             <ul class="nav navbar-nav">
                 {% for menu_item in menu('frontend') %}
                     {% if menu_item.children|length == 0 %}
