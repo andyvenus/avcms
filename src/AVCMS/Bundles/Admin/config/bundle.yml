@@ -21,12 +21,9 @@ assets:
     env: admin
   nanoscroller.css:
     env: admin
-  moment.min.js:
+  jquery.datetimepicker.js:
     env: admin
-    priority: 15
-  bootstrap-datetimepicker.min.js:
-    env: admin
-  bootstrap-datetimepicker.css:
+  jquery.datetimepicker.css:
     env: admin
   jquery-ui.min.js:
     env: admin

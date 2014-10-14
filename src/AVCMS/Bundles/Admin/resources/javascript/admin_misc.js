@@ -31,7 +31,7 @@ $(document).ready(function() {
 
 
         $('[name=publish_date], [data-date-selector]').datetimepicker({
-            format: 'YYYY-MM-DD HH:mm',
+            format: 'Y-m-d H:i',
             defaultDate: new Date()
         });
 
