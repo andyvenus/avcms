@@ -54,6 +54,8 @@ assets:
     priority: 89
   avcms_menus_admin.js:
     env: admin
+  notify.min.js:
+    env: shared
 
 menu_items:
   admin:
