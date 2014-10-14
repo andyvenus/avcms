@@ -3,3 +3,8 @@ namespace: AVCMS\BundlesDev\Assets
 
 services:
   - AssetServices
+
+assets:
+  asset_regenerate.js:
+    env: admin
+    priority: -10
