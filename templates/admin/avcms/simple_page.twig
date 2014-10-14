@@ -5,7 +5,7 @@
 {% block main_content %}
     <div class="simple-header">
         <div class="simple-header-inner">
-            {% block content_header %}{% endblock %}
+            {% block content_header %}{{ block('title') }}{% endblock %}
         </div>
     </div>
 
