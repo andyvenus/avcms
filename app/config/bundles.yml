@@ -10,3 +10,6 @@ Tags:
     enabled: true
 Framework:
     enabled: true
+
+Assets:
+  enabled: true
