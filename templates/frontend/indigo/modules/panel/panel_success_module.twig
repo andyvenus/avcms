@@ -1,0 +1,10 @@
+<div class="panel panel-success">
+    {% if module.showHeader %}
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ module.title }}</h3>
+        </div>
+    {% endif %}
+    <div class="panel-body">
+        {{ module.content|raw }}
+    </div>
+</div>

@@ -7,7 +7,6 @@ use AVCMS\Core\Module\ModuleConfigInterface;
 
 class Module extends Entity implements ModuleConfigInterface
 {
-    protected $template;
     protected $moduleInfo;
     protected $content;
 
@@ -170,22 +169,22 @@ class Module extends Entity implements ModuleConfigInterface
 
     public function getTemplate()
     {
-        return $this->template;
+        return $this->get("template");
     }
 
     public function setTemplate($template)
     {
-        $this->template = $template;
+        $this->set('template', $template);
     }
 
-    public function setTemplateStyle($value)
+    public function setTemplateType($value)
     {
-        $this->set("template_style", $value);
+        $this->set("template_type", $value);
     }
 
-    public function getTemplateStyle()
+    public function getTemplateType()
     {
-        return $this->get("template_style");
+        return $this->get("template_type");
     }
 
     public function setTitle($value)

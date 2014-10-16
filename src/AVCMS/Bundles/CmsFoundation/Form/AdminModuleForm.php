@@ -12,31 +12,37 @@ use AVCMS\Core\Form\FormBlueprint;
 
 class AdminModuleForm extends FormBlueprint
 {
-    public function __construct(RouteChoicesProvider $routesProvider = null, $templateList = array())
+    public function __construct(RouteChoicesProvider $routesProvider = null, $templateList = array(), $templateStyles = array())
     {
-        $this->add('title', 'text', array(
+        $this->setName('admin_module_form');
+
+        $this->add('title', 'text', [
             'label' => 'Heading / Title',
             'required' => true
-        ));
+        ]);
 
-        $this->add('show_header', 'checkbox', array(
+        $this->add('show_header', 'checkbox', [
             'label' => 'Show Header',
             'required' => true,
             'default' => 1
-        ));
+        ]);
 
-        $this->add('template_style', 'select', array(
-            'label' => 'Template Style',
+        $this->add('template_type', 'select', [
+            'label' => 'Template Type',
             'required' => true,
             'choices' => $templateList
-        ));
+        ]);
 
-        $this->add('limit_routes_array[]', 'select', array(
+        $this->add('template', 'select', [
+            'label' => 'Template Style',
+            'required' => true,
+            'choices' => $templateStyles
+        ]);
+
+        $this->add('limit_routes_array[]', 'select', [
             'label' => 'Limit to pages (leave blank for all pages)',
             'choices_provider' => $routesProvider,
-            'attr' => array(
-                'multiple' => 'multiple'
-            )
-        ));
+            'attr' => ['multiple' => 'multiple']
+        ]);
     }
 } 

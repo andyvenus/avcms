@@ -57,7 +57,7 @@ class Module
     /**
      * @var array
      */
-    protected $acceptedTemplateStyles = ['panel', 'none'];
+    protected $acceptedTemplateTypes = ['panel', 'none'];
 
     public function __construct($data = null)
     {
@@ -165,7 +165,7 @@ class Module
     /**
      * @return string
      */
-    public function getTemplateStyle()
+    public function getTemplateType()
     {
         return $this->templateStyle;
     }
@@ -173,19 +173,19 @@ class Module
     /**
      * @param string $templateStyle
      */
-    public function setTemplateStyle($templateStyle)
+    public function setTemplateType($templateStyle)
     {
         $this->templateStyle = $templateStyle;
     }
 
-    public function getAcceptedTemplateStyles()
+    public function getAcceptedTemplateTypes()
     {
-        return $this->acceptedTemplateStyles;
+        return $this->acceptedTemplateTypes;
     }
 
-    public function setAcceptedTemplateStyles($templateStyles)
+    public function setAcceptedTemplateTypes($templateTypes)
     {
-        $this->acceptedTemplateStyles = $templateStyles;
+        $this->acceptedTemplateTypes = $templateTypes;
     }
 
     /**

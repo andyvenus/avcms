@@ -54,6 +54,8 @@ assets:
     priority: 89
   avcms_menus_admin.js:
     env: admin
+  avcms_modules_admin.js:
+      env: admin
   notify.min.js:
     env: shared
 
@@ -70,7 +72,6 @@ modules:
     controller: 'CmsFoundation::BaseModulesController::htmlModule'
     name: HTML Snippet
     description: Add a HTML block to this position
-    template_style: plain
     cachable: true
     default_cache_time: 600
     user_settings:

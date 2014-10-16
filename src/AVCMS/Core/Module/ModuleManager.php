@@ -205,7 +205,7 @@ class ModuleManager
         }
     }
 
-    public function getTemplateStyles()
+    public function getTemplateTypes()
     {
         return array(
             'panel' => array('default_template' => '@CmsFoundation/panel_module.twig', 'name' => 'Panel'),

@@ -89,16 +89,16 @@ class ModulesAdminController extends AdminBaseController
             throw $this->createNotFoundException("Module not found");
         }
 
-        $templateStyles = $moduleManager->getTemplateStyles();
+        $templateStyles = $moduleManager->getTemplateTypes();
 
-        $acceptedTemplates = $module->getAcceptedTemplateStyles();
+        $acceptedTemplates = $module->getAcceptedTemplateTypes();
         foreach ($acceptedTemplates as $acceptedTemplate) {
             if (isset($templateStyles[$acceptedTemplate])) {
                 $templateList[$acceptedTemplate] = $templateStyles[$acceptedTemplate]['name'];
             }
         }
 
-        $form = new AdminModuleForm(new RouteChoicesProvider($this->get('router'), 'frontend'), $templateList);
+        $form = new AdminModuleForm(new RouteChoicesProvider($this->get('router'), 'frontend'), $templateList, $this->getTemplatesList($moduleConfig->getTemplateType()));
 
         if ($module->isCachable()) {
             $form->add('cache_time', 'text', array('label' => "Seconds until cache expires (0 for no cache)", 'default' => $module->getDefaultCacheTime()));
@@ -215,6 +215,23 @@ class ModulesAdminController extends AdminBaseController
     public function togglePublishedAction(Request $request)
     {
         return $this->handleTogglePublished($request, $this->modulePositions);
+    }
+
+    public function getTemplatesListAction($templateType)
+    {
+        return new JsonResponse($this->getTemplatesList($templateType));
+    }
+
+    private function getTemplatesList($templateType)
+    {
+        $dir = $this->setting('template').'/modules/'.$templateType.'/*.twig';
+
+        $templates = ['default' => 'Default'];
+        foreach (glob($dir) as $template) {
+            $templates['modules/'.$templateType.'/'.basename($template)] = basename($template);
+        }
+
+        return $templates;
     }
 
     protected function getSharedTemplateVars($ajax_depth)

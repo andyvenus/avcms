@@ -149,14 +149,14 @@ class MockModuleConfig implements ModuleConfigInterface
         // TODO: Implement setTemplate() method.
     }
 
-    public function setTemplateStyle($value)
+    public function setTemplateType($value)
     {
-        // TODO: Implement setTemplateStyle() method.
+        // TODO: Implement setTemplateType() method.
     }
 
-    public function getTemplateStyle()
+    public function getTemplateType()
     {
-        // TODO: Implement getTemplateStyle() method.
+        // TODO: Implement getTemplateType() method.
     }
 
     public function setTitle($value)

@@ -65,9 +65,9 @@ interface ModuleConfigInterface
 
     public function setTemplate($template);
 
-    public function setTemplateStyle($value);
+    public function setTemplateType($value);
 
-    public function getTemplateStyle();
+    public function getTemplateType();
 
     public function setTitle($value);
 

@@ -77,3 +77,7 @@ modules_save_order:
 modules_delete_position:
   path: /modules/delete-position
   defaults: { _controller: 'CmsFoundation::ModulesAdminController::deletePositionAction' }
+
+modules_get_template_styles:
+  path: /modules/template-styles/{templateType}
+  defaults: { _controller: 'CmsFoundation::ModulesAdminController::getTemplatesListAction' }

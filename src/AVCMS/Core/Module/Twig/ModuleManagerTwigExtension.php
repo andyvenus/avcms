@@ -8,6 +8,7 @@
 namespace AVCMS\Core\Module\Twig;
 
 use AVCMS\Core\Module\ModuleManager;
+use AVCMS\Core\SettingsManager\SettingsManager;
 
 class ModuleManagerTwigExtension extends \Twig_Extension
 {
@@ -16,11 +17,16 @@ class ModuleManagerTwigExtension extends \Twig_Extension
      */
     protected $environment;
 
+    /**
+     * @var ModuleManager
+     */
+    protected $moduleManager;
+
     public function __construct(ModuleManager $moduleManager)
     {
         $this->moduleManager = $moduleManager;
 
-        $this->templates = $moduleManager->getTemplateStyles();
+        $this->templates = $moduleManager->getTemplateTypes();
     }
 
     public function initRuntime(\Twig_Environment $environment)
@@ -44,23 +50,26 @@ class ModuleManagerTwigExtension extends \Twig_Extension
         $modules = $this->moduleManager->getPositionModules($position, $vars, true);
 
         foreach ($modules as $module) {
-            if (isset($this->templates[ $module->getTemplateStyle() ])) {
-                $template = $this->templates[ $module->getTemplateStyle() ]['default_template'];
+            if (!$module->getTemplate() || !$this->environment->getLoader()->exists($module->getTemplate())) {
+                $module->setTemplate($this->getDefaultTemplate($module));
             }
-            else {
-                $template = '@CmsFoundation/blank_module.twig';
-            }
-
-            $module->setTemplate($template);
         }
 
         return $modules;
     }
 
-
-
     public function getName()
     {
         return 'avcms_module_manager';
+    }
+
+    protected function getDefaultTemplate($module)
+    {
+        if (isset($this->templates[ $module->getTemplateType() ])) {
+            return $this->templates[ $module->getTemplateType() ]['default_template'];
+        }
+        else {
+            return '@CmsFoundation/blank_module.twig';
+        }
     }
 }
