@@ -21,22 +21,22 @@ class Finder
     /**
      * @var \AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler
      */
-    protected $current_query;
+    protected $currentQuery;
 
     /**
      * @var int
      */
-    protected $results_per_page = 0;
+    protected $resultsPerPage = 0;
 
     /**
      * @var array
      */
-    protected $search_fields = array();
+    protected $searchFields = array();
 
     /**
      * @var int
      */
-    protected $current_page = 1;
+    protected $currentPage = 1;
 
     /**
      * @var array
@@ -51,97 +51,97 @@ class Finder
     /**
      * @var array The parameters that are extracted from the request
      */
-    protected $valid_request_parameters;
+    protected $validRequestParameters;
 
-    public function __construct(Model $model, TaxonomyManager $taxonomy_manager = null)
+    public function __construct(Model $model, TaxonomyManager $taxonomyManager = null)
     {
         $this->model = $model;
-        $this->taxonomy_manager = $taxonomy_manager;
-        $this->current_query = $model->query();
+        $this->taxonomyManager = $taxonomyManager;
+        $this->currentQuery = $model->query();
 
-        $this->sort_options = array(
+        $this->sortOptions = array(
             'newest' => 'id DESC',
             'oldest' => 'id ASC'
         );
     }
 
-    public function setResultsPerPage($results_per_page)
+    public function setResultsPerPage($resultsPerPage)
     {
-        $this->results_per_page = $results_per_page;
+        $this->resultsPerPage = $resultsPerPage;
 
         return $this;
     }
 
-    public function setJoin(Model $join_model, array $columns, $type = 'left', $join_to = null, $key = null, $operator = '=', $value = null)
+    public function setJoin(Model $joinModel, array $columns, $type = 'left', $join_to = null, $key = null, $operator = '=', $value = null)
     {
         //todo this - or delete
     }
 
     public function handleRequest(Request $request, array $filters)
     {
-        $valid_request_parameters = array();
+        $validRequestParameters = array();
         foreach ($filters as $filter => $default) {
             if (method_exists($this, $filter)) {
                 $this->$filter($request->get($filter, $default));
             }
-            elseif ($this->taxonomy_manager && $this->taxonomy_manager->hasTaxonomy($filter)) {
+            elseif ($this->taxonomyManager && $this->taxonomyManager->hasTaxonomy($filter)) {
                 $this->taxonomy($filter, $request->get($filter, $default));
             }
             else {
                 throw new \Exception('No filter method found for filter '.$filter);
             }
 
-            $valid_request_parameters[] = $filter;
+            $validRequestParameters[] = $filter;
         }
 
-        $this->valid_request_parameters = $valid_request_parameters;
+        $this->validRequestParameters = $validRequestParameters;
 
         return $this;
     }
 
     public function order($order)
     {
-        if (!isset($this->sort_options[$order])) {
+        if (!isset($this->sortOptions[$order])) {
             $order = 'id DESC';
         }
         else {
-            $order = $this->sort_options[$order];
+            $order = $this->sortOptions[$order];
         }
 
-        $order_split = explode(' ', $order);
+        $orderSplit = explode(' ', $order);
 
-        $this->current_query->orderBy($order_split[0], $order_split[1]);
+        $this->currentQuery->orderBy($orderSplit[0], $orderSplit[1]);
 
         return $this;
     }
 
     public function limit($limit)
     {
-        $this->current_query->limit($limit);
+        $this->currentQuery->limit($limit);
 
         return $this;
     }
 
     public function customOrder($field, $type = 'ASC')
     {
-        $this->current_query->orderBy($field, $type);
+        $this->currentQuery->orderBy($field, $type);
 
         return $this;
     }
 
     public function page($page)
     {
-        if ($this->results_per_page === 0) {
+        if ($this->resultsPerPage === 0) {
             return $this;
         }
 
-        $this->current_page = $page;
+        $this->currentPage = $page;
 
         if ($page < 1 || !is_numeric($page)) {
             $page = 1;
         }
 
-        $this->current_query->paginated($page, $this->results_per_page);
+        $this->currentQuery->paginated($page, $this->resultsPerPage);
 
         return $this;
     }
@@ -152,9 +152,9 @@ class Finder
             return $this;
         }
 
-        $search_fields = $this->search_fields;
+        $search_fields = $this->searchFields;
 
-        $this->current_query->where(function ($q) use ($term, $search_fields)
+        $this->currentQuery->where(function ($q) use ($term, $search_fields)
         {
             foreach ($search_fields as $search_field) {
                 if (!isset($i)) {
@@ -180,14 +180,14 @@ class Finder
             $operator = '=';
         }
 
-        $this->current_query->where($key, $operator, $value);
+        $this->currentQuery->where($key, $operator, $value);
 
         return $this;
     }
 
     public function setSearchFields(array $fields)
     {
-        $this->search_fields = $fields;
+        $this->searchFields = $fields;
 
         return $this;
     }
@@ -195,14 +195,14 @@ class Finder
     // todo: time-based published
     public function published()
     {
-        $this->current_query->where('published', 1);
+        $this->currentQuery->where('published', 1);
 
         return $this;
     }
 
     public function taxonomy($taxonomy, $values = null)
     {
-        if (!$this->taxonomy_manager->hasTaxonomy($taxonomy)) {
+        if (!$this->taxonomyManager->hasTaxonomy($taxonomy)) {
             throw new \Exception(sprintf("Taxonomy %s does not exist in the taxonomy manager", $taxonomy));
         }
 
@@ -211,15 +211,15 @@ class Finder
                 $values = explode('|', $values);
             }
 
-            $this->taxonomy_manager->setTaxonomyJoin($taxonomy, $this->model, $this->current_query, $values);
+            $this->taxonomyManager->setTaxonomyJoin($taxonomy, $this->model, $this->currentQuery, $values);
         }
 
         return $this;
     }
 
-    public function join(Model $join_model, array $columns, $type = 'left', $join_to = null, $key = null, $operator = '=', $value = null)
+    public function join(Model $joinModel, array $columns, $type = 'left', $joinTo = null, $key = null, $operator = '=', $value = null)
     {
-        $this->current_query->modelJoin($join_model, $columns, $type, $join_to, $key, $operator, $value);
+        $this->currentQuery->modelJoin($joinModel, $columns, $type, $joinTo, $key, $operator, $value);
 
         return $this;
     }
@@ -231,22 +231,22 @@ class Finder
         return $this;
     }
 
-    public function getQuery($ignored_filters = array())
+    public function getQuery($ignoredFilters = array())
     {
-        return $this->current_query;
+        return $this->currentQuery;
     }
 
     public function getTotalPages()
     {
         $query = $this->getQuery(array('page'));
 
-        return ceil($query->count() / $this->results_per_page);
+        return ceil($query->count() / $this->resultsPerPage);
     }
 
     public function id($id = null)
     {
         if ($id !== null)
-            $this->current_query->where($this->model->getTable().'.id', $id);
+            $this->currentQuery->where($this->model->getTable().'.id', $id);
 
         return $this;
     }
@@ -254,14 +254,14 @@ class Finder
     public function slug($slug = null)
     {
         if ($slug !== null)
-            $this->current_query->where($this->model->getTable().'.slug', $slug);
+            $this->currentQuery->where($this->model->getTable().'.slug', $slug);
 
         return $this;
     }
 
     public function first()
     {
-        $result = $this->current_query->first();
+        $result = $this->currentQuery->first();
 
         $this->assignTaxonomies($result);
 
@@ -270,9 +270,9 @@ class Finder
 
     public function get()
     {
-        $results = $this->current_query->get();
+        $results = $this->currentQuery->get();
 
-        if ($this->taxonomy_manager && !empty($this->taxonomies)) {
+        if ($this->taxonomyManager && !empty($this->taxonomies)) {
             foreach ($results as $entity) {
                 $this->assignTaxonomies($entity);
             }
@@ -283,9 +283,9 @@ class Finder
 
     protected function assignTaxonomies($entity)
     {
-        if ($this->taxonomy_manager && !empty($this->taxonomies)) {
+        if ($this->taxonomyManager && !empty($this->taxonomies)) {
             foreach ($this->taxonomies as $taxonomy) {
-                $this->taxonomy_manager->assign($taxonomy, $entity, $this->model->getSingular());
+                $this->taxonomyManager->assign($taxonomy, $entity, $this->model->getSingular());
             }
         }
     }
@@ -295,6 +295,6 @@ class Finder
      */
     public function getCurrentPage()
     {
-        return $this->current_page;
+        return $this->currentPage;
     }
 }
