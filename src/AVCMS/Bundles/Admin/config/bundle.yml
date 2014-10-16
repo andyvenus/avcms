@@ -48,6 +48,7 @@ module_positions:
     name: Admin Dashboard
     description: The admin dashboard
     type: admin
+    environment: admin
 
 menu_items:
   admin:

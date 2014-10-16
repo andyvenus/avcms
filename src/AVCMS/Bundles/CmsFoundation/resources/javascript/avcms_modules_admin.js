@@ -14,16 +14,17 @@ avcms.modules = {
         }
 
         var template_type = template_type_field.val();
+        var position = $("[name=admin_module_form]").data('position-id');
 
-        $.get(avcms.config.site_url+'admin/modules/template-styles/'+template_type, {}, function(data){
-            var select_data = [];
-
+        $.get(avcms.config.site_url+'admin/modules/template-styles/'+position+'/'+template_type, {}, function(data){
             var template_field = $("[name=admin_module_form] [name=template]");
             template_field.empty();
 
             $.each(data, function(key, val) {
                 template_field.append('<option value="'+key+'">'+val+'</option>')
             });
+
+            template_field.select2("val", "0");
 
         }, 'json')
     }

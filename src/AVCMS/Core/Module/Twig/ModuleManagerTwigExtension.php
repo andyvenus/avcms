@@ -8,7 +8,6 @@
 namespace AVCMS\Core\Module\Twig;
 
 use AVCMS\Core\Module\ModuleManager;
-use AVCMS\Core\SettingsManager\SettingsManager;
 
 class ModuleManagerTwigExtension extends \Twig_Extension
 {

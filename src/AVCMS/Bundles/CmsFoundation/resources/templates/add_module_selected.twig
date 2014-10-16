@@ -14,5 +14,5 @@
 
 {% block form_start %}
     <span class="always-refresh"></span>
-    {{ form_start(form) }}
+    {{ form_start(form, {'data-position-id': position.id}) }}
 {% endblock %}

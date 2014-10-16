@@ -98,7 +98,7 @@ class ModulesAdminController extends AdminBaseController
             }
         }
 
-        $form = new AdminModuleForm(new RouteChoicesProvider($this->get('router'), 'frontend'), $templateList, $this->getTemplatesList($moduleConfig->getTemplateType()));
+        $form = new AdminModuleForm(new RouteChoicesProvider($this->get('router'), 'frontend'), $templateList, $this->getTemplatesList($position, $moduleConfig->getTemplateType()));
 
         if ($module->isCachable()) {
             $form->add('cache_time', 'text', array('label' => "Seconds until cache expires (0 for no cache)", 'default' => $module->getDefaultCacheTime()));
@@ -217,18 +217,28 @@ class ModulesAdminController extends AdminBaseController
         return $this->handleTogglePublished($request, $this->modulePositions);
     }
 
-    public function getTemplatesListAction($templateType)
+    public function getTemplatesListAction($positionId, $templateType)
     {
-        return new JsonResponse($this->getTemplatesList($templateType));
+        $position = $this->modulePositions->getOne($positionId);
+
+        return new JsonResponse($this->getTemplatesList($position, $templateType));
     }
 
-    private function getTemplatesList($templateType)
+    private function getTemplatesList($position, $templateType)
     {
-        $dir = $this->setting('template').'/modules/'.$templateType.'/*.twig';
+        $prependTemplate = null;
 
-        $templates = ['default' => 'Default'];
+        if ($position->getEnvironment() == 'frontend') {
+            $dir = $this->setting('template').'/modules/'.$templateType.'/*.twig';
+        }
+        else {
+            $prependTemplate = "@".$position->getEnvironment().'/';
+            $dir = 'templates/admin/avcms/modules/'.$templateType.'/*.twig';
+        }
+
+        $templates = ['0' => 'Default'];
         foreach (glob($dir) as $template) {
-            $templates['modules/'.$templateType.'/'.basename($template)] = basename($template);
+            $templates[$prependTemplate.'modules/'.$templateType.'/'.basename($template)] = basename($template);
         }
 
         return $templates;

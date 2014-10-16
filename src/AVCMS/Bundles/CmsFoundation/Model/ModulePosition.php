@@ -16,14 +16,24 @@ class ModulePosition extends Entity
         return $this->get("active");
     }
 
+    public function getDescription()
+    {
+        return $this->get("description");
+    }
+
     public function setDescription($value)
     {
         $this->set("description", $value);
     }
 
-    public function getDescription()
+    public function setEnvironment($value)
     {
-        return $this->get("description");
+        $this->set("environment", $value);
+    }
+
+    public function getEnvironment()
+    {
+        return $this->get("environment");
     }
 
     public function getGlobalModules()
@@ -66,14 +76,14 @@ class ModulePosition extends Entity
         return $this->get("owner");
     }
 
-    public function setProvider($value)
-    {
-        $this->set("provider", $value);
-    }
-
     public function getProvider()
     {
         return $this->get("provider");
+    }
+
+    public function setProvider($value)
+    {
+        $this->set("provider", $value);
     }
 
     public function getType()
