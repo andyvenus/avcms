@@ -180,10 +180,13 @@ avcms.browser = {
     editorFormChanged: function() {
         var id = $(this).attr('data-item-id');
 
-        if (id != 0) {
-            $('.header-label-container:visible').html('<span class="label label-warning animated flipInY">Edited</span>');
-            $('.browser-finder-item[data-id="'+id+'"]').addClass('finder-item-edited');
-            $('.browser-finder-item[data-id="'+id+'"]').removeClass('finder-item-saved');
+        var finder_item = $('.browser-finder-item[data-id="'+id+'"]');
+        var header_label_container = $('.header-label-container:visible');
+
+        if (id != 0 && header_label_container.find('.label-warning').length < 1) {
+            header_label_container.html('<span class="label label-warning animated flipInY">Edited</span>');
+            finder_item.addClass('finder-item-edited');
+            finder_item.removeClass('finder-item-saved');
         }
     },
 
