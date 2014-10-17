@@ -396,7 +396,7 @@ class FormBlueprint implements FormBlueprintInterface
      * For example, will add a field "parent[sub_name]" as
      * $this->fields['parent']['fields']['sub_name']
      */
-    protected  function recursiveAddToFields($exploded, $field, $fieldsArray = null) {
+    protected function recursiveAddToFields($exploded, $field, $fieldsArray = null) {
         if ($fieldsArray === null) {
             $fieldsArray = $this->fields;
         }

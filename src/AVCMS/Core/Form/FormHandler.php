@@ -646,11 +646,15 @@ class FormHandler
 
     /**
      * Check each field to see if they're required. If they have no data set, assign the error
-     * TODO: Recursive support for collection
+     * @param null $fields
      */
-    protected function setRequiredFieldErrors()
+    protected function setRequiredFieldErrors($fields = null)
     {
-        foreach ($this->fields as $field) {
+        if ($fields === null) {
+            $fields =& $this->fields;
+        }
+
+        foreach ($fields as $field) {
             if (isset($field['options']['required']) && $field['options']['required'] === true) {
                 if ($this->typeHandler->allowUnsetRequest($field) === false && (!isset($this->data[ $field['name'] ]) || !$this->data[ $field['name'] ] )) {
                     if (isset($field['options']['label'])) {
@@ -661,6 +665,10 @@ class FormHandler
                     }
                     $this->errors[] = new FormError($field['name'], "Field {field_label} must be set", true, array('field_label' => $label));
                 }
+            }
+
+            if (isset($field['fields'])) {
+                $this->setRequiredFieldErrors($field['fields']);
             }
         }
     }
