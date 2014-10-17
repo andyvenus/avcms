@@ -8,6 +8,7 @@
 namespace AVCMS\Core\Bundle\Listeners;
 
 use AVCMS\Core\Bundle\BundleManagerInterface;
+use DirectoryIterator;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -17,24 +18,35 @@ class PublicFileSubscriber implements EventSubscriberInterface
 {
     protected $bundleManager;
 
-    public function __construct(BundleManagerInterface $bundleManager)
+    protected $cacheDir;
+
+    public function __construct(BundleManagerInterface $bundleManager, $cacheDir = 'cache')
     {
         $this->bundleManager = $bundleManager;
+        $this->cacheDir = $cacheDir;
     }
 
     public function moveFiles(GetResponseEvent $event)
     {
-        $request = $event->getRequest();
+        $cacheFile = $this->cacheDir.'/public_asset_last_move.txt';
+
+        $lastTime = 0;
+
+        if (file_exists($cacheFile)) {
+            $lastTime = file_get_contents($cacheFile);
+        }
 
         if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST && $this->bundleManager->isDebug()) {
             $bundles = $this->bundleManager->getBundleConfigs();
 
             foreach ($bundles as $bundle) {
                 if (file_exists($bundle->directory.'/resources')) {
-                    $this->copyDirectory($bundle->directory.'/resources', 'web/resources/'.$bundle->name, array('templates', 'translations'));
+                    $this->copyDirectory($bundle->directory.'/resources', 'web/resources/'.$bundle->name, $lastTime, array('templates', 'translations'));
                 }
             }
         }
+
+        file_put_contents($cacheFile, time());
     }
 
     public static function getSubscribedEvents()
@@ -44,7 +56,7 @@ class PublicFileSubscriber implements EventSubscriberInterface
         );
     }
 
-    private function copyDirectory($src, $dst, array $ignore = null) {
+    private function copyDirectory($src, $dst, $lastTime, array $ignore = null) {
         $dir = opendir($src);
 
         if (!file_exists($dst)) {
@@ -54,9 +66,9 @@ class PublicFileSubscriber implements EventSubscriberInterface
         while(false !== ( $file = readdir($dir)) ) {
             if (( $file != '.' ) && ( $file != '..' ) && ($ignore == null || !in_array($file, $ignore))) {
                 if ( is_dir($src . '/' . $file) ) {
-                    $this->copyDirectory($src . '/' . $file,$dst . '/' . $file);
+                    $this->copyDirectory($src . '/' . $file, $dst . '/' . $file, $lastTime, $ignore);
                 }
-                else {
+                elseif (filemtime($src . '/' . $file) > $lastTime) {
                     copy($src . '/' . $file,$dst . '/' . $file);
                 }
             }
