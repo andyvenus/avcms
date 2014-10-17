@@ -13,7 +13,7 @@ class UserGroups extends Model
 
     public function getSingular()
     {
-        return 'user_group';
+        return 'group';
     }
 
     public function getEntity()
