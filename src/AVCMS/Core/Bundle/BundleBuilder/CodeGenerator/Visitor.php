@@ -68,7 +68,6 @@ class Visitor extends  DefaultVisitor
             $this->writer->write('final ');
         }
 
-        // TODO: Interfaces should be modeled as separate classes.
         $this->isInterface = $class->getAttributeOrElse('interface', false);
         $this->writer->write($this->isInterface ? 'interface ' : 'class ');
         $this->writer->write($class->getShortName());
