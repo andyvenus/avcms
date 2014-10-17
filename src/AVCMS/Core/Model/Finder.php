@@ -147,11 +147,11 @@ class Finder
             return $this;
         }
 
-        $search_fields = $this->searchFields;
+        $searchFields = $this->searchFields;
 
-        $this->currentQuery->where(function ($q) use ($term, $search_fields)
+        $this->currentQuery->where(function ($q) use ($term, $searchFields)
         {
-            foreach ($search_fields as $search_field) {
+            foreach ($searchFields as $searchField) {
                 if (!isset($i)) {
                     $func = 'where';
                     $i = true;
@@ -160,8 +160,7 @@ class Finder
                     $func = 'orWhere';
                 }
 
-                //todo: is secure?
-                $q->$func($search_field, 'LIKE', '%'.$term.'%');
+                $q->$func($searchField, 'LIKE', '%'.$term.'%');
             }
         });
 
