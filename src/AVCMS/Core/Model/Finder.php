@@ -72,11 +72,6 @@ class Finder
         return $this;
     }
 
-    public function setJoin(Model $joinModel, array $columns, $type = 'left', $join_to = null, $key = null, $operator = '=', $value = null)
-    {
-        //todo this - or delete
-    }
-
     public function handleRequest(Request $request, array $filters)
     {
         $validRequestParameters = array();
