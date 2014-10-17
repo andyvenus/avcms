@@ -131,10 +131,6 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
                         $columnValueUsed = true;
                     }
                 }
-
-                if ($columnValueUsed == false) {
-                    // TODO: LOG IN DEV MODE
-                }
             }
 
             if (method_exists($entity, 'getId') && $entity->getID() !== null) {
@@ -342,7 +338,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
         $columnsUpdated = array();
 
         foreach ($columns as $column) {
-            $columnsUpdated[] = "{$joinTable}.{$column}` as `{$joinSingular}__{$column}"; // @todo do this better?
+            $columnsUpdated[] = "{$joinTable}.{$column}` as `{$joinSingular}__{$column}";
         }
 
         $this->select($columnsUpdated, true);
