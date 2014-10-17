@@ -17,6 +17,8 @@ class Users extends Model implements UserProviderInterface
 {
     protected $textIdentifierColumn = 'slug';
 
+    protected $groupsModel;
+
     public function getTable()
     {
         return 'users';
@@ -35,6 +37,11 @@ class Users extends Model implements UserProviderInterface
     public function getByUsernameOrEmail($identifier)
     {
         return $this->query()->where('username', $identifier)->orWhere('email', $identifier)->first();
+    }
+
+    public function setGroupsModel(Model $groupsModel)
+    {
+        $this->groupsModel = $groupsModel;
     }
 
     /**
@@ -60,6 +67,10 @@ class Users extends Model implements UserProviderInterface
             throw new UsernameNotFoundException(sprintf('Username not found.', $username));
         }
 
+        if (isset($this->groupsModel)) {
+            $user->group = $this->groupsModel->getOne($user->getRoleList());
+        }
+
         return $user;
     }
 
@@ -78,9 +89,7 @@ class Users extends Model implements UserProviderInterface
      */
     public function refreshUser(UserInterface $user)
     {
-        $id = $user->getId();
-
-        return $this->getOne($id);
+        return $this->loadUserByUsername($user->getUsername());
     }
 
     /**

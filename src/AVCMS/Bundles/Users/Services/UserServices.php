@@ -20,6 +20,7 @@ class UserServices implements Service
             ->setArguments(array('AVCMS\Bundles\Users\Model\Users'))
             ->setFactoryService('model_factory')
             ->setFactoryMethod('create')
+            ->addMethodCall('setGroupsModel', [new Reference('users.groups_model')])
         ;
 
         $container->register('users.sessions_model', 'AVCMS\Bundles\Users\Model\Sessions')
