@@ -416,16 +416,18 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
      */
     public function insert($data)
     {
+        $entities = [];
         // Get data from entity
         if (is_a($data, 'AVCMS\Core\Model\Entity')) {
-            $entity = $data;
-            $data = $entity->toArray();
+            $entities[] = $data;
+            $data = $data->toArray();
         }
 
         // Possible array of data
         if (is_array($data) && isset($data[0])) {
             foreach ($data as $entity) {
                 if (is_a($entity, 'AVCMS\Core\Model\Entity')) {
+                    $entities[] = $entity;
                     $entityData[] = $entity->toArray();
                 }
             }
@@ -437,9 +439,10 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
 
         $id = parent::insert($data);
 
-        // Set insert ID on entity TODO: support batch insert
-        if (isset($entity) && method_exists($entity, 'setId') && (!method_exists($entity, 'getId') || $entity->getId() === null)) {
-            $entity->setId($id);
+        foreach ($entities as $entity) {
+            if (method_exists($entity, 'setId') && (!method_exists($entity, 'getId') || $entity->getId() === null)) {
+                $entity->setId($id);
+            }
         }
 
         return $id;
