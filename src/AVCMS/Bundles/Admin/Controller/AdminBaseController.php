@@ -108,12 +108,16 @@ abstract class AdminBaseController extends Controller
             throw $this->createNotFoundException(ucfirst($model->getSingular()).' not found');
         }
 
+        if (!$id = $helper->getEntity()->getId()) {
+            $id = 0;
+        }
+
         return $this->createEditResponse(
             $helper,
             $request,
             $editTemplate,
             $browserTemplate,
-            array($editRedirectUrl, array('id' => $helper->getEntity()->getId())),
+            array($editRedirectUrl, array('id' => $id)),
             $templateVars
         );
     }
