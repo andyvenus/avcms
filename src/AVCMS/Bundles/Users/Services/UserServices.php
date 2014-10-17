@@ -157,6 +157,21 @@ class UserServices implements Service
             ->setArguments(array('Symfony\Component\Security\Core\Authentication\Token\AnonymousToken', 'Symfony\Component\Security\Core\Authentication\Token\RememberMeToken'))
         ;
 
+        // ACCESS LISTENER
+
+        $container->register('auth.access_listener', 'Symfony\Component\Security\Http\Firewall\AccessListener')
+            ->setArguments([new Reference('security.context'), new Reference('auth.access_decision_manager'), new Reference('auth.access_map'), new Reference('users.auth_manager')])
+            ->addTag('event.listener', ['event' => KernelEvents::REQUEST, 'method' => 'handle', 'priority' => -101])
+        ;
+
+        $container->register('auth.access_map', 'Symfony\Component\Security\Http\AccessMap')
+            ->addMethodCall('add', [new Reference('auth.admin_request_matcher'), ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']])
+        ;
+
+        $container->register('auth.admin_request_matcher', 'Symfony\Component\HttpFoundation\RequestMatcher')
+            ->setArguments(['^/admin'])
+        ;
+
         // LOG-OUT
         $container->register('auth.logout_listener', 'Symfony\Component\Security\Http\Firewall\LogoutListener')
             ->setArguments([new Reference('security.context'), new Reference('http.utils'), new Reference('auth.logout_success_handler')])
