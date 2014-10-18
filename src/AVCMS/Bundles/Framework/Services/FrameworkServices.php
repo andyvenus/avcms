@@ -51,14 +51,6 @@ class FrameworkServices implements Service
             ->addTag('event.subscriber')
         ;
 
-        /*
-        $container->register('listener.security.routes', 'AVCMS\Core\Security\SecureRoutes')
-            ->setArguments(array(new Reference('active.user')))
-            ->addMethodCall('addRouteMatcherPermission', array('/^\/admin/', 'admin'))
-            ->addTag('event.subscriber')
-        ;
-        */
-
         $container->register('request_matcher', 'Symfony\Component\HttpFoundation\RequestMatcher');
 
         $container->register('http.utils', 'Symfony\Component\Security\Http\HttpUtils')
