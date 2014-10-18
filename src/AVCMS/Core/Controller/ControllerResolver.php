@@ -3,6 +3,7 @@
 namespace AVCMS\Core\Controller;
 
 use AVCMS\Core\Bundle\BundleManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver as BaseControllerResolver;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -11,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class ControllerResolver extends BaseControllerResolver
 {
 
-    public function __construct(ContainerInterface $container, BundleManagerInterface $bundleManager, LoggerInterface $logger = null)
+    public function __construct(ContainerInterface $container, BundleManagerInterface $bundleManager = null, LoggerInterface $logger = null)
     {
         $this->container = $container;
         $this->bundleManager = $bundleManager;
@@ -24,7 +25,7 @@ class ControllerResolver extends BaseControllerResolver
         if (1 === $length = substr_count($controller, '::')) {
             list($class, $method) = explode('::', $controller, 2);
         }
-        elseif ($length === 2) {
+        elseif ($length === 2 && $this->bundleManager !== null) {
             list($bundle, $class, $method) = explode('::', $controller, 3);
 
             if (!$this->bundleManager->hasBundle($bundle)) {
