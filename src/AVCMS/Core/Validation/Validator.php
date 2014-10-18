@@ -153,7 +153,7 @@ class Validator
      */
     public function validate($validatable, $handler = 'standard', $scope = Validator::SCOPE_ALL, $ignore_unset = false)
     {
-        $this->resetParameters(); // TODO: Is this a good idea at all?
+        $this->resetParameters();
         $this->validationObj = $validatable;
 
         if (is_array($validatable)) {
