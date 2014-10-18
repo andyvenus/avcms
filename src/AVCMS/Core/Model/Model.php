@@ -295,9 +295,8 @@ abstract class Model implements ModelInterface {
      * @param null $table The table that is being joined. Allows for different columns to be specified for different tables.
      * @return string
      */
-    public function getJoinColumn($table = null) // todo: support alternate column names
+    public function getJoinColumn($table = null)
     {
-        // Default join column
         return $this->getSingular().'_id';
     }
 
