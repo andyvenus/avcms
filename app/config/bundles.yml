@@ -1,15 +1,14 @@
-CmsFoundation:
-    enabled: true
-Users:
-    enabled: true
-Admin:
-    enabled: true
-Blog:
-    enabled: true
-Tags:
-    enabled: true
 Framework:
-    enabled: true
-
+  enabled: true
+CmsFoundation:
+  enabled: true
+Users:
+  enabled: true
+Admin:
+  enabled: true
+Blog:
+  enabled: true
+Tags:
+  enabled: true
 Assets:
   enabled: true
