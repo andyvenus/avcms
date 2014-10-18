@@ -51,9 +51,14 @@ abstract class Controller extends ContainerAware
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
-        $this->modelFactory = $container->get('model_factory');
-        $this->translator = $container->get('translator');
-        $this->settings = $container->get('settings_manager');
+
+        if ($container->has('translator')) {
+            $this->translator = $container->get('translator');
+        }
+
+        if ($container->has('settings_manager')) {
+            $this->settings = $container->get('settings_manager');
+        }
     }
 
     /**
@@ -90,6 +95,10 @@ abstract class Controller extends ContainerAware
      */
     protected function model($model_name)
     {
+        if (!isset($this->modelFactory)) {
+            $this->modelFactory = $this->container->get('model_factory');
+        }
+
         // If no namespace seems to be specified, use the same namespace that the controller uses
         if (strpos($model_name, '\\') === false && strpos($model_name, '@') === false) {
             $class = get_class($this);
@@ -157,7 +166,10 @@ abstract class Controller extends ContainerAware
             $context['bundle'] = $this->bundle;
         }
         $context['user'] = $this->container->get('security.context')->getToken()->getUser();
-        $context['settings'] = $this->settings;
+
+        if (isset($this->settings)) {
+            $context['settings'] = $this->settings;
+        }
 
         $twig = $this->container->get('twig');
         $result = $twig->render($template, $context);
