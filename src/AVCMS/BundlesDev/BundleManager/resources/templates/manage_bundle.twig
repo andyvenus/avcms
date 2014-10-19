@@ -71,10 +71,10 @@
                 {% if bundle_config.disable_content != true %}
                 <a href="{{ url('bundle_add_content', {'bundle': bundle_config.name}) }}" class="list-group-item"><span class="glyphicon glyphicon-plus-sign"></span> Add Content</a>
                 {% endif %}
-                <!--<a href="#" class="list-group-item">Morbi leo risus</a>
-                <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-                <a href="#" class="list-group-item">Vestibulum at eros</a>
-                -->
+
+                <a href="{{ url('review_bundle_translations', {bundle: bundle_config.name}) }}" class="list-group-item">
+                    <span class="glyphicon glyphicon-flag"></span> Review Translations
+                </a>
             </div>
         </div>
     </div>
