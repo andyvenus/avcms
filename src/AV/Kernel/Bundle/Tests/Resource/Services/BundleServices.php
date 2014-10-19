@@ -1,7 +1,7 @@
 <?php
 namespace AV\Kernel\Bundle\Tests\Resource\Services;
 
-use AVCMS\Core\Service\Service;
+use AV\Service\Service;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**

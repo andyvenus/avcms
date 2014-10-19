@@ -9,7 +9,7 @@ namespace AVCMS\BundlesDev\Assets\Services;
 
 use AVCMS\Core\AssetManager\Asset\AppFileAsset;
 use AVCMS\Core\AssetManager\AssetManager;
-use AVCMS\Core\Service\Service;
+use AV\Service\Service;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 

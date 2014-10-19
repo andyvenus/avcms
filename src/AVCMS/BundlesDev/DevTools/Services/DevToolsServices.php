@@ -7,7 +7,7 @@
 
 namespace AVCMS\BundlesDev\DevTools\Services;
 
-use AVCMS\Core\Service\Service;
+use AV\Service\Service;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\KernelEvents;

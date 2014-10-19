@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\CmsFoundation\Services;
 
-use AVCMS\Core\Service\Service;
+use AV\Service\Service;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
@@ -17,7 +17,7 @@ class BundleServices implements Service
     {
         $container->register('bundle_manager', 'AV\Kernel\Bundle\BundleManagerAlias');
 
-        $container->register('listener.controller.inject.bundle', 'AVCMS\Core\Bundle\Listeners\ControllerInjectBundle')
+        $container->register('listener.controller.inject.bundle', 'AV\Kernel\Listeners\ControllerInjectBundle')
             ->setArguments(array(new Reference('bundle_manager')))
             ->addTag('event.subscriber')
         ;

@@ -5,7 +5,7 @@
  * Time: 19:47
  */
 
-namespace AVCMS\Core\Service;
+namespace AV\Service;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
