@@ -23,7 +23,7 @@ abstract class ModelTestCase extends \PHPUnit_Extensions_Database_TestCase
     protected $conn = null;
 
     /**
-     * @var \AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler
+     * @var \AV\Model\QueryBuilder\QueryBuilderHandler
      */
     protected $query_builder = null;
 
@@ -59,7 +59,7 @@ abstract class ModelTestCase extends \PHPUnit_Extensions_Database_TestCase
                     'collation' => 'utf8_unicode_ci', // Optional
                 );
 
-                self::$shared_query_builder = new \AVCMS\Core\Database\Connection('mysql', $dbconfig, 'QB');
+                self::$shared_query_builder = new \AV\Model\Connection('mysql', $dbconfig, 'QB');
 
                 $mock_dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcher');
 

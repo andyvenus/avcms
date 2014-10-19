@@ -44,7 +44,7 @@ class TaxonomyManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testSetTaxonomyJoin()
     {
-        $mockQueryBuilder = $this->getMockBuilder('AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler')
+        $mockQueryBuilder = $this->getMockBuilder('AV\Model\QueryBuilder\QueryBuilderHandler')
             ->disableOriginalConstructor()
             ->getMock();
         $mockModel = $this->getMockBuilder('AV\Model\Model')

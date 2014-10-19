@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\Tags\Taxonomy;
 
-use AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler;
+use AV\Model\QueryBuilder\QueryBuilderHandler;
 use AV\Model\Model;
 use AVCMS\Core\Taxonomy\Model\TaxonomyModel;
 use AVCMS\Core\Taxonomy\Taxonomy;

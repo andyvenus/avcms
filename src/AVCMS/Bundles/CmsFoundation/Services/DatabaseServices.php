@@ -20,10 +20,10 @@ class DatabaseServices implements Service
 
         $container->setParameter('query_builder.config', $queryBuilderConfig);
 
-        $container->register('query_builder.factory', 'AVCMS\Core\Database\Connection')
+        $container->register('query_builder.factory', 'AV\Model\Connection')
             ->setArguments(array('mysql', '%query_builder.config%', 'QB', null, new Reference('dispatcher')));
 
-        $container->setDefinition('query_builder', new Definition('AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler'))
+        $container->setDefinition('query_builder', new Definition('AV\Model\QueryBuilder\QueryBuilderHandler'))
             ->setFactoryService('query_builder.factory')
             ->setFactoryMethod('getQueryBuilder');
 

@@ -19,7 +19,7 @@ class Finder
     protected $model;
 
     /**
-     * @var \AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler
+     * @var \AV\Model\QueryBuilder\QueryBuilderHandler
      */
     protected $currentQuery;
 

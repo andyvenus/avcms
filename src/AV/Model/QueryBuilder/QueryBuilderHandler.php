@@ -1,9 +1,9 @@
 <?php
 
-namespace AVCMS\Core\Database\QueryBuilder;
+namespace AV\Model\QueryBuilder;
 
-use AVCMS\Core\Database\Connection;
-use AVCMS\Core\Database\Events\QueryBuilderModelJoinEvent;
+use AV\Model\Connection;
+use AV\Model\Event\QueryBuilderModelJoinEvent;
 use AV\Model\Model;
 use AVCMS\Core\Taxonomy\Model\TaxonomyModel;
 use Pixie\QueryBuilder\QueryBuilderHandler as PixieQueryBuilderHandler;
@@ -267,7 +267,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
 
     /**
      * @param $model
-     * @internal param \AVCMS\Core\Database\QueryBuilder\Entity $entity
+     * @internal param \AV\Model\QueryBuilder\Entity $entity
      * @return $this
      */
     public function model($model)

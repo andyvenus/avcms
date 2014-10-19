@@ -1,6 +1,6 @@
 <?php
 
-namespace AVCMS\Core\Database;
+namespace AV\Model;
 
 use Pixie\AliasFacade;
 use Pixie\Connection as PixieConnection;
@@ -28,7 +28,7 @@ class Connection extends PixieConnection {
     public function createAlias($alias)
     {
         class_alias('Pixie\\AliasFacade', $alias);
-        $builder = $this->container->build('\\AVCMS\Core\\Database\\QueryBuilder\\QueryBuilderHandler', array($this));
+        $builder = $this->container->build('\AV\Model\QueryBuilder\QueryBuilderHandler', array($this));
         AliasFacade::setQueryBuilderInstance($builder);
     }
 
@@ -39,7 +39,7 @@ class Connection extends PixieConnection {
      */
     public function getQueryBuilder()
     {
-        return $this->container->build('\\AVCMS\Core\\Database\\QueryBuilder\\QueryBuilderHandler', array($this));
+        return $this->container->build('\AV\Model\QueryBuilder\QueryBuilderHandler', array($this));
     }
 
     /**

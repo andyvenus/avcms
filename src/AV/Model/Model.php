@@ -2,7 +2,7 @@
 
 namespace AV\Model;
 
-use AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler;
+use AV\Model\QueryBuilder\QueryBuilderHandler;
 use AV\Model\Event\ModelInsertEvent;
 use AV\Model\Event\ModelUpdateEvent;
 use AVCMS\Core\Taxonomy\TaxonomyManager;

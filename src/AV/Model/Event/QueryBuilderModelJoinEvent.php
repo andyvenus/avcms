@@ -5,7 +5,7 @@
  * Time: 14:26
  */
 
-namespace AVCMS\Core\Database\Events;
+namespace AV\Model\Event;
 
 use AV\Model\Model;
 use Symfony\Component\EventDispatcher\Event;
