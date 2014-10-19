@@ -11,7 +11,7 @@ use AVCMS\Bundles\Users\Form\UserGroupsAdminFiltersForm;
 use AVCMS\Bundles\Users\Form\UserGroupAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 
-use AVCMS\Core\Form\FormBlueprint;
+use AV\Form\FormBlueprint;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

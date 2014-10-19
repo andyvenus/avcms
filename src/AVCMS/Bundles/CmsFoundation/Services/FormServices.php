@@ -20,11 +20,11 @@ class FormServices implements Service
             ->addMethodCall('setContainer', array(new Reference('service_container')))
         ;
 
-        $container->register('form.handler_factory', 'AVCMS\Core\Form\FormHandlerFactory')
+        $container->register('form.handler_factory', 'AV\Form\FormHandlerFactory')
             ->setArguments(array(new Reference('form.request_handler'), new Reference('form.entity_processor'), new Reference('form.transformer_manager'), new Reference('dispatcher')))
         ;
 
-        $container->register('form.request_handler', 'AVCMS\Core\Form\RequestHandler\SymfonyRequestHandler');
+        $container->register('form.request_handler', 'AV\Form\RequestHandler\SymfonyRequestHandler');
 
         $container->register('form.entity_processor', 'AVCMS\Core\Model\EntityProcessor');
 
@@ -35,11 +35,11 @@ class FormServices implements Service
             ->addTag('event.subscriber')
         ;
 
-        $container->register('form.transformer_manager', 'AVCMS\Core\Form\Transformer\TransformerManager')
+        $container->register('form.transformer_manager', 'AV\Form\Transformer\TransformerManager')
             ->addMethodCall('registerTransformer', array(new Reference('form.unix_timestamp_transformer')))
         ;
 
-        $container->register('form.unix_timestamp_transformer', 'AVCMS\Core\Form\Transformer\UnixTimestampTransformer');
+        $container->register('form.unix_timestamp_transformer', 'AV\Form\Transformer\UnixTimestampTransformer');
 
         // Validation
 

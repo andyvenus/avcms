@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\Admin\Form;
 
-use AVCMS\Core\Form\FormBlueprint;
+use AV\Form\FormBlueprint;
 
 class AdminFiltersForm extends FormBlueprint
 {

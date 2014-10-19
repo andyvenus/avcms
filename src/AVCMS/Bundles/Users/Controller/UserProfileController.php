@@ -11,7 +11,7 @@ use AVCMS\Bundles\Users\Form\ChangeEmailForm;
 use AVCMS\Bundles\Users\Form\ChangePasswordForm;
 use AVCMS\Bundles\Users\Form\EditProfileForm;
 use AVCMS\Core\Controller\Controller;
-use AVCMS\Core\Form\FormError;
+use AV\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;

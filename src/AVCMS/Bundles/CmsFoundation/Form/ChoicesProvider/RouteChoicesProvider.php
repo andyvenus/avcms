@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\CmsFoundation\Form\ChoicesProvider;
 
-use AVCMS\Core\Form\ChoicesProviderInterface;
+use AV\Form\ChoicesProviderInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class RouteChoicesProvider implements ChoicesProviderInterface

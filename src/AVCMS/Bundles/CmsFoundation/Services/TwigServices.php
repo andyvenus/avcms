@@ -44,7 +44,7 @@ class TwigServices implements Service
             ->addTag('twig.extension')
         ;
 
-        $container->register('twig.form.extension', 'AVCMS\Core\Form\Twig\FormExtension')
+        $container->register('twig.form.extension', 'AV\Form\Twig\FormExtension')
             ->addTag('twig.extension')
         ;
 

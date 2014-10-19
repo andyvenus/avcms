@@ -8,7 +8,7 @@
 namespace AVCMS\Bundles\CmsFoundation\Form;
 
 use AVCMS\Bundles\CmsFoundation\Form\ChoicesProvider\RouteChoicesProvider;
-use AVCMS\Core\Form\FormBlueprint;
+use AV\Form\FormBlueprint;
 
 class AdminModuleForm extends FormBlueprint
 {

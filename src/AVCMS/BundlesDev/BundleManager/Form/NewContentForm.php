@@ -7,7 +7,7 @@
 
 namespace AVCMS\BundlesDev\BundleManager\Form;
 
-use AVCMS\Core\Form\FormBlueprint;
+use AV\Form\FormBlueprint;
 
 class NewContentForm extends FormBlueprint
 {

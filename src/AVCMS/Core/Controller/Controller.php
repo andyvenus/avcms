@@ -4,11 +4,11 @@ namespace AVCMS\Core\Controller;
 
 use AVCMS\Bundles\Users\Exception\PermissionDeniedException;
 use AVCMS\Core\Bundle\BundleConfig;
-use AVCMS\Core\Form\FormBlueprint;
-use AVCMS\Core\Form\FormHandler;
-use AVCMS\Core\Form\FormView;
-use AVCMS\Core\Form\RequestHandler\SymfonyRequestHandler;
-use AVCMS\Core\Form\ValidatorExtension\AVCMSValidatorExtension;
+use AV\Form\FormBlueprint;
+use AV\Form\FormHandler;
+use AV\Form\FormView;
+use AV\Form\RequestHandler\SymfonyRequestHandler;
+use AV\Form\ValidatorExtension\AVCMSValidatorExtension;
 use AVCMS\Core\Model\EntityProcessor;
 use AVCMS\Core\Security\PermissionsError;
 use AVCMS\Core\Validation\Validator;

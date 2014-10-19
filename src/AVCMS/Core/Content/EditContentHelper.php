@@ -9,7 +9,7 @@ namespace AVCMS\Core\Content;
 
 use AVCMS\Bundles\Admin\Event\AdminEditFormBuiltEvent;
 use AVCMS\Bundles\Admin\Event\AdminSaveContentEvent;
-use AVCMS\Core\Form\FormHandler;
+use AV\Form\FormHandler;
 use AVCMS\Core\Model\Entity;
 use AVCMS\Core\Model\Model;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -25,7 +25,7 @@ class EditContentHelper
     protected $entity;
 
     /**
-     * @var \AVCMS\Core\Form\FormHandler
+     * @var \AV\Form\FormHandler
      */
     protected $form;
 

@@ -13,4 +13,4 @@ admin_controller: AVCMS\Bundles\Admin\Controller\AdminController
 base_entity: AVCMS\Core\Model\Entity
 base_model: AVCMS\Core\Model\Model
 
-form_blueprint: AVCMS\Core\Form\FormBlueprint
+form_blueprint: AV\Form\FormBlueprint

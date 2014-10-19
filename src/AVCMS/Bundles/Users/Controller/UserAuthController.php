@@ -11,7 +11,7 @@ use AVCMS\Bundles\Users\Form\RegistrationForm;
 use AVCMS\Bundles\Users\Model\EmailValidationKey;
 use AVCMS\Core\Controller\Controller;
 use AVCMS\Bundles\Users\Form\LoginForm;
-use AVCMS\Core\Form\FormError;
+use AV\Form\FormError;
 use Swift_Mailer;
 use Swift_SmtpTransport;
 use Symfony\Component\HttpFoundation\Request;

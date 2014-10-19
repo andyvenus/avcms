@@ -7,10 +7,10 @@
 
 namespace AVCMS\Bundles\CmsFoundation\Form\Factory;
 
-use AVCMS\Core\Form\FormBlueprint;
-use AVCMS\Core\Form\FormHandlerFactory;
-use AVCMS\Core\Form\FormView;
-use AVCMS\Core\Form\ValidatorExtension\AVCMSValidatorExtension;
+use AV\Form\FormBlueprint;
+use AV\Form\FormHandlerFactory;
+use AV\Form\FormView;
+use AV\Form\ValidatorExtension\AVCMSValidatorExtension;
 use AVCMS\Core\Validation\Validator;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;

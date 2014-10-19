@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\Admin\Form;
 
-use AVCMS\Core\Form\FormBlueprint;
+use AV\Form\FormBlueprint;
 use AVCMS\Core\Validation\Rules\MustNotExist;
 use AVCMS\Core\Validation\Validatable;
 use AVCMS\Core\Validation\Validator;

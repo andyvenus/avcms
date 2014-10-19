@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\Blog\Form;
 
-use AVCMS\Core\Form\FormBlueprint;
+use AV\Form\FormBlueprint;
 
 class BlogPostsFilterForm extends FormBlueprint
 {

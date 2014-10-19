@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\CmsFoundation\Settings;
 
-use AVCMS\Core\Form\ChoicesProviderInterface;
+use AV\Form\ChoicesProviderInterface;
 
 class TemplateChoicesProvider implements ChoicesProviderInterface
 {

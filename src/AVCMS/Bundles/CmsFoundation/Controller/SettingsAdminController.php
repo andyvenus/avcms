@@ -9,7 +9,7 @@ namespace AVCMS\Bundles\CmsFoundation\Controller;
 
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use AVCMS\Bundles\CmsFoundation\Form\SettingsForm;
-use AVCMS\Core\Form\FormBlueprint;
+use AV\Form\FormBlueprint;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

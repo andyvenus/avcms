@@ -2,7 +2,7 @@
 
 namespace AVCMS\Bundles\CmsFoundation\Form;
 
-use AVCMS\Core\Form\FormBlueprint;
+use AV\Form\FormBlueprint;
 
 class ModulePositionAdminForm extends FormBlueprint
 {

@@ -7,7 +7,7 @@
 
 namespace AVCMS\BundlesDev\Profiler\Form;
 
-use AVCMS\Core\Form\FormBlueprint;
+use AV\Form\FormBlueprint;
 
 class ProfilerSearchForm extends FormBlueprint
 {

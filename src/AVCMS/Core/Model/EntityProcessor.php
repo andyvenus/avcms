@@ -7,7 +7,7 @@
 
 namespace AVCMS\Core\Model;
 
-use AVCMS\Core\Form\EntityProcessor\EntityProcessor as FormEntityProcessor;
+use AV\Form\EntityProcessor\EntityProcessor as FormEntityProcessor;
 
 /**
  * Class EntityProcessor

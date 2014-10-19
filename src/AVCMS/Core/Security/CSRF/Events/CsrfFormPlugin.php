@@ -7,9 +7,9 @@
 
 namespace AVCMS\Core\Security\Csrf\Events;
 
-use AVCMS\Core\Form\Event\FormHandlerConstructEvent;
-use AVCMS\Core\Form\Event\FormHandlerRequestEvent;
-use AVCMS\Core\Form\FormError;
+use AV\Form\Event\FormHandlerConstructEvent;
+use AV\Form\Event\FormHandlerRequestEvent;
+use AV\Form\FormError;
 use AVCMS\Core\Security\CSRF\CsrfToken;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

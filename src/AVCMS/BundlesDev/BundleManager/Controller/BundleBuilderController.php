@@ -14,8 +14,8 @@ use AVCMS\Core\Bundle\BundleBuilder\CodeGenerator\PhpClass;
 use AVCMS\Core\Bundle\BundleBuilder\CodeGenerator\PhpMethod;
 use AVCMS\Core\Bundle\BundleBuilder\CodeGenerator\Visitor;
 use AVCMS\Core\Bundle\BundleBuilder\FileMaker;
-use AVCMS\Core\Form\FormBlueprint;
-use AVCMS\Core\Form\FormError;
+use AV\Form\FormBlueprint;
+use AV\Form\FormError;
 use CG\Core\DefaultGeneratorStrategy;
 use CG\Generator\PhpParameter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -168,7 +168,7 @@ class BundleBuilderController extends BundleBaseController
                     // Admin Edit Form Class
                     $form_class = new PhpClass();
                     $form_class->setName($config->namespace.'\Form\\'.$fm->getVar('cc_singular').'AdminForm');
-                    $form_class->setUseStatements(array('FormBlueprint' => 'AVCMS\Core\Form\FormBlueprint'));
+                    $form_class->setUseStatements(array('FormBlueprint' => 'AV\Form\FormBlueprint'));
                     $form_class->setParentClassName('FormBlueprint');
 
                     $construct = new PhpMethod('__construct');

@@ -2,7 +2,7 @@
 
 namespace AVCMS\Bundles\Users\Form;
 
-use AVCMS\Core\Form\FormBlueprint;
+use AV\Form\FormBlueprint;
 
 class UserGroupAdminForm extends FormBlueprint
 {
