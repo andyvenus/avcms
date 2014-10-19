@@ -7,7 +7,7 @@
 
 namespace AV\Bundles\Twig\Services;
 
-use AVCMS\Bundles\CmsFoundation\Services\Compiler\TwigEnvironmentPass;
+use AV\Bundles\Twig\Services\Compiler\TwigEnvironmentPass;
 use AV\Service\Service;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;

@@ -5,7 +5,7 @@
  * Time: 12:07
  */
 
-namespace AVCMS\Bundles\CmsFoundation\Services\Compiler;
+namespace AV\Bundles\Twig\Services\Compiler;
 
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
