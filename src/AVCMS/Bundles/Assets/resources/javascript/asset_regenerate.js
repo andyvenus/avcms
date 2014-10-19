@@ -20,7 +20,7 @@ function regenerateAssets() {
         }
     );
 
-    $.get(avcms.config.site_url+'generate_assets', function( data ) {
+    $.get(avcms.config.site_url+'admin/generate_assets', function( data ) {
         $.notify(
             "Assets regenerated",
             { position:"right bottom",

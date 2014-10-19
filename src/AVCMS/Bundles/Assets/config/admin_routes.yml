@@ -1,0 +1,3 @@
+generate_assets:
+  path: /admin/generate_assets
+  defaults: { _controller: Assets::AssetsController::generateAssetsAction }
