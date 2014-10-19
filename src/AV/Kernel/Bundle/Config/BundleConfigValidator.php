@@ -7,15 +7,18 @@
 
 namespace AV\Kernel\Bundle\Config;
 
+use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class BundleConfigValidator implements ConfigurationInterface
 {
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(TreeBuilder $treeBuilder = null, $rootNode = null)
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('bundle_config');
+        if ($rootNode == null) {
+            $treeBuilder = new TreeBuilder();
+            $rootNode = $treeBuilder->root('bundle_config');
+        }
 
         $rootNode
             ->addDefaultsIfNotSet()
@@ -42,6 +45,8 @@ class BundleConfigValidator implements ConfigurationInterface
             ->variableNode('parent_bundle')
             ->end()
             ->variableNode('directory')
+            ->end()
+            ->variableNode('route')
             ->end()
             ->variableNode('config')
             ->end()

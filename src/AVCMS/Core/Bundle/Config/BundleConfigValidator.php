@@ -8,15 +8,16 @@
 namespace AVCMS\Core\Bundle\Config;
 
 use AV\Kernel\Bundle\Config\BundleConfigValidator as BaseBundleConfigValidator;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 class BundleConfigValidator extends BaseBundleConfigValidator
 {
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = parent::getConfigTreeBuilder();
+        $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('bundle_config');
 
-        $rootNode ->children()
+        $rootNode->children()
             ->variableNode('modules')
             ->end()
             ->variableNode('module_positions')
@@ -35,9 +36,8 @@ class BundleConfigValidator extends BaseBundleConfigValidator
             ->variableNode('user_settings_sections')
             ->end()
             ->variableNode('permissions')
-            ->end()
-        ->end();
+            ->end();
 
-        return $treeBuilder;
+        return parent::getConfigTreeBuilder($treeBuilder, $rootNode);
     }
 }

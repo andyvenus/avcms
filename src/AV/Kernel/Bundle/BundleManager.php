@@ -79,7 +79,7 @@ class BundleManager implements BundleManagerInterface
         $this->cacheDir = $cacheDir;
 
         if ($configValidator == null) {
-            $configValidator = new BundleConfigValidator();
+            $configValidator = new BundleConfigValidator(); //todo: change default
         }
 
         $this->configValidator = $configValidator;
