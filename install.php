@@ -3,7 +3,7 @@
 require_once __DIR__.'/vendor/autoload.php';
 
 use AVCMS\Bundles\CmsFoundation\Services\DatabaseServices;
-use AVCMS\Bundles\Framework\Services\FrameworkServices;
+use AV\Bundles\Framework\Services\FrameworkServices;
 use AVCMS\Installer\Services\InstallerServices;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\Request;

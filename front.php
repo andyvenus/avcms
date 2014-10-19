@@ -10,7 +10,7 @@ define('ROOT_DIR', __DIR__);
 
 require_once __DIR__.'/vendor/autoload.php';
 
-$bundle_manager = new BundleManager(array('src/AVCMS/Bundles', 'src/AVCMS/BundlesDev'), 'app/config', 'cache', new BundleConfigValidator());
+$bundle_manager = new BundleManager(array('src/AV/Bundles', 'src/AVCMS/Bundles', 'src/AVCMS/BundlesDev'), 'app/config', 'cache', new BundleConfigValidator());
 
 $avcms = new BundleKernel($bundle_manager, DEBUG_MODE, ROOT_DIR);
 

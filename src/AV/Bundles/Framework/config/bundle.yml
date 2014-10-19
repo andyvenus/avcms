@@ -1,5 +1,5 @@
 name: Framework
-namespace: AVCMS\Bundles\Framework
+namespace: AV\Bundles\Framework
 
 disable_content: true
 
