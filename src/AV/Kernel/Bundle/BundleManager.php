@@ -7,8 +7,8 @@
 
 namespace AV\Kernel\Bundle;
 
+use AV\Kernel\Bundle\Config\BundleConfigValidator;
 use AV\Kernel\Bundle\Exception\NotFoundException;
-use AVCMS\Core\Bundle\Config\BundleConfigValidator;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Processor;
@@ -79,7 +79,7 @@ class BundleManager implements BundleManagerInterface
         $this->cacheDir = $cacheDir;
 
         if ($configValidator == null) {
-            $configValidator = new BundleConfigValidator(); //todo: change default
+            $configValidator = new BundleConfigValidator();
         }
 
         $this->configValidator = $configValidator;
