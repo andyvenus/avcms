@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\CmsFoundation\Model;
 
-use AVCMS\Core\Model\Model;
+use AV\Model\Model;
 use AVCMS\Core\SettingsManager\SettingsModelInterface;
 
 class Settings extends Model implements SettingsModelInterface

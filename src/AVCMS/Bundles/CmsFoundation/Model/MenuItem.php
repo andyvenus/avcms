@@ -2,7 +2,7 @@
 
 namespace AVCMS\Bundles\CmsFoundation\Model;
 
-use AVCMS\Core\Model\Entity;
+use AV\Model\Entity;
 
 class MenuItem extends Entity
 {

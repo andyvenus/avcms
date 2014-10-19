@@ -1,16 +1,16 @@
 <?php
 
-namespace AVCMS\Core\Model;
+namespace AV\Model;
 
 use AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler;
-use AVCMS\Core\Model\Event\ModelInsertEvent;
-use AVCMS\Core\Model\Event\ModelUpdateEvent;
+use AV\Model\Event\ModelInsertEvent;
+use AV\Model\Event\ModelUpdateEvent;
 use AVCMS\Core\Taxonomy\TaxonomyManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class Model
- * @package AVCMS\Core\Model
+ * @package AV\Model
  */
 abstract class Model implements ModelInterface {
 
@@ -47,7 +47,7 @@ abstract class Model implements ModelInterface {
     /**
      * @var string
      */
-    protected $finder = 'AVCMS\Core\Model\Finder';
+    protected $finder = 'AV\Model\Finder';
 
     /**
      * @var \AVCMS\Core\Taxonomy\TaxonomyManager
@@ -75,7 +75,7 @@ abstract class Model implements ModelInterface {
     }
 
     /**
-     * @return \AVCMS\Core\Model\Finder|mixed
+     * @return \AV\Model\Finder|mixed
      */
     public function find()
     {

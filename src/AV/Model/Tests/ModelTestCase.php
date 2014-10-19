@@ -5,10 +5,10 @@
  * Time: 16:06
  */
 
-namespace AVCMS\Core\Model\Tests;
+namespace AV\Model\Tests;
 
 
-use AVCMS\Core\Model\ModelFactory;
+use AV\Model\ModelFactory;
 
 abstract class ModelTestCase extends \PHPUnit_Extensions_Database_TestCase
 {
@@ -28,7 +28,7 @@ abstract class ModelTestCase extends \PHPUnit_Extensions_Database_TestCase
     protected $query_builder = null;
 
     /**
-     * @var \AVCMS\Core\Model\ModelFactory
+     * @var \AV\Model\ModelFactory
      */
     protected $model_factory = null;
 

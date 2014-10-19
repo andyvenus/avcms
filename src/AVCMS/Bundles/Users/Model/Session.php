@@ -8,7 +8,7 @@
 namespace AVCMS\Bundles\Users\Model;
 
 
-use AVCMS\Core\Model\Entity;
+use AV\Model\Entity;
 use Symfony\Component\Security\Core\Authentication\RememberMe\PersistentTokenInterface;
 
 class Session extends Entity implements PersistentTokenInterface

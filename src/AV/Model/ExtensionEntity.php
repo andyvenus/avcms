@@ -5,7 +5,7 @@
  * Time: 20:06
  */
 
-namespace AVCMS\Core\Model;
+namespace AV\Model;
 
 abstract class ExtensionEntity extends Entity
 {

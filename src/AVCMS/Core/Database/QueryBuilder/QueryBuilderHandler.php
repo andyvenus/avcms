@@ -4,7 +4,7 @@ namespace AVCMS\Core\Database\QueryBuilder;
 
 use AVCMS\Core\Database\Connection;
 use AVCMS\Core\Database\Events\QueryBuilderModelJoinEvent;
-use AVCMS\Core\Model\Model;
+use AV\Model\Model;
 use AVCMS\Core\Taxonomy\Model\TaxonomyModel;
 use Pixie\QueryBuilder\QueryBuilderHandler as PixieQueryBuilderHandler;
 
@@ -255,7 +255,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     }
 
     /**
-     * @param $entity \AVCMS\Core\Model\Entity
+     * @param $entity \AV\Model\Entity
      * @return $this
      */
     public function entity($entity)
@@ -392,12 +392,12 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     /**
      * Update the database using an array or AVCMS entity
      *
-     * @param $data array|\AVCMS\Core\Model\Entity
+     * @param $data array|\AV\Model\Entity
      */
     public function update($data)
     {
         // Get data from entity
-        if (is_a($data, 'AVCMS\Core\Model\Entity')) {
+        if (is_a($data, 'AV\Model\Entity')) {
             $data = $data->toArray();
         }
 
@@ -414,7 +414,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     {
         $entities = [];
         // Get data from entity
-        if (is_a($data, 'AVCMS\Core\Model\Entity')) {
+        if (is_a($data, 'AV\Model\Entity')) {
             $entities[] = $data;
             $data = $data->toArray();
         }
@@ -422,7 +422,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
         // Possible array of data
         if (is_array($data) && isset($data[0])) {
             foreach ($data as $entity) {
-                if (is_a($entity, 'AVCMS\Core\Model\Entity')) {
+                if (is_a($entity, 'AV\Model\Entity')) {
                     $entities[] = $entity;
                     $entityData[] = $entity->toArray();
                 }

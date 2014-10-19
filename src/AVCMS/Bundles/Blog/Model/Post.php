@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\Blog\Model;
 
-use AVCMS\Core\Model\ContentEntity;
+use AV\Model\ContentEntity;
 use AVCMS\Core\Validation\Rules\Length;
 use AVCMS\Core\Validation\Validator;
 

@@ -7,7 +7,7 @@
 
 namespace AVCMS\Core\Module;
 
-use AVCMS\Core\Model\Model;
+use AV\Model\Model;
 use AVCMS\Core\Module\Exception\ModuleNotFoundException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;

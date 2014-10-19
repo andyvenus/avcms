@@ -5,9 +5,9 @@
  * Time: 22:45
  */
 
-namespace AVCMS\Core\Model\Tests\Fixtures;
+namespace AV\Model\Tests\Fixtures;
 
-use AVCMS\Core\Model\Entity;
+use AV\Model\Entity;
 
 class FoodItem extends Entity
 {

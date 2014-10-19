@@ -2,7 +2,7 @@
 
 namespace AVCMS\Bundles\CmsFoundation\Model;
 
-use AVCMS\Core\Model\Model;
+use AV\Model\Model;
 
 class ModulePositions extends Model
 {

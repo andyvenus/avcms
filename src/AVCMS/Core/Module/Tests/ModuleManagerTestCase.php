@@ -86,7 +86,7 @@ class ModuleManagerTestCase extends \PHPUnit_Framework_TestCase
             ->method('getPositionModuleConfigs')
             ->willReturn($mockConfigs);
 
-        $positions = Mockery::mock('AVCMS\Core\Model\Model');
+        $positions = Mockery::mock('AV\Model\Model');
 
         $this->mockRequestStack = Mockery::mock('Symfony\Component\HttpFoundation\RequestStack', array('getCurrentRequest' => new Request()));
 

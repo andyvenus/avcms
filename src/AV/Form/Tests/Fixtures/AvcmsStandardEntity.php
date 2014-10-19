@@ -7,8 +7,7 @@
 
 namespace AV\Form\Tests\Fixtures;
 
-
-use AVCMS\Core\Model\Entity;
+use AV\Model\Entity;
 
 class AvcmsStandardEntity extends Entity {
     /**

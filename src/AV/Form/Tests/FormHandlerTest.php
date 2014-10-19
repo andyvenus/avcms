@@ -202,7 +202,7 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testAvcmsEntity()
     {
-        if (!class_exists('AVCMS\Core\Model\Entity')) {
+        if (!class_exists('AV\Model\Entity')) {
             $this->markTestSkipped("AVCMS Not installed");
 
             return null;

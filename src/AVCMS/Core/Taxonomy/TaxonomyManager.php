@@ -8,7 +8,7 @@
 namespace AVCMS\Core\Taxonomy;
 
 use AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler;
-use AVCMS\Core\Model\Model;
+use AV\Model\Model;
 
 /**
  * Class TaxonomyManager

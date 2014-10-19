@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\Admin\Event;
 
-use AVCMS\Core\Model\Entity;
+use AV\Model\Entity;
 use Symfony\Component\EventDispatcher\Event;
 
 class AdminFilterEntityEvent extends Event

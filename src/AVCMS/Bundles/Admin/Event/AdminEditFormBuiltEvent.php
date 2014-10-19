@@ -8,8 +8,8 @@
 namespace AVCMS\Bundles\Admin\Event;
 
 use AV\Form\FormHandler;
-use AVCMS\Core\Model\Entity;
-use AVCMS\Core\Model\Model;
+use AV\Model\Entity;
+use AV\Model\Model;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,12 +25,12 @@ use Symfony\Component\HttpFoundation\Request;
 class AdminEditFormBuiltEvent extends Event
 {
     /**
-     * @var \AVCMS\Core\Model\Entity
+     * @var \AV\Model\Entity
      */
     protected $entity;
 
     /**
-     * @var \AVCMS\Core\Model\Model
+     * @var \AV\Model\Model
      */
     protected $model;
 

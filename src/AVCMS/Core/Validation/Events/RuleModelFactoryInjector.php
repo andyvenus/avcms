@@ -7,7 +7,7 @@
 
 namespace AVCMS\Core\Validation\Events;
 
-use AVCMS\Core\Model\ModelFactory;
+use AV\Model\ModelFactory;
 use AVCMS\Core\Validation\Event\ValidatorFilterRuleEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

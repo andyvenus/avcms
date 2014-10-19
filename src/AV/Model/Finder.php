@@ -5,16 +5,16 @@
  * Time: 12:45
  */
 
-namespace AVCMS\Core\Model;
+namespace AV\Model;
 
-use AVCMS\Core\Model\Model;
+use AV\Model\Model;
 use AVCMS\Core\Taxonomy\TaxonomyManager;
 use Symfony\Component\HttpFoundation\Request;
 
 class Finder
 {
     /**
-     * @var \AVCMS\Core\Model\Model
+     * @var \AV\Model\Model
      */
     protected $model;
 

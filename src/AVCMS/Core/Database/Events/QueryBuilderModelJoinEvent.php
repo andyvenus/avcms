@@ -7,13 +7,13 @@
 
 namespace AVCMS\Core\Database\Events;
 
-use AVCMS\Core\Model\Model;
+use AV\Model\Model;
 use Symfony\Component\EventDispatcher\Event;
 
 class QueryBuilderModelJoinEvent extends Event
 {
     /**
-     * @var \AVCMS\Core\Model\Model
+     * @var \AV\Model\Model
      */
     private $joinModel;
 

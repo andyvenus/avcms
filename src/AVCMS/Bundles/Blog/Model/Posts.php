@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\Blog\Model;
 
-use AVCMS\Core\Model\ContentModel;
+use AV\Model\ContentModel;
 
 class Posts extends ContentModel {
 

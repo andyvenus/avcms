@@ -5,16 +5,16 @@
  * Time: 14:30
  */
 
-namespace AVCMS\Core\Model\Tests;
+namespace AV\Model\Tests;
 
 
-use AVCMS\Core\Model\Tests\Fixtures\Animal;
-use AVCMS\Core\Model\Tests\Fixtures\Food;
+use AV\Model\Tests\Fixtures\Animal;
+use AV\Model\Tests\Fixtures\Food;
 
 class ModelTest extends ModelTestCase
 {
     /**
-     * @var \AVCMS\Core\Model\Model
+     * @var \AV\Model\Model
      */
     private $model;
 
@@ -22,7 +22,7 @@ class ModelTest extends ModelTestCase
     {
         parent::setUp();
 
-        $this->model = $this->model_factory->create('AVCMS\Core\Model\Tests\Fixtures\Animals');
+        $this->model = $this->model_factory->create('AV\Model\Tests\Fixtures\Animals');
     }
 
     public function testFetchOne()
@@ -96,7 +96,7 @@ class ModelTest extends ModelTestCase
     public function testJoin()
     {
 
-        $food = $this->model_factory->create('AVCMS\Core\Model\Tests\Fixtures\Food');
+        $food = $this->model_factory->create('AV\Model\Tests\Fixtures\Food');
 
         $animal = $this->model->findOne(1)->modelJoin($food, array('name'))->first();
 

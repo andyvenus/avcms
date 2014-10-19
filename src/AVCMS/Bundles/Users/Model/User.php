@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\Users\Model;
 
-use AVCMS\Core\Model\Entity;
+use AV\Model\Entity;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 

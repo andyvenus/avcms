@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\Tags\Model;
 
-use AVCMS\Core\Model\Entity;
+use AV\Model\Entity;
 
 class Tag extends Entity
 {

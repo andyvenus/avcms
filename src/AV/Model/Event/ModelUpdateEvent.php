@@ -5,9 +5,9 @@
  * Time: 15:34
  */
 
-namespace AVCMS\Core\Model\Event;
+namespace AV\Model\Event;
 
-use AVCMS\Core\Model\Entity;
+use AV\Model\Entity;
 use Symfony\Component\EventDispatcher\Event;
 
 class ModelUpdateEvent extends Event

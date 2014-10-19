@@ -129,7 +129,7 @@ class BundleBuilderController extends BundleBaseController
                 // Make entity using CodeGenerator
                 $entity_class = new PhpClass();
                 $entity_class->setName($config->namespace.'\Model\\'.$fm->getVar('cc_singular'));
-                $entity_class->setUseStatements(array('Entity' => 'AVCMS\Core\Model\Entity'));
+                $entity_class->setUseStatements(array('Entity' => 'AV\Model\Entity'));
                 $entity_class->setParentClassName('Entity');
                 $form_construct_body = '';
 

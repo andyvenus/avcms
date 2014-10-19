@@ -7,7 +7,7 @@
 
 namespace AVCMS\Core\Module;
 
-use AVCMS\Core\Model\Model;
+use AV\Model\Model;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 class ModulePositionsManager

@@ -7,7 +7,7 @@
 
 namespace AVCMS\Core\Taxonomy\Model;
 
-use AVCMS\Core\Model\Model;
+use AV\Model\Model;
 
 abstract class TaxonomyModel extends Model
 {

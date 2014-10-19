@@ -2,7 +2,7 @@
 
 namespace {{namespace}}\Model;
 
-use AVCMS\Core\Model\Model;
+use AV\Model\Model;
 
 class {{model_class}} extends Model
 {

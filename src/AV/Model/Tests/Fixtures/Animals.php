@@ -5,9 +5,9 @@
  * Time: 20:09
  */
 
-namespace AVCMS\Core\Model\Tests\Fixtures;
+namespace AV\Model\Tests\Fixtures;
 
-use AVCMS\Core\Model\Model;
+use AV\Model\Model;
 
 class Animals extends Model
 {
@@ -23,6 +23,6 @@ class Animals extends Model
 
     public function getEntity()
     {
-        return 'AVCMS\Core\Model\Tests\Fixtures\Animal';
+        return 'AV\Model\Tests\Fixtures\Animal';
     }
 }

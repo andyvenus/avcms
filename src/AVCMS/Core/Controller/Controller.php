@@ -9,7 +9,7 @@ use AV\Form\FormHandler;
 use AV\Form\FormView;
 use AV\Form\RequestHandler\SymfonyRequestHandler;
 use AV\Form\ValidatorExtension\AVCMSValidatorExtension;
-use AVCMS\Core\Model\EntityProcessor;
+use AV\Model\EntityProcessor;
 use AVCMS\Core\Security\PermissionsError;
 use AVCMS\Core\Validation\Validator;
 use Symfony\Component\DependencyInjection\ContainerAware;
@@ -31,7 +31,7 @@ abstract class Controller extends ContainerAware
     protected $translator;
 
     /**
-     * @var \AVCMS\Core\Model\ModelFactory
+     * @var \AV\Model\ModelFactory
      */
     protected $modelFactory;
 
@@ -91,7 +91,7 @@ abstract class Controller extends ContainerAware
 
     /**
      * @param $model_name
-     * @return \AVCMS\Core\Model\Model|mixed
+     * @return \AV\Model\Model|mixed
      */
     protected function model($model_name)
     {

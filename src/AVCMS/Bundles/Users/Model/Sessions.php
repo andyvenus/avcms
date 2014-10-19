@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\Users\Model;
 
-use AVCMS\Core\Model\Model;
+use AV\Model\Model;
 use Symfony\Component\Security\Core\Authentication\RememberMe\PersistentTokenInterface;
 use Symfony\Component\Security\Core\Authentication\RememberMe\TokenProviderInterface;
 use Symfony\Component\Security\Core\Exception\TokenNotFoundException;

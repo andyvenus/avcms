@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\Users\Model;
 
-use AVCMS\Core\Model\Model;
+use AV\Model\Model;
 
 class Groups extends Model
 {

@@ -8,7 +8,7 @@
 namespace AVCMS\Bundles\Blog\Finder;
 
 use AVCMS\Bundles\Blog\Model\Posts;
-use AVCMS\Core\Model\Finder;
+use AV\Model\Finder;
 use AVCMS\Core\Taxonomy\TaxonomyManager;
 
 class BlogPostsFinder extends Finder

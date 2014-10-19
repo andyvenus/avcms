@@ -47,7 +47,7 @@ class TaxonomyManagerTest extends \PHPUnit_Framework_TestCase
         $mockQueryBuilder = $this->getMockBuilder('AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler')
             ->disableOriginalConstructor()
             ->getMock();
-        $mockModel = $this->getMockBuilder('AVCMS\Core\Model\Model')
+        $mockModel = $this->getMockBuilder('AV\Model\Model')
             ->disableOriginalConstructor()
             ->getMock();
 

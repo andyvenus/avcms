@@ -1,8 +1,8 @@
 <?php
 
-namespace AVCMS\Core\Model;
+namespace AV\Model;
 
-use AVCMS\Core\Model\Event\CreateModelEvent;
+use AV\Model\Event\CreateModelEvent;
 
 class ModelFactory {
 

@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\Users\Model;
 
-use AVCMS\Core\Model\Model;
+use AV\Model\Model;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;

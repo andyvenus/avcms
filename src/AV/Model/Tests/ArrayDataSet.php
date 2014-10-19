@@ -5,7 +5,7 @@
  * Time: 16:04
  */
 
-namespace AVCMS\Core\Model\Tests;
+namespace AV\Model\Tests;
 
 //\PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 

@@ -2,7 +2,7 @@
 
 namespace AVCMS\Bundles\Users\Model;
 
-use AVCMS\Core\Model\Entity;
+use AV\Model\Entity;
 
 class EmailValidationKey extends Entity
 {

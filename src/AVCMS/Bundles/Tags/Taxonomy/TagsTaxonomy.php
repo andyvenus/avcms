@@ -8,7 +8,7 @@
 namespace AVCMS\Bundles\Tags\Taxonomy;
 
 use AVCMS\Core\Database\QueryBuilder\QueryBuilderHandler;
-use AVCMS\Core\Model\Model;
+use AV\Model\Model;
 use AVCMS\Core\Taxonomy\Model\TaxonomyModel;
 use AVCMS\Core\Taxonomy\Taxonomy;
 
@@ -26,7 +26,7 @@ class TagsTaxonomy implements Taxonomy
     protected $relation_column = 'name';
 
     /**
-     * @var \AVCMS\Core\Model\Model
+     * @var \AV\Model\Model
      */
     protected $tags;
 

@@ -5,13 +5,13 @@
  * Time: 15:30
  */
 
-namespace AVCMS\Core\Model;
+namespace AV\Model;
 
 use AV\Form\EntityProcessor\EntityProcessor as FormEntityProcessor;
 
 /**
  * Class EntityProcessor
- * @package AVCMS\Core\Model
+ * @package AV\Model
  */
 class EntityProcessor implements FormEntityProcessor
 {

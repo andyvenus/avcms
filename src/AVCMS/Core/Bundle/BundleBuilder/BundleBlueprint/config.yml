@@ -10,7 +10,7 @@ directory_structure:
 base_controller: AVCMS\Core\Controller\Controller
 admin_controller: AVCMS\Bundles\Admin\Controller\AdminController
 
-base_entity: AVCMS\Core\Model\Entity
-base_model: AVCMS\Core\Model\Model
+base_entity: AV\Model\Entity
+base_model: AV\Model\Model
 
 form_blueprint: AV\Form\FormBlueprint

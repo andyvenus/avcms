@@ -8,18 +8,18 @@
 namespace AVCMS\Core\Menu;
 
 use AVCMS\Bundles\CmsFoundation\Model\MenuItem;
-use AVCMS\Core\Model\Model;
+use AV\Model\Model;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class MenuManager
 {
     /**
-     * @var \AVCMS\Core\Model\Model
+     * @var \AV\Model\Model
      */
     protected $model;
     /**
-     * @var \AVCMS\Core\Model\Model
+     * @var \AV\Model\Model
      */
     protected $itemsModel;
 

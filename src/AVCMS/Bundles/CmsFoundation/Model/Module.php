@@ -2,7 +2,7 @@
 
 namespace AVCMS\Bundles\CmsFoundation\Model;
 
-use AVCMS\Core\Model\Entity;
+use AV\Model\Entity;
 use AVCMS\Core\Module\ModuleConfigInterface;
 
 class Module extends Entity implements ModuleConfigInterface

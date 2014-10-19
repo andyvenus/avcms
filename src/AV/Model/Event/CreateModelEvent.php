@@ -1,9 +1,9 @@
 <?php
 
-namespace AVCMS\Core\Model\Event;
+namespace AV\Model\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use AVCMS\Core\Model\Model;
+use AV\Model\Model;
 
 class CreateModelEvent extends Event
 {

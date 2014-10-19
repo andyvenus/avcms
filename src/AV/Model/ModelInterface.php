@@ -5,7 +5,7 @@
  * Time: 14:55
  */
 
-namespace AVCMS\Core\Model;
+namespace AV\Model;
 
 
 interface ModelInterface {

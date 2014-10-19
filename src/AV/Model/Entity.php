@@ -5,14 +5,14 @@
  * Time: 15:46
  */
 
-namespace AVCMS\Core\Model;
+namespace AV\Model;
 
 use AVCMS\Core\Validation\Validatable;
 use AVCMS\Core\Validation\Validator;
 
 /**
  * Class Entity
- * @package AVCMS\Core\Model
+ * @package AV\Model
  */
 abstract class Entity implements Validatable
 {
@@ -60,7 +60,7 @@ abstract class Entity implements Validatable
         else {
             $data = $this->data;
             foreach ($this->subEntities as $sub_entity) {
-                if (is_a($sub_entity, 'AVCMS\Core\Model\ExtensionEntity')) {
+                if (is_a($sub_entity, 'AV\Model\ExtensionEntity')) {
 
                     $sub_data = $sub_entity->toArray();
                     $sub_data_prefixed = array();

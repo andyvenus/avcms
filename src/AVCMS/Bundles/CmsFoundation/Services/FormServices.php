@@ -26,7 +26,7 @@ class FormServices implements Service
 
         $container->register('form.request_handler', 'AV\Form\RequestHandler\SymfonyRequestHandler');
 
-        $container->register('form.entity_processor', 'AVCMS\Core\Model\EntityProcessor');
+        $container->register('form.entity_processor', 'AV\Model\EntityProcessor');
 
         $container->register('csrf.token', 'AVCMS\Core\Security\Csrf\CsrfToken');
 

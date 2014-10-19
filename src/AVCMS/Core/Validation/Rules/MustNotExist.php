@@ -2,7 +2,7 @@
 
 namespace AVCMS\Core\Validation\Rules;
 
-use AVCMS\Core\Model\ModelFactory;
+use AV\Model\ModelFactory;
 
 class MustNotExist extends Rule implements ModelRuleInterface {
 
@@ -16,7 +16,7 @@ class MustNotExist extends Rule implements ModelRuleInterface {
     protected $exists_error = "The field '{param_name}' must be unique, value already exists";
 
     /**
-     * @var \AVCMS\Core\Model\ModelFactory
+     * @var \AV\Model\ModelFactory
      */
     protected $model_factory;
 
