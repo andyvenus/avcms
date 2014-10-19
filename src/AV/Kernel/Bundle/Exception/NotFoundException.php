@@ -5,7 +5,7 @@
  * Time: 17:11
  */
 
-namespace AVCMS\Core\Bundle\Exception;
+namespace AV\Kernel\Bundle\Exception;
 
 class NotFoundException extends \Exception
 {

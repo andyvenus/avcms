@@ -7,17 +7,14 @@
 
 namespace AV\Kernel\Bundle;
 
-use AVCMS\Core\Bundle\Config\BundleConfigurationValidator;
-use AVCMS\Core\Bundle\Exception\NotFoundException;
-use AVCMS\Core\SettingsManager\SettingsManager;
+use AV\Kernel\Bundle\Exception\NotFoundException;
+use AVCMS\Core\Bundle\Config\BundleConfigValidator;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Yaml\Yaml;
@@ -82,7 +79,7 @@ class BundleManager implements BundleManagerInterface
         $this->cacheDir = $cacheDir;
 
         if ($configValidator == null) {
-            $configValidator = new BundleConfigurationValidator();
+            $configValidator = new BundleConfigValidator();
         }
 
         $this->configValidator = $configValidator;
@@ -120,7 +117,7 @@ class BundleManager implements BundleManagerInterface
      * Add required services to the container
      *
      * @param ContainerBuilder $container
-     * @throws Exception\NotFoundException
+     * @throws NotFoundException
      */
     public function decorateContainer(ContainerBuilder $container)
     {
