@@ -5,7 +5,7 @@
  * Time: 14:59
  */
 
-namespace AVCMS\BundlesDev\Assets\Controller;
+namespace AVCMS\Bundles\Assets\Controller;
 
 use Assetic\AssetWriter;
 use AVCMS\Core\AssetManager\Asset\BundleAssetInterface;

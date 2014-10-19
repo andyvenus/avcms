@@ -5,7 +5,7 @@
  * Time: 16:40
  */
 
-namespace AVCMS\BundlesDev\Assets\Services;
+namespace AVCMS\Bundles\Assets\Services;
 
 use AVCMS\Core\AssetManager\Asset\AppFileAsset;
 use AVCMS\Core\AssetManager\AssetManager;
