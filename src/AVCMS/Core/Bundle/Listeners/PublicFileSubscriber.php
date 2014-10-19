@@ -7,7 +7,7 @@
 
 namespace AVCMS\Core\Bundle\Listeners;
 
-use AVCMS\Core\Bundle\BundleManagerInterface;
+use AV\Kernel\Bundle\BundleManagerInterface;
 use DirectoryIterator;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;

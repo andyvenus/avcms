@@ -7,7 +7,7 @@
 
 namespace AVCMS\BundlesDev\DevTools\Listener;
 
-use AVCMS\Core\Bundle\BundleManagerInterface;
+use AV\Kernel\Bundle\BundleManagerInterface;
 use AVCMS\Core\Translation\Translator;
 use Symfony\Component\HttpKernel\Event\PostResponseEvent;
 

@@ -7,7 +7,7 @@
 
 namespace AVCMS\Core\Bundle\ModuleProvider;
 
-use AVCMS\Core\Bundle\BundleManagerInterface;
+use AV\Kernel\Bundle\BundleManagerInterface;
 use AVCMS\Core\Module\Module;
 use AVCMS\Core\Module\ModuleProviderInterface;
 

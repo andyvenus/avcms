@@ -5,9 +5,9 @@
  * Time: 11:19
  */
 
-namespace AVCMS\Core\Kernel;
+namespace AV\Kernel;
 
-use AVCMS\Core\Bundle\BundleManagerInterface;
+use AV\Kernel\Bundle\BundleManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Router as BaseRouter;
 class Router extends BaseRouter
 {
     /**
-     * @var \AVCMS\Core\Bundle\BundleManagerInterface
+     * @var \AV\Kernel\Bundle\BundleManagerInterface
      */
     protected $bundleManager;
 

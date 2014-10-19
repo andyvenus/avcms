@@ -8,7 +8,7 @@
 namespace AVCMS\Core\View;
 
 
-use AVCMS\Core\Bundle\ResourceLocator;
+use AV\Kernel\Bundle\ResourceLocator;
 use AVCMS\Core\SettingsManager\SettingsManager;
 use Twig_Error_Loader;
 

@@ -3,7 +3,7 @@
 namespace AVCMS\Core\Controller;
 
 use AVCMS\Bundles\Users\Exception\PermissionDeniedException;
-use AVCMS\Core\Bundle\BundleConfig;
+use AV\Kernel\Bundle\BundleConfig;
 use AV\Form\FormBlueprint;
 use AV\Form\FormHandler;
 use AV\Form\FormView;
@@ -36,7 +36,7 @@ abstract class Controller extends ContainerAware
     protected $modelFactory;
 
     /**
-     * @var \AVCMS\Core\Bundle\BundleConfig
+     * @var \AV\Kernel\Bundle\BundleConfig
      */
     protected $bundle;
 

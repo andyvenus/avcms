@@ -1,7 +1,7 @@
 <?php
 
-use AVCMS\Core\Kernel\BundleKernel;
-use AVCMS\Core\Bundle\BundleManager;
+use AV\Kernel\BundleKernel;
+use AV\Kernel\Bundle\BundleManager;
 use Symfony\Component\HttpFoundation\Request;
 
 define('DEBUG_MODE', true);

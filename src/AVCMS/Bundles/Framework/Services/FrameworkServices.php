@@ -23,7 +23,7 @@ class FrameworkServices implements Service
 
         $container->register('context', 'Symfony\Component\Routing\RequestContext');
 
-        $container->register('router', 'AVCMS\Core\Kernel\Router')
+        $container->register('router', 'AV\Kernel\Router')
             ->setArguments(array(new Reference('router.loader.yaml'), 'routes.yml', array('cache_dir' => 'cache', 'debug' => '%dev_mode%'), new Reference('bundle_manager')))
         ;
 

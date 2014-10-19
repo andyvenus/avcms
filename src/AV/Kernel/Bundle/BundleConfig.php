@@ -5,7 +5,7 @@
  * Time: 12:59
  */
 
-namespace AVCMS\Core\Bundle;
+namespace AV\Kernel\Bundle;
 
 use AVCMS\Core\Config\Config;
 
@@ -13,8 +13,7 @@ class BundleConfig extends Config
 {
     public function __construct(BundleManagerInterface $bundleManager, $config)
     {
-        if (isset($config['parent_bundle']))
-        {
+        if (isset($config['parent_bundle'])) {
             $parentConfig = $bundleManager->loadBundleConfig($config['parent_bundle'])->getConfigArray();
 
             if (isset($parentConfig['parent_bundle'])) {

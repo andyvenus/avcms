@@ -7,7 +7,7 @@
 
 namespace AVCMS\Core\Bundle\BundleBuilder;
 
-use AVCMS\Core\Bundle\BundleConfig;
+use AV\Kernel\Bundle\BundleConfig;
 
 class FileMaker
 {

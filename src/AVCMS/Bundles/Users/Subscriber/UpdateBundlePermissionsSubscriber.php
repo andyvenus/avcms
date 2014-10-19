@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\Users\Subscriber;
 
-use AVCMS\Core\Bundle\BundleManagerInterface;
+use AV\Kernel\Bundle\BundleManagerInterface;
 use AV\Model\Model;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;

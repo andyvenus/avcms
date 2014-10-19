@@ -15,14 +15,14 @@ class BundleServices implements Service
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
-        $container->register('bundle_manager', 'AVCMS\Core\Bundle\BundleManagerAlias');
+        $container->register('bundle_manager', 'AV\Kernel\Bundle\BundleManagerAlias');
 
         $container->register('listener.controller.inject.bundle', 'AVCMS\Core\Bundle\Listeners\ControllerInjectBundle')
             ->setArguments(array(new Reference('bundle_manager')))
             ->addTag('event.subscriber')
         ;
 
-        $container->register('bundle.resource_locator', 'AVCMS\Core\Bundle\ResourceLocator')
+        $container->register('bundle.resource_locator', 'AV\Kernel\Bundle\ResourceLocator')
             ->setArguments(array(new Reference('bundle_manager'), new Reference('settings_manager')))
         ;
 

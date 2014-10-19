@@ -5,7 +5,7 @@
  * Time: 12:03
  */
 
-namespace AVCMS\Core\Kernel\Events;
+namespace AV\Kernel\Events;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\Event;

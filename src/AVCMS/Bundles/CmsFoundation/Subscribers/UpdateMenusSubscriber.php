@@ -8,7 +8,7 @@
 namespace AVCMS\Bundles\CmsFoundation\Subscribers;
 
 use AVCMS\Bundles\CmsFoundation\Model\MenuItem;
-use AVCMS\Core\Bundle\BundleManagerInterface;
+use AV\Kernel\Bundle\BundleManagerInterface;
 use AVCMS\Core\Menu\MenuManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;

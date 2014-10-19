@@ -5,7 +5,7 @@
  * Time: 11:27
  */
 
-namespace AVCMS\Core\Bundle;
+namespace AV\Kernel\Bundle;
 
 use AVCMS\Core\Bundle\Config\BundleConfigurationValidator;
 use AVCMS\Core\Bundle\Exception\NotFoundException;

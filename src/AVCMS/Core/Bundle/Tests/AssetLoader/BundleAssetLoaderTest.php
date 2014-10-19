@@ -8,14 +8,14 @@
 namespace AVCMS\Core\Bundle\Tests\AssetLoader;
 
 use AVCMS\Core\Bundle\AssetLoader\BundleAssetLoader;
-use AVCMS\Core\Bundle\BundleConfig;
+use AV\Kernel\Bundle\BundleConfig;
 use PHPUnit_Framework_Assert;
 
 class BundleAssetLoaderTest extends \PHPUnit_Framework_TestCase
 {
     public function testBundleAssetLoader()
     {
-        $mockBundleManager = $this->getMockBuilder('AVCMS\Core\Bundle\BundleManager')
+        $mockBundleManager = $this->getMockBuilder('AV\Kernel\Bundle\BundleManager')
             ->disableOriginalConstructor()
             ->getMock();
 

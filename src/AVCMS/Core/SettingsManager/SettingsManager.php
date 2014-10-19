@@ -7,7 +7,7 @@
 
 namespace AVCMS\Core\SettingsManager;
 
-use AVCMS\Core\Bundle\BundleManagerInterface;
+use AV\Kernel\Bundle\BundleManagerInterface;
 use AVCMS\Core\Config\Config;
 use AVCMS\Core\SettingsManager\Loader\SettingsLoaderInterface;
 

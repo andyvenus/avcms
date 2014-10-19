@@ -5,7 +5,7 @@
  * Time: 16:58
  */
 
-namespace AVCMS\Core\Bundle;
+namespace AV\Kernel\Bundle;
 
 use AVCMS\Core\Bundle\Exception\NotFoundException;
 use AVCMS\Core\SettingsManager\SettingsManager;

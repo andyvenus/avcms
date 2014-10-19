@@ -14,7 +14,7 @@ class BundleBaseController extends Controller
 {
     /**
      * @param $bundle
-     * @return null|\AVCMS\Core\Bundle\BundleConfig
+     * @return null|\AV\Kernel\Bundle\BundleConfig
      */
     protected function getBundleConfig($bundle)
     {

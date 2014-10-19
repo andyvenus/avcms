@@ -5,7 +5,7 @@
  * Time: 19:49
  */
 
-namespace AVCMS\Core\Bundle;
+namespace AV\Kernel\Bundle;
 
 use AVCMS\Core\SettingsManager\SettingsManager;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

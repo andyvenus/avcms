@@ -4,7 +4,7 @@
  * Date: 17/08/2014
  * Time: 19:48
  */
-namespace AVCMS\Core\Bundle;
+namespace AV\Kernel\Bundle;
 
 use AVCMS\Core\SettingsManager\SettingsManager;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

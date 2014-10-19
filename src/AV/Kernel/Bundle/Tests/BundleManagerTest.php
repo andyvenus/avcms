@@ -5,16 +5,16 @@
  * Time: 17:14
  */
 
-namespace AVCMS\Core\Bundle\Tests;
+namespace AV\Kernel\Bundle\Tests;
 
-use AVCMS\Core\Bundle\BundleManager;
+use AV\Kernel\Bundle\BundleManager;
 use org\bovigo\vfs\vfsStream;
 use Symfony\Component\Yaml\Yaml;
 
 class BundleManagerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \AVCMS\Core\Bundle\BundleManager
+     * @var \AV\Kernel\Bundle\BundleManager
      */
     private $bundleManager;
 

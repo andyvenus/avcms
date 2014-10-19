@@ -1,9 +1,9 @@
 <?php
 
-namespace AVCMS\Core\Kernel;
+namespace AV\Kernel;
 
-use AVCMS\Core\Bundle\BundleManager;
-use AVCMS\Core\Kernel\Events\KernelBootEvent;
+use AV\Kernel\Bundle\BundleManager;
+use AV\Kernel\Events\KernelBootEvent;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -126,7 +126,7 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
     }
 
     /**
-     * @return \AVCMS\Core\Bundle\BundleManager
+     * @return \AV\Kernel\Bundle\BundleManager
      */
     private function getBundleManager()
     {
