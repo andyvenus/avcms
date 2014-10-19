@@ -7,7 +7,7 @@
 
 namespace AV\Kernel\Bundle;
 
-use AVCMS\Core\Bundle\Exception\NotFoundException;
+use AV\Kernel\Bundle\Exception\NotFoundException;
 use AVCMS\Core\SettingsManager\SettingsManager;
 
 class ResourceLocator

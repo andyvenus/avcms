@@ -35,5 +35,11 @@ class TranslationServices implements Service
         $container->register('translator.message_selector', 'Symfony\Component\Translation\MessageSelector');
 
         $container->register('translator.loader.array', 'Symfony\Component\Translation\Loader\ArrayLoader');
+
+
+        $container->register('twig.translation.extension', 'Symfony\Bridge\Twig\Extension\TranslationExtension')
+            ->setArguments(array(new Reference('translator')))
+            ->addTag('twig.extension')
+        ;
     }
 }

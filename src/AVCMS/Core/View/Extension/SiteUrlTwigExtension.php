@@ -9,7 +9,7 @@ namespace AVCMS\Core\View\Extension;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class GlobalVarsTwigExtension extends \Twig_Extension
+class SiteUrlTwigExtension extends \Twig_Extension
 {
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -30,6 +30,6 @@ class GlobalVarsTwigExtension extends \Twig_Extension
 
     public function getName()
     {
-        return 'avcms_globals';
+        return 'site_url_extension';
     }
 }

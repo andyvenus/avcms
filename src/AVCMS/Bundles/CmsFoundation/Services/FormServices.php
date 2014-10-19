@@ -47,5 +47,11 @@ class FormServices implements Service
             ->setArguments(array(new Reference('model_factory')))
             ->addTag('event.subscriber')
         ;
+
+        // Twig Extension
+
+        $container->register('twig.form.extension', 'AV\Form\Twig\FormExtension')
+            ->addTag('twig.extension')
+        ;
     }
 }

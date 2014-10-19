@@ -1,6 +1,9 @@
 name: Blog
 namespace: AVCMS\Bundles\Blog
 
+services:
+  - MarkdownServices
+
 model:
   posts: Posts
   users: AVCMS\Bundles\Users\Model\Users
