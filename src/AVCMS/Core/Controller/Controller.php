@@ -46,6 +46,8 @@ abstract class Controller extends ContainerAware
     protected $settings;
 
     /**
+     * Set the container into this controller.
+     *
      * @param ContainerInterface $container
      */
     public function setContainer(ContainerInterface $container = null)
@@ -90,6 +92,8 @@ abstract class Controller extends ContainerAware
     }
 
     /**
+     * Get a database model
+     *
      * @param $model_name
      * @return \AV\Model\Model|mixed
      */
@@ -109,17 +113,9 @@ abstract class Controller extends ContainerAware
         return $this->modelFactory->create($model_name);
     }
 
-    protected function newValidator()
-    {
-        $validator = new Validator();
-
-        $validator->setTranslator($this->translator);
-        $validator->setEventDispatcher($this->container->get('dispatcher'));
-
-        return $validator;
-    }
-
     /**
+     * Build a form
+     *
      * @param FormBlueprint $form
      * @param null $request
      * @param array|mixed $entities
@@ -151,15 +147,14 @@ abstract class Controller extends ContainerAware
         return $this->container->get('security.context')->getToken()->getUser();
     }
 
-    protected function checkPermission($permission)
-    {
-        $permission = $this->container->get('active.user')->hasPermission($permission);
-
-        if (!$permission) {
-            throw new PermissionDeniedException("You don't have permission to view this page");
-        }
-    }
-
+    /**
+     * Render a twig template
+     *
+     * @param $template
+     * @param array $context
+     * @param bool $return_response
+     * @return string|Response
+     */
     protected function render($template, array $context = array(), $return_response = false)
     {
         if (isset($this->bundle)) {
@@ -183,6 +178,8 @@ abstract class Controller extends ContainerAware
     }
 
     /**
+     * Get a service from the container
+     *
      * @param $service
      * @return object
      */
@@ -191,23 +188,21 @@ abstract class Controller extends ContainerAware
         return $this->container->get($service);
     }
 
+    /**
+     * Create a not found exception that can be thrown when a requested page doesn't exist
+     *
+     * @param string $message
+     * @param \Exception $previous
+     * @return NotFoundHttpException
+     */
     public function createNotFoundException($message = 'Not Found', \Exception $previous = null)
     {
         return new NotFoundHttpException($message, $previous);
     }
 
-    public function requirePermissions($permissions)
-    {
-        $permissions = (array) $permissions;
-
-        foreach ($permissions as $permission) {
-            if ($this->activeUser()->hasPermission($permission) == false) {
-                throw new PermissionsError('You do not have authorisation to view this page', $permission);
-            }
-        }
-    }
-
     /**
+     * Gets a setting
+     *
      * @param $name
      * @return mixed
      */
@@ -217,6 +212,8 @@ abstract class Controller extends ContainerAware
     }
 
     /**
+     * Dispatch an EventDispatcher Event
+     *
      * @param $name
      * @param Event $event
      * @return \Symfony\Component\EventDispatcher\EventDispatcher
@@ -226,11 +223,27 @@ abstract class Controller extends ContainerAware
         return $this->container->get('dispatcher')->dispatch($name, $event);
     }
 
-    protected function permission($attributes, $object = null)
+    /**
+     * Check if the logged in user has certain permissions
+     *
+     * @param $attributes
+     * @param null $object
+     * @return bool
+     */
+    protected function isGranted($attributes, $object = null)
     {
         return $this->container->get('security.context')->isGranted($attributes, $object);
     }
 
+    /**
+     * Translate a string
+     *
+     * @param $id
+     * @param array $parameters
+     * @param null $domain
+     * @param null $locale
+     * @return string
+     */
     protected function trans($id, $parameters = array(), $domain = null, $locale = null)
     {
         return $this->translator->trans($id, $parameters, $domain, $locale);

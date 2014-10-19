@@ -28,7 +28,7 @@ class BlogAdminController extends AdminBaseController
     {
         $this->blogPosts = $this->model('Posts');
 
-        if (!$this->permission('ADMIN_BLOG')) {
+        if (!$this->isGranted('ADMIN_BLOG')) {
             throw new AccessDeniedException;
         }
     }
