@@ -11,7 +11,7 @@ use AV\Form\FormBlueprint;
 use AV\Form\FormHandlerFactory;
 use AV\Form\FormView;
 use AV\Form\ValidatorExtension\AVCMSValidatorExtension;
-use AVCMS\Core\Validation\Validator;
+use AV\Validation\Validator;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

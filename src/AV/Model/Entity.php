@@ -7,8 +7,8 @@
 
 namespace AV\Model;
 
-use AVCMS\Core\Validation\Validatable;
-use AVCMS\Core\Validation\Validator;
+use AV\Validation\Validatable;
+use AV\Validation\Validator;
 
 /**
  * Class Entity
@@ -110,7 +110,7 @@ abstract class Entity implements Validatable
         $this->validationRules($validator);
 
         foreach ($this->subEntities as $subEntity) {
-            if (is_a($subEntity, 'AVCMS\Core\Validation\Validatable')) {
+            if (is_a($subEntity, 'AV\Validation\Validatable')) {
                 $validator->addSubValidation($subEntity);
             }
         }

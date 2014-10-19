@@ -11,7 +11,7 @@ use AV\Form\RequestHandler\SymfonyRequestHandler;
 use AV\Form\ValidatorExtension\AVCMSValidatorExtension;
 use AV\Model\EntityProcessor;
 use AVCMS\Core\Security\PermissionsError;
-use AVCMS\Core\Validation\Validator;
+use AV\Validation\Validator;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\Event;

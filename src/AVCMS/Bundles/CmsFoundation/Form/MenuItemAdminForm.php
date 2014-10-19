@@ -3,8 +3,8 @@
 namespace AVCMS\Bundles\CmsFoundation\Form;
 
 use AV\Form\FormBlueprint;
-use AVCMS\Core\Validation\Rules\MustNotExist;
-use AVCMS\Core\Validation\Validator;
+use AV\Validation\Rules\MustNotExist;
+use AV\Validation\Validator;
 
 class MenuItemAdminForm extends FormBlueprint
 {

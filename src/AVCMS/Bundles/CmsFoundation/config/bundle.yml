@@ -27,7 +27,7 @@ user_settings:
     section: main
     validation:
       min_length:
-        class: AVCMS\Core\Validation\Rules\Length
+        class: AV\Validation\Rules\Length
         arguments:
           - 5
 

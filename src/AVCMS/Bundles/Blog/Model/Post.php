@@ -8,8 +8,8 @@
 namespace AVCMS\Bundles\Blog\Model;
 
 use AV\Model\ContentEntity;
-use AVCMS\Core\Validation\Rules\Length;
-use AVCMS\Core\Validation\Validator;
+use AV\Validation\Rules\Length;
+use AV\Validation\Validator;
 
 class Post extends ContentEntity {
     public function setTitle($value) {

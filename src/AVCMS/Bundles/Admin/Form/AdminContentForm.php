@@ -8,9 +8,9 @@
 namespace AVCMS\Bundles\Admin\Form;
 
 use AV\Form\FormBlueprint;
-use AVCMS\Core\Validation\Rules\MustNotExist;
-use AVCMS\Core\Validation\Validatable;
-use AVCMS\Core\Validation\Validator;
+use AV\Validation\Rules\MustNotExist;
+use AV\Validation\Validatable;
+use AV\Validation\Validator;
 
 abstract class AdminContentForm extends FormBlueprint
 {

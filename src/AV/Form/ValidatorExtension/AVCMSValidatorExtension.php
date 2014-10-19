@@ -9,7 +9,7 @@ namespace AV\Form\ValidatorExtension;
 
 use AV\Form\FormError;
 use AV\Form\FormHandler;
-use AVCMS\Core\Validation\Validator;
+use AV\Validation\Validator;
 use ReflectionClass;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -22,7 +22,7 @@ class AVCMSValidatorExtension implements ValidatorExtension, ContainerAwareInter
     protected $formHandler;
 
     /**
-     * @var \AVCMS\Core\Validation\Validator
+     * @var \AV\Validation\Validator
      */
     protected $validator;
 
@@ -144,8 +144,8 @@ class AVCMSValidatorExtension implements ValidatorExtension, ContainerAwareInter
                     if (isset($validation['class']) && class_exists($validation['class'])) {
                         $class = $validation['class'];
                     }
-                    elseif (isset($validation['rule']) && class_exists('AVCMS\Core\Validation\Rules\\'.$validation['rule'])) {
-                        $class = 'AVCMS\Core\Validation\Rules\\' . $validation['rule'];
+                    elseif (isset($validation['rule']) && class_exists('AV\Validation\Rules\\'.$validation['rule'])) {
+                        $class = 'AV\Validation\Rules\\' . $validation['rule'];
                     }
                     else {
                         continue;

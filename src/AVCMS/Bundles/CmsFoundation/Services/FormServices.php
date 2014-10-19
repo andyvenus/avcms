@@ -43,7 +43,7 @@ class FormServices implements Service
 
         // Validation
 
-        $container->register('listener.validator.model_injector', 'AVCMS\Core\Validation\Events\RuleModelFactoryInjector')
+        $container->register('listener.validator.model_injector', 'AV\Validation\Events\RuleModelFactoryInjector')
             ->setArguments(array(new Reference('model_factory')))
             ->addTag('event.subscriber')
         ;
