@@ -38,5 +38,10 @@ class AssetServices implements Service
                 ->addTag('twig.extension')
             ;
         }
+
+        $container->register('listener.bundle.public_file', 'AVCMS\Core\Bundle\Listeners\PublicFileSubscriber')
+            ->setArguments(array(new Reference('bundle_manager')))
+            ->addTag('event.subscriber')
+        ;
     }
 }

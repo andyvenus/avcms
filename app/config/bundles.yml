@@ -1,14 +1,16 @@
 Framework:
-  enabled: true
+    enabled: true
 CmsFoundation:
-  enabled: true
+    enabled: true
 Users:
-  enabled: true
+    enabled: true
 Admin:
-  enabled: true
+    enabled: true
 Blog:
-  enabled: true
+    enabled: true
 Tags:
-  enabled: true
+    enabled: true
 Assets:
-  enabled: true
+    enabled: true
+Twig:
+    enabled: true

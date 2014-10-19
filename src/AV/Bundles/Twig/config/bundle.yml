@@ -1,0 +1,5 @@
+name: Twig
+namespace: AV\Bundles\Twig
+
+services:
+ - TwigServices

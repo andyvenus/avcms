@@ -5,7 +5,7 @@
  * Time: 14:02
  */
 
-namespace AVCMS\Bundles\CmsFoundation\Services;
+namespace AV\Bundles\Twig\Services;
 
 use AVCMS\Bundles\CmsFoundation\Services\Compiler\TwigEnvironmentPass;
 use AV\Service\Service;

@@ -26,5 +26,10 @@ class SettingsServices implements Service
             ->setFactoryService('model_factory')
             ->setFactoryMethod('create')
         ;
+
+        $container->register('settings.loader.bundle', 'AVCMS\Core\Bundle\SettingsLoader\BundleSettingsLoader')
+            ->setArguments(array(new Reference('bundle_manager')))
+        ;
+
     }
 }
