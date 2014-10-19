@@ -35,7 +35,7 @@ class FrameworkServices implements Service
             ->setArguments(array(new Reference('app_config.file_locator')))
         ;
 
-        $container->register('resolver', 'AVCMS\Core\Controller\ControllerResolver')
+        $container->register('resolver', 'AV\Controller\ControllerResolver')
             ->setArguments(array(new Reference('service_container'), new Reference('bundle_manager')));
 
         $container->register('listener.router', 'Symfony\Component\HttpKernel\EventListener\RouterListener')

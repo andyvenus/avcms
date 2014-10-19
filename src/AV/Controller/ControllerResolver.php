@@ -1,6 +1,6 @@
 <?php
 
-namespace AVCMS\Core\Controller;
+namespace AV\Controller;
 
 use AV\Kernel\Bundle\BundleManagerInterface;
 use Psr\Log\LoggerInterface;
