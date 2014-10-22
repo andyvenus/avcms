@@ -24,11 +24,11 @@ class FrameworkServices implements Service
         $container->register('context', 'Symfony\Component\Routing\RequestContext');
 
         $container->register('router', 'AV\Kernel\Router')
-            ->setArguments(array(new Reference('router.loader.yaml'), 'routes.yml', array('cache_dir' => 'cache', 'debug' => '%dev_mode%'), new Reference('bundle_manager')))
+            ->setArguments(array(new Reference('router.loader.yaml'), 'routes.yml', array('cache_dir' => '%cache_dir%', 'debug' => '%dev_mode%'), new Reference('bundle_manager')))
         ;
 
         $container->register('app_config.file_locator', 'Symfony\Component\Config\FileLocator')
-            ->setArguments(array('app/config'))
+            ->setArguments(array('%config_dir%'))
         ;
 
         $container->register('router.loader.yaml', 'Symfony\Component\Routing\Loader\YamlFileLoader')

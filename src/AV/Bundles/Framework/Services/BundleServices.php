@@ -23,7 +23,7 @@ class BundleServices implements Service
         ;
 
         $container->register('bundle.resource_locator', 'AV\Kernel\Bundle\ResourceLocator')
-            ->setArguments(array(new Reference('bundle_manager'), new Reference('settings_manager')))
+            ->setArguments(array(new Reference('bundle_manager'), '%app_dir%'))
         ;
     }
 }

@@ -23,10 +23,8 @@ class TwigServices implements Service
             ))
         ;
 
-        $container->register('twig.filesystem', 'AVCMS\Core\View\TwigLoaderFilesystem')
-            ->setArguments(array(new Reference('bundle.resource_locator'), new Reference('settings_manager')))
-            ->addMethodCall('addPath', array('templates/admin/avcms', 'admin'))
-            ->addMethodCall('addPath', array('templates/dev/avcms', 'dev'))
+        $container->register('twig.filesystem', 'AV\Bundles\Twig\TwigLoader\BundleTwigLoaderFilesystem')
+            ->setArguments(array(new Reference('bundle.resource_locator')))
         ;
 
         $container->register('twig.http.kernel_extension', 'Symfony\Bridge\Twig\Extension\HttpKernelExtension')

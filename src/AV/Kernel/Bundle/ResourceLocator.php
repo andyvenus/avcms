@@ -14,12 +14,9 @@ class ResourceLocator
 {
     protected $appDir = 'app';
 
-    protected $templateDir;
-
-    public function __construct(BundleManagerInterface $bundleManager, SettingsManager $settingsManager, $appDir = 'app') {
+    public function __construct(BundleManagerInterface $bundleManager, $appDir = 'app') {
         $this->bundleManager = $bundleManager;
         $this->appDir = $appDir;
-        $this->templateDir = $settingsManager->getSetting('template');
     }
 
     public function findFileDirectory($bundleName, $file, $type)
@@ -37,11 +34,9 @@ class ResourceLocator
         throw new NotFoundException(sprintf('File %s not found in bundle %s', $file, $bundleConfig->name));
     }
 
-    private function getResourceDirs($bundleConfig, $resourceType)
+    protected function getResourceDirs($bundleConfig, $resourceType)
     {
         $dirs = array(
-            $this->templateDir.'/'.$resourceType.'/'.$bundleConfig->name,
-            $this->templateDir.'/'.$bundleConfig->name,
             $this->appDir.'/resources/'.$bundleConfig->name,
             $bundleConfig->directory.'/resources/'.$resourceType,
         );
