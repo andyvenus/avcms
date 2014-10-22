@@ -3,6 +3,8 @@
 namespace AV\Kernel;
 
 use AV\Kernel\Bundle\BundleManager;
+use AV\Kernel\Bundle\BundleManagerInterface;
+use AV\Kernel\Bundle\Config\BundleConfigValidator;
 use AV\Kernel\Events\KernelBootEvent;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Config\FileLocator;
@@ -22,25 +24,32 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
     /**
      * @var bool
      */
-    private $booted = false;
+    protected $booted = false;
 
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerBuilder
      */
-    private $container;
+    protected $container;
 
     /**
      * @var
      */
-    private $debug;
+    protected $debug;
 
-    public function __construct(BundleManager $bundleManager, $debug, $rootDir)
+    /**
+     * @var BundleManagerInterface
+     */
+    protected $bundleManager;
+
+    public function __construct(array $bundleDirs, $rootDir, $debug = false, array $options = array())
     {
-        $bundleManager->setDebug($debug);
-
-        $this->bundleManager = $bundleManager;
+        $this->bundleDirs = $bundleDirs;
         $this->debug = $debug;
         $this->rootDir = $rootDir;
+
+        $this->options = $this->mergeDefaultOptions($options);
+
+        $this->buildBundleManager();
     }
 
     public function boot()
@@ -128,19 +137,44 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
     /**
      * @return \AV\Kernel\Bundle\BundleManager
      */
-    private function getBundleManager()
+    protected function getBundleManager()
     {
+        if (!isset($this->bundleManager)) {
+            $this->buildBundleManager($this->bundleDirs);
+        }
+
         return $this->bundleManager;
     }
 
-    private function getHttpKernel()
+    protected function getHttpKernel()
     {
         return $this->container->get('http_kernel');
     }
 
-    private function updateContext(Request $request)
+    protected function updateContext(Request $request)
     {
         $this->container->get('context')
             ->fromRequest($request);
+    }
+
+    protected function buildBundleManager()
+    {
+        $this->bundleManager = new BundleManager($this->bundleDirs, $this->options['app_dir'].'/config', $this->options['cache_dir'], $this->getBundleConfigValidator());
+        $this->bundleManager->setDebug($this->debug);
+    }
+
+    protected function getBundleConfigValidator()
+    {
+        return new BundleConfigValidator();
+    }
+
+    protected function mergeDefaultOptions(array $options)
+    {
+        $defaults = array(
+            'app_dir' => 'app',
+	        'cache_dir' => 'cache'
+        );
+
+        return array_merge($defaults, $options);
     }
 }
