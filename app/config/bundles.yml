@@ -1,5 +1,7 @@
 Framework:
     enabled: true
+Twig:
+    enabled: true
 CmsFoundation:
     enabled: true
 Users:
@@ -11,6 +13,4 @@ Blog:
 Tags:
     enabled: true
 Assets:
-    enabled: true
-Twig:
     enabled: true
