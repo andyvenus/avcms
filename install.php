@@ -1,30 +1,18 @@
 <?php
 
-require_once __DIR__.'/vendor/autoload.php';
-
-use AVCMS\Bundles\CmsFoundation\Services\DatabaseServices;
-use AV\Bundles\Framework\Services\FrameworkServices;
-use AVCMS\Installer\Services\InstallerServices;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use AVCMS\Core\Kernel\AvcmsKernel;
 use Symfony\Component\HttpFoundation\Request;
 
-$container = new ContainerBuilder();
-$container->setParameter('dev_mode', false);
+define('DEBUG_MODE', true);
+define('ROOT_DIR', __DIR__);
 
-$frameworkServices = new FrameworkServices();
-$frameworkServices->getServices(array(), $container);
-$databaseServices = new DatabaseServices();
-$databaseServices->getServices(array(), $container);
-$installerServices = new InstallerServices;
-$installerServices->getServices(array(), $container);
+require_once __DIR__.'/vendor/autoload.php';
 
-$container->compile();
-
-$kernel = $container->get('http_kernel');
+$avcms = new AvcmsKernel(array('src/AV/Bundles'), ROOT_DIR, DEBUG_MODE, ['app_dir' => 'app/install', 'cache_dir' => 'cache/installer']);
 
 $request = Request::createFromGlobals();
-$response = $kernel->handle($request);
+$response = $avcms->handle($request);
 
 $response->send();
 
-$kernel->terminate($request, $response);
+$avcms->terminate($request, $response);

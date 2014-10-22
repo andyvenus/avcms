@@ -1,0 +1,3 @@
+installer_home:
+  path: /
+  defaults: {_controller: AVCMS\Installer\Controller\InstallerController::installerHomeAction }
