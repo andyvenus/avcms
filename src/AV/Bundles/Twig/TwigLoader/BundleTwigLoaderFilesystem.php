@@ -12,13 +12,11 @@ use AV\Kernel\Bundle\ResourceLocator;
 use AVCMS\Core\SettingsManager\SettingsManager;
 use Twig_Error_Loader;
 
-class TwigLoaderFilesystem extends \Twig_Loader_Filesystem
+class BundleTwigLoaderFilesystem extends \Twig_Loader_Filesystem
 {
-    public function __construct(ResourceLocator $resource_locator, SettingsManager $settings_manager)
+    public function __construct(ResourceLocator $resource_locator)
     {
         $this->resource_locator = $resource_locator;
-        $this->settings_manager = $settings_manager;
-        $this->setPaths(array($settings_manager->getSetting('template'), 'templates'));
     }
 
     protected function findTemplate($name)
