@@ -7,6 +7,8 @@
 
 namespace AV\Bundles\Form\Services;
 
+use AV\Bundles\Form\Services\Compiler\FormBuilderTranslatorPass;
+use AV\Bundles\Form\Services\Compiler\FormTransformerPass;
 use AV\Service\Service;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -15,9 +17,10 @@ class FormServices implements Service
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
-        $container->register('form.builder', 'AVCMS\Bundles\CmsFoundation\Form\Factory\FormBuilder')
-            ->setArguments(array(new Reference('form.handler_factory'), new Reference('translator'), new Reference('dispatcher')))
+        $container->register('form.builder', 'AV\Bundles\Form\Form\FormBuilder')
+            ->setArguments(array(new Reference('form.handler_factory')))
             ->addMethodCall('setContainer', array(new Reference('service_container')))
+            ->addMethodCall('setEventDispatcher', array(new Reference('dispatcher')))
         ;
 
         $container->register('form.handler_factory', 'AV\Form\FormHandlerFactory')
@@ -30,20 +33,20 @@ class FormServices implements Service
 
         $container->register('csrf.token', 'AVCMS\Core\Security\Csrf\CsrfToken');
 
-        $container->register('listener.csrf.form_plugin', 'AVCMS\Core\Security\Csrf\Events\CsrfFormPlugin')
+        $container->register('subscriber.csrf.form_plugin', 'AVCMS\Core\Security\Csrf\Events\CsrfFormPlugin')
             ->setArguments(array(new Reference('csrf.token')))
             ->addTag('event.subscriber')
         ;
 
-        $container->register('form.transformer_manager', 'AV\Form\Transformer\TransformerManager')
-            ->addMethodCall('registerTransformer', array(new Reference('form.unix_timestamp_transformer')))
-        ;
+        $container->register('form.transformer_manager', 'AV\Form\Transformer\TransformerManager');
 
-        $container->register('form.unix_timestamp_transformer', 'AV\Form\Transformer\UnixTimestampTransformer');
+        $container->register('form.unix_timestamp_transformer', 'AV\Form\Transformer\UnixTimestampTransformer')
+            ->addTag('form.transformer')
+        ;
 
         // Validation
 
-        $container->register('listener.validator.model_injector', 'AV\Validation\Events\RuleModelFactoryInjector')
+        $container->register('subscriber.validator.model_injector', 'AV\Validation\Events\RuleModelFactoryInjector')
             ->setArguments(array(new Reference('model_factory')))
             ->addTag('event.subscriber')
         ;
@@ -53,5 +56,8 @@ class FormServices implements Service
         $container->register('twig.form.extension', 'AV\Form\Twig\FormExtension')
             ->addTag('twig.extension')
         ;
+
+        $container->addCompilerPass(new FormBuilderTranslatorPass());
+        $container->addCompilerPass(new FormTransformerPass());
     }
 }
