@@ -3,3 +3,6 @@ namespace: AV\Bundles\Model
 
 services:
  - DatabaseServices
+
+config:
+  database_config_location: app/config/database.php

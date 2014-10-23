@@ -16,7 +16,7 @@ class DatabaseServices implements Service
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
-        $queryBuilderConfig = include 'app/config/database.php';
+        $queryBuilderConfig = include $configuration->config->database_config_location;
 
         $container->setParameter('query_builder.config', $queryBuilderConfig);
 
