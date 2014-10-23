@@ -5,7 +5,7 @@
  * Time: 13:51
  */
 
-namespace AVCMS\Core\Security\CSRF;
+namespace AV\Csrf;
 
 class CsrfToken
 {

@@ -84,5 +84,8 @@ class FrameworkServices implements Service
             ->setArguments([new Reference('service_container')])
             ->addTag('event.subscriber')
         ;
+
+        // CSRF protection
+        $container->register('csrf.token', 'AV\Csrf\CsrfToken');
     }
 }

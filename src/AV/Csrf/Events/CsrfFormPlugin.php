@@ -5,18 +5,18 @@
  * Time: 14:03
  */
 
-namespace AVCMS\Core\Security\Csrf\Events;
+namespace AV\Csrf\Events;
 
 use AV\Form\Event\FormHandlerConstructEvent;
 use AV\Form\Event\FormHandlerRequestEvent;
 use AV\Form\FormError;
-use AVCMS\Core\Security\CSRF\CsrfToken;
+use AV\Csrf\CsrfToken;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CsrfFormPlugin implements EventSubscriberInterface
 {
     /**
-     * @var \AVCMS\Core\Security\CSRF\CsrfToken
+     * @var \AV\Csrf\CsrfToken
      */
     protected $token;
 

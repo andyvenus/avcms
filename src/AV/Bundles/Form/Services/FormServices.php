@@ -31,9 +31,7 @@ class FormServices implements Service
 
         $container->register('form.entity_processor', 'AV\Model\EntityProcessor');
 
-        $container->register('csrf.token', 'AVCMS\Core\Security\Csrf\CsrfToken');
-
-        $container->register('subscriber.csrf.form_plugin', 'AVCMS\Core\Security\Csrf\Events\CsrfFormPlugin')
+        $container->register('subscriber.csrf.form_plugin', 'AV\Csrf\Events\CsrfFormPlugin')
             ->setArguments(array(new Reference('csrf.token')))
             ->addTag('event.subscriber')
         ;
