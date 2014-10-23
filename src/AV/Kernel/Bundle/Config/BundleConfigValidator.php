@@ -50,6 +50,8 @@ class BundleConfigValidator implements ConfigurationInterface
             ->end()
             ->variableNode('config')
             ->end()
+            ->variableNode('container_params')
+            ->end()
         ->end();
 
         return $treeBuilder;
