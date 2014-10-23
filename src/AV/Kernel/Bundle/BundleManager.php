@@ -126,6 +126,12 @@ class BundleManager implements BundleManagerInterface
         }
 
         foreach ($this->bundleConfigs as $bundleConfig) {
+            if ($bundleConfig->container_params && !empty($bundleConfig->container_params) && $bundleConfig->ignore_services !== true) {
+                foreach ($bundleConfig['container_params'] as $param => $val) {
+                    $container->setParameter($param, $val);
+                }
+            }
+
             if ($bundleConfig->services && !empty($bundleConfig->services) && $bundleConfig->ignore_services !== true) {
                 foreach ($bundleConfig->services as $serviceClass) {
                     $fullyQualifiedClass = $bundleConfig->namespace.'\\Services\\'.$serviceClass;
