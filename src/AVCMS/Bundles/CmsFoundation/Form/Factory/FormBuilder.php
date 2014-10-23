@@ -21,43 +21,71 @@ class FormBuilder implements ContainerAwareInterface
 {
     protected $container;
 
-    public function __construct(FormHandlerFactory $form_handler_factory, TranslatorInterface $translator, EventDispatcherInterface $event_dispatcher)
+    protected $formHandlerFactory;
+
+    protected $translator;
+
+    protected $eventDispatcher;
+
+    public function __construct(FormHandlerFactory $formHandlerFactory, TranslatorInterface $translator, EventDispatcherInterface $eventDispatcher)
     {
-        $this->form_handler_factory = $form_handler_factory;
+        $this->formHandlerFactory = $formHandlerFactory;
         $this->translator = $translator;
-        $this->event_dispatcher = $event_dispatcher;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function buildForm(FormBlueprint $form, $request = null, $entities = array(), $form_view = null)
+    public function setEventDispatcher(EventDispatcherInterface $eventDispatcher)
     {
-        if (!$form_view) {
-            $form_view = new FormView();
-            $form_view->setTranslator($this->translator);
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
+    public function setTranslator(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    public function buildForm(FormBlueprint $form, $request = null, $entities = array(), $formView = null)
+    {
+        if (!$formView) {
+            $formView = new FormView();
+            if (isset($this->translator)) {
+                $formView->setTranslator($this->translator);
+            }
         }
 
-        $validator = new Validator();
-        $validator->setTranslator($this->translator);
-        $validator->setEventDispatcher($this->event_dispatcher);
-        $validator_ex = new AVValidatorExtension($validator);
+        if (class_exists('AV\Validation\Validator')) {
+            $validator = new Validator();
+            if (isset($this->translator)) {
+                $validator->setTranslator($this->translator);
+            }
+            if (isset($this->eventDispatcher)) {
+                $validator->setEventDispatcher($this->eventDispatcher);
+            }
 
-        if (isset($this->container)) {
-            $validator_ex->setContainer($this->container);
+            $validatorExtension = new AVValidatorExtension($validator);
+
+            if (isset($this->container)) {
+                $validatorExtension->setContainer($this->container);
+            }
+        }
+        else {
+            $validatorExtension = null;
         }
 
-        $form_handler = $this->form_handler_factory->buildForm($form, $form_view, $validator_ex);
+        $formHandler = $this->formHandlerFactory->buildForm($form, $formView, $validatorExtension);
 
         if (!is_array($entities)) {
             $entities = array($entities);
         }
         foreach ($entities as $entity) {
-            $form_handler->bindEntity($entity);
+            $formHandler->bindEntity($entity);
         }
 
         if ($request) {
-            $form_handler->handleRequest($request);
+            $formHandler->handleRequest($request);
         }
 
-        return $form_handler;
+        return $formHandler;
     }
 
     /**
