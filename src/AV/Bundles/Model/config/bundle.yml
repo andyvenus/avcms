@@ -1,0 +1,5 @@
+name: Model
+namespace: AV\Bundles\Model
+
+services:
+ - DatabaseServices

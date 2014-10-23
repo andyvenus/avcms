@@ -2,6 +2,10 @@ Framework:
     enabled: true
 Twig:
     enabled: true
+Form:
+    enabled: true
+Model:
+    enabled: true
 CmsFoundation:
     enabled: true
 Users:
@@ -13,6 +17,4 @@ Blog:
 Tags:
     enabled: true
 Assets:
-    enabled: true
-Form:
     enabled: true

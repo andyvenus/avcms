@@ -6,7 +6,6 @@ core: true
 services:
   - SettingsServices
   - TemplateServices
-  - DatabaseServices
   - TranslationServices
   - TaxonomyServices
   - MenuServices
