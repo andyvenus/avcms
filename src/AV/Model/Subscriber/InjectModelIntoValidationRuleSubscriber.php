@@ -5,13 +5,13 @@
  * Time: 16:10
  */
 
-namespace AV\Validation\Events;
+namespace AV\Model\Subscriber;
 
 use AV\Model\ModelFactory;
 use AV\Validation\Event\ValidatorFilterRuleEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class RuleModelFactoryInjector implements EventSubscriberInterface
+class InjectModelIntoValidationRuleSubscriber implements EventSubscriberInterface
 {
     protected $model_factory;
 

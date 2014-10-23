@@ -44,13 +44,6 @@ class FormServices implements Service
             ->addTag('form.transformer')
         ;
 
-        // Validation
-
-        $container->register('subscriber.validator.model_injector', 'AV\Validation\Events\RuleModelFactoryInjector')
-            ->setArguments(array(new Reference('model_factory')))
-            ->addTag('event.subscriber')
-        ;
-
         // Twig Extension
 
         $container->register('twig.form.extension', 'AV\Form\Twig\FormExtension')

@@ -31,5 +31,11 @@ class DatabaseServices implements Service
             ->setArguments(array(new Reference('query_builder'), new Reference('dispatcher'), new Reference('taxonomy_manager')))
             ->addMethodCall('addModelAlias', array('users', 'AVCMS\Bundles\Users\Model\Users'))
         ;
+
+        // Validation
+        $container->register('subscriber.validator.model_injector', 'AV\Model\Subscriber\InjectModelIntoValidationRuleSubscriber')
+            ->setArguments(array(new Reference('model_factory')))
+            ->addTag('event.subscriber')
+        ;
     }
-} 
+}
