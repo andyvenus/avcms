@@ -1,5 +1,7 @@
 Framework:
   enabled: true
+Model:
+  enabled: true
 Twig:
   enabled: true
 Form:
