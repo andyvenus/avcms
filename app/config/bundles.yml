@@ -18,3 +18,5 @@ Tags:
     enabled: true
 Assets:
     enabled: true
+Translation:
+    enabled: true

@@ -1,0 +1,5 @@
+name: Translation
+namespace: AV\Bundles\Translation
+
+services:
+  - TranslationServices
