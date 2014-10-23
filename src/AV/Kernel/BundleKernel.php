@@ -114,9 +114,6 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
 
             $container->addResource(new DirectoryResource($this->options['config_dir']));
 
-            $loader = new YamlFileLoader($container, new FileLocator($this->options['config_dir']));
-            $loader->load('app.yml');
-
             $this->container = $container;
 
             $this->getBundleManager()->decorateContainer($container);
