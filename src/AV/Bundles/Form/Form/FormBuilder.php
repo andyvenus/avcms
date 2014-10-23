@@ -5,7 +5,7 @@
  * Time: 16:02
  */
 
-namespace AVCMS\Bundles\CmsFoundation\Form\Factory;
+namespace AV\Bundles\Form\Form;
 
 use AV\Form\FormBlueprint;
 use AV\Form\FormHandlerFactory;
@@ -27,11 +27,9 @@ class FormBuilder implements ContainerAwareInterface
 
     protected $eventDispatcher;
 
-    public function __construct(FormHandlerFactory $formHandlerFactory, TranslatorInterface $translator, EventDispatcherInterface $eventDispatcher)
+    public function __construct(FormHandlerFactory $formHandlerFactory)
     {
         $this->formHandlerFactory = $formHandlerFactory;
-        $this->translator = $translator;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function setEventDispatcher(EventDispatcherInterface $eventDispatcher)
