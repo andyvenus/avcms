@@ -8,7 +8,7 @@ use AV\Form\FormBlueprint;
 use AV\Form\FormHandler;
 use AV\Form\FormView;
 use AV\Form\RequestHandler\SymfonyRequestHandler;
-use AV\Form\ValidatorExtension\AVCMSValidatorExtension;
+use AV\Form\ValidatorExtension\AVValidatorExtension;
 use AV\Model\EntityProcessor;
 use AVCMS\Core\Security\PermissionsError;
 use AV\Validation\Validator;

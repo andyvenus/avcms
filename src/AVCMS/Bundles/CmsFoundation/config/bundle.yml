@@ -16,6 +16,7 @@ services:
 
 user_settings_sections:
   main: Main
+  email: Email
 
 user_settings:
   site_name:
@@ -28,6 +29,39 @@ user_settings:
         class: AV\Validation\Rules\Length
         arguments:
           - 5
+  site_email_address:
+    type: text
+    label: Site "From" Address
+    default: admin@yoursite.com
+    section: email
+    validation:
+      Email:
+        rule: EmailAddress
+  smtp_username:
+    type: text
+    label: SMTP Username
+    section: email
+  smtp_password:
+    type: password
+    label: SMTP Password
+    section: email
+  smtp_port:
+    type: text
+    label: SMTP Port
+    section: email
+  smtp_server:
+    type: text
+    label: SMTP Server
+    section: email
+  smtp_encryption:
+      type: select
+      label: SMTP Encryption
+      section: email
+      choices:
+        none: None
+        ssl: SSL
+        tls: TLS
+
 
   template:
     type: select

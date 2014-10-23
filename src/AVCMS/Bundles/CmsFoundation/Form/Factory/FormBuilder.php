@@ -10,7 +10,7 @@ namespace AVCMS\Bundles\CmsFoundation\Form\Factory;
 use AV\Form\FormBlueprint;
 use AV\Form\FormHandlerFactory;
 use AV\Form\FormView;
-use AV\Form\ValidatorExtension\AVCMSValidatorExtension;
+use AV\Form\ValidatorExtension\AVValidatorExtension;
 use AV\Validation\Validator;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -38,7 +38,7 @@ class FormBuilder implements ContainerAwareInterface
         $validator = new Validator();
         $validator->setTranslator($this->translator);
         $validator->setEventDispatcher($this->event_dispatcher);
-        $validator_ex = new AVCMSValidatorExtension($validator);
+        $validator_ex = new AVValidatorExtension($validator);
 
         if (isset($this->container)) {
             $validator_ex->setContainer($this->container);
