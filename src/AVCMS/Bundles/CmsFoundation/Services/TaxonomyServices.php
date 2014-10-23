@@ -16,8 +16,13 @@ class TaxonomyServices implements Service
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('taxonomy_manager', 'AVCMS\Core\Taxonomy\ContainerAwareTaxonomyManager')
-            ->setArguments(array(new Reference('service_container')))
-            ->addMethodCall('addContainerTaxonomy', array('tags', 'taxonomy.tags'))
+            ->setArguments([new Reference('service_container')])
+            ->addMethodCall('addContainerTaxonomy', ['tags', 'taxonomy.tags'])
+        ;
+
+        $container->register('taxonomy.injector', 'AVCMS\Bundles\CmsFoundation\Subscribers\TaxonomyInjectorSubscriber')
+            ->setArguments([new Reference('taxonomy_manager')])
+            ->addTag('event.subscriber')
         ;
     }
 }

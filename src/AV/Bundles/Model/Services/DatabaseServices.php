@@ -28,7 +28,7 @@ class DatabaseServices implements Service
             ->setFactoryMethod('getQueryBuilder');
 
         $container->register('model_factory', 'AV\Model\ModelFactory')
-            ->setArguments(array(new Reference('query_builder'), new Reference('dispatcher'), new Reference('taxonomy_manager')))
+            ->setArguments(array(new Reference('query_builder'), new Reference('dispatcher')))
             ->addMethodCall('addModelAlias', array('users', 'AVCMS\Bundles\Users\Model\Users'))
         ;
 
