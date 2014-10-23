@@ -2,16 +2,9 @@
 
 namespace AVCMS\Core\Controller;
 
-use AVCMS\Bundles\Users\Exception\PermissionDeniedException;
 use AV\Kernel\Bundle\BundleConfig;
 use AV\Form\FormBlueprint;
 use AV\Form\FormHandler;
-use AV\Form\FormView;
-use AV\Form\RequestHandler\SymfonyRequestHandler;
-use AV\Form\ValidatorExtension\AVValidatorExtension;
-use AV\Model\EntityProcessor;
-use AVCMS\Core\Security\PermissionsError;
-use AV\Validation\Validator;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\Event;
@@ -19,8 +12,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Translation\Loader\ArrayLoader;
-use Symfony\Component\Translation\MessageSelector;
 use AVCMS\Core\Translation\Translator;
 
 abstract class Controller extends ContainerAware
