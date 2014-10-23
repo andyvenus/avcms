@@ -131,7 +131,7 @@ class BundleManager implements BundleManagerInterface
                     $fullyQualifiedClass = $bundleConfig->namespace.'\\Services\\'.$serviceClass;
                     if (class_exists($fullyQualifiedClass)) {
                         $service = new $fullyQualifiedClass();
-                        $service->getServices(array(), $container);
+                        $service->getServices($bundleConfig, $container);
                         $container->addObjectResource($fullyQualifiedClass);
                     }
                     else {
