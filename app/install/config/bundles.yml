@@ -1,4 +1,6 @@
 Framework:
-    enabled: true
+  enabled: true
 Twig:
-    enabled: true
+  enabled: true
+Form:
+  enabled: true
