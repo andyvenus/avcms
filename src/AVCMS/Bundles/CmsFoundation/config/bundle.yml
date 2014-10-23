@@ -9,7 +9,6 @@ services:
   - DatabaseServices
   - TranslationServices
   - TaxonomyServices
-  - FormServices
   - MenuServices
   - ModuleServices
   - EmailServices

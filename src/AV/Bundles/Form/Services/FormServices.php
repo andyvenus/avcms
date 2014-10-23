@@ -5,7 +5,7 @@
  * Time: 16:35
  */
 
-namespace AVCMS\Bundles\CmsFoundation\Services;
+namespace AV\Bundles\Form\Services;
 
 use AV\Service\Service;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

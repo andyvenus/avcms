@@ -1,0 +1,5 @@
+name: Form
+namespace: AV\Bundles\Form
+
+services:
+ - FormServices

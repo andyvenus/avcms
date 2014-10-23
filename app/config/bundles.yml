@@ -14,3 +14,5 @@ Tags:
     enabled: true
 Assets:
     enabled: true
+Form:
+    enabled: true
