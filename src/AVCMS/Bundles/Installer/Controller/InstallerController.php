@@ -40,7 +40,7 @@ class InstallerController extends Controller
 
     public function newInstallAction(Request $request)
     {
-        $databaseConfigFile = 'app/config/database2.php';
+        $databaseConfigFile = 'app/config/database.php';
 
         if (file_exists($databaseConfigFile)) {
             return $this->redirect($this->generateUrl('update_bundles'));
