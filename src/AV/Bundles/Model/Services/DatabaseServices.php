@@ -8,6 +8,7 @@
 namespace AV\Bundles\Model\Services;
 
 use AV\Service\Service;
+use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
@@ -17,6 +18,7 @@ class DatabaseServices implements Service
     public function getServices($configuration, ContainerBuilder $container)
     {
         $queryBuilderConfig = include $configuration->config->database_config_location;
+        $container->addResource(new FileResource($configuration->config->database_config_location));
 
         $container->setParameter('query_builder.config', $queryBuilderConfig);
 
