@@ -151,7 +151,10 @@ abstract class Controller extends ContainerAware
         if (isset($this->bundle)) {
             $context['bundle'] = $this->bundle;
         }
-        $context['user'] = $this->container->get('security.context')->getToken()->getUser();
+
+        if ($this->container->has('security.context')) {
+            $context['user'] = $this->container->get('security.context')->getToken()->getUser();
+        }
 
         if (isset($this->settings)) {
             $context['settings'] = $this->settings;
