@@ -25,9 +25,9 @@ class InstallerController extends Controller
 
     protected $installer;
 
-    public function setUp()
+    protected function getInstaller()
     {
-        $this->installer = $this->container->get('installer');
+        return $this->container->get('installer');
     }
 
     public function installerHomeAction()
@@ -62,7 +62,7 @@ class InstallerController extends Controller
             $databaseConfig['prefix'] = $form->getData('prefix');
 
             try {
-                new \Pixie\Connection('mysql', $databaseConfig);
+                $conn = new \Pixie\Connection('mysql', $databaseConfig);
             }
             catch (\PDOException $e) {
                 $form->addCustomErrors([new FormError('all', 'The database details you entered to not appear to be valid.')]);
@@ -71,6 +71,16 @@ class InstallerController extends Controller
 
             if ($form->isValid()) {
                 file_put_contents($databaseConfigFile, '<?php return ' . var_export($databaseConfig, true) . ';');
+
+                $conn->getPdoInstance()->exec("
+                    CREATE TABLE `{$databaseConfig['prefix']}versions` (
+                          `id` varchar(30) NOT NULL DEFAULT '',
+                          `installed_version` varchar(30) NOT NULL DEFAULT '',
+                          `type` varchar(30) NOT NULL DEFAULT '',
+                          PRIMARY KEY (`id`)
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+                ");
+
                 return $this->redirect($this->generateUrl('update_bundles'));
             }
         }
@@ -82,7 +92,7 @@ class InstallerController extends Controller
     {
         $installType = $request->get('install_type', 'update');
 
-        $updateBundles = $this->installer->getBundlesRequiringUpdate();
+        $updateBundles = $this->getInstaller()->getBundlesRequiringUpdate();
 
         return new Response($this->render('@Installer/update_bundles.twig', ['update_bundles' => $updateBundles, 'install_type' => $installType]));
     }
@@ -91,8 +101,8 @@ class InstallerController extends Controller
     {
         $bundle = $request->get('bundle');
 
-        $success = $this->installer->updateBundle($bundle);
+        $success = $this->getInstaller()->updateBundle($bundle);
 
-        return new JsonResponse(['success' => $success, 'error' => $this->installer->getFailureError()]);
+        return new JsonResponse(['success' => $success, 'error' => $this->getInstaller()->getFailureError()]);
     }
 }
