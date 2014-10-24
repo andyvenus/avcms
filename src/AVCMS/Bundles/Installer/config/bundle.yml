@@ -1,2 +1,5 @@
 name: Installer
 namespace: AVCMS\Bundles\Installer
+
+services:
+  - InstallerServices
