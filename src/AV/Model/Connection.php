@@ -11,8 +11,11 @@ class Connection extends PixieConnection {
 
     protected $eventDispatcher;
 
-    public function __construct($adapter, array $adapterConfig, $alias = null, Container $container = null, EventDispatcherInterface $eventDispatcher = null)
+    public function __construct($adapter, $adapterConfig, $alias = null, Container $container = null, EventDispatcherInterface $eventDispatcher = null)
     {
+        if (is_string($adapterConfig) && file_exists($adapterConfig)) {
+            $adapterConfig = include($adapterConfig);
+        }
         parent::__construct($adapter, $adapterConfig, $alias, $container);
 
         $this->eventDispatcher = $eventDispatcher;

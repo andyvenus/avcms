@@ -17,13 +17,8 @@ class DatabaseServices implements Service
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
-        $queryBuilderConfig = include $configuration->config->database_config_location;
-        $container->addResource(new FileResource($configuration->config->database_config_location));
-
-        $container->setParameter('query_builder.config', $queryBuilderConfig);
-
         $container->register('query_builder.factory', 'AV\Model\Connection')
-            ->setArguments(array('mysql', '%query_builder.config%', 'QB', null, new Reference('dispatcher')));
+            ->setArguments(array('mysql', 'app/config/database.php', null, null, new Reference('dispatcher')));
 
         $container->setDefinition('query_builder', new Definition('AV\Model\QueryBuilder\QueryBuilderHandler'))
             ->setFactoryService('query_builder.factory')
