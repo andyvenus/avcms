@@ -31,6 +31,7 @@ abstract class BundleInstaller
         $this->container = $container;
         $this->queryBuilder = $container->get('query_builder');
         $this->PDO = $this->queryBuilder->getConnection()->getPdoInstance();
+        $this->prefix = $this->queryBuilder->getTablePrefix();
     }
 
     abstract public function getVersions();
