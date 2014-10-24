@@ -7,9 +7,12 @@
 
 namespace AVCMS\Bundles\Installer\Controller;
 
+use AV\Form\FormError;
+use AVCMS\Bundles\Installer\Form\NewInstallForm;
 use AVCMS\Core\Controller\Controller;
 use AVCMS\Core\Installer\InstallerBundleFinder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -35,22 +38,57 @@ class InstallerController extends Controller
         return new Response('Hello world');
     }
 
+    public function newInstallAction(Request $request)
+    {
+        $databaseConfigFile = 'app/config/database2.php';
+
+        if (file_exists($databaseConfigFile)) {
+            return $this->redirect($this->generateUrl('update_bundles'));
+        }
+
+        $form = $this->buildForm(new NewInstallForm(), $request);
+
+        if ($form->isValid()) {
+            $databaseConfig = array(
+                'driver'    => 'mysql', // Db driver
+                'charset'   => 'utf8', // Optional
+                'collation' => 'utf8_unicode_ci', // Optional
+            );
+
+            $databaseConfig['host'] = $form->getData('host');
+            $databaseConfig['database'] = $form->getData('database');
+            $databaseConfig['username'] = $form->getData('username');
+            $databaseConfig['password'] = $form->getData('password');
+            $databaseConfig['prefix'] = $form->getData('prefix');
+
+            try {
+                new \Pixie\Connection('mysql', $databaseConfig, 'QB');
+            }
+            catch (\PDOException $e) {
+                $form->addCustomErrors([new FormError('all', 'The database details you entered to not appear to be valid.')]);
+                $form->addCustomErrors([new FormError('all', $e->getMessage())]);
+            }
+
+            if ($form->isValid()) {
+                file_put_contents($databaseConfigFile, '<?php return ' . var_export($databaseConfig, true) . ';');
+                return $this->redirect($this->generateUrl('update_bundles'));
+            }
+        }
+
+        return new Response($this->render('@Installer/new_install.twig', ['form' => $form->createView()]));
+    }
+
     public function checkForUpdatesAction()
     {
         $updateBundles = $this->installer->getBundlesRequiringUpdate();
 
-        $this->render('@Install/updates_list.twig', ['bundles' => $updateBundles]);
+        $this->render('@Installer/update.twig', ['bundles' => $updateBundles]);
     }
 
-    public function doUpdate(Request $request)
+    public function updateBundlesAction(Request $request)
     {
-        // request lists the bundles we are updating
+        $updateBundles = $this->installer->getBundlesRequiringUpdate();
 
-        // will call updateBundle via ajax with each bundle
-    }
-
-    public function updateBundle($bundleName)
-    {
-        // called via ajax on the doUpdate page for each bundle
+        return new Response('lol');
     }
 }
