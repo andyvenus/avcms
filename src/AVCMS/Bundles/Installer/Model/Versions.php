@@ -20,4 +20,27 @@ class Versions extends Model
     {
         return 'AVCMS\Bundles\Installer\Model\Version';
     }
+
+    public function getInstalledVersion($id, $type)
+    {
+        $version = $this->query()->where('id', $id)->where('type', $type)->first();
+
+        if (!$version) {
+            return 0;
+        }
+
+        return $version->getInstalledVersion();
+    }
+
+    public function setInstalledVersion($id, $versionNo, $type)
+    {
+        $this->query()->where('id', $id)->where('type', $type)->delete();
+
+        $version = $this->newEntity();
+        $version->setId($id);
+        $version->setInstalledVersion($versionNo);
+        $version->setType($type);
+
+        $this->insert($version);
+    }
 }

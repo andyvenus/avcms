@@ -27,7 +27,7 @@ class InstallerController extends Controller
 
     public function setUp()
     {
-        //$this->installer = $this->container->get('installer');
+        $this->installer = $this->container->get('installer');
     }
 
     public function installerHomeAction()
@@ -78,17 +78,21 @@ class InstallerController extends Controller
         return new Response($this->render('@Installer/new_install.twig', ['form' => $form->createView()]));
     }
 
-    public function checkForUpdatesAction()
-    {
-        $updateBundles = $this->installer->getBundlesRequiringUpdate();
-
-        $this->render('@Installer/update.twig', ['bundles' => $updateBundles]);
-    }
-
     public function updateBundlesAction(Request $request)
     {
+        $installType = $request->get('install_type', 'update');
+
         $updateBundles = $this->installer->getBundlesRequiringUpdate();
 
-        return new Response('lol');
+        return new Response($this->render('@Installer/update_bundles.twig', ['update_bundles' => $updateBundles, 'install_type' => $installType]));
+    }
+
+    public function updateBundleAction(Request $request)
+    {
+        $bundle = $request->get('bundle');
+
+        $success = $this->installer->updateBundle($bundle);
+
+        return new JsonResponse(['success' => $success, 'error' => $this->installer->getFailureError()]);
     }
 }

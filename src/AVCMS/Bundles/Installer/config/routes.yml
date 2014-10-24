@@ -5,3 +5,7 @@ new_install:
 update_bundles:
   path: /update-bundles
   defaults: { _controller: Installer::InstallerController::updateBundlesAction }
+
+update_bundle:
+  path: /update-bundle
+  defaults: { _controller: Installer::InstallerController::updateBundleAction }

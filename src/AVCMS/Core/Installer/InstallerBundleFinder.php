@@ -20,7 +20,7 @@ class InstallerBundleFinder
 
                 if ($bundleDir->isDir()) {
                     if (file_exists($bundleDir->getRealPath().'/Install')) {
-                        $bundles[] = $bundleDir->getRealPath();
+                        $bundles[$bundleDir->getFilename()] = $bundleDir->getRealPath();
                     }
                 }
             }

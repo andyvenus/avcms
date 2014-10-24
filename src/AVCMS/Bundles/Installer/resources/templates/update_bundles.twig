@@ -1,0 +1,31 @@
+{% extends '@Installer/installer_index.twig' %}
+
+{% block content %}
+    {% for bundle_name, bundle_dir in update_bundles %}
+        <div class="well well-sm" data-bundle-ajax-updater="{{ url('update_bundle', {bundle: bundle_name}) }}">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>{{ bundle_name }}</h4>
+                    <p>{{ url('update_bundle', {bundle: bundle_name}) }}</p>
+                </div>
+                <div class="col-md-6">
+                    <div class="pull-right">
+                        Hey
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    <script type="text/javascript">
+        $('[data-bundle-ajax-updater]').each(function(){
+            var container = $(this);
+            var url = container.data('bundle-ajax-updater');
+
+            $.get(url, {}, function(data) {
+                alert(data.error.message);
+                container.css('border-color', 'green');
+            }, 'json');
+        })
+    </script>
+{% endblock %}

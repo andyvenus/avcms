@@ -9,11 +9,22 @@ namespace AVCMS\Bundles\Installer\Services;
 
 use AV\Service\Service;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 
 class InstallerServices implements Service
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
-        // TODO: Implement getServices() method.
+        $container->register('installer', 'AVCMS\Core\Installer\Installer')
+            ->setArguments([new Reference('service_container'), new Reference('bundle_finder'), new Reference('installer.versions_model')])
+        ;
+
+        $container->register('installer.versions_model', 'AVCMS\Bundles\Installer\Model\Versions')
+            ->setArguments(array('AVCMS\Bundles\Installer\Model\Versions'))
+            ->setFactoryService('model_factory')
+            ->setFactoryMethod('create')
+        ;
+
+        $container->register('bundle_finder', 'AVCMS\Core\Installer\InstallerBundleFinder');
     }
 }

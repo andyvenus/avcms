@@ -6,14 +6,14 @@ use AV\Model\Entity;
 
 class Version extends Entity
 {
-    public function getIdentifier()
+    public function getId()
     {
-        return $this->get("identifier");
+        return $this->get("id");
     }
 
-    public function setIdentifier($value)
+    public function setId($value)
     {
-        $this->set("identifier", $value);
+        $this->set("id", $value);
     }
 
     public function setInstalledVersion($value)
