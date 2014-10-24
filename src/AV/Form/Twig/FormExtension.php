@@ -25,11 +25,16 @@ class FormExtension extends \Twig_Extension
      */
     protected $baseTemplate;
 
+    public function __construct($defaultTemplate = '@Form/bootstrap_form.twig')
+    {
+        $this->defaultTemplate = $defaultTemplate;
+    }
+
     public function initRuntime(\Twig_Environment $environment)
     {
         $this->environment = $environment;
         $this->compiler = $environment->getCompiler();
-        $this->baseTemplate = $this->environment->loadTemplate('bootstrap_form.twig');
+        $this->baseTemplate = $this->environment->loadTemplate($this->defaultTemplate);
     }
 
     /**
@@ -104,7 +109,7 @@ class FormExtension extends \Twig_Extension
     public function formStart($form, $attributes = array(), $template = null)
     {
         if ($template == null) {
-            $this->baseTemplate = $this->environment->loadTemplate('bootstrap_form.twig');
+            $this->baseTemplate = $this->environment->loadTemplate($this->defaultTemplate);
         }
         else {
             $this->baseTemplate = $this->environment->loadTemplate($template);

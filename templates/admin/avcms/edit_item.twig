@@ -12,7 +12,7 @@
 
 {% block editor_content %}
     {% block form_start %}
-        {{ form_start(form, {"data-item-id": item.id|default(0)}, 'bootstrap_form.twig') }}
+        {{ form_start(form, {"data-item-id": item.id|default(0)}) }}
     {% endblock %}
 
     {{ form_messages(form) }}

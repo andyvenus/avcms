@@ -45,6 +45,7 @@ class FormServices implements Service
         // Twig Extension
 
         $container->register('twig.form.extension', 'AV\Form\Twig\FormExtension')
+            ->setArguments(['%form.default_template%'])
             ->addTag('twig.extension')
         ;
 
