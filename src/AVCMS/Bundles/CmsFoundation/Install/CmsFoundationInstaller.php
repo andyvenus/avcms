@@ -5,7 +5,7 @@
  * Time: 23:47
  */
 
-namespace AVCMS\Bundles\CmsFoundation\Installer;
+namespace AVCMS\Bundles\CmsFoundation\Install;
 
 use AVCMS\Core\Installer\BundleInstaller;
 
