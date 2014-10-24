@@ -62,7 +62,7 @@ class InstallerController extends Controller
             $databaseConfig['prefix'] = $form->getData('prefix');
 
             try {
-                new \Pixie\Connection('mysql', $databaseConfig, 'QB');
+                new \Pixie\Connection('mysql', $databaseConfig);
             }
             catch (\PDOException $e) {
                 $form->addCustomErrors([new FormError('all', 'The database details you entered to not appear to be valid.')]);
