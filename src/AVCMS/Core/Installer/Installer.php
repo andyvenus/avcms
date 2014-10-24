@@ -51,7 +51,7 @@ class Installer
     {
         $installer = $this->getBundleInstaller($bundleName);
 
-        $newVersions = $this->getNewVersions($this->installedVersions->getInstalledVersion('bundle', $bundleName), $installer->getVersions());
+        $newVersions = $this->getNewVersions($this->installedVersions->getInstalledVersion($bundleName, 'bundle'), $installer->getVersions());
 
         return (count($newVersions) == 0 ? true : false);
 	}
