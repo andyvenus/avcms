@@ -35,4 +35,9 @@ abstract class BundleInstaller
     }
 
     abstract public function getVersions();
+
+    protected function sql($sql)
+    {
+        $this->PDO->exec($sql);
+    }
 }
