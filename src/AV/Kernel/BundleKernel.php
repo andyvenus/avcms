@@ -7,16 +7,15 @@ use AV\Kernel\Bundle\BundleManagerInterface;
 use AV\Kernel\Bundle\Config\BundleConfigValidator;
 use AV\Kernel\Events\KernelBootEvent;
 use Symfony\Component\Config\ConfigCache;
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Resource\DirectoryResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Dumper\XmlDumper;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\TerminableInterface;
+use Symfony\Component\Yaml\Yaml;
 
 class BundleKernel implements HttpKernelInterface, TerminableInterface
 {
@@ -42,13 +41,27 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
      */
     protected $bundleManager;
 
-    public function __construct(array $bundleDirs, $rootDir, $debug = false, array $options = array())
+    protected $appConfig;
+
+    public function __construct($rootDir, $debug = false, array $options = array())
     {
-        $this->bundleDirs = $bundleDirs;
+        $this->options = $this->mergeDefaultOptions($options);
+
+        $configLocation = $this->options['app_dir'].'/config/app.yml';
+
+        if (!file_exists($configLocation)) {
+            throw new \Exception('No app config (app.yml) found in '.$this->options['app_dir']);
+        }
+
+        $this->appConfig = Yaml::parse(file_get_contents($configLocation));
+
+        if (!isset($this->appConfig['bundle_dirs'])) {
+            throw new \Exception('App config (app.yml) does not contain any bundle directories');
+        }
+
+        $this->bundleDirs = $this->appConfig['bundle_dirs'];
         $this->debug = $debug;
         $this->rootDir = $rootDir;
-
-        $this->options = $this->mergeDefaultOptions($options);
 
         $this->buildBundleManager();
     }
