@@ -20,7 +20,7 @@ class BlogInstaller extends BundleInstaller
 
     public function install_1_0_0()
     {
-        $this->PDO->exec("CREATE TABLE `{$this->prefix}_blog_posts2` (
+        $this->PDO->exec("CREATE TABLE `{$this->prefix}blog_posts` (
           `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
           `title` text,
           `body` text,
