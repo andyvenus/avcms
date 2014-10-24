@@ -6,3 +6,5 @@ Twig:
   enabled: true
 Form:
   enabled: true
+Installer:
+  enabled: true
