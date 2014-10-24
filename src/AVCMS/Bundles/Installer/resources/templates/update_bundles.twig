@@ -1,17 +1,21 @@
 {% extends '@Installer/installer_index.twig' %}
 
+{% block title %}Update Bundles{% endblock %}
+
 {% block content %}
     {% for bundle_name, bundle_dir in update_bundles %}
         <div class="well well-sm" data-bundle-ajax-updater="{{ url('update_bundle', {bundle: bundle_name}) }}">
             <div class="row">
                 <div class="col-md-6">
-                    <h4>{{ bundle_name }}</h4>
-                    <p>{{ url('update_bundle', {bundle: bundle_name}) }}</p>
+                    <strong>{{ bundle_name }}</strong>
+                    <div class="status-text">Pending...</div>
                 </div>
-                <div class="col-md-6">
-                    <div class="pull-right">
-                        Hey
-                    </div>
+                <div class="col-md-6 show-progress" style="padding-top:10px;display:none;">
+                        <div class="progress" style="margin-bottom:0px">
+                            <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                <span class="sr-only">45% Complete</span>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -22,9 +26,25 @@
             var container = $(this);
             var url = container.data('bundle-ajax-updater');
 
+            container.find('show-progress').show();
+
             $.get(url, {}, function(data) {
-                alert(data.error.message);
-                container.css('border-color', 'green');
+                if (data.success == true) {
+                    container.css('border-color', 'green');
+                    container.find('.status-text').text('Bundle Updated');
+                }
+                else {
+                    if (data.error.severity == 'danger') {
+                        container.css('border-color', 'red');
+                        container.find('.status-text').text(data.error.message);
+                    }
+                    else {
+                        container.css('border-color', 'blue');
+                        container.find('.status-text').text(data.error.message);
+                    }
+                }
+
+                container.find('show-progress').hide();
             }, 'json');
         })
     </script>
