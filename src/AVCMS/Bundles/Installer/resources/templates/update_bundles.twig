@@ -26,7 +26,7 @@
             var container = $(this);
             var url = container.data('bundle-ajax-updater');
 
-            container.find('show-progress').show();
+            container.find('.show-progress').show();
 
             $.get(url, {}, function(data) {
                 if (data.success == true) {
@@ -44,8 +44,10 @@
                     }
                 }
 
-                container.find('show-progress').hide();
-            }, 'json');
+                container.find('.show-progress').hide();
+            }, 'json').fail(function() {
+                alert('The installer gave a PHP syntax error');
+            });
         })
     </script>
 {% endblock %}
