@@ -94,7 +94,7 @@ class InstallerController extends Controller
         $users = $this->model('AVCMS\Bundles\Users\Model\Users');
 
         if ($users->query()->count() !== 0) {
-            return new RedirectResponse('../admin');
+            return new RedirectResponse('../admin/');
         }
 
         $newUser = $users->newEntity();
@@ -128,7 +128,7 @@ class InstallerController extends Controller
         $installType = $request->get('install_type', 'update');
 
         if ($installType == 'update') {
-            $nextPage = '../admin';
+            $nextPage = '../admin/';
         }
         else {
             $nextPage = 'home';
