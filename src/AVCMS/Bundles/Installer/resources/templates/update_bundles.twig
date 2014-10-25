@@ -3,6 +3,7 @@
 {% block title %}Update Bundles{% endblock %}
 
 {% block content %}
+
     {% for bundle_name, bundle_dir in update_bundles %}
         <div class="well well-sm pending" data-bundle-ajax-updater="{{ url('update_bundle', {bundle: bundle_name}) }}">
             <div class="row">
@@ -20,8 +21,13 @@
             </div>
         </div>
     {% else %}
-        No bundles require updating
+        <p>No bundles require updating</p>
     {% endfor %}
+
+
+    {% block finished_button %}
+        <div class="finished" style="display:none;"><a href="{{ next_page_url }}" class="btn btn-default">Proceed <span class="glyphicon glyphicon-arrow-right"></span> </a></div>
+    {% endblock %}
 
     <script type="text/javascript">
         function doBundleUpdates() {
@@ -29,6 +35,7 @@
             var container = $('.pending[data-bundle-ajax-updater]').first();
 
             if (container.length == 0) {
+                upgradesComplete();
                 return;
             }
 
@@ -65,5 +72,10 @@
             });
         }
         doBundleUpdates();
+
+        function upgradesComplete()
+        {
+            $('.finished').show();
+        }
     </script>
 {% endblock %}
