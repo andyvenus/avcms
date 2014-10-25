@@ -156,7 +156,9 @@ abstract class Entity implements Validatable
     public function __clone()
     {
         foreach($this->subEntities as $name => $obj) {
-            $this->subEntities[$name] = clone $obj;
+            if (is_object($obj)) {
+                $this->subEntities[$name] = clone $obj;
+            }
         }
     }
 }
