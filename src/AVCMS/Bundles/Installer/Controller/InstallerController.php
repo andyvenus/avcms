@@ -8,13 +8,17 @@
 namespace AVCMS\Bundles\Installer\Controller;
 
 use AV\Form\FormError;
+use AVCMS\Bundles\Installer\Form\CreateAdminForm;
 use AVCMS\Bundles\Installer\Form\NewInstallForm;
 use AVCMS\Core\Controller\Controller;
 use AVCMS\Core\Installer\InstallerBundleFinder;
+use AVCMS\Core\SlugGenerator\SlugGenerator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 class InstallerController extends Controller
 {
@@ -32,10 +36,7 @@ class InstallerController extends Controller
 
     public function installerHomeAction()
     {
-        $bf = new InstallerBundleFinder();
-        $bf->findBundles(['src/AV/Bundles', 'src/AVCMS/Bundles']);
-
-        return new Response('Hello world');
+        return $this->redirect($this->generateUrl('new_install'));
     }
 
     public function newInstallAction(Request $request)
@@ -88,13 +89,54 @@ class InstallerController extends Controller
         return new Response($this->render('@Installer/new_install.twig', ['form' => $form->createView()]));
     }
 
+    public function createAdminAction(Request $request)
+    {
+        $users = $this->model('AVCMS\Bundles\Users\Model\Users');
+
+        if ($users->query()->count() !== 0) {
+            return new RedirectResponse('../admin');
+        }
+
+        $newUser = $users->newEntity();
+
+        $form = $this->buildForm(new CreateAdminForm(), $request, $newUser);
+
+        if ($form->isValid() && $form->getData('password1') === $form->getData('password2')) {
+            $form->saveToEntities();
+            $encoder = new BCryptPasswordEncoder(9);
+            $newUser->setPassword($encoder->encodePassword($form->getData('password1'), null));
+            $newUser->setRoleList('ROLE_SUPER_ADMIN');
+            $newUser->setJoined(time());
+            $newUser->setLastIp($request->getClientIp());
+
+            $slugGen = new SlugGenerator();
+            $newUser->setSlug($slugGen->generate($newUser->getUsername()));
+
+            $users->save($newUser);
+
+            return new RedirectResponse('../');
+        }
+        elseif ($form->getData('password1') !== $form->getData('password2')) {
+            $form->addCustomErrors([new FormError('password2', 'The two passwords you entered did not match')]);
+        }
+
+        return new Response($this->render('@Installer/create_admin.twig', ['form' => $form->createView()]));
+    }
+
     public function updateBundlesAction(Request $request)
     {
         $installType = $request->get('install_type', 'update');
 
+        if ($installType == 'update') {
+            $nextPage = '../admin';
+        }
+        else {
+            $nextPage = 'home';
+        }
+
         $updateBundles = $this->getInstaller()->getBundlesRequiringUpdate();
 
-        return new Response($this->render('@Installer/update_bundles.twig', ['update_bundles' => $updateBundles, 'install_type' => $installType]));
+        return new Response($this->render('@Installer/update_bundles.twig', ['update_bundles' => $updateBundles, 'next_page_url' => $nextPage]));
     }
 
     public function updateBundleAction(Request $request)

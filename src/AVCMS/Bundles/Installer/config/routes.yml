@@ -9,3 +9,7 @@ update_bundles:
 update_bundle:
   path: /update-bundle
   defaults: { _controller: Installer::InstallerController::updateBundleAction }
+
+create_admin:
+  path: /create-admin
+  defaults: { _controller: Installer::InstallerController::createAdminAction }
