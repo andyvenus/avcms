@@ -4,7 +4,7 @@
 
 {% block content %}
     {% for bundle_name, bundle_dir in update_bundles %}
-        <div class="well well-sm" data-bundle-ajax-updater="{{ url('update_bundle', {bundle: bundle_name}) }}">
+        <div class="well well-sm pending" data-bundle-ajax-updater="{{ url('update_bundle', {bundle: bundle_name}) }}">
             <div class="row">
                 <div class="col-md-6">
                     <strong>{{ bundle_name }}</strong>
@@ -24,32 +24,46 @@
     {% endfor %}
 
     <script type="text/javascript">
-        $('[data-bundle-ajax-updater]').each(function(){
-            var container = $(this);
+        function doBundleUpdates() {
+
+            var container = $('.pending[data-bundle-ajax-updater]').first();
+
+            if (container.length == 0) {
+                return;
+            }
+
+            container.removeClass('pending');
             var url = container.data('bundle-ajax-updater');
 
             container.find('.show-progress').show();
 
-            $.get(url, {}, function(data) {
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json"
+            }).done(function (data) {
                 if (data.success == true) {
-                    container.css('border-color', 'green');
-                    container.find('.status-text').text('Bundle Updated');
+                    container.css('background-color', '#EBFFEB');
+                    container.find('.status-text').text('Updated');
+
+                    doBundleUpdates();
                 }
                 else {
                     if (data.error.severity == 'danger') {
-                        container.css('border-color', 'red');
+                        container.css('background-color', '#FFC2B2');
                         container.find('.status-text').text(data.error.message);
                     }
                     else {
-                        container.css('border-color', 'blue');
+                        container.css('background-color', '#D6E7FF');
                         container.find('.status-text').text(data.error.message);
                     }
                 }
 
                 container.find('.show-progress').hide();
-            }, 'json').fail(function() {
+            }).fail(function () {
                 alert('The installer gave a PHP syntax error');
             });
-        })
+        }
+        doBundleUpdates();
     </script>
 {% endblock %}
