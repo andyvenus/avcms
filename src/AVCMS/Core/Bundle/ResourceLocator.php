@@ -15,9 +15,9 @@ class ResourceLocator extends BaseResourceLocator
 {
     protected $templateDir;
 
-    public function __construct(BundleManagerInterface $bundleManager, SettingsManager $settingsManager, $appDir = 'app') {
+    public function __construct(BundleManagerInterface $bundleManager, SettingsManager $settingsManager, $rootDir, $appDir) {
         $this->templateDir = $settingsManager->getSetting('template');
-        parent::__construct($bundleManager, $appDir);
+        parent::__construct($bundleManager, $rootDir, $appDir);
     }
 
     protected function getResourceDirs($bundleConfig, $resourceType)

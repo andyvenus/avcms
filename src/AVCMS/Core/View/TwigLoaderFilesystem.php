@@ -14,11 +14,11 @@ use Twig_Error_Loader;
 
 class TwigLoaderFilesystem extends \Twig_Loader_Filesystem
 {
-    public function __construct(ResourceLocator $resource_locator, SettingsManager $settings_manager)
+    public function __construct(ResourceLocator $resource_locator, SettingsManager $settings_manager, $rootDir)
     {
         $this->resource_locator = $resource_locator;
         $this->settings_manager = $settings_manager;
-        $this->setPaths(array($settings_manager->getSetting('template'), 'templates'));
+        $this->setPaths(array($rootDir.'/'.$settings_manager->getSetting('template'), $rootDir.'/'.'templates'));
     }
 
     protected function findTemplate($name)

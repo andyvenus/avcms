@@ -14,8 +14,9 @@ class ResourceLocator
 {
     protected $appDir = 'app';
 
-    public function __construct(BundleManagerInterface $bundleManager, $appDir = 'app') {
+    public function __construct(BundleManagerInterface $bundleManager, $rootDir, $appDir) {
         $this->bundleManager = $bundleManager;
+        $this->rootDir = $rootDir;
         $this->appDir = $appDir;
     }
 
@@ -38,7 +39,7 @@ class ResourceLocator
     {
         $dirs = array(
             $this->appDir.'/resources/'.$bundleConfig->name,
-            $bundleConfig->directory.'/resources/'.$resourceType,
+            $this->rootDir.'/'.$bundleConfig->directory.'/resources/'.$resourceType,
         );
 
         if (isset($bundleConfig->parent_config)) {

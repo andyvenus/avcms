@@ -16,15 +16,19 @@ class SiteUrlTwigExtension extends \Twig_Extension
      */
     protected $request;
 
-    public function __construct(RequestStack $request_stack)
+    public function __construct(RequestStack $request_stack, $rootDir = '')
     {
         $this->request = $request_stack->getMasterRequest();
     }
 
     public function getGlobals()
     {
+        $url = $this->request->getUriForPath('/');
+
+        $url = str_replace('front.php/', '', $url);
+
         return array(
-            'site_url' => $this->request->getUriForPath('/')
+            'site_url' => $url
         );
     }
 

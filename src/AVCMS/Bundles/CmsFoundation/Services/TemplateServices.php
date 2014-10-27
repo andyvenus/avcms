@@ -28,14 +28,14 @@ class TemplateServices implements Service
         ;
 
         $container->register('bundle.resource_locator', 'AVCMS\Core\Bundle\ResourceLocator')
-            ->setArguments(array(new Reference('bundle_manager'), new Reference('settings_manager')))
+            ->setArguments(array(new Reference('bundle_manager'), new Reference('settings_manager'), '%root_dir%', '%app_dir%'))
         ;
 
         $container->register('twig.filesystem', 'AVCMS\Core\View\TwigLoaderFilesystem')
-            ->setArguments(array(new Reference('bundle.resource_locator'), new Reference('settings_manager')))
-            ->addMethodCall('addPath', array('templates/admin/avcms', 'admin'))
-            ->addMethodCall('addPath', array('templates/dev/avcms', 'dev'))
-            ->addMethodCall('addPath', array('templates/email/avcms', 'email'))
+            ->setArguments(array(new Reference('bundle.resource_locator'), new Reference('settings_manager'), '%root_dir%'))
+            ->addMethodCall('addPath', array('%root_dir%/templates/admin/avcms', 'admin'))
+            ->addMethodCall('addPath', array('%root_dir%/templates/dev/avcms', 'dev'))
+            ->addMethodCall('addPath', array('%root_dir%/templates/email/avcms', 'email'))
         ;
     }
 }
