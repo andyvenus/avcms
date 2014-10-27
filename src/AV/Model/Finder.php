@@ -191,6 +191,12 @@ class Finder
     {
         $this->currentQuery->where('published', 1);
 
+        $entity = $this->model->getEntity();
+
+        if (method_exists($entity, 'getPublishDate')) {
+            $this->currentQuery->where('publish_date', '<=', time());
+        }
+
         return $this;
     }
 
