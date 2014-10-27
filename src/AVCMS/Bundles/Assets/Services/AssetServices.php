@@ -40,7 +40,7 @@ class AssetServices implements Service
         }
 
         $container->register('listener.bundle.public_file', 'AVCMS\Core\Bundle\Listeners\PublicFileSubscriber')
-            ->setArguments(array(new Reference('bundle_manager')))
+            ->setArguments(array(new Reference('bundle_manager'), '%cache_dir%'))
             ->addTag('event.subscriber')
         ;
     }
