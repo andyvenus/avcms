@@ -92,7 +92,7 @@ class UserAuthController extends Controller
 
                 $mailer = $this->container->get('mailer');
 
-                $email = $mailer->newEmail($this->trans('Validate your new account'), $this->render("@Users/validate_email.email.twig", ['emailKey' => $emailKey]), 'text/html', 'UTF-8');
+                $email = $mailer->newEmail($this->trans('Validate your new account'), $this->render("@Users/email/email.validate_address.twig", ['emailKey' => $emailKey]), 'text/html', 'UTF-8');
                 $email->setTo($user->getEmail());
 
                 $mailer->send($email);
