@@ -35,6 +35,7 @@ class TemplateServices implements Service
             ->setArguments(array(new Reference('bundle.resource_locator'), new Reference('settings_manager')))
             ->addMethodCall('addPath', array('templates/admin/avcms', 'admin'))
             ->addMethodCall('addPath', array('templates/dev/avcms', 'dev'))
+            ->addMethodCall('addPath', array('templates/email/avcms', 'email'))
         ;
     }
 }
