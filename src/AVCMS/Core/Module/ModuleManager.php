@@ -52,7 +52,20 @@ class ModuleManager
 
         if (!$module) return null;
 
-        $cacheFile = $this->cacheDir.'/'.$moduleConfig->getModule().'-'.$moduleConfig->getId().'-'.$position.'.php';
+        $cacheFile = $this->cacheDir.'/'.$moduleConfig->getModule().'-'.$moduleConfig->getId().'-'.$position;
+
+        if ($cacheVars = $module->getCacheIdVars()) {
+            foreach ($cacheVars as $varName) {
+                if (!isset($vars[$varName]) || !is_object($vars[$varName]) || !is_callable([$vars[$varName], 'getId'])) {
+                    throw new \Exception(sprintf("The module type '%s' requires a variable called $varName that is an object with a 'getId'
+                    method. Likely an entity such as a User or Comment.", $module->getName()));
+                }
+
+                $cacheFile .= '-'.$varName.$vars[$varName]->getId();
+            }
+        }
+
+        $cacheFile .= '.php';
 
         if ($module->isCachable() && $this->devMode == false) {
             if (!file_exists($cacheFile)) {

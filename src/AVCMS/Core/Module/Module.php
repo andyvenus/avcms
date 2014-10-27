@@ -57,6 +57,11 @@ class Module
     /**
      * @var array
      */
+    protected $cacheIdVars;
+
+    /**
+     * @var array
+     */
     protected $acceptedTemplateTypes = ['panel', 'none'];
 
     public function __construct($data = null)
@@ -212,6 +217,16 @@ class Module
     public function setType($type)
     {
         $this->type = $type;
+    }
+
+    public function getCacheIdVars()
+    {
+        return $this->cacheIdVars;
+    }
+
+    public function setCacheIdVars($cacheIdVars)
+    {
+        $this->cacheIdVars = $cacheIdVars;
     }
 
     public function fromArray(array $data)
