@@ -103,6 +103,10 @@ class ModuleManager
         }
 
         if ($module->isCachable() && $moduleConfig->getCacheTime()) {
+            if (!file_exists($this->cacheDir)) {
+                mkdir($this->cacheDir, 0777, true);
+            }
+
             file_put_contents($cacheFile, $content);
         }
 
