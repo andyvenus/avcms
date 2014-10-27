@@ -106,7 +106,7 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
         if ($this->debug) {
             $filenameAppend = '_dev';
 
-            if (file_exists($cacheDir = $this->options['cache_dir'].'cache/container.php')) {
+            if (file_exists($cacheDir = $this->options['cache_dir'].'/container.php')) {
                 unlink($cacheDir);
             }
         }
