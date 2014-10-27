@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    {% block head %}
+    {% block head_title %}
         <title>{% block title %}{% endblock %} - {{ settings.site_name }}</title>
     {% endblock %}
 
@@ -11,13 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="{{ site_url }}web/css/style.css" />
 
-    <script type="text/javascript">
-        var avcms = avcms || {};
-
-        avcms.config = {
-            site_url: '{{ site_url }}'
-        }
-    </script>
+    {% include '@CmsFoundation/inline_js.twig' %}
 
     {% for js in javascripts('frontend') %}
         <script type="text/javascript" src="{{ site_url }}{{ js }}"></script>
