@@ -47,8 +47,10 @@ modules:
     name: Users Example
     description: Just a test
     controller: Users::UserModulesController::exampleUserModuleAction
-    default_cache_time: 600
     type: user
+    cachable: true
+    cache_id_vars: [user]
+    default_cache_time: 600
 
 menu_items:
   admin:
