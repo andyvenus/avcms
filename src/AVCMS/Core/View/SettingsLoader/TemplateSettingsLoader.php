@@ -17,11 +17,13 @@ class TemplateSettingsLoader implements SettingsLoaderInterface
 
     protected $fields = array();
 
-    protected $field_sections = array();
+    protected $fieldSections = array();
 
-    public function __construct(TemplateManager $template_manager)
+    protected $templateManager;
+
+    public function __construct(TemplateManager $templateManager)
     {
-        $this->template_manager = $template_manager;
+        $this->templateManager = $templateManager;
     }
 
     public function getSettings(SettingsManager $settingsManager)
@@ -35,7 +37,7 @@ class TemplateSettingsLoader implements SettingsLoaderInterface
             return $this->settings;
         }
 
-        $config = $this->template_manager->getTemplateConfig();
+        $config = $this->templateManager->getTemplateConfig();
 
         $settings = array();
         if (isset($config['user_settings']) && !empty($config['user_settings'])) {
@@ -43,14 +45,14 @@ class TemplateSettingsLoader implements SettingsLoaderInterface
                 $settings[$setting_name] = array(
                     'value' => (isset($setting['default']) ? $setting['default'] : ''),
                     'loader' => self::getId(),
-                    'owner' => $this->template_manager->getTemplateConfig()['details']['name']
+                    'owner' => $this->templateManager->getTemplateConfig()['details']['name']
                 );
                 $this->fields[$setting_name] = $setting;
             }
 
             if (isset($config['user_settings_sections']) && !empty($config['user_settings_sections'])) {
                 foreach ($config['user_settings_sections'] as $id => $label) {
-                    $this->field_sections[$id] = array('label' => $label);
+                    $this->fieldSections[$id] = array('label' => $label);
                 }
             }
         }
@@ -61,7 +63,7 @@ class TemplateSettingsLoader implements SettingsLoaderInterface
 
     public function hasOwner($owner)
     {
-        return ($this->template_manager->getTemplateConfig()['name'] == $owner);
+        return ($this->templateManager->getTemplateConfig()['name'] == $owner);
     }
 
     public static function getId()
@@ -76,6 +78,6 @@ class TemplateSettingsLoader implements SettingsLoaderInterface
 
     public function getSections()
     {
-        return $this->field_sections;
+        return $this->fieldSections;
     }
 }
