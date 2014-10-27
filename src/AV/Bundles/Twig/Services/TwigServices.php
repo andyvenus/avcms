@@ -19,7 +19,7 @@ class TwigServices implements Service
         $container->register('twig', 'Twig_Environment')
             ->setArguments(array(
                 new Reference('twig.filesystem'),
-                array('cache' => 'cache/twig', 'debug' => '%dev_mode%')
+                array('cache' => '%cache_dir%/twig', 'debug' => '%dev_mode%')
             ))
         ;
 
