@@ -12,36 +12,36 @@ use Symfony\Component\Yaml\Yaml;
 
 class TemplateManager
 {
-    protected $current_template;
+    protected $currentTemplate;
 
-    protected $template_config;
+    protected $templateConfig;
 
     public function __construct(SettingsManager $settingsManager)
     {
-        $this->current_template = $settingsManager->getSetting('template');
+        $this->currentTemplate = $settingsManager->getSetting('template');
 
-        if ($this->current_template == null) {
+        if ($this->currentTemplate == null) {
             throw new \Exception("No template set in user settings");
         }
     }
 
     public function getTemplateConfig()
     {
-        if (!isset($this->template_config)) {
-            $config_path = $this->current_template.'/template.yml';
+        if (!isset($this->templateConfig)) {
+            $config_path = $this->currentTemplate.'/template.yml';
             if (file_exists($config_path)) {
-                $this->template_config = Yaml::parse(file_get_contents($config_path));
+                $this->templateConfig = Yaml::parse(file_get_contents($config_path));
             }
             else {
-                $this->template_config = array();
+                $this->templateConfig = array();
             }
         }
 
-        return $this->template_config;
+        return $this->templateConfig;
     }
 
     public function getCurrentTemplate()
     {
-        return $this->current_template;
+        return $this->currentTemplate;
     }
 } 
