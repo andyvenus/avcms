@@ -95,6 +95,11 @@ menu_items:
       icon: glyphicon glyphicon-list-alt
       type: route
       label: Modules
+    settings:
+      target: avcms_settings
+      icon: glyphicon glyphicon-cog
+      type: route
+      label: Settings
 
 modules:
   html_module:
