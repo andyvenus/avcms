@@ -62,6 +62,7 @@ menu_items:
       label: Groups
       type: route
       target: user_groups_admin_home
+      parent: users_admin
 
 template:
   users_browser: @Users/users_browser.twig
