@@ -35,7 +35,6 @@ class AdminModuleForm extends FormBlueprint
 
         $this->add('template', 'select', [
             'label' => 'Template Style',
-            'required' => true,
             'choices' => $templateStyles
         ]);
 
