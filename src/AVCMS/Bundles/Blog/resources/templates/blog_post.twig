@@ -16,4 +16,9 @@
             <a class="btn btn-link btn-sm" href="{{ url('blog_edit_post', { id: post.id}) }}"><span class="glyphicon glyphicon-edit"></span> Edit Post</a>
         </article>
     {% endblock %}
+
+    {% block blog_post_comments %}
+        <h4>{% trans %}Comments{% endtrans %}</h4>
+        {{ comments('blog_post', post) }}
+    {% endblock %}
 {% endblock %}

@@ -1,0 +1,10 @@
+{% for comment in comments %}
+    <div class="panel panel-default comment">
+        <div class="panel-heading">
+            <a href="{{ url('user_profile', {slug: comment.user.slug}) }}">{{ comment.user.username }}</a> - {{ comment.date|date(settings.date_format) }}
+        </div>
+        <div class="panel-body">
+            {{ comment.comment }}
+        </div>
+    </div>
+{% endfor %}

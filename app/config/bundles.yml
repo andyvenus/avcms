@@ -20,5 +20,5 @@ Assets:
     enabled: true
 Translation:
     enabled: true
-Installer:
-    enabled: false
+Comments:
+    enabled: true

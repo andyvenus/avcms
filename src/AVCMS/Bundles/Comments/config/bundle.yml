@@ -1,0 +1,11 @@
+name: Comments
+namespace: AVCMS\Bundles\Comments
+
+services:
+  - CommentServices
+
+assets:
+  avcms_comments.js:
+    env: frontend
+  avcms_comments.css:
+    env: frontend

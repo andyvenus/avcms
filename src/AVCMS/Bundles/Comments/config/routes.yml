@@ -1,0 +1,3 @@
+comments:
+  path: /comments/{content_type}/{content_id}
+  defaults: { _controller: Comments::CommentsController::getCommentsAction }
