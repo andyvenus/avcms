@@ -1,6 +1,12 @@
 name: Blog
 namespace: AVCMS\Bundles\Blog
 
+require:
+  - Admin
+  - CmsFoundation
+  - Users
+  - Comments
+
 services:
   - MarkdownServices
 
