@@ -56,7 +56,7 @@ class BundleBuilderController extends BundleBaseController
 
                 file_put_contents('app/config/bundles.yml', Yaml::dump($app_bundles_config));
 
-                return $this->redirect($this->generateUrl($this->bundle->route->manage_bundle, array('bundle' => $form->getData('name'))));
+                return $this->redirect($this->generateUrl('manage_bundle', array('bundle' => $form->getData('name'))));
             }
         }
 
