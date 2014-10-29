@@ -9,3 +9,8 @@ assets:
     env: frontend
   avcms_comments.css:
     env: frontend
+
+permissions:
+  PERM_ADD_COMMENT:
+    name: Add Comment
+    description: Ability to comment throughout the site

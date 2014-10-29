@@ -1,12 +1,5 @@
 <div class="new-comment">
-    <div class="form-group">
-        <div class="control-label"><label>{% trans %}New Comment{% endtrans %}</label></div>
-        <textarea class="form-control new-comment-field"></textarea>
-    </div>
-
-    <div class="new-comment-button-container">
-        <button class="btn btn-primary">{% trans %}Submit{% endtrans %}</button>
-    </div>
+    {{ form(form) }}
 </div>
 
 <div class="comments-area" data-ajax-url="{{ url('comments', {content_type: content_type, content_id: content_id}) }}">

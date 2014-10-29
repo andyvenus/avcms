@@ -1,8 +1,13 @@
 avcms = avcms || {};
 
 $(document).ready(function() {
-    $(document).scroll(avcms.comments.scrollCheck);
-    $('.load-comments-button').click(avcms.comments.loadComments);
+    var lcb = $('.load-comments-button');
+    if (lcb.length > 0) {
+        $(document).scroll(avcms.comments.scrollCheck);
+        lcb.click(avcms.comments.loadComments);
+
+        $('[name=new_comment_form]').submit(avcms.comments.submitComment);
+    }
 });
 
 avcms.comments = {
@@ -54,5 +59,21 @@ avcms.comments = {
         var elemBottom = elemTop + $(elem).height();
 
         return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+    },
+
+    submitComment: function() {
+        var form = $('[name=new_comment_form]');
+
+        $.post(form.attr('action'), form.serialize(), function(data) {
+            if (data.success == false) {
+                alert(data.error);
+                return;
+            }
+
+            var comments_area = $('.comments-area');
+            comments_area.html(data.html + comments_area.html());
+        }, 'json');
+
+        return false;
     }
 }

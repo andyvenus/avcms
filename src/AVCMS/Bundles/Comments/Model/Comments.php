@@ -33,6 +33,7 @@ class Comments extends Model
             ->where('content_type', $contentType)
             ->where('content_id', $contentId);
 
+
         if ($perPage !== null && is_numeric($perPage)) {
             $query->offset($start)->limit($perPage);
         }

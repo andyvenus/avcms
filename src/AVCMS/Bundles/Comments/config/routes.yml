@@ -1,3 +1,7 @@
 comments:
   path: /comments/{content_type}/{content_id}
   defaults: { _controller: Comments::CommentsController::getCommentsAction }
+
+add_comment:
+  path: /comments/{content_type}/{content_id}/add
+  defaults: { _controller: Comments::CommentsController::addCommentAction }

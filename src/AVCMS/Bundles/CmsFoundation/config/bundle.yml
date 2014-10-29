@@ -77,7 +77,7 @@ assets:
   bootstrap.min.css:
     env: shared
   avcms_form.js:
-    env: shared
+    env: admin
   avcms_event.js:
     env: shared
     priority: 89

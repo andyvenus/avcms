@@ -7,20 +7,22 @@
 
 namespace AVCMS\Bundles\Comments\Twig;
 
-use AV\Model\Model;
+use AV\Form\FormHandler;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CommentsTwigExtension extends \Twig_Extension
 {
-    protected $model;
-
     /**
      * @var \Twig_Environment
      */
     protected $environment;
 
-    public function __construct(Model $model)
+    protected $urlGenerator;
+
+    public function __construct(FormHandler $form, UrlGeneratorInterface $urlGenerator)
     {
-        $this->model = $model;
+        $this->form = $form;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function initRuntime(\Twig_Environment $environment)
@@ -37,7 +39,9 @@ class CommentsTwigExtension extends \Twig_Extension
             $content = $content->getId();
         }
 
-        return $this->environment->render($template, ['content_type' => $contentType, 'content_id' => $content]);
+        $this->form->setAction($this->urlGenerator->generate('add_comment', ['content_id' => $content, 'content_type' => $contentType], UrlGeneratorInterface::ABSOLUTE_URL));
+
+        return $this->environment->render($template, ['content_type' => $contentType, 'content_id' => $content, 'form' => $this->form->createView()]);
     }
 
     public function getFunctions()

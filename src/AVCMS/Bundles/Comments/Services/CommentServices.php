@@ -15,14 +15,20 @@ class CommentServices implements Service
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
-        $container->register('comments.model', 'AVCMS\Bundles\Comments\Model\Comments')
-            ->setArguments(['AVCMS\Bundles\Comments\Model\Comments'])
-            ->setFactoryService('model_factory')
-            ->setFactoryMethod('create')
+        $container->register('comment_types_manager', 'AVCMS\Core\Comments\CommentTypesManager')
+            ->setArguments([new Reference('bundle_manager')])
+        ;
+
+        $container->register('comment_form', 'AVCMS\Bundles\Comments\Form\CommentForm');
+
+        $container->register('comment_form_handler', 'AV\Form\FormHandler')
+            ->setArguments([new Reference('comment_form')])
+            ->setFactoryService('form.builder')
+            ->setFactoryMethod('buildForm')
         ;
 
         $container->register('twig.comments_extension', 'AVCMS\Bundles\Comments\Twig\CommentsTwigExtension')
-            ->setArguments([new Reference('comments.model')])
+            ->setArguments([new Reference('comment_form_handler'), new Reference('router')])
             ->addTag('twig.extension')
         ;
     }

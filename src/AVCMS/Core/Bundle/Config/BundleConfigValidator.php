@@ -35,6 +35,8 @@ class BundleConfigValidator extends BaseBundleConfigValidator
                 ->end()
             ->variableNode('user_settings_sections')
             ->end()
+            ->variableNode('comments')
+            ->end()
             ->variableNode('permissions')
             ->end();
 

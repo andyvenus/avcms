@@ -14,6 +14,10 @@ model:
   posts: Posts
   users: AVCMS\Bundles\Users\Model\Users
 
+comments:
+  blog_post:
+    model: AVCMS\Bundles\Blog\Model\Posts
+
 template:
   blog_post: @Blog/blog_post.twig
   blog_home: @Blog/blog_home.twig
@@ -74,7 +78,6 @@ menu_items:
 
 permissions:
   ADMIN_BLOG:
-    default: deny
     name: Blog Administration
     description: Ability to manage blog posts
 
