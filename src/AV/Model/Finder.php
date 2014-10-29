@@ -96,18 +96,23 @@ class Finder
 
     public function order($order)
     {
-        if (!isset($this->sortOptions[$order])) {
-            $order = 'id DESC';
-        }
-        else {
-            $order = $this->sortOptions[$order];
-        }
+        $order = $this->getDbSort($order);
 
         $orderSplit = explode(' ', $order);
 
         $this->currentQuery->orderBy($orderSplit[0], $orderSplit[1]);
 
         return $this;
+    }
+
+    public function getDbSort($order)
+    {
+        if (!isset($this->sortOptions[$order])) {
+            return 'id DESC';
+        }
+        else {
+            return $this->sortOptions[$order];
+        }
     }
 
     public function limit($limit)
