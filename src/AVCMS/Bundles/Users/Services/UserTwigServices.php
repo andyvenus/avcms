@@ -19,5 +19,10 @@ class UserTwigServices implements Service
             ->setArguments(array(new Reference('security.context')))
             ->addTag('twig.extension')
         ;
+
+        $container->register('twig.user_avatar_extension', 'AVCMS\Bundles\Users\TwigExtension\UserAvatarTwigExtension')
+            ->setArguments(['%avatar_path%', new Reference('request.stack')])
+            ->addTag('twig.extension')
+        ;
     }
 }

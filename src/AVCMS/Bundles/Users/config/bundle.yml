@@ -3,6 +3,7 @@ namespace: AVCMS\Bundles\Users
 
 services:
   - UserServices
+  - UserTwigServices
 
 core: true
 
@@ -69,6 +70,6 @@ menu_items:
 template:
   users_browser: @Users/users_browser.twig
 
-config:
+container_params:
   avatar_dir: web/avatars
   avatar_path: web/avatars

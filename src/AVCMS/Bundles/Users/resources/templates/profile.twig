@@ -5,14 +5,14 @@
 {% block meta_description %}{% trans with {username: profile_user.username} %}{username}'s profile{% endtrans %}{% endblock %}
 
 {% block full_width_content %}
-    <div class="user-profile-header" style="background-image: url('{{ site_url }}/{{ bundle.config.avatar_path }}/{{ profile_user.coverImage }}')">
+    <div class="user-profile-header" style="background-image: url('{{ cover_url(profile_user) }}')">
         <div class="container">
             <div class="user-profile-username">
                 {{ profile_user.username }}
             </div>
 
             <div class="user-profile-avatar">
-                <img src="{{ site_url }}/{{ bundle.config.avatar_path }}/{{ profile_user.avatar }}" width="100px" height="100px" />
+                <img src="{{ avatar_url(profile_user) }}" width="100px" height="100px" />
             </div>
         </div>
         <div class="user-profile-info">

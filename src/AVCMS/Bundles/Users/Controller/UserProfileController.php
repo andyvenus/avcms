@@ -66,14 +66,14 @@ class UserProfileController extends Controller
 
             if ($file = $form->getData('avatar_file')) {
                 $filename = $user->getId().'-avatar.'.$file->guessExtension();
-                $file->move($this->bundle->config->avatar_dir, $filename);
+                $file->move($this->bundle->container_params->avatar_dir, $filename);
 
                 $user->setAvatar($filename);
             }
 
             if ($file = $form->getData('cover_image')) {
                 $filename = $user->getId().'-cover.'.$file->guessExtension();
-                $file->move($this->bundle->config->avatar_dir, $filename);
+                $file->move($this->bundle->container_params->avatar_dir, $filename);
 
                 $user->setCoverImage($filename);
             }
