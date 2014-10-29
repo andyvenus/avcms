@@ -1,0 +1,23 @@
+blog_edit_post:
+    path:     /admin/blog/edit/{id}
+    defaults: { _controller: 'Blog::BlogAdminController::editPostAction' }
+
+blog_add_post:
+    path:     /admin/blog/new
+    defaults: { _controller: 'Blog::BlogAdminController::editPostAction' }
+
+blog_delete_posts:
+    path:     /admin/blog/delete
+    defaults: { _controller: 'Blog::BlogAdminController::deleteAction' }
+
+blog_toggle_posts_published:
+    path:     /admin/blog/publish
+    defaults: { _controller: 'Blog::BlogAdminController::togglePublishedAction' }
+
+blog_admin_home:
+  path: /admin/blog
+  defaults: { _controller: 'Blog::BlogAdminController::blogHomeAction' }
+
+blog_finder:
+  path: /admin/blog/finder/{page}
+  defaults: { page: 1, _controller: 'Blog::BlogAdminController::finderAction' }
