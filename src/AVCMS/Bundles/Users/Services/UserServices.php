@@ -135,7 +135,7 @@ class UserServices implements Service
 
         // ANONYMOUS
         $container->register('subscriber.anonymous_authentication', 'AVCMS\Core\Security\Subscriber\AnonymousAuthenticationSubscriber')
-            ->setArguments(array(new Reference('security.context'), 'PROVIDER_KEY'))
+            ->setArguments(array(new Reference('security.context'), 'PROVIDER_KEY', new Reference('users.groups_model')))
             ->addTag('event.subscriber')
         ;
 

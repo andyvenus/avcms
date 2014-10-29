@@ -7,6 +7,7 @@
 
 namespace AVCMS\Core\Security\Subscriber;
 
+use AV\Model\Model;
 use AVCMS\Bundles\Users\Model\User;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -20,12 +21,14 @@ class AnonymousAuthenticationSubscriber implements EventSubscriberInterface
     private $context;
     private $key;
     private $logger;
+    private $groupsModel;
 
-    public function __construct(SecurityContextInterface $context, $key, LoggerInterface $logger = null)
+    public function __construct(SecurityContextInterface $context, $key, Model $groupsModel, LoggerInterface $logger = null)
     {
+        $this->groupsModel = $groupsModel;
         $this->context = $context;
-        $this->key     = $key;
-        $this->logger  = $logger;
+        $this->key = $key;
+        $this->logger = $logger;
     }
 
     public function handle(GetResponseEvent $event)
@@ -37,6 +40,7 @@ class AnonymousAuthenticationSubscriber implements EventSubscriberInterface
         $user = new User();
         $user->setUsername("Unregistered");
         $user->setRoleList('ROLE_UNREGISTERED');
+        $user->group = $this->groupsModel->getOne('ROLE_UNREGISTERED');
 
         $this->context->setToken(new AnonymousToken($this->key, $user, array()));
 
