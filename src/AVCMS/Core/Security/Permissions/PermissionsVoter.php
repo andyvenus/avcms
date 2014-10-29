@@ -59,6 +59,7 @@ class PermissionsVoter implements VoterInterface
     private function hasPermission($attribute, TokenInterface $token)
     {
         $roles = $token->getUser()->getRoles();
+        $group = $token->getUser()->group;
 
         foreach ($roles as $role) {
             // Super admins always have permission
@@ -77,7 +78,20 @@ class PermissionsVoter implements VoterInterface
 
         $perms =& $this->permissions[ $token->getUser()->getRoleList() ];
 
-        return (isset($perms[$attribute]) ? $perms[$attribute] : false);
+        if (!isset($perms[$attribute])) {
+            $permType = explode('_', $attribute)[0];
+            if (is_callable([$group, "get{$permType}default"])) {
+                $permission = ($group->{"get{$permType}default"}() === 'allow' ? true : false);
+            }
+            else {
+                $permission = false;
+            }
+        }
+        else {
+            $permission = $perms[$attribute];
+        }
+
+        return $permission;
     }
 
     private function getPermissions(array $roles)
