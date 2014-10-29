@@ -124,6 +124,7 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
             $container->setParameter('app_dir', $this->options['app_dir']);
             $container->setParameter('cache_dir', $this->options['cache_dir']);
             $container->setParameter('config_dir', $this->options['app_dir'].'/config');
+            $container->setParameter('config_dir', $this->options['web_path']);
 
             $container->addResource(new DirectoryResource($this->options['config_dir']));
 
@@ -188,7 +189,8 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
     {
         $defaults = array(
             'app_dir' => 'app',
-	        'cache_dir' => 'cache'
+	        'cache_dir' => 'cache',
+            'web_path' => 'web'
         );
 
         $options = array_merge($defaults, $options);
