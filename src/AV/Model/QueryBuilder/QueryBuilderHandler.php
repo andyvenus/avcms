@@ -174,24 +174,20 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     /**
      * Get first row
      *
-     * @param string $class
+     * @param int $fetchType
      * @return mixed
      */
-    public function first($class = 'stdClass')
+    public function first($fetchType = \PDO::FETCH_CLASS)
     {
         $query = clone($this);
 
         $query->limit(1);
 
-        if ($class == 'stdClass' && isset($this->entity)) {
-            $class = $this->entity;
-        }
-
-        if (isset($this->model)) {
-           $result = $query->getEntity($class);
+        if (isset($this->model) && isset($this->entity) && $this->entity !== null) {
+           $result = $query->getEntity($this->entity);
         }
         else {
-            $result = $query->get($class);
+            $result = $query->get(null, $fetchType);
         }
 
         return empty($result) ? null : reset($result);
