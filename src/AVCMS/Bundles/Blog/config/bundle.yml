@@ -16,7 +16,7 @@ model:
 
 comments:
   blog_post:
-    model: AVCMS\Bundles\Blog\Model\Posts
+    model: AVCMS\Bundles\Blog\Model\BlogPosts
 
 template:
   blog_post: @Blog/blog_post.twig
