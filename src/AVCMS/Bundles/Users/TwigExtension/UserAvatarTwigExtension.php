@@ -56,7 +56,7 @@ class UserAvatarTwigExtension extends \Twig_Extension
         $avatar = $user->getAvatar();
 
         if (!$avatar) {
-            return $this->siteUrl.'/web/resources/Users/images/default_avatar.png';
+            return $this->siteUrl.'web/resources/Users/images/default_avatar.png';
         }
 
         return $this->avatarPath.'/'.$avatar;
@@ -67,7 +67,7 @@ class UserAvatarTwigExtension extends \Twig_Extension
         $cover = $user->getCoverImage();
 
         if (!$cover) {
-            return $this->siteUrl.'/web/resources/Users/images/default_cover.png';
+            return $this->siteUrl.'web/resources/Users/images/default_cover.png';
         }
 
         return $this->avatarPath.'/'.$cover;
