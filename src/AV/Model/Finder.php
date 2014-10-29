@@ -65,6 +65,11 @@ class Finder
         );
     }
 
+    public function setSortOptions(array $sortOptions)
+    {
+        $this->sortOptions = $sortOptions;
+    }
+
     public function setResultsPerPage($resultsPerPage)
     {
         $this->resultsPerPage = $resultsPerPage;

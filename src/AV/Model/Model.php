@@ -79,7 +79,18 @@ abstract class Model implements ModelInterface {
      */
     public function find()
     {
-        return new $this->finder($this, $this->taxonomyManager);
+        $finder = new $this->finder($this, $this->taxonomyManager);
+        $finder->setSortOptions($this->getFinderSortOptions());
+
+        return $finder;
+    }
+
+    public function getFinderSortOptions()
+    {
+        return array(
+            'newest' => 'id DESC',
+            'oldest' => 'id ASC'
+        );
     }
 
     /**

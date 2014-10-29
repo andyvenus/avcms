@@ -9,10 +9,8 @@ namespace AVCMS\Bundles\Blog\Model;
 
 use AV\Model\ContentModel;
 
-class Posts extends ContentModel {
-
-    protected $finder = 'AVCMS\Bundles\Blog\Finder\BlogPostsFinder';
-
+class Posts extends ContentModel
+{
     public function getTable()
     {
         return 'blog_posts';
@@ -26,5 +24,16 @@ class Posts extends ContentModel {
     public function getEntity()
     {
         return 'AVCMS\Bundles\Blog\Model\Post';
+    }
+
+    public function getFinderSortOptions()
+    {
+        return array_merge(parent::getFinderSortOptions(), array(
+            'user_id' => 'user_id asc',
+            'publish_date_newest' => 'publish_date desc',
+            'publish_date_oldest' => 'publish_date asc',
+            'a_z' => 'title asc',
+            'z_a' => 'title desc'
+        ));
     }
 }
