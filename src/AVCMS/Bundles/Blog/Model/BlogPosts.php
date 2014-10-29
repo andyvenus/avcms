@@ -9,7 +9,7 @@ namespace AVCMS\Bundles\Blog\Model;
 
 use AV\Model\ContentModel;
 
-class Posts extends ContentModel
+class BlogPosts extends ContentModel
 {
     public function getTable()
     {
@@ -18,12 +18,12 @@ class Posts extends ContentModel
 
     public function getSingular()
     {
-        return 'post';
+        return 'blog_post';
     }
 
     public function getEntity()
     {
-        return 'AVCMS\Bundles\Blog\Model\Post';
+        return 'AVCMS\Bundles\Blog\Model\BlogPost';
     }
 
     public function getFinderSortOptions()

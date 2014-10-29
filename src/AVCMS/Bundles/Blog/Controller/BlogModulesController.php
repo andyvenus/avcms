@@ -13,13 +13,13 @@ use Symfony\Component\HttpFoundation\Response;
 class BlogModulesController extends Controller
 {
     /**
-     * @var \AVCMS\Bundles\Blog\Model\Posts
+     * @var \AVCMS\Bundles\Blog\Model\BlogPosts
      */
     private $blogPosts;
 
     public function setUp()
     {
-        $this->blogPosts = $this->model('Posts');
+        $this->blogPosts = $this->model('BlogPosts');
     }
 
     public function blogPostsModule($module, $userSettings)

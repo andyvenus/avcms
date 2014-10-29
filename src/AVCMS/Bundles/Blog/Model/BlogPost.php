@@ -11,7 +11,7 @@ use AV\Model\ContentEntity;
 use AV\Validation\Rules\Length;
 use AV\Validation\Validator;
 
-class Post extends ContentEntity {
+class BlogPost extends ContentEntity {
     public function setTitle($value) {
         $this->set('title', $value);
     }

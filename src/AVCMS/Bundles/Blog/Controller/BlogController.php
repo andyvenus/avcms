@@ -18,47 +18,42 @@ use Symfony\Component\Yaml\Yaml;
 
 class BlogController extends Controller
 {
+    /**
+     * @var \AVCMS\Bundles\Blog\Model\BlogPosts
+     */
+    private $posts;
+
+    public function setUp()
+    {
+        $this->posts = $this->model('BlogPosts');
+    }
+
     public function blogArchiveAction(Request $request)
     {
-        $posts = $this->model($this->bundle->model->posts);
-
-        $finder = $posts->find();
+        $finder = $this->posts->find();
         $all_posts = $finder->published()
             ->setResultsPerPage(10)
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'tags' => null))
             ->join($this->model($this->bundle->model->users), ['username'])
             ->get();
 
-        return new Response($this->render($this->bundle->template->blog_home, array('posts' => $all_posts)));
+        return new Response($this->render('@Blog/blog_home.twig', array('posts' => $all_posts)));
     }
 
     public function blogPostAction(Request $request)
     {
-        $posts = $this->model($this->bundle->model->posts);
-
-        $post = $posts->find()
+        $post = $this->posts->find()
             ->slug($request->get('slug'))
             ->published()
             ->join($this->model($this->bundle->model->users), ['username'])
             ->first();
 
         if (!$post) {
-            throw $this->createNotFoundException(ucfirst($posts->getSingular()).' not found');
+            throw $this->createNotFoundException(ucfirst($this->posts->getSingular()).' not found');
         }
 
-        $this->container->get('taxonomy_manager')->assign('tags', $post, $posts->getSingular());
+        $this->container->get('taxonomy_manager')->assign('tags', $post, $this->posts->getSingular());
 
-        return new Response($this->render($this->bundle->template->blog_post, array('post' => $post)));
-    }
-
-    public function blogLatestModule()
-    {
-        $posts = $this->model('Posts');
-
-        $all_posts = $posts->query()->get();
-
-        $user = $this->activeUser();
-
-        return new Response($this->render('blog_top_module.twig', array('posts' => $all_posts, 'user' => $user->getUser())));
+        return new Response($this->render('@Blog/blog_post.twig', array('post' => $post)));
     }
 }

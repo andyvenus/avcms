@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class BlogAdminController extends AdminBaseController
 {
     /**
-     * @var \AVCMS\Bundles\Blog\Model\Posts
+     * @var \AVCMS\Bundles\Blog\Model\BlogPosts
      */
     protected $blogPosts;
 
@@ -26,7 +26,7 @@ class BlogAdminController extends AdminBaseController
 
     public function setUp()
     {
-        $this->blogPosts = $this->model('Posts');
+        $this->blogPosts = $this->model('BlogPosts');
 
         if (!$this->isGranted('ADMIN_BLOG')) {
             throw new AccessDeniedException;
