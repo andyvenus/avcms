@@ -202,11 +202,5 @@ class UserServices implements Service
             ->setArguments([new Reference('bundle_manager'), new Reference('users.permissions_model')])
             ->addTag('event.subscriber')
         ;
-
-        // TWIG SECURITY EXTENSION
-        $container->register('twig.security_extension', 'Symfony\Bridge\Twig\Extension\SecurityExtension')
-            ->setArguments(array(new Reference('security.context')))
-            ->addTag('twig.extension')
-        ;
     }
 }
