@@ -9,7 +9,7 @@
         color: #333;
     }
 
-    .profile-block {
+    .profiler-block {
         float: left;
         margin-right: 5px;
         border-right: 1px solid #dddddd;
@@ -20,26 +20,19 @@
         text-decoration: underline;
         color: #333;
     }
-
-    .browser-finder-checked-options {
-        margin-bottom: 40px!important;
-    }
 </style>
 
 <div class="dev-bar-inner animated fadeIn">
-    <div class="profile-block">
+    <div class="profiler-block">
         <a href="{{ url('profiler', {token: token}) }}">{{ token }}</a>
     </div>
-    <div class="profile-block">
+    <div class="profiler-block">
         {{ request.controller.class|abbr_class }} :: {{ request.controller.method }} <i>via</i> {{ request.route }}
     </div>
-    <div class="profile-block">
+    <div class="profiler-block">
         {{ '%.1f'|format(memory.memory / 1024 / 1024) }} MB / {{ '%.0f ms'|format(time.duration) }}
     </div>
-    <div class="profile-block">
+    <div class="profiler-block">
         <a href="{{ url('profiler', {token: token}) }}#translations">{{ translations.translations|length }} Translation Strings</a>
-    </div>
-    <div class="profile-block">
-        <input type="checkbox" name="asset_move" id="asset_move" />
     </div>
 </div>
