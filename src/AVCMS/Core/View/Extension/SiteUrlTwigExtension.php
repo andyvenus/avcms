@@ -16,7 +16,7 @@ class SiteUrlTwigExtension extends \Twig_Extension
      */
     protected $request;
 
-    public function __construct(RequestStack $request_stack, $rootDir = '')
+    public function __construct(RequestStack $request_stack)
     {
         $this->request = $request_stack->getMasterRequest();
     }
