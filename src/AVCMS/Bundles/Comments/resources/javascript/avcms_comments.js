@@ -72,6 +72,8 @@ avcms.comments = {
 
             var comments_area = $('.comments-area');
             comments_area.html(data.html + comments_area.html());
+            form[0].reset();
+
         }, 'json');
 
         return false;
