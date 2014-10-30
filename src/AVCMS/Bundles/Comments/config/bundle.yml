@@ -14,3 +14,11 @@ permissions:
   PERM_ADD_COMMENT:
     name: Add Comment
     description: Ability to comment throughout the site
+
+menu_items:
+  admin:
+    admin_comments:
+      label: Comments
+      target: manage_comments
+      icon: glyphicon glyphicon-comment
+      type: route
