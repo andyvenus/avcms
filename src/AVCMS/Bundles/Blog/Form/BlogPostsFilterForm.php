@@ -8,12 +8,15 @@
 namespace AVCMS\Bundles\Blog\Form;
 
 use AV\Form\FormBlueprint;
+use AVCMS\Bundles\Admin\Form\AdminFiltersForm;
 
-class BlogPostsFilterForm extends FormBlueprint
+class BlogPostsFilterForm extends AdminFiltersForm
 {
     public function __construct()
     {
-        $this->add('order', 'select', array(
+        parent::__construct();
+
+        $this->replace('order', 'select', array(
             'choices' => array(
                 'newest' => 'Newest (by ID)',
                 'oldest' => 'Oldest (by ID)',
@@ -24,8 +27,5 @@ class BlogPostsFilterForm extends FormBlueprint
             )
         ));
 
-        $this->add('search', 'text');
-
-        $this->setName('filter_form');
     }
 } 

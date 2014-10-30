@@ -19,18 +19,7 @@
                         {% block finder_filters %}
                             {{ form_start(finder_filters_form) }}
 
-                            {% block finder_order %}
-                                <div class="filter-form-row">{{ form_field(finder_filters_form.order) }}</div>
-                            {% endblock %}
-
-                            {% block finder_search %}
-                                <div class="input-group">
-                                    {{ form_field(finder_filters_form.search, {"class": "input-md", "placeholder": "Search", "autocomplete": "off"}) }}
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default clear-search" type="button"><span class="glyphicon glyphicon-remove"></span></button>
-                                    </span>
-                                </div>
-                            {% endblock %}
+                            {{ form_rows(finder_filters_form) }}
 
                             {{ form_end(finder_filters_form) }}
                         {% endblock %}

@@ -20,7 +20,9 @@ class AdminFiltersForm extends FormBlueprint
             )
         ));
 
-        $this->add('search', 'text');
+        $this->add('search', 'text', [
+            'field_template' => '@admin/form_fields/search_field.twig'
+        ]);
 
         $this->setName('filter_form');
     }
