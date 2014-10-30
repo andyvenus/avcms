@@ -7,7 +7,6 @@
 
 namespace AVCMS\Bundles\Blog\Form;
 
-use AV\Form\FormBlueprint;
 use AVCMS\Bundles\Admin\Form\AdminFiltersForm;
 
 class BlogPostsFilterForm extends AdminFiltersForm

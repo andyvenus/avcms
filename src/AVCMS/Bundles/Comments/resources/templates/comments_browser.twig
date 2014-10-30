@@ -4,10 +4,6 @@
     {% trans %}Manage Comments{% endtrans %}
 {% endblock %}
 
-{% block finder_filters %}
-    {{ form(finder_filters_form) }}
-{% endblock %}
-
 {% block finder %}
     <div data-url="{{ url('comments_finder') }}">
         {{ render(path('comments_finder')) }}
