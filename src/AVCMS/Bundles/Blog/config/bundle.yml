@@ -16,7 +16,11 @@ model:
 
 comments:
   blog_post:
+    name: Blog Post
     model: AVCMS\Bundles\Blog\Model\BlogPosts
+    title_field: title
+    frontend_route: blog_post
+    frontend_route_params: [slug]
 
 template:
   blog_post: @Blog/blog_post.twig

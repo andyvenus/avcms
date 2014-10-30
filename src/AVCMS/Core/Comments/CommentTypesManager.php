@@ -33,12 +33,32 @@ class CommentTypesManager
         return isset($this->contentTypes[$contentType]);
     }
 
-    public function getContentTypeModelClass($contentType)
+    public function getModelClass($contentType)
     {
         if (!isset($this->contentTypes[$contentType]) || !isset($this->contentTypes[$contentType]['model'])) {
             throw new \Exception("Model not found for content type $contentType");
         }
 
         return $this->contentTypes[$contentType]['model'];
+    }
+
+    public function getTitleField($contentType)
+    {
+        return isset($this->contentTypes[$contentType]['title_field']) ? $this->contentTypes[$contentType]['title_field'] : null;
+    }
+
+    public function getFrontendRoute($contentType)
+    {
+        return isset($this->contentTypes[$contentType]['frontend_route']) ? $this->contentTypes[$contentType]['frontend_route'] : null;
+    }
+
+    public function getFrontendRouteParams($contentType)
+    {
+        return isset($this->contentTypes[$contentType]['frontend_route_params']) ? $this->contentTypes[$contentType]['frontend_route_params'] : [];
+    }
+
+    public function getContentTypes()
+    {
+        return $this->contentTypes;
     }
 } 

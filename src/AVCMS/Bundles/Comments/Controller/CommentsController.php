@@ -95,7 +95,7 @@ class CommentsController extends Controller
 
         $entity = null;
         if ($typesManager->contentTypeValid($contentType) === true) {
-            $entity = $this->model($typesManager->getContentTypeModelClass($contentType))->getOne($contentId);
+            $entity = $this->model($typesManager->getModelClass($contentType))->getOne($contentId);
         }
 
         return $entity;

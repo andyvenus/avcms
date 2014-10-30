@@ -6,6 +6,8 @@ use AV\Model\Model;
 
 class Comments extends Model
 {
+    protected $finder = 'AVCMS\Bundles\Comments\Model\CommentsFinder';
+
     public function getTable()
     {
         return 'comments';

@@ -1,0 +1,16 @@
+{% block content_body %}
+    <div class="container">
+
+        {% for comment in comments %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{ comment.user.username }} {% trans %}commented on{% endtrans %} <a href="{{ comment.content.url }}">{{ comment.content.title }}</a>
+                </div>
+                <div class="panel-body">
+                    {{ comment.comment }}
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+{% endblock %}
