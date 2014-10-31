@@ -45,9 +45,4 @@ class BlogPost extends ContentEntity {
     {
         return $this->get('comments');
     }
-
-    public function validationRules(Validator $validator)
-    {
-        $validator->addRule('title', new Length(10), 'The title must be 10 chars long', true);
-    }
 } 
