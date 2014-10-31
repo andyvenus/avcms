@@ -18,7 +18,7 @@
     {% endblock %}
 
     {% block blog_post_comments %}
-        <h4>{% trans %}Comments{% endtrans %}</h4>
+        <h4>{% trans %}Comments{% endtrans %} ({{ post.comments }})</h4>
         {{ comments('blog_post', post) }}
     {% endblock %}
 {% endblock %}

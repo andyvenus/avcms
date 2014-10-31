@@ -17,6 +17,7 @@
                 {% if is_granted('ADMIN_BLOG')  %}
                     <a class="btn btn-link btn-sm" href="{{ url('blog_edit_post', { id: post.id}) }}"><span class="glyphicon glyphicon-edit"></span> {% trans %}Edit Post{% endtrans %}</a>
                 {% endif %}
+                <a class="btn btn-link btn-sm" href="{{ url('blog_post', {slug: post.slug}) }}"><span class="glyphicon glyphicon-comment"></span> {% trans %}Comments{% endtrans %} ({{ post.comments }})</a>
             </article>
         {% endfor %}
     {% endblock %}
