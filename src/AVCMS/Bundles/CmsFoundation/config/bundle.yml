@@ -87,6 +87,8 @@ assets:
       env: admin
   notify.min.js:
     env: shared
+  avcms_misc.js:
+    env: shared
 
 menu_items:
   admin:
