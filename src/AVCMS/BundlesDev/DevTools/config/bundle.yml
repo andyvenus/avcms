@@ -1,0 +1,5 @@
+name: DevTools
+namespace: AVCMS\BundlesDev\DevTools
+
+services:
+  - DevToolsServices

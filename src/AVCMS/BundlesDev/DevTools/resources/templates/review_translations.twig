@@ -3,9 +3,9 @@
 {% block title %}Review Translations{% endblock %}
 
 {% block content %}
-
+    <form method="post">
     {% for string, translation in translation_strings %}
-        <div class="row">
+        <div class="row" style="border-bottom: 1px solid #c0c0c0">
             <div class="col-md-6">
                 {% if translation.usages|length > 0 %}
                     {% set class = 'text-success' %}
@@ -18,9 +18,12 @@
                 {% endfor %}
             </div>
             <div class="col-md-6">
-                {{ translation.current_translation }}
+                <div class="pull-right">
+                    <label>Include translation <input type="checkbox" name="translations[]" value="{{ string }}" {% if translation.usages|length > 0 %}checked="checked"{% endif %}/></label>
+                </div>
             </div>
         </div>
     {% endfor %}
-
+        <button type="submit" class="btn btn-primary">Accept Translation Strings</button>
+    </form>
 {% endblock %}

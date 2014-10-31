@@ -1,0 +1,3 @@
+review_bundle_translations:
+  path: /dev/translations/{bundle}
+  defaults: { _controller: DevTools::TranslationExtractionController::reviewBundleTranslations }

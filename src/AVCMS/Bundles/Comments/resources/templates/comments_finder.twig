@@ -6,7 +6,7 @@
                 <div class="panel-heading">
                     {{ comment.user.username }} {% trans %}commented on{% endtrans %} <a href="{{ comment.content.url }}">{{ comment.content.title }}</a> - {{ comment.date|date(settings.date_format) }}
                     <div class="pull-right">
-                        <button class="btn btn-danger btn-xs avcms-delete-item" data-delete-url="{{ url('delete_comments') }}">Delete</button>
+                        <button class="btn btn-danger btn-xs avcms-delete-item" data-delete-url="{{ url('delete_comments') }}"><span class="glyphicon glyphicon-remove"></span></button>
                     </div>
                 </div>
                 <div class="panel-body">

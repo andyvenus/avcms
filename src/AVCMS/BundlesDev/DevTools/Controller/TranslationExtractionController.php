@@ -29,24 +29,38 @@ class TranslationExtractionController extends Controller
 
         $foundStrings = unserialize(file_get_contents($file));
 
-        $stringFinder = new StringFinder();
 
         $usedTranslationStrings = [];
         $unusedTranslationStrings = [];
+
+        $previouslyAccepted = [];
+        if (file_exists($bundleDir.'/resources/translations/strings.txt')) {
+            $previouslyAcceptedFile = file($bundleDir . '/resources/translations/strings.txt');
+            foreach ($previouslyAcceptedFile as $fileString) {
+                $previouslyAccepted[] = trim($fileString);
+            }
+        }
+
+        if ($request->request->has('translations')) {
+            $strings = $request->request->get('translations');
+
+            foreach ($strings as $string) {
+                $previouslyAccepted[] = $string;
+            }
+
+            file_put_contents($bundleDir.'/resources/translations/strings.txt', implode(PHP_EOL, $previouslyAccepted));
+        }
+
+        $stringFinder = new StringFinder();
+
         foreach ($foundStrings as $string) {
+            if (in_array($string, $previouslyAccepted)) {
+                continue;
+            }
+
             $usages = $stringFinder->getResults($string, $bundleDir);
 
-            $translator = $this->container->get('translator');
-            $translator->trans($string);
-
-            $rawTranslation = $translator->getTranslationStrings()[$string]['raw_translation'];
-
             $translationInfo = ['string' => $string, 'usages' => $usages];
-
-            $translationInfo['current_translation'] = null;
-            if ($rawTranslation !== $string) {
-                $translationInfo['current_translation'] = $rawTranslation;
-            }
 
             if ($usages === null) {
                 $translationInfo['string'] .= ' - String contains quotations so cannot be validated';
