@@ -6,19 +6,14 @@ use AV\Model\Entity;
 
 class Comment extends Entity
 {
-    public function getComment()
-    {
-        return $this->get("comment");
-    }
-
     public function setComment($value)
     {
         $this->set("comment", $value);
     }
 
-    public function getContentId()
+    public function getComment()
     {
-        return $this->get("content_id");
+        return $this->get("comment");
     }
 
     public function setContentId($value)
@@ -26,9 +21,19 @@ class Comment extends Entity
         $this->set("content_id", $value);
     }
 
-    public function getContentType()
+    public function getContentId()
     {
-        return $this->get("content_type");
+        return $this->get("content_id");
+    }
+
+    public function getContentTitle()
+    {
+        return $this->get("content_title");
+    }
+
+    public function setContentTitle($value)
+    {
+        $this->set("content_title", $value);
     }
 
     public function setContentType($value)
@@ -36,14 +41,19 @@ class Comment extends Entity
         $this->set("content_type", $value);
     }
 
-    public function getDate()
+    public function getContentType()
     {
-        return $this->get("date");
+        return $this->get("content_type");
     }
 
     public function setDate($value)
     {
         $this->set("date", $value);
+    }
+
+    public function getDate()
+    {
+        return $this->get("date");
     }
 
     public function setId($value)
@@ -56,14 +66,14 @@ class Comment extends Entity
         return $this->get("id");
     }
 
-    public function setIp($value)
-    {
-        $this->set("ip", $value);
-    }
-
     public function getIp()
     {
         return $this->get("ip");
+    }
+
+    public function setIp($value)
+    {
+        $this->set("ip", $value);
     }
 
     public function getUserId()
