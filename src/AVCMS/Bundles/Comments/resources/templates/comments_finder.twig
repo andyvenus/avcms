@@ -2,15 +2,17 @@
     <div class="container">
 
         {% for comment in comments %}
-            <div class="panel panel-default">
+            <div class="panel panel-default" data-id="{{ comment.id }}">
                 <div class="panel-heading">
                     {{ comment.user.username }} {% trans %}commented on{% endtrans %} <a href="{{ comment.content.url }}">{{ comment.content.title }}</a> - {{ comment.date|date(settings.date_format) }}
+                    <div class="pull-right">
+                        <button class="btn btn-danger btn-xs avcms-delete-item" data-delete-url="{{ url('delete_comments') }}">Delete</button>
+                    </div>
                 </div>
                 <div class="panel-body">
                     {{ comment.comment }}
                 </div>
             </div>
         {% endfor %}
-
     </div>
 {% endblock %}

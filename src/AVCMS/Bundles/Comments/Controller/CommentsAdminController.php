@@ -102,6 +102,11 @@ class CommentsAdminController extends AdminBaseController
         return new Response($this->renderAdminSection('@Comments/comments_finder.twig', $request->get('ajax_depth'), ['comments' => $comments]));
     }
 
+    public function deleteCommentsAction(Request $request)
+    {
+        return $this->handleDelete($request, $this->comments);
+    }
+
     protected function getSharedTemplateVars($ajaxDepth)
     {
         $templateVars = parent::getSharedTemplateVars($ajaxDepth);
