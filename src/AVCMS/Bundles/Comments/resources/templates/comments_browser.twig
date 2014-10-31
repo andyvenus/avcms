@@ -4,6 +4,8 @@
     {% trans %}Comments Stream{% endtrans %}
 {% endblock %}
 
+{% block browser_class %}browser fluid-browser{% endblock %}
+
 {% block finder %}
     <div data-url="{{ url('comments_finder') }}">
         {{ render(path('comments_finder')) }}
