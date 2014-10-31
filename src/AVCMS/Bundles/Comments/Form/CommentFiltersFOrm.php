@@ -8,14 +8,15 @@
 namespace AVCMS\Bundles\Comments\Form;
 
 use AV\Form\FormBlueprint;
+use AVCMS\Bundles\Admin\Form\AdminFiltersForm;
 
-class CommentFiltersForm extends FormBlueprint
+class CommentFiltersForm extends AdminFiltersForm
 {
     public function __construct($contentTypes)
     {
-        $this->setName('filter_form');
+        parent::__construct();
 
-        $this->add('contentType', 'select', [
+        $this->addBefore('search', 'contentType', 'select', [
             'label' => 'Content Type',
             'choices' => $contentTypes
         ]);
