@@ -14,6 +14,9 @@ permissions:
   PERM_ADD_COMMENT:
     name: Add Comment
     description: Ability to comment throughout the site
+  ADMIN_COMMENTS:
+    name: Manage Comments
+    description: Ability to view & delete comments in the admin and frontend
 
 menu_items:
   admin:

@@ -7,6 +7,7 @@ $(document).ready(function() {
         lcb.click(avcms.comments.loadComments);
 
         $('[name=new_comment_form]').submit(avcms.comments.submitComment);
+        $('body').on('click', '.delete-comment', avcms.comments.deleteComment);
     }
 });
 
@@ -77,5 +78,27 @@ avcms.comments = {
         }, 'json');
 
         return false;
+    },
+
+    deleteComment: function() {
+        if (confirm('Are you sure you want to delete this comment?')) {
+            var button = $(this);
+            var id = button.parents('.comment').data('id');
+
+            $.ajax({
+                type: "POST",
+                url: avcms.config.site_url+'admin/comments/delete',
+                data: {'ids': id},
+                dataType: 'json',
+                success: function(data) {
+                    if (data.success == 0) {
+                        alert('Error: '+data.error);
+                    }
+                    else {
+                        button.parents('.comment').remove();
+                    }
+                }
+            })
+        }
     }
 }

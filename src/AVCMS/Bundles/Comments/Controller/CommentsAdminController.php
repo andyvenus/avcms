@@ -8,11 +8,11 @@
 namespace AVCMS\Bundles\Comments\Controller;
 
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
-use AVCMS\Bundles\Admin\Form\AdminFiltersForm;
 use AVCMS\Bundles\Comments\Form\CommentFiltersForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class CommentsAdminController extends AdminBaseController
 {
@@ -28,6 +28,10 @@ class CommentsAdminController extends AdminBaseController
 
     public function setUp()
     {
+        if (!$this->isGranted('ADMIN_COMMENTS')) {
+            throw new AccessDeniedException;
+        }
+
         $this->comments = $this->model('Comments');
         $this->commentTypes = $this->container->get('comment_types_manager');
     }
