@@ -4,7 +4,7 @@
         {% for comment in comments %}
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{ comment.user.username }} {% trans %}commented on{% endtrans %} <a href="{{ comment.content.url }}">{{ comment.content.title }}</a>
+                    {{ comment.user.username }} {% trans %}commented on{% endtrans %} <a href="{{ comment.content.url }}">{{ comment.content.title }}</a> - {{ comment.date|date(settings.date_format) }}
                 </div>
                 <div class="panel-body">
                     {{ comment.comment }}
