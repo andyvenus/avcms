@@ -36,14 +36,28 @@ class TranslationExtractionController extends Controller
         foreach ($foundStrings as $string) {
             $usages = $stringFinder->getResults($string, $bundleDir);
 
-            if ($usages === null) {
-                $usedTranslationStrings[$string . ' - String contains quotations so cannot be validated'] = '1';
+            $translator = $this->container->get('translator');
+            $translator->trans($string);
+
+            $rawTranslation = $translator->getTranslationStrings()[$string]['raw_translation'];
+
+            $translationInfo = ['string' => $string, 'usages' => $usages];
+
+            $translationInfo['current_translation'] = null;
+            if ($rawTranslation !== $string) {
+                $translationInfo['current_translation'] = $rawTranslation;
             }
-            elseif (count($usages) > 0) {
-                $usedTranslationStrings[$string] = $usages;
+
+            if ($usages === null) {
+                $translationInfo['string'] .= ' - String contains quotations so cannot be validated';
+                $translationInfo['usages'] = '1';
+            }
+
+            if (count($usages) > 0) {
+                $usedTranslationStrings[$string] = $translationInfo;
             }
             else {
-                $unusedTranslationStrings[$string] = $usages;
+                $unusedTranslationStrings[$string] = $translationInfo;
             }
         }
 

@@ -4,16 +4,23 @@
 
 {% block content %}
 
-    {% for string, usages in translation_strings %}
-        {% if usages|length > 0 %}
-            {% set class = 'text-success' %}
-        {% else %}
-            {% set class = 'text-danger' %}
-        {% endif %}
-        <span class="{{ class }}">{{ string }} - {{ usages|length }}</span><br/>
-        {% for usage in usages %}
-            <span style="font-size:8px;">{{ usage.file }}</span><br>
-        {% endfor %}
+    {% for string, translation in translation_strings %}
+        <div class="row">
+            <div class="col-md-6">
+                {% if translation.usages|length > 0 %}
+                    {% set class = 'text-success' %}
+                {% else %}
+                    {% set class = 'text-danger' %}
+                {% endif %}
+                <span class="{{ class }}">{{ string }} - {{ translation.usages|length }}</span><br/>
+                {% for usage in translation.usages %}
+                    <span style="font-size:8px;">{{ usage.file }}</span><br>
+                {% endfor %}
+            </div>
+            <div class="col-md-6">
+                {{ translation.current_translation }}
+            </div>
+        </div>
     {% endfor %}
 
 {% endblock %}
