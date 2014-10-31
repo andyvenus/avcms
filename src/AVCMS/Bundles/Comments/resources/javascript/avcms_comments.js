@@ -66,7 +66,7 @@ avcms.comments = {
 
         $.post(form.attr('action'), form.serialize(), function(data) {
             if (data.success == false) {
-                alert(data.error);
+                alert(data.form.errors[0].message);
                 return;
             }
 

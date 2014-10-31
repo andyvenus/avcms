@@ -7,6 +7,8 @@
 
 namespace AVCMS\Bundles\Comments\Controller;
 
+use AV\Form\FormError;
+use AVCMS\Bundles\Comments\Form\CommentForm;
 use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,14 +40,14 @@ class CommentsController extends Controller
      * @param Request $request
      * @return JsonResponse
      * @throws \Exception
-     *
-     * @todo User Permission
-     * @todo Csrf
      */
     public function addCommentAction(Request $request)
     {
         $contentType = $request->get('content_type');
         $contentId = $request->get('content_id');
+        $content = $this->getEntity($contentType, $contentId);
+
+        $commentTypes = $this->container->get('comment_types_manager');
 
         $entity = $this->getEntity($contentType, $contentId);
 
@@ -55,31 +57,41 @@ class CommentsController extends Controller
         $lastCommentTime = $floodControl->getLastCommentTime($user->getId());
         $floodControlTime = time() - $user->group->getFloodControlTime();
 
+        $comments = $this->model('Comments');
+        $comment = $comments->newEntity();
+
+        $commentForm = $this->buildForm(new CommentForm(), $request, $comment);
+
         if (!$this->isGranted('PERM_ADD_COMMENT')) {
             $error = 'Permission Denied';
         }
         elseif($floodControlTime < $lastCommentTime) {
-            $error = $this->trans("Please wait at least {seconds} seconds between making comments", ['seconds' => $user->group->getFloodControlTime()]);
+            $error = "Please wait at least {seconds} seconds between making comments";
+            $errorParams = ['seconds' => $user->group->getFloodControlTime()];
         }
         elseif ($entity == null) {
             $error = 'Content Type Not Found';
         }
-        elseif (!$request->get('comment')) {
-            $error = $this->trans('Comment field cannot be left blank');
-        }
 
         if (isset($error)) {
-            return new JsonResponse(['success' => false, 'error' => $error]);
-        }
+            if (!isset($errorParams)) {
+                $errorParams = [];
+            }
+            $commentForm->addCustomErrors([new FormError('comment', $error, true, $errorParams)]);
 
-        $comments = $this->model('Comments');
-        $comment = $comments->newEntity();
+            return new JsonResponse(['success' => false, 'form' => $commentForm->createView()->getJsonResponseData()]);
+        }
 
         $comment->setComment($request->get('comment'));
         $comment->setContentId($contentId);
         $comment->setContentType($contentType);
         $comment->setUserId($user->getId());
         $comment->setDate(time());
+
+        $titleField = $commentTypes->getTitleField($contentType);
+        if (is_callable([$content, 'get'.$titleField])) {
+            $comment->setContentTitle($content->{"get".$titleField}());
+        }
 
         $comments->save($comment);
         $floodControl->setLastCommentTime($user->getId(), time());

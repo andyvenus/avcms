@@ -16,7 +16,8 @@ class CommentForm extends FormBlueprint
         $this->setName('new_comment_form');
 
         $this->add('comment', 'textarea', [
-            'label' => 'Add Comment'
+            'label' => 'Add Comment',
+            'required' => true
         ]);
     }
 } 
