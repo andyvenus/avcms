@@ -6,6 +6,8 @@
     <p><a href="{{ url('login') }}">{% trans %}Login to add your own comment{% endtrans %}</a></p>
 {% endif %}
 
+<a name="comments"></a>
+
 <div class="comments-area" data-ajax-url="{{ url('comments', {content_type: content_type, content_id: content_id}) }}">
 </div>
 
