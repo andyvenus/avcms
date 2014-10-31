@@ -21,7 +21,7 @@ class CommentsController extends Controller
         $contentType = $request->get('content_type');
         $contentId = $request->get('content_id');
 
-        $entity = $this->getEntity($contentType, $contentId);
+        $entity = $this->getContentModel($contentType)->getOne($contentId);
 
         if ($entity == null) {
             throw $this->createNotFoundException();
@@ -45,11 +45,9 @@ class CommentsController extends Controller
     {
         $contentType = $request->get('content_type');
         $contentId = $request->get('content_id');
-        $content = $this->getEntity($contentType, $contentId);
+        $content = $this->getContentModel($contentType)->getOne($contentId);
 
         $commentTypes = $this->container->get('comment_types_manager');
-
-        $entity = $this->getEntity($contentType, $contentId);
 
         $user = $this->activeUser();
 
@@ -69,7 +67,7 @@ class CommentsController extends Controller
             $error = "Please wait at least {seconds} seconds between making comments";
             $errorParams = ['seconds' => $user->group->getFloodControlTime()];
         }
-        elseif ($entity == null) {
+        elseif ($content == null) {
             $error = 'Content Type Not Found';
         }
 
@@ -96,20 +94,25 @@ class CommentsController extends Controller
         $comments->save($comment);
         $floodControl->setLastCommentTime($user->getId(), time());
 
+        if (is_callable([$content, 'getComments']) && is_callable([$content, 'setComments'])) {
+            $content->setComments(intval($content->getComments()) + 1);
+            $this->getContentModel($contentType)->save($content);
+        }
+
         $comment->user = $user;
 
         return new JsonResponse(['html' => $this->render('@Comments/comments.twig', ['comments' => [$comment]]), 'success' => true]);
     }
 
-    protected function getEntity($contentType, $contentId)
+    protected function getContentModel($contentType)
     {
         $typesManager = $this->container->get('comment_types_manager');
 
-        $entity = null;
+        $model = null;
         if ($typesManager->contentTypeValid($contentType) === true) {
-            $entity = $this->model($typesManager->getModelClass($contentType))->getOne($contentId);
+            $model = $this->model($typesManager->getModelClass($contentType));
         }
 
-        return $entity;
+        return $model;
     }
 } 
