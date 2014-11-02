@@ -96,9 +96,6 @@ assets:
     env: shared
   avcms_misc.js:
     env: shared
-  ckeditor/ckeditor.js:
-    env: admin
-    compile: false
 
 menu_items:
   admin:
