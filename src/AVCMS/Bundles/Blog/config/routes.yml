@@ -3,8 +3,8 @@ blog_home:
     defaults: { _controller: 'Blog::BlogController::blogArchiveAction' }
 
 blog_archive:
-    path:     '/blog/archive'
-    defaults: { _controller: 'Blog::BlogController::blogArchiveAction' }
+    path:     '/blog/archive/{page}'
+    defaults: { _controller: 'Blog::BlogController::blogArchiveAction', page: 1 }
 
 blog_post:
     path:     /blog/{slug}
