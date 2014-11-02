@@ -112,7 +112,6 @@ avcms.nav = {
     },
 
     onPageModified: function() {
-        $("textarea[name=body]").markdown({autofocus:false,savable:false});
         $("select:not(.no_select2)").select2({
             minimumResultsForSearch: 10
         });

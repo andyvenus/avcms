@@ -7,9 +7,6 @@ require:
   - Users
   - Comments
 
-services:
-  - MarkdownServices
-
 model:
   posts: Posts
   users: AVCMS\Bundles\Users\Model\Users
@@ -35,17 +32,6 @@ user_settings:
       validation:
         numeric:
           rule: Numeric
-
-assets:
-  bootstrap-markdown.js:
-    env: admin
-  markdown.js:
-    env: admin
-  to-markdown.js:
-    env: admin
-
-  bootstrap-markdown.min.css:
-    env: admin
 
 modules:
   blog_posts:

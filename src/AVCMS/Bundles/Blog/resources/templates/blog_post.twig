@@ -11,7 +11,7 @@
                 <a class="btn btn-default btn-xs" href="{{ url('blog_archive', {tags: tag.name}) }}">{{ tag.name }}</a>
             {% endfor %}
 
-            <p>{{ post.body|markdown }}</p>
+            <p>{{ post.body|raw }}</p>
 
             <a class="btn btn-link btn-sm" href="{{ url('blog_edit_post', { id: post.id}) }}"><span class="glyphicon glyphicon-edit"></span> Edit Post</a>
         </article>
