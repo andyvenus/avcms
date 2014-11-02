@@ -23,11 +23,11 @@
 
                 <div class="pull-right">
                     {% if is_granted('ADMIN_USERS') %}
-                        <a class="btn btn-sm btn-default" href="{{ url('users_admin_edit', {id: profile_user.id}) }}">{% trans %}Edit user{% endtrans %}</a>
+                        <a class="btn btn-sm btn-default" href="{{ url('users_admin_edit', {id: profile_user.id}) }}">{% trans %}Edit User{% endtrans %}</a>
                     {% endif %}
 
                     {% if users_own_profile %}
-                        <a class="btn btn-sm btn-default" href="{{ url('edit_user_profile') }}">{% trans %}Edit profile{% endtrans %}</a>
+                        <a class="btn btn-sm btn-default" href="{{ url('edit_user_profile') }}">{% trans %}Edit Profile{% endtrans %}</a>
                     {% endif %}
                 </div>
             </div>
