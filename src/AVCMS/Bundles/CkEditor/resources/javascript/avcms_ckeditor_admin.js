@@ -6,6 +6,8 @@ $(document).ready(function() {
 
 avcms.ckeditor = {
     load: function() {
-        $('[data-html-editor]').ckeditor();
+        $('[data-html-editor]').ckeditor({
+            skin: 'bootstrapck'
+        });
     }
 };
