@@ -26,23 +26,18 @@ class AssetManager
     const ALL_ASSETS = 'all';
     const ALL_TYPES = 'all';
 
-    /**
-     * @var array The javascript assets
-     */
-    protected $javascript = array(
-        self::FRONTEND => array(),
-        self::ADMIN => array(),
-        self::SHARED => array()
-    );
-
-    /**
-     * @var array The CSS assets
-     */
-    protected $css = array(
-        self::FRONTEND => array(),
-        self::ADMIN => array(),
-        self::SHARED => array()
-    );
+    protected $assets = [
+        'javascript' => [
+            self::FRONTEND => array(),
+            self::ADMIN => array(),
+            self::SHARED => array()
+        ],
+        'css' => [
+            self::FRONTEND => array(),
+            self::ADMIN => array(),
+            self::SHARED => array()
+        ]
+    ];
 
     public function add(BaseAsset $asset, $environment = self::SHARED, $priority = 10)
     {
@@ -50,20 +45,12 @@ class AssetManager
             throw new \Exception('Assets passed to the add() method must implement the getType method');
         }
 
-        $this->{$asset->getType()}[$environment][] = array('asset' => $asset, 'priority' => $priority);
+        $this->assets[$asset->getType()][$environment][] = array('asset' => $asset, 'priority' => $priority);
     }
 
-    public function load(AssetLoader $asset_loader)
+    public function load(AssetLoader $assetLoader)
     {
-        $asset_loader->loadAssets($this);
-    }
-
-    public function addAppAsset($asset, $type, $environment = self::SHARED, $priority = 10)
-    {
-        $this->{$type}[$environment][] = array(
-            'asset' => new AppFileAsset($type, $asset),
-            'priority' => $priority
-        );
+        $assetLoader->loadAssets($this);
     }
 
     protected function getFiletype($file)
@@ -83,7 +70,7 @@ class AssetManager
 
     public function getAssets($type)
     {
-        return $this->{$type};
+        return $this->assets[$type];
     }
 
     /**
@@ -91,7 +78,7 @@ class AssetManager
      */
     public function getCSS()
     {
-        return $this->css;
+        return $this->assets['css'];
     }
 
     /**
@@ -99,7 +86,7 @@ class AssetManager
      */
     public function getJavaScript()
     {
-        return $this->javascript;
+        return $this->assets['javascript'];
     }
 
     /**
@@ -118,17 +105,17 @@ class AssetManager
             throw new \Exception("Invalid asset type '$type'. Only 'css' or 'javascript' are valid");
         }
 
-        foreach ($this->$type as $env_key => $environment) {
-            foreach ($environment as $asset_key => $asset) {
+        foreach ($this->assets[$type] as $envKey => $environment) {
+            foreach ($environment as $assetKey => $asset) {
                 if ($asset['asset'] instanceof BundleAssetInterface && $asset['asset']->getBundle() == $bundle && $asset['asset']->getFilename() == $file) {
-                    unset($this->{$type}[$env_key][$asset_key]);
+                    unset($this->assets[$type][$envKey][$assetKey]);
 
-                    $bundle_removed = true;
+                    $bundleRemoved = true;
                 }
             }
         }
 
-        return isset($bundle_removed);
+        return isset($bundleRemoved);
     }
 
     public function generateProductionAssets(AssetWriter $writer)
@@ -141,56 +128,56 @@ class AssetManager
         $writer->writeManagerAssets($assetic);
     }
 
-    public function getDevAssetUrls($asset_type, $environment)
+    public function getDevAssetUrls($assetType, $environment)
     {
-        $ordered_assets = $this->getOrderedAssets($asset_type, $environment);
-        $asset_urls = array();
-        foreach ($ordered_assets as $asset) {
+        $orderedAssets = $this->getOrderedAssets($assetType, $environment);
+        $assetUrls = array();
+        foreach ($orderedAssets as $asset) {
             if (method_exists($asset['asset'], 'getDevUrl')) {
-                $asset_urls[] = $asset['asset']->getDevUrl();
+                $assetUrls[] = $asset['asset']->getDevUrl();
             }
         }
 
-        return $asset_urls;
+        return $assetUrls;
     }
 
-    public function createAsseticCollections(AsseticAssetManager $assetic, $type, $file_extension, $filters = array())
+    public function createAsseticCollections(AsseticAssetManager $assetic, $type, $fileExtension, $filters = array())
     {
-        foreach ($this->$type as $environment => $assets) {
+        foreach ($this->assets[$type] as $environment => $assets) {
             if ($environment != self::SHARED) {
-                $ordered_assets = $this->getOrderedAssets($type, $environment, true);
+                $orderedAssets = $this->getOrderedAssets($type, $environment, true);
 
-                $asset_collection = new AssetCollection($ordered_assets, $filters);
-                $asset_collection->setTargetPath($environment.'.'.$file_extension);
+                $assetCollection = new AssetCollection($orderedAssets, $filters);
+                $assetCollection->setTargetPath($environment.'.'.$fileExtension);
 
-                $assetic->set($environment.'_'.$type, $asset_collection);
+                $assetic->set($environment.'_'.$type, $assetCollection);
             }
         }
 
         return $assetic;
     }
 
-    protected function getOrderedAssets($type, $environment, $strip_priority = false)
+    protected function getOrderedAssets($type, $environment, $stripPriority = false)
     {
         if ($type != 'css' && $type != 'javascript') {
             throw new AssetTypeException('Asset type '.$type.' is not valid');
         }
 
         $assets = array();
-        $selected_assets = $this->$type;
+        $selectedAssets = $this->assets[$type];
 
-        if (isset($selected_assets[$environment])) {
-            $assets = array_merge($assets, $selected_assets[$environment]);
+        if (isset($selectedAssets[$environment])) {
+            $assets = array_merge($assets, $selectedAssets[$environment]);
         }
-        if (isset($selected_assets[AssetManager::SHARED])) {
-            $assets = array_merge($assets, $selected_assets[AssetManager::SHARED]);
+        if (isset($selectedAssets[AssetManager::SHARED])) {
+            $assets = array_merge($assets, $selectedAssets[AssetManager::SHARED]);
         }
 
         usort($assets, function($a, $b) {
             return $b['priority'] - $a['priority'];
         });
 
-        if ($strip_priority) {
+        if ($stripPriority) {
             $stripped = array();
             foreach ($assets as $asset) {
                 $stripped[] = $asset['asset'];

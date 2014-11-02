@@ -14,17 +14,17 @@ use AVCMS\Core\AssetManager\AssetManager;
 
 class AssetManagerExtension extends \Twig_Extension
 {
-    protected $asset_manager;
+    protected $assetManager;
 
     protected $debug;
 
-    public function __construct($debug = false, AssetManager $asset_manager = null)
+    public function __construct($debug = false, AssetManager $assetManager = null)
     {
-        if ($debug == true && $asset_manager == null) {
+        if ($debug == true && $assetManager == null) {
             throw new \Exception("The asset manager must be set in debug mode");
         }
 
-        $this->asset_manager = $asset_manager;
+        $this->assetManager = $assetManager;
         $this->debug = $debug;
     }
 
@@ -64,9 +64,9 @@ class AssetManagerExtension extends \Twig_Extension
         }
     }
 
-    protected function getProductionAssetUrls($asset_type, $environment)
+    protected function getProductionAssetUrls($assetType, $environment)
     {
-        if ($asset_type == 'javascript') {
+        if ($assetType == 'javascript') {
             $ext = 'js';
         }
         else {
@@ -76,23 +76,9 @@ class AssetManagerExtension extends \Twig_Extension
         return array("web/compiled/$environment.$ext");
     }
 
-    protected function getDevAssetUrls($asset_type, $environment)
+    protected function getDevAssetUrls($assetType, $environment)
     {
-        return $this->asset_manager->getDevAssetUrls($asset_type, $environment);
-    }
-
-    /**
-     * @param $asset \AVCMS\Core\AssetManager\Asset\BundleFileAsset|\AVCMS\Core\AssetManager\Asset\TemplateFileAsset
-     * @return string
-     */
-    protected function generateDevAssetUrl($asset)
-    {
-        if ($asset instanceof BundleFileAsset) {
-            return 'bundle_asset/'.$asset->getBundle().'/'.$asset->getType().'/'.$asset->getFile();
-        }
-        else {
-            return 'template_asset/'.$asset->getEnvironment().'/'.$asset->getTemplate().'/'.$asset->getType().'/'.$asset->getFile();
-        }
+        return $this->assetManager->getDevAssetUrls($assetType, $environment);
     }
 
     /**
