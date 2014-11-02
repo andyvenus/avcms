@@ -7,11 +7,13 @@
 
 namespace AVCMS\Bundles\Blog\Form;
 
+use AV\Validation\Rules\MustNotExist;
+use AV\Validation\Validator;
 use AVCMS\Bundles\Admin\Form\AdminContentForm;
 
 class PostForm extends AdminContentForm
 {
-    public function __construct($item_id, $user_id)
+    public function __construct($itemId, $userId)
     {
         $this->add('title', 'text', array(
             'label' => 'Title',
@@ -25,6 +27,7 @@ class PostForm extends AdminContentForm
             'label' => 'Post content',
             'attr' => array(
                 'rows' => 10,
+                'data-html-editor' => 1
             )
         ));
 
@@ -34,7 +37,7 @@ class PostForm extends AdminContentForm
 
         $this->add('user_id', 'text', array(
             'label' => 'Credited Author',
-            'default' => $user_id,
+            'default' => $userId,
             'attr' => array(
                 'class' => 'user_selector no_select2'
             )
@@ -42,6 +45,11 @@ class PostForm extends AdminContentForm
 
         $this->setName('blog_post_form');
 
-        parent::__construct($item_id);
+        parent::__construct($itemId);
+    }
+
+    public function getValidationRules(Validator $validator)
+    {
+        $validator->addRule('slug', new MustNotExist('AVCMS\Bundles\Blog\Model\BlogPosts', 'slug', $this->item_id), 'The URL Slug must be unique, slug already in use');
     }
 }

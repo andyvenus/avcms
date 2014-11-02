@@ -16,9 +16,9 @@ abstract class AdminContentForm extends FormBlueprint
 {
     protected $item_id;
 
-    public function __construct($item_id)
+    public function __construct($itemId)
     {
-        $this->item_id = $item_id;
+        $this->item_id = $itemId;
 
         $this->add('published', 'radio', array(
             'label' => 'Publish',
@@ -42,10 +42,5 @@ abstract class AdminContentForm extends FormBlueprint
             'required' => true,
             'field_template' => '@admin/form_fields/slug_field.twig'
         ));
-    }
-
-    public function getValidationRules(Validator $validator)
-    {
-        $validator->addRule('slug', new MustNotExist('AVCMS\Bundles\Blog\Model\Posts', 'slug', $this->item_id), 'The URL Slug must be unique, slug already in use');
     }
 } 
