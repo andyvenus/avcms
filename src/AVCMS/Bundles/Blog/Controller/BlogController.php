@@ -31,13 +31,13 @@ class BlogController extends Controller
     public function blogArchiveAction(Request $request)
     {
         $finder = $this->posts->find();
-        $all_posts = $finder->published()
+        $allPosts = $finder->published()
             ->setResultsPerPage(10)
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'tags' => null))
             ->join($this->model($this->bundle->model->users), ['username'])
             ->get();
 
-        return new Response($this->render('@Blog/blog_home.twig', array('posts' => $all_posts)));
+        return new Response($this->render('@Blog/blog_home.twig', array('posts' => $allPosts, 'total_pages' => $finder->getTotalPages(), 'current_page' => $finder->getCurrentPage())));
     }
 
     public function blogPostAction(Request $request)

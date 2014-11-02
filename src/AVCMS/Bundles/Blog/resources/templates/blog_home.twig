@@ -21,4 +21,8 @@
             </article>
         {% endfor %}
     {% endblock %}
+
+    {% block blog_posts_pagination %}
+        {{ pagination(total_pages, current_page, 'blog_archive') }}
+    {% endblock %}
 {% endblock %}
