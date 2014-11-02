@@ -67,6 +67,13 @@ user_settings:
     help: The frontend template
     section: main
     default: templates/frontend/indigo
+  language:
+    type: select
+    choices_provider: { class: AVCMS\Bundles\CmsFoundation\Settings\LanguageChoicesProvider }
+    label: Site Language
+    help: The default site language
+    section: main
+    default: en
 
 assets:
   jquery.js:
