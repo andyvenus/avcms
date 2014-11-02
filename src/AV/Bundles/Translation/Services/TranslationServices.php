@@ -16,25 +16,14 @@ class TranslationServices implements Service
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('translator', 'AVCMS\Core\Translation\Translator')
-            ->setArguments(array('en_GB', new Reference('translator.message_selector'), '%dev_mode%'))
-            ->addMethodCall('addLoader', array('array', new Reference('translator.loader.array')))
-            ->addMethodCall('addResource', array('array',
-                array(
-                    'That name is already in use' => 'Arr, that name be already in use',
-                    'Name' => 'FRUNCH NAME',
-                    'Cat One' => 'Le Category Une',
-                    'Published' => 'Pubèlishé',
-                    'Submit' => 'Procesèur',
-                    'Cannot find an account that has that username or email address' => 'Oh vue du nuet finel the user',
-                    'Title' => 'Oh qui le Titlè',
-                    'Blog Posts' => 'Meepz'
-                ),
-                'en_GB'))
+            ->setArguments(array(new Reference('settings_manager'), new Reference('translator.message_selector'), '%dev_mode%'))
+            ->addMethodCall('addLoader', array('php', new Reference('translator.loader.php')))
+            ->addMethodCall('loadTranslationsFromDir', ['php', '%root_dir%/webmaster/translations', 'php'])
         ;
 
         $container->register('translator.message_selector', 'Symfony\Component\Translation\MessageSelector');
 
-        $container->register('translator.loader.array', 'Symfony\Component\Translation\Loader\ArrayLoader');
+        $container->register('translator.loader.php', 'Symfony\Component\Translation\Loader\PhpFileLoader');
 
         $container->register('twig.translation.extension', 'Symfony\Bridge\Twig\Extension\TranslationExtension')
             ->setArguments(array(new Reference('translator')))

@@ -7,6 +7,7 @@
 
 namespace AVCMS\Core\Translation;
 
+use AVCMS\Core\SettingsManager\SettingsManager;
 use Symfony\Component\Translation\MessageSelector;
 use Symfony\Component\Translation\Translator as TranslatorBase;
 
@@ -17,8 +18,13 @@ class Translator extends TranslatorBase
 
     protected $debug;
 
-    public function __construct($locale, MessageSelector $selector = null, $debug = false)
+    public function __construct(SettingsManager $settings, MessageSelector $selector = null, $debug = false)
     {
+        $locale = $settings->getSetting('language');
+        if (!$locale) {
+            $locale = 'en';
+        }
+
         $this->debug = $debug;
 
         parent::__construct($locale, $selector);
@@ -66,5 +72,25 @@ class Translator extends TranslatorBase
     public function getTranslationStrings()
     {
         return $this->translated_strings;
+    }
+
+    public function loadTranslationsFromDir($format, $dir, $fileExtension)
+    {
+        $langFolders = new \DirectoryIterator($dir);
+        foreach ($langFolders as $langFolder) {
+            if ($langFolder->isDot()) {
+                continue;
+            }
+
+            if ($langFolder->isDir()) {
+                $translations = new \DirectoryIterator($langFolder->getRealPath());
+                foreach ($translations as $translation) {
+                    if ($translation->getExtension() == $fileExtension) {
+                        $this->addResource($format, $translation->getRealPath(), $langFolder->getFilename());
+                    }
+                }
+            }
+        }
+
     }
 } 
