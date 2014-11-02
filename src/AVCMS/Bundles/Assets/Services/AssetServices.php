@@ -27,17 +27,9 @@ class AssetServices implements Service
         ;
 
         $container->register('twig.asset_manager.extension', 'AVCMS\Core\AssetManager\Twig\AssetManagerExtension')
-            ->setArguments(array('%dev_mode%'))
+            ->setArguments(array('%dev_mode%', new Reference('asset_manager')))
             ->addTag('twig.extension')
         ;
-
-        if ($container->getParameter('dev_mode') == true) {
-            $container->register('twig.asset_manager.extension.developer', 'AVCMS\Core\AssetManager\Twig\AssetManagerExtension')
-                ->setArguments(array('%dev_mode%', new Reference('asset_manager')))
-                ->setDecoratedService('twig.asset_manager.extension')
-                ->addTag('twig.extension')
-            ;
-        }
 
         $container->register('listener.bundle.public_file', 'AVCMS\Core\Bundle\Listeners\PublicFileSubscriber')
             ->setArguments(array(new Reference('bundle_manager'), '%cache_dir%'))

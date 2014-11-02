@@ -39,6 +39,19 @@ class AssetManager
         ]
     ];
 
+    protected $rawAssetUrls = [
+        'javascript' => [
+            self::FRONTEND => array(),
+            self::ADMIN => array(),
+            self::SHARED => array()
+        ],
+        'css' => [
+            self::FRONTEND => array(),
+            self::ADMIN => array(),
+            self::SHARED => array()
+        ]
+    ];
+
     public function add(BaseAsset $asset, $environment = self::SHARED, $priority = 10)
     {
         if (!method_exists($asset, 'getType')) {
@@ -46,6 +59,20 @@ class AssetManager
         }
 
         $this->assets[$asset->getType()][$environment][] = array('asset' => $asset, 'priority' => $priority);
+    }
+
+    public function addRawAsset(BaseAsset $asset, $environment = self::SHARED)
+    {
+        if (!method_exists($asset, 'getType')) {
+            throw new \Exception('Assets passed to the add() method must implement the getType method');
+        }
+
+        $this->rawAssetUrls[$asset->getType()][$environment][] = $asset->getDevUrl();
+    }
+
+    public function getRawAssetUrls($type, $env)
+    {
+        return $this->rawAssetUrls[$type][$env];
     }
 
     public function load(AssetLoader $assetLoader)
@@ -137,6 +164,8 @@ class AssetManager
                 $assetUrls[] = $asset['asset']->getDevUrl();
             }
         }
+
+        $assetUrls = array_merge($assetUrls, $this->rawAssetUrls[$assetType][$environment]);
 
         return $assetUrls;
     }

@@ -30,9 +30,9 @@ class BundleAssetLoader extends AssetLoader
     }
 
     /**
-     * @param AssetManager $asset_manager
+     * @param AssetManager $assetManager
      */
-    public function loadAssets(AssetManager $asset_manager)
+    public function loadAssets(AssetManager $assetManager)
     {
         $configs = $this->bundleManager->getBundleConfigs();
 
@@ -51,7 +51,12 @@ class BundleAssetLoader extends AssetLoader
 
                     $assetClass = new BundleFileAsset($config->name, $asset['type'], $assetFile);
 
-                    $asset_manager->add($assetClass, $asset['env'], $asset['priority']);
+                    if (!isset($asset['compile']) || $asset['compile'] === true) {
+                        $assetManager->add($assetClass, $asset['env'], $asset['priority']);
+                    }
+                    else {
+                        $assetManager->addRawAsset($assetClass, $asset['env']);
+                    }
                 }
             }
         }

@@ -18,7 +18,7 @@ class AssetManagerExtension extends \Twig_Extension
 
     protected $debug;
 
-    public function __construct($debug = false, AssetManager $assetManager = null)
+    public function __construct($debug = false, AssetManager $assetManager)
     {
         if ($debug == true && $assetManager == null) {
             throw new \Exception("The asset manager must be set in debug mode");
@@ -73,7 +73,10 @@ class AssetManagerExtension extends \Twig_Extension
             $ext = 'css';
         }
 
-        return array("web/compiled/$environment.$ext");
+        $urls = $this->assetManager->getRawAssetUrls($assetType, $environment);
+        $urls[] = "web/compiled/$environment.$ext";
+
+        return $urls;
     }
 
     protected function getDevAssetUrls($assetType, $environment)
