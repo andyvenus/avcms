@@ -22,3 +22,5 @@ Translation:
     enabled: true
 Comments:
     enabled: true
+CkEditor:
+    enabled: true

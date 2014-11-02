@@ -1,0 +1,12 @@
+name: CkEditor
+namespace: AVCMS\Bundles\CkEditor
+
+assets:
+  ckeditor/ckeditor.js:
+    env: admin
+    compile: false
+  ckeditor/adapters/jquery.js:
+    env: admin
+    compile: false
+  avcms_ckeditor_admin.js:
+    env: admin
