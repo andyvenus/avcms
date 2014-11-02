@@ -306,10 +306,16 @@ class Finder
 
     public function getTotalPages()
     {
+        if ($this->resultsPerPage === 0) {
+            return 1;
+        }
+
         $query = clone $this->currentQuery;
 
         $query->removePagination();
 
-        return $query->count();
+        $totalResults = $query->count();
+
+        return ceil($totalResults / $this->resultsPerPage);
     }
 }
