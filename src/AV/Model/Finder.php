@@ -67,7 +67,10 @@ class Finder
 
     public function setSortOptions(array $sortOptions)
     {
-        $this->sortOptions = $sortOptions;
+        $table = $this->model->getTable();
+        foreach ($sortOptions as $key => $val) {
+            $this->sortOptions[$key] = $table.'.'.$val;
+        }
     }
 
     public function setResultsPerPage($resultsPerPage)
@@ -241,16 +244,9 @@ class Finder
         return $this;
     }
 
-    public function getQuery($ignoredFilters = array())
+    public function getQuery()
     {
         return $this->currentQuery;
-    }
-
-    public function getTotalPages()
-    {
-        $query = $this->getQuery(array('page'));
-
-        return ceil($query->count() / $this->resultsPerPage);
     }
 
     public function id($id = null)
@@ -306,5 +302,14 @@ class Finder
     public function getCurrentPage()
     {
         return $this->currentPage;
+    }
+
+    public function getTotalPages()
+    {
+        $query = clone $this->currentQuery;
+
+        $query->removePagination();
+
+        return $query->count();
     }
 }
