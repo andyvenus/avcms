@@ -37,5 +37,9 @@ class TemplateServices implements Service
             ->addMethodCall('addPath', array('%root_dir%/templates/dev/avcms', 'dev'))
             ->addMethodCall('addPath', array('%root_dir%/templates/email/avcms', 'email'))
         ;
+
+        $container->register('twig.extension.pagination', 'AVCMS\Bundles\CmsFoundation\Twig\PaginationTwigExtension')
+            ->addTag('twig.extension')
+        ;
     }
 }

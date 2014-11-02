@@ -1,0 +1,38 @@
+{% set previous_constraint = 3 %}
+{% set next_constraint = 3 %}
+
+{% if current_page < previous_constraint %}
+    {% set next_constraint = next_constraint + (previous_constraint - current_page) + 1 %}
+{% endif %}
+
+{% if current_page > (total_pages - next_constraint) %}
+    {% set previous_constraint = previous_constraint + next_constraint - (total_pages - current_page) %}
+{% endif %}
+
+{% if current_page > previous_constraint %}
+    {% set start_page = current_page - previous_constraint %}
+{% else %}
+    {% set start_page = 1 %}
+{% endif %}
+
+{% if current_page < total_pages - next_constraint %}
+    {% set end_page = current_page + next_constraint %}
+{% else %}
+    {% set end_page = total_pages %}
+{% endif %}
+
+<nav>
+    <ul class="pagination">
+        {% if current_page > 1  %}
+            <li><a href="{{ url(route, attributes|merge({page: current_page - 1})) }}"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+        {% endif %}
+
+        {% for page in start_page..end_page %}
+            <li{% if page == current_page %} class="active"{% endif %}><a href="{{ url(route, attributes|merge({page: page})) }}">{{ page }}</a></li>
+        {% endfor %}
+
+        {% if current_page != total_pages  %}
+            <li><a href="{{ url(route, attributes|merge({page: current_page + 1})) }}"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+        {% endif %}
+    </ul>
+</nav>
