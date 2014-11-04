@@ -1,0 +1,21 @@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            {% block form_start %}{{ form_start(form) }}{% endblock %}
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{% trans %}Close{% endtrans %}</span></button>
+                <h4 class="modal-title" id="myModalLabel">{% block modal_title %}Modal{% endblock %}</h4>
+            </div>
+            <div class="modal-body">
+                {% block modal_body %}
+                    {{ form_rows(form) }}
+                {% endblock %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" {% block close_attr %}{% endblock %}>{% trans %}Close{% endtrans %}</button>
+                <button type="submit" class="btn btn-primary" {% block save_changes_attr %}{% endblock %}>{% trans %}Submit{% endtrans %}</button>
+            </div>
+            {% block form_end %}{{ form_end(form) }}{% endblock %}
+        </div>
+    </div>
+</div>
