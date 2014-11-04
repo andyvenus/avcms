@@ -3,11 +3,13 @@
         <div class="panel-heading">
             <a href="{{ url('user_profile', {slug: comment.user.slug}) }}">{{ comment.user.username }}</a> - {{ comment.date|date(settings.date_format) }}
 
-            {% if is_granted('ADMIN_COMMENTS') %}
-                <div class="pull-right">
+            <div class="pull-right">
+                <button class="btn btn-default btn-xs" data-report-button data-user-id="{{ comment.userId }}" data-content-type="comments" data-content-id="{{ comment.id }}">{% trans %}Report{% endtrans %}</button>
+
+                {% if is_granted('ADMIN_COMMENTS') %}
                     <button class="btn btn-danger btn-xs delete-comment">{% trans %}Delete{% endtrans %}</button>
-                </div>
-            {% endif %}
+                {% endif %}
+            </div>
         </div>
         <div class="panel-body" style="word-break: break-all">
             {{ comment.comment }}
