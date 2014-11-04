@@ -10,8 +10,9 @@
     <option name="twigAnnotateAssetTags" value="false" />
     <option name="twigNamespaces">
       <list>
-        <twig_namespace custom="true" namespace="Blog" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Blog/resources/templates" />
         <twig_namespace custom="true" namespace="admin" namespaceType="ADD_PATH" path="templates/admin/avcms" />
+        <twig_namespace custom="true" namespace="Blog" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Blog/resources/templates" />
+        <twig_namespace custom="true" namespace="CmsFoundation" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/CmsFoundation/resources/templates" />
       </list>
     </option>
     <option name="containerFiles">
