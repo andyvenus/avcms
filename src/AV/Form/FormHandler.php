@@ -663,7 +663,7 @@ class FormHandler
                     else {
                         $label = $field['name'];
                     }
-                    $this->errors[] = new FormError($field['name'], "Field {field_label} must be set", true, array('field_label' => $label));
+                    $this->errors[] = new FormError($field['name'], "Field '{field_label}' must be set", true, array('field_label' => $label));
                 }
             }
 
