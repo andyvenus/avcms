@@ -43,13 +43,18 @@ $(document).ready(function() {
 
     });
 
-    $('body').on('keyup', '[data-slug-target]', avcms.misc.generateSlugDelay);
+    var body = $('body');
 
-    $('body').on('change', '[name=slug]', avcms.misc.disableAutoGenerateSlug);
+    body.on('keyup', '[data-slug-target]', avcms.misc.generateSlugDelay);
 
-    $('body').on('click', '.slug_refresh_button', avcms.misc.generateSlugButton);
+    body.on('change', '[name=slug]', avcms.misc.disableAutoGenerateSlug);
 
-    $('body').on('click', '#menu_toggle, .admin-menu a', avcms.misc.toggleMenu);
+    body.on('click', '.slug_refresh_button', avcms.misc.generateSlugButton);
+
+    body.on('click', '#menu_toggle, .admin-menu a', avcms.misc.toggleMenu);
+
+    body.on('submit', 'form', avcms.form.submitForm);
+    body.on('click', '.reset-button', avcms.form.resetForm);
 
     $(document).ajaxSuccess(function(event, data) {
         if (data.responseJSON !== undefined) {

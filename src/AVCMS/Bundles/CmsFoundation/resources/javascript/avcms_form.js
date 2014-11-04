@@ -4,13 +4,6 @@ var avcms = avcms || {};
  FORMS
  ***********/
 
-$(document).ready(function() {
-    var body = $('body');
-
-    body.on('submit', 'form', avcms.form.submitForm);
-    body.on('click', '.reset-button', avcms.form.resetForm);
-});
-
 avcms.form = {
     submitForm: function() {
         var data = $(this).serialize();
