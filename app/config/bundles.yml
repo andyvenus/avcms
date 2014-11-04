@@ -24,3 +24,5 @@ Comments:
     enabled: true
 CkEditor:
     enabled: true
+Reports:
+    enabled: true
