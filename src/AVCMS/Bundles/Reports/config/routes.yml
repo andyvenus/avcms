@@ -1,0 +1,8 @@
+report_form:
+  path: /reports/new
+  defaults: { _controller: Reports::ReportsController::reportFormAction }
+
+submit_report:
+  path: /reports/submit
+  defaults: { _controller: Reports::ReportsController::submitReportAction }
+  methods: [POST]
