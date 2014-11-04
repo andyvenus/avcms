@@ -8,6 +8,8 @@
             </div>
             <div class="modal-body">
                 {% block modal_body %}
+                    {{ form_messages(form) }}
+
                     {{ form_rows(form) }}
                 {% endblock %}
             </div>
