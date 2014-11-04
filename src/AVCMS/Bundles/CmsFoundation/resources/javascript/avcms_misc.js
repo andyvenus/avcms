@@ -1,3 +1,9 @@
+$(document).ready(function() {
+    // AJAX FORMS
+    $('body').on('submit', '[data-ajax-form]', avcms.form.submitForm);
+});
+
+
 $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
     if (options.type.toUpperCase() === "POST" && (options.data == undefined || options.data.indexOf("csrf_token") < 1)) {
         if (options.data != '') {
