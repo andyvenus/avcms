@@ -17,6 +17,11 @@ avcms.form = {
             submit_url = document.URL;
         }
 
+        var submit_button = form.find('button[type=submit]');
+        var original_submit_text = submit_button.text();
+        submit_button.text('Saving');
+        submit_button.attr('disabled','disabled');
+
         $.ajax({
             type: "POST",
             url: submit_url,
@@ -47,6 +52,9 @@ avcms.form = {
 
                     avcms.event.fireEvent('submit-form-success', [form, data]);
                 }
+
+                submit_button.text(original_submit_text);
+                submit_button.removeAttr('disabled');
 
                 avcms.event.fireEvent('submit-form-complete', [form, data]);
             },
