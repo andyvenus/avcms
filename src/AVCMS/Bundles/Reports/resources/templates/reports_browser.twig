@@ -1,13 +1,13 @@
 {% extends '@admin/browser.twig' %}
 
 {% block finder_title %}
-    {% trans %}Comments{% endtrans %}
+    {% trans %}Reports{% endtrans %}
 {% endblock %}
 
 {% block browser_class %}browser fluid-browser{% endblock %}
 
 {% block finder %}
-    <div data-url="{{ url('comments_finder') }}">
-        {{ render(path('comments_finder', finder)) }}
+    <div data-url="{{ url('reports_finder') }}">
+        {{ render(path('reports_finder')) }}
     </div>
 {% endblock %}

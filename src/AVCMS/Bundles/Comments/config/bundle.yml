@@ -10,6 +10,8 @@ reports:
     model: AVCMS\Bundles\Comments\Model\Comments
     content_field: comment
     user_id_field: userId
+    route: manage_comments
+    route_params: [id]
 
 assets:
   avcms_comments.js:

@@ -38,6 +38,11 @@ class ReportTypesManager
         return isset($this->contentTypes[$contentType]) ? $this->contentTypes[$contentType] : [];
     }
 
+    public function getContentTypes()
+    {
+        return $this->contentTypes;
+    }
+
     public function getUserId($contentType, $content)
     {
         $config = $this->getContentType($contentType);

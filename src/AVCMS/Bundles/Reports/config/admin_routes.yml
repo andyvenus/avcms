@@ -1,0 +1,7 @@
+manage_reports:
+  path: /reports
+  defaults: { _controller: Reports::ReportsAdminController::manageReportsAction }
+
+reports_finder:
+  path: /reports/finder
+  defaults: { _controller: Reports::ReportsAdminController::reportsFinderAction }

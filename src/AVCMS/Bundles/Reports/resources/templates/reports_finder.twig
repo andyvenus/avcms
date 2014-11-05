@@ -1,0 +1,29 @@
+{% block content_body %}
+    <div class="container">
+
+        {% for report in reports %}
+            <div class="panel panel-default" data-id="{{ report.id }}">
+                <div class="panel-heading">
+                    <a href="{{ url('users_admin_edit', {id: report.senderUserId}) }}">{{ report.sender_user.username }}</a> {% trans %}reported{% endtrans %}
+                    {% if report.content.url or report.content.title %}
+                        <a href="{{ report.content.url }}">{{ report.content.title }}</a> by
+                    {% endif %}
+                     <a href="{{ url('users_admin_edit', {id: report.reportedUserId}) }}">{{ report.reported_user.username }}</a>
+                    - {{ report.date|date(settings.date_format) }}
+                    <div class="pull-right">
+                        <button class="btn btn-danger btn-xs avcms-delete-item" data-delete-url="#"><span class="glyphicon glyphicon-remove"></span></button>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <strong>{% trans %}Message from reporter{% endtrans %}</strong><br/>
+                    <p>{{ report.message }}</p>
+
+                    {% if report.content.content %}
+                        <strong>{% trans %}Reported content{% endtrans %}</strong><br/>
+                        <p>{{ report.content.content }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
