@@ -8,7 +8,6 @@
 namespace AVCMS\Bundles\Comments\Form;
 
 use AV\Form\FormBlueprint;
-use AV\Validation\Validatable;
 
 class CommentForm extends FormBlueprint
 {
