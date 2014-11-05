@@ -74,6 +74,12 @@ abstract class AdminBaseController extends Controller
             return new Response('');
         }
 
+        $templateVars['finder'] = $request->query->get('finder', []);
+
+        if ($request->query->has('id')) {
+            $templateVars['finder']['id'] = $request->query->get('id');
+        }
+
         return new Response($this->renderAdminSection(
             $template,
             $request->get('ajax_depth'),
