@@ -116,6 +116,11 @@ class ReportsAdminController extends AdminBaseController
         return new Response($this->render('@Reports/reports_finder.twig', ['reports' => $reports]));
     }
 
+    public function deleteReportsAction(Request $request)
+    {
+        return $this->handleDelete($request, $this->reports);
+    }
+
     protected function getSharedTemplateVars($ajaxDepth)
     {
         $templateVars = parent::getSharedTemplateVars($ajaxDepth);

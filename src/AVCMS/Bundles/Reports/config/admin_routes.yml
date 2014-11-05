@@ -5,3 +5,8 @@ manage_reports:
 reports_finder:
   path: /reports/finder
   defaults: { _controller: Reports::ReportsAdminController::reportsFinderAction }
+
+delete_reports:
+  path: /reports/delete
+  defaults: { _controller: Reports::ReportsAdminController::deleteReportsAction }
+  methods: [POST]
