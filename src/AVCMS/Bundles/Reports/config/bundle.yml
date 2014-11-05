@@ -4,6 +4,11 @@ namespace: AVCMS\Bundles\Reports
 services:
   - ReportsServices
 
+permissions:
+  ADMIN_REPORTS:
+    name: Manage Reports
+    description: Ability to view & manage reports
+
 assets:
   avcms_reports.js:
     env: frontend
