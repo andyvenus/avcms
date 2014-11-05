@@ -77,12 +77,12 @@ avcms.nav = {
         }
 
         if (full_url.indexOf('?') < 0) {
-            var full_url_wqm = full_url + '?';
+            full_url = full_url + '?';
         }
 
         if (ajax_required === true) {
             avcms.misc.mainLoaderOn();
-            $.get(full_url_wqm+'&ajax_depth='+ajax_depth, function(data, textStatus, xhr) {
+            $.get(full_url+'&ajax_depth='+ajax_depth, function(data, textStatus, xhr) {
                 avcms.nav.hideOrRemovePreviousPage(ajax_depth);
                 content_container[func_name](data);
 
