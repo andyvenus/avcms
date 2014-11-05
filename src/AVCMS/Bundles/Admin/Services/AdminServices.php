@@ -7,11 +7,11 @@
 
 namespace AVCMS\Bundles\Admin\Services;
 
-use AV\Service\Service;
+use AV\Service\ServicesInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class AdminServices implements Service
+class AdminServices implements ServicesInterface
 {
     public function getServices($configuration, ContainerBuilder $container)
     {

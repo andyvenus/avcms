@@ -7,12 +7,12 @@
 
 namespace AVCMS\Bundles\Users\Services;
 
-use AV\Service\Service;
+use AV\Service\ServicesInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class UserServices implements Service
+class UserServices implements ServicesInterface
 {
     public function getServices($configuration, ContainerBuilder $container)
     {

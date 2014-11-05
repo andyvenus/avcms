@@ -7,11 +7,11 @@
 
 namespace AVCMS\Bundles\Tags\Services;
 
-use AV\Service\Service;
+use AV\Service\ServicesInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class TagsServices implements Service
+class TagsServices implements ServicesInterface
 {
     public function getServices($configuration, ContainerBuilder $container)
     {

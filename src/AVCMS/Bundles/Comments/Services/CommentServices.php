@@ -7,11 +7,11 @@
 
 namespace AVCMS\Bundles\Comments\Services;
 
-use AV\Service\Service;
+use AV\Service\ServicesInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class CommentServices implements Service
+class CommentServices implements ServicesInterface
 {
     public function getServices($configuration, ContainerBuilder $container)
     {

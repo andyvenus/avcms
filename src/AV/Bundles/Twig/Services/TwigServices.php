@@ -8,11 +8,11 @@
 namespace AV\Bundles\Twig\Services;
 
 use AV\Bundles\Twig\Services\Compiler\TwigEnvironmentPass;
-use AV\Service\Service;
+use AV\Service\ServicesInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class TwigServices implements Service
+class TwigServices implements ServicesInterface
 {
     public function getServices($configuration, ContainerBuilder $container)
     {

@@ -7,12 +7,12 @@
 
 namespace AVCMS\BundlesDev\Profiler\Services;
 
-use AV\Service\Service;
+use AV\Service\ServicesInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DataCollector\MemoryDataCollector;
 
-class Profiler implements Service
+class Profiler implements ServicesInterface
 {
     public function getServices($configuration, ContainerBuilder $container)
     {

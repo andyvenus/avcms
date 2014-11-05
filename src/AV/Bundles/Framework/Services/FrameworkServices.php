@@ -7,12 +7,12 @@
 
 namespace AV\Bundles\Framework\Services;
 
-use AV\Service\Service;
+use AV\Service\ServicesInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 
-class FrameworkServices implements Service
+class FrameworkServices implements ServicesInterface
 {
     public function getServices($configuration, ContainerBuilder $container)
     {

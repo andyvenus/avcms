@@ -9,7 +9,7 @@ namespace AV\Service;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-interface Service
+interface ServicesInterface
 {
     public function getServices($configuration, ContainerBuilder $container);
 } 
