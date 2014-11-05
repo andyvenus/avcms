@@ -211,9 +211,10 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     /**
      * @param $fields
      * @param bool $join
+     * @param bool $prefix
      * @return $this
      */
-    public function select($fields, $join = false)
+    public function select($fields, $join = false, $prefix = true)
     {
         if ($join == false) {
             $this->selectMade = true;
@@ -231,7 +232,9 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
             $fields = $fields_tabled;
         }
 
-        $fields = $this->addTablePrefix($fields);
+        if ($prefix) {
+            $fields = $this->addTablePrefix($fields);
+        }
         $this->addStatement('selects', $fields);
         return $this;
     }
@@ -322,15 +325,20 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
             $thisTable = $this->modelJoins[$joinTo]->getTable();
         }
 
+        $alias = $joinSingular;
+        $joinTable = $alias;
+        $originalTable = $joinModel->getTable();
+
         if (!$joinSingular) {
             $joinSingular = $joinModel->getSingular();
+            $joinTable = $originalTable;
         }
 
         if ($joinTo) {
             $joinSingular = $joinTo.'__'.$joinSingular;
         }
 
-        $joinTable = $joinModel->getTable();
+
         $joinColumn = $joinModel->getJoinColumn($thisTable);
 
         $columnsUpdated = array();
@@ -339,23 +347,58 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
             $columnsUpdated[] = "{$joinTable}.{$column}` as `{$joinSingular}__{$column}";
         }
 
-        $this->select($columnsUpdated, true);
+        $prefix = true;
+        if ($alias !== null) {
+            $prefix = false;
+        }
+
+        $this->select($columnsUpdated, true, $prefix);
 
         if ($key == null && $value == null) {
             $key = $joinTable.'.id';
             $value = $thisTable.'.'.$joinColumn;
         }
 
-        $this->join($joinTable, $key, $operator, $value, $type);
+        $this->join($originalTable, $key, $operator, $value, $type, $alias);
 
         $this->addSubEntity($joinModel->getEntity(), $joinSingular);
 
         $this->modelJoins[$joinSingular] = $joinModel;
 
-        /*
-        $a = $this->getQuery();
-        echo $a->getRawSql();
-        */
+        return $this;
+    }
+
+    /**
+     * @param $table
+     * @param $key
+     * @param null $operator
+     * @param null $value
+     * @param string $type
+     * @param null $alias
+     * @return $this
+     */
+    public function join($table, $key, $operator = null, $value = null, $type = 'inner', $alias = null)
+    {
+        if (!$key instanceof \Closure) {
+            $key = function($joinBuilder) use ($key, $operator, $value, $alias) {
+                $joinBuilder->on($key, $operator, $value, $alias);
+            };
+        }
+
+        // Build a new JoinBuilder class, keep it by reference so any changes made
+        // in the closure should reflect here
+        $joinBuilder = $this->container->build('\\AV\\Model\\QueryBuilder\\JoinBuilder', array($this->connection));
+
+        // Call the closure with our new joinBuilder object
+        $key($joinBuilder);
+        $table = $this->addTablePrefix($table, false);
+
+        if ($alias !== null) {
+            $table .= '` as `'.$alias;
+        }
+        // Get the criteria only query from the joinBuilder object
+        $this->statements['joins'][] = compact('type', 'table', 'joinBuilder');
+
         return $this;
     }
 
