@@ -298,11 +298,11 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
      * @param null|string $operator Join 'on' operation operator
      * @param null $value Join 'on' operation value
      *
+     * @param null $joinSingular
      * @throws \Exception
-     *
      * @return QueryBuilderHandler
      */
-    public function modelJoin(Model $joinModel, array $columns, $type = 'left', $joinTo = null, $key = null, $operator = '=', $value = null)
+    public function modelJoin(Model $joinModel, array $columns, $type = 'left', $joinTo = null, $key = null, $operator = '=', $value = null, $joinSingular = null)
     {
         if ($this->eventDispatcher) {
             $event = new QueryBuilderModelJoinEvent($joinModel, $columns, $type);
@@ -322,7 +322,9 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
             $thisTable = $this->modelJoins[$joinTo]->getTable();
         }
 
-        $joinSingular = $joinModel->getSingular();
+        if (!$joinSingular) {
+            $joinSingular = $joinModel->getSingular();
+        }
 
         if ($joinTo) {
             $joinSingular = $joinTo.'__'.$joinSingular;

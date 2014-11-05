@@ -230,9 +230,9 @@ class Finder
         return $this;
     }
 
-    public function join(Model $joinModel, array $columns, $type = 'left', $joinTo = null, $key = null, $operator = '=', $value = null)
+    public function join(Model $joinModel, array $columns, $type = 'left', $joinTo = null, $key = null, $operator = '=', $value = null, $joinSingular = null)
     {
-        $this->currentQuery->modelJoin($joinModel, $columns, $type, $joinTo, $key, $operator, $value);
+        $this->currentQuery->modelJoin($joinModel, $columns, $type, $joinTo, $key, $operator, $value, $joinSingular);
 
         return $this;
     }
