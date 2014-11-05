@@ -1,6 +1,9 @@
 name: Reports
 namespace: AVCMS\Bundles\Reports
 
+services:
+  - ReportsServices
+
 assets:
   avcms_reports.js:
     env: frontend

@@ -37,4 +37,19 @@ class ReportTypesManager
     {
         return isset($this->contentTypes[$contentType]) ? $this->contentTypes[$contentType] : [];
     }
+
+    public function getUserId($contentType, $content)
+    {
+        $config = $this->getContentType($contentType);
+
+        if (!$config['user_id_field']) {
+            return null;
+        }
+
+        if (!is_callable([$content, 'get'.$config['user_id_field']])) {
+            return null;
+        }
+
+        return $content->{'get'.$config['user_id_field']}();
+    }
 } 
