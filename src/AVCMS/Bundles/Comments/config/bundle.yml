@@ -4,6 +4,13 @@ namespace: AVCMS\Bundles\Comments
 services:
   - CommentServices
 
+reports:
+  comments:
+    name: Comment
+    model: AVCMS\Bundles\Comments\Model\Comments
+    content_field: comment
+    user_id_field: userId
+
 assets:
   avcms_comments.js:
     env: frontend
