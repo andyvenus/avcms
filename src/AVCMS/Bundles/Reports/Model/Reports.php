@@ -6,6 +6,8 @@ use AV\Model\Model;
 
 class Reports extends Model
 {
+    protected $finder = 'AVCMS\Bundles\Reports\Model\ReportsFinder';
+
     public function getTable()
     {
         return 'reports';

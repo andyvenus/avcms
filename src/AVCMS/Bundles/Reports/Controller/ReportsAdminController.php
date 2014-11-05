@@ -47,8 +47,8 @@ class ReportsAdminController extends AdminBaseController
             ->join($this->model('@users'), ['username', 'slug'], 'left', null, 'reported_user.id', '=', 'reports.reported_user_id', 'reported_user')
             ->join($this->model('@users'), ['username', 'slug'], 'left', null, 'sender_user.id', '=', 'reports.sender_user_id', 'sender_user')
             ->setResultsPerPage(10)
-            ->setSearchFields(['content_title', 'comment'])
-            ->handleRequest($request, ['page' => 1, 'order' => 'newest', 'search' => null])
+            ->setSearchFields(['message'])
+            ->handleRequest($request, ['page' => 1, 'order' => 'newest', 'search' => null, 'contentType' => 'all'])
             ->get();
 
         foreach ($reports as $report) {
