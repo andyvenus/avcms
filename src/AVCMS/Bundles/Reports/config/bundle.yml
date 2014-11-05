@@ -12,3 +12,11 @@ permissions:
 assets:
   avcms_reports.js:
     env: frontend
+
+menu_items:
+  admin:
+    admin_reports:
+      type: route
+      target: manage_reports
+      icon: glyphicon glyphicon-warning-sign
+      label: Reports
