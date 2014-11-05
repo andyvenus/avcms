@@ -8,6 +8,7 @@
 namespace AVCMS\Bundles\Comments\Form;
 
 use AV\Form\FormBlueprint;
+use AV\Validation\Validatable;
 
 class CommentForm extends FormBlueprint
 {
@@ -17,7 +18,10 @@ class CommentForm extends FormBlueprint
 
         $this->add('comment', 'textarea', [
             'label' => 'Add Comment',
-            'required' => true
+            'required' => true,
+            'validation' => [
+                ['rule' => 'Length', 'arguments' => [null, 5000]]
+            ]
         ]);
     }
-} 
+}

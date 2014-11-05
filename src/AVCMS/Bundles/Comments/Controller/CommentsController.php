@@ -76,7 +76,9 @@ class CommentsController extends Controller
                 $errorParams = [];
             }
             $commentForm->addCustomErrors([new FormError('comment', $error, true, $errorParams)]);
+        }
 
+        if (!$commentForm->isValid()) {
             return new JsonResponse(['success' => false, 'form' => $commentForm->createView()->getJsonResponseData()]);
         }
 
