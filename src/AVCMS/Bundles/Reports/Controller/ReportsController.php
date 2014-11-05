@@ -59,6 +59,7 @@ class ReportsController extends Controller
             $userId = $reportTypes->getUserId($contentType, $contentEntity);
             $report->setReportedUserId($userId);
             $report->setSenderUserId($this->activeUser()->getId());
+            $report->setDate(time());
 
             $reports->save($report);
         }
