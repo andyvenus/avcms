@@ -9,6 +9,9 @@ use Viocon\Container;
 
 class Connection extends PixieConnection {
 
+    /**
+     * @var EventDispatcherInterface
+     */
     protected $eventDispatcher;
 
     public function __construct($adapter, $adapterConfig, $alias = null, Container $container = null, EventDispatcherInterface $eventDispatcher = null)

@@ -199,7 +199,6 @@ class Finder
         return $this;
     }
 
-    // todo: time-based published
     public function published()
     {
         $this->currentQuery->where('published', 1);

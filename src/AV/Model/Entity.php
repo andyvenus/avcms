@@ -22,7 +22,7 @@ abstract class Entity implements Validatable
     protected $data = array();
 
     /**
-     * @var Entity[] Any entities assigned via the magic __get method
+     * @var array|Entity[] Any entities assigned via the magic __get method
      */
     protected $subEntities = array();
 
@@ -93,9 +93,8 @@ abstract class Entity implements Validatable
     /**
      * @param $name
      * @param Entity $entity
-     * @param bool $extension
      */
-    public function addSubEntity($name, Entity $entity, $extension = false)
+    public function addSubEntity($name, Entity $entity)
     {
         $this->subEntities[$name] = $entity;
     }

@@ -5,7 +5,9 @@
  * Time: 13:17
  */
 
-namespace AV\Model;
+namespace AVCMS\Core\Model;
+
+use AV\Model\Model;
 
 abstract class ContentModel extends Model
 {

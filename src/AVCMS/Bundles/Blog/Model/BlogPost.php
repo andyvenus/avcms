@@ -7,9 +7,7 @@
 
 namespace AVCMS\Bundles\Blog\Model;
 
-use AV\Model\ContentEntity;
-use AV\Validation\Rules\Length;
-use AV\Validation\Validator;
+use AVCMS\Core\Model\ContentEntity;
 
 class BlogPost extends ContentEntity {
     public function setTitle($value) {

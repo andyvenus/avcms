@@ -5,7 +5,6 @@ namespace AV\Model\QueryBuilder;
 use AV\Model\Connection;
 use AV\Model\Event\QueryBuilderModelJoinEvent;
 use AV\Model\Model;
-use AVCMS\Core\Taxonomy\Model\TaxonomyModel;
 use Pixie\QueryBuilder\QueryBuilderHandler as PixieQueryBuilderHandler;
 
 class QueryBuilderHandler extends PixieQueryBuilderHandler {
@@ -14,8 +13,14 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
      */
     protected $model;
 
+    /**
+     * @var \AV\Model\Entity
+     */
     protected $entity;
 
+    /**
+     * @var \AV\Model\Entity[]
+     */
     protected $subEntities;
 
     /**
@@ -28,6 +33,9 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
      */
     protected $modelJoins = array();
 
+    /**
+     * @var bool
+     */
     protected $selectMade;
 
     public function __construct(Connection $connection = null)
@@ -106,9 +114,6 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
             }
 
             foreach ($rowArray as $columnName => $columnValue) {
-
-                $columnValueUsed = false;
-
                 if (strpos($columnName, '__') !== false) {
 
                     $selectedEntity = $this->findSubEntityFromColumn($entity, $columnName);
@@ -119,7 +124,6 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
                         $setterMethodName = 'set'.str_replace('_', '', $column);
                         if (method_exists($selectedEntity, $setterMethodName)) {
                             $selectedEntity->$setterMethodName($columnValue);
-                            $columnValueUsed = true;
                         }
                     }
                 }
@@ -128,7 +132,6 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
 
                     if (method_exists($entity, $setterMethodName)) {
                         $entity->$setterMethodName($columnValue);
-                        $columnValueUsed = true;
                     }
                 }
             }
@@ -222,14 +225,14 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
 
         // If this is a model-based select, we automatically add the table to the fields
         if (isset($this->model) && $join === false) {
-            $fields_tabled = array();
+            $fieldsTabled = array();
             foreach ($fields as $field) {
                 if (!strpos($field, '.')) {
                     $field = $this->model->getTable().'.'.$field;
                 }
-                $fields_tabled[] = $field;
+                $fieldsTabled[] = $field;
             }
-            $fields = $fields_tabled;
+            $fields = $fieldsTabled;
         }
 
         if ($prefix) {
@@ -291,7 +294,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     }
 
     /**
-     * Do a one-to-one join based on data provided by a model
+     * Do a one-to-one join of one Model onto another
      *
      * @param Model $joinModel The model used to create the join
      * @param array $columns The columns to join
@@ -403,23 +406,6 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     }
 
     /**
-     * @param $taxonomyModel
-     * @param $equals
-     * @return $this
-     */
-    public function taxonomy(TaxonomyModel $taxonomyModel, array $equals)
-    {
-        $taxTable = $taxonomyModel->getTable();
-        $taxonomyFieldId = 'content_id';
-
-        $this->join($taxTable, $taxonomyFieldId, '=', $this->model->getTable().'.id', 'left')
-             ->where('content_type', $this->model->getSingular())
-             ->whereIn($taxTable.'.id', $equals);
-
-        return $this;
-    }
-
-    /**
      * Start a query based on data provided by a Model class
      *
      * @param Model $model
@@ -431,7 +417,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     }
 
     /**
-     * Update the database using an array or AVCMS entity
+     * Update the database using an array or Entity
      *
      * @param $data array|\AV\Model\Entity
      */
@@ -446,7 +432,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     }
 
     /**
-     * Insert a row into the database using an array or AVCMS entity
+     * Insert a row into the database using an array or Entity
      *
      * @param $data
      * @return array|string
@@ -510,13 +496,22 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
         return isset($row[0]->field) ? (int) $row[0]->field : 0;
     }
 
-
+    /**
+     * Set a limit and offset based on a page number and the number of results per page
+     *
+     * @param $page
+     * @param $resultsPerPage
+     * @return $this
+     */
     public function paginated($page, $resultsPerPage) {
         $offset = $resultsPerPage * ($page - 1);
 
         return $this->limit($resultsPerPage)->offset($offset);
     }
 
+    /**
+     * Remove the limit & offset from the query
+     */
     public function removePagination()
     {
         unset($this->statements['limit']);

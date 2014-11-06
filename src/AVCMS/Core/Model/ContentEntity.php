@@ -5,7 +5,9 @@
  * Time: 11:20
  */
 
-namespace AV\Model;
+namespace AVCMS\Core\Model;
+
+use AV\Model\Entity;
 
 class ContentEntity extends Entity
 {

@@ -9,12 +9,9 @@ namespace AVCMS\Bundles\Admin\Controller;
 
 use AVCMS\Core\Content\EditContentHelper;
 use AVCMS\Core\Controller\Controller;
-use AVCMS\Bundles\Admin\Event\AdminEditFormBuiltEvent;
-use AVCMS\Bundles\Admin\Event\AdminFilterEntityEvent;
-use AVCMS\Bundles\Admin\Event\AdminSaveContentEvent;
 use AV\Form\FormBlueprint;
 use AV\Form\FormHandler;
-use AV\Model\ContentModel;
+use AVCMS\Core\Model\ContentModel;
 use AV\Model\Model;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
