@@ -3,7 +3,7 @@ var avcms = avcms || {};
 $(document).ready(function() {
     $('body').on('click', '[data-report-button]', avcms.reports.openReportForm);
 
-    avcms.event.addEvent('submit-form-success', avcms.reports.modalFormSuccess);
+    avcms.event.addEvent('submit-form-success', avcms.general.modalFormSuccess);
 });
 
 avcms.reports = {
@@ -22,11 +22,5 @@ avcms.reports = {
                 modal.remove();
             })
         }, 'json');
-    },
-
-    modalFormSuccess: function(form) {
-        if (form.parents('.modal').length == 1) {
-            $('#formModal').modal('hide');
-        }
     }
 };

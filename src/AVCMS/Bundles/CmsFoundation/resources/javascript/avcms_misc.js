@@ -26,5 +26,11 @@ avcms.general = {
             if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
         }
         return null;
+    },
+
+    modalFormSuccess: function(form) {
+        if (form.parents('.modal').length == 1) {
+            $('#formModal').modal('hide');
+        }
     }
 };
