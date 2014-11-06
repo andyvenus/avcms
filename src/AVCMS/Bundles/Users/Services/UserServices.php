@@ -52,7 +52,7 @@ class UserServices implements ServicesInterface
         ;
 
         $container->register('users.dao_auth_provider', 'Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider')
-            ->setArguments(array(new Reference('users.model'), new Reference('users.user_checker'), 'PROVIDER_KEY', new Reference('users.encoder_factory'), false))
+            ->setArguments(array(new Reference('users.model'), new Reference('users.user_checker'), 'username.password', new Reference('users.encoder_factory'), false))
         ;
 
         $container->register('users.encoder_factory', 'Symfony\Component\Security\Core\Encoder\EncoderFactory')
@@ -73,14 +73,14 @@ class UserServices implements ServicesInterface
         ;
 
         $container->register('auth.context_listener', 'AVCMS\Core\Security\Subscriber\ContextListener')
-            ->setArguments(array(new Reference('security.context'), array(new Reference('users.model')), 'PROVIDER_KEY'))
+            ->setArguments(array(new Reference('security.context'), array(new Reference('users.model')), 'user.context'))
             ->addTag('event.listener', array('event' => KernelEvents::REQUEST, 'method' => 'handle'))
             ->addTag('event.listener', array('event' => KernelEvents::RESPONSE, 'method' => 'onKernelResponse'))
         ;
 
         // LOGIN
         $container->register('subscriber.login_authentication', 'AVCMS\Core\Security\Subscriber\LoginAuthenticationSubscriber')
-            ->setArguments(array(new Reference('security.context'), new Reference('users.auth_manager'), new Reference('auth.session_strategy'), new Reference('http.utils'), 'PROVIDER_KEY', new Reference('auth.login_success_handler'), new Reference('auth.login_failure_handler')))
+            ->setArguments(array(new Reference('security.context'), new Reference('users.auth_manager'), new Reference('auth.session_strategy'), new Reference('http.utils'), 'username.password', new Reference('auth.login_success_handler'), new Reference('auth.login_failure_handler')))
             ->addMethodCall('setRememberMeServices', array(new Reference('auth.remember_me_services')))
             ->addTag('event.subscriber')
         ;
@@ -89,7 +89,7 @@ class UserServices implements ServicesInterface
             ->setArguments(array(
                 array(new Reference('users.model')),
                 'SOME_KEY',
-                'PROVIDER_KEY',
+                'persistent.remember',
                 array('name' => 'avcms_remember_me',
                     'remember_me_parameter' => 'remember',
                     'path' => '/',
@@ -115,7 +115,7 @@ class UserServices implements ServicesInterface
         ;
 
         $container->register('users.remember_me_auth_provider', 'Symfony\Component\Security\Core\Authentication\Provider\RememberMeAuthenticationProvider')
-            ->setArguments(array(new Reference('users.user_checker'), 'SOME_KEY', 'PROVIDER_KEY'))
+            ->setArguments(array(new Reference('users.user_checker'), 'SOME_KEY', 'persistent.remember'))
         ;
 
         $container->register('security.random', 'Symfony\Component\Security\Core\Util\SecureRandom');
@@ -126,7 +126,7 @@ class UserServices implements ServicesInterface
 
         $container->register('auth.login_success_handler', 'Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler')
             ->setArguments(array(new Reference('http.utils'), array()))
-            ->addMethodCall('setProviderKey', ['PROVIDER_KEY'])
+            ->addMethodCall('setProviderKey', ['username.password'])
         ;
 
         $container->register('auth.login_failure_handler', 'Symfony\Component\Security\Http\Authentication\DefaultAuthenticationFailureHandler')
@@ -135,7 +135,7 @@ class UserServices implements ServicesInterface
 
         // ANONYMOUS
         $container->register('subscriber.anonymous_authentication', 'AVCMS\Core\Security\Subscriber\AnonymousAuthenticationSubscriber')
-            ->setArguments(array(new Reference('security.context'), 'PROVIDER_KEY', new Reference('users.groups_model')))
+            ->setArguments(array(new Reference('security.context'), 'anonymous', new Reference('users.groups_model')))
             ->addTag('event.subscriber')
         ;
 
@@ -167,6 +167,7 @@ class UserServices implements ServicesInterface
 
         $container->register('auth.access_map', 'Symfony\Component\Security\Http\AccessMap')
             ->addMethodCall('add', [new Reference('auth.admin_request_matcher'), ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']])
+            //->addMethodCall('add', [new Reference('auth.admin_request_matcher'), ['IS_AUTHENTICATED_FULLY']])
         ;
 
         $container->register('auth.admin_request_matcher', 'Symfony\Component\HttpFoundation\RequestMatcher')
@@ -189,7 +190,7 @@ class UserServices implements ServicesInterface
 
         // EXCEPTION LISTENER
         $container->register('auth.exception_listener', 'Symfony\Component\Security\Http\Firewall\ExceptionListener')
-            ->setArguments([new Reference('security.context'), new Reference('auth.trust_resolver'), new Reference('http.utils'), 'PROVIDER_KEY', new Reference('auth.form_entry_point')])
+            ->setArguments([new Reference('security.context'), new Reference('auth.trust_resolver'), new Reference('http.utils'), 'username.password', new Reference('auth.form_entry_point'), 'home'])
             ->addTag('event.listener', ['event' => KernelEvents::EXCEPTION, 'method' => 'onKernelException'])
         ;
 
