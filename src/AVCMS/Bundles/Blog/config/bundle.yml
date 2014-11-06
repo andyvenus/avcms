@@ -19,10 +19,6 @@ comments:
     frontend_route: blog_post
     frontend_route_params: [slug]
 
-template:
-  blog_post: @Blog/blog_post.twig
-  blog_home: @Blog/blog_home.twig
-
 user_settings:
   blog_posts_per_page:
       type: text
