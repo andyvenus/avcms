@@ -35,6 +35,12 @@ class CsrfToken
         }
     }
 
+    /**
+     * @param null $value
+     * @return null|string
+     *
+     * @todo Symfony cookie set
+     */
     public function setTokenCookie($value = null)
     {
         if ($value == null) {

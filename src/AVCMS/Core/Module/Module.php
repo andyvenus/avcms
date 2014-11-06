@@ -10,7 +10,7 @@ namespace AVCMS\Core\Module;
 class Module
 {
     /**
-     * @var int
+     * @var int|null
      */
     protected $id = null;
 

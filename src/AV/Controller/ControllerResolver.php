@@ -11,6 +11,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ControllerResolver extends BaseControllerResolver
 {
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
+     * @var BundleManagerInterface
+     */
+    protected $bundleManager;
 
     public function __construct(ContainerInterface $container, BundleManagerInterface $bundleManager = null, LoggerInterface $logger = null)
     {

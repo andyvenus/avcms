@@ -13,6 +13,12 @@ use AV\Form\FormError;
 use AV\Csrf\CsrfToken;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+/**
+ * Class CsrfFormPlugin
+ * @package AV\Csrf\Events
+ *
+ * Adds a hidden CSRF prevention field to all forms
+ */
 class CsrfFormPlugin implements EventSubscriberInterface
 {
     /**
