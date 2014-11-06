@@ -8,12 +8,8 @@
 namespace AVCMS\Core\Kernel;
 
 use AV\Kernel\BundleKernel;
-use AVCMS\Core\Bundle\Config\BundleConfigValidator;
 
 class AvcmsKernel extends BundleKernel
 {
-    protected function getBundleConfigValidator()
-    {
-        return new BundleConfigValidator();
-    }
+
 } 
