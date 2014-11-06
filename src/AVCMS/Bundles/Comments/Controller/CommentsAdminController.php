@@ -57,19 +57,21 @@ class CommentsAdminController extends AdminBaseController
                 continue;
             }
 
-            $contentModel = $this->model($this->commentTypes->getModelClass($comment->getContentType()));
+            $typeConfig = $this->commentTypes->getContentType($type);
+
+            $contentModel = $this->model($typeConfig['model']);
             $content = $contentModel->getOne($comment->getContentId());
 
             if (!$content) {
                 continue;
             }
 
-            $params = $this->commentTypes->getFrontendRouteParams($type);
-            $frontendRoute = $this->commentTypes->getFrontendRoute($type);
+            $params = $typeConfig['frontend_route_params'];
+            $frontendRoute = $typeConfig['frontend_route'];
 
             $contentInfo = [];
 
-            $titleField = $this->commentTypes->getTitleField($type);
+            $titleField = $typeConfig['title_field'];
 
             $contentInfo['title'] = '?';
 
@@ -124,7 +126,9 @@ class CommentsAdminController extends AdminBaseController
             $comment = $this->comments->getOne($id);
             $type = $comment->getContentType();
 
-            $model = $this->model($this->commentTypes->getModelClass($type));
+            $typeConfig = $this->commentTypes->getContentType($type);
+
+            $model = $this->model($typeConfig['model']);
             $content = $model->getOne($comment->getContentId());
 
             if (is_callable([$content, 'getComments']) && is_callable([$content, 'setComments'])) {

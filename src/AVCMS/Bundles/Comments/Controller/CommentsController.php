@@ -21,7 +21,10 @@ class CommentsController extends Controller
         $contentType = $request->get('content_type');
         $contentId = $request->get('content_id');
 
-        $entity = $this->getContentModel($contentType)->getOne($contentId);
+        $commentTypes = $this->container->get('comment_types_manager');
+        $typeConfig = $commentTypes->getContentType($contentType);
+
+        $entity = $this->model($typeConfig['model'])->getOne($contentId);
 
         if ($entity == null) {
             throw $this->createNotFoundException();
@@ -45,9 +48,13 @@ class CommentsController extends Controller
     {
         $contentType = $request->get('content_type');
         $contentId = $request->get('content_id');
-        $content = $this->getContentModel($contentType)->getOne($contentId);
 
         $commentTypes = $this->container->get('comment_types_manager');
+
+        $typeConfig = $commentTypes->getContentType($contentType);
+
+        $contentModel = $this->model($typeConfig['model']);
+        $content = $contentModel->getOne($contentId);
 
         $user = $this->activeUser();
 
@@ -88,7 +95,7 @@ class CommentsController extends Controller
         $comment->setUserId($user->getId());
         $comment->setDate(time());
 
-        $titleField = $commentTypes->getTitleField($contentType);
+        $titleField = $typeConfig['title_field'];
         if (is_callable([$content, 'get'.$titleField])) {
             $comment->setContentTitle($content->{"get".$titleField}());
         }
@@ -98,23 +105,11 @@ class CommentsController extends Controller
 
         if (is_callable([$content, 'getComments']) && is_callable([$content, 'setComments'])) {
             $content->setComments(intval($content->getComments()) + 1);
-            $this->getContentModel($contentType)->save($content);
+            $contentModel->save($content);
         }
 
         $comment->user = $user;
 
         return new JsonResponse(['html' => $this->render('@Comments/comments.twig', ['comments' => [$comment]]), 'success' => true]);
-    }
-
-    protected function getContentModel($contentType)
-    {
-        $typesManager = $this->container->get('comment_types_manager');
-
-        $model = null;
-        if ($typesManager->contentTypeValid($contentType) === true) {
-            $model = $this->model($typesManager->getModelClass($contentType));
-        }
-
-        return $model;
     }
 } 
