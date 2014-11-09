@@ -18,7 +18,9 @@
     {% endblock %}
 
     {% block blog_post_comments %}
-        <h4>{% trans %}Comments{% endtrans %} ({{ post.comments }})</h4>
-        {{ comments('blog_post', post) }}
+        {% if settings.comments_enabled %}
+            <h4>{% trans %}Comments{% endtrans %} ({{ post.comments }})</h4>
+            {{ comments('blog_post', post) }}
+        {% endif %}
     {% endblock %}
 {% endblock %}
