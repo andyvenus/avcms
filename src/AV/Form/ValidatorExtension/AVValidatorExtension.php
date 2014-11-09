@@ -140,7 +140,6 @@ class AVValidatorExtension implements ValidatorExtension, ContainerAwareInterfac
         foreach ($fields as $field) {
             if (isset($field['options']['validation'])) {
                 foreach ($field['options']['validation'] as $validation) {
-                    // $validation['class'], $validation['arguments']
                     if (isset($validation['class']) && class_exists($validation['class'])) {
                         $class = $validation['class'];
                     }
@@ -156,7 +155,7 @@ class AVValidatorExtension implements ValidatorExtension, ContainerAwareInterfac
                     foreach ($validation['arguments'] as $key => $argument) {
                         if (is_string($argument) && false !== strpos($argument, '%')) {
                             $serviceName = explode('%', $argument)[1];
-                            if ($this->container->has($serviceName)) {
+                            if (isset($this->container) && $this->container->has($serviceName)) {
                                 $validation['arguments'][$key] = $this->container->get($serviceName);
                             }
                             else {
@@ -169,7 +168,6 @@ class AVValidatorExtension implements ValidatorExtension, ContainerAwareInterfac
                     $rule = $r->newInstanceArgs($validation['arguments']);
 
                     $errorMessage = (isset($validation['error_message']) ? $validation['error_message'] : null);
-                    //$ignoreUnset = (isset($validation['ignore_unset']) ? $validation['ignore_unset'] : false);
                     $ignoreUnset = true; // true because
                     $label = (isset($field['options']['label']) ? $field['options']['label'] : null);
 
