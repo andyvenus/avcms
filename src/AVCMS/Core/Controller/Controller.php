@@ -156,10 +156,6 @@ abstract class Controller extends ContainerAware
             $context['user'] = $this->container->get('security.context')->getToken()->getUser();
         }
 
-        if (isset($this->settings)) {
-            $context['settings'] = $this->settings;
-        }
-
         $twig = $this->container->get('twig');
         $result = $twig->render($template, $context);
 

@@ -31,5 +31,9 @@ class SettingsServices implements ServicesInterface
             ->setArguments(array(new Reference('bundle_manager')))
         ;
 
+        $container->register('settings.twig.extension', 'AVCMS\Bundles\CmsFoundation\Twig\SettingsTwigExtension')
+            ->setArguments([new Reference('settings_manager')])
+            ->addTag('twig.extension')
+        ;
     }
 }
