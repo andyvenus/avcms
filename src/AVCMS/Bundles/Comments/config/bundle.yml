@@ -34,3 +34,11 @@ menu_items:
       target: manage_comments
       icon: glyphicon glyphicon-comment
       type: route
+
+user_settings:
+  comments_enabled:
+    label: Enable Comments
+    help: Enable/Disable comments of all types
+    default: true
+    section: main
+    type: checkbox
