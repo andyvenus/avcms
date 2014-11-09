@@ -92,6 +92,8 @@ class BundleConfigValidator implements ConfigurationInterface
             ->end()
             ->variableNode('parent_bundle')
             ->end()
+            ->variableNode('parent_config')
+            ->end()
             ->variableNode('directory')
             ->end()
             ->variableNode('route')

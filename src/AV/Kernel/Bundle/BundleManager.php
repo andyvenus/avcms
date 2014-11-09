@@ -107,7 +107,7 @@ class BundleManager implements BundleManagerInterface
 
         foreach ($bundlesConfig as $bundleName => $bundle) {
             if (isset($bundle['enabled']) && $bundle['enabled'] === true) {
-                $bundleConfig = new BundleConfig($this, $bundle);
+                $bundleConfig = new BundleConfig($bundle);
                 $this->bundleConfigs[$bundleName] = $bundleConfig;
             }
         }
@@ -137,10 +137,20 @@ class BundleManager implements BundleManagerInterface
             if ($bundleConfig->services && !empty($bundleConfig->services) && $bundleConfig->ignore_services !== true) {
                 foreach ($bundleConfig->services as $serviceClass) {
                     $fullyQualifiedClass = $bundleConfig->namespace.'\\Services\\'.$serviceClass;
+
+                    if (isset($bundleConfig['parent_bundle'])) {
+                        $parentFullyQualifiedClass = $bundleConfig->parent_config->namespace.'\\Services\\'.$serviceClass;
+                    }
+
                     if (class_exists($fullyQualifiedClass)) {
                         $service = new $fullyQualifiedClass();
                         $service->getServices($bundleConfig, $container);
                         $container->addObjectResource($fullyQualifiedClass);
+                    }
+                    elseif (isset($parentFullyQualifiedClass) && class_exists($parentFullyQualifiedClass)) {
+                        $service = new $parentFullyQualifiedClass();
+                        $service->getServices($bundleConfig, $container);
+                        $container->addObjectResource($parentFullyQualifiedClass);
                     }
                     else {
                         throw new NotFoundException(sprintf("Service class %s not found", $fullyQualifiedClass));
@@ -221,9 +231,16 @@ class BundleManager implements BundleManagerInterface
                         $appBundleConfigOverrides = $appBundleConfig['config'];
                     }
 
-                    // todo: parent bundle outside of BundleConfig for caching
                     if (isset($bundleConfig['parent_bundle'])) {
+                        $parentConfig = $this->loadBundleConfig($bundleConfig['parent_bundle'])->getConfigArray();
 
+                        if (isset($parentConfig['parent_bundle'])) {
+                            throw new \Exception(sprintf("Cannot extend the Bundle %s as it extends another bundle itself", $bundleConfig['parent_bundle']));
+                        }
+
+                        $bundleConfig = array_replace_recursive($parentConfig, $bundleConfig);
+
+                        $bundleConfig['parent_config'] = $parentConfig;
                     }
 
                     $mergedConfig = array_replace_recursive($bundleConfig, $appBundleConfigOverrides);
@@ -288,7 +305,7 @@ class BundleManager implements BundleManagerInterface
         $config = Yaml::parse($configLocation);
         $config['directory'] = $directory;
 
-        return new BundleConfig($this, $config);
+        return new BundleConfig($config);
     }
 
     /**
