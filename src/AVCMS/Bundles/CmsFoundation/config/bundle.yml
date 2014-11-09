@@ -80,9 +80,9 @@ assets:
     env: shared
     priority: 90
   bootstrap.min.js:
-    env: shared
+    env: frontend
   bootstrap.min.css:
-    env: shared
+    env: frontend
   avcms_form.js:
     env: shared
   avcms_event.js:

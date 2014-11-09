@@ -61,7 +61,7 @@ menu_items:
       type: route
       target: users_admin_home
     user_groups_admin:
-      icon: glyphicon glyphicon-user
+      icon: glyphicon glyphicon-credit-card
       label: Groups
       type: route
       target: user_groups_admin_home
