@@ -28,7 +28,7 @@
 
 {% block item_extended_inner %}
     <div class="col-md-7 hidden-xs">
-        {{ item.body|length > 120 ? item.body|slice(0, 120) ~ '...' : item.body  }}
+        {{ item.body|length > 120 ? item.body|striptags|slice(0, 120) ~ '...' : item.body|striptags  }}
     </div>
     <div class="col-md-2 hidden-sm hidden-xs">
         {{ item.user.username }}
