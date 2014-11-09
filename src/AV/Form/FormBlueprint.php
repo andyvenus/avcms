@@ -340,7 +340,7 @@ class FormBlueprint implements FormBlueprintInterface
     public function createFieldsFromArray(array $fields, $group = null, $section = null)
     {
         foreach ($fields as $field_name => $field) {
-            $field_type = ($field['type'] ? $field['type'] : 'text');
+            $field_type = (isset($field['type']) ? $field['type'] : 'text');
             unset($field['type']);
 
             if (!isset($field['section']) && $section == null) {

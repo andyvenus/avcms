@@ -20,7 +20,7 @@ class FormBlueprintTest extends \PHPUnit_Framework_TestCase {
         $this->form = new FormBlueprint();
     }
 
-    public function testAddElement()
+    public function testAddField()
     {
         $this->form->add('name', 'text', array(
             'label' => 'Name'
@@ -30,6 +30,13 @@ class FormBlueprintTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertTrue($this->form->has('name'));
         $this->assertTrue($this->form->has('description'));
+    }
+
+    public function testAddArrayField()
+    {
+        $this->form->add('names[]', 'select', ['accept_array' => true]);
+
+        $this->assertNotNull($this->form->has('names'));
     }
 
     public function testDuplicateAdd()
@@ -99,7 +106,7 @@ class FormBlueprintTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse($this->form->has('name'));
     }
 
-    public function testReplaceElement()
+    public function testReplaceField()
     {
         $this->form->add('name', 'text', array('label' => 'Original Label'));
 
@@ -194,6 +201,45 @@ class FormBlueprintTest extends \PHPUnit_Framework_TestCase {
         $this->form->setSuccessMessage('Done!!');
 
         $this->assertEquals('Done!!', $this->form->getSuccessMessage());
+    }
+
+    public function testCreateFieldsFromArray()
+    {
+        $fieldsArray = array(
+            'field1' => array(),
+            'field2' => array(
+                'type' => 'select',
+                'section' => 'a_section'
+            )
+        );
+
+        $this->form->createFieldsFromArray($fieldsArray, null, 'main_section');
+
+        $this->assertArrayHasKey('section', $this->form->get('field1')['options']);
+        $this->assertEquals('main_section', $this->form->get('field1')['options']['section']);
+
+        $this->assertEquals('a_section', $this->form->get('field2')['options']['section']);
+    }
+
+    public function testCreateFieldsFromArrayWithGroup()
+    {
+        $fieldsArray = array(
+            'field1' => array()
+        );
+
+        $this->form->createFieldsFromArray($fieldsArray, 'test_group');
+
+        $this->assertNull($this->form->get('field1'));
+        $this->assertNotNull($this->form->get('test_group')['fields']['field1']);
+    }
+
+    public function testCreateSectionsFromArray()
+    {
+        $this->form->createSectionsFromArray(['1' => ['label' => 'One'], '2' => ['label' => 'Two']]);
+
+        $this->assertTrue($this->form->hasSection('1'));
+        $this->assertTrue($this->form->hasSection('2'));
+        $this->assertFalse($this->form->hasSection('3'));
     }
 }
  
