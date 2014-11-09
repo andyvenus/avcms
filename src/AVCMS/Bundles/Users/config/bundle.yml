@@ -20,6 +20,12 @@ user_settings_sections:
   users: Users
 
 user_settings:
+  users_enabled:
+    label: Enable Users
+    type: checkbox
+    help: If disabled, users cannot register and any user related-features are disabled.
+    default: true
+    section: users
   validate_email_addresses:
     label: Validate Emails
     help: If on, a user will need to validate their email address when registering

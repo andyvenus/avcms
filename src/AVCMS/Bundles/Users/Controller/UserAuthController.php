@@ -56,6 +56,10 @@ class UserAuthController extends Controller
      */
     public function registerAction(Request $request)
     {
+        if (!$this->setting('users_enabled')) {
+            throw $this->createNotFoundException();
+        }
+
         $users = $this->model('Users');
         $user = $users->newEntity();
 
