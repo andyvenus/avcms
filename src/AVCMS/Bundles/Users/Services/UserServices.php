@@ -167,11 +167,19 @@ class UserServices implements ServicesInterface
 
         $container->register('auth.access_map', 'Symfony\Component\Security\Http\AccessMap')
             ->addMethodCall('add', [new Reference('auth.admin_request_matcher'), ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']])
-            //->addMethodCall('add', [new Reference('auth.admin_request_matcher'), ['IS_AUTHENTICATED_FULLY']])
         ;
 
         $container->register('auth.admin_request_matcher', 'Symfony\Component\HttpFoundation\RequestMatcher')
             ->setArguments(['^/admin'])
+        ;
+
+        $container->register('auth.access_listener.fully', 'Symfony\Component\Security\Http\Firewall\AccessListener')
+            ->setArguments([new Reference('security.context'), new Reference('auth.access_decision_manager'), new Reference('auth.access_map.fully'), new Reference('users.auth_manager')])
+            ->addTag('event.listener', ['event' => KernelEvents::REQUEST, 'method' => 'handle', 'priority' => -101])
+        ;
+
+        $container->register('auth.access_map.fully', 'Symfony\Component\Security\Http\AccessMap')
+            ->addMethodCall('add', [new Reference('auth.admin_request_matcher'), ['IS_AUTHENTICATED_FULLY']])
         ;
 
         // LOG-OUT
