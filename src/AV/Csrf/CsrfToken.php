@@ -9,7 +9,7 @@ namespace AV\Csrf;
 
 class CsrfToken
 {
-    protected $prefix = 'avcms_';
+    protected $prefix = 'av_';
 
     public function checkToken($token)
     {
