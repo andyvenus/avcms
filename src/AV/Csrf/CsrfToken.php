@@ -11,7 +11,7 @@ class CsrfToken
 {
     protected $prefix = 'avcms_';
 
-    public function checkToken($token, $request = null)
+    public function checkToken($token)
     {
         if (isset($_COOKIE[$this->prefix.'csrf_token']) && $token === $_COOKIE[$this->prefix.'csrf_token']) {
             return true;
