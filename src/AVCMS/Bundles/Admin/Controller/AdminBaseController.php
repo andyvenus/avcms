@@ -211,10 +211,11 @@ abstract class AdminBaseController extends Controller
      * Handle toggling one or more items published
      *
      * @param Request $request
-     * @param ContentModel $model
+     * @param Model $model
+     * @param string $column
      * @return JsonResponse
      */
-    protected function handleTogglePublished(Request $request, ContentModel $model)
+    protected function handleTogglePublished(Request $request, Model $model, $column = 'published')
     {
         if ($this->checkCsrfToken($request) === false) {
             return $this->invalidCsrfTokenJsonResponse();
@@ -233,10 +234,10 @@ abstract class AdminBaseController extends Controller
                 $filteredIds[] = intval($id);
             }
 
-            $model->setPublished($filteredIds, $published);
+            $model->query()->whereIn('id', $filteredIds)->update([$column => $published]);
         }
         else if ($request->request->has('id')) {
-            $model->setPublished($request->request->get('id'), $published);
+            $model->query()->where('id', $request->request->get('id'))->update([$column => $published]);
         }
         else {
             return new JsonResponse(array('success' => 0));
