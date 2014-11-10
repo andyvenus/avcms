@@ -45,12 +45,18 @@ class MenuManager
         $this->itemsModel->save($menuItem);
     }
 
-    public function getMenuItems($menuId)
+    public function getMenuItems($menuId, $showDisabled = false)
     {
+        $query = $this->itemsModel->query()->where('menu', $menuId)->orderBy('order');
+
+        if ($showDisabled === false) {
+            $query->where('enabled', '1');
+        }
+
         /**
          * @var $items object[]
          */
-        $items =  $this->itemsModel->query()->where('menu', $menuId)->orderBy('order')->get();
+        $items =  $query->get();
         $childItems = $sortedItems = array();
 
         foreach ($items as $item) {

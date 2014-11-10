@@ -291,6 +291,11 @@ avcms.browser = {
     togglePublishedButton: function() {
         var button = $(this);
         var id = button.parents('[data-id]').data('id');
+
+        if (id == undefined) {
+            id = button.parents('[data-item-id]').data('item-id');
+        }
+
         $(this).children('.glyphicon').toggleClass("glyphicon-eye-open glyphicon-eye-close");
         $(this).toggleClass("btn-default btn-danger");
 
@@ -301,6 +306,8 @@ avcms.browser = {
         else {
             published = 1;
         }
+
+        console.log(id);
 
         $.ajax({
             type: "POST",

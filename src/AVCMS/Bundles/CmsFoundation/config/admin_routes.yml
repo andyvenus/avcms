@@ -42,6 +42,10 @@ menus_admin_delete_item:
   path: /menus/delete-item
   defaults: { _controller: CmsFoundation::MenusAdminController::deleteMenuItemAction }
 
+toggle_menu_item_enabled:
+  path: /menus/publish
+  defaults: { _controller: CmsFoundation::MenusAdminController::toggleMenuItemEnabledAction }
+
 modules_admin_edit:
     path:     /modules/edit/{id}
     defaults: { _controller: 'CmsFoundation::ModulesAdminController::manageSelectedModuleAction' }

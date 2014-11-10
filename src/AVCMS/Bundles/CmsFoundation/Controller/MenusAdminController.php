@@ -99,7 +99,7 @@ class MenusAdminController extends AdminBaseController
             throw $this->createNotFoundException('Menu Not Found');
         }
 
-        $menu_items = $menuManager->getMenuItems($menu->getId());
+        $menu_items = $menuManager->getMenuItems($menu->getId(), true);
 
         return new Response($this->renderAdminSection('@Admin/manage_menu_items.twig', $request->get('ajax_depth'), array(
             'item' => $menu,
@@ -174,5 +174,10 @@ class MenusAdminController extends AdminBaseController
         }
 
         return new JsonResponse(array('success' => true));
+    }
+
+    public function toggleMenuItemEnabledAction(Request $request)
+    {
+        return $this->handleTogglePublished($request, $this->menuItems, 'enabled');
     }
 }
