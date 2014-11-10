@@ -7,6 +7,12 @@
 
 namespace AV\Form;
 
+/**
+ * Class FormBlueprint
+ * @package AV\Form
+ *
+ * Create a blueprint of a form that can be built and handled by the FormHandler
+ */
 class FormBlueprint implements FormBlueprintInterface
 {
     /**

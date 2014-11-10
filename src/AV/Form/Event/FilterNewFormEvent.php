@@ -8,10 +8,26 @@
 namespace AV\Form\Event;
 
 use AV\Form\FormBlueprintInterface;
+use AV\Form\FormViewInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 class FilterNewFormEvent extends Event
 {
+    /**
+     * @var FormBlueprintInterface
+     */
+    protected $formBlueprint;
+
+    /**
+     * @var FormViewInterface
+     */
+    protected $formView;
+
+    /**
+     * @var mixed
+     */
+    protected $validator;
+
     public function __construct(FormBlueprintInterface $formBlueprint, $formView, $validator)
     {
         $this->formBlueprint = $formBlueprint;
@@ -19,6 +35,9 @@ class FilterNewFormEvent extends Event
         $this->validator = $validator;
     }
 
+    /**
+     * @return FormBlueprintInterface
+     */
     public function getFormBlueprint()
     {
         return $this->formBlueprint;
@@ -30,7 +49,7 @@ class FilterNewFormEvent extends Event
     }
 
     /**
-     * @return mixed
+     * @return FormViewInterface|mixed
      */
     public function getFormView()
     {
@@ -38,7 +57,7 @@ class FilterNewFormEvent extends Event
     }
 
     /**
-     * @param mixed $formView
+     * @param FormViewInterface|mixed $formView
      */
     public function setFormView($formView)
     {

@@ -7,8 +7,8 @@
 
 namespace AV\Form\Transformer;
 
-
-interface TransformerInterface {
+interface TransformerInterface
+{
     public function getId();
 
     public function toForm($value);

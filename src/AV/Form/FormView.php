@@ -10,6 +10,12 @@ namespace AV\Form;
 use AV\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Translation\TranslatorInterface;
 
+/**
+ * Class FormView
+ * @package AV\Form
+ *
+ * Holds form data ready for the view and provides helper methods
+ */
 class FormView implements FormViewInterface
 {
     /**
