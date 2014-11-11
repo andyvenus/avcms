@@ -14,7 +14,7 @@ use Symfony\Component\Translation\Translator as TranslatorBase;
 class Translator extends TranslatorBase
 {
 
-    protected $translated_strings = array();
+    protected $translatedStrings = array();
 
     protected $debug;
 
@@ -58,7 +58,7 @@ class Translator extends TranslatorBase
         $translation = strtr($raw_translation, $params);
 
         if ($this->debug === true) {
-            $this->translated_strings[$id] = array(
+            $this->translatedStrings[$id] = array(
                 'raw' => $id,
                 'translation' => $translation,
                 'raw_translation' => $raw_translation,
@@ -71,7 +71,7 @@ class Translator extends TranslatorBase
 
     public function getTranslationStrings()
     {
-        return $this->translated_strings;
+        return $this->translatedStrings;
     }
 
     public function loadTranslationsFromDir($format, $dir, $fileExtension)
