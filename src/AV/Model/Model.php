@@ -327,4 +327,9 @@ abstract class Model implements ModelInterface {
     {
         return $this->query()->get();
     }
+
+    public function newest($amount)
+    {
+        return $this->query()->limit($amount)->get();
+    }
 }

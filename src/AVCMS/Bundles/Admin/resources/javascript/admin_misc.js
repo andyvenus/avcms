@@ -35,12 +35,28 @@ $(document).ready(function() {
             defaultDate: new Date()
         });
 
-        $("[name='tags']").select2({
-            tags:[],
-            tokenSeparators: [","],
-            width: '100%'
-        });
+        var tags_field = $("[name='tags']");
 
+        if (tags_field.length > 0) {
+            tags_field.select2({
+                tags: [],
+                tokenSeparators: [","],
+                width: '100%'
+            });
+
+            if (avcms.misc.tagsCache === null) {
+                $.post(avcms.config.site_url+'tags/suggestions', null, function(data) {
+                    avcms.misc.tagsCache = data;
+
+                    tags_field.select2({
+                        tags: avcms.misc.tagsCache,
+                        tokenSeparators: [","],
+                        width: '100%'
+                    });
+
+                }, 'json');
+            }
+        }
     });
 
     var body = $('body');
@@ -68,6 +84,7 @@ $(document).ready(function() {
 avcms.misc = {
     typingTimer: null,
     slugInput: null,
+    tagsCache: null,
 
     autoGenerateSlug: function() {
         var input_field = avcms.misc.slugInput;

@@ -1,0 +1,3 @@
+tag_suggestions:
+  path: /tags/suggestions
+  defaults: { _controller: Tags::TagSuggestionsController::tagSuggestionsAction }
