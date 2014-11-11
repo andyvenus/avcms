@@ -4,11 +4,21 @@
         {% for report in reports %}
             <div class="panel panel-default" data-id="{{ report.id }}">
                 <div class="panel-heading">
-                    <a href="{{ url('users_admin_edit', {id: report.senderUserId}) }}">{{ report.sender_user.username }}</a> {% trans %}reported{% endtrans %}
-                    {% if report.content.url or report.content.title %}
-                        <a href="{{ report.content.url }}">{{ report.content.title }}</a> by
+                    {% if report.senderUserId != null %}
+                        <a href="{{ url('users_admin_edit', {id: report.senderUserId}) }}">{{ report.sender_user.username }}</a>
+                    {% else %}
+                        Anonymous
                     {% endif %}
-                     <a href="{{ url('users_admin_edit', {id: report.reportedUserId}) }}">{{ report.reported_user.username }}</a>
+
+                     {% trans %}reported{% endtrans %}
+                    {% if report.content.url or report.content.title %}
+                        <a href="{{ report.content.url }}">{{ report.content.title }}</a> {% trans %}by{% endtrans %}
+                    {% endif %}
+                    {% if report.reportedUserId != null %}
+                        <a href="{{ url('users_admin_edit', {id: report.reportedUserId}) }}">{{ report.reported_user.username }}</a>
+                    {% else %}
+                        Unknown
+                    {% endif %}
                     - {{ report.date|date(settings.date_format) }}
                     <div class="pull-right">
                         <button class="btn btn-danger btn-xs avcms-delete-item" data-delete-url="{{ url('delete_reports') }}"><span class="glyphicon glyphicon-remove"></span></button>
