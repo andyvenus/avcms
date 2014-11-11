@@ -11,8 +11,11 @@ services:
 
 permissions:
   ADMIN_REPORTS:
-    name: Manage Reports
-    description: Ability to view & manage reports
+      name: Manage Reports
+      description: Ability to view & manage reports
+  PERM_SEND_REPORTS:
+      name: Send Reports
+      description: Allows users to report site content like comments
 
 assets:
   avcms_reports.js:

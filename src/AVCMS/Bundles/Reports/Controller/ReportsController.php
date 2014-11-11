@@ -31,6 +31,10 @@ class ReportsController extends Controller
 
     public function submitReportAction(Request $request)
     {
+        if (!$this->isGranted('PERM_SEND_REPORTS')) {
+            return new JsonResponse(['success' => false]);
+        }
+
         $reportTypes = $this->container->get('report_types_manager');
 
         $contentType = $request->get('content_type');
