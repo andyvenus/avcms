@@ -10,7 +10,7 @@ $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
             options.data = options.data + '&';
         }
 
-        var csrf_token = avcms.general.getCookie('avcms_csrf_token');
+        var csrf_token = avcms.general.getCookie('av_csrf_token');
 
         options.data = options.data + '_csrf_token='+encodeURIComponent(csrf_token);
     }
