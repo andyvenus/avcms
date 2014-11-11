@@ -5,15 +5,15 @@
 {% block content %}
     {% block blog_post %}
         <article class="blog-post-container">
-            <h2>{{ post.title }} <small>by {{ post.user.username }}</small></h2>
-
-            {% for tag in post.tags %}
-                <a class="btn btn-default btn-xs" href="{{ url('blog_archive', {tags: tag.name}) }}">{{ tag.name }}</a>
-            {% endfor %}
+            <h2>{{ post.title }}</h2>
+            <p>{{ user_info(post.user) }}</p>
 
             <p>{{ post.body|raw }}</p>
 
             <a class="btn btn-link btn-sm" href="{{ url('blog_edit_post', { id: post.id}) }}"><span class="glyphicon glyphicon-edit"></span> Edit Post</a>
+            {% for tag in post.tags %}
+                <a class="btn btn-default btn-xs" href="{{ url('blog_archive', {tags: tag.name}) }}">{{ tag.name }}</a>
+            {% endfor %}
         </article>
     {% endblock %}
 

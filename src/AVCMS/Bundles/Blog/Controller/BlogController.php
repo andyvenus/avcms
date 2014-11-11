@@ -29,7 +29,7 @@ class BlogController extends Controller
         $allPosts = $finder->published()
             ->setResultsPerPage(10)
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'tags' => null))
-            ->join($this->model($this->bundle->model->users), ['username'])
+            ->join($this->model($this->bundle->model->users), ['id', 'username', 'slug', 'avatar'])
             ->get();
 
         return new Response($this->render('@Blog/blog_home.twig', array('posts' => $allPosts, 'total_pages' => $finder->getTotalPages(), 'current_page' => $finder->getCurrentPage())));
@@ -40,7 +40,7 @@ class BlogController extends Controller
         $post = $this->posts->find()
             ->slug($request->get('slug'))
             ->published()
-            ->join($this->model($this->bundle->model->users), ['username'])
+            ->join($this->model($this->bundle->model->users), ['id', 'username', 'slug', 'avatar'])
             ->first();
 
         if (!$post) {
