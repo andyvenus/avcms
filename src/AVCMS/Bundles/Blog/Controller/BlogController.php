@@ -7,14 +7,9 @@
 
 namespace AVCMS\Bundles\Blog\Controller;
 
-use AVCMS\Bundles\Blog\Finder\BlogPostsFinder;
 use AVCMS\Core\Controller\Controller;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Config\Loader\DelegatingLoader;
-use Symfony\Component\Config\Loader\LoaderResolver;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Yaml\Yaml;
 
 class BlogController extends Controller
 {
