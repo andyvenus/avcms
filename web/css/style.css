@@ -37,3 +37,14 @@ select[name=author] {
   .main-menu .navbar-nav > .open > a, .main-menu .navbar-nav > .open > a:hover, .main-menu .navbar-nav > .open > a:focus {
     background-color: #5a4dae;
     color: white; }
+
+.loader {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: white;
+  border-radius: 5px;
+  padding: 0px 6px 2px 6px;
+  margin: 10px 10px 0px 0px;
+  box-shadow: #595959 0px 0px 1px;
+  display: none; }

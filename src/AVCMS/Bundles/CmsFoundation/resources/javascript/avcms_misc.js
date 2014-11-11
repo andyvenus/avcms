@@ -32,5 +32,13 @@ avcms.general = {
         if (form.parents('.modal').length == 1) {
             $('#formModal').modal('hide');
         }
+    },
+
+    mainLoaderOn: function() {
+        $('.loader').fadeIn(500);
+    },
+
+    mainLoaderOff: function() {
+        $('.loader').fadeOut(500);
     }
 };
