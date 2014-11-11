@@ -1,5 +1,8 @@
 name: Installer
 namespace: AVCMS\Bundles\Installer
 
+require:
+  - Framework
+
 services:
   - InstallerServices

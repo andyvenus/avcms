@@ -2,10 +2,12 @@ name: Blog
 namespace: AVCMS\Bundles\Blog
 
 require:
+  - Framework
   - Admin
   - CmsFoundation
   - Users
   - Comments
+  - Tags
 
 model:
   posts: Posts

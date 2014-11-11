@@ -1,5 +1,8 @@
 name: Twig
 namespace: AV\Bundles\Twig
 
+require:
+  - Framework
+
 services:
  - TwigServices

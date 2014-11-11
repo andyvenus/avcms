@@ -1,6 +1,10 @@
 name: Users
 namespace: AVCMS\Bundles\Users
 
+require:
+  - Framework
+  - CmsFoundation
+
 services:
   - UserServices
   - UserTwigServices

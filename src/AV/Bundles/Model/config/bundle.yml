@@ -1,6 +1,9 @@
 name: Model
 namespace: AV\Bundles\Model
 
+require:
+  - Framework
+
 services:
  - DatabaseServices
 

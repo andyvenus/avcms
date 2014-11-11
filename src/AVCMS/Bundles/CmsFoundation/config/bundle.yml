@@ -3,6 +3,9 @@ namespace: AVCMS\Bundles\CmsFoundation
 
 core: true
 
+require:
+  - Framework
+
 services:
   - SettingsServices
   - TemplateServices

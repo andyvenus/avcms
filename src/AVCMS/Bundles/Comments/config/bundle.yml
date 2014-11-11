@@ -1,6 +1,12 @@
 name: Comments
 namespace: AVCMS\Bundles\Comments
 
+require:
+  - Users
+  - Admin
+  - CmsFoundation
+  - Framework
+
 services:
   - CommentServices
 

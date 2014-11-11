@@ -1,6 +1,11 @@
 name: CkEditor
 namespace: AVCMS\Bundles\CkEditor
 
+require:
+  - Framework
+  - CmsFoundation
+  - Admin
+
 assets:
   ckeditor/ckeditor.js:
     env: admin

@@ -46,6 +46,7 @@ class BundleBuilderController extends BundleBaseController
                 $yaml = $form->getData();
                 unset($yaml['location'], $yaml['_csrf_token']);
                 $yaml['namespace'] .= '\\'.ucfirst($yaml['name']);
+                $yaml['require'] = array('Framework');
 
                 file_put_contents($bundle_location.'/config/bundle.yml', Yaml::dump($yaml));
                 file_put_contents($bundle_location.'/config/routes.yml', '');

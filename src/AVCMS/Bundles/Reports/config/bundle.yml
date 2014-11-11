@@ -1,6 +1,11 @@
 name: Reports
 namespace: AVCMS\Bundles\Reports
 
+require:
+  - Framework
+  - CmsFoundation
+  - Users
+
 services:
   - ReportsServices
 

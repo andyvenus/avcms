@@ -1,6 +1,10 @@
 name: Assets
 namespace: AVCMS\Bundles\Assets
 
+require:
+  - Framework
+  - CmsFoundation
+
 services:
   - AssetServices
 

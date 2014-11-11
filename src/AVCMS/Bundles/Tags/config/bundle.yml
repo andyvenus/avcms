@@ -1,5 +1,9 @@
 name: Tags
 namespace: AVCMS\Bundles\Tags
 
+require:
+  - Framework
+  - CmsFoundation
+
 services:
   - TagsServices

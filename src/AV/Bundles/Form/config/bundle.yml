@@ -1,6 +1,9 @@
 name: Form
 namespace: AV\Bundles\Form
 
+require:
+  - Framework
+
 services:
  - FormServices
 

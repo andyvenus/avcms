@@ -1,5 +1,8 @@
 name: Translation
 namespace: AV\Bundles\Translation
 
+require:
+  - Framework
+
 services:
   - TranslationServices

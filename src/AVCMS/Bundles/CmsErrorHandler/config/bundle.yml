@@ -1,6 +1,10 @@
 name: ErrorHandler
 namespace: AVCMS\Bundles\CmsErrorHandler
 
+require:
+  - Framework
+  - CmsFoundation
+
 services:
   - ErrorHandlerServices
 

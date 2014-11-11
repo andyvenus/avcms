@@ -5,6 +5,7 @@ require:
   - Framework
   - CmsFoundation
   - Users
+  - Assets
 
 assets:
   select2.min.js:
