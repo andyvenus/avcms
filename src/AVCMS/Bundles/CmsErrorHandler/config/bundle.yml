@@ -1,0 +1,8 @@
+name: ErrorHandler
+namespace: AVCMS\Bundles\CmsErrorHandler
+
+services:
+  - ErrorHandlerServices
+
+container_params:
+  error_controller: AVCMS\Bundles\CmsErrorHandler\Controller\ErrorController::exceptionAction
