@@ -40,7 +40,7 @@ class Comments extends Model
             $query->offset($start)->limit($perPage);
         }
 
-        $query->modelJoin($usersModel, ['username', 'slug']);
+        $query->modelJoin($usersModel, ['id', 'username', 'slug', 'avatar']);
 
         return $query->get();
     }

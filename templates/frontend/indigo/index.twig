@@ -33,7 +33,7 @@
         <div class="row">
             <div class="col-md-4">
                 {% if user.loggedIn %}
-                    Hello <strong><a href="{{ url('user_profile', {slug: user.slug}) }}">{{ user.username }}</a></strong>
+                    {{ user_info(user) }}
                     - <a href="{{ url('logout') }}">{% trans %}Logout{% endtrans %}</a>
                     {% if is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']) %}
                         | <a href="{{ url('admin_dashboard') }}">{% trans %}Admin{% endtrans %}</a>

@@ -1,7 +1,7 @@
 {% for comment in comments %}
     <div class="panel panel-default comment" data-id="{{ comment.id }}">
         <div class="panel-heading">
-            <a href="{{ url('user_profile', {slug: comment.user.slug}) }}">{{ comment.user.username }}</a> - {{ comment.date|date(settings.date_format) }}
+            {{ user_info(comment.user) }} - {{ comment.date|date(settings.date_format) }}
 
             <div class="pull-right">
                 <button class="btn btn-default btn-xs" data-report-button data-user-id="{{ comment.userId }}" data-content-type="comments" data-content-id="{{ comment.id }}">{% trans %}Report{% endtrans %}</button>

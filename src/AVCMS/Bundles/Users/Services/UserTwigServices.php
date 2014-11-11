@@ -24,5 +24,9 @@ class UserTwigServices implements ServicesInterface
             ->setArguments(['%avatar_path%', new Reference('request.stack')])
             ->addTag('twig.extension')
         ;
+
+        $container->register('twig.user_info_extension', 'AVCMS\Bundles\Users\TwigExtension\UserInfoTwigExtension')
+            ->addTag('twig.extension')
+        ;
     }
 }
