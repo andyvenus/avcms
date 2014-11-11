@@ -26,3 +26,5 @@ CkEditor:
     enabled: true
 Reports:
     enabled: true
+CmsErrorHandler:
+    enabled: true

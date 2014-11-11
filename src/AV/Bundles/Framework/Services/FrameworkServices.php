@@ -46,10 +46,6 @@ class FrameworkServices implements ServicesInterface
             ->setArguments(array('UTF-8'))
             ->addTag('event.subscriber')
         ;
-        $container->register('listener.exception', 'Symfony\Component\HttpKernel\EventListener\ExceptionListener')
-            ->setArguments(array('AVCMS\\Core\\Controller\\ErrorController::exceptionAction'))
-            ->addTag('event.subscriber')
-        ;
 
         $container->register('request_matcher', 'Symfony\Component\HttpFoundation\RequestMatcher');
 

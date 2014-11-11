@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Error: {{ error.message }}</title>
+        <title>Error{% if dev_mode %}: {{ error.message }}{% endif %}</title>
 
         <style type="text/css">
             body {
@@ -47,7 +47,9 @@
 
 
             <div class="error-message">
-                {{ error.message }}
+                {% if dev_mode %}
+                    {{ error.message }}
+                {% endif %}
             </div>
 
             <div class="error-home-link">
