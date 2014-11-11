@@ -40,5 +40,9 @@ avcms.general = {
 
     mainLoaderOff: function() {
         $('.loader').fadeOut(500);
+    },
+
+    trans: function(translation_string) {
+        return translation_string;
     }
 };
