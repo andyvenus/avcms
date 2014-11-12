@@ -18,13 +18,13 @@ class ErrorController extends Controller
         if($exception->getClass() == 'Symfony\Component\Security\Core\Exception\AccessDeniedException') {
             return new Response($this->render('@CmsErrorHandler/error.twig', array('dev_mode' => $this->container->getParameter('dev_mode'), 'error' => $exception, 'code' => 403)), 403);
         }
-        elseif ($this->container->getParameter('dev_mode') === true) {
+        elseif ($this->container->getParameter('dev_mode') === true && $exception->getStatusCode() !== 404) {
             $whoops = new \Whoops\Run;
             $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
             $whoops->register();
         }
         else {
-            return new Response($this->render('@CmsErrorHandler/error.twig', array('dev_mode' => $this->container->getParameter('dev_mode'), 'error' => $exception, 'code' => 500)), 500);
+            return new Response($this->render('@CmsErrorHandler/error.twig', array('dev_mode' => $this->container->getParameter('dev_mode'), 'error' => $exception, 'code' => $exception->getStatusCode())), $exception->getStatusCode());
         }
     }
 }
