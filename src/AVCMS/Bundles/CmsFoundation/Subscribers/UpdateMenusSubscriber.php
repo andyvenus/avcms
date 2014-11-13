@@ -42,6 +42,14 @@ class UpdateMenusSubscriber implements EventSubscriberInterface
                             $menuItem->setId($itemId);
                             $menuItem->setOwner($bundle->name);
 
+                            // In case someone has used true/false for the translatable parameter
+                            if ($menuItemConfig['translatable']) {
+                                $menuItem->setTranslatable(1);
+                            }
+                            else {
+                                $menuItem->setTranslatable(0);
+                            }
+
                             $this->menuManager->saveMenuItem($menuItem);
                         }
                     }

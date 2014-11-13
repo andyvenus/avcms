@@ -12,6 +12,7 @@ use AV\Model\Model;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class MenuManager
 {
@@ -29,14 +30,23 @@ class MenuManager
      */
     protected $urlGenerator;
 
+    /**
+     * @var SecurityContextInterface
+     */
     protected $securityContext;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator, Model $menusModel, Model $itemsModel, SecurityContextInterface $securityContext)
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
+    public function __construct(UrlGeneratorInterface $urlGenerator, Model $menusModel, Model $itemsModel, SecurityContextInterface $securityContext, TranslatorInterface $translator)
     {
         $this->urlGenerator = $urlGenerator;
         $this->model = $menusModel;
         $this->itemsModel = $itemsModel;
         $this->securityContext = $securityContext;
+        $this->translator = $translator;
     }
 
     public function getModel()
@@ -74,6 +84,10 @@ class MenuManager
                 if (!$this->securityContext->isGranted($permissions)) {
                     continue;
                 }
+            }
+
+            if ($item->getTranslatable()) {
+                $item->setLabel($this->translator->trans($item->getLabel()));
             }
 
             $item->children = array();

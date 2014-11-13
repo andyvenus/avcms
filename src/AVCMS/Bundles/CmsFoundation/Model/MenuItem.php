@@ -8,19 +8,14 @@ class MenuItem extends Entity
 {
     protected $url;
 
-    public function getEnabled()
-    {
-        return $this->get("enabled");
-    }
-
     public function setEnabled($value)
     {
         $this->set("enabled", $value);
     }
 
-    public function getIcon()
+    public function getEnabled()
     {
-        return $this->get("icon");
+        return $this->get("enabled");
     }
 
     public function setIcon($value)
@@ -28,9 +23,9 @@ class MenuItem extends Entity
         $this->set("icon", $value);
     }
 
-    public function getId()
+    public function getIcon()
     {
-        return $this->get("id");
+        return $this->get("icon");
     }
 
     public function setId($value)
@@ -38,14 +33,19 @@ class MenuItem extends Entity
         $this->set("id", $value);
     }
 
-    public function setLabel($value)
+    public function getId()
     {
-        $this->set("label", $value);
+        return $this->get("id");
     }
 
     public function getLabel()
     {
         return $this->get("label");
+    }
+
+    public function setLabel($value)
+    {
+        $this->set("label", $value);
     }
 
     public function setMenu($value)
@@ -58,24 +58,24 @@ class MenuItem extends Entity
         return $this->get("menu");
     }
 
-    public function setOrder($value)
-    {
-        $this->set("order", $value);
-    }
-
     public function getOrder()
     {
         return $this->get("order");
     }
 
-    public function getOwner()
+    public function setOrder($value)
     {
-        return $this->get("owner");
+        $this->set("order", $value);
     }
 
     public function setOwner($value)
     {
         $this->set("owner", $value);
+    }
+
+    public function getOwner()
+    {
+        return $this->get("owner");
     }
 
     public function setParent($value)
@@ -88,19 +88,14 @@ class MenuItem extends Entity
         return $this->get("parent");
     }
 
-    public function getPermission()
-    {
-        return $this->get("permission");
-    }
-
     public function setPermission($value)
     {
         $this->set("permission", $value);
     }
 
-    public function setTarget($value)
+    public function getPermission()
     {
-        $this->set("target", $value);
+        return $this->get("permission");
     }
 
     public function getTarget()
@@ -108,14 +103,29 @@ class MenuItem extends Entity
         return $this->get("target");
     }
 
-    public function setType($value)
+    public function setTarget($value)
     {
-        $this->set("type", $value);
+        $this->set("target", $value);
+    }
+
+    public function getTranslatable()
+    {
+        return $this->get("translatable");
+    }
+
+    public function setTranslatable($value)
+    {
+        $this->set("translatable", $value);
     }
 
     public function getType()
     {
         return $this->get("type");
+    }
+
+    public function setType($value)
+    {
+        $this->set("type", $value);
     }
 
     public function setUrl($url)
