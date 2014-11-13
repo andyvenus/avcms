@@ -14,19 +14,31 @@ class EditProfileForm extends FormBlueprint
     public function __construct()
     {
         $this->add('location', 'text', [
-            'label' => 'Location'
+            'label' => 'Location',
+            'validation' => [
+                ['rule' => 'Length', 'arguments' => [null, 50]]
+            ]
         ]);
 
         $this->add('interests', 'textarea', [
-            'label' => 'Interests'
+            'label' => 'Interests',
+            'validation' => [
+                ['rule' => 'Length', 'arguments' => [null, 300]]
+            ]
         ]);
 
-        $this->add('about_me', 'textarea', [
-            'label' => 'About Me'
+        $this->add('about', 'textarea', [
+            'label' => 'About Me',
+            'validation' => [
+                ['rule' => 'Length', 'arguments' => [null, 300]]
+            ]
         ]);
 
         $this->add('website', 'text', [
-            'label' => 'Website'
+            'label' => 'Website',
+            'validation' => [
+                ['rule' => 'Length', 'arguments' => [null, 100]]
+            ]
         ]);
 
         $this->add('avatar_file', 'file', [
