@@ -11,6 +11,7 @@ use AVCMS\Bundles\CmsFoundation\Model\MenuItem;
 use AV\Model\Model;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class MenuManager
 {
@@ -23,11 +24,19 @@ class MenuManager
      */
     protected $itemsModel;
 
-    public function __construct(UrlGeneratorInterface $url_generator, Model $menusModel, Model $itemsModel)
+    /**
+     * @var UrlGeneratorInterface
+     */
+    protected $urlGenerator;
+
+    protected $securityContext;
+
+    public function __construct(UrlGeneratorInterface $urlGenerator, Model $menusModel, Model $itemsModel, SecurityContextInterface $securityContext)
     {
-        $this->urlGenerator = $url_generator;
+        $this->urlGenerator = $urlGenerator;
         $this->model = $menusModel;
         $this->itemsModel = $itemsModel;
+        $this->securityContext = $securityContext;
     }
 
     public function getModel()
@@ -60,6 +69,13 @@ class MenuManager
         $childItems = $sortedItems = array();
 
         foreach ($items as $item) {
+            if ($item->getPermission()) {
+                $permissions = explode(',', str_replace(' ', '', $item->getPermission()));
+                if (!$this->securityContext->isGranted($permissions)) {
+                    continue;
+                }
+            }
+
             $item->children = array();
 
             if ($item->getParent()) {
