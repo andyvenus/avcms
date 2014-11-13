@@ -1,0 +1,3 @@
+javascript_translations:
+  path: /translationsjs.js
+  defaults: { _controller: CmsFoundation::JavascriptTranslationsController::javascriptTranslationsAction }

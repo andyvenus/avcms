@@ -18,7 +18,7 @@ class TranslationServices implements ServicesInterface
         $container->register('translator', 'AVCMS\Core\Translation\Translator')
             ->setArguments(array(new Reference('settings_manager'), new Reference('translator.message_selector'), '%dev_mode%'))
             ->addMethodCall('addLoader', array('php', new Reference('translator.loader.php')))
-            ->addMethodCall('loadTranslationsFromDir', ['php', '%root_dir%/webmaster/translations', 'php'])
+            ->addMethodCall('loadTranslationsFromDirs', ['php', '%root_dir%/webmaster/translations', 'php'])
         ;
 
         $container->register('translator.message_selector', 'Symfony\Component\Translation\MessageSelector');

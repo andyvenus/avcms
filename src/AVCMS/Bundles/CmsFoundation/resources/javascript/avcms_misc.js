@@ -43,6 +43,11 @@ avcms.general = {
     },
 
     trans: function(translation_string) {
-        return translation_string;
+        if (avcms.translations[translation_string] == undefined) {
+            return translation_string;
+        }
+        else {
+            return avcms.translations[translation_string];
+        }
     }
 };

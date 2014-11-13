@@ -74,7 +74,24 @@ class Translator extends TranslatorBase
         return $this->translatedStrings;
     }
 
-    public function loadTranslationsFromDir($format, $dir, $fileExtension)
+    public function getMessages($domain = null, $locale = null)
+    {
+        if ($locale === null) {
+            $locale = $this->getLocale();
+        }
+
+        if ($domain === null) {
+            $domain = 'messages';
+        }
+
+        if (!isset($this->catalogues[$locale])) {
+            $this->loadCatalogue($locale);
+        }
+
+        return $this->catalogues[$locale]->all($domain);
+    }
+
+    public function loadTranslationsFromDirs($format, $dir, $fileExtension)
     {
         $langFolders = new \DirectoryIterator($dir);
         foreach ($langFolders as $langFolder) {
@@ -83,14 +100,26 @@ class Translator extends TranslatorBase
             }
 
             if ($langFolder->isDir()) {
-                $translations = new \DirectoryIterator($langFolder->getRealPath());
-                foreach ($translations as $translation) {
-                    if ($translation->getExtension() == $fileExtension) {
-                        $this->addResource($format, $translation->getRealPath(), $langFolder->getFilename());
-                    }
-                }
+                $this->loadTranslationsFromDir($format, $langFolder, $fileExtension);
+            }
+
+            if (file_exists($langFolder->getRealPath().'/javascript')) {
+                $this->loadTranslationsFromDir($format, new \SplFileInfo($langFolder->getRealPath().'/javascript'), $fileExtension, 'javascript', $langFolder->getFilename());
             }
         }
+    }
 
+    protected function loadTranslationsFromDir($format, \SplFileInfo $langFolder, $fileExtension, $domain = null, $locale = null)
+    {
+        if ($locale === null) {
+            $locale = $langFolder->getFilename();
+        }
+
+        $translations = new \DirectoryIterator($langFolder->getRealPath());
+        foreach ($translations as $translation) {
+            if ($translation->getExtension() == $fileExtension) {
+                $this->addResource($format, $translation->getRealPath(), $locale, $domain);
+            }
+        }
     }
 } 
