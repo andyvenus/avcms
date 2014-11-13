@@ -1,0 +1,13 @@
+{% if total_reports > 0 %}
+    <div style="font-size: 55px">{{ total_reports }}</div>
+{% endif %}
+
+<p>
+{% transchoice total_reports %}
+    {0} There are no new reports|{1} There is one new report|]1,Inf] There are %count% new reports
+{% endtranschoice %}
+</p>
+
+{% if total_reports > 0 %}
+    <a href="{{ url('manage_reports') }}" class="btn btn-default btn-sm">{% trans %}Manage Reports{% endtrans %}</a>
+{% endif %}

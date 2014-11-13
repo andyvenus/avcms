@@ -21,6 +21,15 @@ assets:
   avcms_reports.js:
     env: frontend
 
+modules:
+  reports:
+      name: Reports Info
+      description: Info about current reports sent to the admin
+      controller: Reports::ReportsModuleController::reportsAdminModule
+      cachable: false
+      accepted_template_types: [panel, none]
+      type: admin
+
 menu_items:
   admin:
     admin_reports:
