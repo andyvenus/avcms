@@ -63,6 +63,7 @@ menu_items:
       icon: glyphicon glyphicon-pencil
       type: route
       label: Blog
+      permission: ADMIN_BLOG
 
 permissions:
   ADMIN_BLOG:
