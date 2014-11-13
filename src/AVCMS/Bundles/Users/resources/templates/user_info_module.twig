@@ -1,0 +1,13 @@
+{% if user.location %}
+    <p><strong>{% trans %}Location{% endtrans %}:</strong> {{ user.location }}</p>
+{% endif %}
+
+{% if user.interests %}
+    <p><strong>{% trans %}Interests{% endtrans %}:</strong><br />
+    {{ user.interests }}</p>
+{% endif %}
+
+{% if user.about %}
+    <p><strong>{% trans %}About{% endtrans %}:</strong><br />
+    {{ user.about }}</p>
+{% endif %}

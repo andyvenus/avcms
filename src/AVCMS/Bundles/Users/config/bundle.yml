@@ -54,14 +54,12 @@ module_positions:
     global_modules: 1
 
 modules:
-  users_example:
-    name: Users Example
-    description: Just a test
-    controller: Users::UserModulesController::exampleUserModuleAction
+  user_info:
+    name: User Info
+    description: Displays user info like location and 'About Me'
+    controller: Users::UserModulesController::userInfoModule
     type: user
-    cachable: true
-    cache_id_vars: [user]
-    default_cache_time: 600
+    cachable: false
 
 menu_items:
   admin:

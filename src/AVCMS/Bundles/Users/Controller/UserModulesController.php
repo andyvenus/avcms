@@ -13,8 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserModulesController extends Controller
 {
-    public function exampleUserModuleAction(User $user)
+    public function userInfoModule(User $user)
     {
-        return new Response($user->getUsername());
+        return new Response($this->render('@Users/user_info_module.twig', ['user' => $user]));
     }
 } 
