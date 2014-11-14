@@ -647,16 +647,21 @@ class FormHandler
     /**
      * Check each field to see if they're required. If they have no data set, assign the error
      * @param null $fields
+     * @param null $data
      */
-    protected function setRequiredFieldErrors($fields = null)
+    protected function setRequiredFieldErrors($fields = null, $data = null)
     {
         if ($fields === null) {
             $fields =& $this->fields;
         }
 
+        if ($data == null) {
+            $data =& $this->data;
+        }
+
         foreach ($fields as $field) {
             if (isset($field['options']['required']) && $field['options']['required'] === true) {
-                if ($this->typeHandler->allowUnsetRequest($field) === false && (!isset($this->data[ $field['name'] ]) || !$this->data[ $field['name'] ] )) {
+                if ($this->typeHandler->allowUnsetRequest($field) === false && (!isset($data[ $field['name'] ]) || !$data[ $field['name'] ] )) {
                     if (isset($field['options']['label'])) {
                         $label = $field['options']['label'];
                     }
@@ -668,7 +673,7 @@ class FormHandler
             }
 
             if (isset($field['fields'])) {
-                $this->setRequiredFieldErrors($field['fields']);
+                $this->setRequiredFieldErrors($field['fields'], $data[ $field['name'] ]);
             }
         }
     }
