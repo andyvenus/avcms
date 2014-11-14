@@ -12,6 +12,7 @@ use AVCMS\Core\Module\Exception\ModuleNotFoundException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
 use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class ModuleManager
 {
@@ -22,7 +23,21 @@ class ModuleManager
      */
     protected $providers = array();
 
-    public function __construct(FragmentHandler $fragmentHandler, ModuleConfigModelInterface $moduleModel, ModulePositionsManager $modulePositionsManager, RequestStack $requestStack, $cacheDir, $devMode = false)
+    protected $fragmentHandler;
+
+    protected $moduleModel;
+
+    protected $modulePositionsManager;
+
+    protected $requestStack;
+
+    protected $cacheDir;
+
+    protected $devMode;
+
+    protected $securityContext;
+
+    public function __construct(FragmentHandler $fragmentHandler, ModuleConfigModelInterface $moduleModel, ModulePositionsManager $modulePositionsManager, RequestStack $requestStack, SecurityContextInterface $securityContext, $cacheDir, $devMode = false)
     {
         $this->fragmentHandler = $fragmentHandler;
         $this->moduleModel = $moduleModel;
@@ -30,6 +45,7 @@ class ModuleManager
         $this->requestStack = $requestStack;
         $this->cacheDir = $cacheDir;
         $this->devMode = $devMode;
+        $this->securityContext = $securityContext;
     }
 
     public function setProvider(ModuleProviderInterface $moduleProviders)
@@ -115,16 +131,26 @@ class ModuleManager
 
     /**
      * @param $positionId
-     * @param $vars
+     * @param array $vars
      * @param bool $limitByRequest
      * @param bool $getContent
+     * @param bool $ignorePermissions
+     * @throws \Exception
      * @return \AVCMS\Bundles\CmsFoundation\Model\Module[]
      */
-    public function getPositionModules($positionId, $vars = array(), $limitByRequest = false, $getContent = true)
+    public function getPositionModules($positionId, $vars = array(), $limitByRequest = false, $getContent = true, $ignorePermissions = false)
     {
         $configs = $this->loadModuleConfigs($positionId);
 
         foreach ($configs as $configId => $moduleConfig) {
+
+            if ($ignorePermissions === false && $perms = $moduleConfig->getPermissionsArray()) {
+                if (!$this->securityContext->isGranted($perms)) {
+                    unset($configs[$configId]);
+                    continue;
+                }
+            }
+
             $routes = $moduleConfig->getLimitRoutesArray();
             
             if ($limitByRequest == true && is_array($routes) && !empty($routes)) {

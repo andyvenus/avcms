@@ -60,6 +60,11 @@ class Module
     protected $cacheIdVars;
 
     /**
+     * @var string
+     */
+    protected $permissions;
+
+    /**
      * @var array
      */
     protected $acceptedTemplateTypes = ['panel', 'none'];
@@ -227,6 +232,16 @@ class Module
     public function setCacheIdVars($cacheIdVars)
     {
         $this->cacheIdVars = $cacheIdVars;
+    }
+
+    public function getDefaultPermissions()
+    {
+        return $this->permissions;
+    }
+
+    public function setDefaultPermissions($permissions)
+    {
+        $this->permissions = $permissions;
     }
 
     public function fromArray(array $data)

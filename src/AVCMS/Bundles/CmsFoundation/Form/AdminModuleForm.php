@@ -9,10 +9,11 @@ namespace AVCMS\Bundles\CmsFoundation\Form;
 
 use AVCMS\Bundles\CmsFoundation\Form\ChoicesProvider\RouteChoicesProvider;
 use AV\Form\FormBlueprint;
+use AVCMS\Bundles\Users\Form\ChoicesProvider\PermissionsChoicesProvider;
 
 class AdminModuleForm extends FormBlueprint
 {
-    public function __construct(RouteChoicesProvider $routesProvider = null, $templateList = array(), $templateStyles = array())
+    public function __construct(RouteChoicesProvider $routesProvider = null, $templateList = array(), $templateStyles = array(), PermissionsChoicesProvider $permissionsProvider = null, $defaultPermission = null)
     {
         $this->setName('admin_module_form');
 
@@ -42,6 +43,13 @@ class AdminModuleForm extends FormBlueprint
             'label' => 'Limit to pages (leave blank for all pages)',
             'choices_provider' => $routesProvider,
             'attr' => ['multiple' => 'multiple']
+        ]);
+
+        $this->add('permissions_array[]', 'select', [
+            'label' => 'Permissions (only one needs to match for access)',
+            'choices_provider' => $permissionsProvider,
+            'attr' => ['multiple' => 'multiple'],
+            'default' => $defaultPermission
         ]);
     }
 } 

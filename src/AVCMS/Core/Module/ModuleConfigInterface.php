@@ -72,4 +72,12 @@ interface ModuleConfigInterface
     public function setTitle($value);
 
     public function getTitle();
+
+    public function setPermissions($value);
+
+    public function getPermissions();
+
+    public function setPermissionsArray($value);
+
+    public function getPermissionsArray();
 }

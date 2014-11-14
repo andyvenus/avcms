@@ -39,6 +39,7 @@ modules:
     cachable: true
     default_cache_time: 10
     accepted_template_types: [list_panel, none]
+    default_permissions: [ADMIN_BLOG]
     user_settings:
       order:
         type: select

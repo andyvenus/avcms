@@ -98,7 +98,9 @@ class ModulesAdminController extends AdminBaseController
             }
         }
 
-        $form = new AdminModuleForm(new RouteChoicesProvider($this->get('router'), 'frontend'), $templateList, $this->getTemplatesList($position, $moduleConfig->getTemplateType()));
+        $permsProvider = $this->container->get('permissions.choices_provider');
+
+        $form = new AdminModuleForm(new RouteChoicesProvider($this->get('router'), 'frontend'), $templateList, $this->getTemplatesList($position, $moduleConfig->getTemplateType()), $permsProvider, $module->getDefaultPermissions());
 
         if ($module->isCachable()) {
             $form->add('cache_time', 'text', array('label' => "Seconds until cache expires (0 for no cache)", 'default' => $module->getDefaultCacheTime()));
@@ -145,7 +147,7 @@ class ModulesAdminController extends AdminBaseController
             throw $this->createNotFoundException('Module position not found');
         }
 
-        $modules = $this->container->get('module_manager')->getPositionModules($request->get('id'), array(), false, false);
+        $modules = $this->container->get('module_manager')->getPositionModules($request->get('id'), array(), false, false, true);
 
         return new Response($this->renderAdminSection('@CmsFoundation/manage_position_modules.twig', $request->get('ajax_depth'), array(
             'item' => $position,

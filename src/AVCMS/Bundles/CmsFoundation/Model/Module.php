@@ -20,24 +20,24 @@ class Module extends Entity implements ModuleConfigInterface
         return $this->get("active");
     }
 
-    public function setCacheTime($value)
-    {
-        $this->set("cache_time", $value);
-    }
-
     public function getCacheTime()
     {
         return $this->get("cache_time");
     }
 
-    public function getContent()
+    public function setCacheTime($value)
     {
-        return $this->content;
+        $this->set("cache_time", $value);
     }
 
     public function setContent($content)
     {
         $this->content = $content;
+    }
+
+    public function getContent()
+    {
+        return $this->content;
     }
 
     public function getId()
@@ -50,14 +50,23 @@ class Module extends Entity implements ModuleConfigInterface
         $this->set("id", $value);
     }
 
+    public function getLimitRoutes()
+    {
+        return $this->get("limit_routes");
+    }
+
     public function setLimitRoutes($value)
     {
         $this->set("limit_routes", $value);
     }
 
-    public function getLimitRoutes()
+    public function setLimitRoutesArray($value)
     {
-        return $this->get("limit_routes");
+        if (is_array($value)) {
+            $value = implode(',', $value);
+        }
+
+        $this->setLimitRoutes($value);
     }
 
     public function getLimitRoutesArray()
@@ -72,13 +81,9 @@ class Module extends Entity implements ModuleConfigInterface
         }
     }
 
-    public function setLimitRoutesArray($value)
+    public function getModule()
     {
-        if (is_array($value)) {
-            $value = implode(',', $value);
-        }
-
-        $this->setLimitRoutes($value);
+        return $this->get("module");
     }
 
     public function setModule($value)
@@ -86,9 +91,9 @@ class Module extends Entity implements ModuleConfigInterface
         $this->set("module", $value);
     }
 
-    public function getModule()
+    public function getModuleInfo()
     {
-        return $this->get("module");
+        return $this->moduleInfo;
     }
 
     public function setModuleInfo($moduleInfo)
@@ -96,9 +101,9 @@ class Module extends Entity implements ModuleConfigInterface
         $this->moduleInfo = $moduleInfo;
     }
 
-    public function getModuleInfo()
+    public function getOrder()
     {
-        return $this->moduleInfo;
+        return $this->get("order");
     }
 
     public function setOrder($value)
@@ -106,14 +111,35 @@ class Module extends Entity implements ModuleConfigInterface
         $this->set("order", $value);
     }
 
-    public function getOrder()
+    public function setPermissions($value)
     {
-        return $this->get("order");
+        $this->set("permissions", $value);
     }
 
-    public function setPosition($value)
+    public function getPermissions()
     {
-        $this->set("position", $value);
+        return $this->get("permissions");
+    }
+
+    public function setPermissionsArray($value)
+    {
+        if (is_array($value)) {
+            $value = implode(',', $value);
+        }
+
+        $this->setPermissions($value);
+    }
+
+    public function getPermissionsArray()
+    {
+        $permissions = $this->getPermissions();
+
+        if ($permissions) {
+            return explode(',', $permissions);
+        }
+        else {
+            return null;
+        }
     }
 
     public function getPosition()
@@ -121,14 +147,19 @@ class Module extends Entity implements ModuleConfigInterface
         return $this->get("position");
     }
 
-    public function getSettings()
+    public function setPosition($value)
     {
-        return $this->get("settings");
+        $this->set("position", $value);
     }
 
     public function setSettings($value)
     {
         $this->set("settings", $value);
+    }
+
+    public function getSettings()
+    {
+        return $this->get("settings");
     }
 
     /**
@@ -157,14 +188,14 @@ class Module extends Entity implements ModuleConfigInterface
         }
     }
 
-    public function setShowHeader($value)
-    {
-        $this->set("show_header", $value);
-    }
-
     public function getShowHeader()
     {
         return $this->get("show_header");
+    }
+
+    public function setShowHeader($value)
+    {
+        $this->set("show_header", $value);
     }
 
     public function getTemplate()
@@ -172,19 +203,19 @@ class Module extends Entity implements ModuleConfigInterface
         return $this->get("template");
     }
 
-    public function setTemplate($template)
+    public function setTemplate($value)
     {
-        $this->set('template', $template);
-    }
-
-    public function setTemplateType($value)
-    {
-        $this->set("template_type", $value);
+        $this->set("template", $value);
     }
 
     public function getTemplateType()
     {
         return $this->get("template_type");
+    }
+
+    public function setTemplateType($value)
+    {
+        $this->set("template_type", $value);
     }
 
     public function setTitle($value)
