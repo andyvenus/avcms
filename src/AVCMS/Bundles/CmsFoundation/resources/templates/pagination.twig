@@ -21,6 +21,7 @@
     {% set end_page = total_pages %}
 {% endif %}
 
+{% if total_pages > 1 %}
 <nav>
     <ul class="pagination">
         {% if current_page > 1  %}
@@ -36,3 +37,4 @@
         {% endif %}
     </ul>
 </nav>
+{% endif %}
