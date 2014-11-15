@@ -7,6 +7,8 @@
 
 namespace AVCMS\Bundles\CmsFoundation\Twig;
 
+use Symfony\Component\HttpFoundation\RequestStack;
+
 class PaginationTwigExtension extends \Twig_Extension
 {
     protected $template = '@CmsFoundation/pagination.twig';
@@ -15,6 +17,11 @@ class PaginationTwigExtension extends \Twig_Extension
      * @var \Twig_Environment
      */
     protected $environment;
+
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+    }
 
     public function getFunctions()
     {
@@ -39,6 +46,9 @@ class PaginationTwigExtension extends \Twig_Extension
 
     public function pagination($pages, $currentPage, $route, $routeAttr = [])
     {
+        $requestAttr = $this->requestStack->getCurrentRequest()->query->all();
+        $routeAttr = array_merge($routeAttr, $requestAttr);
+
         return $this->environment->render($this->template, [
             'total_pages' => $pages,
             'current_page' => $currentPage,

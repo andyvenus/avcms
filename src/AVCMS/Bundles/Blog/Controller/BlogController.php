@@ -27,7 +27,7 @@ class BlogController extends Controller
     {
         $finder = $this->posts->find();
         $allPosts = $finder->published()
-            ->setResultsPerPage(10)
+            ->setResultsPerPage(1)
             ->setSearchFields(['title'])
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'tags' => null, 'search' => null))
             ->join($this->model($this->bundle->model->users), ['id', 'username', 'slug', 'avatar'])

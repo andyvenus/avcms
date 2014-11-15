@@ -39,6 +39,7 @@ class TemplateServices implements ServicesInterface
         ;
 
         $container->register('twig.extension.pagination', 'AVCMS\Bundles\CmsFoundation\Twig\PaginationTwigExtension')
+            ->setArguments([new Reference('request.stack')])
             ->addTag('twig.extension')
         ;
 
