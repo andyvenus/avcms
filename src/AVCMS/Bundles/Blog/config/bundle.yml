@@ -21,6 +21,11 @@ comments:
     frontend_route: blog_post
     frontend_route_params: [slug]
 
+frontend_search:
+  blog_posts:
+    name: Blog Posts
+    route: blog_archive
+
 user_settings:
   blog_posts_per_page:
       type: text

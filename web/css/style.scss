@@ -52,6 +52,18 @@ select[name=author] {
   }
 }
 
+.search-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 120px!important;
+  border-left:0px;
+  border-radius: 0px;
+  float: none!important;
+  vertical-align: middle!important;
+  display: inline!important;
+}
+
 .loader {
   position: fixed;
   top: 0;

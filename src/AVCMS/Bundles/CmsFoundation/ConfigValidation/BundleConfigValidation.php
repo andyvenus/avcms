@@ -57,6 +57,8 @@ class BundleConfigValidation implements BundleConfigValidationInterface
             ->end()
             ->variableNode('permissions')
             ->end()
+            ->variableNode('frontend_search')
+            ->end()
         ->end();
     }
 }

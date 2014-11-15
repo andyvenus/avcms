@@ -53,9 +53,14 @@
 
 <nav class="navbar navbar-default navbar-static-top main-menu" role="navigation">
     <div class="container">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-collapse">
-            {% trans %}Main Menu{% endtrans %}
-        </button>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
         <div class="collapse navbar-collapse" id="main-menu-collapse">
             <ul class="nav navbar-nav">
                 {% for menu_item in menu('frontend') %}
@@ -75,6 +80,19 @@
 
                 {% endfor %}
             </ul>
+
+            <form class="navbar-form navbar-right" role="search" id="search_form">
+                <div class="form-group">
+                    <div class="input-group">
+                        {{ form_field(search_form.search) }}
+                        <div class="input-group-btn">
+                            {{ form_field(search_form.content_type, {class: 'search-select'}) }}
+
+                            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </nav>

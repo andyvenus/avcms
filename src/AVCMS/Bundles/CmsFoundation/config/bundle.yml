@@ -99,6 +99,8 @@ assets:
     env: shared
   avcms_misc.js:
     env: shared
+  avcms_frontend.js:
+    env: frontend
 
 menu_items:
   admin:
