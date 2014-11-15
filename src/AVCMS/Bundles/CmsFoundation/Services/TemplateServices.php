@@ -43,7 +43,7 @@ class TemplateServices implements ServicesInterface
         ;
 
         $container->register('twig.extension.search', 'AVCMS\Bundles\CmsFoundation\Twig\SearchTwigExtension')
-            ->setArguments([new Reference('bundle_manager'), new Reference('form.builder'), new Reference('router'), new Reference('translator')])
+            ->setArguments([new Reference('bundle_manager'), new Reference('form.builder'), new Reference('router'), new Reference('translator'), new Reference('request.stack')])
             ->addTag('twig.extension')
         ;
     }

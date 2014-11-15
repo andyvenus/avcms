@@ -11,7 +11,7 @@ use AV\Form\FormBlueprint;
 
 class FrontendSearchForm extends FormBlueprint
 {
-    public function __construct($searchContentTypes)
+    public function __construct($searchContentTypes, $selectedContent = null)
     {
         $this->add('search', 'text', [
             'label' => 'Search',
@@ -19,7 +19,8 @@ class FrontendSearchForm extends FormBlueprint
         ]);
 
         $this->add('content_type', 'select', [
-            'choices' => $searchContentTypes
+            'choices' => $searchContentTypes,
+            'default' => $selectedContent
         ]);
     }
 } 
