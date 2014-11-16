@@ -193,7 +193,7 @@ abstract class Model implements ModelInterface {
      */
     public function insert($data)
     {
-        $this->eventDispatcher->dispatch('model.insert', $event = new ModelInsertEvent($data));
+        $this->eventDispatcher->dispatch('model.insert', $event = new ModelInsertEvent($data, $this));
         $data = $event->getData();
 
         return $this->query()->insert($data);
@@ -210,7 +210,7 @@ abstract class Model implements ModelInterface {
      */
     public function update(Entity $entity, $columnMatch = null)
     {
-        $this->eventDispatcher->dispatch('model.update', new ModelUpdateEvent($entity));
+        $this->eventDispatcher->dispatch('model.update', new ModelUpdateEvent($entity, $this));
 
         if (!$columnMatch) {
             $columnMatch = $this->numberIdentifierColumn;
