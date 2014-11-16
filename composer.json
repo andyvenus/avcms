@@ -19,7 +19,6 @@
         "kriswallsmith/assetic": "1.2.*-dev",
         "patchwork/jsqueeze": "1.0.*",
         "leafo/scssphp": "dev-master",
-        "guzzlehttp/guzzle": "3.*",
         "filp/whoops": "1",
         "monolog/monolog": "1.*",
         "ircmaxell/password-compat": "dev-master"
