@@ -51,5 +51,10 @@ class ModuleServices implements ServicesInterface
         $container->register('module.bundle_positions_provider', 'AVCMS\Core\Bundle\ModuleProvider\BundleModulePositionsProvider')
             ->setArguments([new Reference('bundle_manager')])
         ;
+
+        $container->register('module.cache_buster_subscriber', 'AVCMS\Bundles\CmsFoundation\Subscribers\ModuleCacheBusterSubscriber')
+            ->setArguments([new Reference('bundle_manager'), '%cache_dir%/modules'])
+            ->addTag('event.subscriber')
+        ;
     }
 }

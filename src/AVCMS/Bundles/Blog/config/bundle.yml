@@ -42,6 +42,7 @@ modules:
     description: A sortable list of blog posts
     controller: Blog::BlogModulesController::blogPostsModule
     cachable: true
+    cache_bust_model: BlogPosts
     default_cache_time: 10
     accepted_template_types: [list_panel, none]
     default_permissions: [ADMIN_BLOG]

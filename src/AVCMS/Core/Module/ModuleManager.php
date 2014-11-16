@@ -68,7 +68,7 @@ class ModuleManager
 
         if (!$module) return null;
 
-        $cacheFile = $this->cacheDir.'/'.$moduleConfig->getModule().'-'.$moduleConfig->getId().'-'.$position;
+        $cacheFile = $this->cacheDir.'/'.$moduleConfig->getModule().'/'.$moduleConfig->getId().'-'.$position;
 
         if ($cacheVars = $module->getCacheIdVars()) {
             foreach ($cacheVars as $varName) {
@@ -121,6 +121,9 @@ class ModuleManager
         if ($module->isCachable() && $moduleConfig->getCacheTime()) {
             if (!file_exists($this->cacheDir)) {
                 mkdir($this->cacheDir, 0777, true);
+            }
+            if (!file_exists($this->cacheDir.'/'.$moduleConfig->getModule())) {
+                mkdir($this->cacheDir.'/'.$moduleConfig->getModule(), 0777, true);
             }
 
             file_put_contents($cacheFile, $content);

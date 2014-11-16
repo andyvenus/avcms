@@ -65,6 +65,11 @@ class Module
     protected $permissions;
 
     /**
+     * @var
+     */
+    protected $cacheBustModel;
+
+    /**
      * @var array
      */
     protected $acceptedTemplateTypes = ['panel', 'none'];
@@ -242,6 +247,16 @@ class Module
     public function setDefaultPermissions($permissions)
     {
         $this->permissions = $permissions;
+    }
+
+    public function getCacheBustModel()
+    {
+        return $this->cacheBustModel;
+    }
+
+    public function setCacheBustModel($cacheBustModel)
+    {
+        $this->cacheBustModel = $cacheBustModel;
     }
 
     public function fromArray(array $data)
