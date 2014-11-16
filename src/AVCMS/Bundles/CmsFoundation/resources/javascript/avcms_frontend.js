@@ -16,7 +16,6 @@ avcms.frontend = {
     },
 
     updateSearchForm: function() {
-        console.log('f');
         var search_param = avcms.general.getUrlParameter('search');
         if (search_param !== null) {
             $('#search_form').find('[name=search]').val(search_param);
