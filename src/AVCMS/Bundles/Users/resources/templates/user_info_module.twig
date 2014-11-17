@@ -1,13 +1,17 @@
-{% if user.location %}
-    <p><strong>{% trans %}Location{% endtrans %}:</strong> {{ user.location }}</p>
+{% if profile_user.location %}
+    <p><strong>{% trans %}Location{% endtrans %}:</strong> {{ profile_user.location }}</p>
 {% endif %}
 
-{% if user.about %}
+{% if profile_user.about %}
     <p><strong>{% trans %}About{% endtrans %}:</strong><br />
-        {{ user.about }}</p>
+        {{ profile_user.about }}</p>
 {% endif %}
 
-{% if user.interests %}
+{% if profile_user.interests %}
     <p><strong>{% trans %}Interests{% endtrans %}:</strong><br />
-    {{ user.interests }}</p>
+    {{ profile_user.interests }}</p>
+{% endif %}
+
+{% if profile_user.location == null and profile_user.about == null and profile_user.interests == null %}
+    {% trans %}This user has not filled in their profile{% endtrans %}
 {% endif %}
