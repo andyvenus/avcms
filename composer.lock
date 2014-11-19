@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e7a94b00bac5665efc5e0fc027f6746b",
+    "hash": "a8327a1871df65e2c6ddf6a2429e3d05",
     "packages": [
         {
             "name": "filp/whoops",
@@ -1289,16 +1289,16 @@
         },
         {
             "name": "usmanhalalit/pixie",
-            "version": "1.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/usmanhalalit/pixie.git",
-                "reference": "d92b4b169452d043efcbb768d4e3eb35c7462735"
+                "reference": "f40a6bcc10f8e29ceeaffeb4d710ee4b569d8388"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/usmanhalalit/pixie/zipball/d92b4b169452d043efcbb768d4e3eb35c7462735",
-                "reference": "d92b4b169452d043efcbb768d4e3eb35c7462735",
+                "url": "https://api.github.com/repos/usmanhalalit/pixie/zipball/f40a6bcc10f8e29ceeaffeb4d710ee4b569d8388",
+                "reference": "f40a6bcc10f8e29ceeaffeb4d710ee4b569d8388",
                 "shasum": ""
             },
             "require": {
@@ -1336,7 +1336,7 @@
                 "sql",
                 "sqlite"
             ],
-            "time": "2014-05-30 13:47:18"
+            "time": "2014-11-19 11:30:12"
         },
         {
             "name": "usmanhalalit/viocon",
@@ -1531,12 +1531,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "30eb319efcf2ebe6b4529be51f60df78340bdbb5"
+                "reference": "4055c0e8577dfbc841fd384797487ff3fc75afff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/30eb319efcf2ebe6b4529be51f60df78340bdbb5",
-                "reference": "30eb319efcf2ebe6b4529be51f60df78340bdbb5",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/4055c0e8577dfbc841fd384797487ff3fc75afff",
+                "reference": "4055c0e8577dfbc841fd384797487ff3fc75afff",
                 "shasum": ""
             },
             "require": {
@@ -1589,7 +1589,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2014-11-10 08:31:38"
+            "time": "2014-11-18 13:37:25"
         },
         {
             "name": "pdepend/pdepend",

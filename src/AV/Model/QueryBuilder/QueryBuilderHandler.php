@@ -511,6 +511,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
 
     /**
      * Remove the limit & offset from the query
+     * todo: remove
      */
     public function removePagination()
     {
