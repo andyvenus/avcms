@@ -43,4 +43,14 @@ class BlogPost extends ContentEntity {
     {
         return $this->get('comments');
     }
+
+    public function setHits($hits)
+    {
+        $this->set('hits', $hits);
+    }
+
+    public function getHits()
+    {
+        return $this->get('hits');
+    }
 } 

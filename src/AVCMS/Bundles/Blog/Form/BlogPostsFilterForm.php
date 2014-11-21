@@ -22,7 +22,9 @@ class BlogPostsFilterForm extends AdminFiltersForm
                 'publish_date_newest' => 'Newest (by publish date)',
                 'publish_date_oldest' => 'Oldest (by publish date)',
                 'a_z' => 'A-Z',
-                'z_a' => 'Z-A'
+                'z_a' => 'Z-A',
+                'top_hits' => 'Top Hits',
+                'low_hits' => 'Lowest Hits'
             )
         ));
 

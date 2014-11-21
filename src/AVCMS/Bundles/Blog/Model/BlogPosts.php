@@ -33,7 +33,9 @@ class BlogPosts extends ContentModel
             'publish_date_newest' => 'publish_date desc',
             'publish_date_oldest' => 'publish_date asc',
             'a_z' => 'title asc',
-            'z_a' => 'title desc'
+            'z_a' => 'title desc',
+            'top_hits' => 'hits desc',
+            'low_hits' => 'hits asc'
         ));
     }
 }

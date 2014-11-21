@@ -10,10 +10,15 @@
 
             <p>{{ post.body|raw }}</p>
 
-            <a class="btn btn-link btn-sm" href="{{ url('blog_edit_post', { id: post.id}) }}"><span class="glyphicon glyphicon-edit"></span> Edit Post</a>
+            <span class="text-muted"><span class="glyphicon glyphicon-eye-open"></span> {{ post.hits }}</span> &nbsp;
+
             {% for tag in post.tags %}
                 <a class="btn btn-default btn-xs" href="{{ url('blog_archive', {tags: tag.name}) }}">{{ tag.name }}</a>
             {% endfor %}
+
+            {% if is_granted('ADMIN_BLOG')  %}
+                <a class="btn btn-link btn-sm" href="{{ url('blog_edit_post', { id: post.id}) }}"><span class="glyphicon glyphicon-edit"></span> {% trans %}Edit Post{% endtrans %}</a>
+            {% endif %}
         </article>
     {% endblock %}
 

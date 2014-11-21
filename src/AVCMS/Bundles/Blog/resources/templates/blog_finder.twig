@@ -2,7 +2,7 @@
 
 
 {% block finder_header_titles %}
-    <div class="col-md-7 hidden-xs">
+    <div class="col-md-6 hidden-xs">
         {% trans %}Body{% endtrans %}
     </div>
     <div class="col-md-2 hidden-sm hidden-xs">
@@ -10,6 +10,9 @@
     </div>
     <div class="col-md-3 hidden-sm hidden-xs">
         {% trans %}Slug{% endtrans %}
+    </div>
+    <div class="col-md-1 hidden-sm hidden-xs">
+        {% trans %}Hits{% endtrans %}
     </div>
 {% endblock %}
 
@@ -27,7 +30,7 @@
 {% endblock %}
 
 {% block item_extended_inner %}
-    <div class="col-md-7 hidden-xs">
+    <div class="col-md-6 hidden-xs">
         {{ item.body|length > 120 ? item.body|striptags|slice(0, 120) ~ '...' : item.body|striptags  }}
     </div>
     <div class="col-md-2 hidden-sm hidden-xs">
@@ -35,5 +38,8 @@
     </div>
     <div class="col-md-3 hidden-sm hidden-xs">
         <a href="{{ url('blog_post', {slug: item.slug}) }}">{{ item.slug }}</a>
+    </div>
+    <div class="col-md-1 hidden-sm hidden-xs">
+        {{ item.hits }}
     </div>
 {% endblock %}
