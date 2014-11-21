@@ -26,15 +26,24 @@ frontend_search:
     name: Blog Posts
     route: blog_archive
 
+user_settings_sections:
+  blog: Blog
+
 user_settings:
   blog_posts_per_page:
       type: text
       label: Blog Posts Per Page
       help: The number of blog posts displayed on each page
-      section: main
+      section: blog
       validation:
         numeric:
           rule: Numeric
+  show_blog_hits:
+    type: checkbox
+    label: Show post hits
+    help: Show the number of page hits each blog post has on the frontend
+    section: blog
+    default: true
 
 modules:
   blog_posts:
