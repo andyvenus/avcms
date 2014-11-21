@@ -24,7 +24,11 @@ class BlogModulesController extends Controller
 
     public function blogPostsModule($module, $userSettings)
     {
-        $posts = $this->blogPosts->find()->limit($userSettings['limit'])->published()->get();
+        $posts = $this->blogPosts->find()
+            ->limit($userSettings['limit'])
+            ->order($userSettings['order'])
+            ->published()
+            ->get();
 
         return new Response($this->render('@Blog/blog_posts_module.twig', array('posts' => $posts, 'user_settings' => $userSettings)));
     }

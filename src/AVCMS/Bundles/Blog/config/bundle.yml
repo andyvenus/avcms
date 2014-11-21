@@ -61,7 +61,7 @@ modules:
         label: Order
         choices:
           newest: Newest Posts
-          popular: Popular Posts
+          top_hits: Top Hits
         default: newest
       limit:
         type: text
