@@ -44,6 +44,13 @@ class Users extends Model implements UserProviderInterface
         $this->groupsModel = $groupsModel;
     }
 
+    public function updateUserActivity($userId, $ip)
+    {
+        $lastActivity = time();
+
+        $this->query()->where('id', $userId)->update(['last_activity' => $lastActivity, 'last_ip' => $ip]);
+    }
+
     /**
      * Loads the user for the given username.
      *

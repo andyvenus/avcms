@@ -19,5 +19,10 @@ class UserMiscServices implements ServicesInterface
         $container->register('permissions.choices_provider', 'AVCMS\Bundles\Users\Form\ChoicesProvider\PermissionsChoicesProvider')
             ->setArguments([new Reference('users.permissions_model')])
         ;
+
+        $container->register('users.activity_subscriber', 'AVCMS\Bundles\Users\Subscriber\UserActivitySubscriber')
+            ->setArguments([new Reference('security.context'), new Reference('users.model')])
+            ->addTag('event.subscriber')
+        ;
     }
 }
