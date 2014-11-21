@@ -50,6 +50,8 @@ class BlogController extends Controller
 
         $this->container->get('taxonomy_manager')->assign('tags', $post, $this->posts->getSingular());
 
+        $this->container->get('hitcounter')->registerHit($this->posts, $post->getId());
+
         return new Response($this->render('@Blog/blog_post.twig', array('post' => $post)));
     }
 }

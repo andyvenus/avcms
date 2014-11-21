@@ -13,6 +13,7 @@ services:
   - MenuServices
   - ModuleServices
   - EmailServices
+  - HitCounterServices
 
 user_settings_sections:
   main: Main
