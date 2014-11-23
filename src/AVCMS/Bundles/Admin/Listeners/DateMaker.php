@@ -34,7 +34,7 @@ class DateMaker implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'admin.controller.filter.entity' => array('setDates', 8),
+            'admin.before.content.save' => array('setDates', 8),
         );
     }
 } 

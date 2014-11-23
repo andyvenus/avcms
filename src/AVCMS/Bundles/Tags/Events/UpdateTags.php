@@ -78,7 +78,7 @@ class UpdateTags implements EventSubscriberInterface
     {
         return array(
             'admin.edit.form.built' => array('getTags'),
-            'admin.save.content' => array('updateTags')
+            'admin.after.content.save' => array('updateTags')
         );
     }
 }

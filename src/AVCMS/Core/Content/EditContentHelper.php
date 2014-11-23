@@ -81,9 +81,14 @@ class EditContentHelper
 
         if ($this->form->isValid() && $this->contentExists()) {
             $this->form->saveToEntities();
+
+            $event = new AdminSaveContentEvent($this->entity, $this->model, $this->form);
+
+            $this->eventDispatcher->dispatch('admin.before.content.save', $event);
+
             $this->model->save($this->entity);
 
-            $this->eventDispatcher->dispatch('admin.save.content', new AdminSaveContentEvent($this->entity, $this->model, $this->form));
+            $this->eventDispatcher->dispatch('admin.after.content.save', $event);
 
             return true;
         }
