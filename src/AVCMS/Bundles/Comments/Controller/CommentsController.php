@@ -94,6 +94,7 @@ class CommentsController extends Controller
         $comment->setContentType($contentType);
         $comment->setUserId($user->getId());
         $comment->setDate(time());
+        $comment->setIp($request->getClientIp());
 
         $titleField = $typeConfig['title_field'];
         if (is_callable([$content, 'get'.$titleField])) {

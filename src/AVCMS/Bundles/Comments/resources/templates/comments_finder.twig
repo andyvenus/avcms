@@ -7,7 +7,7 @@
                     {% if comment.user.id %}
                         <a href="{{ url('users_admin_edit', {id: comment.user.id}) }}">{{ comment.user.username }}</a>
                     {% else %}
-                        {% trans %}Unknown User{% endtrans %}
+                        {{ comment.ip }}
                     {% endif %}
                     {% trans %}commented on{% endtrans %} <a href="{{ comment.content.url }}">{{ comment.content.title }}</a> - {{ comment.date|date(settings.date_format) }}
                     <div class="pull-right">

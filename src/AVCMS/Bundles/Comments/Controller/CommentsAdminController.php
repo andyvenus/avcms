@@ -47,7 +47,7 @@ class CommentsAdminController extends AdminBaseController
         $comments = $this->comments->find()
             ->join($this->model('@users'), ['id', 'username', 'slug'])
             ->setResultsPerPage(10)
-            ->setSearchFields(['content_title', 'comment'])
+            ->setSearchFields(['content_title', 'comment', 'ip'])
             ->handleRequest($request, ['page' => 1, 'contentType' => 'all', 'order' => 'newest', 'search' => null, 'id' => null])
             ->get();
 
