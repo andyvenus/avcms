@@ -3,13 +3,15 @@
 {% block title %}{% trans %}Validate Email{% endtrans %}{% endblock %}
 
 {% block content %}
-    <h1>Validate Email</h1>
+    <div class="box validate-email-container">
+        <h1>Validate Email</h1>
 
-    {% if success %}
-        <p>{% trans %}Your email address has been validated.{% endtrans %}</p>
+        {% if success %}
+            <p>{% trans %}Your email address has been validated.{% endtrans %}</p>
 
-        <p><a class="btn btn-default" href="{{ url('login') }}">{% trans %}Log in now{% endtrans %}</a></p>
-    {% else %}
-        <p>{% trans %}Invalid user and verification code combination{% endtrans %}</p>
-    {% endif %}
+            <p><a class="btn btn-default" href="{{ url('login') }}">{% trans %}Log in now{% endtrans %}</a></p>
+        {% else %}
+            <p>{% trans %}Invalid user and verification code combination{% endtrans %}</p>
+        {% endif %}
+    </div>
 {% endblock %}

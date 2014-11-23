@@ -3,15 +3,17 @@
 {% block title %}{% trans %}Edit Profile{% endtrans %}{% endblock %}
 
 {% block content %}
-    <ol class="breadcrumb">
-        <li><a href="{{ url('user_profile', {slug: user.slug}) }}">{{ user.username }}</a></li>
-        <li class="active">{% trans %}Edit Profile{% endtrans %}</li>
-    </ol>
+    <div class="box edit-profile-container">
+        <ol class="breadcrumb">
+            <li><a href="{{ url('user_profile', {slug: user.slug}) }}">{{ user.username }}</a></li>
+            <li class="active">{% trans %}Edit Profile{% endtrans %}</li>
+        </ol>
 
-    <ul class="nav nav-tabs" role="tablist">
-        <li class="active"><a href="{{ url('edit_user_profile') }}">{% trans %}Profile{% endtrans %}</a></li>
-        <li><a href="{{ url('user_email_password') }}">{% trans %}Password & Email{% endtrans %}</a></li>
-    </ul>
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active"><a href="{{ url('edit_user_profile') }}">{% trans %}Profile{% endtrans %}</a></li>
+            <li><a href="{{ url('user_email_password') }}">{% trans %}Password & Email{% endtrans %}</a></li>
+        </ul>
 
-    {{ form(form) }}
+        {{ form(form) }}
+    </div>
 {% endblock %}

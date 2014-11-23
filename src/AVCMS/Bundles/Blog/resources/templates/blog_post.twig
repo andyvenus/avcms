@@ -3,31 +3,45 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
+    <div class="blog-post-container">
     {% block blog_post %}
-        <article class="blog-post-container">
-            <h2>{{ post.title }}</h2>
-            <p>{{ user_info(post.user) }}</p>
+        <article class="box blog-post-container">
+            <div class="box-top">
+                <h2>{{ post.title }}</h2>
+                <p>{{ user_info(post.user) }}</p>
+            </div>
 
-            <p>{{ post.body|raw }}</p>
+            <div class="box-main">
+                <p>{{ post.body|raw }}</p>
+            </div>
 
-            {% if settings.show_blog_hits %}
-                <span class="text-muted"><span class="glyphicon glyphicon-eye-open"></span> {{ post.hits }}</span> &nbsp;
-            {% endif %}
+            <div class="box-footer">
+                {% if settings.show_blog_hits %}
+                    <span class="text-muted"><span class="glyphicon glyphicon-eye-open"></span> {{ post.hits }}</span> &nbsp;
+                {% endif %}
 
-            {% for tag in post.tags %}
-                <a class="btn btn-default btn-xs" href="{{ url('blog_archive', {tags: tag.name}) }}">{{ tag.name }}</a>
-            {% endfor %}
+                {% for tag in post.tags %}
+                    <a class="btn btn-default btn-xs" href="{{ url('blog_archive', {tags: tag.name}) }}">{{ tag.name }}</a>
+                {% endfor %}
 
-            {% if is_granted('ADMIN_BLOG')  %}
-                <a class="btn btn-link btn-sm" href="{{ url('blog_edit_post', { id: post.id}) }}"><span class="glyphicon glyphicon-edit"></span> {% trans %}Edit Post{% endtrans %}</a>
-            {% endif %}
+                {% if is_granted('ADMIN_BLOG')  %}
+                    <a class="btn btn-link btn-sm" href="{{ url('blog_edit_post', { id: post.id}) }}"><span class="glyphicon glyphicon-edit"></span> {% trans %}Edit Post{% endtrans %}</a>
+                {% endif %}
+            </div>
         </article>
     {% endblock %}
 
     {% block blog_post_comments %}
         {% if settings.comments_enabled %}
-            <h4>{% trans %}Comments{% endtrans %} ({{ post.comments }})</h4>
-            {{ comments('blog_post', post) }}
+            <div class="box">
+                <div class="box-top">
+                    <h4>{% trans %}Comments{% endtrans %} ({{ post.comments }})</h4>
+                </div>
+                <div class="box-main">
+                    {{ comments('blog_post', post) }}
+                </div>
+            </div>
         {% endif %}
     {% endblock %}
+    </div>
 {% endblock %}

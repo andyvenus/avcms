@@ -3,19 +3,21 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-    {{ form_start(login_form, null) }}
+    <div class="box login-container">
+        {{ form_start(login_form, null) }}
 
-    {% if login_form.errors is not empty %}
-        <div class="alert alert-danger">
-            {% for error in login_form.errors %}
-                {{ error.message }}<br />
-            {% endfor %}
-        </div>
-    {% endif %}
+        {% if login_form.errors is not empty %}
+            <div class="alert alert-danger">
+                {% for error in login_form.errors %}
+                    {{ error.message }}<br />
+                {% endfor %}
+            </div>
+        {% endif %}
 
-    {{ form_rows(login_form) }}
+        {{ form_rows(login_form) }}
 
-    {{ form_submit_button(login_form) }}
+        {{ form_submit_button(login_form) }}
 
-    {{ form_end(login_form) }}
+        {{ form_end(login_form) }}
+    </div>
 {% endblock %}
