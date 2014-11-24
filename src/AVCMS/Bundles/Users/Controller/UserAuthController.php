@@ -71,7 +71,7 @@ class UserAuthController extends Controller
             $form->saveToEntities();
 
             $slugGenerator = $this->container->get('slug.generator');
-            $user->setSlug($slugGenerator->generate($user->getUsername()));
+            $user->setSlug($slugGenerator->slugify($user->getUsername()));
 
             $user->setJoined(time());
             $user->setLastIp($request->getClientIp());

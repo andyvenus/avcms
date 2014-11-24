@@ -38,7 +38,7 @@ class AdminHelpersController extends Controller
     {
         $slugGenerator = $this->container->get('slug.generator');
 
-        $slug = $slugGenerator->generate($request->get('title'));
+        $slug = $slugGenerator->slugify($request->get('title'));
 
         return new JsonResponse(array('slug' => $slug));
     }

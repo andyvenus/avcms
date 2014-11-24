@@ -21,7 +21,8 @@
         "leafo/scssphp": "dev-master",
         "filp/whoops": "1",
         "monolog/monolog": "1.*",
-        "ircmaxell/password-compat": "dev-master"
+        "ircmaxell/password-compat": "dev-master",
+        "cocur/slugify": "@stable"
     },
     "require-dev": {
         "phpunit/phpunit": "4.2.*",
