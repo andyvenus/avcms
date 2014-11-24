@@ -82,8 +82,13 @@ abstract class Entity implements Validatable
         foreach ($data as $key => $value) {
             $key = str_replace('_', '', $key);
 
-            if (!method_exists($this, 'set'.$key) && $ignoreUnusable === false) {
-                throw new \Exception("This entity does not have a method for the data named $key");
+            if (!method_exists($this, 'set'.$key)) {
+                if ($ignoreUnusable === false) {
+                    throw new \Exception("This entity does not have a method for the data named $key");
+                }
+                else {
+                    continue;
+                }
             }
 
             $this->{'set'.$key}($value);
