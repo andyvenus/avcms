@@ -13,6 +13,7 @@ use AVCMS\Bundles\Installer\Form\NewInstallForm;
 use AVCMS\Core\Controller\Controller;
 use AVCMS\Core\Installer\InstallerBundleFinder;
 use AVCMS\Core\SlugGenerator\SlugGenerator;
+use Cocur\Slugify\Slugify;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -109,8 +110,8 @@ class InstallerController extends Controller
             $newUser->setJoined(time());
             $newUser->setLastIp($request->getClientIp());
 
-            $slugGen = new SlugGenerator();
-            $newUser->setSlug($slugGen->generate($newUser->getUsername()));
+            $slugGen = new Slugify();
+            $newUser->setSlug($slugGen->slugify($newUser->getUsername()));
 
             $users->save($newUser);
 
