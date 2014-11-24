@@ -26,6 +26,8 @@ class SiteUrlTwigExtension extends \Twig_Extension
         $url = $this->request->getUriForPath('/');
 
         $url = str_replace('front.php/', '', $url);
+        $url = str_replace('index.php/', '', $url);
+        $url = str_replace('install.php/', '', $url);
 
         return array(
             'site_url' => $url
