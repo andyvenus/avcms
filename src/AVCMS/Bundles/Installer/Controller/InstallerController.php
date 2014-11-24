@@ -115,6 +115,8 @@ class InstallerController extends Controller
 
             $users->save($newUser);
 
+            $this->getInstaller()->getDefaultContentInstaller()->freshInstallComplete();
+
             return new RedirectResponse('../');
         }
         elseif ($form->getData('password1') !== $form->getData('password2')) {

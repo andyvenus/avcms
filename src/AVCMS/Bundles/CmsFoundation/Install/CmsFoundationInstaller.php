@@ -31,17 +31,20 @@ class CmsFoundationInstaller extends BundleInstaller
 
         $this->sql("
             CREATE TABLE `{$this->prefix}menu_items` (
-                  `id` varchar(30) NOT NULL DEFAULT '',
-                  `menu` varchar(11) DEFAULT NULL,
-                  `type` varchar(11) DEFAULT NULL,
+                  `id` varchar(60) NOT NULL DEFAULT '',
+                  `menu` varchar(30) DEFAULT NULL,
+                  `type` varchar(30) DEFAULT NULL,
                   `label` varchar(80) DEFAULT NULL,
-                  `target` varchar(80) DEFAULT NULL,
-                  `icon` varchar(30) DEFAULT NULL,
-                  `parent` varchar(30) DEFAULT NULL,
+                  `target` varchar(100) DEFAULT NULL,
+                  `icon` varchar(100) DEFAULT NULL,
+                  `parent` varchar(60) DEFAULT NULL,
                   `enabled` tinyint(1) DEFAULT '1',
                   `order` int(11) NOT NULL DEFAULT '99',
                   `owner` varchar(30) DEFAULT NULL,
-                  PRIMARY KEY (`id`)
+                  `permission` varchar(80) DEFAULT NULL,
+                  `translatable` tinyint(1) NOT NULL DEFAULT '0',
+                  PRIMARY KEY (`id`),
+                  KEY `menu` (`menu`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
 
@@ -59,7 +62,9 @@ class CmsFoundationInstaller extends BundleInstaller
                   `template` varchar(200) NOT NULL DEFAULT '0',
                   `limit_routes` text NOT NULL,
                   `cache_time` int(11) DEFAULT NULL,
-                  PRIMARY KEY (`id`)
+                  `permissions` varchar(120) DEFAULT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `position` (`position`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
 

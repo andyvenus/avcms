@@ -21,21 +21,23 @@ class BlogInstaller extends BundleInstaller
     public function install_1_0_0()
     {
         $this->PDO->exec("
-              CREATE TABLE `{$this->prefix}blog_posts` (
+             CREATE TABLE `{$this->prefix}blog_posts` (
                   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
                   `title` text,
-                  `body` text,
-                  `user_id` varchar(200) DEFAULT NULL,
-                  `testone__something` varchar(80) DEFAULT NULL,
-                  `published` int(11) DEFAULT NULL,
+                  `body` longtext,
+                  `user_id` int(11) DEFAULT NULL,
+                  `published` tinyint(1) NOT NULL DEFAULT '1',
                   `date_added` int(11) DEFAULT NULL,
                   `date_edited` int(11) DEFAULT NULL,
                   `creator_id` int(11) DEFAULT NULL,
                   `editor_id` int(11) DEFAULT NULL,
-                  `slug` varchar(255) DEFAULT NULL,
+                  `slug` text,
                   `publish_date` int(11) DEFAULT NULL,
-                  PRIMARY KEY (`id`)
-              ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+                  `comments` int(11) NOT NULL DEFAULT '0',
+                  `hits` int(11) NOT NULL DEFAULT '0',
+                  PRIMARY KEY (`id`),
+                  UNIQUE KEY `slug` (`slug`(255))
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
     }
 }

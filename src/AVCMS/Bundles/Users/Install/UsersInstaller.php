@@ -25,7 +25,8 @@ class UsersInstaller extends BundleInstaller
                   `user_id` int(11) NOT NULL,
                   `code` varchar(120) DEFAULT NULL,
                   `generated` int(11) DEFAULT NULL,
-                  PRIMARY KEY (`user_id`)
+                  PRIMARY KEY (`user_id`),
+                  KEY `code` (`code`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
 
@@ -33,7 +34,9 @@ class UsersInstaller extends BundleInstaller
             CREATE TABLE `{$this->prefix}group_permissions` (
                   `role` varchar(80) DEFAULT NULL,
                   `name` varchar(80) DEFAULT NULL,
-                  `value` tinyint(1) NOT NULL DEFAULT '0'
+                  `value` tinyint(1) NOT NULL DEFAULT '0',
+                  KEY `role` (`role`),
+                  KEY `name` (`name`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
 
@@ -41,8 +44,10 @@ class UsersInstaller extends BundleInstaller
             CREATE TABLE `{$this->prefix}password_resets` (
                   `user_id` int(11) NOT NULL,
                   `code` varchar(128) NOT NULL DEFAULT '',
-                  `generated` int(11) DEFAULT NULL
-            ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+                  `generated` int(11) DEFAULT NULL,
+                  KEY `user_id` (`user_id`),
+                  KEY `code` (`code`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
 
         $this->sql("
@@ -62,8 +67,10 @@ class UsersInstaller extends BundleInstaller
                   `username` varchar(255) DEFAULT NULL,
                   `series` varchar(255) DEFAULT NULL,
                   `token_value` varchar(255) DEFAULT NULL,
-                  `last_used_timestamp` int(11) DEFAULT NULL
-            ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+                  `last_used_timestamp` int(11) DEFAULT NULL,
+                  KEY `class` (`class`),
+                  KEY `username` (`username`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
 
         $this->sql("
@@ -93,19 +100,17 @@ class UsersInstaller extends BundleInstaller
                   `website` varchar(200) NOT NULL DEFAULT '',
                   `joined` text NOT NULL,
                   `avatar` varchar(25) NOT NULL,
-                  `facebook` tinyint(1) NOT NULL DEFAULT '0',
-                  `facebook_id` bigint(20) unsigned NOT NULL,
-                  `last_ip` char(15) NOT NULL DEFAULT '',
-                  `slug` varchar(200) NOT NULL DEFAULT '',
-                  `last_activity` datetime NOT NULL,
+                  `cover_image` varchar(25) NOT NULL,
+                  `last_ip` varchar(15) NOT NULL DEFAULT '',
+                  `last_activity` int(11) NOT NULL,
                   `timezone` varchar(80) NOT NULL DEFAULT '',
-                  `cover_image` varchar(25) NOT NULL DEFAULT '',
+                  `slug` varchar(200) NOT NULL,
                   PRIMARY KEY (`id`),
-                  KEY `slug` (`slug`),
                   KEY `username` (`username`),
                   KEY `email` (`email`),
-                  KEY `email_validated` (`email_validated`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+                  KEY `activate` (`email_validated`),
+                  KEY `slug` (`slug`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
     }
 }

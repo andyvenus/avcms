@@ -2,3 +2,5 @@ bundle_dirs:
   - src/AV/Bundles
   - src/AVCMS/Bundles
   - src/AVCMS/BundlesDev
+
+default_content_installer: BlogDefaultContentInstaller

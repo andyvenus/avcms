@@ -27,12 +27,17 @@ class Installer
 
     protected $failureMessage;
 
+    protected $appDir;
+
+    protected $defaultContentInstaller;
+
     public function __construct(ContainerInterface $container, InstallerBundleFinder $bundleFinder, Versions $installedVersions, $appDir = 'app')
     {
         $this->installedVersions = $installedVersions;
         $this->container = $container;
         $this->appConfig = Yaml::parse(file_get_contents($appDir.'/config/app.yml'));
         $this->bundleDirs = $bundleFinder->findBundles($this->appConfig['bundle_dirs']);
+        $this->appDir = $appDir;
     }
 
     public function getBundlesRequiringUpdate()
@@ -142,5 +147,16 @@ class Installer
     public function getFailureError()
     {
         return $this->failureMessage;
+    }
+
+    public function getDefaultContentInstaller()
+    {
+        if (!isset($this->defaultContentInstaller)) {
+            include $this->appDir.'/install/'.$this->appConfig['default_content_installer'].'.php';
+
+            $this->defaultContentInstaller = new $this->appConfig['default_content_installer']($this->container);
+        }
+
+        return $this->defaultContentInstaller;
     }
 }
