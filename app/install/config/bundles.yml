@@ -2,6 +2,9 @@ Framework:
   enabled: true
 Model:
   enabled: true
+  config:
+    container_params:
+      database_config_location: app/config/database.php
 Twig:
   enabled: true
 Form:

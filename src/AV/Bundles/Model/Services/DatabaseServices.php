@@ -18,7 +18,7 @@ class DatabaseServices implements ServicesInterface
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('query_builder.factory', 'AV\Model\Connection')
-            ->setArguments(array('mysql', '%config_dir%/database.php', null, null, new Reference('dispatcher')));
+            ->setArguments(array('mysql', '%database_config_location%', null, null, new Reference('dispatcher')));
 
         $container->setDefinition('query_builder', new Definition('AV\Model\QueryBuilder\QueryBuilderHandler'))
             ->setFactoryService('query_builder.factory')

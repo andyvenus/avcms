@@ -7,5 +7,5 @@ require:
 services:
  - DatabaseServices
 
-config:
-  database_config_location: app/config/database.php
+container_params:
+  database_config_location: %config_dir%/database.php
