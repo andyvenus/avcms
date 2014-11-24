@@ -1,16 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>{{ block('title') }}</title>
+
     <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        @media (min-width: 992px) {
+            body {
+                margin-top: 50px;
+            }
+
+            .installer-container {
+                border-radius: 15px;
+            }
+        }
+
+        body {
+            background: #565fa3;
+        }
+
+        .installer-container {
+            background: white;
+            padding: 25px 15px;
+            max-width: 800px;
+        }
+
+        .title {
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: #6c77cc;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Install AVCMS</h1>
-
-        {% block content %}{% endblock %}
+    <div class="container installer-container">
+        <div class="row">
+            <div class="col-md-3">
+                <div style="text-align: center;"><img src="{{ site_url }}src/AVCMS/Bundles/Installer/resources/images/av-logo.png" width="126" />
+                <div class="title">{% block title %}{% endblock %}</div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
     </div>
 </body>
 </html>
