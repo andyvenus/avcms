@@ -77,12 +77,12 @@ abstract class Entity implements Validatable
         }
     }
 
-    public function fromArray(array $data)
+    public function fromArray(array $data, $ignoreUnusable = false)
     {
         foreach ($data as $key => $value) {
             $key = str_replace('_', '', $key);
 
-            if (!method_exists($this, 'set'.$key)) {
+            if (!method_exists($this, 'set'.$key) && $ignoreUnusable === false) {
                 throw new \Exception("This entity does not have a method for the data named $key");
             }
 
