@@ -110,11 +110,13 @@ menu_items:
       icon: glyphicon glyphicon-list-alt
       type: route
       label: Modules
+      default_order: 110
     settings:
       target: avcms_settings
       icon: glyphicon glyphicon-cog
       type: route
       label: Settings
+      default_order: 120
 
 modules:
   html_module:

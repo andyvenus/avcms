@@ -63,6 +63,7 @@ menu_items:
       icon: glyphicon glyphicon-dashboard
       type: route
       label: Dashboard
+      default_order: 1
 
 services:
   - AdminServices

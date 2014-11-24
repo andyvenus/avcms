@@ -37,10 +37,14 @@ class UpdateMenusSubscriber implements EventSubscriberInterface
                                 $menuItem = new MenuItem();
                             }
 
-                            $menuItem->fromArray($menuItemConfig);
+                            $menuItem->fromArray($menuItemConfig, true);
                             $menuItem->setMenu($menu);
                             $menuItem->setId($itemId);
                             $menuItem->setOwner($bundle->name);
+
+                            if ($menuItem->getOrder() === null && isset($menuItemConfig['default_order'])) {
+                               $menuItem->setOrder($menuItemConfig['default_order']);
+                            }
 
                             // In case someone has used true/false for the translatable parameter
                             if ($menuItemConfig['translatable']) {

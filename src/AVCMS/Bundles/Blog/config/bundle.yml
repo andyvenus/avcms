@@ -80,6 +80,7 @@ menu_items:
       type: route
       label: Blog
       permission: ADMIN_BLOG
+      default_order: 20
 
 permissions:
   ADMIN_BLOG:
