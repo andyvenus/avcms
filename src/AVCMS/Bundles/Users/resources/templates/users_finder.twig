@@ -29,7 +29,11 @@
 {% block item_extended_inner %}
     <div class="col-md-3">{{ item.joined|date(settings.date_format) }}</div>
 
-    <div class="col-md-3">{{ item.lastActive|date(settings.date_format) }}</div>
+    <div class="col-md-3">
+        {% if item.lastActivity != 0 %}
+            {{ item.lastActivity|date(settings.date_format ~ ' H:i') }}
+        {% endif %}
+    </div>
 
     <div class="col-md-3">{{ item.lastIp|default('None') }}</div>
 

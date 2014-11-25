@@ -161,6 +161,14 @@ class User extends Entity implements UserInterface
         $this->set('last_ip', $value);
     }
 
+    public function getLastActivity() {
+        return $this->get('last_activity');
+    }
+
+    public function setLastActivity($value) {
+        $this->set('last_activity', $value);
+    }
+
     public function setRoleList($roleList)
     {
         $this->set('role_list', $roleList);
