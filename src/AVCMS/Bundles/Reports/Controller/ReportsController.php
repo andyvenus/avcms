@@ -26,7 +26,7 @@ class ReportsController extends Controller
 
         $form = $this->buildForm($reportForm);
 
-        return new JsonResponse(['html' => $this->render('@Reports/report_form_modal.twig', ['form' => $form->createView()])]);
+        return new JsonResponse(['html' => $this->render('@CmsFoundation/modal_form.twig', ['form' => $form->createView(), 'modal_title' => 'Send Report'])]);
     }
 
     public function submitReportAction(Request $request)
