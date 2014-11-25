@@ -281,7 +281,11 @@ class FormView implements FormViewInterface
             return $this->translator->trans($str, $params);
         }
         else {
-            return $str;
+            $finalParams = array();
+            foreach ($params as $placeholder => $value) {
+                $finalParams['{'.$placeholder.'}'] = $value;
+            }
+            return strtr($str, $finalParams);
         }
     }
 
