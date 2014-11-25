@@ -14,28 +14,28 @@ use AVCMS\Core\View\TemplateManager;
 
 class TemplateAssetLoader extends AssetLoader
 {
-    protected $template_manager;
+    protected $templateManager;
 
-    protected $template_config;
+    protected $templateConfig;
 
-    public function __construct(TemplateManager $template_manager)
+    public function __construct(TemplateManager $templateManager)
     {
-        $this->template_manager = $template_manager;
+        $this->templateManager = $templateManager;
     }
 
-    public function loadAssets(AssetManager $asset_manager)
+    public function loadAssets(AssetManager $assetManager)
     {
-        $this->template_config = $this->template_manager->getTemplateConfig();
+        $this->templateConfig = $this->templateManager->getTemplateConfig();
 
-        if (isset($this->template_config['assets']) && is_array($this->template_config['assets']) && !empty($this->template_config['assets'])) {
-            foreach ($this->template_config['assets'] as $file => $asset_config) {
-                $asset_type = $this->getFiletype($file);
+        if (isset($this->templateConfig['assets']) && is_array($this->templateConfig['assets']) && !empty($this->templateConfig['assets'])) {
+            foreach ($this->templateConfig['assets'] as $file => $assetConfig) {
+                $assetType = $this->getFiletype($file);
 
-                $asset_config['priority'] = (isset($asset_config['priority']) ? $asset_config['priority'] : 10);
+                $assetConfig['priority'] = (isset($assetConfig['priority']) ? $assetConfig['priority'] : 10);
 
-                $asset = new TemplateFileAsset($this->template_manager->getCurrentTemplate(), $asset_type, $file);
+                $asset = new TemplateFileAsset($this->templateManager->getCurrentTemplate(), $assetType, $file);
 
-                $asset_manager->add($asset, 'frontend', $asset_config['priority']);
+                $assetManager->add($asset, 'frontend', $assetConfig['priority']);
             }
         }
     }

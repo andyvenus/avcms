@@ -11,5 +11,5 @@ use AVCMS\Core\AssetManager\AssetManager;
 
 interface AssetLoaderInterface
 {
-    public function loadAssets(AssetManager $asset_manager);
+    public function loadAssets(AssetManager $assetManager);
 }
