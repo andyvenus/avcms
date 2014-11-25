@@ -1,5 +1,10 @@
 $(document).ready(function() {
     // AJAX FORMS
+
+    $('body').on('click', '[data-form-modal-url]', function() {
+        var url = $(this).data('form-modal-url');
+        avcms.general.loadFormModal(url);
+    });
     $('body').on('submit', '[data-ajax-form]', avcms.form.submitForm);
     avcms.event.addEvent('submit-form-success', avcms.general.modalFormSuccess);
 });
@@ -33,7 +38,6 @@ avcms.general = {
         avcms.general.mainLoaderOn();
 
         $.post(url, data, function(data) {
-            console.log('test');
             avcms.general.mainLoaderOff();
             $('body').append(data.html);
             var modal = $('#formModal');
