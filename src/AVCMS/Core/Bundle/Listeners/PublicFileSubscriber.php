@@ -32,7 +32,7 @@ class PublicFileSubscriber implements EventSubscriberInterface
 
         $lastTime = 0;
 
-        if (file_exists($cacheFile)) {
+        if (file_exists($cacheFile) && $this->bundleManager->cacheIsFresh()) {
             $lastTime = file_get_contents($cacheFile);
         }
 
