@@ -1,17 +1,20 @@
-.leaderboard {
+.header {
   background-color: darkslateblue;
   color: white; }
 
-.leaderboard a {
+.header a {
   color: #fff;
   text-decoration: none; }
 
-.leaderboard a:hover {
+.header a:hover {
   text-decoration: none;
   color: #c7b9ff; }
 
-.leaderboard h1 {
+.header h1 {
   font-family: HelveticaNeue-Light, HelveticaNeue, sans-serif !important; }
+
+.logo-image {
+  margin: 10px 0px; }
 
 .blog-post-container {
   border-bottom: 1px solid #a7a8cd;

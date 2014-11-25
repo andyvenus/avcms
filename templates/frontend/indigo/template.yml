@@ -8,11 +8,10 @@ assets:
   template_asset.js:
 
 user_settings_sections:
-  template: Template Settings
+  template: Indigo Template Settings
 
 user_settings:
-  bacon:
+  logo_image_url:
       type: text
-      default: rofl
       section: template
-      label: Bacon
+      label: Logo URL

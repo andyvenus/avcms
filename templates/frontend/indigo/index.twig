@@ -28,7 +28,7 @@
 </head>
 <body>
 
-<header class="leaderboard">
+<header class="header">
     <div class="container">
         <div class="row">
             <div class="col-md-4">
@@ -45,7 +45,13 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <a href="{{ url('home') }}"><h1>{{ settings.site_name }}</h1></a>
+                <a href="{{ url('home') }}">
+                    {% if settings.logo_image_url %}
+                        <img class="logo-image" src="{{ settings.logo_image_url }}" />
+                    {% else %}
+                        <h1>{{ settings.site_name }}</h1>
+                    {% endif %}
+                </a>
             </div>
         </div>
     </div>
