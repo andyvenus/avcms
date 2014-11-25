@@ -28,6 +28,20 @@ avcms.general = {
         return null;
     },
 
+    loadFormModal: function(url, data) {
+        avcms.general.mainLoaderOn();
+        $.post(url, data, function(data) {
+            avcms.general.mainLoaderOff();
+            $('body').append(data.html);
+            var modal = $('#formModal');
+            modal.modal();
+
+            modal.on('hidden.bs.modal', function () {
+                modal.remove();
+            })
+        }, 'json');
+    },
+
     modalFormSuccess: function(form) {
         if (form.parents('.modal').length == 1) {
             $('#formModal').modal('hide');
