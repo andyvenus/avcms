@@ -2,8 +2,6 @@ var avcms = avcms || {};
 
 $(document).ready(function() {
     $('body').on('click', '[data-report-button]', avcms.reports.openReportForm);
-
-    avcms.event.addEvent('submit-form-success', avcms.general.modalFormSuccess);
 });
 
 avcms.reports = {
