@@ -15,3 +15,4 @@ assets:
     compile: false
   avcms_ckeditor_admin.js:
     env: admin
+    priority: 88
