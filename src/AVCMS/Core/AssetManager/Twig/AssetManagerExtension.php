@@ -73,8 +73,8 @@ class AssetManagerExtension extends \Twig_Extension
             $ext = 'css';
         }
 
-        $urls = $this->assetManager->getRawAssetUrls($assetType, $environment);
-        $urls[] = "web/compiled/$environment.$ext";
+        $urls = ["web/compiled/$environment.$ext"];
+        $urls = array_merge($urls, $this->assetManager->getRawAssetUrls($assetType, $environment));
 
         return $urls;
     }
