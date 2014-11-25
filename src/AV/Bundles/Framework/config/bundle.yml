@@ -6,3 +6,4 @@ disable_content: true
 services:
   - FrameworkServices
   - BundleServices
+  - CacheServices

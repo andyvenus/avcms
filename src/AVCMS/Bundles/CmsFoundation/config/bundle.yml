@@ -131,6 +131,7 @@ modules:
               label: HTML
               required: true
 
-require:
-  - Framework
-  - NonExistant
+permissions:
+  ADMIN_CLEAR_CACHES:
+    name: Clear Caches
+    description: Ability to clear app caches

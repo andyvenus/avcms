@@ -70,6 +70,10 @@ class ModuleCacheBusterSubscriber implements EventSubscriberInterface
                 }
             }
 
+            if (!file_exists(dirname($this->cacheFile))) {
+                mkdir(dirname($this->cacheFile), 0777, true);
+            }
+
             file_put_contents($this->cacheFile, '<?php return '.var_export($cacheBust, true).';');
         }
 
