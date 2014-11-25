@@ -4,8 +4,8 @@ admin_dashboard:
 
 username_suggest:
   path: /username_suggest
-  defaults: {_controller: 'AVCMS\Bundles\Admin\Controller\AdminHelpersController::usernameSuggestAction' }
+  defaults: {_controller: Admin::AdminHelpersController::usernameSuggestAction' }
 
 generate_slug:
   path: /generate_slug/{title}
-  defaults: { _controller: 'AVCMS\Bundles\Admin\Controller\AdminHelpersController::slugGeneratorAction' }
+  defaults: { _controller: 'Admin::AdminHelpersController::slugGeneratorAction' }
