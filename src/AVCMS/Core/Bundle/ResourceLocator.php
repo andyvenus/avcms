@@ -20,14 +20,17 @@ class ResourceLocator extends BaseResourceLocator
         parent::__construct($bundleManager, $rootDir, $appDir);
     }
 
-    protected function getResourceDirs($bundleConfig, $resourceType)
+    protected function getResourceDirs($bundleConfig, $resourceType, $originalOnly)
     {
-        $templateDirs = array(
-            $this->templateDir.'/'.$resourceType.'/'.$bundleConfig->name,
-            $this->templateDir.'/'.$bundleConfig->name,
-        );
+        $templateDirs = [];
+        if ($originalOnly === false) {
+            $templateDirs = array(
+                $this->templateDir . '/' . $resourceType . '/' . $bundleConfig->name,
+                $this->templateDir . '/' . $bundleConfig->name,
+            );
+        }
 
-        $dirs = parent::getResourceDirs($bundleConfig, $resourceType);
+        $dirs = parent::getResourceDirs($bundleConfig, $resourceType, $originalOnly);
 
         return (array_merge($templateDirs, $dirs));
     }

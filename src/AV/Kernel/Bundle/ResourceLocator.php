@@ -20,11 +20,11 @@ class ResourceLocator
         $this->appDir = $appDir;
     }
 
-    public function findFileDirectory($bundleName, $file, $type)
+    public function findFileDirectory($bundleName, $file, $type, $originalOnly = false)
     {
         $bundleConfig = $this->bundleManager->getBundleConfig($bundleName);
 
-        foreach ($this->getResourceDirs($bundleConfig, $type) as $dir) {
+        foreach ($this->getResourceDirs($bundleConfig, $type, $originalOnly) as $dir) {
             $dir = $dir.'/'.$file;
 
             if (file_exists($dir)) {
@@ -35,12 +35,15 @@ class ResourceLocator
         throw new NotFoundException(sprintf('File %s not found in bundle %s', $file, $bundleConfig->name));
     }
 
-    protected function getResourceDirs($bundleConfig, $resourceType)
+    protected function getResourceDirs($bundleConfig, $resourceType, $originalOnly)
     {
-        $dirs = array(
-            $this->appDir.'/resources/'.$bundleConfig->name,
-            $this->rootDir.'/'.$bundleConfig->directory.'/resources/'.$resourceType,
-        );
+        $dirs = [];
+
+        if ($originalOnly === false) {
+            $dirs[] = $this->appDir . '/resources/' . $bundleConfig->name;
+        }
+
+        $dirs[] = $this->rootDir.'/'.$bundleConfig->directory.'/resources/'.$resourceType;
 
         if (isset($bundleConfig->parent_config)) {
             $dirs[] = $bundleConfig->parent_config->directory.'/resources/'.$resourceType;

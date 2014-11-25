@@ -33,8 +33,14 @@ class TwigLoaderFilesystem extends \Twig_Loader_Filesystem
 
         list($namespace, $shortname) = $this->parseName($name);
 
+        $originalOnly = false;
+        if ($namespace[0] === '@') {
+            $originalOnly = true;
+            $namespace = str_replace('@', '', $namespace);
+        }
+
         if ($this->resource_locator->bundleExists($namespace)) {
-            return $this->resource_locator->findFileDirectory($namespace, $shortname, 'templates');
+            return $this->resource_locator->findFileDirectory($namespace, $shortname, 'templates', $originalOnly);
         }
 
         if (!isset($this->paths[$namespace])) {
