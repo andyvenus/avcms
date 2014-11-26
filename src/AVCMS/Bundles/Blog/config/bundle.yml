@@ -35,6 +35,7 @@ user_settings:
       label: Blog Posts Per Page
       help: The number of blog posts displayed on each page
       section: blog
+      default: 10
       validation:
         numeric:
           rule: Numeric
