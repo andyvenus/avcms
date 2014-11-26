@@ -52,6 +52,7 @@ class BlogDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentIn
         $reportsModule->setTitle('Reports');
         $reportsModule->setShowHeader(1);
         $reportsModule->setTemplateType('panel');
+        $reportsModule->setPermissions('ADMIN_REPORTS');
 
         $modules->save($reportsModule);
     }

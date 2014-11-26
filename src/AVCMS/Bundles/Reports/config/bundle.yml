@@ -29,6 +29,7 @@ modules:
       cachable: false
       accepted_template_types: [panel, none]
       type: admin
+      default_permissions: [ADMIN_REPORTS]
 
 menu_items:
   admin:
