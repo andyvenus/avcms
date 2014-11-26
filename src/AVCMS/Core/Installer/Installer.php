@@ -130,6 +130,15 @@ class Installer
 
                 return false;
             }
+
+            try {
+                $this->getDefaultContentInstaller()->handleContent($bundleName, $version);
+            }
+            catch (\Exception $e) {
+                $this->setFailureError($e->getMessage(), 'danger');
+
+                return false;
+            }
         }
 
         end($versions);
@@ -149,6 +158,9 @@ class Installer
         return $this->failureMessage;
     }
 
+    /**
+     * @return DefaultContentInstaller
+     */
     public function getDefaultContentInstaller()
     {
         if (!isset($this->defaultContentInstaller)) {

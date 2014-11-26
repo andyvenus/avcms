@@ -7,6 +7,7 @@
 
 namespace AVCMS\Bundles\Installer\Controller;
 
+use AV\Cache\CacheClearer;
 use AV\Form\FormError;
 use AVCMS\Bundles\Installer\Form\CreateAdminForm;
 use AVCMS\Bundles\Installer\Form\NewInstallForm;
@@ -115,8 +116,6 @@ class InstallerController extends Controller
 
             $users->save($newUser);
 
-            $this->getInstaller()->getDefaultContentInstaller()->freshInstallComplete();
-
             return new RedirectResponse('../');
         }
         elseif ($form->getData('password1') !== $form->getData('password2')) {
@@ -147,6 +146,9 @@ class InstallerController extends Controller
         $bundle = $request->get('bundle');
 
         $success = $this->getInstaller()->updateBundle($bundle);
+
+        $cacheClearer = new CacheClearer('cache');
+        $cacheClearer->clearCaches();
 
         return new JsonResponse(['success' => $success, 'error' => $this->getInstaller()->getFailureError()]);
     }

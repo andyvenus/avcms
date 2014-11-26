@@ -10,16 +10,11 @@ class BlogDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentIn
     public function getHooks()
     {
         return array(
-            'Blog' => ['1.0' => 'blog_defaults']
+            'Blog' => ['1.0' => 'blogDefaults']
         );
     }
 
-    public function freshInstallComplete()
-    {
-
-    }
-
-    public function freshInstallStart()
+    public function blogDefaults()
     {
 
     }
