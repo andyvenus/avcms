@@ -26,11 +26,17 @@ class InstallerBase
      */
     protected $PDO;
 
+    /**
+     * @var \AV\Model\ModelFactory
+     */
+    protected $modelFactory;
+
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
         $this->queryBuilder = $container->get('query_builder');
         $this->PDO = $this->queryBuilder->getConnection()->getPdoInstance();
+        $this->modelFactory = $container->get('model_factory');
         $this->prefix = $this->queryBuilder->getTablePrefix();
     }
 
