@@ -8,6 +8,7 @@
 namespace AVCMS\Core\View;
 
 use AVCMS\Core\SettingsManager\SettingsManager;
+use AVCMS\Core\View\SettingsLoader\TemplateSettingsLoader;
 use Symfony\Component\Yaml\Yaml;
 
 class TemplateManager
@@ -19,6 +20,9 @@ class TemplateManager
     public function __construct(SettingsManager $settingsManager)
     {
         $this->currentTemplate = $settingsManager->getSetting('template');
+
+        $templateSettingsProvider = new TemplateSettingsLoader($this);
+        $settingsManager->load('template', $templateSettingsProvider);
 
         if ($this->currentTemplate == null) {
             throw new \Exception("No template set in user settings");

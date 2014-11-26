@@ -23,10 +23,6 @@ class TemplateServices implements ServicesInterface
             ->setArguments(array(new Reference('template_manager')))
         ;
 
-        $container->register('settings.loader.template', 'AVCMS\Core\View\SettingsLoader\TemplateSettingsLoader')
-            ->setArguments(array(new Reference('template_manager')))
-        ;
-
         $container->register('bundle.resource_locator', 'AVCMS\Core\Bundle\ResourceLocator')
             ->setArguments(array(new Reference('bundle_manager'), new Reference('settings_manager'), '%root_dir%', '%app_dir%'))
         ;

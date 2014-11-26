@@ -15,3 +15,8 @@ user_settings:
       type: text
       section: template
       label: Logo URL
+
+module_positions:
+  left_sidebar:
+        name: Left Sidebar
+        description: The main sidebar on the template

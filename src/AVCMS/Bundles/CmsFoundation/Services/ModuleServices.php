@@ -45,11 +45,16 @@ class ModuleServices implements ServicesInterface
         $container->register('module_positions_manager', 'AVCMS\Core\Module\ModulePositionsManager')
             ->setArguments(array(new Reference('module.positions_model')))
             ->addMethodCall('setProvider', [new Reference('module.bundle_positions_provider')])
+            ->addMethodCall('setProvider', [new Reference('module.template_positions_provider')])
             ->addTag('event.listener', ['event' => KernelEvents::REQUEST, 'method' => 'updatePositions'])
         ;
 
         $container->register('module.bundle_positions_provider', 'AVCMS\Core\Bundle\ModuleProvider\BundleModulePositionsProvider')
             ->setArguments([new Reference('bundle_manager')])
+        ;
+
+        $container->register('module.template_positions_provider', 'AVCMS\Core\View\ModuleProvider\TemplateModulePositionsProvider')
+            ->setArguments([new Reference('template_manager')])
         ;
 
         $container->register('module.cache_buster_subscriber', 'AVCMS\Bundles\CmsFoundation\Subscribers\ModuleCacheBusterSubscriber')
