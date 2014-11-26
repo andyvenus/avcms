@@ -17,8 +17,10 @@ class BlogDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentIn
 
     public function cmsDefaults()
     {
+        // Modules
         $modules = $this->modelFactory->create('AVCMS\Bundles\CmsFoundation\Model\Modules');
 
+        // Newest Blog Posts - Left Sidebar
         $newestPostsModule = $modules->newEntity();
         $newestPostsModule->setModule('blog_posts');
         $newestPostsModule->setActive(1);
