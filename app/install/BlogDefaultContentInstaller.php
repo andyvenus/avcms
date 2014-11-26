@@ -17,6 +17,19 @@ class BlogDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentIn
 
     public function cmsDefaults()
     {
+        // Menu Items
+        $menuItems = $this->modelFactory->create('AVCMS\Bundles\CmsFoundation\Model\MenuItems');
+
+        $homeItem = $menuItems->newEntity();
+        $homeItem->setId('main_menu_home');
+        $homeItem->setMenu('frontend');
+        $homeItem->setType('route');
+        $homeItem->setLabel('Home');
+        $homeItem->setTarget('home');
+        $homeItem->setIcon('glyphicon glyphicon-home');
+
+        $menuItems->save($homeItem);
+
         // Modules
         $modules = $this->modelFactory->create('AVCMS\Bundles\CmsFoundation\Model\Modules');
 
