@@ -43,6 +43,17 @@ class BlogDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentIn
         $newestPostsModule->setTemplateType('list_panel');
 
         $modules->save($newestPostsModule);
+
+        // Reports - Admin Dashboard
+        $reportsModule = $modules->newEntity();
+        $reportsModule->setModule('reports');
+        $reportsModule->setActive(1);
+        $reportsModule->setPosition('admin_dashboard');
+        $reportsModule->setTitle('Reports');
+        $reportsModule->setShowHeader(1);
+        $reportsModule->setTemplateType('panel');
+
+        $modules->save($reportsModule);
     }
 
     public function blogDefaults()
