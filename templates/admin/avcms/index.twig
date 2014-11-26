@@ -56,11 +56,11 @@
                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"/> </a>
                            <ul class="dropdown-menu" role="menu">
                                {% if is_granted('ADMIN_CLEAR_CACHES') %}
-                                   <li><a href="#" data-form-modal-url="{{ url('clear_caches') }}">Clear Caches</a></li>
-                                   <li><a href="#" class="regenerate-assets">Regenerate Assets</a></li>
+                                   <li><a href="#" data-form-modal-url="{{ url('clear_caches') }}">{% trans %}Clear Caches{% endtrans %}</a></li>
+                                   <li><a href="#" class="regenerate-assets">{% trans %}Regenerate Assets{% endtrans %}</a></li>
                                    <li class="divider"></li>
                                {% endif %}
-                               <li><a href="#">Check for update</a></li>
+                               <li><a href="#">{% trans %}Check for update{% endtrans %}</a></li>
                            </ul>
                        </li>
                    </ul>
