@@ -31,8 +31,12 @@ class AssetServices implements ServicesInterface
             ->addTag('twig.extension')
         ;
 
+        $container->register('public_file_mover', 'AVCMS\Core\Bundle\PublicFileMover')
+            ->setArguments([new Reference('bundle_manager'), new Reference('template_manager'), '%cache_dir%'])
+        ;
+
         $container->register('listener.bundle.public_file', 'AVCMS\Core\Bundle\Listeners\PublicFileSubscriber')
-            ->setArguments(array(new Reference('bundle_manager'), '%cache_dir%'))
+            ->setArguments(array(new Reference('public_file_mover')))
             ->addTag('event.subscriber')
         ;
     }

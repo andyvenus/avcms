@@ -10,6 +10,8 @@ $(document).ready(function() {
     $('body').on('change', 'form[name=avcms_settings] [name=template]', function() {
         template_form_field_changed = true;
     });
+
+    $('body').on('click', '.regenerate-assets', regenerateAssets)
 });
 
 function regenerateAssets() {
