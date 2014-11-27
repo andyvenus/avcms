@@ -6,7 +6,7 @@
             <a href="{{ url('user_profile', {slug: info_user.slug}) }}"><img class="avatar" src="{{ avatar_url(info_user) }}" width="{{ options.avatar_width }}" height="{{ options.avatar_height }}"/></a>
                 <a href="{{ url('user_profile', {slug: info_user.slug}) }}">{{ info_user.username }}</a>
             {% else %}
-                {{ info_user.username }}
+                <strong>{{ info_user.username }}</strong>
             {% endif %}
         </span>
 
