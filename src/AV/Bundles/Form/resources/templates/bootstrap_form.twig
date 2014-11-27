@@ -14,11 +14,30 @@
     {% endspaceless %}
 {% endblock %}
 
+{% block form_label %}
+    {% spaceless %}
+        {% set label = options.label|default('') %}
+        <label>{{ label }}{% if options.required is not empty %} *{% endif %}</label> {{ block('help') }}
+    {% endspaceless %}
+{% endblock %}
+
+{% block help %}
+    {% if options.help %}
+        &nbsp;<span title="{{ options.help }}" data-toggle="tooltip" data-placement="right"><span class="glyphicon glyphicon-question-sign"></span></span>
+    {% endif %}
+{% endblock %}
+
 {% block checkbox_row %}
     {% spaceless %}
         <div class="checkbox{% if form_row.has_error == true %} has-error{% endif %}">
                 {{ form_field(form_row, attr) }}
         </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block checkbox_field %}
+    {% spaceless %}
+        <label><input type="checkbox" name="{{ name }}" {% if value is not empty %}value="{{ value }}" {% endif %} {% if options.checked == true %}checked="checked"{% endif %} /> {{ options.label }}</label> {{ block('help') }}
     {% endspaceless %}
 {% endblock %}
 
