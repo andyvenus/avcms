@@ -18,7 +18,7 @@ class TemplateChoicesProvider implements ChoicesProviderInterface
         $dirs = scandir($template_dir);
         $choices = array();
         foreach ($dirs as $dir) {
-            if (is_dir($template_dir.'/'.$dir) && $dir != '.' && $dir != '..') {
+            if (is_dir($template_dir.'/'.$dir) && $dir != '.' && $dir != '..' && file_exists($template_dir.'/'.$dir.'/template.yml')) {
                 $choices['templates/frontend/'.$dir] = $dir;
             }
         }
