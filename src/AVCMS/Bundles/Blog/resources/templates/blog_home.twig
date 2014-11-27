@@ -6,34 +6,7 @@
     <div class="blog-home-container">
     {% block blog_posts %}
         {% for post in posts %}
-            <article class="box blog-post-container">
-                <div class="box-top">
-                    <h2><a href="{{ url('blog_post', {slug: post.slug}) }}">{{ post.title }}</a></h2>
-                    <p>{{ user_info(post.user) }}</p>
-                </div>
-
-                <div class="box-main">
-                    <p>{{ post.body|raw }}</p>
-                </div>
-
-                <div class="box-footer">
-                    {% if settings.show_blog_hits %}
-                        <span class="text-muted"><span class="glyphicon glyphicon-eye-open"></span> {{ post.hits }}</span>
-                    {% endif %}
-
-                    {% if settings.comments_enabled %}
-                        <a class="btn btn-link btn-sm" href="{{ url('blog_post', {slug: post.slug}) }}#comments"><span class="glyphicon glyphicon-comment"></span> {% trans %}Comments{% endtrans %} ({{ post.comments }})</a>
-                    {% endif %}
-
-                    {% for tag in post.tags %}
-                        <a class="btn btn-default btn-xs" href="{{ url('blog_archive', {tags: tag.name}) }}">{{ tag.name }}</a>
-                    {% endfor %}
-
-                    {% if is_granted('ADMIN_BLOG')  %}
-                        <a class="btn btn-link btn-sm" href="{{ url('blog_edit_post', { id: post.id}) }}"><span class="glyphicon glyphicon-edit"></span> {% trans %}Edit Post{% endtrans %}</a>
-                    {% endif %}
-                </div>
-            </article>
+            {% include '@Blog/blog_post.twig' %}
         {% endfor %}
     {% endblock %}
 

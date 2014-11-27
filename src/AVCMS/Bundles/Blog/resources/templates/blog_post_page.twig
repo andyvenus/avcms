@@ -1,0 +1,24 @@
+{% extends 'index.twig' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+    <div class="blog-post-container">
+    {% block blog_post %}
+        {% include '@Blog/blog_post.twig' %}
+    {% endblock %}
+
+    {% block blog_post_comments %}
+        {% if settings.comments_enabled %}
+            <div class="box">
+                <div class="box-top">
+                    <h4>{% trans %}Comments{% endtrans %} ({{ post.comments }})</h4>
+                </div>
+                <div class="box-main">
+                    {{ comments('blog_post', post) }}
+                </div>
+            </div>
+        {% endif %}
+    {% endblock %}
+    </div>
+{% endblock %}

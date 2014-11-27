@@ -52,6 +52,6 @@ class BlogController extends Controller
 
         $this->container->get('hitcounter')->registerHit($this->posts, $post->getId());
 
-        return new Response($this->render('@Blog/blog_post.twig', array('post' => $post)));
+        return new Response($this->render('@Blog/blog_post_page.twig', array('post' => $post)));
     }
 }
