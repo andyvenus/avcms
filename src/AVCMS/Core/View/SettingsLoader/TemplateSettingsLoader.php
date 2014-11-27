@@ -28,7 +28,9 @@ class TemplateSettingsLoader implements SettingsLoaderInterface
 
     public function getSettings(SettingsManager $settingsManager)
     {
-        $settingsManager->addSettings($this->loadSettings());
+        if (!$this->templateManager->cacheIsFresh()) {
+            $settingsManager->addSettings($this->loadSettings());
+        }
     }
 
     protected function loadSettings()

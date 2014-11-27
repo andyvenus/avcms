@@ -16,7 +16,7 @@ class TemplateServices implements ServicesInterface
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('template_manager', 'AVCMS\Core\View\TemplateManager')
-            ->setArguments(array(new Reference('settings_manager')))
+            ->setArguments(array(new Reference('settings_manager'), '%dev_mode%'))
         ;
 
         $container->register('assets.loader.template', 'AVCMS\Core\View\AssetLoader\TemplateAssetLoader')

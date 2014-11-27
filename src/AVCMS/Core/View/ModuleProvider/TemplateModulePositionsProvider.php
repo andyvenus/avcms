@@ -25,6 +25,10 @@ class TemplateModulePositionsProvider implements ModulePositionsProviderInterfac
 
     public function updatePositions(ModulePositionsManager $modulePositionsManager)
     {
+        if ($this->templateManager->cacheIsFresh()) {
+            return;
+        }
+
         $model = $modulePositionsManager->getModel();
 
         $model->disablePositionsByProvider(self::PROVIDER_NAME);
