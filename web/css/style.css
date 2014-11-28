@@ -40,6 +40,8 @@ select[name=author] {
   .main-menu .navbar-nav > .open > a, .main-menu .navbar-nav > .open > a:hover, .main-menu .navbar-nav > .open > a:focus {
     background-color: #5a4dae;
     color: white; }
+  .main-menu .navbar-collapse, .main-menu .navbar-form {
+    border-color: #3f3579; }
 
 .search-select {
   -webkit-appearance: none;
@@ -62,3 +64,7 @@ select[name=author] {
   margin: 10px 10px 0px 0px;
   box-shadow: #595959 0px 0px 1px;
   display: none; }
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: white; } }

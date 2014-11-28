@@ -54,6 +54,10 @@ select[name=author] {
     background-color: lighten(darkslateblue, 10);
     color: white;
   }
+
+  .navbar-collapse, .navbar-form {
+    border-color: darken(darkslateblue, 5);
+  }
 }
 
 .search-select {
@@ -78,4 +82,10 @@ select[name=author] {
   margin: 10px 10px 0px 0px;
   box-shadow: #595959 0px 0px 1px;
   display: none;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu>li>a {
+    color: white;
+  }
 }
