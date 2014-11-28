@@ -7,6 +7,8 @@
     {% block blog_posts %}
         {% for post in posts %}
             {% include '@Blog/blog_post.twig' %}
+        {% else %}
+            <div class="well well-lg">{% trans %}No Results{% endtrans %}</div>
         {% endfor %}
     {% endblock %}
 
