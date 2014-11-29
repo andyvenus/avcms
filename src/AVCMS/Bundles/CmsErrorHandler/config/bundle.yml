@@ -1,4 +1,4 @@
-name: ErrorHandler
+name: CmsErrorHandler
 namespace: AVCMS\Bundles\CmsErrorHandler
 
 require:
