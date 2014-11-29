@@ -1,0 +1,65 @@
+User Groups
+Add User Group
+Permissions
+Users
+Join Date
+Last Active
+Last IP
+Email address
+Change Password
+New Password
+Confirm Password
+Change {username}'s password
+{username}'s profile
+Admin
+Joined
+Username
+Email
+Email Validated
+About
+Interests
+Group
+User
+Not Validated
+Banned
+Super Admin
+Location
+Website
+Avatar
+Cover Image
+Slug
+Editing User
+Password
+Remember me
+About Me
+Edit Profile
+Profile
+Password & Email
+Re-enter password
+The entered passwords do not match
+Default
+Allow
+Deny
+Editing permissions
+Editing Permissions
+Email Address
+Name
+Flood Control Time
+Default Admin Permission
+Default General Permission
+Editing User Group
+Register
+Register to our website!
+Registration Complete
+Registration complete. You can now login.
+Username not found.
+Validate your new account
+Thanks for registering. Please validate your email address by clicking the link below.
+Registration complete. An link has been sent to {email} for you to confirm your email address and activate your account.
+Sorry that username is already in use
+An account is already registered using that email address
+Validate Email
+Log in now
+Edit User
+Groups
+This user has not filled in their profile

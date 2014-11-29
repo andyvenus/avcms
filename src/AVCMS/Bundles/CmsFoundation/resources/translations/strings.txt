@@ -1,0 +1,60 @@
+Site Name
+Template
+Main
+Submit
+Menus
+Modules
+Positions
+Description
+Inactive
+Editing Menu
+Identifier (permanent)
+Label
+Target Type
+URL
+Route Name
+Target
+Icon
+Enabled
+New Menu Item
+Category
+Editing Menu Item
+Add Module
+Heading / Title
+Show Header
+Template Style
+None
+Limit to pages (leave blank for all pages)
+Seconds until cache expires (0 for no cache)
+HTML
+Manage Module
+This section is not currently active on your site
+Template Type
+Default
+Email
+SMTP Username
+SMTP Password
+SMTP Port
+SMTP Server
+SMTP Encryption
+SSL
+TLS
+Order
+Search
+en
+Default (English)
+Site Language
+Settings
+Permissions (only one needs to match for access)
+Close
+modules
+Core Caches
+Clear Caches
+Date Format
+Identifier
+New Menu
+Site "From" Address
+Add Menu
+Add Menu Item
+Edit
+Please note, you will need to refresh the admin panel to see changes to the admin panel menu.

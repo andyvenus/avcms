@@ -1,3 +1,27 @@
 Post content
 Tags
 Edit Post
+Title
+Credited Author
+URL Slug
+Newest (by ID)
+Oldest (by ID)
+Newest (by publish date)
+Oldest (by publish date)
+A-Z
+Z-A
+Blog Posts
+Add Blog Post
+Body
+Author
+Slug
+Editing Post
+New Post
+Comments
+Blog
+Hits
+Top Hits
+Lowest Hits
+The URL Slug must be unique, slug already in use
+By
+No Results

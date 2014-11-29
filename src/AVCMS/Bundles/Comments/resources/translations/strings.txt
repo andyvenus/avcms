@@ -1,0 +1,9 @@
+Please wait at least {seconds} seconds between making comments
+commented on
+Manage Comments
+Content Type
+All
+Add Comment
+Delete
+Comments
+Report
