@@ -135,7 +135,7 @@ abstract class Controller extends ContainerAware
      */
     protected function activeUser()
     {
-        return $this->container->get('security.context')->getToken()->getUser();
+        return $this->container->get('security.token_storage')->getToken()->getUser();
     }
 
     /**
@@ -153,7 +153,7 @@ abstract class Controller extends ContainerAware
         }
 
         if ($this->container->has('security.context')) {
-            $context['user'] = $this->container->get('security.context')->getToken()->getUser();
+            $context['user'] = $this->container->get('security.token_storage')->getToken()->getUser();
         }
 
         $twig = $this->container->get('twig');
@@ -222,7 +222,7 @@ abstract class Controller extends ContainerAware
      */
     protected function isGranted($attributes, $object = null)
     {
-        return $this->container->get('security.context')->isGranted($attributes, $object);
+        return $this->container->get('security.auth_checker')->isGranted($attributes, $object);
     }
 
     /**

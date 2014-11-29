@@ -9,15 +9,16 @@ namespace AVCMS\Bundles\Admin\Listeners;
 
 use AVCMS\Bundles\Users\ActiveUser;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class AuthorAssigner implements EventSubscriberInterface
 {
-    protected $securityContext;
+    protected $tokenStorage;
 
-    public function __construct(SecurityContextInterface $securityContext)
+    public function __construct(TokenStorageInterface $tokenStorage)
     {
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
     }
 
     public function setDates($event)
@@ -28,7 +29,7 @@ class AuthorAssigner implements EventSubscriberInterface
             return;
         }
 
-        $userId = $this->securityContext->getToken()->getUser()->getId();
+        $userId = $this->tokenStorage->getToken()->getUser()->getId();
 
         if ($entity->getId() === null && is_callable(array($entity, 'setCreatorId')) && is_callable(array($entity, 'getCreatorId')) && $entity->getCreatorId() === null) {
             $entity->setCreatorId($userId);

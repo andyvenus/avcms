@@ -14,26 +14,26 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class AnonymousAuthenticationSubscriber implements EventSubscriberInterface
 {
-    private $context;
+    private $tokenStorage;
     private $key;
     private $logger;
     private $groupsModel;
 
-    public function __construct(SecurityContextInterface $context, $key, Model $groupsModel, LoggerInterface $logger = null)
+    public function __construct(TokenStorageInterface $tokenStorage, $key, Model $groupsModel, LoggerInterface $logger = null)
     {
         $this->groupsModel = $groupsModel;
-        $this->context = $context;
+        $this->tokenStorage = $tokenStorage;
         $this->key = $key;
         $this->logger = $logger;
     }
 
     public function handle(GetResponseEvent $event)
     {
-        if (null !== $this->context->getToken()) {
+        if (null !== $this->tokenStorage->getToken()) {
             return;
         }
 
@@ -42,7 +42,7 @@ class AnonymousAuthenticationSubscriber implements EventSubscriberInterface
         $user->setRoleList('ROLE_UNREGISTERED');
         $user->group = $this->groupsModel->getOne('ROLE_UNREGISTERED');
 
-        $this->context->setToken(new AnonymousToken($this->key, $user, array()));
+        $this->tokenStorage->setToken(new AnonymousToken($this->key, $user, array()));
 
         if (null !== $this->logger) {
             $this->logger->info('Populated SecurityContext with an anonymous Token');

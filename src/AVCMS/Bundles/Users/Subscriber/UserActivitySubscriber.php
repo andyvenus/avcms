@@ -12,25 +12,26 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\PostResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
 
 class UserActivitySubscriber implements EventSubscriberInterface
 {
     /**
      * @var SecurityContextInterface
      */
-    protected $securityContext;
+    protected $tokenStorage;
 
     protected $users;
 
-    public function __construct(SecurityContextInterface $securityContext, Users $users)
+    public function __construct(TokenStorageInterface $tokenStorage, Users $users)
     {
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
         $this->users = $users;
     }
 
     public function updateUserActivity(PostResponseEvent $event)
     {
-        $user = $this->securityContext->getToken()->getUser();
+        $user = $this->tokenStorage->getToken()->getUser();
 
         if ($user->getId() > 0) {
             $this->users->updateUserActivity($user->getId(), $event->getRequest()->getClientIp());

@@ -42,8 +42,15 @@ class UserServices implements ServicesInterface
             ->setFactory([new Reference('model_factory'), 'create'])
         ;
 
+        // security.context DEPRECIATED
         $container->register('security.context', 'Symfony\Component\Security\Core\SecurityContext')
-            ->setArguments(array(new Reference('users.auth_manager'), new Reference('auth.access_decision_manager')))
+            ->setArguments(array(new Reference('security.token_storage'), new Reference('security.auth_checker')))
+        ;
+
+        $container->register('security.token_storage', 'Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage');
+
+        $container->register('security.auth_checker', 'Symfony\Component\Security\Core\Authorization\AuthorizationChecker')
+            ->setArguments([new Reference('security.token_storage'), new Reference('users.auth_manager'), new Reference('auth.access_decision_manager')])
         ;
 
         $container->register('users.dao_auth_provider', 'Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider')
@@ -130,7 +137,7 @@ class UserServices implements ServicesInterface
 
         // ANONYMOUS
         $container->register('subscriber.anonymous_authentication', 'AVCMS\Core\Security\Subscriber\AnonymousAuthenticationSubscriber')
-            ->setArguments(array(new Reference('security.context'), 'anonymous', new Reference('users.groups_model')))
+            ->setArguments(array(new Reference('security.token_storage'), 'anonymous', new Reference('users.groups_model')))
             ->addTag('event.subscriber')
         ;
 

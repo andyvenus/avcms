@@ -13,7 +13,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class UserMiscServices implements ServicesInterface
 {
-
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('permissions.choices_provider', 'AVCMS\Bundles\Users\Form\ChoicesProvider\PermissionsChoicesProvider')
@@ -21,7 +20,7 @@ class UserMiscServices implements ServicesInterface
         ;
 
         $container->register('users.activity_subscriber', 'AVCMS\Bundles\Users\Subscriber\UserActivitySubscriber')
-            ->setArguments([new Reference('security.context'), new Reference('users.model')])
+            ->setArguments([new Reference('security.token_storage'), new Reference('users.model')])
             ->addTag('event.subscriber')
         ;
     }

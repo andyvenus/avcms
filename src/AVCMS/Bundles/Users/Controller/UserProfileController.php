@@ -50,13 +50,11 @@ class UserProfileController extends Controller
      */
     public function editUserProfileAction(Request $request)
     {
-        $context = $this->container->get('security.context');
-
-        if (!$context->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw new InsufficientAuthenticationException;
         }
 
-        $user = $context->getToken()->getUser();
+        $user = $this->activeUser();
 
         $editProfileForm = new EditProfileForm();
         $form = $this->buildForm($editProfileForm, $request, [$user]);
