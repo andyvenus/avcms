@@ -25,11 +25,13 @@ user_settings:
     label: Site Name
     default: My AVCMS Site
     section: main
+    required: true
     validation:
       min_length:
         class: AV\Validation\Rules\Length
         arguments:
           - 5
+
   site_email_address:
     type: text
     label: Site "From" Address
@@ -78,6 +80,12 @@ user_settings:
     help: The default site language
     section: main
     default: en
+  date_format:
+    type: text
+    label: Date Format
+    default: Y-m-d
+    section: main
+    required: true
 
 assets:
   jquery.js:
