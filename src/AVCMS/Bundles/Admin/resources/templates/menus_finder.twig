@@ -13,11 +13,14 @@
 {% block item_options %}
     <div class="btn-group">
         {{ buttons.manage('menus_admin_manage_items', item.id) }}
-        {{ buttons.edit('menus_admin_edit', item.id) }}
-        {% if item.custom == 1 %}
+        {% if item.custom == 1 or item.active == 0 %}
             {{ buttons.delete('menus_admin_delete') }}
         {% endif %}
     </div>
+
+    {% if item.active == 0 %}
+        <span class="label label-warning">Inactive</span>
+    {% endif %}
 {% endblock %}
 
 {% block item_extended_inner %}

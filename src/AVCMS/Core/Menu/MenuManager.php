@@ -7,6 +7,7 @@
 
 namespace AVCMS\Core\Menu;
 
+use AVCMS\Bundles\CmsFoundation\Model\Menu;
 use AVCMS\Bundles\CmsFoundation\Model\MenuItem;
 use AV\Model\Model;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
@@ -62,6 +63,16 @@ class MenuManager
     public function saveMenuItem(MenuItem $menuItem)
     {
         $this->itemsModel->save($menuItem);
+    }
+
+    public function saveMenu(Menu $menu)
+    {
+        $this->model->save($menu);
+    }
+
+    public function setMenusInactiveByProvider($provider)
+    {
+        $this->model->query()->where('provider', $provider)->update(['active' => 0]);
     }
 
     public function getMenuItems($menuId, $showDisabled = false)

@@ -128,7 +128,7 @@ class MenusAdminController extends AdminBaseController
             return new JsonResponse(array('success' => 0, 'error' => 'No ids set'));
         }
 
-        $this->menus->query()->where('custom', 1)->whereIn('id', (array) $request->request->get('ids'))->delete();
+        $this->menus->query()->whereIn('id', (array) $request->request->get('ids'))->delete();
 
         $this->menuItems->query()->where('owner', 'user')->whereIn('menu', (array) $request->request->get('ids'))->delete();
 

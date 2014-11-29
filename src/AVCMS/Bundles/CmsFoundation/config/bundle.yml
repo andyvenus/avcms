@@ -111,6 +111,12 @@ assets:
   avcms_frontend.js:
     env: frontend
 
+menus:
+  frontend:
+    label: Frontend
+  admin:
+    label: Admin
+
 menu_items:
   admin:
     modules:

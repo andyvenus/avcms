@@ -30,7 +30,7 @@ class MenuServices implements ServicesInterface
         ;
 
         $container->register('menu_manager.subscriber', 'AVCMS\Bundles\CmsFoundation\Subscribers\UpdateMenusSubscriber')
-            ->setArguments(array(new Reference('menu_manager'), new Reference('bundle_manager')))
+            ->setArguments(array(new Reference('menu_manager'), new Reference('template_manager'), new Reference('bundle_manager')))
             ->addTag('event.subscriber')
         ;
 
