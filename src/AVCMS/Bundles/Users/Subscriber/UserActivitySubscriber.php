@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class UserActivitySubscriber implements EventSubscriberInterface
 {
     /**
-     * @var SecurityContextInterface
+     * @var TokenStorageInterface
      */
     protected $tokenStorage;
 
