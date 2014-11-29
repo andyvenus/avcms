@@ -21,8 +21,8 @@ class DatabaseServices implements ServicesInterface
             ->setArguments(array('mysql', '%database_config_location%', null, null, new Reference('dispatcher')));
 
         $container->setDefinition('query_builder', new Definition('AV\Model\QueryBuilder\QueryBuilderHandler'))
-            ->setFactoryService('query_builder.factory')
-            ->setFactoryMethod('getQueryBuilder');
+            ->setFactory([new Reference('query_builder.factory'), 'getQueryBuilder'])
+        ;
 
         $container->register('model_factory', 'AV\Model\ModelFactory')
             ->setArguments(array(new Reference('query_builder'), new Reference('dispatcher')))

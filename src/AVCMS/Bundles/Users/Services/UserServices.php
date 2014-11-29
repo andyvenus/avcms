@@ -18,33 +18,28 @@ class UserServices implements ServicesInterface
     {
         $container->register('users.model', 'AVCMS\Bundles\Users\Model\Users')
             ->setArguments(array('AVCMS\Bundles\Users\Model\Users'))
-            ->setFactoryService('model_factory')
-            ->setFactoryMethod('create')
+            ->setFactory([new Reference('model_factory'), 'create'])
             ->addMethodCall('setGroupsModel', [new Reference('users.groups_model')])
         ;
 
         $container->register('users.sessions_model', 'AVCMS\Bundles\Users\Model\Sessions')
             ->setArguments(array('AVCMS\Bundles\Users\Model\Sessions'))
-            ->setFactoryService('model_factory')
-            ->setFactoryMethod('create')
+            ->setFactory([new Reference('model_factory'), 'create'])
         ;
 
         $container->register('users.groups_model', 'AVCMS\Bundles\Users\Model\UserGroups')
             ->setArguments(array('AVCMS\Bundles\Users\Model\UserGroups'))
-            ->setFactoryService('model_factory')
-            ->setFactoryMethod('create')
+            ->setFactory([new Reference('model_factory'), 'create'])
         ;
 
         $container->register('users.permissions_model', 'AVCMS\Bundles\Users\Model\Permissions')
             ->setArguments(array('AVCMS\Bundles\Users\Model\Permissions'))
-            ->setFactoryService('model_factory')
-            ->setFactoryMethod('create')
+            ->setFactory([new Reference('model_factory'), 'create'])
         ;
 
         $container->register('users.group_permissions_model', 'AVCMS\Bundles\Users\Model\GroupPermissions')
             ->setArguments(array('AVCMS\Bundles\Users\Model\GroupPermissions'))
-            ->setFactoryService('model_factory')
-            ->setFactoryMethod('create')
+            ->setFactory([new Reference('model_factory'), 'create'])
         ;
 
         $container->register('security.context', 'Symfony\Component\Security\Core\SecurityContext')

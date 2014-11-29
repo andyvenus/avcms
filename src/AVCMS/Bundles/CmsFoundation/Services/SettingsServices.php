@@ -22,8 +22,7 @@ class SettingsServices implements ServicesInterface
 
         $container->register('settings_model', 'AVCMS\Bundles\CmsFoundation\Model\Settings')
             ->setArguments(array('AVCMS\Bundles\CmsFoundation\Model\Settings'))
-            ->setFactoryService('model_factory')
-            ->setFactoryMethod('create')
+            ->setFactory([new Reference('model_factory'), 'create'])
         ;
 
         $container->register('settings.loader.bundle', 'AVCMS\Core\Bundle\SettingsLoader\BundleSettingsLoader')

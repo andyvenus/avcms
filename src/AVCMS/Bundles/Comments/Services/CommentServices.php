@@ -23,8 +23,7 @@ class CommentServices implements ServicesInterface
 
         $container->register('comment_form_handler', 'AV\Form\FormHandler')
             ->setArguments([new Reference('comment_form')])
-            ->setFactoryService('form.builder')
-            ->setFactoryMethod('buildForm')
+            ->setFactory([new Reference('form.builder'), 'buildForm'])
         ;
 
         $container->register('twig.comments_extension', 'AVCMS\Bundles\Comments\Twig\CommentsTwigExtension')

@@ -21,14 +21,12 @@ class MenuServices implements ServicesInterface
 
         $container->register('menu_manager.model', 'AVCMS\Bundles\CmsFoundation\Model\Menus')
             ->setArguments(array('AVCMS\Bundles\CmsFoundation\Model\Menus'))
-            ->setFactoryService('model_factory')
-            ->setFactoryMethod('create')
+            ->setFactory([new Reference('model_factory'), 'create'])
         ;
 
         $container->register('menu_manager.items_model', 'AVCMS\Bundles\CmsFoundation\Model\MenuItems')
             ->setArguments(array('AVCMS\Bundles\CmsFoundation\Model\MenuItems'))
-            ->setFactoryService('model_factory')
-            ->setFactoryMethod('create')
+            ->setFactory([new Reference('model_factory'), 'create'])
         ;
 
         $container->register('menu_manager.subscriber', 'AVCMS\Bundles\CmsFoundation\Subscribers\UpdateMenusSubscriber')
