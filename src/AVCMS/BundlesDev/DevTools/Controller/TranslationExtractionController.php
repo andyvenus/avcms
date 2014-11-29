@@ -48,6 +48,10 @@ class TranslationExtractionController extends Controller
                 $previouslyAccepted[] = $string;
             }
 
+            if (!file_exists($bundleDir.'/resources/translations')) {
+                mkdir($bundleDir.'/resources/translations', 0777, true);
+            }
+
             file_put_contents($bundleDir.'/resources/translations/strings.txt', implode(PHP_EOL, $previouslyAccepted));
         }
 
