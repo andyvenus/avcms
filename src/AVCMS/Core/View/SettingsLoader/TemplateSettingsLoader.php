@@ -75,6 +75,8 @@ class TemplateSettingsLoader implements SettingsLoaderInterface
 
     public function getFields()
     {
+        $this->loadSettings();
+
         return $this->fields;
     }
 
