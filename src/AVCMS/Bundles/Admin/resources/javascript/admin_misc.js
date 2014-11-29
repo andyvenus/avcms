@@ -56,6 +56,13 @@ $(document).ready(function() {
 
                 }, 'json');
             }
+            else {
+                tags_field.select2({
+                    tags: avcms.misc.tagsCache,
+                    tokenSeparators: [","],
+                    width: '100%'
+                });
+            }
         }
 
         $('[data-toggle="tooltip"]').tooltip();
