@@ -16,6 +16,9 @@ class SelectType extends DefaultType
         if (is_array($data) && !isset($field['options']['attr']['multiple'])) {
             return false;
         }
+        elseif (isset($field['options']['strict']) && $field['options']['strict'] === true && !is_array($data) && !isset($field['options']['choices'][$data])) {
+            return false;
+        }
         elseif ($data !== null) {
             return true;
         }
