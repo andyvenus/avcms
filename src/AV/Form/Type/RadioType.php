@@ -15,6 +15,7 @@ class RadioType extends DefaultType
     {
         $field = parent::makeView($field, $allFormData, $formHandler);
 
+        // Make sure that numerical values are always integers
         if (is_numeric($field['value'])) {
             $field['value'] = intval($field['value']);
         }
