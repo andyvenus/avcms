@@ -33,7 +33,7 @@ class CacheClearer
             $dirItr = new \DirectoryIterator($this->cacheDir);
             foreach ($dirItr as $file) {
                 if ($file->isFile()) {
-                    unlink($file->getRealPath());
+                    unlink($file->getPathname());
                 }
             }
         }
