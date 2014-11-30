@@ -24,16 +24,6 @@ class FormView implements FormViewInterface
     protected $fields = array();
 
     /**
-     * @var String
-     */
-    protected $action = null;
-
-    /**
-     * @var String
-     */
-    protected $method = 'POST';
-
-    /**
      * @var TranslatorInterface
      */
     protected $translator;
@@ -41,7 +31,7 @@ class FormView implements FormViewInterface
     /**
      * @var String
      */
-    protected $submit_button_label = 'Submit';
+    protected $submitButtonLabel = 'Submit';
 
     /**
      * @var array
@@ -66,7 +56,7 @@ class FormView implements FormViewInterface
     /**
      * @var FormBlueprint
      */
-    protected $form_blueprint;
+    protected $formBlueprint;
 
     /**
      * @var bool
@@ -89,8 +79,8 @@ class FormView implements FormViewInterface
 
     public function setSections(array $sections)
     {
-        foreach ($sections as $section_id => $section) {
-            $this->sections[$section_id]['label'] = $this->translate($section['label']);
+        foreach ($sections as $sectionId => $section) {
+            $this->sections[$sectionId]['label'] = $this->translate($section['label']);
         }
     }
 
@@ -99,25 +89,25 @@ class FormView implements FormViewInterface
         return $this->sections;
     }
 
-    public function setFormBlueprint(FormBlueprintInterface $form_blueprint)
+    public function setFormBlueprint(FormBlueprintInterface $formBlueprint)
     {
-        $this->form_blueprint = $form_blueprint;
+        $this->formBlueprint = $formBlueprint;
     }
 
     public function getSuccessMessage()
     {
         if ($this->submitted) {
-            return $this->form_blueprint->getSuccessMessage();
+            return $this->formBlueprint->getSuccessMessage();
         }
         else {
             return null;
         }
     }
 
-    public function doFieldTranslations($fields) {
-        $updated_fields = array();
+    protected function doFieldTranslations($fields) {
+        $updatedFields = array();
 
-        foreach ($fields as $field_name => $field) {
+        foreach ($fields as $fieldName => $field) {
 
             if (isset($field['options']['label'])) {
                 $field['options']['label'] = $this->translate($field['options']['label']);
@@ -134,14 +124,14 @@ class FormView implements FormViewInterface
             }
 
             if (strpos($field['name'], '[]') === false) {
-                $updated_fields[$field_name] = $field;
+                $updatedFields[$fieldName] = $field;
             }
             else {
-                $updated_fields[] = $field;
+                $updatedFields[] = $field;
             }
         }
 
-        return $updated_fields;
+        return $updatedFields;
     }
 
     /**
@@ -158,14 +148,14 @@ class FormView implements FormViewInterface
      */
     public function getSectionFields($section)
     {
-        $matched_fields = array();
-        foreach ($this->fields as $field_name => $field) {
+        $matchedFields = array();
+        foreach ($this->fields as $fieldName => $field) {
             if (isset($field['options']['section']) && $field['options']['section'] == $section) {
-                $matched_fields[$field_name] = $field;
+                $matchedFields[$fieldName] = $field;
             }
         }
 
-        return $matched_fields;
+        return $matchedFields;
     }
 
     /**
@@ -190,11 +180,24 @@ class FormView implements FormViewInterface
     }
 
     /**
+     * @return mixed
+     */
+    public function getMethod()
+    {
+        return $this->params['method'];
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function setName($name)
     {
         $this->params['name'] = $name;
+    }
+
+    public function getName()
+    {
+        return $this->params['name'];
     }
 
     /**
@@ -215,7 +218,7 @@ class FormView implements FormViewInterface
      */
     public function setSubmitButtonLabel($label)
     {
-        $this->submit_button_label = $label;
+        $this->submitButtonLabel = $label;
     }
 
     /**
@@ -223,7 +226,7 @@ class FormView implements FormViewInterface
      */
     public function getSubmitButtonLabel()
     {
-        return $this->translate($this->submit_button_label);
+        return $this->translate($this->submitButtonLabel);
     }
 
     /**
@@ -271,7 +274,7 @@ class FormView implements FormViewInterface
     /**
      * Translate a string if the translator has been injected
      *
-     * @param $str The string that will be translated
+     * @param $str string The string that will be translated
      * @param array $params
      * @return string
      */
@@ -302,6 +305,9 @@ class FormView implements FormViewInterface
         }
     }
 
+    /**
+     * @return bool
+     */
     public function hasErrors()
     {
         return isset($this->errors);
@@ -318,11 +324,6 @@ class FormView implements FormViewInterface
         else {
             return null;
         }
-    }
-
-    public function getParams()
-    {
-        return $this->params;
     }
 
     public function getJsonResponseData()

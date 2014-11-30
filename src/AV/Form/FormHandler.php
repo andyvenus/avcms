@@ -60,7 +60,7 @@ class FormHandler
     protected $entityProcessor;
 
     /**
-     * @var FormView A FormView instance that helps render the form
+     * @var FormViewInterface A FormView instance that helps render the form
      */
     protected $formView;
 
@@ -586,10 +586,7 @@ class FormHandler
         $this->formView->setAction($this->getAction());
         $this->formView->setSubmitted($this->isSubmitted());
         $this->formView->setValid($this->isValid());
-
-        //if ($this->submitted && isset($this->validator)) {
-            $this->formView->setErrors($this->getValidationErrors());
-        //}
+        $this->formView->setErrors($this->getValidationErrors());
 
         return $this->formView;
     }

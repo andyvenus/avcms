@@ -16,17 +16,17 @@ class FormViewTest extends \PHPUnit_Framework_TestCase
     /**
      * @var FormView
      */
-    private $form_view;
+    private $formView;
 
-    private $name_field;
+    private $nameField;
 
-    private $category_field;
+    private $categoryField;
 
     public function setUp()
     {
-        $this->form_view = new FormView();
+        $this->formView = new FormView();
 
-        $this->name_field = array (
+        $this->nameField = array (
             'name' => 'name',
             'type' => 'text',
             'options' => array (
@@ -35,7 +35,7 @@ class FormViewTest extends \PHPUnit_Framework_TestCase
             'value' => 'Example Name'
         );
 
-        $this->category_field = array (
+        $this->categoryField = array (
             'name' => 'category',
             'type' => 'select',
             'options' => array (
@@ -51,22 +51,22 @@ class FormViewTest extends \PHPUnit_Framework_TestCase
     public function testGetSetField()
     {
         $fields = array(
-            'name' => $this->name_field,
-            'category' => $this->category_field
+            'name' => $this->nameField,
+            'category' => $this->categoryField
         );
 
-        $this->form_view->setFields($fields);
+        $this->formView->setFields($fields);
 
-        $this->assertTrue(isset($this->form_view->name));
-        $this->assertTrue(isset($this->form_view->category));
-        $this->assertFalse(isset($this->form_view->non_existant));
-        $this->assertEquals($this->name_field, $this->form_view->name);
-        $this->assertEquals($this->category_field, $this->form_view->category);
+        $this->assertTrue(isset($this->formView->name));
+        $this->assertTrue(isset($this->formView->category));
+        $this->assertFalse(isset($this->formView->non_existant));
+        $this->assertEquals($this->nameField, $this->formView->name);
+        $this->assertEquals($this->categoryField, $this->formView->category);
     }
 
     public function testGetNullField()
     {
-        $this->assertNull($this->form_view->non_existant_var);
+        $this->assertNull($this->formView->non_existant_var);
     }
 
     /**
@@ -76,7 +76,7 @@ class FormViewTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('\Exception');
 
-        $this->form_view->setFields(array(
+        $this->formView->setFields(array(
             $field_name => array('name' => $field_name)
         ));
     }
@@ -92,55 +92,66 @@ class FormViewTest extends \PHPUnit_Framework_TestCase
     {
         $url = 'http://www.example.com/form.php';
 
-        $this->form_view->setAction($url);
+        $this->formView->setAction($url);
 
-        $params = $this->form_view->getParams();
-
-        $this->assertEquals($url, $params['action']);
+        $this->assertEquals($url, $this->formView->getAction());
     }
 
     public function testGetSetMethod()
     {
-        $this->form_view->setMethod('GET');
+        $this->formView->setMethod('GET');
 
-        $params = $this->form_view->getParams();
+        $this->assertEquals('GET', $this->formView->getMethod());
+    }
 
-        $this->assertEquals('GET', $params['method']);
+    public function testGetSetName()
+    {
+        $name = 'form_name_test';
+
+        $this->formView->setName($name);
+
+        $this->assertEquals($name, $this->formView->getName());
+    }
+
+    public function testValid()
+    {
+        $this->formView->setValid(true);
+        $this->assertTrue($this->formView->isValid());
     }
 
     public function testEncoding()
     {
         $set = 'multipart/form-data';
 
-        $this->form_view->setEncoding($set);
-        $this->assertEquals($set, $this->form_view->getEncoding());
+        $this->formView->setEncoding($set);
+        $this->assertEquals($set, $this->formView->getEncoding());
     }
 
     public function testHasErrors()
     {
-        $this->assertNull($this->form_view->getErrors());
+        $this->assertNull($this->formView->getErrors());
 
-        $this->form_view->setErrors(array(new FormError('name', 'test')));
-        $this->assertTrue($this->form_view->hasErrors());
+        $this->formView->setErrors(array(new FormError('name', 'test')));
+        $this->assertTrue($this->formView->hasErrors());
     }
 
     public function testJsonResponse()
     {
-        $this->form_view->setErrors(array(new FormError('name', 'test')));
+        $this->formView->setErrors(array(new FormError('name', 'test')));
 
-        $json_data = $this->form_view->getJsonResponseData();
+        $jsonData = $this->formView->getJsonResponseData();
 
-        $this->assertTrue($json_data['has_errors']);
-        $this->assertCount(1, $json_data['errors']);
+        $this->assertTrue($jsonData['has_errors']);
+        $this->assertCount(1, $jsonData['errors']);
     }
 
     public function testTranslation()
     {
-        $mock_translator = $this->getMockBuilder('\AVCMS\Core\Translation\Translator')
+        $mockTranslator = $this->getMockBuilder('\AVCMS\Core\Translation\Translator')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $expected_translation = array(
+        $expectedTranslation = array(
             'Name Translated',
             'Category Translated',
             'One Translated',
@@ -149,44 +160,55 @@ class FormViewTest extends \PHPUnit_Framework_TestCase
         );
 
         $map = array(
-            array('Name', array(), null, null, $expected_translation[0]),
-            array('Category', array(), null, null, $expected_translation[1]),
-            array("One", array(), null, null, $expected_translation[2]),
-            array("Submit Original", array(), null, null, $expected_translation[3]),
-            array("Example Error", array(), null, null, $expected_translation[4])
+            array('Name', array(), null, null, $expectedTranslation[0]),
+            array('Category', array(), null, null, $expectedTranslation[1]),
+            array("One", array(), null, null, $expectedTranslation[2]),
+            array("Submit Original", array(), null, null, $expectedTranslation[3]),
+            array("Example Error", array(), null, null, $expectedTranslation[4])
         );
 
-        $mock_translator->expects($this->any())
+        $mockTranslator->expects($this->any())
             ->method('trans')
             ->will($this->returnValueMap($map));
 
-        $this->form_view->setTranslator($mock_translator);
+        $this->formView->setTranslator($mockTranslator);
 
         $fields = array(
-            'name' => $this->name_field,
-            'category' => $this->category_field
+            'name' => $this->nameField,
+            'category' => $this->categoryField
         );
 
-        $this->form_view->setFields($fields);
+        $this->formView->setFields($fields);
 
-        $this->form_view->setSubmitButtonLabel('Submit Original');
+        $this->formView->setSubmitButtonLabel('Submit Original');
 
-        $fields = $this->form_view->getFields();
+        $fields = $this->formView->getFields();
 
-        $this->assertEquals($expected_translation[0], $fields['name']['options']['label']);
-        $this->assertEquals($expected_translation[1], $fields['category']['options']['label']);
-        $this->assertEquals($expected_translation[2], $fields['category']['options']['choices'][1]);
-        $this->assertEquals($expected_translation[3], $this->form_view->getSubmitButtonLabel());
+        $this->assertEquals($expectedTranslation[0], $fields['name']['options']['label']);
+        $this->assertEquals($expectedTranslation[1], $fields['category']['options']['label']);
+        $this->assertEquals($expectedTranslation[2], $fields['category']['options']['choices'][1]);
+        $this->assertEquals($expectedTranslation[3], $this->formView->getSubmitButtonLabel());
 
-        $form_errors = array(
+        $formErrors = array(
             new FormError('name', 'Example Error', true)
         );
 
-        $this->form_view->setErrors($form_errors);
+        $this->formView->setErrors($formErrors);
 
-        $translated_errors = $this->form_view->getErrors();
+        $translatedErrors = $this->formView->getErrors();
 
-        $this->assertEquals($expected_translation[4], $translated_errors[0]->getMessage());
+        $this->assertEquals($expectedTranslation[4], $translatedErrors[0]->getMessage());
+    }
+
+    public function testTranslationNoTranslator()
+    {
+        $error = new FormError('name', 'A {param_name} error', true, ['param_name' => 'name']);
+
+        $this->formView->setErrors([$error]);
+
+        $finalErrors = $this->formView->getErrors();
+
+        $this->assertEquals('A name error', $finalErrors[0]->getMessage());
     }
 
     public function testSections()
@@ -194,33 +216,33 @@ class FormViewTest extends \PHPUnit_Framework_TestCase
         $sections = array('my_section' => array('label' => 'My Section'));
         $fields = array('example_field' => array('name' => 'example_field', 'options' => array('section' => 'my_section')));
 
-        $this->form_view->setSections($sections);
+        $this->formView->setSections($sections);
 
-        $this->form_view->setFields($fields);
+        $this->formView->setFields($fields);
 
-        $this->assertEquals($sections, $this->form_view->getSections());
+        $this->assertEquals($sections, $this->formView->getSections());
 
-        $resulting_fields = $this->form_view->getSectionFields('my_section');
+        $resultingFields = $this->formView->getSectionFields('my_section');
 
-        $this->assertArrayHasKey('example_field', $resulting_fields);
+        $this->assertArrayHasKey('example_field', $resultingFields);
     }
 
     public function testSuccessMessage()
     {
-        $form_blueprint = new FormBlueprint();
-        $form_blueprint->setSuccessMessage('Form Submitted Message');
+        $formBlueprint = new FormBlueprint();
+        $formBlueprint->setSuccessMessage('Form Submitted Message');
 
-        $this->form_view->setFormBlueprint($form_blueprint);
-        $this->form_view->setSubmitted(true);
+        $this->formView->setFormBlueprint($formBlueprint);
+        $this->formView->setSubmitted(true);
 
-        $this->assertEquals('Form Submitted Message', $this->form_view->getSuccessMessage('Form Submitted Message'));
+        $this->assertEquals('Form Submitted Message', $this->formView->getSuccessMessage('Form Submitted Message'));
     }
 
     public function testSubmitted()
     {
-        $this->form_view->setSubmitted(true);
+        $this->formView->setSubmitted(true);
 
-        $this->assertTrue($this->form_view->isSubmitted());
+        $this->assertTrue($this->formView->isSubmitted());
     }
 }
  

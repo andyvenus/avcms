@@ -7,6 +7,7 @@
 
 namespace AV\Form\Twig;
 
+use AV\Form\FormViewInterface;
 
 class FormExtension extends \Twig_Extension
 {
@@ -106,7 +107,7 @@ class FormExtension extends \Twig_Extension
         );
     }
 
-    public function formStart($form, $attributes = array(), $template = null)
+    public function formStart(FormViewInterface $form, $attributes = array(), $template = null)
     {
         if ($template == null) {
             $this->baseTemplate = $this->environment->loadTemplate($this->defaultTemplate);
@@ -123,41 +124,32 @@ class FormExtension extends \Twig_Extension
         $this->baseTemplate = $this->environment->loadTemplate($template);
     }
 
-    public function formEnd($form)
+    public function formEnd(FormViewInterface $form)
     {
         return $this->baseTemplate->renderBlock('form_end', array('form' => $form));
     }
 
-    public function formField($field_data, $attributes = array())
+    public function formField($fieldData, $attributes = array())
     {
-        if (isset($field_data['options']['attr']) && is_array($field_data['options']['attr'])) {
-            $field_data['attr'] = array_merge($field_data['options']['attr'], $attributes);
+        if (isset($fieldData['options']['attr']) && is_array($fieldData['options']['attr'])) {
+            $fieldData['attr'] = array_merge($fieldData['options']['attr'], $attributes);
         }
         else {
-            $field_data['attr'] = $attributes;
+            $fieldData['attr'] = $attributes;
         }
 
-        /*
-        if (isset($field_data['options']['field_template'])) {
-            $template = $field_data['options']['field_template'];
+        if (isset($fieldData['options']['field_template'])) {
+            $template = $this->environment->loadTemplate($fieldData['options']['field_template']);
+
+            unset($fieldData['options']['field_template']);
+            $field = $template->render(array('field' => $fieldData));
         }
         else {
-            $template = $field_data['type'].'_field';
-        }
-        */
-
-        if (isset($field_data['options']['field_template'])) {
-            $template = $this->environment->loadTemplate($field_data['options']['field_template']);
-
-            unset($field_data['options']['field_template']);
-            $field = $template->render(array('field' => $field_data));
-        }
-        else {
-            $field = $this->baseTemplate->renderBlock($field_data['type'].'_field', $field_data);
+            $field = $this->baseTemplate->renderBlock($fieldData['type'].'_field', $fieldData);
         }
 
         if (!$field) {
-            return "<strong>Error:</strong> No template for field type '$field_data[type]'";
+            return "<strong>Error:</strong> No template for field type '$fieldData[type]'";
         }
 
         return $field;
@@ -168,7 +160,7 @@ class FormExtension extends \Twig_Extension
         return $this->baseTemplate->renderBlock('form_label', $fieldData);
     }
 
-    public function formSubmitButton($form)
+    public function formSubmitButton(FormViewInterface $form)
     {
         $label = $form->getSubmitButtonLabel();
         return $this->baseTemplate->renderBlock('submit_button', array('label' => $label));
@@ -189,44 +181,44 @@ class FormExtension extends \Twig_Extension
         return $this->baseTemplate->renderBlock($block, array('form_row' => $field, 'attr' => $attributes));
     }
 
-    public function formRows($form, $attributes = array(), $template_overrides = array())
+    public function formRows(FormViewInterface $form, $attributes = array())
     {
         $fields = $form->getFields();
 
         return $this->baseTemplate->renderBlock('form_rows', array('form_rows' => $fields, 'attr' => $attributes));
     }
 
-    public function formRowsBefore($form, $beforeField, $attributes = array())
+    public function formRowsBefore(FormViewInterface $form, $beforeField, $attributes = array())
     {
         $fields = $form->getFields();
 
         $limitedFields = array();
 
-        foreach ($fields as $field_name => $field) {
-            if ($field_name == $beforeField) {
+        foreach ($fields as $fieldName => $field) {
+            if ($fieldName == $beforeField) {
                 break;
             }
             else {
-                $limitedFields[$field_name] = $field;
+                $limitedFields[$fieldName] = $field;
             }
         }
 
         return $this->baseTemplate->renderBlock('form_rows', array('form_rows' => $limitedFields, 'attr' => $attributes));
     }
 
-    public function formRowsAfter($form, $beforeField, $attributes = array())
+    public function formRowsAfter(FormViewInterface $form, $beforeField, $attributes = array())
     {
         $fields = $form->getFields();
 
         $beforeFieldReached = false;
         $limitedFields = array();
 
-        foreach ($fields as $field_name => $field) {
+        foreach ($fields as $fieldName => $field) {
             if ($beforeFieldReached) {
-                $limitedFields[$field_name] = $field;
+                $limitedFields[$fieldName] = $field;
             }
 
-            if ($field_name == $beforeField) {
+            if ($fieldName == $beforeField) {
                 $beforeFieldReached = true;
             }
         }
@@ -234,12 +226,12 @@ class FormExtension extends \Twig_Extension
         return $this->baseTemplate->renderBlock('form_rows', array('form_rows' => $limitedFields, 'attr' => $attributes));
     }
 
-    public function form($form, $attributes = array())
+    public function form(FormViewInterface $form, $attributes = array())
     {
         return $this->baseTemplate->renderBlock('form_complete', array('form' => $form, 'attributes' => $attributes));
     }
 
-    public function formMessages($form)
+    public function formMessages(FormViewInterface $form)
     {
         return $this->baseTemplate->renderBlock('messages', array('form' => $form));
     }

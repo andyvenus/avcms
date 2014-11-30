@@ -1,6 +1,6 @@
 {% block form_start %}
     {% spaceless %}
-    <form enctype="{{ form.params.encoding }}" {% if form.params.action is not empty %}action="{{ form.params.action }}"{% endif %} {% if form.params.name is not empty %}name="{{ form.params.name }}"{% endif %} method="{{ form.params.method }}"{{ block('attributes') }}>
+    <form enctype="{{ form.encoding }}" {% if form.action is not empty %}action="{{ form.action }}"{% endif %} {% if form.name is not empty %}name="{{ form.name }}"{% endif %} method="{{ form.method }}"{{ block('attributes') }}>
     {% endspaceless %}
 {% endblock %}
 
