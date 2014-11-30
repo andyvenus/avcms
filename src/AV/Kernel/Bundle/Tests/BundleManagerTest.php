@@ -209,12 +209,14 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
     public function testDecorateContainer()
     {
         $mock_container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
-        ->setMethods(['register', 'setParameter'])
+        ->setMethods(['register', 'setParameter', 'addObjectResource'])
         ->getMock();
         $mock_container->expects($this->exactly(2))
             ->method('register');
         $mock_container->expects($this->exactly(2))
             ->method('setParameter');
+        $mock_container->expects($this->exactly(2))
+            ->method('addObjectResource');
 
         $configCache = $this->getMockBuilder('Symfony\Component\Config\ConfigCache')
             ->disableOriginalConstructor()
