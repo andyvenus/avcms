@@ -7,8 +7,6 @@
 
 namespace AV\Form\Type;
 
-use AV\Form\FormHandler;
-
 class FileType extends DefaultType
 {
     public function getDefaultOptions($field)
@@ -29,10 +27,5 @@ class FileType extends DefaultType
     public function isValidRequestData($field, $data)
     {
         return (is_object($data) || is_file($data));
-    }
-
-    public function processRequestData($field, $data)
-    {
-        return $data;
     }
 }
