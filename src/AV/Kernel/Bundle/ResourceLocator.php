@@ -12,7 +12,11 @@ use AVCMS\Core\SettingsManager\SettingsManager;
 
 class ResourceLocator
 {
-    protected $appDir = 'app';
+    protected $appDir;
+
+    protected $rootDir;
+
+    protected $bundleManager;
 
     public function __construct(BundleManagerInterface $bundleManager, $rootDir, $appDir) {
         $this->bundleManager = $bundleManager;
@@ -20,6 +24,14 @@ class ResourceLocator
         $this->appDir = $appDir;
     }
 
+    /**
+     * @param $bundleName
+     * @param $file
+     * @param $type
+     * @param bool $originalOnly
+     * @throws NotFoundException
+     * @return string
+     */
     public function findFileDirectory($bundleName, $file, $type, $originalOnly = false)
     {
         $bundleConfig = $this->bundleManager->getBundleConfig($bundleName);
@@ -46,7 +58,7 @@ class ResourceLocator
         $dirs[] = $this->rootDir.'/'.$bundleConfig->directory.'/resources/'.$resourceType;
 
         if (isset($bundleConfig->parent_config)) {
-            $dirs[] = $bundleConfig->parent_config->directory.'/resources/'.$resourceType;
+            $dirs[] = $this->rootDir.'/'.$bundleConfig->parent_config->directory.'/resources/'.$resourceType;
         }
 
         return $dirs;
