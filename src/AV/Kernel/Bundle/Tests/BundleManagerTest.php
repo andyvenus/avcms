@@ -49,6 +49,17 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
                         'admin_routes.yml' => Yaml::dump(array('my_admin_route' => array('path' => '/admin-path')))
                     )
                 ),
+                'BundleWithParent' => array(
+                    'config' => array(
+                        'bundle.yml' => Yaml::dump(array(
+                                'name' => 'BundleWithParent',
+                                'namespace' => 'AV\Kernel\Bundle\Tests\Resource',
+                                'parent_bundle' => 'FakeBundle'
+                            )
+                        ),
+                        'routes.yml' => Yaml::dump(array('my_route' => array('path' => '/path'))),
+                    )
+                ),
                 'FakeDevBundle' => array(
                     'config' => array(
                         'bundle.yml' => Yaml::dump(array('name' => 'FakeDevBundle', 'namespace' => 'AV\Kernel\Bundle\Tests\Resource'))
@@ -57,7 +68,14 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
             ),
             'cache' => array(),
             'config' => array(
-                'bundles.yml' => Yaml::dump(array('FakeBundle' => array('enabled' => true, 'config' => array('model' => 'Example\Model')))),
+                'bundles.yml' => Yaml::dump(array(
+                    'FakeBundle' => array(
+                        'enabled' => true, 'config' => array('model' => 'Example\Model')
+                    ),
+                    'BundleWithParent' => array(
+                        'enabled' => true
+                    )
+                )),
                 'bundles_dev.yml' => Yaml::dump(array('FakeDevBundle' => array('enabled' => true)))
             ),
             'BadBundles' => array(
@@ -83,6 +101,10 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
                 'FakeBundle' => array(
                     'enabled' => true,
                     'directory' => 'vfs://root/Bundles/FakeBundle'
+                ),
+                'BundleWithParent' => array(
+                    'enabled' => true,
+                    'directory' => 'vfs://root/Bundles/BundleWithParent'
                 )
             );"
         );
@@ -187,10 +209,12 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
     public function testDecorateContainer()
     {
         $mock_container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
-        ->setMethods(['register'])
+        ->setMethods(['register', 'setParameter'])
         ->getMock();
-        $mock_container->expects($this->once())
+        $mock_container->expects($this->exactly(2))
             ->method('register');
+        $mock_container->expects($this->exactly(2))
+            ->method('setParameter');
 
         $configCache = $this->getMockBuilder('Symfony\Component\Config\ConfigCache')
             ->disableOriginalConstructor()
@@ -239,7 +263,7 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
 
         $config = $this->bundleManager->getBundleConfig('FakeBundle');
 
-        $this->assertCount(1, $this->bundleManager->getBundleConfigs());
+        $this->assertCount(2, $this->bundleManager->getBundleConfigs());
 
         $this->assertEquals('FakeBundle', $config['name']);
 
@@ -278,7 +302,7 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
         $bm->initBundles();
 
         $mock_collection = $this->getMock('Symfony\Component\Routing\RouteCollection');
-        $mock_collection->expects($this->exactly(2))->method('addCollection');
+        $mock_collection->expects($this->exactly(3))->method('addCollection');
 
         $bm->getBundleRoutes($mock_collection);
     }
