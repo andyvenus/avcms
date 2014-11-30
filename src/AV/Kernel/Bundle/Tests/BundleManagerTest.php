@@ -53,7 +53,7 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
                     'config' => array(
                         'bundle.yml' => Yaml::dump(array(
                                 'name' => 'BundleWithParent',
-                                'namespace' => 'AV\Kernel\Bundle\Tests\Resource',
+                                'namespace' => 'AV\Kernel\Bundle\Tests\Resource\BundleWithParent',
                                 'parent_bundle' => 'FakeBundle'
                             )
                         ),
