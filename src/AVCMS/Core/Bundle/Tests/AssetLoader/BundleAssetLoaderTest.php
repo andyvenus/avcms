@@ -22,7 +22,7 @@ class BundleAssetLoaderTest extends \PHPUnit_Framework_TestCase
         $mockBundleManager->expects($this->once())
             ->method('getBundleConfigs')
             ->willReturn(array(
-                'bundleConfig' => new BundleConfig($mockBundleManager, array(
+                'bundleConfig' => new BundleConfig(array(
                     'assets' => array(
                         'my_file.js' => array()
                     )

@@ -31,7 +31,7 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
                     'config' => array(
                         'bundle.yml' => Yaml::dump(array(
                                 'name' => 'FakeBundle',
-                                'namespace' => 'AVCMS\Core\Bundle\Tests\Resource',
+                                'namespace' => 'AV\Kernel\Bundle\Tests\Resource',
                                 'services' => array(
                                     'BundleServices'
                                 ),
@@ -39,6 +39,9 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
                                     'my_setting' => array(
                                         'name' => 'my_name'
                                     )
+                                ),
+                                'container_params' => array(
+                                    'container_param' => 'a_value'
                                 )
                             )
                         ),
@@ -48,7 +51,7 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
                 ),
                 'FakeDevBundle' => array(
                     'config' => array(
-                        'bundle.yml' => Yaml::dump(array('name' => 'FakeDevBundle', 'namespace' => 'AVCMS\Core\Bundle\Tests\Resource'))
+                        'bundle.yml' => Yaml::dump(array('name' => 'FakeDevBundle', 'namespace' => 'AV\Kernel\Bundle\Tests\Resource'))
                     )
                 )
             ),
@@ -142,7 +145,7 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
     {
         $bm = new BundleManager(array(), 'not_exists');
 
-        $this->setExpectedException('AVCMS\Core\Bundle\Exception\NotFoundException');
+        $this->setExpectedException('AV\Kernel\Bundle\Exception\NotFoundException');
 
         $bm->loadAppBundleConfig();
     }
@@ -176,14 +179,16 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testFindBundleDirectoryException()
     {
-        $this->setExpectedException('AVCMS\Core\Bundle\Exception\NotFoundException');
+        $this->setExpectedException('AV\Kernel\Bundle\Exception\NotFoundException');
 
         $this->bundleManager->findBundleDirectory('BadBundle');
     }
 
     public function testDecorateContainer()
     {
-        $mock_container = $this->getMock('Symfony\Component\DependencyInjection\ContainerBuilder');
+        $mock_container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
+        ->setMethods(['register'])
+        ->getMock();
         $mock_container->expects($this->once())
             ->method('register');
 
@@ -197,9 +202,9 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->bundleManager->bundlesInitialized());
     }
 
-    public function testNonExistantServiceException()
+    public function testNonExistentServiceException()
     {
-        $this->setExpectedException('AVCMS\Core\Bundle\Exception\NotFoundException', "Service class");
+        $this->setExpectedException('AV\Kernel\Bundle\Exception\NotFoundException', "Service class");
 
         $configCache = $this->getMockBuilder('Symfony\Component\Config\ConfigCache')
             ->disableOriginalConstructor()
@@ -208,7 +213,9 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
         $bm = new BundleManager(array(vfsStream::url('root/BadBundles')), vfsStream::url('root/BadBundles/config'), vfsStream::url('root/BadBundles/cache'));
         $bm->setConfigCache($configCache);
 
-        $mock_container = $this->getMock('Symfony\Component\DependencyInjection\ContainerBuilder');
+        $mock_container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
+            ->setMethods(null)
+            ->getMock();
 
         $bm->decorateContainer($mock_container);
     }
