@@ -403,6 +403,20 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $form->getValidationErrors());
     }
 
+    public function testArrayFieldRequired()
+    {
+        $this->basic_form->add('no_label[example]', 'text', array('required' => true));
+        $form = new FormHandler($this->basic_form);
+
+        $_POST['name'] = '';
+        $_POST['no_label']['example'] = '';
+
+        $form->handleRequest();
+
+        $this->assertFalse($form->isValid());
+        $this->assertCount(2, $form->getValidationErrors());
+    }
+
     public function testHasFieldWithName()
     {
         $this->assertTrue($this->basic_form_handler->hasFieldWithName('name'));
@@ -649,6 +663,15 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $handler = new FormHandler(new BasicForm(), null, null, null,  $event_dispatcher_mock);
         // Triggers FormHandlerRequestEvent
         $handler->handleRequest();
+    }
+
+    public function testMergeData()
+    {
+        $this->basic_form_handler->setData('one', 1);
+
+        $this->basic_form_handler->mergeData(['two' => 2]);
+
+        $this->assertEquals(['one' => 1, 'two' => 2], $this->basic_form_handler->getData());
     }
 
     public function providerDefaultValues()
