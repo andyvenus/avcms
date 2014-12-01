@@ -74,7 +74,7 @@ class UserServices implements ServicesInterface
             ->setArguments(array(array(new Reference('users.dao_auth_provider'), new Reference('users.remember_me_auth_provider'))))
         ;
 
-        $container->register('auth.context_listener', 'AVCMS\Core\Security\Subscriber\ContextListener')
+        $container->register('auth.context_listener', 'Symfony\Component\Security\Http\Firewall\ContextListener')
             ->setArguments(array(new Reference('security.context'), array(new Reference('users.model')), 'user.context'))
             ->addTag('event.listener', array('event' => KernelEvents::REQUEST, 'method' => 'handle'))
             ->addTag('event.listener', array('event' => KernelEvents::RESPONSE, 'method' => 'onKernelResponse'))
