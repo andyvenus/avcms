@@ -146,7 +146,7 @@ class UserServices implements ServicesInterface
             ->setArguments(array(array(new Reference('auth.voter.authenticated'), new Reference('auth.voter.permissions'), new Reference('auth.voter.role'))))
         ;
 
-        $container->register('auth.voter.permissions', 'AVCMS\Core\Security\Permissions\PermissionsVoter')
+        $container->register('auth.voter.permissions', 'AVCMS\Core\Security\Voter\PermissionsVoter')
             ->setArguments(array(new Reference('users.group_permissions_model')))
         ;
 

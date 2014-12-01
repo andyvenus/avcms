@@ -5,8 +5,9 @@
  * Time: 10:39
  */
 
-namespace AVCMS\Core\Security\Permissions;
+namespace AVCMS\Core\Security\Voter;
 
+use AVCMS\Core\Security\Permissions\RolePermissionsProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
