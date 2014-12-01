@@ -48,7 +48,7 @@ class PermissionsVoter implements VoterInterface
             }
 
             $result = VoterInterface::ACCESS_DENIED;
-            if ($this->hasPermission($attribute, $token)) {
+            if ($this->hasPermission($attribute, $token) === true) {
                 return VoterInterface::ACCESS_GRANTED;
             }
 
