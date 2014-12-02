@@ -27,8 +27,6 @@ class ModuleManager
 
     protected $moduleModel;
 
-    protected $modulePositionsManager;
-
     protected $requestStack;
 
     protected $cacheDir;
@@ -37,11 +35,10 @@ class ModuleManager
 
     protected $securityContext;
 
-    public function __construct(FragmentHandler $fragmentHandler, ModuleConfigModelInterface $moduleModel, ModulePositionsManager $modulePositionsManager, RequestStack $requestStack, SecurityContextInterface $securityContext, $cacheDir, $devMode = false)
+    public function __construct(FragmentHandler $fragmentHandler, ModuleConfigModelInterface $moduleModel, RequestStack $requestStack, SecurityContextInterface $securityContext, $cacheDir, $devMode = false)
     {
         $this->fragmentHandler = $fragmentHandler;
         $this->moduleModel = $moduleModel;
-        $this->modulePositionsManager = $modulePositionsManager;
         $this->requestStack = $requestStack;
         $this->cacheDir = $cacheDir;
         $this->devMode = $devMode;
@@ -243,10 +240,18 @@ class ModuleManager
 
     public function clearCaches()
     {
-        $files = new \DirectoryIterator($this->cacheDir);
+        $this->doClearCaches($this->cacheDir);
+    }
+
+    protected function doClearCaches($dir)
+    {
+        $files = new \DirectoryIterator($dir);
         foreach($files as $file) {
             if ($file->isFile()) {
                 unlink($file->getPathName());
+            }
+            if ($file->isDir() && $file->isDot() === false) {
+                $this->doClearCaches($file->getPathname());
             }
         }
     }
