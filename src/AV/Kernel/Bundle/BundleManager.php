@@ -72,16 +72,13 @@ class BundleManager implements BundleManagerInterface
      */
     protected $configCache;
 
-    public function __construct(array $bundleLocations, $configDir = 'app/config', $cacheDir = 'cache', BundleConfigValidator $configValidator = null)
+    public function __construct(array $bundleLocations, $configDir = 'app/config', $cacheDir = 'cache')
     {
         $this->bundleLocations = $bundleLocations;
         $this->configDir = $configDir;
         $this->cacheDir = $cacheDir;
 
-        if ($configValidator == null) {
-            $configValidator = new BundleConfigValidator();
-        }
-
+        $configValidator = new BundleConfigValidator();
         $configValidator->setBundleDirs($bundleLocations);
 
         $this->configValidator = $configValidator;

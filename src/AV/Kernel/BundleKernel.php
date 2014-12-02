@@ -176,13 +176,8 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
 
     protected function buildBundleManager()
     {
-        $this->bundleManager = new BundleManager($this->bundleDirs, $this->options['app_dir'].'/config', $this->options['cache_dir'], $this->getBundleConfigValidator());
+        $this->bundleManager = new BundleManager($this->bundleDirs, $this->options['app_dir'].'/config', $this->options['cache_dir']);
         $this->bundleManager->setDebug($this->debug);
-    }
-
-    protected function getBundleConfigValidator()
-    {
-        return new BundleConfigValidator();
     }
 
     protected function mergeDefaultOptions(array $options)
