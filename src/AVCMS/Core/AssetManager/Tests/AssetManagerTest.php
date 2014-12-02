@@ -163,4 +163,28 @@ class AssetManagerTest extends \PHPUnit_Framework_TestCase {
 
         $this->asset_manager->getDevAssetUrls('fake_type', AssetManager::SHARED);
     }
+
+    public function testAddRawAsset()
+    {
+        $this->asset_manager->addRawAsset($this->javascript_assets[0], AssetManager::SHARED);
+
+        $this->assertEquals([$this->javascript_assets[0]->getDevUrl()], $this->asset_manager->getRawAssetUrls('javascript', AssetManager::SHARED));
+    }
+
+    public function testAddRawAssetGetTypeException()
+    {
+        $this->setExpectedException('\Exception', 'Assets passed to the addRawAsset() method must implement the getType method');
+
+        $asset = new FileAsset('test.js');
+        $this->asset_manager->addRawAsset($asset);
+    }
+
+    public function testLoad()
+    {
+        $assetLoader = $this->getMock('AVCMS\Core\AssetManager\AssetLoader\AssetLoader');
+        $assetLoader->expects($this->once())
+            ->method('loadAssets');
+
+        $this->asset_manager->load($assetLoader);
+    }
 }

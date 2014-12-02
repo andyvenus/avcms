@@ -7,8 +7,6 @@
 
 namespace AVCMS\Bundles\Assets\Services;
 
-use AVCMS\Core\AssetManager\Asset\AppFileAsset;
-use AVCMS\Core\AssetManager\AssetManager;
 use AV\Service\ServicesInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;

@@ -11,7 +11,6 @@ use Assetic\Asset\AssetCollection;
 use Assetic\Asset\BaseAsset;
 use Assetic\AssetWriter;
 use Assetic\Filter\JSqueezeFilter;
-use AVCMS\Core\AssetManager\Asset\AppFileAsset;
 use AVCMS\Core\AssetManager\Asset\BundleAssetInterface;
 use AVCMS\Core\AssetManager\AssetLoader\AssetLoader;
 use AVCMS\Core\AssetManager\Exception\AssetTypeException;
@@ -64,7 +63,7 @@ class AssetManager
     public function addRawAsset(BaseAsset $asset, $environment = self::SHARED)
     {
         if (!method_exists($asset, 'getType')) {
-            throw new \Exception('Assets passed to the add() method must implement the getType method');
+            throw new \Exception('Assets passed to the addRawAsset() method must implement the getType method');
         }
 
         $this->rawAssetUrls[$asset->getType()][$environment][] = $asset->getDevUrl();
@@ -78,26 +77,6 @@ class AssetManager
     public function load(AssetLoader $assetLoader)
     {
         $assetLoader->loadAssets($this);
-    }
-
-    protected function getFiletype($file)
-    {
-        $ext = pathinfo($file, PATHINFO_EXTENSION);
-
-        if ($ext == 'js') {
-            return 'javascript';
-        }
-        else if (in_array($ext, array('css', 'scss', 'sass', 'less'))) {
-            return 'css';
-        }
-        else {
-            return 'unknown';
-        }
-    }
-
-    public function getAssets($type)
-    {
-        return $this->assets[$type];
     }
 
     /**
