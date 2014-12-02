@@ -44,12 +44,12 @@ $(document).ready(function() {
                 width: '100%'
             });
 
-            if (avcms.misc.tagsCache === null) {
+            if (avcms.admin.tagsCache === null) {
                 $.post(avcms.config.site_url+'tags/suggestions', null, function(data) {
-                    avcms.misc.tagsCache = data;
+                    avcms.admin.tagsCache = data;
 
                     tags_field.select2({
-                        tags: avcms.misc.tagsCache,
+                        tags: avcms.admin.tagsCache,
                         tokenSeparators: [","],
                         width: '100%'
                     });
@@ -58,7 +58,7 @@ $(document).ready(function() {
             }
             else {
                 tags_field.select2({
-                    tags: avcms.misc.tagsCache,
+                    tags: avcms.admin.tagsCache,
                     tokenSeparators: [","],
                     width: '100%'
                 });
@@ -66,17 +66,23 @@ $(document).ready(function() {
         }
 
         $('[data-toggle="tooltip"]').tooltip();
+
+        $("select:not(.no_select2)").select2({
+            minimumResultsForSearch: 10
+        });
+
+        $(".nano").nanoScroller({ iOSNativeScrolling: false });
     });
 
     var body = $('body');
 
-    body.on('keyup', '[data-slug-target]', avcms.misc.generateSlugDelay);
+    body.on('keyup', '[data-slug-target]', avcms.admin.generateSlugDelay);
 
-    body.on('change', '[name=slug]', avcms.misc.disableAutoGenerateSlug);
+    body.on('change', '[name=slug]', avcms.admin.disableAutoGenerateSlug);
 
-    body.on('click', '.slug_refresh_button', avcms.misc.generateSlugButton);
+    body.on('click', '.slug_refresh_button', avcms.admin.generateSlugButton);
 
-    body.on('click', '#menu_toggle, .admin-menu a', avcms.misc.toggleMenu);
+    body.on('click', '#menu_toggle, .admin-menu a', avcms.admin.toggleMenu);
 
     body.on('submit', 'form', avcms.form.submitForm);
     body.on('click', '.reset-button', avcms.form.resetForm);
@@ -90,13 +96,13 @@ $(document).ready(function() {
     });
 })
 
-avcms.misc = {
+avcms.admin = {
     typingTimer: null,
     slugInput: null,
     tagsCache: null,
 
     autoGenerateSlug: function() {
-        var input_field = avcms.misc.slugInput;
+        var input_field = avcms.admin.slugInput;
 
         if (!input_field.val()) {
             return;
@@ -124,24 +130,24 @@ avcms.misc = {
     },
 
     generateSlugDelay: function() {
-        avcms.misc.slugInput = $(this);
+        avcms.admin.slugInput = $(this);
         var input_field = $(this);
         var target_field_name = input_field.data('slug-target');
         var target_field = input_field.closest('form').find('[name='+target_field_name+']');
 
         if (target_field.attr('value') == null && target_field.data('modified') == null) {
-            if (avcms.misc.typingTimer) {
-                clearTimeout(avcms.misc.typingTimer);
+            if (avcms.admin.typingTimer) {
+                clearTimeout(avcms.admin.typingTimer);
             }
-            avcms.misc.typingTimer = setTimeout(avcms.misc.autoGenerateSlug, 600);
+            avcms.admin.typingTimer = setTimeout(avcms.admin.autoGenerateSlug, 600);
         }
 
         return true;
     },
 
     generateSlugButton: function() {
-        avcms.misc.slugInput = $(this).closest('form').find('[data-slug-target]');
-        avcms.misc.autoGenerateSlug();
+        avcms.admin.slugInput = $(this).closest('form').find('[data-slug-target]');
+        avcms.admin.autoGenerateSlug();
     },
 
     disableAutoGenerateSlug: function() {

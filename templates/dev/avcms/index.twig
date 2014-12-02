@@ -7,10 +7,10 @@
     <meta name="description" content="The AVCMS developer section">
     <meta name="author" content="AV Scripts">
 
-    <link rel="stylesheet" href="{{ url('home') }}web/resources/CmsFoundation/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url('home') }}web/resources/Admin/css/select2.css">
-    <link rel="stylesheet" href="{{ url('home') }}web/resources/Admin/css/select2-bootstrap.css">
-    <link rel="stylesheet" href="{{ url('home') }}templates/dev/avcms/dev.css">
+    <link rel="stylesheet" href="{{ site_url }}web/resources/CmsFoundation/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ site_url }}web/resources/Admin/css/select2.css">
+    <link rel="stylesheet" href="{{ site_url }}web/resources/Admin/css/select2-bootstrap.css">
+    <link rel="stylesheet" href="{{ site_url }}templates/dev/avcms/dev.css">
 
     <script type="text/javascript">
         var avcms = avcms || {};
@@ -20,13 +20,13 @@
         }
     </script>
 
-    <script src="{{ url('home') }}web/resources/CmsFoundation/javascript/jquery.js"></script>
-    <script src="{{ url('home') }}web/resources/CmsFoundation/javascript/bootstrap.min.js"></script>
-    <script src="{{ url('home') }}web/resources/Admin/javascript/select2.min.js"></script>
-    <script src="{{ url('home') }}web/javascript/avcms_dev.js"></script>
+    <script src="{{ site_url }}web/resources/CmsFoundation/javascript/jquery.js"></script>
+    <script src="{{ site_url }}web/resources/CmsFoundation/javascript/bootstrap.min.js"></script>
+    <script src="{{ site_url }}web/resources/Admin/javascript/select2.min.js"></script>
+    <script src="{{ site_url }}templates/dev/avcms_dev.js"></script>
 
     <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 </head>
 
@@ -52,7 +52,7 @@
                 <li><a href="{{ url('profiler_search') }}"><span class="glyphicon glyphicon-flash"></span> Profiler</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ url('home') }}">Frontend</a></li>
+                <li><a href="{{ site_url }}">Frontend</a></li>
                 <li><a href="{{ url('admin_dashboard') }}">Admin</a></li>
                 <li><a href="{{ url('logout') }}">Logout</a></li>
             </ul>

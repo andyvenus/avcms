@@ -1,8 +1,8 @@
 var avcms = avcms || {};
 
-/***********************
- ADMIN AJAX NAVIGATION
- **********************/
+/****************************
+ AVCMS ADMIN AJAX NAVIGATION
+ ***************************/
 
 $(document).ready(function() {
     var body = $('body');
@@ -47,7 +47,7 @@ avcms.nav = {
         var current_attr = full_url.substring(full_url.indexOf("admin/") + 6).split('/');
         var prev_attr = previous_url.substring(previous_url.indexOf("admin/") + 6).split('/');
 
-        var prev_attr_clean = avcms.fn.removeAllAfter('?', prev_attr[0]);
+        var prev_attr_clean = avcms.general.removeAllAfter('?', prev_attr[0]);
 
         var func_name, ajax_depth;
 
@@ -81,7 +81,7 @@ avcms.nav = {
         }
 
         if (ajax_required === true) {
-            avcms.misc.mainLoaderOn();
+            avcms.admin.mainLoaderOn();
             $.get(full_url+'&ajax_depth='+ajax_depth, function(data, textStatus, xhr) {
                 avcms.nav.hideOrRemovePreviousPage(ajax_depth);
                 content_container[func_name](data);
@@ -92,10 +92,10 @@ avcms.nav = {
 
                 window.scrollTo(0, 0);
                 avcms.nav.onPageModified();
-                avcms.misc.mainLoaderOff();
+                avcms.admin.mainLoaderOff();
             }).fail(function(xhr) {
                 alert('Could not load page. Error: '+xhr.status);
-                avcms.misc.mainLoaderOff();
+                avcms.admin.mainLoaderOff();
                 History.back();
             });
         }
@@ -112,12 +112,6 @@ avcms.nav = {
     },
 
     onPageModified: function() {
-        $("select:not(.no_select2)").select2({
-            minimumResultsForSearch: 10
-        });
-
-        $(".nano").nanoScroller({ iOSNativeScrolling: false });
-
         avcms.event.fireEvent('page-modified');
     },
 
@@ -149,7 +143,7 @@ avcms.nav = {
         var hash = states[prevUrlIndex].hash;
 
         if (!dont_remove_suid) {
-            hash = avcms.fn.removeParameter(hash, '_suid');
+            hash = avcms.general.removeParameter(hash, '_suid');
         }
 
         if (hash.indexOf('=') <= 0)  {
