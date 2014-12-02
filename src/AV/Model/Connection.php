@@ -2,6 +2,7 @@
 
 namespace AV\Model;
 
+use AV\Model\Exception\DatabaseConfigMissingException;
 use Pixie\AliasFacade;
 use Pixie\Connection as PixieConnection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -16,9 +17,15 @@ class Connection extends PixieConnection {
 
     public function __construct($adapter, $adapterConfig, $alias = null, Container $container = null, EventDispatcherInterface $eventDispatcher = null)
     {
-        if (is_string($adapterConfig) && file_exists($adapterConfig)) {
-            $adapterConfig = include($adapterConfig);
+        if (is_string($adapterConfig)) {
+            if (file_exists($adapterConfig)) {
+                $adapterConfig = include($adapterConfig);
+            }
+            else {
+                throw new DatabaseConfigMissingException();
+            }
         }
+
         parent::__construct($adapter, $adapterConfig, $alias, $container);
 
         $this->eventDispatcher = $eventDispatcher;
