@@ -7,12 +7,11 @@
 
 namespace AVCMS\Core\Module;
 
-use AV\Model\Model;
 use AVCMS\Core\Module\Exception\ModuleNotFoundException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
 use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class ModuleManager
 {
@@ -33,16 +32,16 @@ class ModuleManager
 
     protected $devMode;
 
-    protected $securityContext;
+    protected $authChecker;
 
-    public function __construct(FragmentHandler $fragmentHandler, ModuleConfigModelInterface $moduleModel, RequestStack $requestStack, SecurityContextInterface $securityContext, $cacheDir, $devMode = false)
+    public function __construct(FragmentHandler $fragmentHandler, ModuleConfigModelInterface $moduleModel, RequestStack $requestStack, AuthorizationCheckerInterface $authChecker, $cacheDir, $devMode = false)
     {
         $this->fragmentHandler = $fragmentHandler;
         $this->moduleModel = $moduleModel;
         $this->requestStack = $requestStack;
         $this->cacheDir = $cacheDir;
         $this->devMode = $devMode;
-        $this->securityContext = $securityContext;
+        $this->authChecker = $authChecker;
     }
 
     public function setProvider(ModuleProviderInterface $moduleProviders)
@@ -116,9 +115,6 @@ class ModuleManager
         }
 
         if ($module->isCachable() && $moduleConfig->getCacheTime()) {
-            if (!file_exists($this->cacheDir)) {
-                mkdir($this->cacheDir, 0777, true);
-            }
             if (!file_exists($this->cacheDir.'/'.$moduleConfig->getModule())) {
                 mkdir($this->cacheDir.'/'.$moduleConfig->getModule(), 0777, true);
             }
@@ -145,7 +141,7 @@ class ModuleManager
         foreach ($configs as $configId => $moduleConfig) {
 
             if ($ignorePermissions === false && $perms = $moduleConfig->getPermissionsArray()) {
-                if (!$this->securityContext->isGranted($perms)) {
+                if (!$this->authChecker->isGranted($perms)) {
                     unset($configs[$configId]);
                     continue;
                 }
