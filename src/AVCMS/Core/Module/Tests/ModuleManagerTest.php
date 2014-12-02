@@ -28,13 +28,13 @@ class ModuleManagerTest extends ModuleManagerTestCase
         $content = $this->moduleManager->getModuleContent($this->mockModuleConfigOne, 'test_position');
 
         $this->assertEquals('module-content', $content);
-        $this->assertTrue(file_exists(vfsStream::url('root/cache').'/test_module-1-test_position.php'));
+        $this->assertTrue(file_exists(vfsStream::url('root/cache').'/test_module/1-test_position.php'));
 
         $this->moduleManager->getModuleContent($this->mockModuleConfigOne, 'test_position');
 
         $this->moduleManager->clearCaches();
 
-        $this->assertFalse(file_exists(vfsStream::url('root/cache').'/test_module-1-test_position.php'));
+        $this->assertFalse(file_exists(vfsStream::url('root/cache').'/test_module/1-test_position.php'));
 
         $this->moduleManager->getModuleContent($this->mockModuleConfigOne, 'test_position');
     }

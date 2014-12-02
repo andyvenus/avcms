@@ -93,7 +93,11 @@ class ModuleManagerTestCase extends \PHPUnit_Framework_TestCase
         $this->rootDir = vfsStream::setup('root', 0777);
         vfsStream::create(array('cache' => array()));
 
-        $this->moduleManager = new ModuleManager($this->mockFragmentHandler, $this->mockModuleConfigModel, $positions, $this->mockRequestStack, vfsStream::url('root/cache'));
+        $mockAuthChecker = $this->getMockBuilder('Symfony\Component\Security\Core\Authorization\AuthorizationChecker')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->moduleManager = new ModuleManager($this->mockFragmentHandler, $this->mockModuleConfigModel, $this->mockRequestStack, $mockAuthChecker, vfsStream::url('root/cache'));
 
         $this->mockProvider = Mockery::mock('AVCMS\Core\Module\ModuleProviderInterface', array(
             'getModules' => array('test_module' => $this->testModule)
