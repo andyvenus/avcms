@@ -20,5 +20,19 @@ class DevToolsServices implements ServicesInterface
             ->setArguments([new Reference('translator'), new Reference('bundle_manager'), '%root_dir%', true])
             ->addTag('event.listener', ['event' => KernelEvents::TERMINATE, 'method' => 'onTerminate'])
         ;
+
+        // Deny non-admin access to everything apart from /login in dev mode
+        $container->register('auth.access_listener_dev', 'Symfony\Component\Security\Http\Firewall\AccessListener')
+            ->setArguments([new Reference('security.context'), new Reference('auth.access_decision_manager'), new Reference('auth.access_map_dev'), new Reference('users.auth_manager')])
+            ->addTag('event.listener', ['event' => KernelEvents::REQUEST, 'method' => 'handle', 'priority' => -101])
+        ;
+
+        $container->register('auth.access_map_dev', 'Symfony\Component\Security\Http\AccessMap')
+            ->addMethodCall('add', [new Reference('auth.dev_request_matcher'), ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']])
+        ;
+
+        $container->register('auth.dev_request_matcher', 'Symfony\Component\HttpFoundation\RequestMatcher')
+            ->setArguments(['^/(?!login)'])
+        ;
     }
 }
