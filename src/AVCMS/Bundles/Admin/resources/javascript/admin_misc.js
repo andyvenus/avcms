@@ -52,8 +52,6 @@ $(document).ready(function() {
 
     body.on('click', '.slug_refresh_button', avcms.admin.generateSlugButton);
 
-    body.on('click', '#menu_toggle, .admin-menu a', avcms.admin.toggleMenu);
-
     body.on('submit', 'form', avcms.form.submitForm);
     body.on('click', '.reset-button', avcms.form.resetForm);
 

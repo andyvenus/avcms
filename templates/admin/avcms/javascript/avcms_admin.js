@@ -13,6 +13,8 @@ $(document).ready(function() {
 
     avcms.event.addEvent('page-modified', avcms.adminTemplate.verticalDesign);
     avcms.event.addEvent('submit-form-complete', avcms.adminTemplate.formSubmitScroll);
+
+    $('body').on('click', '#menu_toggle, .admin-menu a', avcms.admin.toggleMenu);
 });
 
 avcms.adminTemplate = {
