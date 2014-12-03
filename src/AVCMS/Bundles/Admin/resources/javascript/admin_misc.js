@@ -35,36 +35,6 @@ $(document).ready(function() {
             defaultDate: new Date()
         });
 
-        var tags_field = $("[name='tags']");
-
-        if (tags_field.length > 0) {
-            tags_field.select2({
-                tags: [],
-                tokenSeparators: [","],
-                width: '100%'
-            });
-
-            if (avcms.admin.tagsCache === null) {
-                $.post(avcms.config.site_url+'tags/suggestions', null, function(data) {
-                    avcms.admin.tagsCache = data;
-
-                    tags_field.select2({
-                        tags: avcms.admin.tagsCache,
-                        tokenSeparators: [","],
-                        width: '100%'
-                    });
-
-                }, 'json');
-            }
-            else {
-                tags_field.select2({
-                    tags: avcms.admin.tagsCache,
-                    tokenSeparators: [","],
-                    width: '100%'
-                });
-            }
-        }
-
         $('[data-toggle="tooltip"]').tooltip();
 
         $("select:not(.no_select2)").select2({
@@ -99,7 +69,6 @@ $(document).ready(function() {
 avcms.admin = {
     typingTimer: null,
     slugInput: null,
-    tagsCache: null,
 
     autoGenerateSlug: function() {
         var input_field = avcms.admin.slugInput;

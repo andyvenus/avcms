@@ -5,5 +5,9 @@ require:
   - Framework
   - CmsFoundation
 
+assets:
+  avcms_tags.js:
+    env: admin
+
 services:
   - TagsServices
