@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Error{% if dev_mode %}: {{ error.message }}{% endif %}</title>
+        <title>{% trans %}Error{% endtrans %}{% if dev_mode %}: {{ error.message }}{% endif %}</title>
 
         <style type="text/css">
             body {
@@ -53,7 +53,7 @@
             </div>
 
             <div class="error-home-link">
-                <a href="{{ url('home') }}">&larr; Go To Homepage</a>
+                <a href="{{ url('home') }}">&larr; {% trans %}Go To Homepage{% endtrans %}</a>
             </div>
         </div>
     </body>
