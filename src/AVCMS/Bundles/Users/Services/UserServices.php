@@ -199,7 +199,7 @@ class UserServices implements ServicesInterface
         $container->register('auth.session_logout_handler', 'Symfony\Component\Security\Http\Logout\SessionLogoutHandler');
 
         // EXCEPTION LISTENER
-        $container->register('auth.exception_listener', 'Symfony\Component\Security\Http\Firewall\ExceptionListener')
+        $container->register('auth.exception_listener', 'AVCMS\Core\Security\Firewall\ExceptionListener')
             ->setArguments([new Reference('security.context'), new Reference('auth.trust_resolver'), new Reference('http.utils'), 'username.password', new Reference('auth.form_entry_point'), 'home'])
             ->addTag('event.listener', ['event' => KernelEvents::EXCEPTION, 'method' => 'onKernelException'])
         ;
