@@ -7,13 +7,30 @@
 
 namespace AV\Csrf;
 
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+
 class CsrfToken
 {
-    protected $prefix = 'av_';
+    /**
+     * @var string
+     */
+    protected $prefix;
+
+    /**
+     * @var null|string
+     */
+    protected $token = null;
+
+    public function __construct($prefix = 'av_')
+    {
+        $this->prefix = $prefix;
+    }
 
     public function checkToken($token)
     {
-        if (isset($_COOKIE[$this->prefix.'csrf_token']) && $token === $_COOKIE[$this->prefix.'csrf_token']) {
+        if ($token === $this->token) {
             return true;
         }
 
@@ -27,28 +44,22 @@ class CsrfToken
 
     public function getToken()
     {
-        if (isset($_COOKIE[$this->prefix.'csrf_token']) && strlen($_COOKIE[$this->prefix.'csrf_token']) === 80) {
-            return $_COOKIE[$this->prefix.'csrf_token'];
-        }
-        else {
-            return $this->setTokenCookie();
-        }
+        return $this->token;
     }
 
-    /**
-     * @param null $value
-     * @return null|string
-     *
-     * @todo Symfony cookie set
-     */
-    public function setTokenCookie($value = null)
+    public function handleRequest(GetResponseEvent $event)
     {
-        if ($value == null) {
-            $value = $this->generateToken();
+        $token = $event->getRequest()->cookies->get($this->prefix.'csrf_token', null);
+
+        if ($token === null) {
+            $token = $this->generateToken();
         }
 
-        setcookie($this->prefix.'csrf_token', $value, null, '/');
+        $this->token = $token;
+    }
 
-        return $value;
+    public function handleResponse(FilterResponseEvent $event)
+    {
+        $event->getResponse()->headers->setCookie(new Cookie($this->prefix.'csrf_token', $this->token, 0, '/', null, false, false));
     }
 }

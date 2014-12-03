@@ -11,6 +11,7 @@ use AV\Service\ServicesInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 class FrameworkServices implements ServicesInterface
 {
@@ -82,6 +83,9 @@ class FrameworkServices implements ServicesInterface
         ;
 
         // CSRF protection
-        $container->register('csrf.token', 'AV\Csrf\CsrfToken');
+        $container->register('csrf.token', 'AV\Csrf\CsrfToken')
+            ->addTag('event.listener', ['event' => KernelEvents::REQUEST, 'method' => 'handleRequest'])
+            ->addTag('event.listener', ['event' => KernelEvents::RESPONSE, 'method' => 'handleResponse'])
+        ;
     }
 }
