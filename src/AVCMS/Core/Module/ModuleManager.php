@@ -138,6 +138,11 @@ class ModuleManager
     {
         $request = $this->requestStack->getCurrentRequest();
 
+        // No module on login page
+        if ($request->attributes->get('_route') == 'login') {
+            return [];
+        }
+
         $configs = $this->loadModuleConfigs($positionId);
 
         foreach ($configs as $configId => $moduleConfig) {

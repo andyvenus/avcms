@@ -28,7 +28,7 @@ class DevBarListener implements  EventSubscriberInterface
         if (($token = $response->headers->get('X-Debug-Token')) && (strpos($request->getUri(), 'dev/') === false)) {
             $content = $response->getContent();
 
-            if (strripos($content, '</body>') !== false) {
+            if (strripos($content, '</body>') !== false && $request->attributes->get('_route') !== 'login') {
                 $dev_bar = $this->twig->render('@Profiler/dev_bar_container.twig', array('token' => $token));
 
                 $content = str_ireplace('</body>', "$dev_bar</body>", $content);
