@@ -24,6 +24,10 @@ class ExceptionListener extends BaseExceptionListener
             return;
         }
 
+        if ($request->attributes->get('_route') === 'login') {
+            return;
+        }
+
         parent::setTargetPath($request);
     }
 } 
