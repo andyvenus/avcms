@@ -97,7 +97,7 @@ class UserServices implements ServicesInterface
                     'path' => '/',
                     'domain' => null,
                     'always_remember_me' => false,
-                    'lifetime' => 99999,
+                    'lifetime' => 1209600,
                     'secure' => false,
                     'httponly' => true
                 ),
