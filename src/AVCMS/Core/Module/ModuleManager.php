@@ -136,6 +136,8 @@ class ModuleManager
      */
     public function getPositionModules($positionId, $vars = array(), $limitByRequest = false, $getContent = true, $ignorePermissions = false)
     {
+        $request = $this->requestStack->getCurrentRequest();
+
         $configs = $this->loadModuleConfigs($positionId);
 
         foreach ($configs as $configId => $moduleConfig) {
@@ -148,9 +150,9 @@ class ModuleManager
             }
 
             $routes = $moduleConfig->getLimitRoutesArray();
-            
+
             if ($limitByRequest == true && is_array($routes) && !empty($routes)) {
-                if (!in_array($this->requestStack->getCurrentRequest()->attributes->get('_route'), $routes)) {
+                if (!in_array($request->attributes->get('_route'), $routes)) {
                     unset($configs[$configId]);
                 }
             }
