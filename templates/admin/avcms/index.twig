@@ -56,7 +56,7 @@
                            <ul class="dropdown-menu" role="menu">
                                {% if is_granted('ADMIN_CLEAR_CACHES') %}
                                    <li><a href="#" data-form-modal-url="{{ url('clear_caches') }}">{% trans %}Clear Caches{% endtrans %}</a></li>
-                                   <li><a href="#" class="regenerate-assets">{% trans %}Regenerate Assets{% endtrans %}</a></li>
+                                   <li><a href="{{ url('generate_assets') }}">{% trans %}Regenerate Assets{% endtrans %}</a></li>
                                    <li class="divider"></li>
                                {% endif %}
                                <li><a href="#">{% trans %}Check for update{% endtrans %}</a></li>

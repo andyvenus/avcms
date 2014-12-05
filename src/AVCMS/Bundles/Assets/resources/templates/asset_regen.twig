@@ -1,0 +1,13 @@
+{% extends '@admin/simple_page.twig' %}
+
+{% block title %}{% trans %}Regenerate Assets{% endtrans %}{% endblock %}
+
+{% block content_body %}
+    <div class="well well-lg">
+        {% if error %}
+            {{ error }}
+        {% else %}
+            {% trans %}Assets Regenerated{% endtrans %}
+        {% endif %}
+    </div>
+{% endblock %}
