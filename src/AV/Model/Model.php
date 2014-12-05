@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  * Class Model
  * @package AV\Model
  */
-abstract class Model implements ModelInterface {
+abstract class Model {
 
     /**
      * @var $query_builder QueryBuilderHandler
@@ -63,6 +63,12 @@ abstract class Model implements ModelInterface {
         $this->queryBuilder = $queryBuilder;
         $this->eventDispatcher = $eventDispatcher;
     }
+
+    abstract public function getTable();
+
+    abstract public function getSingular();
+
+    abstract public function getEntity();
 
     /**
      * Set a taxonomy manager allowing records to be found by assigned taxonomy
