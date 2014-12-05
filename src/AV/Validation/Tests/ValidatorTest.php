@@ -2,11 +2,10 @@
 
 namespace AV\Validation\Tests;
 
-use AV\Validation\Rules\MinLength;
+use AV\Validation\Rules\Length;
 use AV\Validation\Tests\Fixtures\NestedArrayValidatableObject;
 use AV\Validation\Tests\Fixtures\ParentValidatableObject;
 use AV\Validation\Tests\Fixtures\SimpleValidatableObject;
-use AV\Validation\Validatable;
 use AV\Validation\Validator;
 
 /**
@@ -117,7 +116,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function testArrayValidation()
     {
-        $this->validator->addRule('name', new MinLength(50));
+        $this->validator->addRule('name', new Length(50));
 
         $this->validator->validate(array(
             'name' => 'Too Short'
