@@ -2,23 +2,35 @@
 
 namespace AV\Validation\Rules;
 
+use AV\Model\Model;
 use AV\Model\ModelFactory;
 
 class MustNotExist extends Rule implements ModelRuleInterface {
 
     /**
-     * @var string
+     * @var string|Model
      */
     protected $model;
 
+    /**
+     * @var string
+     */
     protected $column;
 
-    protected $exists_error = "The field '{param_name}' must be unique, value already exists";
+    /**
+     * @var string
+     */
+    protected $existsError = "The field '{param_name}' must be unique, value already exists";
 
     /**
      * @var \AV\Model\ModelFactory
      */
-    protected $model_factory;
+    protected $modelFactory;
+
+    /**
+     * @var mixed
+     */
+    protected $id;
 
     public function __construct($model, $column, $id = null)
     {
@@ -29,12 +41,12 @@ class MustNotExist extends Rule implements ModelRuleInterface {
 
     public function assert($param)
     {
-        if (!is_object($this->model) && !isset($this->model_factory)) {
+        if (!is_object($this->model) && !isset($this->modelFactory)) {
             throw new \Exception(sprintf("The rule %s requires a ModelFactory to be set using the RuleModelFactoryInjector subscriber", get_class($this)));
         }
 
         if (!is_object($this->model)) {
-            $model = $this->model_factory->create($this->model);
+            $model = $this->modelFactory->create($this->model);
         }
         else {
             $model = $this->model;
@@ -46,13 +58,13 @@ class MustNotExist extends Rule implements ModelRuleInterface {
             $query->where('id', '!=', $this->id);
         }
 
-        $result = $query->get();
+        $result = $query->first();
 
         if (empty($result)) {
             return true;
         }
         else {
-            $this->setError($this->exists_error);
+            $this->setError($this->existsError);
             return false;
         }
     }
@@ -66,6 +78,6 @@ class MustNotExist extends Rule implements ModelRuleInterface {
      * @param ModelFactory $model_factory
      */
     public function setModelFactory(ModelFactory $model_factory) {
-        $this->model_factory = $model_factory;
+        $this->modelFactory = $model_factory;
     }
 } 
