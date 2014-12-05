@@ -22,11 +22,26 @@ function regenerateAssets() {
         }
     );
 
-    $.get(avcms.config.site_url+'admin/generate_assets', function( data ) {
-        $.notify(
-            "Assets regenerated",
-            { position:"right bottom",
-            className: 'success'}
-        );
-    });
+    $.get(avcms.config.site_url+'admin/regenerate-assets', function( data ) {
+
+        if (data.success) {
+            $.notify(
+                "Assets regenerated",
+                {
+                    position: "right bottom",
+                    className: 'success'
+                }
+            );
+        }
+        else {
+            $.notify(
+                data.error,
+                {
+                    position: "right bottom",
+                    className: 'error'
+                }
+            );
+        }
+
+    }, 'json');
 }
