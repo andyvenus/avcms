@@ -67,7 +67,7 @@ class UserAuthController extends Controller
         $form = $this->buildForm(new RegistrationForm(), $request, $user);
 
         if ($form->isValid() && $form->getData('password1') == $form->getData('password2')) {
-            $encodedPassword = $this->container->get('users.bcrypt_encoder')->encodePassword($form->getData('password1'), null);
+            $encodedPassword = $this->container->get('security.bcrypt_encoder')->encodePassword($form->getData('password1'), null);
             $user->setPassword($encodedPassword);
             $form->saveToEntities();
 

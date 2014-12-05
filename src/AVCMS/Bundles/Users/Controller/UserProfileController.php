@@ -97,7 +97,7 @@ class UserProfileController extends Controller
 
         if ($passwordForm->isSubmitted()) {
             if ($passwordForm->getData('password1') === $passwordForm->getData('password2')) {
-                $encodedPassword = $this->container->get('users.bcrypt_encoder')->encodePassword($passwordForm->getData('password1'), null);
+                $encodedPassword = $this->container->get('security.bcrypt_encoder')->encodePassword($passwordForm->getData('password1'), null);
                 $user->setPassword($encodedPassword);
                 $this->model('Users')->update($user);
             }

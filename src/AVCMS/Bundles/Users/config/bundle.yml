@@ -7,6 +7,7 @@ require:
 
 services:
   - UserServices
+  - SecurityServices
   - UserTwigServices
   - UserMiscServices
 
@@ -77,6 +78,7 @@ menu_items:
       parent: users_admin
 
 container_params:
+  test_var: users.model
   avatar_dir: web/avatars
   avatar_path: web/avatars
   default_access_denied_template: @CmsErrorHandler/error.twig
