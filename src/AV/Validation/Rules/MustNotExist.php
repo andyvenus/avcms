@@ -75,9 +75,9 @@ class MustNotExist extends Rule implements ModelRuleInterface {
      * REQUIRES that the Events\RuleModelFactoryInjector subscriber is
      * subscribed to the validator.filter.rule event in within the Validator
      *
-     * @param ModelFactory $model_factory
+     * @param ModelFactory $modelFactory
      */
-    public function setModelFactory(ModelFactory $model_factory) {
-        $this->modelFactory = $model_factory;
+    public function setModelFactory(ModelFactory $modelFactory) {
+        $this->modelFactory = $modelFactory;
     }
 } 
