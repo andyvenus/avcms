@@ -126,6 +126,9 @@ avcms.nav = {
                 document.title = 'Unnamed Page';
             }
         }
+        else if (url.indexOf("?") > -1) {
+            avcms.nav.setPageTitle(url.split("?")[0])
+        }
     },
 
     setDataAjaxUrl: function(content_container, ajax_depth) {
