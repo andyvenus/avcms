@@ -8,6 +8,7 @@
 namespace AVCMS\Bundles\Users\Services;
 
 use AV\Service\ServicesInterface;
+use Monolog\Logger;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -198,20 +199,39 @@ class UserServices implements ServicesInterface
 
         $container->register('auth.session_logout_handler', 'Symfony\Component\Security\Http\Logout\SessionLogoutHandler');
 
+        // LOGGER
+        $container->register('logger', 'Monolog\Logger')
+            ->setArguments(['security.logger'])
+            ->addMethodCall('pushHandler', [new Reference('logger.stream_handler')])
+        ;
+
+        $container->register('logger.stream_handler', 'Monolog\Handler\StreamHandler')
+            ->setArguments(['%cache_dir%/logs/security.log', Logger::DEBUG])
+        ;
+
         // EXCEPTION LISTENER
         $container->register('auth.exception_listener', 'AVCMS\Core\Security\Firewall\ExceptionListener')
-            ->setArguments([new Reference('security.context'), new Reference('auth.trust_resolver'), new Reference('http.utils'), 'username.password', new Reference('auth.form_entry_point'), 'home'])
-            ->addTag('event.listener', ['event' => KernelEvents::EXCEPTION, 'method' => 'onKernelException'])
+            ->setArguments([new Reference('security.context'), new Reference('auth.trust_resolver'), new Reference('http.utils'), 'username.password', new Reference('auth.form_entry_point'), 'home', new Reference('auth.access_denied_handler'), new Reference('logger')])
+            ->addTag('event.listener', ['event' => KernelEvents::EXCEPTION, 'method' => 'onKernelException', 'priority' => -10])
+        ;
+
+        $container->register('auth.access_denied_handler', 'AVCMS\Core\Security\Firewall\AccessDeniedHandler')
+            ->setArguments([new Reference('twig'), '%default_access_denied_template%', '%access_denied_templates%'])
         ;
 
         $container->register('auth.form_entry_point', 'Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint')
-            ->setArguments([new Reference('http_kernel'), new Reference('http.utils'), '/login'])
+            ->setArguments([new Reference('http_kernel'), new Reference('http.utils'), '/login?reauth=true'])
         ;
 
         // UPDATE PERMISSION SUBSCRIBER
         $container->register('subscriber.user.update_permissions', 'AVCMS\Bundles\Users\Subscriber\UpdateBundlePermissionsSubscriber')
             ->setArguments([new Reference('bundle_manager'), new Reference('users.permissions_model')])
             ->addTag('event.subscriber')
+        ;
+
+        $container->register('site_offline_handler', 'AVCMS\Core\Security\SiteOfflineHandler')
+            ->setArguments([new Reference('auth.access_denied_handler')])
+            ->addTag('event.listener', ['event' => KernelEvents::EXCEPTION, 'method' => 'onKernelException', 'priority' => 100])
         ;
     }
 }

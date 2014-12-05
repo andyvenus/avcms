@@ -12,11 +12,9 @@ use AVCMS\Bundles\Users\Model\EmailValidationKey;
 use AVCMS\Core\Controller\Controller;
 use AVCMS\Bundles\Users\Form\LoginForm;
 use AV\Form\FormError;
-use Swift_Mailer;
-use Swift_SmtpTransport;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\Util\SecureRandom;
 
 class UserAuthController extends Controller
@@ -33,17 +31,20 @@ class UserAuthController extends Controller
         $loginFormBlueprint->setAction($this->generateUrl('login_check'));
         $loginForm = $this->buildForm($loginFormBlueprint);
 
-        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $errorMessage = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR)->getMessage();
-        } elseif($request->getSession()->get(SecurityContext::AUTHENTICATION_ERROR)) {
-            $errorMessage = $request->getSession()->get(SecurityContext::AUTHENTICATION_ERROR)->getMessage();
+        if ($request->attributes->has(Security::AUTHENTICATION_ERROR)) {
+            $errorMessage = $request->attributes->get(Security::AUTHENTICATION_ERROR)->getMessage();
+        } elseif($request->getSession()->get(Security::AUTHENTICATION_ERROR)) {
+            $errorMessage = $request->getSession()->get(Security::AUTHENTICATION_ERROR)->getMessage();
+        }
+        if ($request->get('reauth')) {
+            $loginForm->addCustomErrors([new FormError(null, 'Please re-authenticate to access this area')]);
         }
 
         if (isset($errorMessage)) {
             $loginForm->addCustomErrors(array(new FormError(null, $errorMessage, true)));
         }
 
-        $loginForm->setData('username', $request->getSession()->get(SecurityContext::LAST_USERNAME));
+        $loginForm->setData('username', $request->getSession()->get(Security::LAST_USERNAME));
 
         return new Response($this->render('@Users/login.twig', array('login_form' => $loginForm->createView())));
     }

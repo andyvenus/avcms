@@ -10,3 +10,10 @@ services:
 
 container_params:
   error_controller: AVCMS\Bundles\CmsErrorHandler\Controller\ErrorController::exceptionAction
+
+user_settings:
+  site_offline_message:
+    type: text
+    label: Site Offline Message
+    default: Down for maintenance, back soon!
+    section: main

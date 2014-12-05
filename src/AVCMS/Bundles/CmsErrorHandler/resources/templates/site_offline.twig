@@ -1,0 +1,15 @@
+{% extends '@CmsErrorHandler/error.twig' %}
+
+{% block title %}
+    {{ settings.site_offline_message }}
+{% endblock %}
+
+{% block error_status_code %}
+    !
+{% endblock %}
+
+{% block error_message %}
+    {{ settings.site_offline_message }}
+{% endblock %}
+
+{% block error_home_link %}{% endblock %}

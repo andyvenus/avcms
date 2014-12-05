@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>{% trans %}Error{% endtrans %}{% if dev_mode %}: {{ error.message }}{% endif %}</title>
+        <title>{% block title %}{% trans %}Error{% endtrans %}{% if dev_mode %}: {{ error.message }}{% endif %}{% endblock %}</title>
 
         <style type="text/css">
             body {
@@ -36,24 +36,30 @@
         <div class="error-container">
 
                 <div class="error-status-code">
-                    {% if code %}
-                        {{ code }}
-                    {% elseif error.statusCode != 200 %}
-                        {{ error.statusCode }}
-                    {% else %}
-                        :(
-                    {% endif %}
+                    {% block error_status_code %}
+                        {% if code %}
+                            {{ code }}
+                        {% elseif error.statusCode != 200 %}
+                            {{ error.statusCode }}
+                        {% else %}
+                            :(
+                        {% endif %}
+                    {% endblock %}
                 </div>
 
 
             <div class="error-message">
-                {% if dev_mode %}
-                    {{ error.message }}
-                {% endif %}
+                {% block error_message %}
+                    {% if dev_mode or show_error %}
+                        {{ error.message }}
+                    {% endif %}
+                {% endblock %}
             </div>
 
             <div class="error-home-link">
-                <a href="{{ url('home') }}">&larr; {% trans %}Go To Homepage{% endtrans %}</a>
+                {% block error_home_link %}
+                    <a href="{{ url('home') }}">&larr; {% trans %}Go To Homepage{% endtrans %}</a>
+                {% endblock %}
             </div>
         </div>
     </body>
