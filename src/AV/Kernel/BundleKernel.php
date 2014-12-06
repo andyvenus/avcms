@@ -4,8 +4,8 @@ namespace AV\Kernel;
 
 use AV\Kernel\Bundle\BundleManager;
 use AV\Kernel\Bundle\BundleManagerInterface;
-use AV\Kernel\Bundle\Config\BundleConfigValidator;
 use AV\Kernel\Events\KernelBootEvent;
+use AV\Kernel\Exception\KernelConfigException;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Config\Resource\DirectoryResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -50,13 +50,13 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
         $configLocation = $this->options['app_dir'].'/config/app.yml';
 
         if (!file_exists($configLocation)) {
-            throw new \Exception('No app config (app.yml) found in '.$this->options['app_dir']);
+            throw new KernelConfigException('No app config (app.yml) found in '.$this->options['app_dir']);
         }
 
         $this->appConfig = Yaml::parse(file_get_contents($configLocation));
 
         if (!isset($this->appConfig['bundle_dirs'])) {
-            throw new \Exception('App config (app.yml) does not contain any bundle directories');
+            throw new KernelConfigException('App config (app.yml) does not contain any bundle directories');
         }
 
         $this->bundleDirs = $this->appConfig['bundle_dirs'];
@@ -68,12 +68,16 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
 
     public function boot()
     {
+        $this->booted = true;
+
         $this->bundleManager->initBundles();
 
         $this->buildContainer();
 
         // Set BundleManager alias
-        $this->container->get('bundle_manager')->setBundleManager($this->getBundleManager());
+        if ($this->container->has('bundle_manager')) {
+            $this->container->get('bundle_manager')->setBundleManager($this->getBundleManager());
+        }
 
         $event_dispatcher = $this->container->get('dispatcher');
         $event_dispatcher->dispatch('kernel.boot', new KernelBootEvent($this->container));
@@ -115,9 +119,9 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
         }
 
         $containerCacheFile = $this->options['cache_dir'].'/container'.$filenameAppend.'.php';
-        $container_config_cache = new ConfigCache($containerCacheFile, $this->debug);
+        $containerConfigCache = new ConfigCache($containerCacheFile, $this->debug);
 
-        if (!$container_config_cache->isFresh()) {
+        if (!$containerConfigCache->isFresh()) {
             $container = new ContainerBuilder();
             $container->setParameter('dev_mode', $this->debug);
             $container->setParameter('root_dir', $this->rootDir);
@@ -134,11 +138,13 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
 
             $this->container->compile();
 
-            $dumper = new PhpDumper($this->container);
-            $container_config_cache->write(
-                $dumper->dump(),
-                $this->container->getResources()
-            );
+            if ($this->options['container_cache'] !== false) {
+                $dumper = new PhpDumper($this->container);
+                $containerConfigCache->write(
+                    $dumper->dump(),
+                    $this->container->getResources()
+                );
+            }
 
             if ($this->debug) {
                 $xmldumper = new XmlDumper($this->container);
@@ -185,7 +191,8 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
         $defaults = array(
             'app_dir' => 'app',
 	        'cache_dir' => 'cache',
-            'web_path' => 'web'
+            'web_path' => 'web',
+            'container_cache' => true
         );
 
         $options = array_merge($defaults, $options);
