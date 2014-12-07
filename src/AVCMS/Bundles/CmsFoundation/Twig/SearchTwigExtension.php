@@ -32,7 +32,12 @@ class SearchTwigExtension extends \Twig_Extension
         foreach ($bundleConfigs as $bundleConfig) {
             if (isset($bundleConfig['frontend_search'])) {
                 foreach ($bundleConfig['frontend_search'] as $searchConfig) {
-                    $route = $urlGen->generate($searchConfig['route'], [], UrlGeneratorInterface::ABSOLUTE_URL);
+                    try {
+                        $route = $urlGen->generate($searchConfig['route'], [], UrlGeneratorInterface::ABSOLUTE_URL);
+                    }
+                    catch (\Exception $e) {
+                        $route = '#route-'.$searchConfig['route'].'-not-found';
+                    }
                     $searchContentTypes[$route] = $translator->trans($searchConfig['name']);
 
                     if ($currentBundle === $bundleConfig['name'] && $selectedContent === null) {
