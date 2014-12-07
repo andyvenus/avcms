@@ -43,5 +43,10 @@ class TemplateServices implements ServicesInterface
             ->setArguments([new Reference('bundle_manager'), new Reference('form.builder'), new Reference('router'), new Reference('translator'), new Reference('request.stack')])
             ->addTag('twig.extension')
         ;
+
+        $container->register('twig.extension.flash_messages', 'AVCMS\Bundles\CmsFoundation\Twig\FlashMessagesTwigExtension')
+            ->setArguments([new Reference('session')])
+            ->addTag('twig.extension')
+        ;
     }
 }
