@@ -41,7 +41,11 @@ class FormView implements FormViewInterface
     /**
      * @var array
      */
-    protected $params;
+    protected $params = [
+        'name' => null,
+        'method' => 'POST',
+        'action' => null
+    ];
 
     /**
      * @var bool
@@ -180,24 +184,11 @@ class FormView implements FormViewInterface
     }
 
     /**
-     * @return mixed
-     */
-    public function getMethod()
-    {
-        return $this->params['method'];
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function setName($name)
     {
         $this->params['name'] = $name;
-    }
-
-    public function getName()
-    {
-        return $this->params['name'];
     }
 
     /**
@@ -208,9 +199,9 @@ class FormView implements FormViewInterface
         $this->params['encoding'] = $encoding;
     }
 
-    public function getEncoding()
+    public function getParams()
     {
-        return $this->params['encoding'];
+        return $this->params;
     }
 
     /**

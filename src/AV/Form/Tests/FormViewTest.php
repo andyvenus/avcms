@@ -94,14 +94,14 @@ class FormViewTest extends \PHPUnit_Framework_TestCase
 
         $this->formView->setAction($url);
 
-        $this->assertEquals($url, $this->formView->getAction());
+        $this->assertEquals($url, $this->formView->getParams()['action']);
     }
 
     public function testGetSetMethod()
     {
         $this->formView->setMethod('GET');
 
-        $this->assertEquals('GET', $this->formView->getMethod());
+        $this->assertEquals('GET', $this->formView->getParams()['method']);
     }
 
     public function testGetSetName()
@@ -110,7 +110,7 @@ class FormViewTest extends \PHPUnit_Framework_TestCase
 
         $this->formView->setName($name);
 
-        $this->assertEquals($name, $this->formView->getName());
+        $this->assertEquals($name, $this->formView->getParams()['name']);
     }
 
     public function testValid()
@@ -124,7 +124,7 @@ class FormViewTest extends \PHPUnit_Framework_TestCase
         $set = 'multipart/form-data';
 
         $this->formView->setEncoding($set);
-        $this->assertEquals($set, $this->formView->getEncoding());
+        $this->assertEquals($set, $this->formView->getParams()['encoding']);
     }
 
     public function testHasErrors()

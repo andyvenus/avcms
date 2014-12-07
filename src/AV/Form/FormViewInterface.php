@@ -57,21 +57,12 @@ interface FormViewInterface
     public function setAction($url);
 
     /**
-     * @return string
-     */
-    public function getAction();
-
-    /**
      * Set the form submit method (either POST or GET)
      *
      * @param string $method
      */
     public function setMethod($method);
 
-    /**
-     * @return mixed
-     */
-    public function getMethod();
 
     /**
      * @param $name
@@ -79,19 +70,14 @@ interface FormViewInterface
     public function setName($name);
 
     /**
-     * @return string|null
-     */
-    public function getName();
-
-    /**
      * @param $encoding
      */
     public function setEncoding($encoding);
 
     /**
-     * @return string
+     * @return array
      */
-    public function getEncoding();
+    public function getParams();
 
     /**
      * Set the label for the submit button
