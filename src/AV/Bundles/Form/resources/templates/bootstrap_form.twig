@@ -62,7 +62,7 @@
 {% endblock %}
 
 {% block button_field %}
-    {{ block('button') }}
+    <div class="form-group">{{ block('button') }}</div>
 {% endblock %}
 
 {% block text_button_field %}
@@ -74,6 +74,14 @@
                 {{ form_field(options.button, options.button.attr) }}
             </span>
         </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block submit_button %}
+    {% spaceless %}
+        {% set label = label|default('Submit') %}
+        {% set type = type|default('submit') %}
+        <div class="form-group">{{ block('button') }}</div>
     {% endspaceless %}
 {% endblock %}
 
