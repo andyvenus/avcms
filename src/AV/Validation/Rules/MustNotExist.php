@@ -32,14 +32,27 @@ class MustNotExist extends Rule implements ModelRuleInterface {
      */
     protected $id;
 
-    public function __construct($model, $column, $id = null)
+    public function __construct($model, $column, $ignoredId = null)
     {
         $this->model = $model;
         $this->column = $column;
-        $this->id = $id;
+        $this->id = $ignoredId;
     }
 
     public function assert($param)
+    {
+        $result = $this->getResult($param);
+
+        if (empty($result)) {
+            return true;
+        }
+        else {
+            $this->setError($this->existsError);
+            return false;
+        }
+    }
+
+    protected function getResult($param)
     {
         if (!is_object($this->model) && !isset($this->modelFactory)) {
             throw new \Exception(sprintf("The rule %s requires a ModelFactory to be set using the RuleModelFactoryInjector subscriber", get_class($this)));
@@ -58,15 +71,7 @@ class MustNotExist extends Rule implements ModelRuleInterface {
             $query->where('id', '!=', $this->id);
         }
 
-        $result = $query->first();
-
-        if (empty($result)) {
-            return true;
-        }
-        else {
-            $this->setError($this->existsError);
-            return false;
-        }
+        return $query->first();
     }
 
     /**
