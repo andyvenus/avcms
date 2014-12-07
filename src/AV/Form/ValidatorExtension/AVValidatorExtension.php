@@ -147,6 +147,13 @@ class AVValidatorExtension implements ValidatorExtension, ContainerAwareInterfac
                         $class = 'AV\Validation\Rules\\' . $validation['rule'];
                     }
                     else {
+                        if (isset($validation['rule'])) {
+                            throw new \Exception("Validation rule $validation[rule] not found");
+                        }
+                        elseif ($validation['class']) {
+                            throw new \Exception("Validation class $validation[class] does not exist");
+                        }
+
                         continue;
                     }
 
