@@ -8,6 +8,7 @@ require:
 services:
   - UserServices
   - SecurityServices
+  - AuthServices
   - UserTwigServices
   - UserMiscServices
 

@@ -37,6 +37,7 @@ class AnonymousAuthenticationSubscriber implements EventSubscriberInterface
             return;
         }
 
+        //todo: allow user class to be set
         $user = new User();
         $user->setUsername("Unregistered");
         $user->setRoleList('ROLE_UNREGISTERED');
