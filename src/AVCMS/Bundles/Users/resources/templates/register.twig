@@ -6,14 +6,20 @@
 
 {% block content %}
     <div class="box register-container">
-        {% if registration.errors is not empty %}
-            <div class="alert alert-danger">
-                {% for error in login_form.errors %}
-                    {{ error.message }}<br />
-                {% endfor %}
-            </div>
-        {% endif %}
+        <div class="box-top">
+            <h2>{{ block('title') }}</h2>
+        </div>
 
-        {{ form(registration_form) }}
+        <div class="box-main">
+            {% if registration.errors is not empty %}
+                <div class="alert alert-danger">
+                    {% for error in login_form.errors %}
+                        {{ error.message }}<br />
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {{ form(registration_form) }}
+        </div>
     </div>
 {% endblock %}

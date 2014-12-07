@@ -27,3 +27,11 @@ edit_user_profile:
 user_email_password:
   path: /email-password
   defaults: { _controller: Users::UserProfileController::manageEmailPasswordAction }
+
+user_forgot_password:
+  path: /forgot-password
+  defaults: { _controller: Users::UserForgotPasswordController::forgotPasswordAction }
+
+user_forgot_password_process:
+  path: /forgot-password-process/{userId}/{code}
+  defaults: { _controller: Users::UserForgotPasswordController::forgotPasswordProcessAction }

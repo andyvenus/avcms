@@ -1,23 +1,32 @@
 {% extends 'index.twig' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}{% trans %}Login{% endtrans %}{% endblock %}
 
 {% block content %}
     <div class="box login-container">
-        {{ form_start(login_form, null) }}
+        <div class="box-top">
+            <h2>{{ block('title') }}</h2>
+        </div>
+        <div class="box-main">
+            {{ form_start(login_form, null) }}
 
-        {% if login_form.errors is not empty %}
-            <div class="alert alert-danger">
-                {% for error in login_form.errors %}
-                    {{ error.message }}<br />
-                {% endfor %}
+            {% if login_form.errors is not empty %}
+                <div class="alert alert-danger">
+                    {% for error in login_form.errors %}
+                        {{ error.message }}<br />
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {{ form_rows(login_form) }}
+
+            {{ form_submit_button(login_form) }}
+
+            {{ form_end(login_form) }}
+
+            <div class="login-options">
+                <a class="btn btn-default" href="{{ url('user_forgot_password') }}">{% trans %}Forgotten Your Password?{% endtrans %}</a>
             </div>
-        {% endif %}
-
-        {{ form_rows(login_form) }}
-
-        {{ form_submit_button(login_form) }}
-
-        {{ form_end(login_form) }}
+        </div>
     </div>
 {% endblock %}
