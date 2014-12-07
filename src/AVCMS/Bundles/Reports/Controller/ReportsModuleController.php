@@ -16,6 +16,6 @@ class ReportsModuleController extends Controller
     {
         $totalReports = $this->model('Reports')->query()->count();
 
-        return new Response($this->render('@Reports/reports_module.twig', ['total_reports' => $totalReports]));
+        return new Response($this->render('@Reports/admin/reports_module.twig', ['total_reports' => $totalReports]));
     }
 } 

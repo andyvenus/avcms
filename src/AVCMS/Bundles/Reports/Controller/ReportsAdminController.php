@@ -38,7 +38,7 @@ class ReportsAdminController extends AdminBaseController
 
     public function manageReportsAction(Request $request)
     {
-        return $this->handleManage($request, '@Reports/reports_browser.twig');
+        return $this->handleManage($request, '@Reports/admin/reports_browser.twig');
     }
 
     public function reportsFinderAction(Request $request)
@@ -113,7 +113,7 @@ class ReportsAdminController extends AdminBaseController
             $report->content = $contentInfo;
         }
 
-        return new Response($this->render('@Reports/reports_finder.twig', ['reports' => $reports]));
+        return new Response($this->render('@Reports/admin/reports_finder.twig', ['reports' => $reports]));
     }
 
     public function deleteReportsAction(Request $request)

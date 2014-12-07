@@ -21,7 +21,7 @@ class UsersAdminController extends AdminBaseController
      */
     protected $users;
 
-    protected $browserTemplate = '@Users/users_browser.twig';
+    protected $browserTemplate = '@Users/admin/users_browser.twig';
 
     public function setUp(Request $request)
     {
@@ -30,14 +30,14 @@ class UsersAdminController extends AdminBaseController
 
     public function homeAction(Request $request)
     {
-       return $this->handleManage($request, '@Users/users_browser.twig');
+       return $this->handleManage($request, '@Users/admin/users_browser.twig');
     }
 
     public function editAction(Request $request)
     {
         $formBlueprint = new UserAdminForm();
 
-        return $this->handleEdit($request, $this->users, $formBlueprint, 'users_admin_edit', '@Users/edit_user.twig', '@Users/users_browser.twig', array());
+        return $this->handleEdit($request, $this->users, $formBlueprint, 'users_admin_edit', '@Users/admin/edit_user.twig', '@Users/admin/users_browser.twig', array());
     }
 
     public function changePasswordAction(Request $request, $id)
@@ -69,7 +69,7 @@ class UsersAdminController extends AdminBaseController
             return new JsonResponse(['form' => $form->createView()->getJsonResponseData()]);
         }
 
-        return new Response($this->renderAdminSection('@Users/admin_change_user_password.twig', $request->get('ajax_depth'), ['item' => $user, 'form' => $form->createView()]));
+        return new Response($this->renderAdminSection('@Users/admin/admin_change_user_password.twig', $request->get('ajax_depth'), ['item' => $user, 'form' => $form->createView()]));
     }
 
     public function finderAction(Request $request)
@@ -80,7 +80,7 @@ class UsersAdminController extends AdminBaseController
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
         $items = $finder->get();
 
-        return new Response($this->render('@Users/users_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));
+        return new Response($this->render('@Users/admin/users_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));
     }
 
     public function deleteAction(Request $request)

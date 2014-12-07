@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MenusAdminController extends AdminBaseController
 {
-    protected $browserTemplate = '@CmsFoundation/menus_browser.twig';
+    protected $browserTemplate = '@CmsFoundation/admin/menus_browser.twig';
 
     /**
      * @var \AVCMS\Bundles\CmsFoundation\Model\Menus
@@ -49,7 +49,7 @@ class MenusAdminController extends AdminBaseController
             throw $this->createNotFoundException();
         }
 
-        return $this->createEditResponse($helper, $request, '@CmsFoundation/edit_menu.twig', $this->browserTemplate, array('menus_admin_edit', array('id' => $helper->getEntity()->getId())));
+        return $this->createEditResponse($helper, $request, '@CmsFoundation/admin/edit_menu.twig', $this->browserTemplate, array('menus_admin_edit', array('id' => $helper->getEntity()->getId())));
     }
 
     public function editMenuItemAction(Request $request)
@@ -81,7 +81,7 @@ class MenusAdminController extends AdminBaseController
         return $this->createEditResponse(
             $helper,
             $request,
-            '@CmsFoundation/edit_menu_item.twig',
+            '@CmsFoundation/admin/edit_menu_item.twig',
             $this->browserTemplate,
             array('menus_admin_manage_items', array('id' => $menu->getId())),
             array('menu' => $menu))
@@ -101,7 +101,7 @@ class MenusAdminController extends AdminBaseController
 
         $menu_items = $menuManager->getMenuItems($menu->getId(), true);
 
-        return new Response($this->renderAdminSection('@CmsFoundation/manage_menu_items.twig', $request->get('ajax_depth'), array(
+        return new Response($this->renderAdminSection('@CmsFoundation/admin/manage_menu_items.twig', $request->get('ajax_depth'), array(
             'item' => $menu,
             'menu_items' => $menu_items,
         )));
@@ -115,7 +115,7 @@ class MenusAdminController extends AdminBaseController
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
         $items = $finder->get();
 
-        return new Response($this->render('@CmsFoundation/menus_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));
+        return new Response($this->render('@CmsFoundation/admin/menus_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));
     }
 
     public function deleteMenuAction(Request $request)

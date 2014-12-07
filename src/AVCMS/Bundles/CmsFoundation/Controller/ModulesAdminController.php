@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ModulesAdminController extends AdminBaseController
 {
-    protected $browserTemplate = '@CmsFoundation/modules_browser.twig';
+    protected $browserTemplate = '@CmsFoundation/admin/modules_browser.twig';
 
     /**
      * @var \AVCMS\Bundles\CmsFoundation\Model\ModulePositions
@@ -36,7 +36,7 @@ class ModulesAdminController extends AdminBaseController
 
     public function homeAction(Request $request)
     {
-       return $this->handleManage($request, '@CmsFoundation/modules_browser.twig');
+       return $this->handleManage($request, '@CmsFoundation/admin/modules_browser.twig');
     }
 
     public function addModuleAction(Request $request, $position)
@@ -124,7 +124,7 @@ class ModulesAdminController extends AdminBaseController
             ));
         }
 
-        return new Response($this->renderAdminSection('@CmsFoundation\add_module_selected.twig', $request->get('ajax_depth'), array(
+        return new Response($this->renderAdminSection('@CmsFoundation/admin/add_module_selected.twig', $request->get('ajax_depth'), array(
             'item' => $moduleConfig,
             'position' => $position,
             'module' => $module,
@@ -136,7 +136,7 @@ class ModulesAdminController extends AdminBaseController
     {
         $formBlueprint = new ModulePositionAdminForm();
 
-        return $this->handleEdit($request, $this->modulePositions, $formBlueprint, 'module_positions_admin_edit', '@CmsFoundation/edit_module_position.twig', '@CmsFoundation/modules_browser.twig', array());
+        return $this->handleEdit($request, $this->modulePositions, $formBlueprint, 'module_positions_admin_edit', '@CmsFoundation/admin/edit_module_position.twig', '@CmsFoundation/admin/modules_browser.twig', array());
     }
 
     public function managePositionModulesAction(Request $request)
@@ -149,7 +149,7 @@ class ModulesAdminController extends AdminBaseController
 
         $modules = $this->container->get('module_manager')->getPositionModules($request->get('id'), array(), false, false, true);
 
-        return new Response($this->renderAdminSection('@CmsFoundation/manage_position_modules.twig', $request->get('ajax_depth'), array(
+        return new Response($this->renderAdminSection('@CmsFoundation/admin/manage_position_modules.twig', $request->get('ajax_depth'), array(
             'item' => $position,
             'modules' => $modules,
         )));
@@ -206,7 +206,7 @@ class ModulesAdminController extends AdminBaseController
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
         $items = $finder->get();
 
-        return new Response($this->render('@CmsFoundation/module_positions_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));
+        return new Response($this->render('@CmsFoundation/admin/module_positions_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));
     }
 
     public function deleteAction(Request $request)

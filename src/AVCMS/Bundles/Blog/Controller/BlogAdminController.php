@@ -22,7 +22,7 @@ class BlogAdminController extends AdminBaseController
      */
     protected $blogPosts;
 
-    protected $browserTemplate = '@Blog/blog_browser.twig';
+    protected $browserTemplate = '@Blog/admin/blog_browser.twig';
 
     public function setUp()
     {
@@ -35,14 +35,14 @@ class BlogAdminController extends AdminBaseController
 
     public function blogHomeAction(Request $request)
     {
-        return $this->handleManage($request, '@Blog/blog_browser.twig');
+        return $this->handleManage($request, '@Blog/admin/blog_browser.twig');
     }
 
     public function editPostAction(Request $request)
     {
         $form_blueprint = new PostForm($request->get('id', 0), $this->activeUser()->getId());
 
-        return $this->handleEdit($request, $this->blogPosts, $form_blueprint, 'blog_edit_post', '@Blog/edit_post.twig', '@Blog/blog_browser.twig', array());
+        return $this->handleEdit($request, $this->blogPosts, $form_blueprint, 'blog_edit_post', '@Blog/admin/edit_post.twig', '@Blog/admin/blog_browser.twig', array());
     }
 
     public function finderAction(Request $request)
@@ -57,7 +57,7 @@ class BlogAdminController extends AdminBaseController
 
         $posts = $finder->get();
 
-        return new Response($this->render('@Blog/blog_finder.twig', array('items' => $posts, 'page' => $finder->getCurrentPage())));
+        return new Response($this->render('@Blog/admin/blog_finder.twig', array('items' => $posts, 'page' => $finder->getCurrentPage())));
     }
 
     public function deleteAction(Request $request)

@@ -39,7 +39,7 @@ class CommentsAdminController extends AdminBaseController
 
     public function manageCommentsAction(Request $request)
     {
-        return $this->handleManage($request, '@Comments/comments_browser.twig');
+        return $this->handleManage($request, '@Comments/admin/comments_browser.twig');
     }
 
     public function commentsFinderAction(Request $request)
@@ -106,7 +106,7 @@ class CommentsAdminController extends AdminBaseController
 
         }
 
-        return new Response($this->renderAdminSection('@Comments/comments_finder.twig', $request->get('ajax_depth'), ['comments' => $comments]));
+        return new Response($this->renderAdminSection('@Comments/admin/comments_finder.twig', $request->get('ajax_depth'), ['comments' => $comments]));
     }
 
     public function deleteCommentsAction(Request $request)
