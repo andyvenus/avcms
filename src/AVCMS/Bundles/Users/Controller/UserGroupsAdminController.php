@@ -15,6 +15,7 @@ use AV\Form\FormBlueprint;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class UserGroupsAdminController extends AdminBaseController
 {
@@ -28,6 +29,10 @@ class UserGroupsAdminController extends AdminBaseController
     public function setUp(Request $request)
     {
         $this->userGroups = $this->model('UserGroups');
+
+        if (!$this->isGranted('ADMIN_USER_GROUPS')) {
+            throw new AccessDeniedException;
+        }
     }
 
     public function homeAction(Request $request)

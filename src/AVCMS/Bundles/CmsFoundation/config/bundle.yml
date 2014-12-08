@@ -126,18 +126,21 @@ menu_items:
       type: route
       label: Modules
       parent: settings
+      permission: ADMIN_MODULES
     menus:
       target: menus_admin_home
       icon: glyphicon glyphicon-th-list
       type: route
       label: Menus
       parent: settings
+      permission: ADMIN_MENUS
     settings:
       target: avcms_settings
       icon: glyphicon glyphicon-cog
       type: route
       label: Settings
       default_order: 120
+      permission: ADMIN_SETTINGS
 
 modules:
   html_module:
@@ -155,4 +158,13 @@ modules:
 permissions:
   ADMIN_CLEAR_CACHES:
     name: Clear Caches
-    description: Ability to clear app caches
+    description: Clear app caches
+  ADMIN_MENUS:
+    name: Manage Menus
+    description: Manage menus in the admin panel
+  ADMIN_MODULES:
+    name: Manage Modules
+    description: Manage modules in the admin panel
+  ADMIN_SETTINGS:
+    name: Admin Settings
+    description: Manage the site settings in the admin panel

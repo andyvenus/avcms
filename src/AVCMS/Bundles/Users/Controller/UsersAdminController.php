@@ -12,6 +12,7 @@ use AV\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
 class UsersAdminController extends AdminBaseController
@@ -26,6 +27,10 @@ class UsersAdminController extends AdminBaseController
     public function setUp(Request $request)
     {
         $this->users = $this->model('Users');
+
+        if (!$this->isGranted('ADMIN_USERS')) {
+            throw new AccessDeniedException;
+        }
     }
 
     public function homeAction(Request $request)

@@ -71,12 +71,22 @@ menu_items:
       label: Users
       type: route
       target: users_admin_home
+      permission: ADMIN_USERS
     user_groups_admin:
       icon: glyphicon glyphicon-credit-card
       label: Groups
       type: route
       target: user_groups_admin_home
       parent: users_admin
+      permission: ADMIN_USER_GROUPS
+
+permissions:
+  ADMIN_USERS:
+    name: Manage Users
+    description: Manage users in the admin panel
+  ADMIN_USER_GROUPS:
+      name: Manage User Groups
+      description: Manage user groups in the admin panel
 
 container_params:
   test_var: users.model

@@ -12,6 +12,7 @@ use AVCMS\Core\Module\Exception\ModuleNotFoundException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
 class ModulesAdminController extends AdminBaseController
@@ -32,6 +33,10 @@ class ModulesAdminController extends AdminBaseController
     {
         $this->modulePositions = $this->model('ModulePositions');
         $this->modules = $this->model('Modules');
+
+        if (!$this->isGranted('ADMIN_MODULES')) {
+            throw new AccessDeniedException;
+        }
     }
 
     public function homeAction(Request $request)

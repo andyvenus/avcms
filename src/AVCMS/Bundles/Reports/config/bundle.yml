@@ -38,3 +38,4 @@ menu_items:
       target: manage_reports
       icon: glyphicon glyphicon-warning-sign
       label: Reports
+      permission: ADMIN_REPORTS

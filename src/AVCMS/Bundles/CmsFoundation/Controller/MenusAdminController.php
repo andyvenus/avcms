@@ -7,10 +7,10 @@ use AVCMS\Bundles\Admin\Form\MenusAdminFiltersForm;
 use AVCMS\Bundles\CmsFoundation\Form\MenuAdminForm;
 
 use AVCMS\Bundles\CmsFoundation\Form\MenuItemAdminForm;
-use AVCMS\Core\Content\EditContentHelper;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class MenusAdminController extends AdminBaseController
 {
@@ -30,6 +30,10 @@ class MenusAdminController extends AdminBaseController
     {
         $this->menus = $this->model('Menus');
         $this->menuItems  = $this->model('MenuItems');
+
+        if (!$this->isGranted('ADMIN_MENUS')) {
+            throw new AccessDeniedException;
+        }
     }
 
     public function homeAction(Request $request)

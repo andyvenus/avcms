@@ -40,6 +40,7 @@ menu_items:
       target: manage_comments
       icon: glyphicon glyphicon-comment
       type: route
+      permission: ADMIN_COMMENTS
 
 user_settings:
   comments_enabled:
