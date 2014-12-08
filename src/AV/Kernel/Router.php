@@ -21,8 +21,11 @@ class Router extends BaseRouter
      */
     protected $bundleManager;
 
-    public function __construct(LoaderInterface $loader, $resource, array $options = array(), BundleManagerInterface $bundle_manager = null, RequestContext $context = null, LoggerInterface $logger = null)
+    protected $appDir;
+
+    public function __construct(LoaderInterface $loader, $resource, $appDir, array $options = array(), BundleManagerInterface $bundle_manager = null, RequestContext $context = null, LoggerInterface $logger = null)
     {
+        $this->appDir = $appDir;
         $this->bundleManager = $bundle_manager;
         parent::__construct($loader, $resource, $options, $context, $logger);
     }
@@ -39,8 +42,8 @@ class Router extends BaseRouter
                 $this->bundleManager->getBundleRoutes($this->collection);
             }
 
-            $this->collection->addResource(new FileResource('app/config/bundles.yml'));
-            $this->collection->addResource(new FileResource('app/config/bundles_dev.yml'));
+            $this->collection->addResource(new FileResource($this->appDir.'/config/bundles.yml'));
+            $this->collection->addResource(new FileResource($this->appDir.'/config/bundles_dev.yml'));
         }
 
         return $this->collection;

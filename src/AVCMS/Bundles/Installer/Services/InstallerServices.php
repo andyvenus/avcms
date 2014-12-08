@@ -16,7 +16,7 @@ class InstallerServices implements ServicesInterface
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('installer', 'AVCMS\Core\Installer\Installer')
-            ->setArguments([new Reference('service_container'), new Reference('bundle_finder'), new Reference('installer.versions_model')])
+            ->setArguments([new Reference('service_container'), new Reference('bundle_finder'), new Reference('installer.versions_model'), '%main_app_dir%'])
         ;
 
         $container->register('installer.versions_model', 'AVCMS\Bundles\Installer\Model\Versions')

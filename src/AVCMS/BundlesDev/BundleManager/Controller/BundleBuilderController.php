@@ -28,6 +28,7 @@ class BundleBuilderController extends BundleBaseController
     public function newBundleAction(Request $request)
     {
         $config = $this->getBundleBuilderConfig();
+        $appDir = $this->container->getParameter('app_dir');
 
         $form = $this->buildForm(new NewBundleForm(), $request);
 
@@ -55,7 +56,7 @@ class BundleBuilderController extends BundleBaseController
                 $app_bundles_config = Yaml::parse(file_get_contents('app/config/bundles.yml'));
                 $app_bundles_config[ucfirst($yaml['name'])] = array('enabled' => false);
 
-                file_put_contents('app/config/bundles.yml', Yaml::dump($app_bundles_config));
+                file_put_contents($appDir.'/config/bundles.yml', Yaml::dump($app_bundles_config));
 
                 return $this->redirect($this->generateUrl('manage_bundle', array('bundle' => $form->getData('name'))));
             }

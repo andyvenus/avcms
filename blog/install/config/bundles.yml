@@ -4,10 +4,13 @@ Model:
   enabled: true
   config:
     container_params:
-      database_config_location: app/config/database.php
+      database_config_location: blog/config/database.php
 Twig:
   enabled: true
 Form:
   enabled: true
 Installer:
   enabled: true
+  config:
+    container_params:
+      main_app_dir: blog

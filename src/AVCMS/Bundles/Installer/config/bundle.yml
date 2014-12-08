@@ -6,3 +6,6 @@ require:
 
 services:
   - InstallerServices
+
+container_params:
+  main_app_dir: app

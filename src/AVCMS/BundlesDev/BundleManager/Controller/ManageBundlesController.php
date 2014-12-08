@@ -89,7 +89,8 @@ class ManageBundlesController extends BundleBaseController
             return new Response('Bundle not found');
         }
 
-        $app_bundles_config = Yaml::parse(file_get_contents('app/config/bundles.yml'));
+        $appDir = $this->container->getParameter('app_dir');
+        $app_bundles_config = Yaml::parse(file_get_contents($appDir.'/config/bundles.yml'));
         $bundle_config = array();
         if (isset($app_bundles_config[$bundle])) {
             $bundle_config = $app_bundles_config[$bundle];
@@ -99,7 +100,7 @@ class ManageBundlesController extends BundleBaseController
 
         $app_bundles_config[$bundle] = $bundle_config;
 
-        file_put_contents('app/config/bundles.yml', Yaml::dump($app_bundles_config, 10));
+        file_put_contents($appDir.'/config/bundles.yml', Yaml::dump($app_bundles_config, 10));
 
         return new Response('');
     }
