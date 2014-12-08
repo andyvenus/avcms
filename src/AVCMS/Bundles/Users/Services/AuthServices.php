@@ -8,6 +8,7 @@
 namespace AVCMS\Bundles\Users\Services;
 
 use AV\Service\ServicesInterface;
+use Monolog\Logger;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -68,7 +69,7 @@ class AuthServices implements ServicesInterface
         ;
 
         $container->register('auth.remember_me_provider', 'Symfony\Component\Security\Core\Authentication\Provider\RememberMeAuthenticationProvider')
-            ->setArguments(array(new Reference('auth.user_checker'), 'SOME_KEY', 'persistent.remember'))
+            ->setArguments(array(new Reference('auth.user_checker'), 'remember_me_token', 'persistent.remember'))
         ;
 
         $container->register('auth.session_strategy', 'Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy')
