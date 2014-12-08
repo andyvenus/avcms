@@ -79,6 +79,8 @@ class UserGroupsAdminController extends AdminBaseController
         $formBlueprint = new FormBlueprint();
         $formBlueprint->setSuccessMessage('Permissions Updated');
 
+        $groupedPermissions = ['PERM' => [], 'ADMIN' => []];
+
         foreach ($permissions as $permission) {
             $formBlueprint->add("permissions[{$permission->getId()}]", 'radio', [
                 'label' => $permission->getName(),
@@ -89,6 +91,10 @@ class UserGroupsAdminController extends AdminBaseController
                 ],
                 'default' => 'default'
             ]);
+
+            $permType = explode('_', $permission->getId())[0];
+
+            $groupedPermissions[$permType][] = $permission;
         }
 
         $form = $this->buildForm($formBlueprint);
@@ -107,8 +113,10 @@ class UserGroupsAdminController extends AdminBaseController
             return new JsonResponse(['form' => $form->createView()->getJsonResponseData()]);
         }
 
+        $permissionTypes = ['ADMIN' => $this->trans('Admin Permissions'), 'PERM' => $this->trans('Main Permissions')];
+
         return new Response($this->renderAdminSection('@Users/admin/manage_user_group_permissions.twig', $request->get('ajax_depth'),
-            ['form' => $form->createView(), 'permissions' => $permissions, 'item' => $userGroup]
+            ['form' => $form->createView(), 'grouped_permissions' => $groupedPermissions, 'item' => $userGroup, 'permission_types' => $permissionTypes]
         ));
     }
 

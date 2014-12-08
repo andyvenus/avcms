@@ -11,11 +11,14 @@
 
     {% set permission_fields = form.permissions.fields %}
 
-    {% for permission in permissions %}
-        <div class="well well-sm">
-            <strong>{{ permission.name }}</strong> -  {{ permission.description }}<br/>
-            {{ form_field(permission_fields[permission.id]) }}
-        </div>
+    {% for permission_type, permissions in grouped_permissions %}
+        <h4>{{ permission_types[permission_type] }}</h4>
+        {% for permission in permissions %}
+            <div class="well well-sm">
+                <strong>{{ permission.name }}</strong> -  {{ permission.description }}<br/>
+                {{ form_field(permission_fields[permission.id]) }}
+            </div>
+        {% endfor %}
     {% endfor %}
 
     {{ form_rows_after(form, 'permissions') }}
