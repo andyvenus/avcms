@@ -20,4 +20,16 @@ class UserGroups extends Model
     {
         return 'AVCMS\Bundles\Users\Model\UserGroup';
     }
+
+    public function save($entity, $column = null)
+    {
+        $id = $entity->getId();
+
+        if ($this->query()->where('id', $id)->count() >= 1) {
+            return $this->update($entity);
+        }
+        else {
+            return $this->insert($entity);
+        }
+    }
 }

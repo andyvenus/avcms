@@ -45,6 +45,7 @@ class InstallerController extends Controller
     {
         $databaseConfigFile = 'app/config/database.php';
 
+        // Secure, if database.php already exists only run update-bundles
         if (file_exists($databaseConfigFile)) {
             return $this->redirect($this->generateUrl('update_bundles'));
         }
@@ -95,6 +96,7 @@ class InstallerController extends Controller
     {
         $users = $this->model('AVCMS\Bundles\Users\Model\Users');
 
+        // Secure, admin can't be created here unless there are 0 users in the database
         if ($users->query()->count() !== 0) {
             return new RedirectResponse('../admin/');
         }

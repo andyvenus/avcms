@@ -25,6 +25,9 @@ class CmsFoundationInstaller extends BundleInstaller
                   `id` varchar(30) NOT NULL DEFAULT '',
                   `label` varchar(60) DEFAULT NULL,
                   `custom` int(11) DEFAULT '1',
+                  `provider` varchar(40) DEFAULT NULL,
+                  `owner` varchar(40) DEFAULT NULL,
+                  `active` tinyint(1) NOT NULL DEFAULT '1',
                   PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");

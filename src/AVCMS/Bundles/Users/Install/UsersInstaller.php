@@ -112,5 +112,35 @@ class UsersInstaller extends BundleInstaller
                   KEY `slug` (`slug`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
+
+        $groupsModel = $this->modelFactory->create('AVCMS\Bundles\Users\Model\UserGroups');
+
+        $superAdmin = $groupsModel->newEntity();
+        $superAdmin->fromArray(['id' => 'ROLE_SUPER_ADMIN', 'name' => 'Super Admin', 'flood_control_time' => 0, 'admin_default' => 'allow', 'perm_default' => 'allow', 'owner' => 'app', 'custom_permissions' => '0']);
+        $groupsModel->save($superAdmin);
+
+        $admin = $groupsModel->newEntity();
+        $admin->fromArray(['id' => 'ROLE_ADMIN', 'name' => 'Admin', 'flood_control_time' => 0, 'admin_default' => 'allow', 'perm_default' => 'allow', 'owner' => 'app', 'custom_permissions' => '1']);
+        $groupsModel->save($admin);
+
+        $user = $groupsModel->newEntity();
+        $user->fromArray(['id' => 'ROLE_USER', 'name' => 'Member', 'flood_control_time' => 60, 'admin_default' => 'deny', 'perm_default' => 'allow', 'owner' => 'app', 'custom_permissions' => '1']);
+        $groupsModel->save($user);
+
+        $moderator = $groupsModel->newEntity();
+        $moderator->fromArray(['id' => 'ROLE_MODERATOR', 'name' => 'Moderator', 'flood_control_time' => 0, 'admin_default' => 'deny', 'perm_default' => 'allow', 'owner' => 'app', 'custom_permissions' => '1']);
+        $groupsModel->save($moderator);
+
+        $notValidated = $groupsModel->newEntity();
+        $notValidated->fromArray(['id' => 'ROLE_NOT_VALIDATED', 'name' => 'Not Validated', 'flood_control_time' => 0, 'admin_default' => 'deny', 'perm_default' => 'deny', 'owner' => 'app', 'custom_permissions' => '0']);
+        $groupsModel->save($notValidated);
+
+        $banned = $groupsModel->newEntity();
+        $banned->fromArray(['id' => 'ROLE_BANNED', 'name' => 'Banned', 'flood_control_time' => 0, 'admin_default' => 'deny', 'perm_default' => 'deny', 'owner' => 'app', 'custom_permissions' => '0']);
+        $groupsModel->save($banned);
+
+        $unregistered = $groupsModel->newEntity();
+        $unregistered->fromArray(['id' => 'ROLE_UNREGISTERED', 'name' => 'Unregistered', 'flood_control_time' => 60, 'admin_default' => 'deny', 'perm_default' => 'deny', 'owner' => 'app', 'custom_permissions' => '0']);
+        $groupsModel->save($unregistered);
     }
 }
