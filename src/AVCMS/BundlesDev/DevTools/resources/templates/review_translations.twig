@@ -10,20 +10,48 @@
                 {% if translation.usages|length > 0 %}
                     {% set class = 'text-success' %}
                 {% else %}
-                    {% set class = 'text-danger' %}
+                    {% if translation.bundle %}
+                        {% set class = 'text-info' %}
+                    {% else %}
+                        {% set class = 'text-danger' %}
+                    {% endif %}
                 {% endif %}
-                <span class="{{ class }}">{{ string }} - {{ translation.usages|length }}</span><br/>
+                <span class="{{ class }}">{{ string }} - {% if translation.bundle %}Belongs to other bundle: {{ translation.bundle }}{% else %}{{ translation.usages|length }}{% endif %}</span><br/>
                 {% for usage in translation.usages %}
                     <span style="font-size:8px;">{{ usage.file }}</span><br>
                 {% endfor %}
             </div>
             <div class="col-md-6">
                 <div class="pull-right">
-                    <label>Include translation <input type="checkbox" name="translations[]" value="{{ string }}" {% if translation.usages|length > 0 %}checked="checked"{% endif %}/></label>
+                    {{ block('other_bundles_dropdown') }}&nbsp;&nbsp;
+                    <label>Include translation in this bundle <input type="checkbox" name="translations[]" value="{{ string }}" {% if translation.usages|length > 0 %}checked="checked"{% endif %}/></label>
                 </div>
             </div>
         </div>
     {% endfor %}
         <button type="submit" class="btn btn-primary">Accept Translation Strings</button>
     </form>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('body').on('change', '.other_bundle_dropdown', function() {
+                var string = $(this).attr('id');
+                var bundle = $(this).val();
+                $(this).parents('.row').hide();
+
+                $.post('{{ site_url }}dev/save-translations', "translations[]="+encodeURIComponent(string)+"&bundle="+encodeURIComponent(bundle));
+            })
+        });
+    </script>
+{% endblock %}
+
+{% block other_bundles_dropdown %}
+    <label>Add To Another Bundle
+        <select class="other_bundle_dropdown" id="{{ string }}">
+            <option disabled selected>Select...</option>
+        {% for bundle in all_bundles %}
+            <option value="{{ bundle }}">{{ bundle }}</option>
+        {% endfor %}
+        </select>
+    </label>
 {% endblock %}
