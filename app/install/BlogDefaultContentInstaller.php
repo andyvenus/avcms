@@ -55,6 +55,17 @@ class BlogDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentIn
         $reportsModule->setPermissions('ADMIN_REPORTS');
 
         $modules->save($reportsModule);
+
+        // User Info - User Profile
+        $userInfoModule = $modules->newEntity();
+        $userInfoModule->setModule('user_info');
+        $userInfoModule->setActive(1);
+        $userInfoModule->setPosition('user_profile_main');
+        $userInfoModule->setTitle('User Info');
+        $userInfoModule->setShowHeader(1);
+        $userInfoModule->setTemplateType('panel');
+
+        $modules->save($userInfoModule);
     }
 
     public function blogDefaults()
