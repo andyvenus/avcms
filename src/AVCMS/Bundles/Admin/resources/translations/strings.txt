@@ -1,1 +1,7 @@
 Dashboard
+Revert Changes
+Back To Finder
+Navigation
+Check for update
+View Site
+Admin Settings

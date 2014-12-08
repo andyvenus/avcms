@@ -8,3 +8,5 @@ Message from reporter
 Reported content
 by
 Send Report
+Manage Reports
+Send Reports

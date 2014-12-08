@@ -63,3 +63,24 @@ Log in now
 Edit User
 Groups
 This user has not filled in their profile
+Logout
+Login
+Validate Emails
+Enable User Features
+Enable Users
+Never
+Forgot Password
+Password reset request
+Reset my password
+If you did not request this password reset ignore this email.
+You have requested a password reset for your account on
+That user already has an active reset request. Please wait to try again.
+The password reset request is invalid
+Your password has been reset
+Forgotten Your Password?
+Manage Users
+Manage User Groups
+Main Permissions
+Admin Permissions
+The presented password is invalid.
+Email validated

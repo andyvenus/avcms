@@ -58,3 +58,24 @@ Add Menu
 Add Menu Item
 Edit
 Please note, you will need to refresh the admin panel to see changes to the admin panel menu.
+
+Publish
+Publish / Scheduled Publish
+Hidden
+Publish Time
+Page
+Oldest by ID
+No results
+Main Menu
+Anonymous
+Error
+Go To Homepage
+Manage
+Template Settings
+Panel
+Loading...
+List Panel
+Language
+Site Offline Message
+Manage Modules
+Manage Menus

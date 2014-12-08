@@ -25,3 +25,11 @@ Lowest Hits
 The URL Slug must be unique, slug already in use
 By
 No Results
+Blog Posts Per Page
+Newest Posts
+Popular Posts
+Number of posts to display
+Show Date
+Blog Administration
+Show post hits
+Blog Post
