@@ -37,7 +37,7 @@ user_settings:
     label: Validate Emails
     help: If on, a user will need to validate their email address when registering
     type: checkbox
-    default: 1
+    default: 0
     section: users
 
 assets:
