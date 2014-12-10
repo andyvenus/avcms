@@ -93,6 +93,16 @@ a {
       padding-left: 20px;
     }
   }
+
+  .version {
+    position: fixed;
+    bottom:0px;
+    font-size: 12px;
+    color: lighten($main_menu_color, 50);
+    width: inherit;
+    text-align: center;
+    margin-bottom: 5px;
+  }
 }
 
 .admin-menu-focused {

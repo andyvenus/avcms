@@ -1,3 +1,7 @@
+info:
+  name: AV Blog
+  version: '1.0'
+
 bundle_dirs:
   - src/AV/Bundles
   - src/AVCMS/Bundles
