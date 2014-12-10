@@ -2,8 +2,8 @@
 
 namespace AV\Model\Event;
 
-use Symfony\Component\EventDispatcher\Event;
 use AV\Model\Model;
+use Symfony\Component\EventDispatcher\Event;
 
 class CreateModelEvent extends Event
 {

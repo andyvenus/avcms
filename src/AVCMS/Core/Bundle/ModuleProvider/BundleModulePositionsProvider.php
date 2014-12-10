@@ -7,9 +7,8 @@
 
 namespace AVCMS\Core\Bundle\ModuleProvider;
 
-use AVCMS\Bundles\CmsFoundation\Model\ModulePosition;
 use AV\Kernel\Bundle\BundleManagerInterface;
-use AVCMS\Core\Module\ModuleManager;
+use AVCMS\Bundles\CmsFoundation\Model\ModulePosition;
 use AVCMS\Core\Module\ModulePositionsManager;
 use AVCMS\Core\Module\ModulePositionsProviderInterface;
 

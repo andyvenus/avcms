@@ -7,8 +7,8 @@
 
 namespace AVCMS\Core\Bundle\Tests\AssetLoader;
 
-use AVCMS\Core\Bundle\AssetLoader\BundleAssetLoader;
 use AV\Kernel\Bundle\BundleConfig;
+use AVCMS\Core\Bundle\AssetLoader\BundleAssetLoader;
 use PHPUnit_Framework_Assert;
 
 class BundleAssetLoaderTest extends \PHPUnit_Framework_TestCase

@@ -7,10 +7,10 @@
 
 namespace AV\Csrf\Events;
 
+use AV\Csrf\CsrfToken;
 use AV\Form\Event\FormHandlerConstructEvent;
 use AV\Form\Event\FormHandlerRequestEvent;
 use AV\Form\FormError;
-use AV\Csrf\CsrfToken;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

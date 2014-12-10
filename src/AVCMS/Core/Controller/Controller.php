@@ -2,9 +2,9 @@
 
 namespace AVCMS\Core\Controller;
 
-use AV\Kernel\Bundle\BundleConfig;
 use AV\Form\FormBlueprint;
 use AV\Form\FormHandler;
+use AV\Kernel\Bundle\BundleConfig;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\Event;
@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use AVCMS\Core\Translation\Translator;
 
 abstract class Controller extends ContainerAware
 {

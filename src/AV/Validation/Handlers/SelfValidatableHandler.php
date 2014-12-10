@@ -7,7 +7,6 @@
 
 namespace AV\Validation\Handlers;
 
-use AV\Validation\Validatable;
 use AV\Validation\Validator;
 
 class SelfValidatableHandler implements ValidatableHandler

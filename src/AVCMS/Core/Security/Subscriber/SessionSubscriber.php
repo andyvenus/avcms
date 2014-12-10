@@ -8,7 +8,6 @@
 namespace AVCMS\Core\Security\Subscriber;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\EventListener\SessionListener;
 
 class SessionSubscriber extends SessionListener

@@ -7,12 +7,11 @@
 
 namespace AVCMS\Bundles\Admin\Controller;
 
-use AVCMS\Core\Content\EditContentHelper;
-use AVCMS\Core\Controller\Controller;
 use AV\Form\FormBlueprint;
 use AV\Form\FormHandler;
-use AVCMS\Core\Model\ContentModel;
 use AV\Model\Model;
+use AVCMS\Core\Content\EditContentHelper;
+use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

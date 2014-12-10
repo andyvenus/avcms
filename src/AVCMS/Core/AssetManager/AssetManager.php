@@ -9,12 +9,12 @@ namespace AVCMS\Core\AssetManager;
 
 use Assetic\Asset\AssetCollection;
 use Assetic\Asset\BaseAsset;
+use Assetic\AssetManager as AsseticAssetManager;
 use Assetic\AssetWriter;
 use Assetic\Filter\JSqueezeFilter;
 use AVCMS\Core\AssetManager\Asset\BundleAssetInterface;
 use AVCMS\Core\AssetManager\AssetLoader\AssetLoader;
 use AVCMS\Core\AssetManager\Exception\AssetTypeException;
-use Assetic\AssetManager as AsseticAssetManager;
 use AVCMS\Core\AssetManager\Filters\BundleUrlRewriteFilter;
 
 class AssetManager

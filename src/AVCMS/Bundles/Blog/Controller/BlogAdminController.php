@@ -7,10 +7,9 @@
 
 namespace AVCMS\Bundles\Blog\Controller;
 
+use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use AVCMS\Bundles\Blog\Form\BlogPostsFilterForm;
 use AVCMS\Bundles\Blog\Form\PostForm;
-use AVCMS\Bundles\Admin\Controller\AdminBaseController;
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;

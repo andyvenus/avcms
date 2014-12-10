@@ -8,8 +8,8 @@
 namespace AVCMS\Core\Bundle;
 
 use AV\Kernel\Bundle\BundleManagerInterface;
-use AVCMS\Core\SettingsManager\SettingsManager;
 use AV\Kernel\Bundle\ResourceLocator as BaseResourceLocator;
+use AVCMS\Core\SettingsManager\SettingsManager;
 
 class ResourceLocator extends BaseResourceLocator
 {

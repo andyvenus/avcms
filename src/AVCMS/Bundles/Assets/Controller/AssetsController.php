@@ -9,9 +9,6 @@ namespace AVCMS\Bundles\Assets\Controller;
 
 use Assetic\AssetWriter;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
-use AVCMS\Core\AssetManager\Asset\BundleAssetInterface;
-use AVCMS\Core\AssetManager\Asset\TemplateAssetInterface;
-use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

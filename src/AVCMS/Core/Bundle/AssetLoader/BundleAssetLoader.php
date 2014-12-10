@@ -7,11 +7,10 @@
 
 namespace AVCMS\Core\Bundle\AssetLoader;
 
+use AV\Kernel\Bundle\BundleManagerInterface;
 use AVCMS\Core\AssetManager\Asset\BundleFileAsset;
 use AVCMS\Core\AssetManager\AssetLoader\AssetLoader;
 use AVCMS\Core\AssetManager\AssetManager;
-use AV\Kernel\Bundle\BundleManagerInterface;
-use AV\Kernel\Bundle\ResourceLocator;
 
 /**
  * Class BundleAssetLoader

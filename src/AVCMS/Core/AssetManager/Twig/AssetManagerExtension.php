@@ -7,9 +7,7 @@
 
 namespace AVCMS\Core\AssetManager\Twig;
 
-use Assetic\Asset\BaseAsset;
 use AVCMS\Core\AssetManager\Asset\BundleAsset;
-use AVCMS\Core\AssetManager\Asset\BundleFileAsset;
 use AVCMS\Core\AssetManager\AssetManager;
 
 class AssetManagerExtension extends \Twig_Extension

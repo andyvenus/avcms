@@ -7,9 +7,9 @@
 
 namespace AVCMS\Core\Menu;
 
+use AV\Model\Model;
 use AVCMS\Bundles\CmsFoundation\Model\Menu;
 use AVCMS\Bundles\CmsFoundation\Model\MenuItem;
-use AV\Model\Model;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;

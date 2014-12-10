@@ -7,11 +7,10 @@
 
 namespace AVCMS\Bundles\Users\Controller;
 
-use AVCMS\Bundles\Users\Form\UserGroupsAdminFiltersForm;
-use AVCMS\Bundles\Users\Form\UserGroupAdminForm;
-use AVCMS\Bundles\Admin\Controller\AdminBaseController;
-
 use AV\Form\FormBlueprint;
+use AVCMS\Bundles\Admin\Controller\AdminBaseController;
+use AVCMS\Bundles\Users\Form\UserGroupAdminForm;
+use AVCMS\Bundles\Users\Form\UserGroupsAdminFiltersForm;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

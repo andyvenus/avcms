@@ -18,7 +18,6 @@ use AV\Form\RequestHandler\StandardRequestHandler;
 use AV\Form\Transformer\TransformerManager;
 use AV\Form\Type\TypeHandler;
 use AV\Form\ValidatorExtension\ValidatorExtension;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

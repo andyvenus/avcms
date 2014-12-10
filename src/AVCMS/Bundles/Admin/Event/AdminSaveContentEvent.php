@@ -11,7 +11,6 @@ use AV\Form\FormHandler;
 use AV\Model\Entity;
 use AV\Model\Model;
 use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class AdminSaveContentEvent

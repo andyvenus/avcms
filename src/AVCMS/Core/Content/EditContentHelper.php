@@ -7,11 +7,11 @@
 
 namespace AVCMS\Core\Content;
 
-use AVCMS\Bundles\Admin\Event\AdminEditFormBuiltEvent;
-use AVCMS\Bundles\Admin\Event\AdminSaveContentEvent;
 use AV\Form\FormHandler;
 use AV\Model\Entity;
 use AV\Model\Model;
+use AVCMS\Bundles\Admin\Event\AdminEditFormBuiltEvent;
+use AVCMS\Bundles\Admin\Event\AdminSaveContentEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 

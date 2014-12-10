@@ -2,13 +2,12 @@
 
 namespace AVCMS\Bundles\Users\Controller;
 
+use AV\Form\FormBlueprint;
+use AV\Form\FormError;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
-
 use AVCMS\Bundles\Users\Event\DeleteUserEvent;
 use AVCMS\Bundles\Users\Form\UserAdminForm;
 use AVCMS\Bundles\Users\Form\UsersAdminFiltersForm;
-use AV\Form\FormBlueprint;
-use AV\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

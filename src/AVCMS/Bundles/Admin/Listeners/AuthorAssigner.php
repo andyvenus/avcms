@@ -10,7 +10,6 @@ namespace AVCMS\Bundles\Admin\Listeners;
 use AVCMS\Bundles\Users\ActiveUser;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class AuthorAssigner implements EventSubscriberInterface
 {

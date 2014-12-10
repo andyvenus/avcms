@@ -10,7 +10,6 @@ namespace AVCMS\BundlesDev\Profiler\Services;
 use AV\Service\ServicesInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\HttpKernel\DataCollector\MemoryDataCollector;
 
 class Profiler implements ServicesInterface
 {

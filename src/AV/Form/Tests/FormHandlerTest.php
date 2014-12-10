@@ -15,8 +15,8 @@ use AV\Form\FormView;
 use AV\Form\RequestHandler\SymfonyRequestHandler;
 use AV\Form\Tests\Fixtures\AvcmsStandardEntity;
 use AV\Form\Tests\Fixtures\BasicForm;
-use AV\Form\Tests\Fixtures\StandardFormEntity;
 use AV\Form\Tests\Fixtures\StandardForm;
+use AV\Form\Tests\Fixtures\StandardFormEntity;
 use AV\Form\Type\TypeHandler;
 use Symfony\Component\HttpFoundation\Request;
 

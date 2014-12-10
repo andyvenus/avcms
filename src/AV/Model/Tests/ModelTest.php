@@ -9,7 +9,6 @@ namespace AV\Model\Tests;
 
 
 use AV\Model\Tests\Fixtures\Animal;
-use AV\Model\Tests\Fixtures\Food;
 
 class ModelTest extends ModelTestCase
 {

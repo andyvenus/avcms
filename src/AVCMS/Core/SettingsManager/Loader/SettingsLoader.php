@@ -7,8 +7,6 @@
 
 namespace AVCMS\Core\SettingsManager\Loader;
 
-use AVCMS\Core\SettingsManager\SettingsManager;
-
 abstract class SettingsLoader implements SettingsLoaderInterface
 {
 

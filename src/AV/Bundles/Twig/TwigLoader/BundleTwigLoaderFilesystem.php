@@ -9,7 +9,6 @@ namespace AV\Bundles\Twig\TwigLoader;
 
 
 use AV\Kernel\Bundle\ResourceLocator;
-use AVCMS\Core\SettingsManager\SettingsManager;
 use Twig_Error_Loader;
 
 class BundleTwigLoaderFilesystem extends \Twig_Loader_Filesystem

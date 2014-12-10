@@ -7,8 +7,8 @@
 
 namespace AVCMS\Bundles\CmsFoundation\Form;
 
-use AVCMS\Bundles\CmsFoundation\Form\ChoicesProvider\RouteChoicesProvider;
 use AV\Form\FormBlueprint;
+use AVCMS\Bundles\CmsFoundation\Form\ChoicesProvider\RouteChoicesProvider;
 use AVCMS\Bundles\Users\Form\ChoicesProvider\PermissionsChoicesProvider;
 
 class AdminModuleForm extends FormBlueprint

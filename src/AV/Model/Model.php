@@ -2,9 +2,9 @@
 
 namespace AV\Model;
 
-use AV\Model\QueryBuilder\QueryBuilderHandler;
 use AV\Model\Event\ModelInsertEvent;
 use AV\Model\Event\ModelUpdateEvent;
+use AV\Model\QueryBuilder\QueryBuilderHandler;
 use AVCMS\Core\Taxonomy\TaxonomyManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

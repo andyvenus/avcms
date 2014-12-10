@@ -8,7 +8,6 @@
 namespace AV\Kernel\Bundle;
 
 use AV\Kernel\Bundle\Exception\NotFoundException;
-use AVCMS\Core\SettingsManager\SettingsManager;
 
 class ResourceLocator
 {

@@ -7,11 +7,11 @@
 
 namespace AVCMS\Bundles\Users\Controller;
 
+use AV\Form\FormError;
+use AVCMS\Bundles\Users\Form\LoginForm;
 use AVCMS\Bundles\Users\Form\RegistrationForm;
 use AVCMS\Bundles\Users\Model\EmailValidationKey;
 use AVCMS\Core\Controller\Controller;
-use AVCMS\Bundles\Users\Form\LoginForm;
-use AV\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;

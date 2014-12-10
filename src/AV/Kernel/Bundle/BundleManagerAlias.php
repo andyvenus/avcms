@@ -7,7 +7,6 @@
 
 namespace AV\Kernel\Bundle;
 
-use AVCMS\Core\SettingsManager\SettingsManager;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\RouteCollection;

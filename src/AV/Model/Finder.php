@@ -7,7 +7,6 @@
 
 namespace AV\Model;
 
-use AV\Model\Model;
 use AVCMS\Core\Taxonomy\TaxonomyManager;
 use Symfony\Component\HttpFoundation\Request;
 

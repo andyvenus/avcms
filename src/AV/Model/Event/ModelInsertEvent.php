@@ -7,7 +7,6 @@
 
 namespace AV\Model\Event;
 
-use AV\Model\Entity;
 use AV\Model\Model;
 use Symfony\Component\EventDispatcher\Event;
 

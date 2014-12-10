@@ -8,7 +8,6 @@
 namespace AV\Form\ValidatorExtension;
 
 
-use AV\Form\FormBlueprint;
 use AV\Form\FormHandler;
 
 interface ValidatorExtension {
