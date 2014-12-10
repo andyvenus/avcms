@@ -142,8 +142,8 @@ avcms.browser = {
             var form_serial = $('form[name="filter_form"]').serialize() + '&page=' + new_page;
 
             var finder = finder_div.find('[data-url]');
-            //var finder_div = $(this);
 
+            avcms.admin.mainLoaderOn();
             $.get(finder.data('url') + '?' + form_serial, function(data) {
                 if (data) {
                     if(data.indexOf("NORESULTS") <= 0) {
@@ -156,6 +156,7 @@ avcms.browser = {
                         $('.nano-pane').show();
                     }
                 }
+                avcms.admin.mainLoaderOff();
             })
         }
     },
@@ -166,6 +167,7 @@ avcms.browser = {
         var finder = $('.finder-ajax').find('[data-url]');
         avcms.browser.finder_loading = 1;
 
+        avcms.admin.mainLoaderOn();
         $.get(finder.data('url') + '?' + form_serial, function(data) {
             if (data) {
                 finder.html(data);
@@ -174,6 +176,7 @@ avcms.browser = {
 
                 $(".nano").nanoScroller({ iOSNativeScrolling: false });
             }
+            avcms.admin.mainLoaderOff();
         })
     },
 
