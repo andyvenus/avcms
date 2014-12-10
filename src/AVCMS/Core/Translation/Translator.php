@@ -93,6 +93,10 @@ class Translator extends TranslatorBase
 
     public function loadTranslationsFromDirs($format, $dir, $fileExtension)
     {
+        if (!file_exists($dir)) {
+            return;
+        }
+
         $langFolders = new \DirectoryIterator($dir);
         foreach ($langFolders as $langFolder) {
             if ($langFolder->isDot()) {
