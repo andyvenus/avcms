@@ -22,6 +22,9 @@ assets:
     env: admin
   nanoscroller.css:
     env: admin
+  jquery.mjs.nestedSortable.js:
+      env: admin
+      compile: false
   jquery.datetimepicker.js:
     env: admin
   jquery.datetimepicker.css:
@@ -29,8 +32,6 @@ assets:
   jquery-ui.min.js:
     env: admin
     priority: 20
-  jquery.mjs.nestedSortable.js:
-    env: admin
 
   bootstrap.min.js:
     env: admin
