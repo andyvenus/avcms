@@ -60,7 +60,7 @@ class PublicFileMover
         $dir = opendir($src);
 
         if (!file_exists($dst)) {
-            mkdir($dst);
+            mkdir($dst, 0777, true);
         }
 
         while(false !== ( $file = readdir($dir)) ) {
