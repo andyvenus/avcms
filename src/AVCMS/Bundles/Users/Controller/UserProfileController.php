@@ -62,6 +62,10 @@ class UserProfileController extends Controller
         if ($form->isValid()) {
             $form->saveToEntities();
 
+            if (!file_exists($this->bundle->container_params->avatar_dir)) {
+                mkdir($this->bundle->container_params->avatar_dir);
+            }
+
             if ($file = $form->getData('avatar_file')) {
                 $filename = $user->getId().'-avatar.'.$file->guessExtension();
                 $file->move($this->bundle->container_params->avatar_dir, $filename);
