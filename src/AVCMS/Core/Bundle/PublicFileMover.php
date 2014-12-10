@@ -20,11 +20,14 @@ class PublicFileMover
 
     private $ignore = array('templates', 'translations');
 
-    public function __construct(BundleManagerInterface $bundleManager, TemplateManager $templateManager, $cacheDir = 'cache')
+    private $rootDir;
+
+    public function __construct(BundleManagerInterface $bundleManager, TemplateManager $templateManager, $cacheDir = 'cache', $rootDir = '')
     {
         $this->bundleManager = $bundleManager;
         $this->templateManager = $templateManager;
         $this->cacheDir = $cacheDir;
+        $this->rootDir = $rootDir;
     }
 
     public function doMove($forceMove = false)
@@ -51,6 +54,16 @@ class PublicFileMover
             foreach (new \DirectoryIterator($templateDir) as $templateResourceDir) {
                 if ($templateResourceDir->isDir() && file_exists('web/resources/' . $templateResourceDir) && $templateResourceDir->isDot() === false) {
                     $this->copyDirectory($templateResourceDir->getRealPath(), 'web/resources/' . $templateResourceDir, $lastTime, $this->ignore);
+                }
+            }
+        }
+
+        $webmasterDir = $this->rootDir.'/webmaster/resources';
+
+        if (file_exists($webmasterDir)) {
+            foreach (new \DirectoryIterator($webmasterDir) as $webmasterResourceDir) {
+                if ($webmasterResourceDir->isDir() && file_exists('web/resources/' . $webmasterResourceDir) && $webmasterResourceDir->isDot() === false) {
+                    $this->copyDirectory($webmasterResourceDir->getRealPath(), 'web/resources/' . $webmasterResourceDir, $lastTime, $this->ignore);
                 }
             }
         }

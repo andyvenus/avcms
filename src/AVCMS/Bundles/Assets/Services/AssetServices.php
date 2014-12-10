@@ -30,7 +30,7 @@ class AssetServices implements ServicesInterface
         ;
 
         $container->register('public_file_mover', 'AVCMS\Core\Bundle\PublicFileMover')
-            ->setArguments([new Reference('bundle_manager'), new Reference('template_manager'), '%cache_dir%'])
+            ->setArguments([new Reference('bundle_manager'), new Reference('template_manager'), '%cache_dir%', '%root_dir%'])
         ;
 
         $container->register('listener.bundle.public_file', 'AVCMS\Core\Bundle\Listeners\PublicFileSubscriber')
