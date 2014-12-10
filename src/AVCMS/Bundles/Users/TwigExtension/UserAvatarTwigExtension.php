@@ -29,7 +29,7 @@ class UserAvatarTwigExtension extends \Twig_Extension
 
         $basename = basename($this->siteUrl);
 
-        if (strpos($basename, '.') !== false) {
+        if (strpos($basename, '.php') !== false) {
             $this->siteUrl = str_replace($basename, '', $this->siteUrl);
         }
 

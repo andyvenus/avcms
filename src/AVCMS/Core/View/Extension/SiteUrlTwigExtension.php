@@ -27,7 +27,7 @@ class SiteUrlTwigExtension extends \Twig_Extension
 
         $basename = basename($url);
 
-        if (strpos($basename, '.') !== false) {
+        if (strpos($basename, '.php') !== false) {
             $url = str_replace($basename, '', $url);
         }
 
