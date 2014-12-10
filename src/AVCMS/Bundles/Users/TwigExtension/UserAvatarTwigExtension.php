@@ -25,8 +25,14 @@ class UserAvatarTwigExtension extends \Twig_Extension
     {
         $this->request = $requestStack->getMasterRequest();
 
-        $url = $this->request->getUriForPath('/');
-        $this->siteUrl = str_replace('front.php/', '', $url);
+        $this->siteUrl = $this->request->getUriForPath('/');
+
+        $basename = basename($this->siteUrl);
+
+        if (strpos($basename, '.') !== false) {
+            $this->siteUrl = str_replace($basename, '', $this->siteUrl);
+        }
+
         $this->avatarPath = $this->siteUrl.$avatarPath;
     }
 
