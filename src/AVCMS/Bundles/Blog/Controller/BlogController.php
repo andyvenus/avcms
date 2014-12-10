@@ -33,7 +33,7 @@ class BlogController extends Controller
             ->join($this->model($this->bundle->model->users), ['id', 'username', 'slug', 'avatar'])
             ->get();
 
-        return new Response($this->render('@Blog/blog_home.twig', array('posts' => $allPosts, 'total_pages' => $finder->getTotalPages(), 'current_page' => $finder->getCurrentPage())));
+        return new Response($this->render('@Blog/blog_archive.twig', array('posts' => $allPosts, 'total_pages' => $finder->getTotalPages(), 'current_page' => $finder->getCurrentPage())));
     }
 
     public function blogPostAction(Request $request)
