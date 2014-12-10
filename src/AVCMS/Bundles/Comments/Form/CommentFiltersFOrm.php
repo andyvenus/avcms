@@ -7,7 +7,6 @@
 
 namespace AVCMS\Bundles\Comments\Form;
 
-use AV\Form\FormBlueprint;
 use AVCMS\Bundles\Admin\Form\AdminFiltersForm;
 
 class CommentFiltersForm extends AdminFiltersForm
