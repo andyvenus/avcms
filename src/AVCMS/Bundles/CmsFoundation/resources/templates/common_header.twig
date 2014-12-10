@@ -1,12 +1,4 @@
-<script type="text/javascript">
-    var avcms = avcms || {};
-
-    avcms.config = {
-        site_url: '{{ site_url }}'
-    }
-</script>
-
-<script type="text/javascript" src="{{ url('javascript_translations') }}"></script>
+{% include '@CmsFoundation/inline_js.twig' %}
 
 <link rel="icon" type="image/x-icon" href="{{ web_url }}favicon.ico" />
 
