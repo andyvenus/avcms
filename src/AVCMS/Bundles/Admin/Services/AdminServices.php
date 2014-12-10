@@ -16,7 +16,9 @@ class AdminServices implements ServicesInterface
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
-        $container->register('slug.generator', 'Cocur\Slugify\Slugify');
+        $container->register('slug.generator', 'Cocur\Slugify\Slugify')
+            ->addMethodCall('addRule', ["'", ''])
+        ;
 
         $container->register('listener.entity.date', 'AVCMS\Bundles\Admin\Listeners\DateMaker')
             ->addTag('event.subscriber')
