@@ -1,11 +1,8 @@
 <?php
 
-use AV\Kernel\BundleKernel;
-use AV\Kernel\Bundle\BundleManager;
 use AV\Model\Exception\DatabaseConfigMissingException;
 use AVCMS\Core\Kernel\AvcmsKernel;
 use Symfony\Component\HttpFoundation\Request;
-use AVCMS\Core\Bundle\Config\BundleConfigValidator;
 
 define('DEBUG_MODE', true);
 define('ROOT_DIR', __DIR__);
