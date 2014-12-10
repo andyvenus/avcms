@@ -1,0 +1,22 @@
+<script type="text/javascript">
+    var avcms = avcms || {};
+
+    avcms.config = {
+        site_url: '{{ site_url }}'
+    }
+</script>
+
+<script type="text/javascript" src="{{ url('javascript_translations') }}"></script>
+
+<link rel="icon" type="image/x-icon" href="{{ web_url }}favicon.ico" />
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+{% for js in javascripts('frontend') %}
+    <script type="text/javascript" src="{{ site_url }}{{ js }}"></script>
+{% endfor %}
+
+{% for css in css('frontend') %}
+    <link href="{{ site_url }}{{ css }}" rel="stylesheet">
+{% endfor %}
