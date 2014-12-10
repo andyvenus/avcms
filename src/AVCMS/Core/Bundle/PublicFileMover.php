@@ -45,11 +45,13 @@ class PublicFileMover
             }
         }
 
-        $templateDir = $this->templateManager->getCurrentTemplate();
+        $templateDir = $this->templateManager->getCurrentTemplate().'/resources';
 
-        foreach (new \DirectoryIterator($templateDir) as $templateResourceDir) {
-            if ($templateResourceDir->isDir() && file_exists('web/resources/'.$templateResourceDir) && $templateResourceDir->isDot() === false) {
-                $this->copyDirectory($templateResourceDir->getRealPath(), 'web/resources/'.$templateResourceDir, $lastTime, $this->ignore);
+        if (file_exists($templateDir)) {
+            foreach (new \DirectoryIterator($templateDir) as $templateResourceDir) {
+                if ($templateResourceDir->isDir() && file_exists('web/resources/' . $templateResourceDir) && $templateResourceDir->isDot() === false) {
+                    $this->copyDirectory($templateResourceDir->getRealPath(), 'web/resources/' . $templateResourceDir, $lastTime, $this->ignore);
+                }
             }
         }
 
