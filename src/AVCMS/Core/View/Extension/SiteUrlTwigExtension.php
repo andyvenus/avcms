@@ -32,7 +32,8 @@ class SiteUrlTwigExtension extends \Twig_Extension
         }
 
         return array(
-            'site_url' => $url
+            'site_url' => $url,
+            'web_url' => $url.'web/'
         );
     }
 
