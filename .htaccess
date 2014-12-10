@@ -8,6 +8,9 @@ DirectoryIndex front.php
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # Block access to AVCMS code folders
+    RewriteRule ^(src/|cache/|webmaster/|vendor/) - [F,L,NC]
+
     # Determine the RewriteBase automatically and set it as environment variable.
     # If you are using Apache aliases to do mass virtual hosting or installed the
     # project in a subdirectory, the base path will be prepended to allow proper
@@ -51,7 +54,7 @@ DirectoryIndex front.php
     </IfModule>
 </IfModule>
 
-<Files ~ "\.(yml|twig)$">
+<Files ~ "\.(yml|twig)$|composer.json|composer.lock">
     order deny,allow
     deny from all
 </Files>
