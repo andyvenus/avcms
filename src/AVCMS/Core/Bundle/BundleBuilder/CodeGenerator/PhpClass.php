@@ -2,6 +2,8 @@
 
 namespace AVCMS\Core\Bundle\BundleBuilder\CodeGenerator;
 
+use CG\Core\ReflectionUtils;
+
 class PhpClass extends \CG\Generator\PhpClass
 {
     private static $phpParser;
