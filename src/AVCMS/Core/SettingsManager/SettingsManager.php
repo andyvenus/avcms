@@ -7,37 +7,38 @@
 
 namespace AVCMS\Core\SettingsManager;
 
-use AV\Kernel\Bundle\BundleManagerInterface;
 use AVCMS\Core\Config\Config;
 use AVCMS\Core\SettingsManager\Loader\SettingsLoaderInterface;
 
 class SettingsManager
 {
-    protected $settings_model;
+    protected $settingsModel;
 
     protected $loaders;
 
-    public function __construct(SettingsModelInterface $settings_model, BundleManagerInterface $bundle_manager)
+    protected $settings;
+
+    public function __construct(SettingsModelInterface $settingsModel)
     {
-        $this->settings_model = $settings_model;
-        $this->settings = new Config($this->settings_model->getSettings());
+        $this->settingsModel = $settingsModel;
+        $this->settings = new Config($this->settingsModel->getSettings());
     }
 
     public function addSettings($settings)
     {
         foreach ($settings as $name => $setting) {
             if (!isset($this->settings[$name])) {
-                $this->settings_model->addSetting($name, $setting['value'], $setting['loader'], $setting['owner']);
+                $this->settingsModel->addSetting($name, $setting['value'], $setting['loader'], $setting['owner']);
                 $this->settings->setSetting($name, $setting['value']);
             }
         }
     }
 
-    public function load($id, SettingsLoaderInterface $settings_loader)
+    public function load($id, SettingsLoaderInterface $settingsLoader)
     {
-        $this->loaders[$id] = $settings_loader;
+        $this->loaders[$id] = $settingsLoader;
 
-        $settings_loader->getSettings($this);
+        $settingsLoader->getSettings($this);
     }
 
     public function getSettings()

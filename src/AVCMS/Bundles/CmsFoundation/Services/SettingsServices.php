@@ -16,7 +16,7 @@ class SettingsServices implements ServicesInterface
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('settings_manager', 'AVCMS\Core\SettingsManager\SettingsManager')
-            ->setArguments(array(new Reference('settings_model'), new Reference('bundle_manager')))
+            ->setArguments(array(new Reference('settings_model')))
             ->addMethodCall('load', array('bundle', new Reference('settings.loader.bundle')))
         ;
 
