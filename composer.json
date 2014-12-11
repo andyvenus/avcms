@@ -20,7 +20,7 @@
         "patchwork/jsqueeze": "1.0.*",
         "filp/whoops": "1",
         "monolog/monolog": "1.*",
-        "ircmaxell/password-compat": "dev-master",
+        "ircmaxell/password-compat": "1.0.*",
         "cocur/slugify": "@stable"
     },
     "require-dev": {
