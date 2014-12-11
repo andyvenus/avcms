@@ -6,8 +6,6 @@ use CG\Core\ReflectionUtils;
 
 class PhpClass extends \CG\Generator\PhpClass
 {
-    private static $phpParser;
-
     protected static function createMethod(\ReflectionMethod $method)
     {
         return PhpMethod::fromReflection($method, true);
@@ -23,42 +21,30 @@ class PhpClass extends \CG\Generator\PhpClass
             ->setConstants($ref->getConstants())
         ;
 
-        if (null === self::$phpParser) {
-            if (!class_exists('Doctrine\Common\Annotations\PhpParser')) {
-                self::$phpParser = false;
-            } else {
-                self::$phpParser = new PhpParser();
-            }
-        }
 
-        if (false !== self::$phpParser) {
-            $class->setUseStatements(self::$phpParser->parseClass($ref));
-        }
-        else {
-            $source = file($ref->getFileName());
-            $source = implode("", $source);
-            preg_match_all("/(?<=use )(.*)(?=;)/", $source, $matches);
+        $source = file($ref->getFileName());
+        $source = implode("", $source);
+        preg_match_all("/(?<=use )(.*)(?=;)/", $source, $matches);
 
-            foreach ($matches[0] as $namespace) {
-                if (strpos($namespace, ',') !== false) {
-                    $use_statements = explode(',', $namespace);
-                    foreach ($use_statements as $use) {
-                        if (strpos($use, ' as ') !== false) {
-                            $use = explode(' as ', trim($use));
-                            $class->addUseStatement($use[0], $use[1]);
-                        }
-                        else {
-                            $class->addUseStatement(trim($use));
-                        }
+        foreach ($matches[0] as $namespace) {
+            if (strpos($namespace, ',') !== false) {
+                $use_statements = explode(',', $namespace);
+                foreach ($use_statements as $use) {
+                    if (strpos($use, ' as ') !== false) {
+                        $use = explode(' as ', trim($use));
+                        $class->addUseStatement($use[0], $use[1]);
+                    }
+                    else {
+                        $class->addUseStatement(trim($use));
                     }
                 }
-                elseif (strpos($namespace, ' as ') !== false) {
-                    $use = explode(' as ', $namespace);
-                    $class->addUseStatement($use[0], $use[1]);
-                }
-                else {
-                    $class->addUseStatement($namespace);
-                }
+            }
+            elseif (strpos($namespace, ' as ') !== false) {
+                $use = explode(' as ', $namespace);
+                $class->addUseStatement($use[0], $use[1]);
+            }
+            else {
+                $class->addUseStatement($namespace);
             }
         }
 
@@ -67,13 +53,13 @@ class PhpClass extends \CG\Generator\PhpClass
         }
 
         foreach ($ref->getMethods() as $method) {
-            if ($parent == true || !isset($ref->getParentClass()->name) || $method->getDeclaringClass()->name !== $ref->getParentClass()->name) {
+            if ($parent === true || !isset($ref->getParentClass()->name) || $method->getDeclaringClass()->name !== $ref->getParentClass()->name) {
                 $class->setMethod(static::createMethod($method));
             }
         }
 
         foreach ($ref->getProperties() as $property) {
-            if ($parent == true || !isset($ref->getParentClass()->name) || $property->getDeclaringClass()->name !== $ref->getParentClass()->name) {
+            if ($parent === true || !isset($ref->getParentClass()->name) || $property->getDeclaringClass()->name !== $ref->getParentClass()->name) {
                 $class->setProperty(static::createProperty($property));
             }
         }
