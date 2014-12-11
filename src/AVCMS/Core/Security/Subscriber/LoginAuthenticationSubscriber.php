@@ -11,7 +11,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Firewall\AbstractAuthenticationListener;
 
 class LoginAuthenticationSubscriber extends AbstractAuthenticationListener implements EventSubscriberInterface
@@ -21,9 +21,9 @@ class LoginAuthenticationSubscriber extends AbstractAuthenticationListener imple
         $username = trim($request->request->get('username', null, true));
         $password = $request->request->get('password', null, true);
 
-        $request->getSession()->set(SecurityContextInterface::LAST_USERNAME, $username);
+        $request->getSession()->set(Security::LAST_USERNAME, $username);
 
-        $token = $unauthenticatedToken = new UsernamePasswordToken(
+        $token = new UsernamePasswordToken(
             $username,
             $password,
             $this->providerKey
