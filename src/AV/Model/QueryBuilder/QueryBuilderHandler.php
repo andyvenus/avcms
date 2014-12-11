@@ -509,16 +509,6 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
         return $this->limit($resultsPerPage)->offset($offset);
     }
 
-    /**
-     * Remove the limit & offset from the query
-     * todo: remove
-     */
-    public function removePagination()
-    {
-        unset($this->statements['limit']);
-        unset($this->statements['offset']);
-    }
-
     public function getTablePrefix()
     {
         return $this->tablePrefix;

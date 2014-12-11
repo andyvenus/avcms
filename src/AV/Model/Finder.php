@@ -308,11 +308,7 @@ class Finder
             return 1;
         }
 
-        $query = clone $this->currentQuery;
-
-        $query->removePagination();
-
-        $totalResults = $query->count();
+        $totalResults = $this->currentQuery->count();
 
         return ceil($totalResults / $this->resultsPerPage);
     }
