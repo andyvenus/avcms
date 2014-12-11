@@ -2,6 +2,7 @@
 
 namespace AVCMS\Bundles\CmsFoundation\Model;
 
+use AV\Model\Entity;
 use AV\Model\Model;
 
 class ModulePositions extends Model
@@ -31,7 +32,7 @@ class ModulePositions extends Model
         return $this->query()->where('provider', $provider)->get();
     }
 
-    public function save($entity, $column = null)
+    public function save(Entity $entity, $column = null)
     {
         $id = $entity->getId();
 

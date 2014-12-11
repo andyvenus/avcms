@@ -170,7 +170,7 @@ abstract class Model {
      * @return array|null|int
      * @throws \Exception
      */
-    public function save($entity, $columnMatch = null)
+    public function save(Entity $entity, $columnMatch = null)
     {
         if (is_callable(array($entity, 'get'.$this->numberIdentifierColumn))) {
             $idMethod = 'get'.$this->numberIdentifierColumn;
@@ -248,16 +248,16 @@ abstract class Model {
     /**
      * Create a WHERE query from an entity and it's values
      *
-     * For example, if the entity has an 'id' field and $column_match contains 'id'
+     * For example, if the entity has an 'id' field and $columnMatch contains 'id'
      * a WHERE will be generated for WHERE id = $entity->getId();
      *
-     * @param $entity
+     * @param Entity $entity
      * @param $columnMatch
      *
      * @throws \Exception
      * @return QueryBuilderHandler
      */
-    protected function createWhereQuery($entity, $columnMatch)
+    protected function createWhereQuery(Entity $entity, $columnMatch)
     {
         $query = $this->query();
 

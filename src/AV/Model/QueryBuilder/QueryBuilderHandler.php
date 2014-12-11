@@ -54,15 +54,15 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
      */
     public function get($class = null, $fetchType = \PDO::FETCH_CLASS)
     {
-        if ($class == null && isset($this->entity) && $this->entity !== null) {
+        if ($class === null && isset($this->entity) && $this->entity !== null) {
             $class = $this->entity;
         }
 
-        if (isset($this->model) && $class != 'stdClass' && $class != null) {
+        if (isset($this->model) && $class != 'stdClass' && $class !== null) {
             return $this->getEntity($class);
         }
 
-        if ($class == null && $fetchType === \PDO::FETCH_CLASS) {
+        if ($class === null && $fetchType === \PDO::FETCH_CLASS) {
             $class = 'stdClass';
         }
 
@@ -120,7 +120,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
                     $subEntities = explode('__', $columnName);
                     $column = array_pop($subEntities);
 
-                    if ($selectedEntity != null) {
+                    if ($selectedEntity !== null) {
                         $setterMethodName = 'set'.str_replace('_', '', $column);
                         if (method_exists($selectedEntity, $setterMethodName)) {
                             $selectedEntity->$setterMethodName($columnValue);
@@ -219,7 +219,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
      */
     public function select($fields, $join = false, $prefix = true)
     {
-        if ($join == false) {
+        if ($join === false) {
             $this->selectMade = true;
         }
 
@@ -317,7 +317,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
             $type = $event->getType();
         }
 
-        if ($joinTo == null) {
+        if ($joinTo === null) {
             $thisTable = $this->model->getTable();
         }
         else {
@@ -357,7 +357,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
 
         $this->select($columnsUpdated, true, $prefix);
 
-        if ($key == null && $value == null) {
+        if ($key === null && $value === null) {
             $key = $joinTable.'.id';
             $value = $thisTable.'.'.$joinColumn;
         }
@@ -383,7 +383,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     public function join($table, $key, $operator = null, $value = null, $type = 'inner', $alias = null)
     {
         if (!$key instanceof \Closure) {
-            $key = function($joinBuilder) use ($key, $operator, $value, $alias) {
+            $key = function(JoinBuilder $joinBuilder) use ($key, $operator, $value, $alias) {
                 $joinBuilder->on($key, $operator, $value, $alias);
             };
         }
@@ -420,6 +420,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
      * Update the database using an array or Entity
      *
      * @param $data array|\AV\Model\Entity
+     * @return void
      */
     public function update($data)
     {

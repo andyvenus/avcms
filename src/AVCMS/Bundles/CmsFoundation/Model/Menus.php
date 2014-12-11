@@ -2,6 +2,7 @@
 
 namespace AVCMS\Bundles\CmsFoundation\Model;
 
+use AV\Model\Entity;
 use AV\Model\Model;
 
 class Menus extends Model
@@ -23,7 +24,7 @@ class Menus extends Model
         return 'AVCMS\Bundles\CmsFoundation\Model\Menu';
     }
 
-    public function save($entity, $column = null)
+    public function save(Entity $entity, $column = null)
     {
         $id = $entity->getId();
 

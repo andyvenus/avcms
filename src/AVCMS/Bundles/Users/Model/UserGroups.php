@@ -2,6 +2,7 @@
 
 namespace AVCMS\Bundles\Users\Model;
 
+use AV\Model\Entity;
 use AV\Model\Model;
 
 class UserGroups extends Model
@@ -21,7 +22,7 @@ class UserGroups extends Model
         return 'AVCMS\Bundles\Users\Model\UserGroup';
     }
 
-    public function save($entity, $column = null)
+    public function save(Entity $entity, $column = null)
     {
         $id = $entity->getId();
 
