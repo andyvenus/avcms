@@ -8,6 +8,7 @@
 namespace AV\Model;
 
 use AVCMS\Core\Taxonomy\TaxonomyManager;
+use Pixie\QueryBuilder\QueryBuilderHandler;
 use Symfony\Component\HttpFoundation\Request;
 
 class Finder
@@ -161,7 +162,7 @@ class Finder
 
         $searchFields = $this->searchFields;
 
-        $this->currentQuery->where(function ($q) use ($term, $searchFields)
+        $this->currentQuery->where(function (QueryBuilderHandler $q) use ($term, $searchFields)
         {
             foreach ($searchFields as $searchField) {
                 if (!isset($i)) {

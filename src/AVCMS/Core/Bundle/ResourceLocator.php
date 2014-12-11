@@ -7,6 +7,7 @@
 
 namespace AVCMS\Core\Bundle;
 
+use AV\Kernel\Bundle\BundleConfig;
 use AV\Kernel\Bundle\BundleManagerInterface;
 use AV\Kernel\Bundle\ResourceLocator as BaseResourceLocator;
 use AVCMS\Core\SettingsManager\SettingsManager;
@@ -20,7 +21,7 @@ class ResourceLocator extends BaseResourceLocator
         parent::__construct($bundleManager, $rootDir, $appDir);
     }
 
-    protected function getResourceDirs($bundleConfig, $resourceType, $originalOnly)
+    protected function getResourceDirs(BundleConfig $bundleConfig, $resourceType, $originalOnly)
     {
         $avcmsDirs = [];
         if ($originalOnly === false) {

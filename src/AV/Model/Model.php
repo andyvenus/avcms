@@ -166,11 +166,11 @@ abstract class Model {
      * Cannot be used on tables/entities where there's no ID parameter
      *
      * @param Entity $entity
-     * @param string $column_match
+     * @param string $columnMatch
      * @return array|null|int
      * @throws \Exception
      */
-    public function save($entity, $column_match = null)
+    public function save($entity, $columnMatch = null)
     {
         if (is_callable(array($entity, 'get'.$this->numberIdentifierColumn))) {
             $idMethod = 'get'.$this->numberIdentifierColumn;
@@ -183,7 +183,7 @@ abstract class Model {
         }
 
         if ($entity->$idMethod()) {
-            $this->update($entity, $column_match);
+            $this->update($entity, $columnMatch);
             return $entity->$idMethod();
         }
         else {

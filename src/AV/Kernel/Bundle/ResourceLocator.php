@@ -46,7 +46,7 @@ class ResourceLocator
         throw new NotFoundException(sprintf('File %s not found in bundle %s', $file, $bundleConfig->name));
     }
 
-    protected function getResourceDirs($bundleConfig, $resourceType, $originalOnly)
+    protected function getResourceDirs(BundleConfig $bundleConfig, $resourceType, $originalOnly)
     {
         $dirs = [];
 
