@@ -17,10 +17,6 @@ class AssetManagerExtension extends \Twig_Extension
 
     public function __construct($debug = false, AssetManager $assetManager)
     {
-        if ($debug == true && $assetManager == null) {
-            throw new \Exception("The asset manager must be set in debug mode");
-        }
-
         $this->assetManager = $assetManager;
         $this->debug = $debug;
     }
