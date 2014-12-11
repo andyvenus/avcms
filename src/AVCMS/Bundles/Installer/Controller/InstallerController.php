@@ -12,7 +12,6 @@ use AV\Form\FormError;
 use AVCMS\Bundles\Installer\Form\CreateAdminForm;
 use AVCMS\Bundles\Installer\Form\NewInstallForm;
 use AVCMS\Core\Controller\Controller;
-use AVCMS\Core\SlugGenerator\SlugGenerator;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;

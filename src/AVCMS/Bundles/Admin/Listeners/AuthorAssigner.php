@@ -7,7 +7,7 @@
 
 namespace AVCMS\Bundles\Admin\Listeners;
 
-use AVCMS\Bundles\Users\ActiveUser;
+use AVCMS\Bundles\Admin\Event\AdminSaveContentEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -20,7 +20,7 @@ class AuthorAssigner implements EventSubscriberInterface
         $this->tokenStorage = $tokenStorage;
     }
 
-    public function setDates($event)
+    public function setDates(AdminSaveContentEvent $event)
     {
         $entity = $event->getEntity();
 
