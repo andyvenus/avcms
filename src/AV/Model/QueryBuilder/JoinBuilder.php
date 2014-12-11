@@ -18,7 +18,7 @@ class JoinBuilder extends QueryBuilderHandler
      */
     public function on($key, $operator, $value, $alias)
     {
-        return $this->_join($key, $operator, $value, 'AND', $alias);
+        return $this->doJoin($key, $operator, $value, 'AND', $alias);
     }
 
     /**
@@ -30,7 +30,7 @@ class JoinBuilder extends QueryBuilderHandler
      */
     public function orOn($key, $operator, $value)
     {
-        return $this->_join($key, $operator, $value, 'OR');
+        return $this->doJoin($key, $operator, $value, 'OR');
     }
 
     /**
@@ -42,7 +42,7 @@ class JoinBuilder extends QueryBuilderHandler
      * @param null $alias
      * @return $this
      */
-    protected function _join($key, $operator = null, $value = null, $joiner = 'AND', $alias = null)
+    protected function doJoin($key, $operator = null, $value = null, $joiner = 'AND', $alias = null)
     {
         if ($alias === null || strpos($key, $alias.'.') === false) {
             $key = $this->addTablePrefix($key);
