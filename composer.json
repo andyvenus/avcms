@@ -1,6 +1,8 @@
 {
     "name": "avcms/avcms",
     "description": "AVCMS is a CMS framework for AV Scripts products",
+    "license": "MIT",
+    "type": "project",
     "require": {
         "symfony/http-foundation": "2.6.*",
         "symfony/routing": "2.6.*",
