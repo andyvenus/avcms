@@ -47,7 +47,7 @@ class SiteOfflineAccessListener implements ListenerInterface
 
         $request = $event->getRequest();
 
-        list($attributes, $channel) = $this->map->getPatterns($request);
+        $attributes = $this->map->getPatterns($request)[0];
 
         if (null === $attributes) {
             return;
