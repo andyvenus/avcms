@@ -85,7 +85,7 @@ class BundleBuilderController extends BundleBaseController
         }
         // Step 2, select the database columns
         else {
-            $table = $request->request->get('database_table'); //todo MMMMMM mysqlsequre
+            $table = preg_replace('/[^0-9a-zA-Z_]/', '', $request->request->get('database_table'));
             $columns_result = $qb->query("show columns from $table")->get(null, \PDO::FETCH_ASSOC);
 
             $columns = array();
@@ -236,7 +236,7 @@ class BundleBuilderController extends BundleBaseController
             $admin_form = new $content['admin_form'];
         }
 
-        $table = $content['database']; //todo MMMMMM mysqlsequre
+        $table = preg_replace('/[^0-9a-zA-Z_]/', '', $content['database']);
         $columns_result = $qb->query("show columns from {$qb->getTablePrefix()}$table")->get(null, \PDO::FETCH_ASSOC);
 
         $columns = array();
