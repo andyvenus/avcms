@@ -315,11 +315,7 @@ class BundleBuilderController extends BundleBaseController
     }
 
     public function orderMethodsClosure() {
-        return function($a, $b) {
-            /**
-             * @var $a PhpMethod
-             * @var $b PhpMethod
-             */
+        return function(PhpMethod $a, PhpMethod $b) {
             if ($a->isStatic() !== $isStatic = $b->isStatic()) {
                 return $isStatic ? 1 : -1;
             }
