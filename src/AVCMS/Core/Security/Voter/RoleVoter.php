@@ -10,7 +10,7 @@ namespace AVCMS\Core\Security\Voter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
-class RoleVoter
+class RoleVoter implements VoterInterface
 {
     private $prefix;
 
