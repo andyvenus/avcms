@@ -28,7 +28,6 @@ class MenuManagerTwigExtension extends \Twig_Extension
 
     public function getMenuItems($menuId)
     {
-        $a = $this->menuManager->getMenuItems($menuId);
         return $this->menuManager->getMenuItems($menuId);
     }
 
