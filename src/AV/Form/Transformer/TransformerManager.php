@@ -9,9 +9,16 @@ namespace AV\Form\Transformer;
 
 class TransformerManager
 {
+    /**
+     * @var TransformerInterface[]
+     */
     protected $transformers = array();
 
-    public function registerTransformer($transformer)
+    /**
+     * @param TransformerInterface $transformer
+     * @throws \Exception
+     */
+    public function registerTransformer(TransformerInterface $transformer)
     {
         $id = $transformer->getId();
 
@@ -22,24 +29,39 @@ class TransformerManager
         $this->transformers[$id] = $transformer;
     }
 
-    public function toForm($value, $transformer)
+    /**
+     * @param $value
+     * @param $transformerId
+     * @return mixed
+     * @throws \Exception
+     */
+    public function toForm($value, $transformerId)
     {
-        if (!isset($this->transformers[$transformer])) {
-            throw new \Exception("Transformer $transformer does not exist");
+        if (!isset($this->transformers[$transformerId])) {
+            throw new \Exception("Transformer $transformerId does not exist");
         }
 
-        return $this->transformers[$transformer]->toForm($value);
+        return $this->transformers[$transformerId]->toForm($value);
     }
 
-    public function fromForm($value, $transformer)
+    /**
+     * @param $value
+     * @param $transformerId
+     * @return mixed
+     * @throws \Exception
+     */
+    public function fromForm($value, $transformerId)
     {
-        if (!isset($this->transformers[$transformer])) {
-            throw new \Exception("Transformer $transformer does not exist");
+        if (!isset($this->transformers[$transformerId])) {
+            throw new \Exception("Transformer $transformerId does not exist");
         }
 
-        return $this->transformers[$transformer]->fromForm($value);
+        return $this->transformers[$transformerId]->fromForm($value);
     }
 
+    /**
+     * @return TransformerInterface[]
+     */
     public function getTransformers()
     {
         return $this->transformers;
