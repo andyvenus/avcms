@@ -9,7 +9,7 @@ namespace AVCMS\Core\Taxonomy;
 
 use AV\Model\QueryBuilder\QueryBuilderHandler;
 
-interface Taxonomy {
+interface TaxonomyInterface {
     public function getModel();
 
     public function get($contentId, $contentType);

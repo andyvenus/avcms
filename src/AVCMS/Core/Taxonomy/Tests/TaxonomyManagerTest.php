@@ -17,7 +17,7 @@ class TaxonomyManagerTest extends \PHPUnit_Framework_TestCase
     private $taxonomyManager;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\AVCMS\Core\Taxonomy\Taxonomy
+     * @var \PHPUnit_Framework_MockObject_MockObject|\AVCMS\Core\Taxonomy\TaxonomyInterface
      */
     private $mockTaxonomy;
 

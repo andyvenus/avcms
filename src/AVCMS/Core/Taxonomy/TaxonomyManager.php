@@ -19,15 +19,15 @@ use AV\Model\QueryBuilder\QueryBuilderHandler;
 class TaxonomyManager
 {
     /**
-     * @var Taxonomy[]
+     * @var TaxonomyInterface[]
      */
     protected $taxonomies = array();
 
     /**
      * @param $name
-     * @param Taxonomy $taxonomy
+     * @param TaxonomyInterface $taxonomy
      */
-    public function addTaxonomy($name, Taxonomy $taxonomy)
+    public function addTaxonomy($name, TaxonomyInterface $taxonomy)
     {
         $this->taxonomies[$name] = $taxonomy;
     }
@@ -35,7 +35,7 @@ class TaxonomyManager
     /**
      * @param $name
      * @throws \Exception
-     * @return Taxonomy
+     * @return TaxonomyInterface
      */
     public function getTaxonomy($name)
     {

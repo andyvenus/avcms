@@ -53,7 +53,7 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
     protected $basic_form_handler;
 
     /**
-     * @var \AV\Form\ValidatorExtension\ValidatorExtension|\PHPUnit_Framework_MockObject_MockObject
+     * @var \AV\Form\ValidatorExtension\ValidatorExtensionInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $mock_validator;
 

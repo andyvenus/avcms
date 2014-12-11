@@ -12,7 +12,7 @@ namespace AV\Form\EntityProcessor;
  * Class GetterSetterEntityProcessor
  * @package AV\Form\EntityProcessor
  */
-class GetterSetterEntityProcessor implements EntityProcessor
+class GetterSetterEntityProcessor implements EntityProcessorInterface
 {
     /**
      * Get data from an entity using getter methods

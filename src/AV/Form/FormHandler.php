@@ -7,7 +7,7 @@
 
 namespace AV\Form;
 
-use AV\Form\EntityProcessor\EntityProcessor;
+use AV\Form\EntityProcessor\EntityProcessorInterface;
 use AV\Form\EntityProcessor\GetterSetterEntityProcessor;
 use AV\Form\Event\FormHandlerConstructEvent;
 use AV\Form\Event\FormHandlerRequestEvent;
@@ -17,7 +17,7 @@ use AV\Form\RequestHandler\RequestHandlerInterface;
 use AV\Form\RequestHandler\StandardRequestHandler;
 use AV\Form\Transformer\TransformerManager;
 use AV\Form\Type\TypeHandler;
-use AV\Form\ValidatorExtension\ValidatorExtension;
+use AV\Form\ValidatorExtension\ValidatorExtensionInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -64,7 +64,7 @@ class FormHandler
     protected $formView;
 
     /**
-     * @var ValidatorExtension A validator object
+     * @var ValidatorExtensionInterface A validator object
      */
     protected $validator;
 
@@ -116,14 +116,14 @@ class FormHandler
     /**
      * @param FormBlueprintInterface $form
      * @param \AV\Form\RequestHandler\RequestHandlerInterface|null $requestHandler
-     * @param EntityProcessor $entityProcessor
+     * @param EntityProcessorInterface $entityProcessor
      * @param \AV\Form\Type\TypeHandler $typeHandler
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         FormBlueprintInterface $form,
         RequestHandlerInterface $requestHandler = null,
-        EntityProcessor $entityProcessor = null,
+        EntityProcessorInterface $entityProcessor = null,
         TypeHandler $typeHandler = null,
         EventDispatcherInterface $eventDispatcher = null
     )
@@ -592,9 +592,9 @@ class FormHandler
     /**
      * Set a validator wrapped in a ValidatorExtension class
      *
-     * @param ValidatorExtension $validator
+     * @param ValidatorExtensionInterface $validator
      */
-    public function setValidator(ValidatorExtension $validator)
+    public function setValidator(ValidatorExtensionInterface $validator)
     {
         $this->validator = $validator;
         $this->validator->setFormHandler($this);
@@ -603,7 +603,7 @@ class FormHandler
     /**
      * Get the assigned form validator
      *
-     * @return ValidatorExtension
+     * @return ValidatorExtensionInterface
      * @throws BadMethodCallException
      */
     public function getValidator()

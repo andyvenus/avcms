@@ -10,7 +10,7 @@ namespace AV\Form\ValidatorExtension;
 
 use AV\Form\FormHandler;
 
-interface ValidatorExtension {
+interface ValidatorExtensionInterface {
     /**
      * Sets the form handler
      *

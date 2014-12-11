@@ -10,7 +10,7 @@ namespace AV\Form\EntityProcessor;
  * Interface EntityProcessor
  * @package AV\Form\EntityProcessor
  */
-interface EntityProcessor
+interface EntityProcessorInterface
 {
     /**
      * Save an array of form data to an entity

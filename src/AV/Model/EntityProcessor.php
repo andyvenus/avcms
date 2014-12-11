@@ -7,7 +7,7 @@
 
 namespace AV\Model;
 
-use AV\Form\EntityProcessor\EntityProcessor as FormEntityProcessor;
+use AV\Form\EntityProcessor\EntityProcessorInterface as FormEntityProcessor;
 
 /**
  * Class EntityProcessor

@@ -10,7 +10,7 @@ namespace AVCMS\Bundles\Tags\Taxonomy;
 use AV\Model\Model;
 use AV\Model\QueryBuilder\QueryBuilderHandler;
 use AVCMS\Core\Taxonomy\Model\TaxonomyModel;
-use AVCMS\Core\Taxonomy\Taxonomy;
+use AVCMS\Core\Taxonomy\TaxonomyInterface;
 
 /**
  * Class TagsTaxonomy
@@ -18,7 +18,7 @@ use AVCMS\Core\Taxonomy\Taxonomy;
  *
  * Add the ability to assign tags to content
  */
-class TagsTaxonomy implements Taxonomy
+class TagsTaxonomy implements TaxonomyInterface
 {
     /**
      * @var string The column that this taxonomy is identified by, for example when entered into a form

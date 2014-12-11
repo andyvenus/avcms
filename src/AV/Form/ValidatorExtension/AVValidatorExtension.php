@@ -14,7 +14,7 @@ use ReflectionClass;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class AVValidatorExtension implements ValidatorExtension, ContainerAwareInterface
+class AVValidatorExtension implements ValidatorExtensionInterface, ContainerAwareInterface
 {
     /**
      * @var FormHandler
