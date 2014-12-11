@@ -189,7 +189,7 @@ class Validator
                         if (!$rule['error_message']) {
 
                             if (!$rule['error_message'] = $rule_obj->getError()) {
-                                $rule['error_message'] = "Unidentified {param_name} error"; // TODO: Add rule name to error
+                                $rule['error_message'] = "Unidentified {param_name} error";
                             }
                         }
 
