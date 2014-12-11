@@ -37,7 +37,6 @@ class BundleTranslationsCollector
             return;
         }
 
-        $config = $this->bundleManager->getBundleConfig($bundle);
         $dir = $this->rootDir.'/dev/'.$bundle;
 
         $file = $dir.'/translation_strings.txt';
