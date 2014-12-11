@@ -217,10 +217,9 @@ class FormHandler
      * @param $entity
      * @param null $fields
      * @param bool $validatable
-     * @param null $id
      * @throws \Exception
      */
-    public function bindEntity($entity, $fields = null, $validatable = true, $id = null)
+    public function bindEntity($entity, $fields = null, $validatable = true)
     {
         if ($this->submitted) {
             throw new BadMethodCallException("Entities cannot be assigned after FormHandler::handleRequest has been called");
