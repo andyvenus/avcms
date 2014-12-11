@@ -86,7 +86,7 @@ class AuthServices implements ServicesInterface
 
         // ANONYMOUS
         $container->register('auth.subscriber.anonymous_authentication', 'AVCMS\Core\Security\Subscriber\AnonymousAuthenticationSubscriber')
-            ->setArguments(array(new Reference('security.token_storage'), 'anonymous', new Reference('users.groups_model')))
+            ->setArguments(array(new Reference('security.token_storage'), 'anonymous', new Reference('users.model'), new Reference('users.groups_model')))
             ->addTag('event.subscriber')
         ;
 
