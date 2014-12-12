@@ -62,7 +62,7 @@ class EntityProcessor implements FormEntityProcessor
         foreach($formData as $field => $value) {
             $setterName = "set".$this->dashesToCamelCase($field);
 
-            if (($limitFields == null || in_array($field, $limitFields))) {
+            if (($limitFields === null || in_array($field, $limitFields))) {
                 if (is_callable(array($entity, $setterName))) {
                     $entity->$setterName($value);
                 }

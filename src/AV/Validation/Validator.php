@@ -197,7 +197,7 @@ class Validator
 
                         $rule['error_message'] = $this->processError($rule['error_message'], $rule_obj->getRuleData() + array('param_name' => $readableName));
 
-                        if ($rule['stop_propagation'] == true) {
+                        if ($rule['stop_propagation'] === true) {
                             $sub_validation_ignore[] = $rule['param_name'];
                         }
 
@@ -207,12 +207,12 @@ class Validator
                 }
 
             }
-            elseif ($rule['ignore_unset'] == false) {
+            elseif ($rule['ignore_unset'] === false) {
                 $rule['error_message'] = "Parameter '{param_name}' not set";
 
                 $rule['error_message'] = $this->processError($rule['error_message'], array('param_name' => $rule['param_name']));
 
-                if ($rule['stop_propagation'] == true) {
+                if ($rule['stop_propagation'] === true) {
                     $sub_validation_ignore[] = $rule['param_name'];
                 }
 

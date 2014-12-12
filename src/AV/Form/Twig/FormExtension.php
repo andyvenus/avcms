@@ -109,7 +109,7 @@ class FormExtension extends \Twig_Extension
 
     public function formStart(FormViewInterface $form, $attributes = array(), $template = null)
     {
-        if ($template == null) {
+        if ($template === null) {
             $this->baseTemplate = $this->environment->loadTemplate($this->defaultTemplate);
         }
         else {

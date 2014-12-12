@@ -120,7 +120,7 @@ class BundleManager implements BundleManagerInterface
      */
     public function decorateContainer(ContainerBuilder $container)
     {
-        if ($this->bundlesInitialized == false) {
+        if ($this->bundlesInitialized === false) {
             $this->initBundles();
         }
 
@@ -213,7 +213,7 @@ class BundleManager implements BundleManagerInterface
             $resources = array(new FileResource($this->configDir.'/bundles.yml'), new FileResource($this->configDir.'/bundles_dev.yml'));
 
             foreach ($appBundlesConfig as $bundleName => $appBundleConfig) {
-                if ($appBundleConfig['enabled'] == true) {
+                if ($appBundleConfig['enabled'] === true) {
                     $bundleLocation = $this->findBundleDirectory($bundleName);
                     $bundleConfigLocation = $bundleLocation.'/config/bundle.yml';
 

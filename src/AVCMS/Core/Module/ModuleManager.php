@@ -79,7 +79,7 @@ class ModuleManager
 
         $cacheFile .= '.php';
 
-        if ($module->isCachable() && $this->devMode == false) {
+        if ($module->isCachable() && $this->devMode === false) {
             if (!file_exists($cacheFile)) {
                 $cacheFresh = false;
             }
@@ -156,7 +156,7 @@ class ModuleManager
 
             $routes = $moduleConfig->getLimitRoutesArray();
 
-            if ($limitByRequest == true && is_array($routes) && !empty($routes)) {
+            if ($limitByRequest === true && is_array($routes) && !empty($routes)) {
                 if (!in_array($request->attributes->get('_route'), $routes)) {
                     unset($configs[$configId]);
                 }

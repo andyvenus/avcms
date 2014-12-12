@@ -289,7 +289,7 @@ class FormView implements FormViewInterface
     public function setErrors(array $errors)
     {
         foreach ($errors as $error) {
-            if ($error->getTranslate() == true) {
+            if ($error->getTranslate() === true) {
                 $error->setMessage($this->translate($error->getMessage(), $error->getTranslationParams()));
             }
             $this->errors[] = $error;

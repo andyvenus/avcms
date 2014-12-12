@@ -79,7 +79,7 @@ class PublicFileMover
         }
 
         while(false !== ( $file = readdir($dir)) ) {
-            if (( $file != '.' ) && ( $file != '..' ) && ($ignore == null || !in_array($file, $ignore))) {
+            if (( $file != '.' ) && ( $file != '..' ) && ($ignore === null || !in_array($file, $ignore))) {
                 if ( is_dir($src . '/' . $file) ) {
                     $this->copyDirectory($src . '/' . $file, $dst . '/' . $file, $lastTime, $ignore);
                 }

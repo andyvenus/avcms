@@ -282,7 +282,7 @@ class FormHandler
             }
         }
 
-        if ($this->submitted == true && isset($validRequestData)) {
+        if ($this->submitted === true && isset($validRequestData)) {
             $this->data = $validRequestData;
             $this->setRequiredFieldErrors();
         }

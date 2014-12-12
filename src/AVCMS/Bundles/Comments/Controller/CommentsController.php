@@ -74,7 +74,7 @@ class CommentsController extends Controller
             $error = "Please wait at least {seconds} seconds between making comments";
             $errorParams = ['seconds' => $user->group->getFloodControlTime()];
         }
-        elseif ($content == null) {
+        elseif ($content === null) {
             $error = 'Content Type Not Found';
         }
 

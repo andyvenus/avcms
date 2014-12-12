@@ -136,7 +136,7 @@ class FormBlueprint implements FormBlueprintInterface
      */
     public function replace($name, $type, $options = array(), $addIfNotExist = false)
     {
-        if (!isset($this->fields[$name]) && $addIfNotExist == false) {
+        if (!isset($this->fields[$name]) && $addIfNotExist === false) {
             throw new \Exception("Can't replace field, field '$name' doesn't exist");
         }
 

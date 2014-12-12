@@ -81,7 +81,7 @@ class AVValidatorExtension implements ValidatorExtensionInterface, ContainerAwar
 
     public function isValid($scope, $options)
     {
-        if ($scope == null) {
+        if ($scope === null) {
             $scope = Validator::SCOPE_ALL;
         }
 
