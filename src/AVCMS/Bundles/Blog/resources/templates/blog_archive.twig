@@ -1,6 +1,14 @@
 {% extends 'index.twig' %}
 
-{% block title %}Blog Homepage{% endblock %}
+{% block title %}
+{% spaceless %}
+    {% if page_type == 'home' %}
+        {% trans %}Blog{% endtrans %}
+    {% elseif page_type != 'site_home' %}
+        {% trans %}Blog Archive{% endtrans %}
+    {% endif %}
+{% endspaceless %}
+{% endblock %}
 
 {% block content %}
     <div class="blog-home-container">

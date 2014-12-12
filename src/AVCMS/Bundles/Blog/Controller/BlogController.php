@@ -23,7 +23,7 @@ class BlogController extends Controller
         $this->posts = $this->model('BlogPosts');
     }
 
-    public function blogArchiveAction(Request $request)
+    public function blogArchiveAction(Request $request, $pageType = 'archive')
     {
         $finder = $this->posts->find();
         $allPosts = $finder->published()
@@ -33,7 +33,7 @@ class BlogController extends Controller
             ->join($this->model($this->bundle->model->users), ['id', 'username', 'slug', 'avatar'])
             ->get();
 
-        return new Response($this->render('@Blog/blog_archive.twig', array('posts' => $allPosts, 'total_pages' => $finder->getTotalPages(), 'current_page' => $finder->getCurrentPage())));
+        return new Response($this->render('@Blog/blog_archive.twig', array('posts' => $allPosts, 'total_pages' => $finder->getTotalPages(), 'current_page' => $finder->getCurrentPage(), 'page_type' => $pageType)));
     }
 
     public function blogPostAction(Request $request)

@@ -1,6 +1,6 @@
 blog_home:
     path:     '/blog'
-    defaults: { _controller: 'Blog::BlogController::blogArchiveAction' }
+    defaults: { _controller: 'Blog::BlogController::blogArchiveAction', pageType: home }
 
 blog_archive:
     path:     '/blog/archive/{page}'
