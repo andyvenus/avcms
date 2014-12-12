@@ -28,9 +28,7 @@
   color: white;
   position: absolute;
   bottom: 0px;
-  width: 100%; }
+  width: 100%;
+  padding: 10px 0px; }
   .user-profile-info .pull-left {
-    padding: 10px 0px;
     margin-left: 120px; }
-  .user-profile-info .pull-right {
-    padding-top: 4px; }

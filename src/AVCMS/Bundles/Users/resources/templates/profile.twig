@@ -20,21 +20,20 @@
                 <div class="pull-left">
                     {% trans %}Joined{% endtrans %}: {{ profile_user.joined|date(settings.date_format) }}
                 </div>
-
-                <div class="pull-right">
-                    {% if is_granted('ADMIN_USERS') %}
-                        <a class="btn btn-sm btn-default" href="{{ url('users_admin_edit', {id: profile_user.id}) }}">{% trans %}Edit User{% endtrans %}</a>
-                    {% endif %}
-
-                    {% if users_own_profile %}
-                        <a class="btn btn-sm btn-default" href="{{ url('edit_user_profile') }}">{% trans %}Edit Profile{% endtrans %}</a>
-                    {% endif %}
-                </div>
             </div>
         </div>
     </div>
 
     <div class="container">
+        <p class="text-right">
+            {% if is_granted('ADMIN_USERS') %}
+                <a class="btn btn-default" href="{{ url('users_admin_edit', {id: profile_user.id}) }}">{% trans %}Edit User{% endtrans %}</a>
+            {% endif %}
+
+            {% if users_own_profile %}
+                <a class="btn btn-default" href="{{ url('edit_user_profile') }}">{% trans %}Edit Profile{% endtrans %}</a>
+            {% endif %}
+        </p>
         <div class="row">
             <div class="col-md-8">
                 {% for module in modules('user_profile_main', {user: profile_user}) %}
