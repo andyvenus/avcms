@@ -29,7 +29,7 @@ class GetterSetterEntityProcessor implements EntityProcessorInterface
         foreach($formParameters as $field) {
             $getter_name = "get".$this->dashesToCamelCase($field);
 
-            if (($limitFields == null || in_array($field, $limitFields)) && method_exists($entity, $getter_name) && ($value = $entity->$getter_name()) != null) {
+            if (($limitFields === null || in_array($field, $limitFields)) && method_exists($entity, $getter_name) && ($value = $entity->$getter_name()) !== null) {
                 $extracted_data[$field] = $value;
             }
         }
@@ -50,7 +50,7 @@ class GetterSetterEntityProcessor implements EntityProcessorInterface
         foreach($formData as $field => $value) {
             $setter_name = "set".$this->dashesToCamelCase($field);
 
-            if (($limitFields == null || in_array($field, $limitFields)) && method_exists($entity, $setter_name)) {
+            if (($limitFields === null || in_array($field, $limitFields)) && method_exists($entity, $setter_name)) {
                 $entity->$setter_name($value);
             }
         }

@@ -25,28 +25,28 @@ class EntityProcessor implements FormEntityProcessor
      */
     public function getFromEntity($entity, array $formParameters, $limitFields = null)
     {
-        $extracted_data = array();
+        $extractedData = array();
 
         foreach($formParameters as $field) {
-            $getter_name = "get".$this->dashesToCamelCase($field);
+            $getterName = "get".$this->dashesToCamelCase($field);
 
-            if (($limitFields == null || in_array($field, $limitFields))) {
-                if (is_callable(array($entity, $getter_name)) && ($value = $entity->$getter_name()) !== null) {
-                    $extracted_data[$field] = $value;
+            if (($limitFields === null || in_array($field, $limitFields))) {
+                if (is_callable(array($entity, $getterName)) && ($value = $entity->$getterName()) !== null) {
+                    $extractedData[$field] = $value;
                 }
                 else {
-                    $sub_entities = $entity->getAllSubEntities();
+                    $subEntities = $entity->getAllSubEntities();
 
-                    foreach ($sub_entities as $sub_entity) {
-                        if (!empty($sub_entities) && is_callable(array($sub_entity, $getter_name)) && ($value = $sub_entity->$getter_name()) !== null) {
-                            $extracted_data[$field] = $value;
+                    foreach ($subEntities as $subEntity) {
+                        if (!empty($subEntities) && is_callable(array($subEntity, $getterName)) && ($value = $subEntity->$getterName()) !== null) {
+                            $extractedData[$field] = $value;
                         }
                     }
                 }
             }
         }
 
-        return $extracted_data;
+        return $extractedData;
     }
 
     /**
@@ -60,18 +60,18 @@ class EntityProcessor implements FormEntityProcessor
     public function saveToEntity($entity, $formData, $limitFields = null)
     {
         foreach($formData as $field => $value) {
-            $setter_name = "set".$this->dashesToCamelCase($field);
+            $setterName = "set".$this->dashesToCamelCase($field);
 
             if (($limitFields == null || in_array($field, $limitFields))) {
-                if (is_callable(array($entity, $setter_name))) {
-                    $entity->$setter_name($value);
+                if (is_callable(array($entity, $setterName))) {
+                    $entity->$setterName($value);
                 }
                 else {
                     $sub_entities = $entity->getAllSubEntities();
 
-                    foreach ($sub_entities as $sub_entity) {
-                        if (!empty($sub_entities) && is_callable(array($sub_entity, $setter_name))) {
-                            $sub_entity->$setter_name($value);
+                    foreach ($sub_entities as $subEntity) {
+                        if (!empty($sub_entities) && is_callable(array($subEntity, $setterName))) {
+                            $subEntity->$setterName($value);
                         }
                     }
                 }

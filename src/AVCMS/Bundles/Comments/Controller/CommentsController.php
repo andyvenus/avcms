@@ -26,7 +26,7 @@ class CommentsController extends Controller
 
         $entity = $this->model($typeConfig['model'])->getOne($contentId);
 
-        if ($entity == null) {
+        if ($entity === null) {
             throw $this->createNotFoundException();
         }
 

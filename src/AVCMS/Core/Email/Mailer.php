@@ -38,7 +38,7 @@ class Mailer
      */
     public function newEmail($subject = null, $body = null, $contentType = null, $charset = null)
     {
-        if ($charset == null) {
+        if ($charset === null) {
             $charset = 'UTF-8';
         }
 

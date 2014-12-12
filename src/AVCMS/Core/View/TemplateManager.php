@@ -32,7 +32,7 @@ class TemplateManager
         $templateSettingsProvider = new TemplateSettingsLoader($this);
         $settingsManager->load('template', $templateSettingsProvider);
 
-        if ($this->currentTemplate == null) {
+        if ($this->currentTemplate === null) {
             throw new \Exception("No template set in user settings");
         }
     }

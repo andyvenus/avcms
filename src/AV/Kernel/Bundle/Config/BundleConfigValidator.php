@@ -18,7 +18,7 @@ class BundleConfigValidator implements ConfigurationInterface
 
     public function getConfigTreeBuilder(TreeBuilder $treeBuilder = null, $rootNode = null)
     {
-        if ($rootNode == null) {
+        if ($rootNode === null) {
             $treeBuilder = new TreeBuilder();
             $rootNode = $treeBuilder->root('bundle_config');
         }

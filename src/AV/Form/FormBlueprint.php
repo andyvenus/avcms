@@ -312,7 +312,7 @@ class FormBlueprint implements FormBlueprintInterface
             $offset = count($array);
         }
 
-        if ($insertBefore == false) {
+        if ($insertBefore === false) {
             $offset = $offset + 1;
         }
 
@@ -347,7 +347,7 @@ class FormBlueprint implements FormBlueprintInterface
             $field_type = (isset($field['type']) ? $field['type'] : 'text');
             unset($field['type']);
 
-            if (!isset($field['section']) && $section == null) {
+            if (!isset($field['section']) && $section === null) {
                 $field['section'] = 'main';
             }
             elseif (!isset($field['section'])) {

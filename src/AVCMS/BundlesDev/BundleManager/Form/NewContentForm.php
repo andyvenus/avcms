@@ -40,7 +40,7 @@ class NewContentForm extends FormBlueprint
     public function addColumnsFields($columns)
     {
         foreach ($columns as $column_name => $column) {
-            if (isset($column['entity']) && $column['entity'] == true) {
+            if (isset($column['entity']) && $column['entity'] === true) {
                 $form_field_type = 'hidden';
             }
             else {
@@ -52,7 +52,7 @@ class NewContentForm extends FormBlueprint
                 'default' => 1
             ));
 
-            if (isset($column['form']) && $column['form'] == true) {
+            if (isset($column['form']) && $column['form'] === true) {
                 $form_field_type = 'hidden';
             }
             else {

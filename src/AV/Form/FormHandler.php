@@ -441,7 +441,7 @@ class FormHandler
     public function getData($name = null, $transform = true)
     {
         $data = $this->data;
-        if ($transform == true) {
+        if ($transform === true) {
             $data = $this->transformFromFormData($this->data);
         }
 
@@ -650,7 +650,7 @@ class FormHandler
             $fields =& $this->fields;
         }
 
-        if ($data == null) {
+        if ($data === null) {
             $data =& $this->data;
         }
 

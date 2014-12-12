@@ -248,7 +248,7 @@ class BundleBuilderController extends BundleBaseController
                 'setter' => 'set'.$this->dashesToCamelCase($column['Field'], true),
                 'type' => $column['Type'],
                 'entity' => ($entity_class->hasMethod('set'.$method_base) || $entity_class->hasMethod('get'.$method_base)),
-                'form' => ($admin_form != null && $admin_form->has($column['Field']))
+                'form' => ($admin_form !== null && $admin_form->has($column['Field']))
             );
         }
 
