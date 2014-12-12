@@ -18,7 +18,14 @@ class TwigLoaderFilesystem extends \Twig_Loader_Filesystem
     {
         $this->resource_locator = $resource_locator;
         $this->settings_manager = $settings_manager;
-        $this->setPaths(array($rootDir.'/'.$settings_manager->getSetting('template'), $rootDir.'/'.'templates'));
+
+        $templateDir = $rootDir.'/'.$settings_manager->getSetting('template');
+
+        if (!is_dir($templateDir)) {
+            return;$templateDir = $rootDir.'/default';
+        }
+
+        $this->setPaths(array($templateDir));
     }
 
     protected function findTemplate($name)

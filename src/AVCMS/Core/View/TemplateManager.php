@@ -39,6 +39,10 @@ class TemplateManager
 
     public function getTemplateConfig()
     {
+        if (!file_exists($this->currentTemplate.'/template.yml')) {
+            return [];
+        }
+
         if (isset($this->templateConfig)) {
             return $this->templateConfig;
         }

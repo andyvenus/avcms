@@ -46,4 +46,4 @@ class BundleTwigLoaderFilesystem extends \Twig_Loader_Filesystem
 
         throw new Twig_Error_Loader(sprintf('Unable to find template "%s" (looked into: %s).', $name, implode(', ', $this->paths[$namespace])));
     }
-} 
+}
