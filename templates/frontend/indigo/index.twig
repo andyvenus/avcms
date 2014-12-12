@@ -20,7 +20,7 @@
 <header class="header">
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-12 text-right">
                 {% if user.loggedIn %}
                     {{ user_info(user) }}
                     - <a href="{{ url('logout') }}">{% trans %}Logout{% endtrans %}</a>
@@ -28,12 +28,12 @@
                         | <a href="{{ url('admin_dashboard') }}">{% trans %}Admin{% endtrans %}</a>
                     {% endif %}
                 {% elseif settings.users_enabled %}
-                   <a href="{{ url('login') }}">{% trans %}Login{% endtrans %}</a> / <a href="{{ url('register') }}">{% trans %}Register{% endtrans %}</a>
+                    <a href="{{ url('login') }}">{% trans %}Login{% endtrans %}</a> / <a href="{{ url('register') }}">{% trans %}Register{% endtrans %}</a>
                 {% endif %}
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <a href="{{ url('home') }}">
                     {% if settings.logo_image_url %}
                         <img class="logo-image" src="{{ settings.logo_image_url }}" />
@@ -42,6 +42,7 @@
                     {% endif %}
                 </a>
             </div>
+
         </div>
     </div>
 </header>
@@ -51,9 +52,7 @@
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-collapse">
                 <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+                {% trans %}Menu{% endtrans %}
             </button>
         </div>
         <div class="collapse navbar-collapse" id="main-menu-collapse">

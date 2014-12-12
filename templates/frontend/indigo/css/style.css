@@ -11,7 +11,8 @@
   color: #c7b9ff; }
 
 .header h1 {
-  font-family: HelveticaNeue-Light, HelveticaNeue, sans-serif !important; }
+  font-family: HelveticaNeue-Light, HelveticaNeue, sans-serif !important;
+  margin-top: 0px; }
 
 .logo-image {
   margin: 10px 0px; }
@@ -42,6 +43,11 @@ select[name=author] {
     color: white; }
   .main-menu .navbar-collapse, .main-menu .navbar-form {
     border-color: #3f3579; }
+  .main-menu .navbar-toggle {
+    float: left;
+    margin-left: 15px; }
+  .main-menu .navbar-toggle:focus, .main-menu .navbar-toggle:hover {
+    background: none; }
 
 .search-select {
   -webkit-appearance: none;
