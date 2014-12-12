@@ -2,6 +2,8 @@
 
 {% block title %}{{ post.title }}{% endblock %}
 
+{% block meta_description %}{{ post.body|striptags|truncate(160) }}{% endblock %}
+
 {% block content %}
     <div class="blog-post-container">
     {% block blog_post %}
