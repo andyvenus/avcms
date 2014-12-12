@@ -11,10 +11,19 @@ use AV\Kernel\Bundle\BundleManagerInterface;
 
 class ReportTypesManager
 {
+    /**
+     * @var BundleManagerInterface
+     */
     protected $bundleManager;
 
+    /**
+     * @var array
+     */
     protected $contentTypes = [];
 
+    /**
+     * @param BundleManagerInterface $bundleManager
+     */
     public function __construct(BundleManagerInterface $bundleManager)
     {
         $this->bundleManager = $bundleManager;
@@ -28,21 +37,37 @@ class ReportTypesManager
         }
     }
 
+    /**
+     * @param string $contentType
+     * @return bool
+     */
     public function contentTypeValid($contentType)
     {
         return isset($this->contentTypes[$contentType]);
     }
 
+    /**
+     * @param string $contentType
+     * @return array
+     */
     public function getContentType($contentType)
     {
         return isset($this->contentTypes[$contentType]) ? $this->contentTypes[$contentType] : [];
     }
 
+    /**
+     * @return array
+     */
     public function getContentTypes()
     {
         return $this->contentTypes;
     }
 
+    /**
+     * @param string $contentType
+     * @param mixed $content
+     * @return null|string|int
+     */
     public function getUserId($contentType, $content)
     {
         $config = $this->getContentType($contentType);
