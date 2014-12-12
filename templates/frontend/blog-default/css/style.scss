@@ -1,9 +1,9 @@
-$header-base-color: #cddcca;
+$header-base-color: #c9dccb;
 $header-text-color: darken($header-base-color, 40);
 $panel-header-color: #f6f2eb;
 
 h1, h2, h3, h3, h5, h6 {
-  font-family: HelveticaNeue-Light;
+  font-family: HelveticaNeue-Light, HelveticaNeue, sans-serif;
 }
 
 a {
@@ -70,7 +70,7 @@ select[name=author] {
 
 .main-menu {
   margin-bottom: 0px;
-  background-color: lighten($header-base-color, 5);
+  background-color: darken($header-base-color, 2);
   color: $header-text-color;
   border-bottom: 0px;
 

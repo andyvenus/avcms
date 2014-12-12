@@ -1,8 +1,8 @@
 h1, h2, h3, h3, h5, h6 {
-  font-family: HelveticaNeue-Light; }
+  font-family: HelveticaNeue-Light, HelveticaNeue, sans-serif; }
 
 a {
-  color: #5e8357; }
+  color: #55845a; }
 
 .panel, .panel-heading {
   border-radius: 0px; }
@@ -14,19 +14,19 @@ a {
     color: #b7975e; }
 
 .btn-link {
-  color: #5e8357; }
+  color: #55845a; }
 
 .header {
-  background-color: #cddcca;
-  color: #5e8357; }
+  background-color: #c9dccb;
+  color: #55845a; }
 
 .header a {
-  color: #5e8357;
+  color: #55845a;
   text-decoration: none; }
 
 .header a:hover {
   text-decoration: none;
-  color: #769f6e; }
+  color: #6ca072; }
 
 .header h1 {
   margin-top: 0px; }
@@ -50,16 +50,16 @@ select[name=author] {
 
 .main-menu {
   margin-bottom: 0px;
-  background-color: #dbe6d9;
-  color: #5e8357;
+  background-color: #c3d8c5;
+  color: #55845a;
   border-bottom: 0px; }
   .main-menu .navbar-nav > li > a, .main-menu .navbar-nav > li > a:hover, .main-menu .navbar-nav > li > a:focus {
-    color: #5e8357; }
+    color: #55845a; }
   .main-menu .navbar-nav > .open > a, .main-menu .navbar-nav > .open > a:hover, .main-menu .navbar-nav > .open > a:focus {
-    background-color: #eaf0e9;
-    color: #5e8357; }
+    background-color: #e8f0e9;
+    color: #55845a; }
   .main-menu .navbar-collapse, .main-menu .navbar-form {
-    border-color: #bfd2bb; }
+    border-color: #bad2bc; }
   .main-menu .navbar-toggle {
     float: left;
     margin-left: 15px; }
