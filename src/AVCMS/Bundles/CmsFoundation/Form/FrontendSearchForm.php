@@ -18,9 +18,16 @@ class FrontendSearchForm extends FormBlueprint
             'attr' => ['placeholder' => 'Search']
         ]);
 
-        $this->add('content_type', 'select', [
-            'choices' => $searchContentTypes,
-            'default' => $selectedContent
-        ]);
+        if (count($searchContentTypes) < 2) {
+            $this->add('content_type', 'hidden', [
+                'default' => key($searchContentTypes),
+            ]);
+        }
+        else {
+            $this->add('content_type', 'select', [
+                'choices' => $searchContentTypes,
+                'default' => $selectedContent
+            ]);
+        }
     }
 } 
