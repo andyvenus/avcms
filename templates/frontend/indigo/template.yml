@@ -5,7 +5,8 @@ details:
   author: Andy Venus
 
 assets:
-  template_asset.js:
+  style.css:
+    priority: -100
 
 user_settings_sections:
   template: Indigo Template Settings
