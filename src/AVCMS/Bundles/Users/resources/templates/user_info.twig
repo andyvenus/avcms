@@ -3,7 +3,7 @@
 
         <span class="username">
             {% if settings.users_enabled %}
-            <a href="{{ url('user_profile', {slug: info_user.slug}) }}"><img class="avatar" src="{{ avatar_url(info_user) }}" width="{{ options.avatar_width }}" height="{{ options.avatar_height }}"/></a>
+            <a href="{{ url('user_profile', {slug: info_user.slug}) }}"><img class="avatar" src="{{ avatar_url(info_user) }}" width="{{ options.avatar_width }}" height="{{ options.avatar_height }}" alt="{% trans %}avatar{% endtrans %}"/></a>
                 <a href="{{ url('user_profile', {slug: info_user.slug}) }}">{{ info_user.username }}</a>
             {% else %}
                 <strong>{{ info_user.username }}</strong>
