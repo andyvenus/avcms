@@ -1,7 +1,7 @@
 details:
-  name: Indigo
-  description: A new version of the classic indigo theme
-  version: 0.1
+  name: Blog Default
+  description: A simple theme for the blog
+  version: 1.0
   author: Andy Venus
 
 assets:
@@ -9,7 +9,7 @@ assets:
     priority: -100
 
 user_settings_sections:
-  template: Indigo Template Settings
+  template: Template Settings
 
 user_settings:
   logo_image_url:

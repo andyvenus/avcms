@@ -1,20 +1,48 @@
+$header-base-color: #cddcca;
+$header-text-color: darken($header-base-color, 40);
+$panel-header-color: #f6f2eb;
+
+h1, h2, h3, h3, h5, h6 {
+  font-family: HelveticaNeue-Light;
+}
+
+a {
+  color: $header-text-color;
+}
+
+.panel, .panel-heading {
+  border-radius: 0px;
+}
+
+.panel-default {
+  border-color: darken($panel-header-color, 5);
+
+  .panel-heading {
+    background-color: $panel-header-color;
+    color: darken($panel-header-color, 40);
+  }
+}
+
+.btn-link {
+  color: $header-text-color;
+}
+
 .header {
-    background-color: darkslateblue;
-    color: white;
+    background-color: $header-base-color;
+    color: $header-text-color;
 }
 
 .header a {
-    color: #fff;
+    color: $header-text-color;
     text-decoration: none;
 }
 
 .header a:hover {
     text-decoration: none;
-    color: #c7b9ff;
+    color: lighten($header-text-color, 10);
 }
 
 .header h1 {
-    font-family: HelveticaNeue-Light, HelveticaNeue, sans-serif!important;
     margin-top: 0px;
 }
 
@@ -23,7 +51,7 @@
 }
 
 .blog-post-container {
-    border-bottom: 1px solid #a7a8cd;
+    border-bottom: 2px solid #e5e6e7;
     margin-bottom: 10px;
     padding-bottom: 5px;
 }
@@ -42,21 +70,21 @@ select[name=author] {
 
 .main-menu {
   margin-bottom: 0px;
-  background-color: lighten(darkslateblue, 5);
-  color: white;
+  background-color: lighten($header-base-color, 5);
+  color: $header-text-color;
   border-bottom: 0px;
 
   .navbar-nav>li>a, .navbar-nav>li>a:hover, .navbar-nav>li>a:focus {
-    color: white;
+    color: $header-text-color;
   }
 
   .navbar-nav>.open>a, .navbar-nav>.open>a:hover, .navbar-nav>.open>a:focus {
-    background-color: lighten(darkslateblue, 10);
-    color: white;
+    background-color: lighten($header-base-color, 10);
+    color: $header-text-color;
   }
 
   .navbar-collapse, .navbar-form {
-    border-color: darken(darkslateblue, 5);
+    border-color: darken($header-base-color, 5);
   }
 
   .navbar-toggle {

@@ -73,7 +73,7 @@ user_settings:
     label: Template
     help: The frontend template
     section: main
-    default: templates/frontend/indigo
+    default: templates/frontend/blog-default
   language:
     type: select
     choices_provider: { class: AVCMS\Bundles\CmsFoundation\Settings\LanguageChoicesProvider }
