@@ -9,7 +9,7 @@ namespace AV\Validation\Handlers;
 
 use AV\Validation\Validator;
 
-class SelfValidatableHandler implements ValidatableHandler
+class SelfValidatableHandler implements ValidatableHandlerInterface
 {
     public function getValidationRules($validatable, Validator $validator)
     {

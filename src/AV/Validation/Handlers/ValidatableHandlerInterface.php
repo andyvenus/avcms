@@ -8,7 +8,7 @@ namespace AV\Validation\Handlers;
 
 use AV\Validation\Validator;
 
-interface ValidatableHandler
+interface ValidatableHandlerInterface
 {
     public function getValidationRules($validatable, Validator $validator);
 

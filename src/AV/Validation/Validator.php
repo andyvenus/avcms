@@ -4,7 +4,7 @@ namespace AV\Validation;
 
 use AV\Validation\Event\ValidatorFilterRuleEvent;
 use AV\Validation\Handlers\SelfValidatableHandler;
-use AV\Validation\Handlers\ValidatableHandler;
+use AV\Validation\Handlers\ValidatableHandlerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -62,7 +62,7 @@ class Validator
     protected $limitedParams = array();
 
     /**
-     * @var ValidatableHandler[]
+     * @var ValidatableHandlerInterface[]
      */
     protected $validatableHandlers;
 
@@ -335,7 +335,7 @@ class Validator
         return $this->errors;
     }
 
-    public function addValidatableHandler(ValidatableHandler $handler)
+    public function addValidatableHandler(ValidatableHandlerInterface $handler)
     {
         $name = $handler->getName();
         $this->validatableHandlers[$name] = $handler;
