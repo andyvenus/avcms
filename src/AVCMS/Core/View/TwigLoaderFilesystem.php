@@ -22,7 +22,7 @@ class TwigLoaderFilesystem extends \Twig_Loader_Filesystem
         $templateDir = $rootDir.'/'.$settings_manager->getSetting('template');
 
         if (!is_dir($templateDir)) {
-            return;$templateDir = $rootDir.'/default';
+            return;
         }
 
         $this->setPaths(array($templateDir));
