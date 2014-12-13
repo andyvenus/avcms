@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+{% block head %}
+    {% block head_title %}
+        {% set title = block('title') %}
+        <title>{{ title }}{% if title is not empty %} - {% endif %}{{ settings.site_name }}</title>
+    {% endblock %}
+
+    {% include '@CmsFoundation/common_header.twig' %}
+
+    <meta charset="UTF-8">
+
+    {% block viewport %}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% endblock %}
+
+    {% set meta_description = block('meta_description') %}
+    {% if meta_description is not empty %}
+        <meta name="description" content="{{ meta_description }}">
+    {% endif %}
+{% endblock %}
+</head>
+
+<body>
+{% block body %}{% endblock %}
+
+{% block footer %}
+    {% block loader_icon %}
+        <div class="loader"><img src="{{ web_url }}resources/CmsFoundation/images/loader.gif" alt="{% trans %}Loading{% endtrans %}..." /></div>
+    {% endblock %}
+
+    {% block copyright %}
+        <div class="copyright">Blog Software by <a href="http://www.avscripts.net">AV Scripts</a></div>
+    {% endblock %}
+{% endblock %}
+</body>
+
+</html>

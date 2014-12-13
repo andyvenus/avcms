@@ -1,21 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    {% block head_title %}
-        {% set title = block('title') %}
-            <title>{{ title }}{% if title is not empty %} - {% endif %}{{ settings.site_name }}</title>
-    {% endblock %}
+{% extends '@CmsFoundation/frontend.twig' %}
 
-    {% include '@CmsFoundation/common_header.twig' %}
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    {% set meta_description = block('meta_description') %}
-    {% if meta_description is not empty %}
-        <meta name="description" content="{{ meta_description }}">
-    {% endif %}
-</head>
-<body>
+{% block body %}
 
 <header class="header">
     <div class="container">
@@ -111,16 +96,4 @@
 </section>
 {% endblock %}
 
-<footer class="container">
-    {% block footer %}
-    <div class="row">
-        <div class="col-md-4">
-            Copyright AV Scripts 2014
-        </div>
-    </div>
-    {% endblock %}
-</footer>
-
-<div class="loader"><img src="{{ site_url }}/web/resources/CmsFoundation/images/loader.gif" alt="{% trans %}Loading{% endtrans %}..." /></div>
-</body>
-</html>
+{% endblock %}
