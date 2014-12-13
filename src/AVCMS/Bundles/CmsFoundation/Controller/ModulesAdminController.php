@@ -61,7 +61,7 @@ class ModulesAdminController extends AdminBaseController
             }
         }
 
-        return new Response($this->renderAdminSection('@CmsFoundation\add_module.twig', $request->get('ajax_depth'), array('item' => $position, 'module_positions' => $modulePositions)));
+        return new Response($this->renderAdminSection('@CmsFoundation/admin/add_module.twig', $request->get('ajax_depth'), array('item' => $position, 'module_positions' => $modulePositions)));
     }
 
     public function manageSelectedModuleAction(Request $request)
