@@ -1,0 +1,24 @@
+wallpapers:
+    bundle: Wallpapers
+    namespace: AVCMS\Bundles\Wallpapers
+    singular: wallpaper
+    plural: wallpapers
+    uc_singular: Wallpaper
+    uc_plural: Wallpapers
+    cc_singular: Wallpaper
+    cc_plural: Wallpapers
+    dash_singular: wallpaper
+    dash_plural: wallpapers
+    admin_home_route: wallpapers_admin_home
+    admin_finder_route: wallpapers_admin_finder
+    admin_delete_route: wallpapers_admin_delete
+    admin_edit_route: wallpapers_admin_edit
+    admin_add_route: wallpapers_admin_add
+    admin_controller: 'Wallpapers::WallpapersAdminController'
+    finder_item_extra_buttons: ''
+    database: wallpapers
+    entity: AVCMS\Bundles\Wallpapers\Model\Wallpaper
+    admin_form: AVCMS\Bundles\Wallpapers\Form\WallpaperAdminForm
+    model_class: Wallpapers
+    model_var_name: wallpapers
+    title_field: name

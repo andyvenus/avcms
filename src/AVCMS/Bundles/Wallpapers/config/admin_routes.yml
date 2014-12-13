@@ -1,0 +1,21 @@
+
+
+wallpapers_admin_edit:
+    path:     /wallpapers/edit/{id}
+    defaults: { _controller: 'Wallpapers::WallpapersAdminController::editAction' }
+
+wallpapers_admin_add:
+    path:     /wallpapers/new
+    defaults: { _controller: 'Wallpapers::WallpapersAdminController::editAction' }
+
+wallpapers_admin_delete:
+    path:     /wallpapers/delete
+    defaults: { _controller: 'Wallpapers::WallpapersAdminController::deleteAction' }
+
+wallpapers_admin_home:
+  path: /wallpapers
+  defaults: { _controller: 'Wallpapers::WallpapersAdminController::homeAction' }
+
+wallpapers_admin_finder:
+  path: /wallpapers/finder/{page}
+  defaults: { page: 1, _controller: 'Wallpapers::WallpapersAdminController::finderAction' }
