@@ -6,14 +6,14 @@ use AV\Model\Entity;
 
 class Wallpaper extends Entity
 {
-    public function setCategory($value)
-    {
-        $this->set("category", $value);
-    }
-
     public function getCategory()
     {
         return $this->get("category");
+    }
+
+    public function setCategory($value)
+    {
+        $this->set("category", $value);
     }
 
     public function getCreatorId()
@@ -26,19 +26,14 @@ class Wallpaper extends Entity
         $this->set("creator_id", $value);
     }
 
-    public function getCropHorizontal()
+    public function getCropPosition()
     {
-        return $this->get("crop_horizontal");
+        return $this->get("crop_position");
     }
 
-    public function setCropHorizontal($value)
+    public function setCropPosition($value)
     {
-        $this->set("crop_horizontal", $value);
-    }
-
-    public function getCropType()
-    {
-        return $this->get("crop_type");
+        $this->set("crop_position", $value);
     }
 
     public function setCropType($value)
@@ -46,14 +41,9 @@ class Wallpaper extends Entity
         $this->set("crop_type", $value);
     }
 
-    public function setCropVertical($value)
+    public function getCropType()
     {
-        $this->set("crop_vertical", $value);
-    }
-
-    public function getCropVertical()
-    {
-        return $this->get("crop_vertical");
+        return $this->get("crop_type");
     }
 
     public function setDateAdded($value)
@@ -66,14 +56,14 @@ class Wallpaper extends Entity
         return $this->get("date_added");
     }
 
-    public function setDateEdited($value)
-    {
-        $this->set("date_edited", $value);
-    }
-
     public function getDateEdited()
     {
         return $this->get("date_edited");
+    }
+
+    public function setDateEdited($value)
+    {
+        $this->set("date_edited", $value);
     }
 
     public function setDescription($value)
@@ -86,14 +76,14 @@ class Wallpaper extends Entity
         return $this->get("description");
     }
 
-    public function setEditorId($value)
-    {
-        $this->set("editor_id", $value);
-    }
-
     public function getEditorId()
     {
         return $this->get("editor_id");
+    }
+
+    public function setEditorId($value)
+    {
+        $this->set("editor_id", $value);
     }
 
     public function setFeatured($value)
@@ -106,14 +96,14 @@ class Wallpaper extends Entity
         return $this->get("featured");
     }
 
-    public function setFile($value)
-    {
-        $this->set("file", $value);
-    }
-
     public function getFile()
     {
         return $this->get("file");
+    }
+
+    public function setFile($value)
+    {
+        $this->set("file", $value);
     }
 
     public function getHits()
@@ -136,24 +126,34 @@ class Wallpaper extends Entity
         $this->set("id", $value);
     }
 
-    public function getName()
-    {
-        return $this->get("name");
-    }
-
     public function setName($value)
     {
         $this->set("name", $value);
     }
 
-    public function setPublished($value)
+    public function getName()
     {
-        $this->set("published", $value);
+        return $this->get("name");
+    }
+
+    public function getPublishDate()
+    {
+        return $this->get("publish_date");
+    }
+
+    public function setPublishDate($value)
+    {
+        $this->set("publish_date", $value);
     }
 
     public function getPublished()
     {
         return $this->get("published");
+    }
+
+    public function setPublished($value)
+    {
+        $this->set("published", $value);
     }
 
     public function getSlug()
@@ -166,13 +166,13 @@ class Wallpaper extends Entity
         $this->set("slug", $value);
     }
 
-    public function setTotalDownloads($value)
-    {
-        $this->set("total_downloads", $value);
-    }
-
     public function getTotalDownloads()
     {
         return $this->get("total_downloads");
+    }
+
+    public function setTotalDownloads($value)
+    {
+        $this->set("total_downloads", $value);
     }
 }

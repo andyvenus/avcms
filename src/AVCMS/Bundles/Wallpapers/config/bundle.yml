@@ -2,3 +2,12 @@ name: Wallpapers
 namespace: AVCMS\Bundles\Wallpapers
 require:
     - Framework
+
+menu_items:
+    admin:
+        wallpapers_admin:
+            label: Wallpapers
+            icon: glyphicon glyphicon-picture
+            type: route
+            target: wallpapers_admin_home
+            default_order: 80

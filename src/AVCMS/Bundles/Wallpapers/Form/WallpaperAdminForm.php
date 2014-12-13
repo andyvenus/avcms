@@ -2,50 +2,50 @@
 
 namespace AVCMS\Bundles\Wallpapers\Form;
 
-use AV\Form\FormBlueprint;
+use AVCMS\Bundles\Admin\Form\AdminContentForm;
 
-class WallpaperAdminForm extends FormBlueprint
+class WallpaperAdminForm extends AdminContentForm
 {
-    public function __construct()
+    public function __construct($itemId)
     {
+        $this->add('file', 'text', array(
+            'label' => 'File',
+        ));
+
         $this->add('name', 'text', array(
             'label' => 'Name',
+            'attr' => [
+                'data-slug-target' => 'slug'
+            ]
         ));
         
         $this->add('description', 'textarea', array(
             'label' => 'Description',
         ));
-        
-        $this->add('file', 'text', array(
-            'label' => 'File',
+
+        $this->add('tags', 'text', array(
+            'label' => 'Tags'
         ));
-        
+
+        /*
         $this->add('category', 'select', array(
             'label' => 'Category',
-        ));
-        
-        $this->add('published', 'checkbox', array(
-            'label' => 'Published',
-        ));
+        ));*/
+
         
         $this->add('featured', 'checkbox', array(
             'label' => 'Featured',
         ));
-        
-        $this->add('slug', 'text', array(
-            'label' => 'Slug',
-        ));
-        
-        $this->add('crop_type', 'select', array(
-            'label' => 'Crop Type',
-        ));
-        
-        $this->add('crop_vertical', 'radio', array(
-            'label' => 'Crop Vertical',
-        ));
-        
-        $this->add('crop_horizontal', 'radio', array(
-            'label' => 'Crop Horizontal',
-        ));
+
+        parent::__construct($itemId);
+
+        /*
+       $this->add('crop_type', 'select', array(
+           'label' => 'Crop Type',
+       ));
+
+      $this->add('crop_position', 'select', array(
+           'label' => 'Crop Position'
+       ));*/
     }
 }

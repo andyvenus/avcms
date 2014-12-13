@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WallpapersAdminController extends AdminBaseController
 {
+    /**
+     * @var \AVCMS\Bundles\Wallpapers\Model\Wallpapers
+     */
     protected $wallpapers;
 
     public function setUp(Request $request)
@@ -21,12 +24,12 @@ class WallpapersAdminController extends AdminBaseController
 
     public function homeAction(Request $request)
     {
-       return $this->handleManage($request, '@Wallpapers/wallpapers_browser.twig');
+        return $this->handleManage($request, '@Wallpapers/wallpapers_browser.twig');
     }
 
     public function editAction(Request $request)
     {
-        $formBlueprint = new WallpaperAdminForm();
+        $formBlueprint = new WallpaperAdminForm($request->get('id', 0));
 
         return $this->handleEdit($request, $this->wallpapers, $formBlueprint, 'wallpapers_admin_edit', '@Wallpapers/edit_wallpaper.twig', '@Wallpapers/wallpapers_browser.twig', array());
     }

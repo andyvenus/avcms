@@ -1,0 +1,9 @@
+{% extends 'index.twig' %}
+
+{% block content %}
+    {% for wallpaper in wallpapers %}
+        {{ wallpaper.name }}<br/>
+    {% else %}
+        {% trans %}No Wallpapers Found{% endtrans %}
+    {% endfor %}
+{% endblock %}

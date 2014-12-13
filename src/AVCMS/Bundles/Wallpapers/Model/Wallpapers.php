@@ -2,9 +2,9 @@
 
 namespace AVCMS\Bundles\Wallpapers\Model;
 
-use AV\Model\Model;
+use AVCMS\Core\Model\ContentModel;
 
-class Wallpapers extends Model
+class Wallpapers extends ContentModel
 {
     public function getTable()
     {

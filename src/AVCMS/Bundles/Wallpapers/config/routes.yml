@@ -1,0 +1,7 @@
+wallpaper_image:
+  path: /wallpaper-image
+  defaults: { _controller: Wallpapers::WallpapersImageController::imageAction }
+
+browse_wallpapers:
+  path: /wallpapers
+  defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction }
