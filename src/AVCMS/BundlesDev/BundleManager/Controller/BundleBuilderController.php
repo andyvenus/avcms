@@ -52,7 +52,7 @@ class BundleBuilderController extends BundleBaseController
                 file_put_contents($bundle_location.'/config/routes.yml', '');
                 file_put_contents($bundle_location.'/config/admin_routes.yml', '');
 
-                $app_bundles_config = Yaml::parse(file_get_contents('app/config/bundles.yml'));
+                $app_bundles_config = Yaml::parse(file_get_contents($this->container->getParameter('config_dir').'/bundles.yml'));
                 $app_bundles_config[ucfirst($yaml['name'])] = array('enabled' => false);
 
                 file_put_contents($appDir.'/config/bundles.yml', Yaml::dump($app_bundles_config));
