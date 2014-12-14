@@ -3,14 +3,13 @@
 namespace AVCMS\Bundles\Wallpapers\Form;
 
 use AVCMS\Bundles\Admin\Form\AdminContentForm;
+use AVCMS\Bundles\FileUpload\Form\FileSelectFields;
 
 class WallpaperAdminForm extends AdminContentForm
 {
     public function __construct($itemId)
     {
-        $this->add('file', 'text', array(
-            'label' => 'File',
-        ));
+        new FileSelectFields($this, 'admin/wallpapers/find-files', 'admin/wallpapers/upload');
 
         $this->add('name', 'text', array(
             'label' => 'Name',
