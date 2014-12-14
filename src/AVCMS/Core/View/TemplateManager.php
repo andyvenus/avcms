@@ -35,6 +35,8 @@ class TemplateManager
         if ($this->currentTemplate === null) {
             throw new \Exception("No template set in user settings");
         }
+
+        $this->getTemplateConfig();
     }
 
     public function getTemplateConfig()
