@@ -8,9 +8,9 @@ $(document).ready(function() {
 
         avcms.file_select.doChange($('[name=file_type]').filter(':visible:checked'));
 
-        var file_selector = $(".file_selector_dropdown").filter(':visible');
+        var file_selector = $(".file_selector_dropdown");
 
-        file_selector.filter(':visible').select2({
+        file_selector.select2({
             placeholder: "Find file",
             minimumInputLength: 2,
             ajax: {
@@ -40,29 +40,31 @@ $(document).ready(function() {
                 }
             }
         });
+
+
+        var file_upload = $('form').filter(':visible').find('.file_upload');
+
+        file_upload.fileupload({
+            url: avcms.config.site_url+file_upload.data('upload-url'),
+            dataType: 'json',
+            done: function (e, data) {
+                $('.file-upload-progress').filter(':visible').html('');
+
+                $('form').filter(':visible').find('input[name=file]').val(data.result.file);
+                $("input[name=file_type][value=file]").filter(':visible').prop('checked', true).change();
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('.file-upload-progress').filter(':visible').html('Uploading: '+progress+'%');
+            },
+            fail: function() {
+                alert('f');
+            }
+        }).prop('disabled', !$.support.fileInput)
+            .parent().addClass($.support.fileInput ? undefined : 'disabled');
     });
 
-    var file_upload = $('.file_upload').filter(':visible');
 
-    file_upload.fileupload({
-        url: avcms.config.site_url+file_upload.data('upload-url'),
-        dataType: 'json',
-        done: function (e, data) {
-            $('.file-upload-progress').filter(':visible').html('');
-
-            $.each(data.result.files, function (index, file) {
-                $("input[name=file_type][value=file]").filter(':visible').prop('checked', true).change();
-            });
-        },
-        progressall: function (e, data) {
-            var progress = parseInt(data.loaded / data.total * 100, 10);
-            $('.file-upload-progress').filter(':visible').html('Uploading: '+progress+'%');
-        },
-        fail: function() {
-            alert('f');
-        }
-    }).prop('disabled', !$.support.fileInput)
-        .parent().addClass($.support.fileInput ? undefined : 'disabled');
 });
 
 avcms.file_select = {
