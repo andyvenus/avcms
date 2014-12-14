@@ -11,3 +11,6 @@ menu_items:
             type: route
             target: wallpapers_admin_home
             default_order: 80
+
+config:
+    wallpapers_dir: webmaster/wallpapers

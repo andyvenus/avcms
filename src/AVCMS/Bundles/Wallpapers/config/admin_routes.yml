@@ -1,5 +1,3 @@
-
-
 wallpapers_admin_edit:
     path:     /wallpapers/edit/{id}
     defaults: { _controller: 'Wallpapers::WallpapersAdminController::editAction' }
@@ -19,3 +17,11 @@ wallpapers_admin_home:
 wallpapers_admin_finder:
   path: /wallpapers/finder/{page}
   defaults: { page: 1, _controller: 'Wallpapers::WallpapersAdminController::finderAction' }
+
+wallpapers_admin_find_files:
+  path: /wallpapers/find-files
+  defaults: { _controller: 'Wallpapers::WallpapersAdminController::findFilesAction' }
+
+wallpapers_admin_upload:
+  path: /wallpapers/upload
+  defaults: { _controller: 'Wallpapers::WallpapersAdminController::uploadFilesAction' }

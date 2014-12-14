@@ -6,6 +6,7 @@ use AVCMS\Bundles\Wallpapers\Form\WallpapersAdminFiltersForm;
 use AVCMS\Bundles\Wallpapers\Form\WallpaperAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -53,6 +54,43 @@ class WallpapersAdminController extends AdminBaseController
     public function togglePublishedAction(Request $request)
     {
         return $this->handleTogglePublished($request, $this->wallpapers);
+    }
+
+    public function findFilesAction(Request $request)
+    {
+        $q = $request->get('q');
+
+        $dir = $this->bundle->config->wallpapers_dir;
+
+        $itr = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir));
+
+        $data = [];
+
+        foreach ($itr as $file) {
+            if ($file->isFile() && strpos($file->getFilename(), $q) !== false) {
+                $relativeDir = str_replace($dir, '', $file->getPath().'/'.$file->getFilename());
+                $relativeDir = ($relativeDir[0] === '/' ? substr($relativeDir, 1) : $relativeDir);
+                $relativePretty = str_replace('/', ' » ', $relativeDir);
+                $data[] = ['id' => $relativeDir, 'text' => $relativePretty];
+            }
+        }
+
+        return new JsonResponse($data);
+    }
+
+    public function uploadFilesAction(Request $request)
+    {
+        $file = $request->files->get('upload', null);
+
+        if ($file === null) {
+            throw $this->createNotFoundException();
+        }
+
+        $file->move($this->container->getParameter('root_dir').'/'.$this->bundle->config->wallpapers_dir.'/'.$file->getClientOriginalName()[0], $file->getClientOriginalName());
+
+        $fileJson = ['file' => $file->getClientOriginalName()[0].'/'.$file->getClientOriginalName()];
+
+        return new JsonResponse($fileJson);
     }
 
     protected function getSharedTemplateVars($ajax_depth)
