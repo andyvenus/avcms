@@ -30,3 +30,5 @@ CmsErrorHandler:
     enabled: true
 Wallpapers:
     enabled: true
+FileUpload:
+    enabled: true

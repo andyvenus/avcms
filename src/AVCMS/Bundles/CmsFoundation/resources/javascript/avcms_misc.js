@@ -11,7 +11,7 @@ $(document).ready(function() {
 
 
 $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
-    if (options.type.toUpperCase() === "POST" && (options.data == undefined || options.data.indexOf("csrf_token") < 1)) {
+    if (typeof(options.data) !== 'object' && options.type.toUpperCase() === "POST" && (options.data == undefined || options.data.indexOf("csrf_token") < 1)) {
         if (options.data != '') {
             options.data = options.data + '&';
         }

@@ -1,0 +1,17 @@
+name: FileUpload
+namespace: AVCMS\Bundles\FileUpload
+require:
+    - Framework
+
+assets:
+  avcms_file_select.js:
+    env: admin
+  jquery.ui.widget.js:
+    env: admin
+  jquery.fileupload.js:
+    env: admin
+  jquery.iframe-transport.js:
+    env: admin
+
+  jquery.fileupload.css:
+    env: admin
