@@ -6,8 +6,13 @@ $(document).ready(function() {
 
 avcms.ckeditor = {
     load: function() {
-        $('[data-html-editor]').ckeditor({
-            skin: 'bootstrapck'
-        });
+        var ua = navigator.userAgent.toLowerCase();
+        var isAndroid = ua.indexOf("android") > -1;
+
+        if (!isAndroid) {
+            $('[data-html-editor]').ckeditor({
+                skin: 'bootstrapck'
+            });
+        }
     }
 };
