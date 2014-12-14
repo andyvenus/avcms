@@ -27,6 +27,7 @@ assets:
       compile: false
   jquery.datetimepicker.js:
     env: admin
+    compile: false
   jquery.datetimepicker.css:
     env: admin
   jquery-ui.min.js:
