@@ -34,7 +34,7 @@ class SymfonyFile extends Rule
             return false;
         }
 
-        if ($this->maxFileSize && $param->getClientSize() > $this->maxFileSize) {
+        if ($this->maxFileSize && $param->getSize() > $this->maxFileSize) {
             $this->setError(sprintf($this->tooBigError, $this->byteFormat($this->maxFileSize, $this->unit)));
             return false;
         }
