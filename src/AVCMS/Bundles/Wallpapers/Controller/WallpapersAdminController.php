@@ -2,6 +2,7 @@
 
 namespace AVCMS\Bundles\Wallpapers\Controller;
 
+use AV\FileHandler\UploadedFileHandler;
 use AVCMS\Bundles\Wallpapers\Form\WallpapersAdminFiltersForm;
 use AVCMS\Bundles\Wallpapers\Form\WallpaperAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
@@ -82,13 +83,16 @@ class WallpapersAdminController extends AdminBaseController
     {
         $file = $request->files->get('upload', null);
 
-        if ($file === null) {
-            throw $this->createNotFoundException();
+        $path = $this->container->getParameter('root_dir').'/'.$this->bundle->config->wallpapers_dir.'/'.$file->getClientOriginalName()[0];
+
+        $handler = new UploadedFileHandler();
+
+        if ($handler->moveFile($file, $path) === false) {
+            $fileJson = ['success' => false, 'error' => $handler->getTranslatedError($this->translator)];
         }
-
-        $file->move($this->container->getParameter('root_dir').'/'.$this->bundle->config->wallpapers_dir.'/'.$file->getClientOriginalName()[0], $file->getClientOriginalName());
-
-        $fileJson = ['file' => $file->getClientOriginalName()[0].'/'.$file->getClientOriginalName()];
+        else {
+            $fileJson = ['file' => $file->getClientOriginalName()[0] . '/' . $file->getClientOriginalName()];
+        }
 
         return new JsonResponse($fileJson);
     }
