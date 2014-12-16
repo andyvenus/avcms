@@ -10,24 +10,25 @@ namespace AVCMS\Bundles\FileUpload\Form;
 use AV\Form\FormBlueprintInterface;
 
 class FileSelectFields {
-    public function __construct(FormBlueprintInterface $formBlueprint, $fileSelectUrl, $uploadUrl)
+    public function __construct(FormBlueprintInterface $formBlueprint, $fileSelectUrl, $uploadUrl, $fieldName = 'file', $groupName = 'wallpaper_file')
     {
-        $formBlueprint->add('file_type', 'radio', [
+        $formBlueprint->add($groupName.'[file_type]', 'radio', [
             'label' => 'File Type',
             'choices' => [
-                'file' => 'Path',
-                'find' => 'Find',
-                'upload' => 'Upload',
-                'grab' => 'Grab'
+                $fieldName => 'Path',
+                $groupName.'[find]' => 'Find',
+                $groupName.'[upload]' => 'Upload',
+                $groupName.'[grab]' => 'Grab'
             ],
-            'default' => 'file'
+            'attr' => ['data-file-selector-group' => $groupName, 'data-file-selector-target' => $fieldName],
+            'default' => $fieldName
         ]);
 
-        $formBlueprint->add('file', 'text', array(
+        $formBlueprint->add($fieldName, 'text', array(
             'label' => 'File Path',
         ));
 
-        $formBlueprint->add('find', 'text', array(
+        $formBlueprint->add($groupName.'[find]', 'text', array(
             'label' => 'Find File',
             'attr' => array(
                 'class' => 'file_selector_dropdown no_select2',
@@ -35,7 +36,7 @@ class FileSelectFields {
             )
         ));
 
-        $formBlueprint->add('upload', 'file', [
+        $formBlueprint->add($groupName.'[upload]', 'file', [
             'label' => 'Upload File',
             'field_template' => '@FileUpload/file_upload_field.twig',
             'attr' => [
@@ -43,7 +44,7 @@ class FileSelectFields {
             ]
         ]);
 
-        $formBlueprint->add('grab', 'text', [
+        $formBlueprint->add($groupName.'[grab]', 'text', [
             'label' => 'Grab File'
         ]);
     }

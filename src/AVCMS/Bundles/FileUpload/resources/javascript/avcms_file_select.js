@@ -2,11 +2,13 @@ avcms = avcms || {};
 
 $(document).ready(function() {
 
-    $('body').on('change', '[name=file_type]', avcms.file_select.changeSelectedClick);
+    $('body').on('change', '[data-file-selector-group]', avcms.file_select.changeSelectedClick);
 
     avcms.event.addEvent('page-modified', function () {
 
-        avcms.file_select.doChange($('[name=file_type]').filter(':visible:checked'));
+        $('[data-file-selector-target]').filter(':visible:checked').each(function() {
+            avcms.file_select.doChange($(this));
+        });
 
         var file_selector = $(".file_selector_dropdown");
 
@@ -42,29 +44,66 @@ $(document).ready(function() {
         });
 
 
-        var file_upload = $('form').filter(':visible').find('.file_upload');
+        var file_upload = $('form').filter(':visible').find('.file-upload');
 
-        file_upload.fileupload({
-            url: avcms.config.site_url+file_upload.data('upload-url'),
-            dataType: 'json',
-            done: function (e, data) {
-                $('.file-upload-progress').filter(':visible').html('');
+        file_upload.each(function() {
+            var field_group = $(this).attr('name').substr(0, $(this).attr('name').indexOf('['));
+            var file_field = $('[data-file-selector-group="'+field_group+'"]').filter(':visible').data('file-selector-target');
 
-                $('form').filter(':visible').find('input[name=file]').val(data.result.file);
-                $("input[name=file_type][value=file]").filter(':visible').prop('checked', true).change();
-            },
-            progressall: function (e, data) {
-                var progress = parseInt(data.loaded / data.total * 100, 10);
-                $('.file-upload-progress').filter(':visible').html('Uploading: '+progress+'%');
-            },
-            fail: function() {
-                alert('f');
-            }
-        }).prop('disabled', !$.support.fileInput)
-            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+            $(this).fileupload({
+                url: avcms.config.site_url+$(this).data('upload-url')+'?type='+field_group,
+                dataType: 'json',
+                done: function (e, data) {
+                    if (data.result.success === true) {
+                        $('.file-upload-progress').filter(':visible').html('');
+
+                        $('form').filter(':visible').find('input[name="'+file_field+'"]').val(data.result.file);
+                        $('input[name="'+field_group+'[file_type]"][value="'+file_field+'"]').filter(':visible').prop('checked', true).change();
+                    }
+                    else {
+                        alert(data.result.error);
+                    }
+                },
+                progressall: function (e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('.file-upload-progress').filter(':visible').html('Uploading: '+progress+'%');
+                },
+                fail: function() {
+                    alert('f');
+                }
+            }).prop('disabled', !$.support.fileInput)
+                .parent().addClass($.support.fileInput ? undefined : 'disabled');
+            });
+        });
+
+    avcms.event.addEvent('submit-form', function (form, data) {
+        var field = form.find('.file-upload');
+        var messages = $(form).find('.form-messages');
+        var return_val = true;
+
+        if (field.length > 0) {
+            field.each(function() {
+                var field_group = $(this).attr('name').substr(0, $(this).attr('name').indexOf('['));
+
+                var field_val = $('[data-file-selector-group="'+field_group+'"]').filter(':checked').val();
+
+                if (field_val == field_group+'[upload]' || field_val == field_group+'[grab]') {
+                    messages.html('');
+
+                    messages.append('<div class="alert alert-danger animated bounce">'+avcms.general.trans('Please upload the file before saving')+'</div>');
+
+                    return_val = false;
+                }
+
+                if (field_val == field_group+'[find]') {
+                    var file_field = $('[data-file-selector-group="'+field_group+'"]').filter(':checked').data('file-selector-target');
+                    form.find('[name="'+file_field+'"]').val(form.find('[name="'+field_group+'[find]"]').val());
+                }
+            })
+        }
+
+        return return_val;
     });
-
-
 });
 
 avcms.file_select = {
@@ -79,11 +118,11 @@ avcms.file_select = {
 
         var form = checkbox.closest('form');
 
-        form.find('[name='+name+']').each(function() {
-            form.find('[name='+$(this).val()+']').parents('.form-group').hide();
+        form.find('[name="'+name+'"]').each(function() {
+            form.find('[name="'+$(this).val()+'"]').parents('.form-group').hide();
         });
 
-        form.find('[name='+target+']').parents('.form-group').show();
+        form.find('[name="'+target+'"]').parents('.form-group').show();
 
         avcms.event.fireEvent('file-select-change', {target: target, name: name, form: form})
     }
