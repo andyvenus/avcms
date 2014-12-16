@@ -6,8 +6,15 @@ var avcms = avcms || {};
 
 avcms.form = {
     submitForm: function() {
-        var data = $(this).serialize();
         var form = $(this);
+
+        var eventResult = avcms.event.fireEvent('submit-form', [form]);
+        if (eventResult === false) {
+            avcms.event.fireEvent('submit-form-complete', [form]);
+            return false;
+        }
+
+        var data = $(this).serialize();
 
         var submit_url;
         if (form.attr('action')) {

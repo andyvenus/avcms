@@ -44,7 +44,7 @@ avcms.browser = {
             return;
         }
 
-        if (response_data.form.has_errors === false) {
+        if (typeof(response_data) !== 'undefined' && response_data.form.has_errors === false) {
             var id = form.attr('data-item-id')
             if (id !== undefined) {
                 $(form).find('*').filter(':input:not(button)').each(function(i, form_field){

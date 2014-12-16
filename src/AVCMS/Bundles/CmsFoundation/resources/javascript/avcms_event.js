@@ -19,7 +19,10 @@ avcms.event = new function () {
 
         var arrayLength =  this.events[event].length;
         for (var i = 0; i < arrayLength; i++) {
-            this.events[event][i].apply(this, args);
+            var result = this.events[event][i].apply(this, args);
+            if (result === false) {
+                return false;
+            }
         }
     };
 
