@@ -39,10 +39,17 @@ class UploadedFileHandler
         }
 
         if ($this->acceptedFileTypes !== null) {
-            foreach ($this->acceptedFileTypes as $extension => $mimeTypes)
-            if (!in_array($uploadedFile->getMimeType(), $mimeTypes)) {
+            foreach ($this->acceptedFileTypes as $extension => $mimeTypes) {
+                $mimeTypes = (array) $mimeTypes;
+
+                if ($extension === $uploadedFile->guessClientExtension() && in_array($uploadedFile->getMimeType(), $mimeTypes)) {
+                    $mimeTypeValid = true;
+                }
+            }
+
+            if (!isset($mimeTypeValid)) {
                 $friendlyFileTypes = [];
-                foreach ($this->maxSize as $fileTypeName => $mimeType) {
+                foreach ($this->acceptedFileTypes as $fileTypeName => $mimeType) {
                     $friendlyFileTypes[] = $fileTypeName;
                 }
 
@@ -111,6 +118,17 @@ class UploadedFileHandler
             return false;
         }
 
-        return true;
+        return $fullPath;
+    }
+
+    public static function getImageFiletypes()
+    {
+        return [
+            'jpg' => ['image/jpeg'],
+            'jpeg' => ['image/jpeg'],
+            'png' => ['image/png'],
+            'gif' => ['image/gif'],
+            'bmp' => ['image/bmp', 'image/x-windows-bmp']
+        ];
     }
 }
