@@ -7,6 +7,7 @@ use AVCMS\Bundles\Wallpapers\Form\WallpapersAdminFiltersForm;
 use AVCMS\Bundles\Wallpapers\Form\WallpaperAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -81,17 +82,20 @@ class WallpapersAdminController extends AdminBaseController
 
     public function uploadFilesAction(Request $request)
     {
-        $file = $request->files->get('upload', null);
+        /**
+         * @var $file UploadedFile
+         */
+        $file = $request->files->get($request->query->get('type'), null)['upload'];
 
         $path = $this->container->getParameter('root_dir').'/'.$this->bundle->config->wallpapers_dir.'/'.$file->getClientOriginalName()[0];
 
-        $handler = new UploadedFileHandler();
+        $handler = new UploadedFileHandler(UploadedFileHandler::getImageFiletypes());
 
-        if ($handler->moveFile($file, $path) === false) {
+        if (($fullPath = $handler->moveFile($file, $path)) === false) {
             $fileJson = ['success' => false, 'error' => $handler->getTranslatedError($this->translator)];
         }
         else {
-            $fileJson = ['file' => $file->getClientOriginalName()[0] . '/' . $file->getClientOriginalName()];
+            $fileJson = ['success' => true, 'file' => $file->getClientOriginalName()[0].'/'.basename($fullPath)];
         }
 
         return new JsonResponse($fileJson);
