@@ -514,4 +514,4 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
     {
         return $this->tablePrefix;
     }
-} 
+}

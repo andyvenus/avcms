@@ -42,13 +42,12 @@ class BlogController extends Controller
             ->slug($request->get('slug'))
             ->published()
             ->join($this->model($this->bundle->model->users), ['id', 'username', 'slug', 'avatar'])
+            ->joinTaxonomy('tags')
             ->first();
 
         if (!$post) {
             throw $this->createNotFoundException(ucfirst($this->posts->getSingular()).' not found');
         }
-
-        $this->container->get('taxonomy_manager')->assign('tags', $post, $this->posts->getSingular());
 
         $this->container->get('hitcounter')->registerHit($this->posts, $post->getId());
 
