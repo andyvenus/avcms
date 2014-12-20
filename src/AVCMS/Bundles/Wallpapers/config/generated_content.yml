@@ -22,3 +22,27 @@ wallpapers:
     model_class: Wallpapers
     model_var_name: wallpapers
     title_field: name
+wallpaper_categories:
+    bundle: Wallpapers
+    namespace: AVCMS\Bundles\Wallpapers
+    singular: wallpaper_category
+    plural: wallpaper_categories
+    uc_singular: 'Wallpaper Category'
+    uc_plural: 'Wallpaper Categories'
+    cc_singular: WallpaperCategory
+    cc_plural: WallpaperCategories
+    dash_singular: wallpaper-category
+    dash_plural: wallpaper-categories
+    admin_home_route: wallpaper_categories_admin_home
+    admin_finder_route: wallpaper_categories_admin_finder
+    admin_delete_route: wallpaper_categories_admin_delete
+    admin_edit_route: wallpaper_categories_admin_edit
+    admin_add_route: wallpaper_categories_admin_add
+    admin_controller: 'Wallpapers::WallpaperCategoriesAdminController'
+    finder_item_extra_buttons: ''
+    database: wallpaper_categories
+    entity: AVCMS\Bundles\Wallpapers\Model\WallpaperCategory
+    admin_form: AVCMS\Bundles\Wallpapers\Form\WallpaperCategoryAdminForm
+    model_class: WallpaperCategories
+    model_var_name: wallpaperCategories
+    title_field: name

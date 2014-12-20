@@ -25,3 +25,11 @@ wallpapers_admin_find_files:
 wallpapers_admin_upload:
   path: /wallpapers/upload
   defaults: { _controller: 'Wallpapers::WallpapersAdminController::uploadFilesAction' }
+
+wallpapers_manage_categories:
+  path: /wallpapers/categories
+  defaults: { _controller: 'Wallpapers::WallpapersAdminController::manageCategoriesAction', contentType: wallpaper }
+
+wallpapers_save_categories_order:
+  path: /wallpapers/categories/save-order
+  defaults: { _controller: Wallpapers::WallpapersAdminController::saveOrderAction, contentType: wallpaper }

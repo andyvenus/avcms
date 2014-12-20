@@ -6,24 +6,34 @@ use AV\Model\Entity;
 
 class Wallpaper extends Entity
 {
-    public function getCategory()
+    public function setCategoryId($value)
     {
-        return $this->get("category");
+        $this->set("category_id", $value);
     }
 
-    public function setCategory($value)
+    public function getCategoryId()
     {
-        $this->set("category", $value);
+        return $this->get("category_id");
     }
 
-    public function getCreatorId()
+    public function setCategoryParentId($value)
     {
-        return $this->get("creator_id");
+        $this->set("category_parent_id", $value);
+    }
+
+    public function getCategoryParentId()
+    {
+        return $this->get("category_parent_id");
     }
 
     public function setCreatorId($value)
     {
         $this->set("creator_id", $value);
+    }
+
+    public function getCreatorId()
+    {
+        return $this->get("creator_id");
     }
 
     public function getCropPosition()
@@ -126,24 +136,24 @@ class Wallpaper extends Entity
         $this->set("id", $value);
     }
 
-    public function setName($value)
-    {
-        $this->set("name", $value);
-    }
-
     public function getName()
     {
         return $this->get("name");
     }
 
-    public function getPublishDate()
+    public function setName($value)
     {
-        return $this->get("publish_date");
+        $this->set("name", $value);
     }
 
     public function setPublishDate($value)
     {
         $this->set("publish_date", $value);
+    }
+
+    public function getPublishDate()
+    {
+        return $this->get("publish_date");
     }
 
     public function getPublished()

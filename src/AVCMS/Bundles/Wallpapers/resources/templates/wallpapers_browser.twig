@@ -10,6 +10,7 @@
 
 {% block add_item %}
     {{ buttons.add_item('wallpapers_admin_add', 'Add Wallpaper') }}
+    {{ buttons.add_item('wallpapers_admin_add', 'Manage Categories', 'glyphicon-th-list') }}
 {% endblock %}
 
 {% block finder %}
@@ -24,6 +25,4 @@
 
 {% block checked_options_buttons %}
     {{ buttons.bulk_delete('wallpapers_admin_delete') }}
-
-    
 {% endblock %}

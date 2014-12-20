@@ -3,6 +3,8 @@
 namespace AVCMS\Bundles\Wallpapers\Controller;
 
 use AV\FileHandler\UploadedFileHandler;
+use AVCMS\Bundles\Categories\Controller\CategoryActionsTrait;
+use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Wallpapers\Form\WallpapersAdminFiltersForm;
 use AVCMS\Bundles\Wallpapers\Form\WallpaperAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
@@ -15,6 +17,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WallpapersAdminController extends AdminBaseController
 {
+    use CategoryActionsTrait;
+
     /**
      * @var \AVCMS\Bundles\Wallpapers\Model\Wallpapers
      */
@@ -32,7 +36,7 @@ class WallpapersAdminController extends AdminBaseController
 
     public function editAction(Request $request)
     {
-        $formBlueprint = new WallpaperAdminForm($request->get('id', 0));
+        $formBlueprint = new WallpaperAdminForm($request->get('id', 0), new CategoryChoicesProvider($this->model('WallpaperCategories')));
 
         return $this->handleEdit($request, $this->wallpapers, $formBlueprint, 'wallpapers_admin_edit', '@Wallpapers/edit_wallpaper.twig', '@Wallpapers/wallpapers_browser.twig', array());
     }

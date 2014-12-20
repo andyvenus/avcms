@@ -12,5 +12,11 @@ menu_items:
             target: wallpapers_admin_home
             default_order: 80
 
+categories:
+    wallpaper:
+        model: AVCMS\Bundles\Wallpapers\Model\WallpaperCategories
+        browser_template: @Wallpapers/wallpapers_browser.twig
+        route_prefix: wallpapers_
+
 config:
     wallpapers_dir: webmaster/wallpapers
