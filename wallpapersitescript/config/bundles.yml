@@ -32,3 +32,5 @@ Wallpapers:
     enabled: true
 FileUpload:
     enabled: true
+Categories:
+    enabled: true
