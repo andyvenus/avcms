@@ -42,4 +42,11 @@ abstract class Categories extends Model
 
         return $mainCategories;
     }
+
+    public function getParentCategories()
+    {
+        $categories = $this->query()->orderBy('order')->whereNull('parent')->get();
+
+        return $categories;
+    }
 }

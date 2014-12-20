@@ -7,6 +7,8 @@
 
 namespace AVCMS\Bundles\Categories\Controller;
 
+use AVCMS\Bundles\Categories\Form\CategoryAdminForm;
+use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Categories\Model\Categories;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,9 +77,14 @@ trait CategoryActionsTrait
         return new JsonResponse(array('success' => true));
     }
 
-    public function editCategoryAction()
+    public function editCategoryAction(Request $request, $contentType)
     {
+        $categoryConfig = $this->getCategoryConfig($contentType);
+        $model = $this->model($categoryConfig['model']);
 
+        $formBlueprint = new CategoryAdminForm(new CategoryChoicesProvider($this->model('WallpaperCategories'), false));
+
+        return $this->handleEdit($request, $model, $formBlueprint, $categoryConfig['route_prefix'].'manage_categories', '@Categories/admin/edit_category.twig', $categoryConfig['browser_template'], ['route_prefix' => $categoryConfig['route_prefix']]);
     }
 
     private function getCategoryConfig($contentType)

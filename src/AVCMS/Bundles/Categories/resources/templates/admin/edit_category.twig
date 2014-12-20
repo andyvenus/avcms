@@ -1,0 +1,19 @@
+{% extends '@admin/edit_item.twig' %}
+
+{% block title -%}
+    {% spaceless %}
+        {% if item.id %}
+            Editing {{ item.name }}
+        {% else %}
+            {% trans %}New Category{% endtrans %}
+        {% endif %}
+    {% endspaceless  %}
+{% endblock %}
+
+{% block editor_title_edit %}
+    <span class="light"><a href="{{ url(route_prefix ~ 'manage_categories') }}">{% trans %}Categories{% endtrans %}</a> /</span> <span data-id="{{ item.id }}" data-field="label">{{ item.name }}</span>
+{% endblock %}
+
+{% block editor_title_new %}
+    {% trans %}New Category{% endtrans %}
+{% endblock %}
