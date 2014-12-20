@@ -60,10 +60,13 @@
     </div>
 {% endmacro %}
 
-{% macro add_item(ajax_route, label) %}
+{% macro add_item(ajax_route, label, icon) %}
+    {% if icon == null %}
+        {% set icon = 'glyphicon-plus' %}
+    {% endif %}
     <div class="add-item">
         <a href="{{ url(ajax_route) }}">
-            <span class="glyphicon glyphicon-plus"></span> {{ label|trans }}
+            <span class="glyphicon {{ icon }}"></span> {{ label|trans }}
         </a>
     </div>
 {% endmacro %}
