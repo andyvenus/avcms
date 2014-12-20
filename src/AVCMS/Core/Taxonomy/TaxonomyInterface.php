@@ -9,16 +9,15 @@ namespace AVCMS\Core\Taxonomy;
 
 use AV\Model\QueryBuilder\QueryBuilderHandler;
 
-interface TaxonomyInterface {
-    public function getModel();
-
+interface TaxonomyInterface
+{
     public function get($contentId, $contentType);
 
     public function getRelationsModel();
 
-    public function update($contentId, $contentType, array $tags);
+    public function update($contentId, $contentType, array $taxonomyValues);
 
-    public function setTaxonomyJoin($model, QueryBuilderHandler $query, array $tags);
+    public function setTaxonomyJoin($model, QueryBuilderHandler $query, array $taxonomyValues);
 
     public function assign($entity, $contentType);
 }
