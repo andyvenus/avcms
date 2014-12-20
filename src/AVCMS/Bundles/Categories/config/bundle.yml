@@ -2,3 +2,6 @@ name: Categories
 namespace: AVCMS\Bundles\Categories
 require:
     - Framework
+
+services:
+    - CategoryServices

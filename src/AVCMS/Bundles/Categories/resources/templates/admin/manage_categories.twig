@@ -1,0 +1,40 @@
+{% extends '@admin/editor.twig' %}
+
+{% block title %}Categories{% endblock %}
+
+{% block editor_title %}{{ block('title') }}{% endblock %}
+
+{% block editor_content %}
+    <span class="always-refresh"></span>
+
+    <p><a href="{#{{ url('menu_items_add', {menu: item.id}) }}#}" class="btn btn-default">{% trans %}Add Category{% endtrans %}</a></p>
+
+    <div class="sortable-container">
+        <ul class="sortable" style="position: absolute;" data-sortable-levels="2" data-ajax-action="{{ url(route_prefix ~ 'save_categories_order') }}" data-ajax-delete-action="{{ url('menus_admin_delete_item') }}">
+            {% for category in categories %}
+                <li id="category_order_{{ category.id }}" data-item-id="{{ category.id }}">
+                    <div class="sortable-item">
+                        <span class="glyphicon glyphicon-align-justify handle"></span> {{ category.name }}
+                        {% block category_buttons %}
+                            <div class="pull-right">
+
+                            </div>
+                        {% endblock %}
+                    </div>
+                    {% if category.subCategories %}
+                        <ul>
+                            {% for subCategory in category.subCategories %}
+                                <li id="category_order_{{ subCategory.id }}">
+                                    <div class="sortable-item">
+                                        <span class="glyphicon glyphicon-align-justify handle"></span> {{ subCategory.name }}
+                                        {{ block('menu_item_buttons') }}
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
