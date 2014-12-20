@@ -23,7 +23,7 @@ class TagsTaxonomy implements TaxonomyInterface
     /**
      * @var string The column that this taxonomy is identified by, for example when entered into a form
      */
-    protected $relation_column = 'name';
+    protected $relationColumn = 'name';
 
     /**
      * @var \AV\Model\Model
@@ -33,16 +33,16 @@ class TagsTaxonomy implements TaxonomyInterface
     /**
      * @var \AVCMS\Core\Taxonomy\Model\TaxonomyModel
      */
-    protected $relations_model;
+    protected $relationsModel;
 
     /**
-     * @param Model $tags_model The main model for the taxonomy that holds information about each tag
-     * @param TaxonomyModel $relations_model The model that provides the relational data linking the tag to the content
+     * @param Model $tagsModel The main model for the taxonomy that holds information about each tag
+     * @param TaxonomyModel $relationsModel The model that provides the relational data linking the tag to the content
      */
-    public function __construct(Model $tags_model, TaxonomyModel $relations_model)
+    public function __construct(Model $tagsModel, TaxonomyModel $relationsModel)
     {
-        $this->relations_model = $relations_model;
-        $this->tags = $tags_model;
+        $this->relationsModel = $relationsModel;
+        $this->tags = $tagsModel;
     }
 
     /**
@@ -55,8 +55,8 @@ class TagsTaxonomy implements TaxonomyInterface
      */
     public function setTaxonomyJoin($model, QueryBuilderHandler $query, array $tags)
     {
-        $query->join($this->relations_model->getTable(), 'content_id', '=', $model->getTable().'.id', 'left')
-            ->join($this->tags->getTable(), $this->tags->getTable().'.id', '=', $this->relations_model->getTable().'.taxonomy_id', 'left')
+        $query->join($this->relationsModel->getTable(), 'content_id', '=', $model->getTable().'.id', 'left')
+            ->join($this->tags->getTable(), $this->tags->getTable().'.id', '=', $this->relationsModel->getTable().'.taxonomy_id', 'left')
             ->where('content_type', $model->getSingular())
             ->whereIn($this->tags->getTable().'.name', $tags);
 
@@ -73,46 +73,46 @@ class TagsTaxonomy implements TaxonomyInterface
      */
     public function update($contentId, $contentType, array $tags)
     {
-        $existing_tags = $this->tags->query()->whereIn($this->relation_column, $tags)->get();
+        $existingTags = $this->tags->query()->whereIn($this->relationColumn, $tags)->get();
 
-        $only_new_tags = $tags;
+        $onlyNewTags = $tags;
 
         /**
          * @var $existing_tag \AVCMS\Bundles\Tags\Model\Tag
          */
-        foreach ($existing_tags as $existing_tag) {
-            if(($key = array_search($existing_tag->getName(), $only_new_tags)) !== false) {
-                unset($only_new_tags[$key]);
+        foreach ($existingTags as $existing_tag) {
+            if(($key = array_search($existing_tag->getName(), $onlyNewTags)) !== false) {
+                unset($onlyNewTags[$key]);
             }
         }
 
-        $new_tags = array();
+        $newTags = array();
 
-        foreach ($only_new_tags as $new_tag) {
-            if (!in_array($new_tag, $existing_tags)) {
-                $tag_entity = $this->tags->newEntity();
-                $tag_entity->setName($new_tag);
+        foreach ($onlyNewTags as $new_tag) {
+            if (!in_array($new_tag, $existingTags)) {
+                $tagEntity = $this->tags->newEntity();
+                $tagEntity->setName($new_tag);
 
-                $new_tags[] = $tag_entity;
+                $newTags[] = $tagEntity;
             }
         }
 
-        $existing_tag_ids = array();
-        foreach($existing_tags as $existing_tag) {
-            $existing_tag_ids[] = $existing_tag->getId();
+        $existingTagIds = array();
+        foreach($existingTags as $existing_tag) {
+            $existingTagIds[] = $existing_tag->getId();
         }
 
-        if ($new_tags) {
-            $new_tag_ids = $this->tags->insert($new_tags);
+        if ($newTags) {
+            $newTagIds = $this->tags->insert($newTags);
         }
         else {
-            $new_tag_ids = array();
+            $newTagIds = array();
         }
 
-        $tag_ids = array_merge($existing_tag_ids, $new_tag_ids);
+        $tagIds = array_merge($existingTagIds, $newTagIds);
 
-        $this->relations_model->deleteContentTaxonomy($contentId, $contentType);
-        $this->relations_model->addContentTaxonomy($contentId, $contentType, $tag_ids);
+        $this->relationsModel->deleteContentTaxonomy($contentId, $contentType);
+        $this->relationsModel->addContentTaxonomy($contentId, $contentType, $tagIds);
 
     }
 
@@ -125,7 +125,7 @@ class TagsTaxonomy implements TaxonomyInterface
      */
     public function get($contentId, $contentType)
     {
-        return $this->tags->query()->join($this->relations_model->getTable(), 'taxonomy_id', '=', $this->tags->getTable().'.id', 'left')
+        return $this->tags->query()->join($this->relationsModel->getTable(), 'taxonomy_id', '=', $this->tags->getTable().'.id', 'left')
             ->where('content_type', $contentType)
             ->where('content_id', $contentId)
             ->get();
@@ -153,7 +153,7 @@ class TagsTaxonomy implements TaxonomyInterface
      */
     public function getRelationsModel()
     {
-        return $this->relations_model;
+        return $this->relationsModel;
     }
 
     /**
