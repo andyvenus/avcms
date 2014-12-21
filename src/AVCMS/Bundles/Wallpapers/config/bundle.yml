@@ -15,6 +15,7 @@ menu_items:
 categories:
     wallpaper:
         model: AVCMS\Bundles\Wallpapers\Model\WallpaperCategories
+        content_model: AVCMS\Bundles\Wallpapers\Model\Wallpapers
         browser_template: @Wallpapers/wallpapers_browser.twig
         route_prefix: wallpapers_
 

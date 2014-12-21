@@ -23,10 +23,10 @@
                     </div>
                     {% if category.subCategories %}
                         <ul>
-                            {% for subCategory in category.subCategories %}
-                                <li id="category_order_{{ subCategory.id }}">
+                            {% for category in category.subCategories %}
+                                <li id="category_order_{{ category.id }}">
                                     <div class="sortable-item">
-                                        <span class="glyphicon glyphicon-align-justify handle"></span> {{ subCategory.name }}
+                                        <span class="glyphicon glyphicon-align-justify handle"></span> {{ category.name }}
                                         {{ block('category_buttons') }}
                                     </div>
                                 </li>

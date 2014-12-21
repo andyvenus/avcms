@@ -67,10 +67,18 @@ trait CategoryActionsTrait
                     $parent = null;
                 }
 
+                $previousParent = $category->getParent();
+
                 $category->setParent($parent);
                 $category->setOrder($i);
 
                 $model->update($category);
+
+                if ($previousParent !== $parent) {
+                    $contentModel = $this->model($categoryConfig['content_model']);
+
+                    $contentModel->query()->where('category_id', $category->getId())->update(['category_parent_id' => $parent]);
+                }
             }
         }
 
