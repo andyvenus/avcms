@@ -28,7 +28,7 @@ $(document).ready(function() {
     avcms.event.addEvent('submit-form-success', avcms.browser.editorAddItemFormSubmitEvent);
 
     avcms.event.addEvent('page-modified', function() {
-        $('.nano-content').on('scroll', avcms.browser.finderLoadMore);
+        $('.browser-finder-results .nano-content').on('scroll', avcms.browser.finderLoadMore);
         $(window).on('scroll', avcms.browser.finderLoadMore);
 
         avcms.browser.finder_loading = 0;
