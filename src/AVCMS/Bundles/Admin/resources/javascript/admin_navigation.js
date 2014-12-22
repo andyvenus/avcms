@@ -41,6 +41,8 @@ avcms.nav = {
 
     // On URL change, get the right page content via AJAX
     pageChange: function(depth) {
+        avcms.event.fireEvent('url-change');
+
         var full_url = avcms.nav.getCurrentUrl();
         var previous_url = avcms.nav.getPreviousUrl();
 

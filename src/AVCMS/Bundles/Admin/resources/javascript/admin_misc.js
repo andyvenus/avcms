@@ -118,9 +118,5 @@ avcms.admin = {
 
     disableAutoGenerateSlug: function() {
         $(this).data('modified', 'true');
-    },
-
-    toggleMenu: function() {
-        $('.admin-menu').toggleClass('admin-menu-focused');
     }
 }

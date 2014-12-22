@@ -40,25 +40,28 @@
             <div class="col-xs-4">
                    <ul class="nav navbar-nav">
                        <li class="visible-xs-inline visible-sm-inline"><a href="#" id="menu_toggle"><span class="glyphicon glyphicon-align-justify"></span> {% trans %}Navigation{% endtrans %}</a></li>
-                       <li class="dropdown visible-md-inline visible-lg-inline">
-                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ random(['Namaste', 'Hello', 'Hola', 'Bonjour', 'Saluton', 'Hallo']) }} {{ user.username }}</a>
-                           <ul class="dropdown-menu" role="menu">
-                               <li><a href="{{ url('user_profile', {slug: user.slug}) }}">Profile</a></li>
-                               <li class="divider"></li>
-                               <li><a href="{{ url('logout') }}">Log-out</a></li>
-                           </ul>
-                       </li>
-                       <li class="dropdown visible-md-inline visible-lg-inline">
-                           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"/> </a>
-                           <ul class="dropdown-menu" role="menu">
-                               {% if is_granted('ADMIN_CLEAR_CACHES') %}
-                                   <li><a href="#" data-form-modal-url="{{ url('clear_caches') }}">{% trans %}Clear Caches{% endtrans %}</a></li>
-                                   <li><a href="{{ url('generate_assets') }}">{% trans %}Regenerate Assets{% endtrans %}</a></li>
+                       {% set visible_classes = 'visible-md-inline visible-lg-inline' %}
+                       {% block top_menu %}
+                           <li class="dropdown {{ visible_classes }}">
+                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ random(['Namaste', 'Hello', 'Hola', 'Bonjour', 'Saluton', 'Hallo']) }} {{ user.username }}</a>
+                               <ul class="dropdown-menu" role="menu">
+                                   <li><a href="{{ url('user_profile', {slug: user.slug}) }}">Profile</a></li>
                                    <li class="divider"></li>
-                               {% endif %}
-                               <li><a href="#">{% trans %}Check for update{% endtrans %}</a></li>
-                           </ul>
-                       </li>
+                                   <li><a href="{{ url('logout') }}">Log-out</a></li>
+                               </ul>
+                           </li>
+                           <li class="dropdown {{ visible_classes }}">
+                               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"/> </a>
+                               <ul class="dropdown-menu" role="menu">
+                                   {% if is_granted('ADMIN_CLEAR_CACHES') %}
+                                       <li><a href="#" data-form-modal-url="{{ url('clear_caches') }}">{% trans %}Clear Caches{% endtrans %}</a></li>
+                                       <li><a href="{{ url('generate_assets') }}">{% trans %}Regenerate Assets{% endtrans %}</a></li>
+                                       <li class="divider"></li>
+                                   {% endif %}
+                                   <li><a href="#">{% trans %}Check for update{% endtrans %}</a></li>
+                               </ul>
+                           </li>
+                       {% endblock %}
                    </ul>
             </div>
             <div class="col-xs-4">
@@ -83,6 +86,12 @@
 </header>
 
 <aside class="admin-menu">
+    {% set visible_classes = 'visible-sm-inline visible-xs-inline' %}
+
+    <div class="top-menu-sidebar">
+        {{ block('top_menu') }}
+    </div>
+
     <ul>
         {% for menu_item in menu('admin') %}
             <li><a href="{{ menu_item.url }}"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}</a></li>

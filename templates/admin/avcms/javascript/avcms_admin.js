@@ -14,7 +14,9 @@ $(document).ready(function() {
     avcms.event.addEvent('page-modified', avcms.adminTemplate.verticalDesign);
     avcms.event.addEvent('submit-form-complete', avcms.adminTemplate.formSubmitScroll);
 
-    $('body').on('click', '#menu_toggle, .admin-menu a', avcms.admin.toggleMenu);
+    $('body').on('click', '#menu_toggle', avcms.adminTemplate.toggleMenu);
+
+    avcms.event.addEvent('url-change', avcms.adminTemplate.menuOff);
 });
 
 avcms.adminTemplate = {
@@ -74,5 +76,13 @@ avcms.adminTemplate = {
         form.parent('.editor-content').scrollTop(0);
         form.parents('.simple-content').scrollTop(0);
         window.scrollTo(0,0);
+    },
+
+    toggleMenu: function() {
+        $('.admin-menu').toggleClass('admin-menu-focused');
+    },
+
+    menuOff: function() {
+        $('.admin-menu').removeClass('admin-menu-focused');
     }
 }

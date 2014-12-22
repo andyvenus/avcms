@@ -94,6 +94,26 @@ a {
     }
   }
 
+  .top-menu-sidebar {
+    text-align: center;
+    padding: 10px;
+    margin-top: 10px;
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .dropdown-toggle {
+      padding: 10px;
+      border: 1px solid lighten($main_menu_color, 20);
+    }
+
+    .dropdown-menu a {
+      color: black;
+    }
+  }
+
   .version {
     position: fixed;
     bottom:0px;
