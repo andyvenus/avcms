@@ -103,7 +103,7 @@ class FileMaker
     public function processVars($string)
     {
         foreach ($this->vars as $varName => $var) {
-            $string = str_replace("{{{$varName}}}", $var, $string);
+            $string = str_replace("{{".$varName."}}", $var, $string);
         }
 
         return $string;

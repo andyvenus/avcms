@@ -5,6 +5,7 @@ directory_structure:
   - Form
   - resources
   - resources/templates
+  - resources/templates/admin
   - Services
 
 base_controller: AVCMS\Core\Controller\Controller

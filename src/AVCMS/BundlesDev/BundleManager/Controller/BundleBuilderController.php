@@ -119,9 +119,9 @@ class BundleBuilderController extends BundleBaseController
 
                 if ($form->getData('admin_sections') == 1) {
                     $fm->addFile('AdminController.php.bt', 'Controller/{{cc_plural}}AdminController.php');
-                    $fm->addFile('browser.twig.bt', 'resources/templates/{{plural}}_browser.twig');
-                    $fm->addFile('edit_item.twig.bt', 'resources/templates/edit_{{singular}}.twig');
-                    $fm->addFile('finder.twig.bt', 'resources/templates/{{plural}}_finder.twig');
+                    $fm->addFile('browser.twig.bt', 'resources/templates/admin/{{plural}}_browser.twig');
+                    $fm->addFile('edit_item.twig.bt', 'resources/templates/admin/edit_{{singular}}.twig');
+                    $fm->addFile('finder.twig.bt', 'resources/templates/admin/{{plural}}_finder.twig');
                     $fm->addFile('content_routes.yml.bt', 'config/admin_routes.yml', FileMaker::APPEND);
                 }
 

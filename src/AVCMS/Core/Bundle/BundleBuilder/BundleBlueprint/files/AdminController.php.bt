@@ -5,10 +5,8 @@ namespace {{namespace}}\Controller;
 use AVCMS\Bundles\{{bundle}}\Form\{{cc_plural}}AdminFiltersForm;
 use AVCMS\Bundles\{{bundle}}\Form\{{cc_singular}}AdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 
 class {{cc_plural}}AdminController extends AdminBaseController
 {
@@ -24,14 +22,14 @@ class {{cc_plural}}AdminController extends AdminBaseController
 
     public function homeAction(Request $request)
     {
-       return $this->handleManage($request, '@{{bundle}}/{{plural}}_browser.twig');
+       return $this->handleManage($request, '@{{bundle}}/admin/{{plural}}_browser.twig');
     }
 
     public function editAction(Request $request)
     {
         $formBlueprint = new {{cc_singular}}AdminForm();
 
-        return $this->handleEdit($request, $this->{{model_var_name}}, $formBlueprint, '{{admin_edit_route}}', '@{{bundle}}/edit_{{singular}}.twig', '@{{bundle}}/{{plural}}_browser.twig', array());
+        return $this->handleEdit($request, $this->{{model_var_name}}, $formBlueprint, '{{admin_edit_route}}', '@{{bundle}}/admin/edit_{{singular}}.twig', '@{{bundle}}/admin/{{plural}}_browser.twig', array());
     }
 
     public function finderAction(Request $request)
@@ -42,7 +40,7 @@ class {{cc_plural}}AdminController extends AdminBaseController
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
         $items = $finder->get();
 
-        return new Response($this->render('@{{bundle}}/{{plural}}_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));
+        return new Response($this->render('@{{bundle}}/admin/{{plural}}_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));
     }
 
     public function deleteAction(Request $request)
