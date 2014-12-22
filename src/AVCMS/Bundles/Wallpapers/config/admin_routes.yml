@@ -38,6 +38,10 @@ wallpapers_admin_add_category:
   path: /wallpapers/categories/new
   defaults: { _controller: Wallpapers::WallpapersAdminController::editCategoryAction, contentType: wallpaper }
 
+wallpapers_admin_delete_category:
+  path: /wallpapers/categories/delete/{id}
+  defaults: { _controller: Wallpapers::WallpapersAdminController::deleteCategoryAction, contentType: wallpaper }
+
 wallpapers_admin_edit_category:
-  path: /wallpapers/categories/{id}
+  path: /wallpapers/categories/edit/{id}
   defaults: { _controller: Wallpapers::WallpapersAdminController::editCategoryAction, contentType: wallpaper }

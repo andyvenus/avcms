@@ -18,6 +18,7 @@
                         {% block category_buttons %}
                             <div class="pull-right">
                                 <a href="{{ url(route_prefix ~ 'admin_edit_category', {id: category.id}) }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit{% endtrans %}</a>
+                                <button data-category-delete-url="{{ url(route_prefix ~ 'admin_delete_category', {id: category.id}) }}" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
                             </div>
                         {% endblock %}
                     </div>

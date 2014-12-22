@@ -18,11 +18,14 @@ class CategoryChoicesProvider implements ChoicesProviderInterface
 
     protected $allowNone;
 
-    public function __construct(Categories $model, $subCategories = true, $allowNone = false)
+    protected $exclude;
+
+    public function __construct(Categories $model, $subCategories = true, $allowNone = false, $exclude = [])
     {
         $this->model = $model;
         $this->subCategories = $subCategories;
         $this->allowNone = $allowNone;
+        $this->exclude = (array) $exclude;
     }
 
     /**
@@ -40,7 +43,9 @@ class CategoryChoicesProvider implements ChoicesProviderInterface
         }
 
         foreach ($categories as $category) {
-            $choices[$category->getId()] = $category->getParent() ? ' - '.$category->getName() : $category->getName();
+            if (!in_array($category->getId(), $this->exclude)) {
+                $choices[$category->getId()] = $category->getParent() ? ' - ' . $category->getName() : $category->getName();
+            }
         }
 
         return $choices;

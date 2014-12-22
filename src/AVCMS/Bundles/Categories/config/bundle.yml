@@ -5,3 +5,7 @@ require:
 
 services:
     - CategoryServices
+
+assets:
+    avcms_categories_admin.js:
+        env: admin
