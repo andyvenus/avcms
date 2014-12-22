@@ -11,7 +11,7 @@
 {% block editor_content %}
     <span class="always-refresh"></span>
     {% if item.active %}
-        <p><a href="{{ url('modules_admin_add', {position: item.id}) }}" class="btn btn-default">{% trans %}Add Module{% endtrans %}</a></p>
+        <p><a href="{{ url('modules_admin_add', {position: item.id}) }}" class="btn btn-primary">{% trans %}Add Module{% endtrans %}</a></p>
     {% else %}
         <p><span class="label label-warning">{% trans %}Inactive{% endtrans %}</span> {% trans %}This section is not currently active on your site{% endtrans %}</p>
     {% endif %}
