@@ -3,6 +3,8 @@ avcms = avcms || {};
 $(document).ready(function() {
     $('#search_form').submit(avcms.frontend.search);
 
+    $('body').on('submit', '[data-ajax-form]', avcms.form.submitForm);
+
     avcms.frontend.updateSearchForm();
 });
 

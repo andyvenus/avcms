@@ -5,7 +5,7 @@ $(document).ready(function() {
         var url = $(this).data('form-modal-url');
         avcms.general.loadFormModal(url);
     });
-    $('body').on('submit', '[data-ajax-form]', avcms.form.submitForm);
+
     avcms.event.addEvent('submit-form-success', avcms.general.modalFormSuccess);
 });
 
