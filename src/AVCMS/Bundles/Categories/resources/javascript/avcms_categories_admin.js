@@ -1,7 +1,9 @@
 var avcms = avcms || {};
 
 $(document).ready(function() {
-    $('body').on('click', '[data-category-delete-url]', avcms.reports.openDeleteCategoryForm);
+    $('body').on('click', '[data-category-delete-url]', avcms.categories.openDeleteCategoryForm);
+
+    avcms.event.addEvent('submit-form-success', avcms.categories.onCategoryDeleted);
 });
 
 avcms.categories = {
@@ -13,7 +15,9 @@ avcms.categories = {
         avcms.general.loadFormModal(delete_category_url);
     },
 
-    onCategoryDeleted: function() {
-
+    onCategoryDeleted: function(form) {
+        if (form.attr('name') == 'category_delete_form') {
+            avcms.nav.refreshSection('.ajax-editor-inner', 'editor');
+        }
     }
 };

@@ -114,6 +114,7 @@ trait CategoryActionsTrait
         }
 
         $moveItemsForm = new FormBlueprint();
+        $moveItemsForm->setName('category_delete_form');
 
         $moveItemsForm->add('new_category', 'select', [
             'label' => "Move existing items to",
