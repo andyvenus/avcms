@@ -3,7 +3,7 @@
 {% block title -%}
     {% spaceless %}
         {% if item.id %}
-            Editing {{ item.username }}
+            {% trans with {'item': item.username} %}Editing {item}{% endtrans %}
         {% else %}
             {% trans %}New User{% endtrans %}
         {% endif %}
@@ -15,9 +15,5 @@
 {% endblock %}
 
 {% block editor_title_new %}
-    New User
-{% endblock %}
-
-{% block form_rows %}
-    {{ form_rows(form) }}
+    {% trans %}New User{% endtrans %}
 {% endblock %}

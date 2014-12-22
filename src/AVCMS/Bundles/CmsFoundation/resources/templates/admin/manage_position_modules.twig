@@ -1,7 +1,7 @@
 {% extends '@admin/editor.twig' %}
 
 {% block title -%}
-    Editing Modules Position - {{ item.name }}
+    {% trans %}Editing Modules Position{% endtrans %} - {{ item.name }}
 {% endblock %}
 
 {% block editor_title %}
@@ -27,7 +27,7 @@
                             {{ module.moduleInfo.name }} &nbsp;
                             <a class="btn btn-xs btn-default" href="{{ url('modules_admin_edit', {id: module.id}) }}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
                         {% else %}
-                            <span class="label label-danger">Module type "{{ module.module }}" missing</span>
+                            <span class="label label-danger">{% trans with {module: module.module} %}Module type "{module}" missing{% endtrans %}</span>
                         {% endif %}
                         <button class="btn btn-xs btn-danger delete-item"><span class="glyphicon glyphicon-remove"></span></button>
                     </div>

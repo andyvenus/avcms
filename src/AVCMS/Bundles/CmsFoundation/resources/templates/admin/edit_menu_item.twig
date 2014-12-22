@@ -3,7 +3,7 @@
 {% block title -%}
     {% spaceless %}
         {% if item.id %}
-            Editing {{ item.label }}
+            {% trans with {'item': item.label} %}Editing {item}{% endtrans %}
         {% else %}
             {% trans %}New Menu Item{% endtrans %}
         {% endif %}
@@ -15,9 +15,5 @@
 {% endblock %}
 
 {% block editor_title_new %}
-    New Menu Item
-{% endblock %}
-
-{% block form_rows %}
-    {{ form_rows(form) }}
+    {% trans %}New Menu Item{% endtrans %}
 {% endblock %}

@@ -107,7 +107,7 @@ abstract class AdminBaseController extends Controller
         $helper->handleRequestAndSave($request);
 
         if (!$helper->contentExists()) {
-            throw $this->createNotFoundException(ucfirst($model->getSingular()).' not found');
+            throw $this->createNotFoundException(ucwords(str_replace('_', ' ', $model->getSingular())).' not found');
         }
 
         if (!$id = $helper->getEntity()->getId()) {

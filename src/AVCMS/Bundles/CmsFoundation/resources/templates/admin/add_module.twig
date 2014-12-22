@@ -1,7 +1,7 @@
 {% extends '@admin/editor.twig' %}
 
 {% block title -%}
-    Add Module
+    {% trans %}Add Module{% endtrans %}
 {% endblock %}
 
 {% block editor_title %}
@@ -18,7 +18,7 @@
                     {{ module.description }}
                 </div>
                 <div class="pull-right" style="margin-top:3px;">
-                    <a href="{{ url('modules_admin_add_selected', { position: item.id, module: module_id}) }}" class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span> Add</a>
+                    <a href="{{ url('modules_admin_add_selected', { position: item.id, module: module_id}) }}" class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span> {% trans %}Add{% endtrans %}</a>
                 </div>
             </div>
         {% endfor %}

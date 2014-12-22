@@ -3,7 +3,7 @@
 {% block title -%}
     {% spaceless %}
         {% if item.id %}
-            Editing {{ item.{{title_field}} }}
+            {% trans with {'item': item.{{title_field}}} %}Editing {item}{% endtrans %}
         {% else %}
             {% trans %}New {{uc_singular}}{% endtrans %}
         {% endif %}
@@ -15,9 +15,5 @@
 {% endblock %}
 
 {% block editor_title_new %}
-    New {{uc_singular}}
-{% endblock %}
-
-{% block form_rows %}
-    {{ form_rows(form) }}
+    {% trans %}New {{uc_singular}}{% endtrans %}
 {% endblock %}

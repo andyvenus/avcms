@@ -8,9 +8,7 @@
     {{ buttons.expand_finder('modules_admin_home') }}
 {% endblock %}
 
-{% block add_item %}
-
-{% endblock %}
+{% block add_item %}{% endblock %}
 
 {% block finder %}
     <div data-url="{{ url('modules_admin_finder') }}">
@@ -24,6 +22,4 @@
 
 {% block checked_options_buttons %}
     {{ buttons.bulk_delete('modules_admin_delete') }}
-
-    
 {% endblock %}

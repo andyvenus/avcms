@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class {{cc_plural}}AdminController extends AdminBaseController
 {
+    /**
+     * @var \{{namespace}}\Model\{{model_class}}
+     */
     protected ${{model_var_name}};
 
     public function setUp(Request $request)
@@ -52,12 +55,12 @@ class {{cc_plural}}AdminController extends AdminBaseController
         return $this->handleTogglePublished($request, $this->{{model_var_name}});
     }
 
-    protected function getSharedTemplateVars($ajax_depth)
+    protected function getSharedTemplateVars($ajaxDepth)
     {
-        $template_vars = parent::getSharedTemplateVars($ajax_depth);
+        $templateVars = parent::getSharedTemplateVars($ajaxDepth);
 
-        $template_vars['finder_filters_form'] = $this->buildForm(new {{cc_plural}}AdminFiltersForm())->createView();
+        $templateVars['finder_filters_form'] = $this->buildForm(new {{cc_plural}}AdminFiltersForm())->createView();
 
-        return $template_vars;
+        return $templateVars;
     }
 } 

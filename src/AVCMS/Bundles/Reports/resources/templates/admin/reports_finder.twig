@@ -7,7 +7,7 @@
                     {% if report.senderUserId != null %}
                         <a href="{{ url('users_admin_edit', {id: report.senderUserId}) }}">{{ report.sender_user.username }}</a>
                     {% else %}
-                        Anonymous
+                        {% trans %}Anonymous{% endtrans %}
                     {% endif %}
 
                      {% trans %}reported{% endtrans %}
@@ -17,7 +17,7 @@
                     {% if report.reportedUserId != null %}
                         <a href="{{ url('users_admin_edit', {id: report.reportedUserId}) }}">{{ report.reported_user.username }}</a>
                     {% else %}
-                        Unknown
+                        {% trans %}Unknown{% endtrans %}
                     {% endif %}
                     - {{ report.date|date(settings.date_format) }}
                     <div class="pull-right">

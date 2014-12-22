@@ -3,7 +3,7 @@
 {% block title -%}
     {% spaceless %}
         {% if item.id %}
-            Editing {{ item.name }}
+            {% trans with {'item': item.name} %}Editing {item}{% endtrans %}
         {% else %}
             {% trans %}New Category{% endtrans %}
         {% endif %}
