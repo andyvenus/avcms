@@ -19,5 +19,5 @@
 {% endblock %}
 
 {% block form_start %}
-    {{ form_start(form) }}
+    {{ form_start(form, {"data-item-id": item.id|default(0), "data-update-browser": 'none'}) }}
 {% endblock %}

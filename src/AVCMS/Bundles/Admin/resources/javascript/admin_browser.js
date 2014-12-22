@@ -23,7 +23,7 @@ $(document).ready(function() {
     avcms.event.addEvent('page-modified', avcms.browser.setBrowserFocus);
     avcms.browser.setBrowserFocus();
 
-    avcms.event.addEvent('submit-form-complete', avcms.browser.browserFormSubmitted)
+    avcms.event.addEvent('submit-form-complete', avcms.browser.browserFormSubmitted);
 
     avcms.event.addEvent('submit-form-success', avcms.browser.editorAddItemFormSubmitEvent);
 
@@ -40,7 +40,7 @@ avcms.browser = {
     finder_loading: 0,
 
     browserFormSubmitted: function(form, response_data) {
-        if ($('.browser').length < 1) {
+        if ($('.browser').length < 1 || form.data('update-browser') === 'none') {
             return;
         }
 

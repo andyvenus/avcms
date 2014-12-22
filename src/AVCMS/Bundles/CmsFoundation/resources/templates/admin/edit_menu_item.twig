@@ -17,3 +17,7 @@
 {% block editor_title_new %}
     {% trans %}New Menu Item{% endtrans %}
 {% endblock %}
+
+{% block form_start %}
+    {{ form_start(form, {"data-item-id": item.id|default(0), "data-update-browser": 'none'}) }}
+{% endblock %}
