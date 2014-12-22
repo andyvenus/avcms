@@ -39,7 +39,7 @@
         <div class="row">
             <div class="col-xs-4">
                    <ul class="nav navbar-nav">
-                       <li class="visible-xs-inline visible-sm-inline"><a href="#" id="menu_toggle"><span class="glyphicon glyphicon-align-justify"></span> {% trans %}Navigation{% endtrans %}</a></li>
+                       <li class="visible-xs-inline visible-sm-inline"><a href="#" id="menu_toggle"><span class="glyphicon glyphicon-align-justify"></span> {% trans %}Menu{% endtrans %}</a></li>
                        {% set visible_classes = 'visible-md-inline visible-lg-inline' %}
                        {% block top_menu %}
                            <li class="dropdown {{ visible_classes }}">
@@ -92,14 +92,18 @@
         {{ block('top_menu') }}
     </div>
 
-    <ul>
-        {% for menu_item in menu('admin') %}
-            <li><a href="{{ menu_item.url }}"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}</a></li>
-            {% for sub_menu_item in menu_item.children %}
-                <li class="sub-menu-item"><a href="{{ sub_menu_item.url }}"><span class="{{ sub_menu_item.icon }}"></span> {{ sub_menu_item.label }}</a></li>
-            {% endfor %}
-        {% endfor %}
-    </ul>
+    <div class="nano">
+        <div class="nano-content">
+            <ul>
+                {% for menu_item in menu('admin') %}
+                    <li><a href="{{ menu_item.url }}"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}</a></li>
+                    {% for sub_menu_item in menu_item.children %}
+                        <li class="sub-menu-item"><a href="{{ sub_menu_item.url }}"><span class="{{ sub_menu_item.icon }}"></span> {{ sub_menu_item.label }}</a></li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 
     <div class="version">
         {{ app_config.info.name }} {{ app_config.info.version }}
