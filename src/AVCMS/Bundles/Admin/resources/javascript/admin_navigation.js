@@ -40,7 +40,7 @@ avcms.nav = {
     },
 
     // On URL change, get the right page content via AJAX
-    pageChange: function() {
+    pageChange: function(depth) {
         var full_url = avcms.nav.getCurrentUrl();
         var previous_url = avcms.nav.getPreviousUrl();
 
@@ -51,7 +51,7 @@ avcms.nav = {
 
         var func_name, ajax_depth;
 
-        if ($.trim(prev_attr_clean) == $.trim(current_attr[0]) && $('.ajax-editor').length > 0) {
+        if (($.trim(prev_attr_clean) == $.trim(current_attr[0]) && $('.ajax-editor').length > 0) || (typeof(depth) !== 'undefined' && depth === 'editor')) {
             ajax_depth = 'editor';
             func_name = 'append';
         }
@@ -161,6 +161,17 @@ avcms.nav = {
             states = History.savedStates,
             prevUrlIndex = states.length - 2;
 
-        return states[prevUrlIndex].hash;
+        if (typeof(states[prevUrlIndex]) !== 'undefined') {
+            return states[prevUrlIndex].hash;
+        }
+        else {
+            return '';
+        }
+    },
+
+    refreshSection: function(section, depth) {
+        $(section).filter(':visible').remove();
+
+        avcms.nav.pageChange(depth);
     }
 }
