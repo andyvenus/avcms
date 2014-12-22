@@ -6,6 +6,7 @@ require:
 assets:
   avcms_file_select.js:
     env: admin
+    priority: 20
   jquery.ui.widget.js:
     env: admin
   jquery.fileupload.js:
