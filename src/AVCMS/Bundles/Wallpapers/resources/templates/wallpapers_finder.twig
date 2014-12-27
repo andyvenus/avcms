@@ -4,18 +4,24 @@
 
 {% endblock %}
 
-{% block item_title %}
-    <div class="finder-item-title" data-field="name">
-        {{ item.name }}
+{% block item_main %}
+    <div class="wallpaper-image" style="float:left;margin-right: 5px;">
+        <img src="{{ wp_thumbnail_url(item, 80, 45) }}"/>
     </div>
-{% endblock %}
 
-{% block item_options %}
-    <div class="btn-group">
-        {{ buttons.edit('wallpapers_admin_edit', item.id) }}
+    {% block item_title %}
+        <div class="finder-item-title" data-field="name">
+            {{ item.name }}
+        </div>
+    {% endblock %}
 
-        {{ buttons.delete('wallpapers_admin_delete') }}
-    </div>
+    {% block item_options %}
+        <div class="btn-group">
+            {{ buttons.edit('wallpapers_admin_edit', item.id) }}
+
+            {{ buttons.delete('wallpapers_admin_delete') }}
+        </div>
+    {% endblock %}
 {% endblock %}
 
 {% block item_extended_inner %}

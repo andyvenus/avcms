@@ -3,6 +3,9 @@ namespace: AVCMS\Bundles\Wallpapers
 require:
     - Framework
 
+services:
+    - WallpaperServices
+
 menu_items:
     admin:
         wallpapers_admin:

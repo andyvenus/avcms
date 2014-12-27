@@ -1,6 +1,6 @@
-wallpaper_image:
-  path: /wallpaper-image
-  defaults: { _controller: Wallpapers::WallpapersImageController::imageAction }
+wallpaper_thumbnail:
+  path: /web/wallpapers/{id}/thumbnail/{width}x{height}.{ext}
+  defaults: { _controller: Wallpapers::WallpapersImageController::imageAction, ext: png }
 
 browse_wallpapers:
   path: /wallpapers

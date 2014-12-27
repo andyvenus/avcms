@@ -374,6 +374,11 @@ a {
     display:inherit;
   }
 
+  .finder-wide {
+    width: 330px;
+    display:inherit;
+  }
+
   .finder-has-focus {
     width: 100%;
   }
@@ -390,7 +395,7 @@ a {
   }
 
   .browser-finder-filters {
-    max-width: 300px;
+    max-width: 330px;
   }
 
   .editor-content, .simple-content {

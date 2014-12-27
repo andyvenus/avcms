@@ -28,14 +28,16 @@
             {% endblock %}
 
             <div class="finder-item-main">
-                {% block item_title %}
-                    <div class="finder-item-title" data-field="title">
-                        {{ item.title }}
-                    </div>
-                {% endblock %}
+                {% block item_main %}
+                    {% block item_title %}
+                        <div class="finder-item-title" data-field="title">
+                            {{ item.title }}
+                        </div>
+                    {% endblock %}
 
-                {% block item_options %}
+                    {% block item_options %}
 
+                    {% endblock %}
                 {% endblock %}
             </div>
             <div class="finder-item-extended">

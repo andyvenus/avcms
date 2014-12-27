@@ -8,6 +8,7 @@
 namespace AVCMS\Bundles\Wallpapers\Controller;
 
 use AVCMS\Core\Controller\Controller;
+use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\ImageManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,13 +17,23 @@ class WallpapersImageController extends Controller
 {
     public function imageAction(Request $request)
     {
-        $width = $request->get('w', 800);
-        $height = $request->get('h', 600);
+        $width = $request->get('width', 800);
+        $height = $request->get('height', 600);
         $anchor = $request->get('a', 'bottom-left');
+
+        $wallpaper = $this->model('Wallpapers')->getOne($request->get('id'));
+        if (!$wallpaper) {
+            throw $this->createNotFoundException();
+        }
 
         $man = new ImageManager(['driver' => 'GD']);
 
-        $img = $man->make($this->container->getParameter('root_dir').'/web/wp.jpg');
+        try {
+            $img = $man->make($this->container->getParameter('root_dir') . '/' . $this->bundle->config->wallpapers_dir . '/' . $wallpaper->getFile());
+        }
+        catch (NotReadableException $e) {
+            exit('source image not found');
+        }
 
         $reqRatio = $width / $height;
         $origRatio = $img->width() / $img->height();
@@ -35,6 +46,13 @@ class WallpapersImageController extends Controller
 
         $img->resizeCanvas($width, $height, $anchor);
 
-        return new Response($img->encode(), 200, ['Content-Type' => 'image/png']);
+
+        $thumbDir = $this->container->getParameter('web_path').'/wallpapers/'.$wallpaper->getId().'/thumbnail';
+        if (!file_exists($thumbDir)) {
+            mkdir($thumbDir, 0777, true);
+        }
+        $img->save($thumbDir.'/'.$width.'x'.$height.'.'.$img->extension);
+
+        return new Response($img->encode(), 200, ['Content-Type' => $img->mime]);
     }
 }

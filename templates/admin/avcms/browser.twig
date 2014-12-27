@@ -8,7 +8,7 @@
 
 {% block main_content %}
     <div class="{% block browser_class %}browser{% endblock %}">
-        <div class="browser-finder animated fadeIn">
+        <div class="browser-finder animated fadeIn {%- block finder_extra_class -%}{%- endblock -%}">
             <div class="browser-finder-top">
                 <div class="browser-finder-filters">
                     {% block finder_top -%}
