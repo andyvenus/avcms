@@ -75,7 +75,11 @@ avcms.browser = {
                 if (data) {
                     if (id != 0) {
                         var item_html = $($.parseHTML(data)).filter('[data-id="'+id+'"]').html();
-                        finder_inner.find('[data-id="'+id+'"]').html(item_html);
+
+                        var finder_item = finder_inner.find('[data-id="'+id+'"]').html(item_html);
+                        finder_item.find('img').each(function() {
+                            $(this).attr('src', $(this).attr('src') + new Date().getTime());
+                        })
                     }
                     else {
                         $('.remove-header').remove();
