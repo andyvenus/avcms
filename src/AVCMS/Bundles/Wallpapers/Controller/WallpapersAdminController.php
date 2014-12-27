@@ -2,6 +2,7 @@
 
 namespace AVCMS\Bundles\Wallpapers\Controller;
 
+use AV\Cache\CacheClearer;
 use AV\FileHandler\UploadedFileHandler;
 use AVCMS\Bundles\Categories\Controller\CategoryActionsTrait;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
@@ -38,7 +39,33 @@ class WallpapersAdminController extends AdminBaseController
     {
         $formBlueprint = new WallpaperAdminForm($request->get('id', 0), new CategoryChoicesProvider($this->model('WallpaperCategories')));
 
-        return $this->handleEdit($request, $this->wallpapers, $formBlueprint, 'wallpapers_admin_edit', '@Wallpapers/edit_wallpaper.twig', '@Wallpapers/wallpapers_browser.twig', array());
+        $form = $this->buildForm($formBlueprint);
+
+        $helper = $this->editContentHelper($this->wallpapers, $form);
+
+        $helper->handleRequestAndSave($request);
+
+        if (!$helper->contentExists()) {
+            throw $this->createNotFoundException(ucwords(str_replace('_', ' ', $this->wallpapers->getSingular())).' not found');
+        }
+
+        if (!$id = $helper->getEntity()->getId()) {
+            $id = 0;
+        }
+
+        if ($helper->formValid()) {
+            $cacheClearer = new CacheClearer($this->container->getParameter('root_dir').'/'.$this->container->getParameter('web_path').'/'.$this->bundle->config->web_dir);
+            $cacheClearer->clearCaches([$helper->getEntity()->getId()]);
+        }
+
+        return $this->createEditResponse(
+            $helper,
+            $request,
+            '@Wallpapers/edit_wallpaper.twig',
+            '@Wallpapers/wallpapers_browser.twig',
+            array('wallpapers_admin_edit', array('id' => $id)),
+            []
+        );
     }
 
     public function finderAction(Request $request)

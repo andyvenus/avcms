@@ -24,3 +24,4 @@ categories:
 
 config:
     wallpapers_dir: webmaster/wallpapers
+    web_dir: wallpapers
