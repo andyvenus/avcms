@@ -19,7 +19,6 @@ class WallpapersImageController extends Controller
     {
         $width = $request->get('width', 800);
         $height = $request->get('height', 600);
-        $anchor = $request->get('a', 'bottom-left');
 
         $wallpaper = $this->model('Wallpapers')->getOne($request->get('id'));
         if (!$wallpaper) {
@@ -44,7 +43,11 @@ class WallpapersImageController extends Controller
             $img->heighten($height);
         }
 
-        $img->resizeCanvas($width, $height, $anchor);
+        if (!$cropPos = $wallpaper->getCropPosition()) {
+            $cropPos = 'center';
+        }
+
+        $img->resizeCanvas($width, $height, $cropPos);
 
 
         $thumbDir = $this->container->getParameter('web_path').'/wallpapers/'.$wallpaper->getId().'/thumbnail';

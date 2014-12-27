@@ -12,6 +12,23 @@ class WallpaperAdminForm extends AdminContentForm
     {
         new FileSelectFields($this, 'admin/wallpapers/find-files', 'admin/wallpapers/upload');
 
+        $this->add('crop_position', 'select', [
+            'choices' => [
+                'top-left' => 'Top-Left',
+                'top' => 'Top-Center',
+                'top-right' => 'Top-Right',
+                'left' => 'Left',
+                'center' => 'Center',
+                'right' => 'Right',
+                'bottom-left' => 'Bottom-Left',
+                'bottom' => 'Bottom-Center',
+                'bottom-right' => 'Bottom-Right'
+            ],
+            'label' => 'Crop Position',
+            'default' => 'center',
+            'strict' => true,
+        ]);
+
         $this->add('name', 'text', array(
             'label' => 'Name',
             'attr' => [

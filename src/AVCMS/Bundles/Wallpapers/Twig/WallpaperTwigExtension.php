@@ -33,6 +33,8 @@ class WallpaperTwigExtension extends \Twig_Extension
 
     public function thumbnailUrl(Wallpaper $wallpaper, $width, $height)
     {
-        return $this->urlGenerator->generate('wallpaper_thumbnail', ['id' => $wallpaper->getId(), 'width' => $width, 'height' => $height]);
+        $extension = pathinfo($wallpaper->getFile())['extension'];
+
+        return $this->urlGenerator->generate('wallpaper_thumbnail', ['id' => $wallpaper->getId(), 'width' => $width, 'height' => $height, 'ext' => $extension]);
     }
 }
