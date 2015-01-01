@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "00b6f910d88ef027b0b1e3d29755c6ff",
+    "hash": "6e86df67cbf56d5468f2c77fc93b1c5c",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -118,16 +118,16 @@
         },
         {
             "name": "intervention/image",
-            "version": "2.0.14",
+            "version": "2.0.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Intervention/image.git",
-                "reference": "0d2eb5858520ace6a7d1b42f4267a6488a63c0ed"
+                "reference": "b5350f62f59f8fa24f5d9c1ffbd094a7fd91c0e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/0d2eb5858520ace6a7d1b42f4267a6488a63c0ed",
-                "reference": "0d2eb5858520ace6a7d1b42f4267a6488a63c0ed",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/b5350f62f59f8fa24f5d9c1ffbd094a7fd91c0e3",
+                "reference": "b5350f62f59f8fa24f5d9c1ffbd094a7fd91c0e3",
                 "shasum": ""
             },
             "require": {
@@ -170,7 +170,7 @@
                 "thumbnail",
                 "watermark"
             ],
-            "time": "2014-11-21 18:49:22"
+            "time": "2014-12-20 14:14:38"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -290,16 +290,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.11.0",
+            "version": "1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "ec3961874c43840e96da3a8a1ed20d8c73d7e5aa"
+                "reference": "1fbe8c2641f2b163addf49cc5e18f144bec6b19f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/ec3961874c43840e96da3a8a1ed20d8c73d7e5aa",
-                "reference": "ec3961874c43840e96da3a8a1ed20d8c73d7e5aa",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1fbe8c2641f2b163addf49cc5e18f144bec6b19f",
+                "reference": "1fbe8c2641f2b163addf49cc5e18f144bec6b19f",
                 "shasum": ""
             },
             "require": {
@@ -313,7 +313,7 @@
                 "aws/aws-sdk-php": "~2.4, >2.4.8",
                 "doctrine/couchdb": "~1.0@dev",
                 "graylog2/gelf-php": "~1.0",
-                "phpunit/phpunit": "~3.7.0",
+                "phpunit/phpunit": "~4.0",
                 "raven/raven": "~0.5",
                 "ruflin/elastica": "0.90.*",
                 "videlalvaro/php-amqplib": "~2.4"
@@ -332,7 +332,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.11.x-dev"
+                    "dev-master": "1.12.x-dev"
                 }
             },
             "autoload": {
@@ -358,20 +358,20 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-09-30 13:30:58"
+            "time": "2014-12-29 21:29:35"
         },
         {
             "name": "patchwork/jsqueeze",
-            "version": "v1.0.5",
+            "version": "v1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tchwork/jsqueeze.git",
-                "reference": "2587913cf62143d896943b248b21651314911e2c"
+                "reference": "c97736ada25058f7c6fe963dc5c1713732b516c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tchwork/jsqueeze/zipball/2587913cf62143d896943b248b21651314911e2c",
-                "reference": "2587913cf62143d896943b248b21651314911e2c",
+                "url": "https://api.github.com/repos/tchwork/jsqueeze/zipball/c97736ada25058f7c6fe963dc5c1713732b516c1",
+                "reference": "c97736ada25058f7c6fe963dc5c1713732b516c1",
                 "shasum": ""
             },
             "require": {
@@ -400,7 +400,47 @@
                 "javascript",
                 "minification"
             ],
-            "time": "2014-11-08 10:03:23"
+            "time": "2015-01-01 09:34:58"
+        },
+        {
+            "name": "php-curl-class/php-curl-class",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-curl-class/php-curl-class.git",
+                "reference": "59e8e40626bda2b9286a16a0163aa7842e4434ab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-curl-class/php-curl-class/zipball/59e8e40626bda2b9286a16a0163aa7842e4434ab",
+                "reference": "59e8e40626bda2b9286a16a0163aa7842e4434ab",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Unlicense"
+            ],
+            "description": "PHP Curl Class is an object-oriented wrapper of the PHP cURL extension.",
+            "homepage": "https://github.com/php-curl-class/php-curl-class",
+            "keywords": [
+                "class",
+                "curl",
+                "php"
+            ],
+            "time": "2014-07-07 05:39:42"
         },
         {
             "name": "psr/log",
@@ -1350,16 +1390,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.16.2",
+            "version": "v1.16.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fabpot/Twig.git",
-                "reference": "42f758d9fe2146d1f0470604fc05ee43580873fc"
+                "url": "https://github.com/twigphp/Twig.git",
+                "reference": "6dc11a1e8ecfc30e2c68aaeb218148409d8e68af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/42f758d9fe2146d1f0470604fc05ee43580873fc",
-                "reference": "42f758d9fe2146d1f0470604fc05ee43580873fc",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/6dc11a1e8ecfc30e2c68aaeb218148409d8e68af",
+                "reference": "6dc11a1e8ecfc30e2c68aaeb218148409d8e68af",
                 "shasum": ""
             },
             "require": {
@@ -1394,7 +1434,7 @@
                 },
                 {
                     "name": "Twig Team",
-                    "homepage": "https://github.com/fabpot/Twig/graphs/contributors",
+                    "homepage": "http://twig.sensiolabs.org/contributors",
                     "role": "Contributors"
                 }
             ],
@@ -1403,7 +1443,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-10-17 12:53:44"
+            "time": "2014-12-25 19:58:19"
         },
         {
             "name": "usmanhalalit/pixie",
@@ -1649,12 +1689,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "4055c0e8577dfbc841fd384797487ff3fc75afff"
+                "reference": "ee277735d9dea95553ee667bee3292cdd6947574"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/4055c0e8577dfbc841fd384797487ff3fc75afff",
-                "reference": "4055c0e8577dfbc841fd384797487ff3fc75afff",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/ee277735d9dea95553ee667bee3292cdd6947574",
+                "reference": "ee277735d9dea95553ee667bee3292cdd6947574",
                 "shasum": ""
             },
             "require": {
@@ -1707,7 +1747,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2014-11-18 13:37:25"
+            "time": "2014-12-31 11:42:06"
         },
         {
             "name": "pdepend/pdepend",
@@ -1839,16 +1879,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "2.0.13",
+            "version": "2.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "0e7d2eec5554f869fa7a4ec2d21e4b37af943ea5"
+                "reference": "ca158276c1200cc27f5409a5e338486bc0b4fc94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/0e7d2eec5554f869fa7a4ec2d21e4b37af943ea5",
-                "reference": "0e7d2eec5554f869fa7a4ec2d21e4b37af943ea5",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/ca158276c1200cc27f5409a5e338486bc0b4fc94",
+                "reference": "ca158276c1200cc27f5409a5e338486bc0b4fc94",
                 "shasum": ""
             },
             "require": {
@@ -1900,7 +1940,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-12-03 06:41:44"
+            "time": "2014-12-26 13:28:33"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2446,16 +2486,16 @@
         },
         {
             "name": "sebastian/version",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/version.git",
-                "reference": "b6e1f0cf6b9e1ec409a0d3e2f2a5fb0998e36b43"
+                "reference": "a77d9123f8e809db3fbdea15038c27a95da4058b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/version/zipball/b6e1f0cf6b9e1ec409a0d3e2f2a5fb0998e36b43",
-                "reference": "b6e1f0cf6b9e1ec409a0d3e2f2a5fb0998e36b43",
+                "url": "https://api.github.com/repos/sebastianbergmann/version/zipball/a77d9123f8e809db3fbdea15038c27a95da4058b",
+                "reference": "a77d9123f8e809db3fbdea15038c27a95da4058b",
                 "shasum": ""
             },
             "type": "library",
@@ -2477,7 +2517,7 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2014-03-07 15:35:33"
+            "time": "2014-12-15 14:25:24"
         }
     ],
     "aliases": [],
