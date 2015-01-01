@@ -22,6 +22,11 @@ categories:
         browser_template: @Wallpapers/wallpapers_browser.twig
         route_prefix: wallpapers_
 
+frontend_search:
+  wallpapers:
+    name: Wallpapers
+    route: browse_wallpapers
+
 config:
     wallpapers_dir: webmaster/wallpapers
     web_dir: wallpapers

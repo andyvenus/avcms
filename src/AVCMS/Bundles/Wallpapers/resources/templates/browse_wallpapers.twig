@@ -1,9 +1,20 @@
 {% extends 'index.twig' %}
 
 {% block content %}
+    <div class="row">
     {% for wallpaper in wallpapers %}
-        {{ wallpaper.name }}<br/>
+        <div class="col-md-6">
+            <a class="thumbnail" href="#">
+                <img src="{{ wp_thumbnail_url(wallpaper, 300, 120) }}" width="100%"/>
+                <h5>{{ wallpaper.name }}</h5>
+            </a>
+        </div>
     {% else %}
-        {% trans %}No Wallpapers Found{% endtrans %}
+        <div class="well well-lg">{% trans %}No Wallpapers Found{% endtrans %}</div>
     {% endfor %}
+    </div>
+
+    {% block wallpapers_pagination %}
+        {{ pagination(total_pages, current_page, 'browse_wallpapers') }}
+    {% endblock %}
 {% endblock %}
