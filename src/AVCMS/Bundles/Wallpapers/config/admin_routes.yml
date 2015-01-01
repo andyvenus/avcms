@@ -45,3 +45,7 @@ wallpapers_admin_delete_category:
 wallpapers_admin_edit_category:
   path: /wallpapers/categories/edit/{id}
   defaults: { _controller: Wallpapers::WallpapersAdminController::editCategoryAction, contentType: wallpaper }
+
+wallpapers_grab_file:
+  path: /wallpapers/grab-file
+  defaults: { _controller: Wallpapers::WallpapersAdminController::grabFileAction }

@@ -10,7 +10,7 @@ namespace AVCMS\Bundles\FileUpload\Form;
 use AV\Form\FormBlueprintInterface;
 
 class FileSelectFields {
-    public function __construct(FormBlueprintInterface $formBlueprint, $fileSelectUrl, $uploadUrl, $fieldName = 'file', $groupName = 'wallpaper_file')
+    public function __construct(FormBlueprintInterface $formBlueprint, $fileSelectUrl, $uploadUrl, $grabUrl, $fieldName = 'file', $groupName = 'wallpaper_file')
     {
         $formBlueprint->add($groupName.'[file_type]', 'radio', [
             'label' => 'File Type',
@@ -45,7 +45,11 @@ class FileSelectFields {
         ]);
 
         $formBlueprint->add($groupName.'[grab]', 'text', [
-            'label' => 'Grab File'
+            'label' => 'Grab File From URL',
+            'field_template' => '@FileUpload/grab_file_field.twig',
+            'attr' => array(
+                'data-grab-file-url' => $grabUrl
+            )
         ]);
     }
 }

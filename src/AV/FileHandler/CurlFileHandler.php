@@ -10,20 +10,24 @@ namespace AV\FileHandler;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class UploadedFileHandler extends FileHandlerBase
+class CurlFileHandler extends FileHandlerBase
 {
-    public function validateFile(UploadedFile $uploadedFile)
+    public function validateFile($fileUrl, $file)
     {
+        /*
         if ($this->maxSize !== null && $uploadedFile->getSize() > $this->maxSize) {
             $this->setError("File size must not be bigger than {max_size}mb", ['max_size' => $this->maxSize]);
             return false;
-        }
+        }*/
+
+        $mimeGetter = new \finfo(FILEINFO_MIME_TYPE);
+        $mimeType = $mimeGetter->buffer($file);
 
         if ($this->acceptedFileTypes !== null) {
             foreach ($this->acceptedFileTypes as $extension => $mimeTypes) {
                 $mimeTypes = (array) $mimeTypes;
 
-                if ($extension === $uploadedFile->guessClientExtension() && in_array($uploadedFile->getMimeType(), $mimeTypes)) {
+                if ($extension === pathinfo($fileUrl, PATHINFO_EXTENSION) && in_array($mimeType, $mimeTypes)) {
                     $mimeTypeValid = true;
                 }
             }
@@ -37,14 +41,18 @@ class UploadedFileHandler extends FileHandlerBase
         return true;
     }
 
-    public function moveFile(UploadedFile $file, $path, $filename = null, $fileExistsStrategy = self::EXISTS_NUMBER)
+    public function moveFile($fileUrl, $file, $path, $filename = null, $fileExistsStrategy = self::EXISTS_NUMBER)
     {
-        if ($this->validateFile($file) === false) {
+        if ($this->validateFile($fileUrl, $file) === false) {
             return false;
         }
 
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+
         if ($filename === null) {
-            $filename = $file->getClientOriginalName();
+            $filename = basename($fileUrl);
         }
 
         $fullPath = $newPath = $path . '/' . $filename;
@@ -69,13 +77,7 @@ class UploadedFileHandler extends FileHandlerBase
             }
         }
 
-        try {
-            $file->move($path, basename($fullPath));
-        }
-        catch (FileException $e) {
-            $this->setError($e->getMessage());
-            return false;
-        }
+        file_put_contents($fullPath, $file);
 
         return $fullPath;
     }

@@ -10,7 +10,7 @@ class WallpaperAdminForm extends AdminContentForm
 {
     public function __construct($itemId, CategoryChoicesProvider $categoryChoicesProvider)
     {
-        new FileSelectFields($this, 'admin/wallpapers/find-files', 'admin/wallpapers/upload');
+        new FileSelectFields($this, 'admin/wallpapers/find-files', 'admin/wallpapers/upload', 'admin/wallpapers/grab-file');
 
         $this->add('crop_position', 'select', [
             'choices' => [

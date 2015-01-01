@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6e86df67cbf56d5468f2c77fc93b1c5c",
+    "hash": "b3b14ce6c1d2eeae9a65fcf4191fb84e",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -404,16 +404,16 @@
         },
         {
             "name": "php-curl-class/php-curl-class",
-            "version": "2.1.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-curl-class/php-curl-class.git",
-                "reference": "59e8e40626bda2b9286a16a0163aa7842e4434ab"
+                "reference": "1707167890aac8203e720550983e227f72ee83dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-curl-class/php-curl-class/zipball/59e8e40626bda2b9286a16a0163aa7842e4434ab",
-                "reference": "59e8e40626bda2b9286a16a0163aa7842e4434ab",
+                "url": "https://api.github.com/repos/php-curl-class/php-curl-class/zipball/1707167890aac8203e720550983e227f72ee83dd",
+                "reference": "1707167890aac8203e720550983e227f72ee83dd",
                 "shasum": ""
             },
             "require": {
@@ -440,7 +440,7 @@
                 "curl",
                 "php"
             ],
-            "time": "2014-07-07 05:39:42"
+            "time": "2014-11-14 17:49:58"
         },
         {
             "name": "psr/log",
@@ -2526,6 +2526,7 @@
         "usmanhalalit/pixie": 20,
         "kriswallsmith/assetic": 20,
         "cocur/slugify": 0,
+        "php-curl-class/php-curl-class": 20,
         "jms/cg": 20,
         "mikey179/vfsstream": 20,
         "mockery/mockery": 20

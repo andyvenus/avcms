@@ -3,6 +3,7 @@
 namespace AVCMS\Bundles\Wallpapers\Controller;
 
 use AV\Cache\CacheClearer;
+use AV\FileHandler\CurlFileHandler;
 use AV\FileHandler\UploadedFileHandler;
 use AVCMS\Bundles\Categories\Controller\CategoryActionsTrait;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
@@ -10,6 +11,7 @@ use AVCMS\Bundles\Wallpapers\Form\WallpapersAdminFiltersForm;
 use AVCMS\Bundles\Wallpapers\Form\WallpaperAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 
+use Curl\Curl;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -127,6 +129,32 @@ class WallpapersAdminController extends AdminBaseController
         }
         else {
             $fileJson = ['success' => true, 'file' => $file->getClientOriginalName()[0].'/'.basename($fullPath)];
+        }
+
+        return new JsonResponse($fileJson);
+    }
+
+    public function grabFileAction(Request $request)
+    {
+        $fileUrl = $request->get('file_url');
+
+        if (!$fileUrl) {
+            return new JsonResponse(['success' => false, 'error' => $this->trans('No URL Entered')]);
+        }
+
+        $curl = new Curl();
+
+        $file = $curl->get($fileUrl);
+
+        $handler = new CurlFileHandler(CurlFileHandler::getImageFiletypes());
+
+        $path = $this->container->getParameter('root_dir').'/'.$this->bundle->config->wallpapers_dir.'/'.basename($fileUrl)[0];
+
+        if (($fullPath = $handler->moveFile($fileUrl, $file, $path)) === false) {
+            $fileJson = ['success' => false, 'error' => $handler->getTranslatedError($this->translator)];
+        }
+        else {
+            $fileJson = ['success' => true, 'file' => basename($fileUrl)[0].'/'.basename($fullPath)];
         }
 
         return new JsonResponse($fileJson);

@@ -3,6 +3,7 @@ avcms = avcms || {};
 $(document).ready(function() {
 
     $('body').on('change', '[data-file-selector-group]', avcms.file_select.changeSelectedClick);
+    $('body').on('click', '.grab-file-button', avcms.file_select.grabFile);
 
     avcms.event.addEvent('page-modified', function () {
 
@@ -125,5 +126,27 @@ avcms.file_select = {
         form.find('[name="'+target+'"]').parents('.form-group').show();
 
         avcms.event.fireEvent('file-select-change', {target: target, name: name, form: form})
+    },
+
+    grabFile: function() {
+        var urlField = $('.grab-file-field').filter(':visible');
+        var btn = $(this);
+
+        var origBtn = $(this).html();
+        $(this).html('Downloading...');
+        $.post(avcms.config.site_url + urlField.data('grab-file-url'), 'file_url='+urlField.val(), function(data) {
+            if (data.success === true) {
+                var field_group = urlField.attr('name').substr(0, urlField.attr('name').indexOf('['));
+                var file_field = $('[data-file-selector-group="'+field_group+'"]').filter(':visible').data('file-selector-target');
+
+                $('form').filter(':visible').find('input[name="'+file_field+'"]').val(data.file);
+                $('input[name="'+field_group+'[file_type]"][value="'+file_field+'"]').filter(':visible').prop('checked', true).change();
+            }
+            else {
+                alert(data.error);
+            }
+
+            btn.html(origBtn);
+        }, 'json');
     }
 };
