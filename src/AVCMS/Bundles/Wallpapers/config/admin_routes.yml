@@ -57,3 +57,24 @@ wallpapers_manage_resolutions:
 wallpapers_admin_toggle_published:
   path: /wallpapers/publish
   defaults: { _controller: Wallpapers::WallpapersAdminController::togglePublishedAction }
+
+
+wallpaper_bulk_import_admin_edit:
+    path:     /wallpapers-bulk-import/edit/{id}
+    defaults: { _controller: 'Wallpapers::WallpapersBulkImportAdminController::editAction' }
+
+wallpaper_bulk_import_admin_add:
+    path:     /wallpapers-bulk-import/new
+    defaults: { _controller: 'Wallpapers::WallpapersBulkImportAdminController::editAction' }
+
+wallpaper_bulk_import_admin_delete:
+    path:     /wallpapers-bulk-import/delete
+    defaults: { _controller: 'Wallpapers::WallpapersBulkImportAdminController::deleteAction' }
+
+wallpaper_bulk_import_admin_home:
+  path: /wallpapers-bulk-import
+  defaults: { _controller: 'Wallpapers::WallpapersBulkImportAdminController::homeAction' }
+
+wallpaper_bulk_import_admin_finder:
+  path: /wallpapers-bulk-import/finder/{page}
+  defaults: { page: 1, _controller: 'Wallpapers::WallpapersBulkImportAdminController::finderAction' }

@@ -46,3 +46,27 @@ wallpaper_categories:
     model_class: WallpaperCategories
     model_var_name: wallpaperCategories
     title_field: name
+wallpaper_bulk_import:
+    bundle: Wallpapers
+    namespace: AVCMS\Bundles\Wallpapers
+    singular: wallpaper_bulk_import
+    plural: wallpaper_bulk_import
+    uc_singular: 'Wallpaper Bulk Import'
+    uc_plural: 'Wallpaper Bulk Import'
+    cc_singular: WallpaperBulkImport
+    cc_plural: WallpaperBulkImport
+    dash_singular: wallpaper-bulk-import
+    dash_plural: wallpaper-bulk-import
+    admin_home_route: wallpaper_bulk_import_admin_home
+    admin_finder_route: wallpaper_bulk_import_admin_finder
+    admin_delete_route: wallpaper_bulk_import_admin_delete
+    admin_edit_route: wallpaper_bulk_import_admin_edit
+    admin_add_route: wallpaper_bulk_import_admin_add
+    admin_controller: 'Wallpapers::WallpaperBulkImportAdminController'
+    finder_item_extra_buttons: ''
+    database: wallpapers
+    entity: AVCMS\Bundles\Wallpapers\Model\WallpaperBulkImport
+    admin_form: AVCMS\Bundles\Wallpapers\Form\WallpaperBulkImportAdminForm
+    model_class: WallpaperBulkImportModel
+    model_var_name: wallpaperBulkImport
+    title_field: name
