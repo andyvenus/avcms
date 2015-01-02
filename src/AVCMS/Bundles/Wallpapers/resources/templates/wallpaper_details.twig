@@ -19,7 +19,7 @@
                         <h4>{{ resolution_category }}</h4>
 
                         {% for resolution, name in category_resolutions %}
-                            <a href="{{ url('wallpaper_preview', {slug: wallpaper.slug, category: wallpaper.category.slug, resolution: resolution}) }}">{{ name }}</a><br/>
+                            <a href="{{ url('wallpaper_preview', {slug: wallpaper.slug, resolution: resolution}) }}">{{ name }}</a><br/>
                         {% endfor %}
                     </div>
 

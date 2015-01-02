@@ -14,10 +14,10 @@ browse_wallpapers:
   path: /wallpapers
   defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction }
 
-wallpaper_details:
-  path: /wallpapers/{category}/{slug}
-  defaults: { _controller: Wallpapers::WallpapersController::wallpaperDetailsAction }
-
 wallpaper_preview:
-  path: /wallpapers/{category}/{slug}/{resolution}
+  path: /wallpapers/{slug}/{resolution}
   defaults: { _controller: Wallpapers::WallpapersController::wallpaperPreviewAction }
+
+wallpaper_details:
+  path: /wallpapers/{slug}
+  defaults: { _controller: Wallpapers::WallpapersController::wallpaperDetailsAction }
