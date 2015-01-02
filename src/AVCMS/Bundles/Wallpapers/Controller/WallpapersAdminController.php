@@ -49,7 +49,26 @@ class WallpapersAdminController extends AdminBaseController
 
         $helper = $this->editContentHelper($this->wallpapers, $form);
 
-        $helper->handleRequestAndSave($request);
+        $helper->handleRequest($request);
+
+        if ($helper->formValid()) {
+            $imagePath = $this->container->getParameter('root_dir').'/'.$this->bundle->config->wallpapers_dir.'/'.$helper->getForm()->getData('file');
+
+            if (!file_exists($imagePath)) {
+                $form->addCustomErrors([new FormError('file', 'File does not exist: '.$imagePath)]);
+            }
+            else {
+                $size = @getimagesize($imagePath);
+
+                if (!is_array($size)) {
+                    $form->addCustomErrors([new FormError('file', 'Could not get image dimension for file: '.$imagePath)]);
+                }
+
+                $helper->getEntity()->setOriginalWidth($size[0]);
+                $helper->getEntity()->setOriginalHeight($size[1]);
+                $helper->save();
+            }
+        }
 
         if (!$helper->contentExists()) {
             throw $this->createNotFoundException(ucwords(str_replace('_', ' ', $this->wallpapers->getSingular())).' not found');

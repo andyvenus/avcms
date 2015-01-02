@@ -156,6 +156,26 @@ class Wallpaper extends Entity
         $this->set("name", $value);
     }
 
+    public function getOriginalWidth()
+    {
+        return $this->get('original_width');
+    }
+
+    public function setOriginalWidth($width)
+    {
+        $this->set('original_width', $width);
+    }
+
+    public function getOriginalHeight()
+    {
+        return $this->get('original_height');
+    }
+
+    public function setOriginalHeight($height)
+    {
+        $this->set('original_height', $height);
+    }
+
     public function setPublishDate($value)
     {
         $this->set("publish_date", $value);
