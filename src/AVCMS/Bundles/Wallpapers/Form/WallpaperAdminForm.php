@@ -33,7 +33,8 @@ class WallpaperAdminForm extends AdminContentForm
             'label' => 'Name',
             'attr' => [
                 'data-slug-target' => 'slug'
-            ]
+            ],
+            'required' => true
         ));
         
         $this->add('description', 'textarea', array(
