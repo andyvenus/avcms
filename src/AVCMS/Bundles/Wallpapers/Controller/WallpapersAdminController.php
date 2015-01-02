@@ -5,6 +5,8 @@ namespace AVCMS\Bundles\Wallpapers\Controller;
 use AV\Cache\CacheClearer;
 use AV\FileHandler\CurlFileHandler;
 use AV\FileHandler\UploadedFileHandler;
+use AV\Form\FormBlueprint;
+use AV\Form\FormError;
 use AVCMS\Bundles\Categories\Controller\CategoryActionsTrait;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Wallpapers\Form\WallpapersAdminFiltersForm;
@@ -27,6 +29,8 @@ class WallpapersAdminController extends AdminBaseController
      */
     protected $wallpapers;
 
+    protected $browserTemplate = '@Wallpapers/admin/wallpapers_browser.twig';
+
     public function setUp(Request $request)
     {
         $this->wallpapers = $this->model('Wallpapers');
@@ -34,7 +38,7 @@ class WallpapersAdminController extends AdminBaseController
 
     public function homeAction(Request $request)
     {
-        return $this->handleManage($request, '@Wallpapers/wallpapers_browser.twig');
+        return $this->handleManage($request, '@Wallpapers/admin/wallpapers_browser.twig');
     }
 
     public function editAction(Request $request)
@@ -63,8 +67,8 @@ class WallpapersAdminController extends AdminBaseController
         return $this->createEditResponse(
             $helper,
             $request,
-            '@Wallpapers/edit_wallpaper.twig',
-            '@Wallpapers/wallpapers_browser.twig',
+            '@Wallpapers/admin/edit_wallpaper.twig',
+            '@Wallpapers/admin/wallpapers_browser.twig',
             array('wallpapers_admin_edit', array('id' => $id)),
             []
         );
@@ -79,7 +83,7 @@ class WallpapersAdminController extends AdminBaseController
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
         $items = $finder->get();
 
-        return new Response($this->render('@Wallpapers/wallpapers_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));
+        return new Response($this->render('@Wallpapers/admin/wallpapers_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));
     }
 
     public function deleteAction(Request $request)
@@ -159,6 +163,41 @@ class WallpapersAdminController extends AdminBaseController
         }
 
         return new JsonResponse($fileJson);
+    }
+
+    public function editResolutionsAction(Request $request)
+    {
+        $rm = $this->container->get('wallpaper.resolutions_manager');
+        $config = $rm->getResolutionsConfig();
+
+        $formBlueprint = new FormBlueprint();
+        $formBlueprint->add('config', 'textarea', [
+            'label' => 'Wallpaper Resolutions Config',
+            'default' => $config,
+            'attr' => [
+                'rows' => 20
+            ]
+        ]);
+        $formBlueprint->setSuccessMessage('Resolution Config Saved');
+
+        $form = $this->buildForm($formBlueprint, $request);
+
+        if ($form->isSubmitted()) {
+            $config = $form->getData('config');
+            try {
+                $rm->saveResolutionsConfig($config);
+            }
+            catch (\Exception $e) {
+                $form->addCustomErrors([new FormError('config', $e->getMessage())]);
+            }
+
+            return new JsonResponse(['success' => false, 'form' => $form->createView()->getJsonResponseData()]);
+        }
+
+        return new Response($this->renderAdminSection('@Wallpapers/admin/manage_resolutions.twig', $request->get('ajax_depth'), [
+            'form' => $form->createView()
+
+        ]));
     }
 
     protected function getSharedTemplateVars($ajax_depth)

@@ -49,3 +49,7 @@ wallpapers_admin_edit_category:
 wallpapers_grab_file:
   path: /wallpapers/grab-file
   defaults: { _controller: Wallpapers::WallpapersAdminController::grabFileAction }
+
+wallpapers_manage_resolutions:
+  path: /wallpapers/manage-resolutions
+  defaults: { _controller: Wallpapers::WallpapersAdminController::editResolutionsAction }

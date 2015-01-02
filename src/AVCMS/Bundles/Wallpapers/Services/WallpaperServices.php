@@ -19,5 +19,9 @@ class WallpaperServices implements ServicesInterface
             ->setArguments([new Reference('router')])
             ->addTag('twig.extension')
         ;
+
+        $container->register('wallpaper.resolutions_manager', 'AVCMS\Bundles\Wallpapers\ResolutionsManager\ResolutionsManager')
+            ->setArguments(['%root_dir%'])
+        ;
     }
 }
