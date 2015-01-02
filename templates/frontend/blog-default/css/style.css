@@ -95,3 +95,6 @@ select[name=author] {
 .copyright {
   text-align: center;
   margin-bottom: 8px; }
+
+.box {
+  margin-bottom: 15px; }
