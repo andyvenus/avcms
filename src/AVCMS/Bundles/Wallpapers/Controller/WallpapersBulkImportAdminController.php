@@ -43,12 +43,15 @@ class WallpapersBulkImportAdminController extends AdminBaseController
         );
 
         $items = [];
-        foreach ($dirs as $file) {
-            if (in_array($file->getBasename(), array('.', '..'))) {
-                continue;
-            } elseif ($file->isDir()) {
-                if (!$request->get('search') || strpos($file->getFilename(), $request->get('search')) !== false)
-                $items[] = ['name' => $file->getFilename()];
+
+        if ($request->get('page') == 1) {
+            foreach ($dirs as $file) {
+                if (in_array($file->getBasename(), array('.', '..'))) {
+                    continue;
+                } elseif ($file->isDir()) {
+                    if (!$request->get('search') || strpos($file->getFilename(), $request->get('search')) !== false)
+                        $items[] = ['name' => $file->getFilename()];
+                }
             }
         }
 
