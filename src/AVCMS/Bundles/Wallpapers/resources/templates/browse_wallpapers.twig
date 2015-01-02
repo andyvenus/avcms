@@ -4,9 +4,14 @@
     <div class="row">
     {% for wallpaper in wallpapers %}
         <div class="col-md-6">
-            <a class="thumbnail" href="{{ url('wallpaper_details', {slug: wallpaper.slug}) }}">
+            <a class="thumbnail clearfix" href="{{ url('wallpaper_details', {slug: wallpaper.slug}) }}">
                 <img src="{{ wp_thumbnail_url(wallpaper, 300, 120) }}" width="100%"/>
-                <h5>{{ wallpaper.name }}</h5>
+                <div class="pull-left">
+                    {{ wallpaper.name }}
+                </div>
+                <div class="pull-right">
+                    <span class="glyphicon glyphicon-eye-open"></span> {{ wallpaper.hits }}
+                </div>
             </a>
         </div>
     {% else %}
