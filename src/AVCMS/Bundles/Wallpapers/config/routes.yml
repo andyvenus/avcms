@@ -1,5 +1,5 @@
 wallpaper_thumbnail:
-  path: /web/wallpapers/{id}/thumbnailx/{width}x{height}.{ext}
+  path: /web/wallpapers/{id}/thumbnail/{width}x{height}.{ext}
   defaults: { _controller: Wallpapers::WallpapersImageController::imageAction, thumbnail: true }
 
 wallpaper_image:
