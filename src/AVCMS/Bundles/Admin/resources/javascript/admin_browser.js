@@ -348,7 +348,7 @@ avcms.browser = {
             dataType: 'json',
             success: function(data) {
                 $.each(ids, function(key, id) {
-                    var form = $('form[data-item-id="'+id+'"');
+                    var form = $('form[data-item-id="'+id+'"]');
                     form.find('[name="published"][value="'+published+'"]').prop("checked", true);
 
                     var finder_item = $('.browser-finder-item[data-id='+id+']');
