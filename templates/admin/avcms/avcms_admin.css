@@ -391,3 +391,5 @@ a {
 
   100% {
     background-position: 2000px 0; } }
+.monospaced-field {
+  font-family: "Courier New", Courier, monospace; }

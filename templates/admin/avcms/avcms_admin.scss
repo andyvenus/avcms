@@ -594,3 +594,7 @@ $lightbar-color: 255,255,255;
   0% {background-position: -$lightbar-offset 0;}
   100% {background-position: $lightbar-offset 0;}
 }
+
+.monospaced-field {
+  font-family: "Courier New", Courier, monospace;
+}

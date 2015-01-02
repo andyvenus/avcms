@@ -194,7 +194,8 @@ class WallpapersAdminController extends AdminBaseController
             'label' => 'Wallpaper Resolutions Config',
             'default' => $config,
             'attr' => [
-                'rows' => 20
+                'rows' => 20,
+                'class' => 'monospaced-field'
             ]
         ]);
         $formBlueprint->setSuccessMessage('Resolution Config Saved');
