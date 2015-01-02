@@ -382,6 +382,10 @@ a {
   .finder-wide {
     width: 330px;
     display:inherit;
+
+    .finder-item-main {
+      width: 308px!important;
+    }
   }
 
   .finder-has-focus {
