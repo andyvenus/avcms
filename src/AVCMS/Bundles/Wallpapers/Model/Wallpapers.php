@@ -6,6 +6,8 @@ use AVCMS\Core\Model\ContentModel;
 
 class Wallpapers extends ContentModel
 {
+    protected $textIdentifierColumn = 'slug';
+
     public function getTable()
     {
         return 'wallpapers';

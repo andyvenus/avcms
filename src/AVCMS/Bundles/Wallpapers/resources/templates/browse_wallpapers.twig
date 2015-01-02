@@ -4,7 +4,7 @@
     <div class="row">
     {% for wallpaper in wallpapers %}
         <div class="col-md-6">
-            <a class="thumbnail" href="#">
+            <a class="thumbnail" href="{{ url('wallpaper_details', {slug: wallpaper.slug, category: wallpaper.category.slug}) }}">
                 <img src="{{ wp_thumbnail_url(wallpaper, 300, 120) }}" width="100%"/>
                 <h5>{{ wallpaper.name }}</h5>
             </a>

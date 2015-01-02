@@ -75,6 +75,7 @@ class WallpapersAdminController extends AdminBaseController
         $finder = $this->wallpapers->find()
             ->setSearchFields(array('name'))
             ->setResultsPerPage(15)
+            ->join($this->model('WallpaperCategories'), ['id', 'name', 'slug'])
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
         $items = $finder->get();
 

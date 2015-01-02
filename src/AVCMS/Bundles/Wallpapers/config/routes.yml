@@ -5,3 +5,7 @@ wallpaper_thumbnail:
 browse_wallpapers:
   path: /wallpapers
   defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction }
+
+wallpaper_details:
+  path: /wallpapers/{category}/{slug}
+  defaults: { _controller: Wallpapers::WallpapersController::wallpaperDetailsAction }

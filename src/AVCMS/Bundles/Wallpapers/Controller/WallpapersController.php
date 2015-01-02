@@ -30,8 +30,20 @@ class WallpapersController extends Controller
             ->setResultsPerPage(20)
             ->setSearchFields(['name'])
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'tags' => null, 'search' => null))
+            ->join($this->model('WallpaperCategories'), ['id', 'name', 'slug'])
             ->get();
 
         return new Response($this->render('@Wallpapers/browse_wallpapers.twig', array('wallpapers' => $wallpapers, 'total_pages' => $finder->getTotalPages(), 'current_page' => $finder->getCurrentPage(), 'page_type' => $pageType)));
+    }
+
+    public function wallpaperDetailsAction(Request $request, $slug)
+    {
+        $wallpaper = $this->wallpapers->findOne($slug)->first();
+
+        if (!$wallpaper) {
+            throw $this->createNotFoundException('Wallpaper Not Found');
+        }
+
+        return new Response($this->render('@Wallpapers/wallpaper_details.twig', ['wallpaper' => $wallpaper]));
     }
 }

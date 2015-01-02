@@ -21,6 +21,8 @@
 
             {{ buttons.delete('wallpapers_admin_delete') }}
         </div>
+
+        {{ buttons.view('wallpaper_details', {category: item.category.slug, slug: item.slug}) }}
     {% endblock %}
 {% endblock %}
 

@@ -13,7 +13,7 @@ class WallpaperCategories extends Categories
 
     public function getSingular()
     {
-        return 'wallpaper_category';
+        return 'category';
     }
 
     public function getEntity()
