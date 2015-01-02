@@ -15,20 +15,49 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WallpapersImageController extends Controller
 {
-    public function imageAction(Request $request)
+    public function imageAction(Request $request, $thumbnail = false, $download = false)
     {
-        $width = $request->get('width', 800);
-        $height = $request->get('height', 600);
+        $width = $request->get('width');
+        $height = $request->get('height');
 
-        $wallpaper = $this->model('Wallpapers')->getOne($request->get('id'));
+        if ($width === null || $height === null) {
+            $resolution = $request->get('resolution');
+            list($width, $height) = explode('x', $resolution);
+        }
+
+        if (!$width || !$height) {
+            throw $this->createNotFoundException('No valid resolution');
+        }
+
+        $wallpaper = $this->model('Wallpapers')->findOne($request->get('id'))->first();
         if (!$wallpaper) {
             throw $this->createNotFoundException();
         }
 
-        $man = new ImageManager(['driver' => 'GD']);
+        $cacheDir = $this->container->getParameter('web_path').'/wallpapers/'.$wallpaper->getId();
+        if ($thumbnail === true) {
+            $cacheDir .= '/thumbnail';
+        }
+        $filename = $width.'x'.$height.'.'.pathinfo($wallpaper->getFile(), PATHINFO_EXTENSION);
+        $imagePath = $cacheDir.'/'.$filename;
+
+
+        $headers = [];
+        if ($download === true) {
+            $headers['Content-Disposition'] = 'attachment; filename="'.$filename.'"';
+        }
+
+        if (file_exists($imagePath)) {
+            $mimeGetter = new \finfo(FILEINFO_MIME_TYPE);
+            $file = file_get_contents($imagePath);
+            $headers['Content-Type'] = $mimeGetter->buffer($file);
+            return new Response($file, 200, $headers);
+        }
+
+        $imageManager = new ImageManager(['driver' => 'GD']);
 
         try {
-            $img = $man->make($this->container->getParameter('root_dir') . '/' . $this->bundle->config->wallpapers_dir . '/' . $wallpaper->getFile());
+            $img = $imageManager->make($this->container->getParameter('root_dir') . '/' . $this->bundle->config->wallpapers_dir . '/' . $wallpaper->getFile());
         }
         catch (NotReadableException $e) {
             exit('source image not found');
@@ -49,13 +78,12 @@ class WallpapersImageController extends Controller
 
         $img->resizeCanvas($width, $height, $cropPos);
 
-
-        $thumbDir = $this->container->getParameter('web_path').'/wallpapers/'.$wallpaper->getId().'/thumbnail';
-        if (!file_exists($thumbDir)) {
-            mkdir($thumbDir, 0777, true);
+        if (!file_exists($cacheDir)) {
+            mkdir($cacheDir, 0777, true);
         }
-        $img->save($thumbDir.'/'.$width.'x'.$height.'.'.$img->extension);
+        $img->save($imagePath);
 
-        return new Response($img->encode(), 200, ['Content-Type' => $img->mime]);
+        $headers['Content-Type'] = $img->mime;
+        return new Response($img->encode(), 200, $headers);
     }
 }

@@ -1,5 +1,24 @@
 {% extends 'index.twig' %}
 
 {% block wide_content %}
-    heyo
+    <h1>{{ wallpaper.name }} - {{ wallpaper_width }}x{{ wallpaper_height }}</h1>
+
+    <div class="wallpaper-preview-buttons">
+        <p><a href="{{ wp_download_url(wallpaper, wallpaper_width, wallpaper_height) }}" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> {% trans %}Download{% endtrans %}</a></p>
+    </div>
+
+    <div class="wallpaper-preview-container">
+        <a href="{{ wp_image_url(wallpaper, wallpaper_width, wallpaper_height) }}">
+            <img src="{{ wp_image_url(wallpaper, wallpaper_width, wallpaper_height) }}" style="max-width: 100%" class="img-thumbnail"/>
+        </a>
+    </div>
+
+    <br/>
+    <div class="wallpaper-download-info">
+        <div class="alert alert-info">
+            {% trans %}Press the download button to save, or:{% endtrans %}<br/>
+            <span class="glyphicon glyphicon-info-sign"></span> {% trans %}Desktop users - Right click to save or set as desktop background{% endtrans %}<br/>
+            <span class="glyphicon glyphicon-info-sign"></span> {% trans %}Mobile users - Tap and hold your finder over the image for save options{% endtrans %}
+        </div>
+    </div>
 {% endblock %}

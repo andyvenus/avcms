@@ -53,10 +53,16 @@ class WallpapersController extends Controller
     {
         $wallpaper = $this->wallpapers->findOne($slug)->first();
 
+        list($width, $height) = explode('x', $request->get('resolution'));
+
+        if (!$width || !$height) {
+            throw $this->createNotFoundException('Not a valid resolution');
+        }
+
         if (!$wallpaper) {
             throw $this->createNotFoundException('Wallpaper Not Found');
         }
 
-        return new Response($this->render('@Wallpapers/wallpaper_preview.twig', ['wallpaper' => $wallpaper]));
+        return new Response($this->render('@Wallpapers/wallpaper_preview.twig', ['wallpaper' => $wallpaper, 'wallpaper_width' => $width, 'wallpaper_height' => $height]));
     }
 }

@@ -28,6 +28,8 @@ class WallpaperTwigExtension extends \Twig_Extension
     {
         return array(
             'wp_thumbnail_url' => new \Twig_SimpleFunction('wp_thumbnail_url', array($this, 'thumbnailUrl'), array('is_safe' => array('html'))),
+            'wp_image_url' => new \Twig_SimpleFunction('wp_image_url', array($this, 'imageUrl'), array('is_safe' => array('html'))),
+            'wp_download_url' => new \Twig_SimpleFunction('wp_download_url', array($this, 'downloadUrl'), array('is_safe' => array('html'))),
         );
     }
 
@@ -36,5 +38,17 @@ class WallpaperTwigExtension extends \Twig_Extension
         $extension = pathinfo($wallpaper->getFile())['extension'];
 
         return $this->urlGenerator->generate('wallpaper_thumbnail', ['id' => $wallpaper->getId(), 'width' => $width, 'height' => $height, 'ext' => $extension]);
+    }
+
+    public function imageUrl(Wallpaper $wallpaper, $width, $height, $route = 'wallpaper_image')
+    {
+        $extension = pathinfo($wallpaper->getFile())['extension'];
+
+        return $this->urlGenerator->generate($route, ['id' => $wallpaper->getId(), 'width' => $width, 'height' => $height, 'ext' => $extension]);
+    }
+
+    public function downloadUrl(Wallpaper $wallpaper, $width, $height)
+    {
+        return $this->imageUrl($wallpaper, $width, $height, 'wallpaper_download');
     }
 }
