@@ -27,6 +27,14 @@ frontend_search:
     name: Wallpapers
     route: browse_wallpapers
 
+comments:
+  wallpaper:
+    name: Wallpaper
+    model: AVCMS\Bundles\Wallpapers\Model\Wallpapers
+    title_field: name
+    frontend_route: wallpaper_details
+    frontend_route_params: [slug]
+
 config:
     wallpapers_dir: webmaster/wallpapers
     web_dir: wallpapers

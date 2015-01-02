@@ -32,4 +32,17 @@
         </div>
     </div>
 
+    {% block blog_post_comments %}
+        {% if settings.comments_enabled %}
+            <div class="box">
+                <div class="box-top">
+                    <h4>{% trans %}Comments{% endtrans %} ({{ wallpaper.comments }})</h4>
+                </div>
+                <div class="box-main">
+                    {{ comments('wallpaper', wallpaper) }}
+                </div>
+            </div>
+        {% endif %}
+    {% endblock %}
+
 {% endblock %}

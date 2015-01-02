@@ -26,6 +26,16 @@ class Wallpaper extends Entity
         return $this->get("category_parent_id");
     }
 
+    public function setComments($comments)
+    {
+        $this->set('comments', $comments);
+    }
+
+    public function getComments()
+    {
+        return $this->get('comments');
+    }
+
     public function setCreatorId($value)
     {
         $this->set("creator_id", $value);
