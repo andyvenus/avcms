@@ -30,4 +30,6 @@
 
 {% block checked_options_buttons %}
     {{ buttons.bulk_delete('wallpapers_admin_delete') }}
+    {{ buttons.bulk_publish('wallpapers_admin_toggle_published') }}
+    {{ buttons.bulk_unpublish('wallpapers_admin_toggle_published') }}
 {% endblock %}

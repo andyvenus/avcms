@@ -20,6 +20,8 @@
             {{ buttons.edit('wallpapers_admin_edit', item.id) }}
 
             {{ buttons.delete('wallpapers_admin_delete') }}
+
+            {{ buttons.publish(item.published, 'wallpapers_admin_toggle_published') }}
         </div>
 
         {{ buttons.view('wallpaper_details', {category: item.category.slug, slug: item.slug}) }}

@@ -53,3 +53,7 @@ wallpapers_grab_file:
 wallpapers_manage_resolutions:
   path: /wallpapers/manage-resolutions
   defaults: { _controller: Wallpapers::WallpapersAdminController::editResolutionsAction }
+
+wallpapers_admin_toggle_published:
+  path: /wallpapers/publish
+  defaults: { _controller: Wallpapers::WallpapersAdminController::togglePublishedAction }
