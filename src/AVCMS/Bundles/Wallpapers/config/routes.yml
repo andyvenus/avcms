@@ -9,3 +9,7 @@ browse_wallpapers:
 wallpaper_details:
   path: /wallpapers/{category}/{slug}
   defaults: { _controller: Wallpapers::WallpapersController::wallpaperDetailsAction }
+
+wallpaper_preview:
+  path: /wallpapers/{category}/{slug}/{resolution}
+  defaults: { _controller: Wallpapers::WallpapersController::wallpaperPreviewAction }

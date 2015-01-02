@@ -82,17 +82,20 @@
             <div class="alert alert-info">{{ message.message }}</div>
         {% endfor %}
 
-        <div class="row">
-        <div class="col-md-8">
-            {% block content %}{% endblock %}
-        </div>
+        {% block wide_content %}
+            <div class="row">
 
-        <div class="col-md-4">
-            {% for module in modules('left_sidebar') %}
-                {% include module.template %}
-            {% endfor %}
-        </div>
-    </div>
+                <div class="col-md-8">
+                    {% block content %}{% endblock %}
+                </div>
+
+                <div class="col-md-4">
+                    {% for module in modules('left_sidebar') %}
+                        {% include module.template %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endblock %}
 </section>
 {% endblock %}
 

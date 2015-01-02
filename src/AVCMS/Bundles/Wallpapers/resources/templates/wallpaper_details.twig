@@ -12,7 +12,23 @@
             <h3 class="panel-title">{% trans %}Resolutions{% endtrans %}</h3>
         </div>
         <div class="panel-body">
-            Rresoes
+            <div class="row">
+                {% for resolution_category, category_resolutions in resolutions %}
+
+                    <div class="col-md-4">
+                        <h4>{{ resolution_category }}</h4>
+
+                        {% for resolution, name in category_resolutions %}
+                            <a href="{{ url('wallpaper_preview', {slug: wallpaper.slug, category: wallpaper.category.slug, resolution: resolution}) }}">{{ name }}</a><br/>
+                        {% endfor %}
+                    </div>
+
+                    {% if loop.index is divisible by(3) %}
+                        </div><div class="row">
+                    {% endif %}
+
+                {% endfor %}
+            </div>
         </div>
     </div>
 

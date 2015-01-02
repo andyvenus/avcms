@@ -38,12 +38,25 @@ class WallpapersController extends Controller
 
     public function wallpaperDetailsAction(Request $request, $slug)
     {
+        $wallpaper = $this->wallpapers->findOne($slug)->modelJoin($this->model('WallpaperCategories'), ['slug', 'name'])->first();
+
+        if (!$wallpaper) {
+            throw $this->createNotFoundException('Wallpaper Not Found');
+        }
+
+        $resolutions = $this->container->get('wallpaper.resolutions_manager')->getResolutions();
+
+        return new Response($this->render('@Wallpapers/wallpaper_details.twig', ['wallpaper' => $wallpaper, 'resolutions' => $resolutions]));
+    }
+
+    public function wallpaperPreviewAction(Request $request, $slug)
+    {
         $wallpaper = $this->wallpapers->findOne($slug)->first();
 
         if (!$wallpaper) {
             throw $this->createNotFoundException('Wallpaper Not Found');
         }
 
-        return new Response($this->render('@Wallpapers/wallpaper_details.twig', ['wallpaper' => $wallpaper]));
+        return new Response($this->render('@Wallpapers/wallpaper_preview.twig', ['wallpaper' => $wallpaper]));
     }
 }
