@@ -2,12 +2,8 @@
 
 namespace AVCMS\Bundles\Wallpapers\Controller;
 
-use AVCMS\Bundles\Admin\Event\AdminSaveContentEvent;
-use AVCMS\Bundles\Admin\Form\AdminFiltersForm;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Wallpapers\Form\WallpaperAdminForm;
-use AVCMS\Bundles\Wallpapers\Form\WallpaperBulkImportAdminFiltersForm;
-use AVCMS\Bundles\Wallpapers\Form\WallpaperBulkImportAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use AVCMS\Bundles\Wallpapers\Form\WallpapersBulkImportFiltersForm;
 use RecursiveDirectoryIterator;
@@ -73,9 +69,16 @@ class WallpapersBulkImportAdminController extends AdminBaseController
                     $contentHelper->setEntity($newWallpaper);
                     $newWallpaper->setFile($folder.'/'.$file->getFilename());
 
+                    $dimensions = @getimagesize($file->getPath().'/'.$file->getFilename());
+                    if (!is_array($dimensions)) {
+                        $dimensions = [0, 0];
+                    }
+
                     $replaceValues['{filename}'] = str_replace('.'.$file->getExtension(), '', $file->getBasename());
                     $replaceValues['{clean_filename}'] = ucwords(str_replace('_', ' ', str_replace('.'.$file->getExtension(), '', $file->getBasename())));
                     $replaceValues['{folder_name}'] = basename($folder);
+                    $replaceValues['{original_width}'] = $dimensions[0];
+                    $replaceValues['{original_height}'] = $dimensions[1];
 
                     $allData = $newWallpaper->toArray();
                     $newData = [];
@@ -97,6 +100,8 @@ class WallpapersBulkImportAdminController extends AdminBaseController
                     }
 
                     $newWallpaper->setSlug($slug);
+                    $newWallpaper->setOriginalWidth($dimensions[0]);
+                    $newWallpaper->setOriginalHeight($dimensions[1]);
 
                     $contentHelper->save(false);
                     $wallpapersImported++;
@@ -167,6 +172,13 @@ class WallpapersBulkImportAdminController extends AdminBaseController
     public function deleteAction(Request $request)
     {
         return $this->handleDelete($request, $this->wallpapers);
+    }
+
+    public function uploadFilesAction(Request $request)
+    {
+
+
+        return new Response($this->renderAdminSection('@Wallpapers/admin/bulk_upload.twig', $request->get('ajax_depth')));
     }
 
     protected function getSharedTemplateVars($ajaxDepth)
