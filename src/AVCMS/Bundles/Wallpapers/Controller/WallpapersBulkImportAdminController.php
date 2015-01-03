@@ -58,6 +58,7 @@ class WallpapersBulkImportAdminController extends AdminBaseController
                 $form->saveToEntities();
 
                 $originalTags = $contentHelper->getForm()->getData('tags');
+                $wallpapersImported = 0;
 
                 foreach ($itr as $file) {
                     if (!$file->isFile() || exif_imagetype($file->getPathname()) === false) {
@@ -91,8 +92,10 @@ class WallpapersBulkImportAdminController extends AdminBaseController
                     $newWallpaper->fromArray($newData);
 
                     $contentHelper->save(false);
-
+                    $wallpapersImported++;
                 }
+
+                $formBlueprint->setSuccessMessage("$wallpapersImported ".$this->trans("wallpapers imported"));
             }
 
             return new JsonResponse(['form' => $form->createView()->getJsonResponseData()]);
