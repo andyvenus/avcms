@@ -6,6 +6,7 @@ $(document).ready(function() {
     body.on('change', '.ajax-editor form', avcms.browser.editorFormChanged);
     body.on('change', 'form[name="filter_form"] select', avcms.browser.changeFinderFilters);
     body.on('keyup', 'form[name="filter_form"] input', avcms.browser.changeFinderFilters);
+    body.on('click', 'form[name="filter_form"] :checkbox', avcms.browser.changeFinderFilters);
     body.on('click', '.clear-search', avcms.browser.clearSearch);
 
     body.on('click', '.select-all-button', avcms.browser.selectAllFinderResults);
