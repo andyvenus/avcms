@@ -142,9 +142,21 @@ class WallpapersAdminController extends AdminBaseController
         /**
          * @var $file UploadedFile
          */
-        $file = $request->files->get($request->query->get('type'), null)['upload'];
+        if ($request->files->has('file')) {
+            $file = $request->files->get('file');
+        }
+        else {
+            $file = $request->files->get($request->query->get('type'), null)['upload'];
+        }
 
-        $path = $this->container->getParameter('root_dir').'/'.$this->bundle->config->wallpapers_dir.'/'.$file->getClientOriginalName()[0];
+        $wpDir = $this->container->getParameter('root_dir').'/'.$this->bundle->config->wallpapers_dir.'/';
+
+        if ($request->request->has('folder')) {
+            $path = $wpDir.str_replace('.', '', $request->request->get('folder'));
+        }
+        else {
+            $path = $wpDir.$file->getClientOriginalName()[0];
+        }
 
         $handler = new UploadedFileHandler(UploadedFileHandler::getImageFiletypes());
 

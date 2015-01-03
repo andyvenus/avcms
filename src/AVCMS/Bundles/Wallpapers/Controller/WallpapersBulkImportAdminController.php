@@ -2,7 +2,10 @@
 
 namespace AVCMS\Bundles\Wallpapers\Controller;
 
+use AV\FileHandler\UploadedFileHandler;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
+use AVCMS\Bundles\Wallpapers\Form\BulkUploadForm;
+use AVCMS\Bundles\Wallpapers\Form\RecursiveDirectoryChoicesProvider;
 use AVCMS\Bundles\Wallpapers\Form\WallpaperAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use AVCMS\Bundles\Wallpapers\Form\WallpapersBulkImportFiltersForm;
@@ -174,11 +177,11 @@ class WallpapersBulkImportAdminController extends AdminBaseController
         return $this->handleDelete($request, $this->wallpapers);
     }
 
-    public function uploadFilesAction(Request $request)
+    public function bulkUploadAction(Request $request)
     {
+        $form = $this->buildForm(new BulkUploadForm(new RecursiveDirectoryChoicesProvider($this->bundle->config->wallpapers_dir)), $request);
 
-
-        return new Response($this->renderAdminSection('@Wallpapers/admin/bulk_upload.twig', $request->get('ajax_depth')));
+        return new Response($this->renderAdminSection('@Wallpapers/admin/bulk_upload.twig', $request->get('ajax_depth'), ['form' => $form->createView()]));
     }
 
     protected function getSharedTemplateVars($ajaxDepth)
