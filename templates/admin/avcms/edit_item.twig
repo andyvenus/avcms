@@ -11,6 +11,8 @@
 {%- endblock %}
 
 {% block editor_content %}
+    {% block before_form %}{% endblock %}
+
     {% block form_start %}
         {{ form_start(form, {"data-item-id": item.id|default(0)}) }}
     {% endblock %}

@@ -9,6 +9,7 @@ use AVCMS\Bundles\Wallpapers\Form\WallpaperAdminForm;
 use AVCMS\Bundles\Wallpapers\Form\WallpaperBulkImportAdminFiltersForm;
 use AVCMS\Bundles\Wallpapers\Form\WallpaperBulkImportAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
+use AVCMS\Bundles\Wallpapers\Form\WallpapersBulkImportFiltersForm;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -36,7 +37,7 @@ class WallpapersBulkImportAdminController extends AdminBaseController
 
     public function importAction(Request $request)
     {
-        $folder = str_replace('.', '', $request->get('folder'));
+        $folder = str_replace(['.', '@'], ['', '/'], $request->get('folder'));
         if (!$folder) {
             throw $this->createNotFoundException("Folder $folder not found");
         }
@@ -50,13 +51,12 @@ class WallpapersBulkImportAdminController extends AdminBaseController
         $contentHelper = $this->editContentHelper($this->wallpapers, $form, $entity);
         $contentHelper->handleRequest($request);
 
+        $itr = new \DirectoryIterator($this->bundle->config->wallpapers_dir.'/'.$folder);
+
         if ($contentHelper->formSubmitted()) {
             if ($contentHelper->formValid()) {
                 $form->saveToEntities();
 
-
-
-                $itr = new \DirectoryIterator($this->bundle->config->wallpapers_dir.'/'.$folder);
                 foreach ($itr as $file) {
                     if ($file->isFile() && exif_imagetype($file->getPathname()) !== false) {
                         $newWallpaper = clone $entity;
@@ -65,6 +65,7 @@ class WallpapersBulkImportAdminController extends AdminBaseController
 
                         $replaceValues['{filename}'] = str_replace('.'.$file->getExtension(), '', $file->getBasename());
                         $replaceValues['{clean_filename}'] = ucwords(str_replace('_', ' ', str_replace('.'.$file->getExtension(), '', $file->getBasename())));
+                        $replaceValues['{folder_name}'] = basename($folder);
 
                         $allData = $newWallpaper->toArray();
                         $newData = [];
@@ -85,11 +86,28 @@ class WallpapersBulkImportAdminController extends AdminBaseController
             return new JsonResponse(['form' => $form->createView()->getJsonResponseData()]);
         }
 
-        return new Response($this->renderAdminSection('@Wallpapers/admin/wallpaper_bulk_import.twig', $request->get('ajax_depth'), ['item' => ['id' => $folder], 'folder' => $folder, 'form' => $form->createView()]));
+        $totalFiles = 0;
+        foreach ($itr as $file) {
+            if ($file->isFile() && in_array($file->getExtension(), ['gif', 'bmp', 'jpeg', 'jpg', 'png'])) {
+                $totalFiles++;
+            }
+        }
+
+        $importedFiles = $this->wallpapers->query()->where('file', 'LIKE', $folder.'%')->count();
+
+        return new Response($this->renderAdminSection('@Wallpapers/admin/wallpaper_bulk_import.twig', $request->get('ajax_depth'), [
+            'item' => ['id' => $folder],
+            'folder' => $folder,
+            'form' => $form->createView(),
+            'total_files' => $totalFiles,
+            'imported_files' => $importedFiles
+        ]));
     }
 
     public function finderAction(Request $request)
     {
+        $showSingleCharDirs = $request->get('show_single_char_dirs', false);
+
         $dirs = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($this->bundle->config->wallpapers_dir),
             RecursiveIteratorIterator::CHILD_FIRST
@@ -101,22 +119,15 @@ class WallpapersBulkImportAdminController extends AdminBaseController
             foreach ($dirs as $file) {
                 if (in_array($file->getBasename(), array('.', '..'))) {
                     continue;
-                } elseif ($file->isDir()) {
-                    if (!$request->get('search') || strpos($file->getFilename(), $request->get('search')) !== false)
-                        $items[] = ['id' => $file->getFilename(), 'name' => $file->getFilename()];
+                } elseif ($file->isDir() && ($showSingleCharDirs == 1 || strlen($file->getFilename()) > 1)) {
+                    if (!$request->get('search') || strpos($file->getFilename(), $request->get('search')) !== false) {
+                        $filename = str_replace($this->bundle->config->wallpapers_dir.'/', '', $file->getPath().'/'.$file->getFilename());
+                        $id = str_replace('/', '@', $filename);
+                        $items[] = ['id' => $id, 'name' => $filename];
+                    }
                 }
             }
         }
-
-        usort($items, function($s1, $s2) {
-            if (strlen($s1['name']) !== 1 && strlen($s2['name']) === 1) {
-                return -1;
-            } elseif (strlen($s2['name']) !== 1 && strlen($s1['name']) === 1) {
-                return 1;
-            } else {
-                return 0;
-            }
-        });
 
         return new Response($this->render('@Wallpapers/admin/wallpaper_bulk_import_finder.twig', array('items' => $items, 'page' => 1)));
     }
@@ -135,7 +146,7 @@ class WallpapersBulkImportAdminController extends AdminBaseController
     {
         $templateVars = parent::getSharedTemplateVars($ajaxDepth);
 
-        $fbp = new AdminFiltersForm();
+        $fbp = new WallpapersBulkImportFiltersForm();
         $fbp->remove('order');
 
         $templateVars['finder_filters_form'] = $this->buildForm($fbp)->createView();

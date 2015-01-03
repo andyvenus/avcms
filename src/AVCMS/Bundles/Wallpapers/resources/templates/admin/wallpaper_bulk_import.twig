@@ -7,3 +7,29 @@
 {% block editor_title %}
     <span class="light">{% trans %}Import From Folder{% endtrans %}:</span> {{ folder }}
 {% endblock %}
+
+{% block before_form %}
+    <span class="always-refresh"></span>
+
+    <div class="alert alert-info">
+        <p>
+            <span class="glyphicon glyphicon-info-sign"></span>
+            {% transchoice total_files with {folder_name: folder} %}{0}There are no images in this folder, so nothing will be imported.|{1}There is one image in the folder folder_name.|]1,Inf]The folder folder_name has %total_files% images inside.
+            {% endtranschoice %}
+
+            {% if imported_files > 0 %}
+                {% transchoice imported_files %}{1}One image has already been imported from this folder and will not be imported again.|]1,Inf]%imported_files% images have already been imported from this folder and will not be imported again.{% endtranschoice %}
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="well well-sm">
+        <p>{% trans %}The following placeholders can be used when importing wallpapers{% endtrans %}:</p>
+
+        <p><strong>{clean_filename}</strong> - {% trans %}The filename without an extension and made more presentable.{% endtrans %}</p>
+        <p><strong>{filename}</strong> - {% trans %}The original filename.{% endtrans %}</p>
+        <p><strong>{folder_name}</strong> - {% trans %}The folder name the image is contained within.{% endtrans %}</p>
+    </div>
+
+    <h4>{% trans %}Imported Wallpaper Details{% endtrans %}</h4>
+{% endblock %}
