@@ -24,7 +24,7 @@
             {{ buttons.publish(item.published, 'wallpapers_admin_toggle_published') }}
         </div>
 
-        {{ buttons.view('wallpaper_details', {category: item.category.slug, slug: item.slug}) }}
+        {{ buttons.view('wallpaper_details', {slug: item.slug}) }}
     {% endblock %}
 {% endblock %}
 
