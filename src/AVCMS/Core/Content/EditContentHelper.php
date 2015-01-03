@@ -73,14 +73,16 @@ class EditContentHelper
         return $this->save();
     }
 
-    public function save()
+    public function save($saveToEntities = true)
     {
         if (!isset($this->request)) {
             throw new \Exception("Cannot save, request not handled");
         }
 
         if ($this->form->isValid() && $this->contentExists()) {
-            $this->form->saveToEntities();
+            if ($saveToEntities === true) {
+                $this->form->saveToEntities();
+            }
 
             $event = new AdminSaveContentEvent($this->entity, $this->model, $this->form);
 
@@ -115,6 +117,11 @@ class EditContentHelper
     public function getEntity()
     {
         return $this->entity;
+    }
+
+    public function setEntity($entity)
+    {
+        $this->entity = $entity;
     }
 
     public function getForm()

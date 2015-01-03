@@ -8,9 +8,9 @@ use AVCMS\Bundles\FileUpload\Form\FileSelectFields;
 
 class WallpaperAdminForm extends AdminContentForm
 {
-    public function __construct($itemId, CategoryChoicesProvider $categoryChoicesProvider, $fileSelect = true)
+    public function __construct($itemId, CategoryChoicesProvider $categoryChoicesProvider, $import = false)
     {
-        if ($fileSelect === true) {
+        if ($import === false) {
             new FileSelectFields($this, 'admin/wallpapers/find-files', 'admin/wallpapers/upload', 'admin/wallpapers/grab-file');
         }
 
@@ -59,13 +59,8 @@ class WallpaperAdminForm extends AdminContentForm
 
         parent::__construct($itemId);
 
-        /*
-       $this->add('crop_type', 'select', array(
-           'label' => 'Crop Type',
-       ));
-
-      $this->add('crop_position', 'select', array(
-           'label' => 'Crop Position'
-       ));*/
+        if ($import === true) {
+            $this->remove('slug');
+        }
     }
 }

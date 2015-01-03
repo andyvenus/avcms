@@ -59,13 +59,9 @@ wallpapers_admin_toggle_published:
   defaults: { _controller: Wallpapers::WallpapersAdminController::togglePublishedAction }
 
 
-wallpaper_bulk_import_admin_edit:
-    path:     /wallpapers-bulk-import/edit/{id}
-    defaults: { _controller: 'Wallpapers::WallpapersBulkImportAdminController::editAction' }
-
-wallpaper_bulk_import_admin_add:
-    path:     /wallpapers-bulk-import/new
-    defaults: { _controller: 'Wallpapers::WallpapersBulkImportAdminController::editAction' }
+wallpaper_bulk_import:
+    path:     /wallpapers-bulk-import/import/{folder}
+    defaults: { _controller: 'Wallpapers::WallpapersBulkImportAdminController::importAction' }
 
 wallpaper_bulk_import_admin_delete:
     path:     /wallpapers-bulk-import/delete
