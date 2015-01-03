@@ -60,31 +60,38 @@ class WallpapersBulkImportAdminController extends AdminBaseController
                 $originalTags = $contentHelper->getForm()->getData('tags');
 
                 foreach ($itr as $file) {
-                    if ($file->isFile() && exif_imagetype($file->getPathname()) !== false) {
-                        $newWallpaper = clone $entity;
-                        $contentHelper->setEntity($newWallpaper);
-                        $newWallpaper->setFile($folder.'/'.$file->getFilename());
-
-                        $replaceValues['{filename}'] = str_replace('.'.$file->getExtension(), '', $file->getBasename());
-                        $replaceValues['{clean_filename}'] = ucwords(str_replace('_', ' ', str_replace('.'.$file->getExtension(), '', $file->getBasename())));
-                        $replaceValues['{folder_name}'] = basename($folder);
-
-                        $allData = $newWallpaper->toArray();
-                        $newData = [];
-
-                        foreach ($allData as $key => $value) {
-                            if (!is_array($value)) {
-                                $newData[$key] = str_replace(array_keys($replaceValues), $replaceValues, $value);
-                            }
-                        }
-
-                        $newTags = str_replace(array_keys($replaceValues), $replaceValues, $originalTags);
-                        $contentHelper->getForm()->setData('tags', $newTags);
-
-                        $newWallpaper->fromArray($newData);
-
-                        $contentHelper->save(false);
+                    if (!$file->isFile() || exif_imagetype($file->getPathname()) === false) {
+                        continue;
                     }
+
+                    if ($this->wallpapers->query()->where('file', $folder.'/'.$file->getFilename())->count() > 0) {
+                        continue;
+                    }
+
+                    $newWallpaper = clone $entity;
+                    $contentHelper->setEntity($newWallpaper);
+                    $newWallpaper->setFile($folder.'/'.$file->getFilename());
+
+                    $replaceValues['{filename}'] = str_replace('.'.$file->getExtension(), '', $file->getBasename());
+                    $replaceValues['{clean_filename}'] = ucwords(str_replace('_', ' ', str_replace('.'.$file->getExtension(), '', $file->getBasename())));
+                    $replaceValues['{folder_name}'] = basename($folder);
+
+                    $allData = $newWallpaper->toArray();
+                    $newData = [];
+
+                    foreach ($allData as $key => $value) {
+                        if (!is_array($value)) {
+                            $newData[$key] = str_replace(array_keys($replaceValues), $replaceValues, $value);
+                        }
+                    }
+
+                    $newTags = str_replace(array_keys($replaceValues), $replaceValues, $originalTags);
+                    $contentHelper->getForm()->setData('tags', $newTags);
+
+                    $newWallpaper->fromArray($newData);
+
+                    $contentHelper->save(false);
+
                 }
             }
 
