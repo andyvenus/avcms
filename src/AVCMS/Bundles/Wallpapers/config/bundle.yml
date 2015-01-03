@@ -14,6 +14,12 @@ menu_items:
             type: route
             target: wallpapers_admin_home
             default_order: 80
+        wallpapers_bulk_admin:
+          label: Bulk Import
+          icon: glyphicon glyphicon-import
+          type: route
+          target: wallpaper_bulk_import_admin_home
+          parent: wallpapers_admin
 
 categories:
     wallpaper:
