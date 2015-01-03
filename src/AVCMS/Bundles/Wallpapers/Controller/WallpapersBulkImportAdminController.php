@@ -142,10 +142,20 @@ class WallpapersBulkImportAdminController extends AdminBaseController
                 if (in_array($file->getBasename(), array('.', '..'))) {
                     continue;
                 } elseif ($file->isDir() && ($showSingleCharDirs == 1 || strlen($file->getFilename()) > 1)) {
-                    if (!$request->get('search') || strpos($file->getFilename(), $request->get('search')) !== false) {
-                        $filename = str_replace($this->bundle->config->wallpapers_dir.'/', '', $file->getPath().'/'.$file->getFilename());
+                    $filename = str_replace($this->bundle->config->wallpapers_dir.'/', '', $file->getPath().'/'.$file->getFilename());
+                    if (!$request->get('search') || strpos($filename, $request->get('search')) !== false) {
                         $id = str_replace('/', '@', $filename);
-                        $items[] = ['id' => $id, 'name' => $filename];
+
+                        $fileItr = new \DirectoryIterator($this->bundle->config->wallpapers_dir.'/'.$filename);
+                        $totalFiles = 0;
+                        foreach ($fileItr as $innerFile) {
+                            if ($innerFile->isFile() && in_array($innerFile->getExtension(), ['gif', 'bmp', 'jpeg', 'jpg', 'png'])) {
+                                $totalFiles++;
+                            }
+                        }
+                        $importedFiles = $this->wallpapers->query()->where('file', 'LIKE', $filename.'%')->count();
+
+                        $items[] = ['id' => $id, 'name' => $filename, 'imported_files' => $importedFiles, 'total_files' => $totalFiles, 'dir' => $file];
                     }
                 }
             }
