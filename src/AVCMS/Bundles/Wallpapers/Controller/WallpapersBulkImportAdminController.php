@@ -169,11 +169,6 @@ class WallpapersBulkImportAdminController extends AdminBaseController
         return $this->handleDelete($request, $this->wallpapers);
     }
 
-    public function togglePublishedAction(Request $request)
-    {
-        return $this->handleTogglePublished($request, $this->wallpapers);
-    }
-
     protected function getSharedTemplateVars($ajaxDepth)
     {
         $templateVars = parent::getSharedTemplateVars($ajaxDepth);
