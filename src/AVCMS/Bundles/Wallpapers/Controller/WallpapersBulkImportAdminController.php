@@ -91,6 +91,13 @@ class WallpapersBulkImportAdminController extends AdminBaseController
 
                     $newWallpaper->fromArray($newData);
 
+                    $slug = $this->container->get('slug.generator')->slugify($newWallpaper->getName());
+                    if ($this->wallpapers->query()->where('slug', $slug)->count() > 0) {
+                        $slug .= '-'.time();
+                    }
+
+                    $newWallpaper->setSlug($slug);
+
                     $contentHelper->save(false);
                     $wallpapersImported++;
                 }
