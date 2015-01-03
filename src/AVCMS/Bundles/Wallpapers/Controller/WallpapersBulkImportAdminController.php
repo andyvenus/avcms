@@ -179,7 +179,7 @@ class WallpapersBulkImportAdminController extends AdminBaseController
 
     public function bulkUploadAction(Request $request)
     {
-        $form = $this->buildForm(new BulkUploadForm(new RecursiveDirectoryChoicesProvider($this->bundle->config->wallpapers_dir)), $request);
+        $form = $this->buildForm(new BulkUploadForm(new RecursiveDirectoryChoicesProvider($this->container->getParameter('root_dir').'/'.$this->bundle->config->wallpapers_dir, false)), $request);
 
         return new Response($this->renderAdminSection('@Wallpapers/admin/bulk_upload.twig', $request->get('ajax_depth'), ['form' => $form->createView()]));
     }
