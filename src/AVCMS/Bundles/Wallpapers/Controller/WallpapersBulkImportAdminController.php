@@ -57,6 +57,8 @@ class WallpapersBulkImportAdminController extends AdminBaseController
             if ($contentHelper->formValid()) {
                 $form->saveToEntities();
 
+                $originalTags = $contentHelper->getForm()->getData('tags');
+
                 foreach ($itr as $file) {
                     if ($file->isFile() && exif_imagetype($file->getPathname()) !== false) {
                         $newWallpaper = clone $entity;
@@ -75,6 +77,9 @@ class WallpapersBulkImportAdminController extends AdminBaseController
                                 $newData[$key] = str_replace(array_keys($replaceValues), $replaceValues, $value);
                             }
                         }
+
+                        $newTags = str_replace(array_keys($replaceValues), $replaceValues, $originalTags);
+                        $contentHelper->getForm()->setData('tags', $newTags);
 
                         $newWallpaper->fromArray($newData);
 
