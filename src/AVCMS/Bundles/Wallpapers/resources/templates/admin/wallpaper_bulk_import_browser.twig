@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block add_item %}
-
+    {{ buttons.add_item('wallpapers_bulk_upload', 'Upload Images', 'glyphicon-upload') }}
 {% endblock %}
 
 {% block finder %}
@@ -24,6 +24,4 @@
 
 {% block checked_options_buttons %}
     {{ buttons.bulk_delete('wallpaper_bulk_import_admin_delete') }}
-
-    
 {% endblock %}
