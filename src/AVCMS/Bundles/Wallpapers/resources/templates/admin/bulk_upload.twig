@@ -19,25 +19,50 @@
 
     {{ form_end(form) }}
 
+    <div class="selected-files-area"></div>
+
+    <button class="btn btn-primary start-upload-btn">{% trans %}Start Upload{% endtrans %}</button>
+
     <script type="text/javascript">
 
         $('.bulk-file-upload').fileupload({
             url: avcms.config.site_url+'admin/wallpapers/upload',
             dataType: 'json',
-            done: function (e, data) {
-                if (data.result.success === true) {
-                    $('.file-upload-progress').filter(':visible').html('');
+            add: function (e, data) {
+                $.each(data.files, function(index, file) {
+                    $('.selected-files-area').append('<div class="well well-sm clearfix" data-image-name="'+file.name+'">' +
+                        '<div class="col-md-6"> <img class="new-image" src="" width="90"/> '+file.name+'</div>' +
+                        '<div class="col-md-6 text-right image-upload-progress"></div>' +
+                    '</div>');
 
-                    $('form').filter(':visible').find('input[name="'+file_field+'"]').val(data.result.file);
-                    $('input[name="'+field_group+'[file_type]"][value="'+file_field+'"]').filter(':visible').prop('checked', true).change();
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('.new-image[src=""]').first().attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                });
+                data.context = $('.start-upload-btn').click(function () {
+                    data.submit();
+                });
+            },
+            done: function (e, data) {
+                var name = data.files[0].name;
+                if (data.result.success === true) {
+                    var progresser = $('[data-image-name="'+name+'"]').find('.image-upload-progress');
+
+                    progresser.html('<div class="label label-success">100%</div>');
                 }
                 else {
                     alert(data.result.error);
                 }
             },
-            progressall: function (e, data) {
+            progress: function (e, data) {
+                var name = data.files[0].name;
                 var progress = parseInt(data.loaded / data.total * 100, 10);
-                $('.file-upload-progress').filter(':visible').html('Uploading: '+progress+'%');
+
+                var progresser = $('[data-image-name="'+name+'"]').find('.image-upload-progress');
+
+                progresser.html('<div class="label label-info">'+progress+'%</div>');
             },
             fail: function() {
                 alert('f');
