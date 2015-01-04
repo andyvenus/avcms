@@ -10,6 +10,11 @@
 
 {% block add_item %}
     {{ buttons.add_item('wallpapers_bulk_upload', 'Upload Images', 'glyphicon-upload') }}
+    <div class="add-item">
+        <a href="#" data-form-modal-url="{{ url('wallpapers_bulk_import_new_folder') }}">
+            <span class="glyphicon glyphicon-folder-open"></span> {% trans %}Add New Folder{% endtrans %}
+        </a>
+    </div>
 {% endblock %}
 
 {% block finder %}

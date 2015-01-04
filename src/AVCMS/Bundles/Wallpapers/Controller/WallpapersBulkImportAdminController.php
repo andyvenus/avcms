@@ -3,6 +3,8 @@
 namespace AVCMS\Bundles\Wallpapers\Controller;
 
 use AV\FileHandler\UploadedFileHandler;
+use AV\Form\FormBlueprint;
+use AV\Form\FormError;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Wallpapers\Form\BulkUploadForm;
 use AVCMS\Bundles\Wallpapers\Form\RecursiveDirectoryChoicesProvider;
@@ -182,6 +184,35 @@ class WallpapersBulkImportAdminController extends AdminBaseController
         $form = $this->buildForm(new BulkUploadForm(new RecursiveDirectoryChoicesProvider($this->container->getParameter('root_dir').'/'.$this->bundle->config->wallpapers_dir, false)), $request);
 
         return new Response($this->renderAdminSection('@Wallpapers/admin/bulk_upload.twig', $request->get('ajax_depth'), ['form' => $form->createView()]));
+    }
+
+    public function addFolderAction(Request $request)
+    {
+        $formBp = new FormBlueprint();
+        $formBp->setName('wallpaper_new_folder');
+        $formBp->setAction($this->generateUrl('wallpapers_bulk_import_new_folder'));
+        $formBp->add('folder_name', 'text', [
+            'label' => 'Folder',
+            'help' => 'The new folder directory, use forward slashes to create a sub-directory'
+        ]);
+
+        $form = $this->buildForm($formBp, $request);
+
+        if ($form->isSubmitted()) {
+
+            $newDir = $this->bundle->config->wallpapers_dir.'/'.$form->getData('folder_name');
+
+            if (file_exists($newDir)) {
+                $form->addCustomErrors([new FormError('folder_name', 'Folder already exists')]);
+            }
+            else {
+                mkdir($newDir, 0777, true);
+            }
+
+            return new JsonResponse(['success' => $form->isValid(), 'form' => $form->createView()->getJsonResponseData(), 'folder' => $form->getData('folder_name')]);
+        }
+
+        return new JsonResponse(['html' => $this->render('@CmsFoundation/modal_form.twig', ['form' => $form->createView(), 'modal_title' => 'Add Folder'])]);
     }
 
     protected function getSharedTemplateVars($ajaxDepth)

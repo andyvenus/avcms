@@ -7,6 +7,7 @@ $(document).ready(function() {
     $('body').on('click', '.new-upload-button', avcms.wallpaper_bulk.newUpload);
 
     avcms.event.addEvent('page-modified', avcms.wallpaper_bulk.loadFileUploader);
+    avcms.event.addEvent('submit-form-success', avcms.wallpaper_bulk.folderAdded);
 });
 
 avcms.wallpaper_bulk = {
@@ -76,6 +77,21 @@ avcms.wallpaper_bulk = {
                 }
             }).prop('disabled', !$.support.fileInput)
                 .parent().addClass($.support.fileInput ? undefined : 'disabled');
+        }
+    },
+
+    folderAdded: function(form, data) {
+        if ($(form).attr('name') == 'wallpaper_new_folder') {
+            avcms.browser.changeFinderFilters();
+
+            var folder_field = $('select[name=folder]');
+            if (folder_field.length > 0) {
+                var value = data.folder;
+                folder_field.append($("<option></option>")
+                    .attr("value", value)
+                    .text(value));
+                folder_field.select2('val', value);
+            }
         }
     }
 };

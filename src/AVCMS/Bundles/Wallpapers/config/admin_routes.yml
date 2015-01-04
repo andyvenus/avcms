@@ -78,3 +78,7 @@ wallpaper_bulk_import_admin_finder:
 wallpapers_bulk_upload:
   path: /wallpapers-bulk-import/upload
   defaults: { _controller: 'Wallpapers::WallpapersBulkImportAdminController::bulkUploadAction' }
+
+wallpapers_bulk_import_new_folder:
+  path: /wallpapers-bulk-import/add-folder
+  defaults: { _controller: 'Wallpapers::WallpapersBulkImportAdminController::addFolderAction' }
