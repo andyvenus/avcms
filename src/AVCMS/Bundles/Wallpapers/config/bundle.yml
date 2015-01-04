@@ -6,6 +6,11 @@ require:
 services:
     - WallpaperServices
 
+assets:
+  avcms_wallpapers.js:
+    env: admin
+    priority: 50
+
 menu_items:
     admin:
         wallpapers_admin:
