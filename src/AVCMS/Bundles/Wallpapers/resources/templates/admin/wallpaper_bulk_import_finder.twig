@@ -12,6 +12,8 @@
     </div>
 {% endblock %}
 
+{% block item_checkbox %}{% endblock %}
+
 {% block item_title %}
     <div class="finder-item-title" data-field="name">
         {{ item.name }}
@@ -22,6 +24,10 @@
     <div class="btn-group">
         <a href="{{ url('wallpaper_bulk_import', {folder: item.id}) }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-download"></span> {% trans %}Import{% endtrans %}</a>
     </div>
+
+    {% if item.total_files == 0 %}
+        {{ buttons.delete('wallpaper_bulk_import_admin_delete') }}
+    {% endif %}
 {% endblock %}
 
 {% block item_extended_inner %}

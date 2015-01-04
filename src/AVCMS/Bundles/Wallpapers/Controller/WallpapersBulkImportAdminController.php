@@ -174,11 +174,6 @@ class WallpapersBulkImportAdminController extends AdminBaseController
         return new Response($this->render('@Wallpapers/admin/wallpaper_bulk_import_finder.twig', array('items' => $items, 'page' => 1)));
     }
 
-    public function deleteAction(Request $request)
-    {
-        return $this->handleDelete($request, $this->wallpapers);
-    }
-
     public function bulkUploadAction(Request $request)
     {
         $form = $this->buildForm(new BulkUploadForm(new RecursiveDirectoryChoicesProvider($this->container->getParameter('root_dir').'/'.$this->bundle->config->wallpapers_dir, false)), $request);
@@ -213,6 +208,27 @@ class WallpapersBulkImportAdminController extends AdminBaseController
         }
 
         return new JsonResponse(['html' => $this->render('@CmsFoundation/modal_form.twig', ['form' => $form->createView(), 'modal_title' => 'Add Folder'])]);
+    }
+
+    public function deleteFolderAction(Request $request)
+    {
+        if (!$this->checkCsrfToken($request)) {
+            return $this->invalidCsrfTokenJsonResponse();
+        }
+
+        $folder = str_replace('.', '', $request->request->get('ids'));
+        $fullPath = $this->container->getParameter('root_dir').'/'.$this->bundle->config->wallpapers_dir.'/'.$folder;
+        if (!$folder || !file_exists($fullPath)) {
+            return new JsonResponse(['success' => 0, 'error' => $this->trans('Folder cannot be deleted because it doesn\'t exist')]);
+        }
+
+        if (count(glob($fullPath."/*")) === 0) {
+            rmdir($fullPath);
+            return new JsonResponse(['success' => 1]);
+        }
+        else {
+            return new JsonResponse(['success' => 0, 'error' => $this->trans('Folder not empty')]);
+        }
     }
 
     protected function getSharedTemplateVars($ajaxDepth)

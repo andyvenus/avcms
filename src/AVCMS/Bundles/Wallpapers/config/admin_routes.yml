@@ -65,7 +65,7 @@ wallpaper_bulk_import:
 
 wallpaper_bulk_import_admin_delete:
     path:     /wallpapers-bulk-import/delete
-    defaults: { _controller: 'Wallpapers::WallpapersBulkImportAdminController::deleteAction' }
+    defaults: { _controller: 'Wallpapers::WallpapersBulkImportAdminController::deleteFolderAction' }
 
 wallpaper_bulk_import_admin_home:
   path: /wallpapers-bulk-import
