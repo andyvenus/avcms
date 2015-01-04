@@ -10,6 +10,7 @@ namespace AVCMS\Bundles\LikeDislike\Controller;
 use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class LikeDislikeController extends Controller
 {
@@ -28,6 +29,10 @@ class LikeDislikeController extends Controller
 
     public function registerVoteAction(Request $request)
     {
+        if (!$this->isGranted(['IS_AUTHENTICATED_REMEMBERED', 'IS_AUTHENTICATED_FULLY'])) {
+            return new AccessDeniedException;
+        }
+
         $rating = $request->get('rating');
         $contentType = $request->get('content_type');
         $contentId = $request->get('content_id');
@@ -38,6 +43,8 @@ class LikeDislikeController extends Controller
 
         $result = $this->ratingsManager->registerRating($rating, $contentType, $contentId);
 
-        return new JsonResponse(['success' => $result]);
+        $content = $this->ratingsManager->getLastContent();
+
+        return new JsonResponse(['success' => $result, 'likes' => $content->getLikes(), 'dislikes' => $content->getDislikes()]);
     }
 }

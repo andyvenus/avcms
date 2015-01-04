@@ -22,6 +22,8 @@ class RatingsManager
 
     private $modelFactory;
 
+    private $lastContent;
+
     public function __construct(BundleManagerInterface $bundleManager, Ratings $ratings, TokenStorage $tokenStorage, ModelFactory $modelFactory)
     {
         $this->bundleManager = $bundleManager;
@@ -121,7 +123,13 @@ class RatingsManager
             $contentModel->save($content);
         }
 
+        $this->lastContent = $content;
+
         return true;
+    }
+
+    public function getLastContent() {
+        return $this->lastContent;
     }
 
     public function getUsersRating($contentType, $contentId, $userId)
