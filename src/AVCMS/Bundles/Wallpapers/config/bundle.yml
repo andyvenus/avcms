@@ -46,6 +46,40 @@ comments:
     frontend_route: wallpaper_details
     frontend_route_params: [slug]
 
+modules:
+  wallpapers:
+    name: Wallpapers
+    description: A sortable list of wallpapers
+    controller: Wallpapers::WallpaperModulesController::wallpapersListModule
+    cachable: true
+    cache_bust_model: Wallpapers
+    default_cache_time: 10000
+    accepted_template_types: [list_panel, none]
+    user_settings:
+      order:
+        type: select
+        label: Order
+        choices:
+          newest: Newest Posts
+          top_hits: Top Hits
+        default: newest
+      limit:
+        type: text
+        label: Number of wallpapers to display
+        default: 5
+      show_date:
+        type: checkbox
+        label: Show Date
+        default: 0
+      show_hits:
+        type: checkbox
+        label: Show Hits
+        default: 0
+      show_category:
+        type: checkbox
+        label: Show Category
+        default: 0
+
 config:
     wallpapers_dir: webmaster/wallpapers
     web_dir: wallpapers
