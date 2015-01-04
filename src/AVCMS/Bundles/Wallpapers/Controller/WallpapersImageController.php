@@ -29,7 +29,8 @@ class WallpapersImageController extends Controller
             throw $this->createNotFoundException('No valid resolution');
         }
 
-        $wallpaper = $this->model('Wallpapers')->findOne($request->get('id'))->first();
+        $wallpapers = $this->model('Wallpapers');
+        $wallpaper = $wallpapers->findOne($request->get('id'))->first();
         if (!$wallpaper) {
             throw $this->createNotFoundException();
         }
@@ -45,6 +46,7 @@ class WallpapersImageController extends Controller
         $headers = [];
         if ($download === true) {
             $headers['Content-Disposition'] = 'attachment; filename="'.$filename.'"';
+            $this->container->get('hitcounter')->registerHit($wallpapers, $wallpaper->getId(), 'total_downloads');
         }
 
         if (file_exists($imagePath)) {

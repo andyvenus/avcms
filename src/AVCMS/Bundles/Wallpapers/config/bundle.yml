@@ -60,7 +60,7 @@ modules:
         type: select
         label: Order
         choices:
-          newest: Newest Posts
+          newest: Newest
           top_hits: Top Hits
         default: newest
       limit:
@@ -74,6 +74,10 @@ modules:
       show_hits:
         type: checkbox
         label: Show Hits
+        default: 1
+      show_downloads:
+        type: checkbox
+        label: Show Downloads
         default: 1
       show_category:
         type: checkbox
