@@ -216,7 +216,7 @@ class WallpapersBulkImportAdminController extends AdminBaseController
             return $this->invalidCsrfTokenJsonResponse();
         }
 
-        $folder = str_replace('.', '', $request->request->get('ids'));
+        $folder = str_replace(['.', '@'], ['', '/'], $request->request->get('ids'));
         $fullPath = $this->container->getParameter('root_dir').'/'.$this->bundle->config->wallpapers_dir.'/'.$folder;
         if (!$folder || !file_exists($fullPath)) {
             return new JsonResponse(['success' => 0, 'error' => $this->trans('Folder cannot be deleted because it doesn\'t exist')]);
