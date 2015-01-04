@@ -34,3 +34,5 @@ FileUpload:
     enabled: true
 Categories:
     enabled: true
+LikeDislike:
+    enabled: true

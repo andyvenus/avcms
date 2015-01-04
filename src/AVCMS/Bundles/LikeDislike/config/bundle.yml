@@ -1,0 +1,7 @@
+name: LikeDislike
+namespace: AVCMS\Bundles\LikeDislike
+require:
+    - Framework
+
+services:
+    - RatingsServices
