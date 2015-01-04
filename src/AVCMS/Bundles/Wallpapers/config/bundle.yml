@@ -74,11 +74,11 @@ modules:
       show_hits:
         type: checkbox
         label: Show Hits
-        default: 0
+        default: 1
       show_category:
         type: checkbox
         label: Show Category
-        default: 0
+        default: 1
 
 config:
     wallpapers_dir: webmaster/wallpapers
