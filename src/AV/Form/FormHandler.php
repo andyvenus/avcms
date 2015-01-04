@@ -254,8 +254,33 @@ class FormHandler
 
         $requestData = $this->requestHandler->handleRequest($this, $request);
 
-        foreach ($this->fields as $field) {
+        $validRequestData = $this->checkFieldsSubmitted($this->fields, $requestData);
+
+        if ($this->submitted === true && !empty($validRequestData)) {
+            $this->data = $validRequestData;
+            $this->setRequiredFieldErrors();
+        }
+        else {
+            $this->submitted = false;
+        }
+
+        if (isset($this->eventDispatcher)) {
+            $event = new FormHandlerRequestEvent($this, $request, $this->data);
+            $this->eventDispatcher->dispatch('form_handler.request', $event);
+            $this->data = $event->getFormData();
+        }
+    }
+
+    protected function checkFieldsSubmitted($fields, $requestData)
+    {
+        $validRequestData = [];
+        foreach ($fields as $index => $field) {
             $fieldName = $field['name'];
+
+            if ($fieldName === null) {
+                $fieldName = $index;
+            }
+
             if (isset($requestData[ $fieldName ])) {
                 $field_submitted = $this->typeHandler->isValidRequestData($field, $requestData[$fieldName]);
             }
@@ -280,21 +305,13 @@ class FormHandler
                     }
                 }
             }
+
+            /*if (isset($field['fields'])) {
+                $validRequestData[$fieldName] = $this->checkFieldsSubmitted($field['fields'], isset($validRequestData[$fieldName]) ? $validRequestData[$fieldName] : []);
+            }*/
         }
 
-        if ($this->submitted === true && isset($validRequestData)) {
-            $this->data = $validRequestData;
-            $this->setRequiredFieldErrors();
-        }
-        else {
-            $this->submitted = false;
-        }
-
-        if (isset($this->eventDispatcher)) {
-            $event = new FormHandlerRequestEvent($this, $request, $this->data);
-            $this->eventDispatcher->dispatch('form_handler.request', $event);
-            $this->data = $event->getFormData();
-        }
+        return $validRequestData;
     }
 
     /**

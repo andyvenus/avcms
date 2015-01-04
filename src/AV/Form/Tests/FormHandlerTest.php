@@ -82,7 +82,7 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
             'published' => 1
         );
 
-        $this->mock_validator = $this->getMock('AV\Form\ValidatorExtension\ValidatorExtension');
+        $this->mock_validator = $this->getMock('AV\Form\ValidatorExtension\ValidatorExtensionInterface');
 
         $this->resetRequest();
     }
@@ -535,6 +535,36 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('colours[]', $form_view->colours['fields'][2]['name']);
     }
 
+    public function testArrayKeyFieldSubmit()
+    {
+        $form = new FormBlueprint();
+        $form->add('colours[red]', 'checkbox', array(
+        ));
+
+        $form_handler = new FormHandler($form);
+
+        $_POST = ['colours' => []];
+
+        $form_handler->handleRequest();
+
+        $this->assertEquals(['red' => '0'], $form_handler->getData('colours'));
+    }
+
+    public function testArrayFieldSubmit()
+    {
+        $form = new FormBlueprint();
+        $form->add('colours[]', 'checkbox', array(
+        ));
+
+        $form_handler = new FormHandler($form);
+
+        $_POST = ['colours' => []];
+
+        $form_handler->handleRequest();
+
+        $this->assertEquals([0 => '0'], $form_handler->getData('colours'));
+    }
+
     public function testNamedArrayFields()
     {
         $form = new FormBlueprint();
@@ -700,4 +730,3 @@ class FormHandlerTest extends \PHPUnit_Framework_TestCase
         $_FILES = $this->default_request['FILES'];
     }
 }
- 
