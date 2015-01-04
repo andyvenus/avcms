@@ -11,25 +11,43 @@
 {% block editor_content %}
     <span class="always-refresh"></span>
 
-    {{ form_start(form) }}
+    <div class="bulk-upload">
+        {{ form_start(form) }}
 
-    {{ form_messages(form) }}
+        {{ form_messages(form) }}
 
-    {{ form_rows(form) }}
+        {{ form_rows(form) }}
 
-    {{ form_end(form) }}
+        {{ form_end(form) }}
+
+        <div class="form-group">
+            <button class="btn btn-primary start-upload-btn" style="display: none;">{% trans %}Start Upload{% endtrans %}</button>
+        </div>
+    </div>
+
+    <div class="form-group new-upload" style="display:none;overflow: hidden;">
+        <button class="btn btn-warning btn-large new-upload-button">{% trans %}New Upload{% endtrans %}</button>
+    </div>
 
     <div class="selected-files-area"></div>
 
-    <button class="btn btn-primary start-upload-btn">{% trans %}Start Upload{% endtrans %}</button>
-
     <script type="text/javascript">
+        avcms = avcms || {};
+
+        $(document).ready(function() {
+            $('.new-upload-button').click(avcms.wallpaper_bulk.newUpload);
+        });
+
+        avcms.wallpaper_bulk = {
+            newUpload: function() {
+                avcms.nav.refreshSection('.ajax-editor-inner', 'editor');
+            }
+        };
 
         $('.bulk-file-upload').fileupload({
             url: avcms.config.site_url+'admin/wallpapers/upload',
             dataType: 'json',
             add: function (e, data) {
-                console.log('addrun');
                 var file = data.files[0];
 
                 $('.selected-files-area').append('<div class="well well-sm clearfix" data-image-name="'+file.name+'">' +
@@ -51,9 +69,15 @@
                     $('.new-image[src=""]').first().remove();
                 }
 
-                data.context = $('.start-upload-btn').click(function () {
+                data.context = $('.start-upload-btn').show().click(function () {
                     data.submit();
                 });
+            },
+            start: function (e) {
+                $('.bulk-upload').slideUp();
+            },
+            stop: function (e) {
+                $('.new-upload').slideDown();
             },
             done: function (e, data) {
                 var name = data.files[0].name;
