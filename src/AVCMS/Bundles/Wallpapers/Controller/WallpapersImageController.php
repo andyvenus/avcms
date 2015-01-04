@@ -60,7 +60,7 @@ class WallpapersImageController extends Controller
             $img = $imageManager->make($this->container->getParameter('root_dir') . '/' . $this->bundle->config->wallpapers_dir . '/' . $wallpaper->getFile());
         }
         catch (NotReadableException $e) {
-            exit('source image not found');
+            throw $this->createNotFoundException('Wallpaper Source Image Not Found');
         }
 
         $reqRatio = $width / $height;
