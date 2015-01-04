@@ -24,18 +24,18 @@ class ClearCachesController extends Controller
 
         $formBlueprint = new FormBlueprint();
         $formBlueprint->setAction($this->generateUrl('clear_caches', [], UrlGeneratorInterface::ABSOLUTE_URL));
-        $formBlueprint->add("cache_dirs[main]", 'checkbox', ['label' => 'Core Caches']);
+        $formBlueprint->add("cache_dirs[]", 'checkbox', ['label' => 'Core Caches', 'checked_value' => 'main']);
 
         foreach (new \DirectoryIterator($this->container->getParameter('cache_dir')) as $dir) {
             if ($dir->isDir() && !$dir->isDot()) {
-                $formBlueprint->add("cache_dirs[{$dir->getFilename()}]", 'checkbox', ['label' => ucfirst($dir->getFilename())]);
+                $formBlueprint->add("cache_dirs[]", 'checkbox', ['label' => ucfirst($dir->getFilename()), 'checked_value' => $dir->getFilename()]);
             }
         }
 
         $form = $this->buildForm($formBlueprint, $request);
 
         if ($form->isSubmitted()) {
-            $this->get('cache.clearer')->clearCaches(array_keys($form->getData('cache_dirs')));
+            $this->get('cache.clearer')->clearCaches($form->getData('cache_dirs'));
 
             return new JsonResponse(['success' => true, 'form' => $form->createView()->getJsonResponseData()]);
         }
