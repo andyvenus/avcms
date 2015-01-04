@@ -17,7 +17,7 @@ avcms.wallpaper_bulk = {
 
     loadFileUploader: function() {
         var field = $('.bulk-file-upload');
-        console.log(field.length);
+
         if (field.length > 0) {
             field.fileupload({
                 url: avcms.config.site_url + 'admin/wallpapers/upload',
