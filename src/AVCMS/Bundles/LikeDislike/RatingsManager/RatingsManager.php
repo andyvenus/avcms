@@ -123,4 +123,9 @@ class RatingsManager
 
         return true;
     }
+
+    public function getUsersRating($contentType, $contentId, $userId)
+    {
+        return $this->ratings->query()->where('content_type', $contentType)->where('content_id', $contentId)->where('user_id', $userId)->first();
+    }
 }

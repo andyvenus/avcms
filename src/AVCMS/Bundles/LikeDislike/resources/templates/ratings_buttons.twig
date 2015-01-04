@@ -1,0 +1,4 @@
+<span class="btn-group like-dislike-buttons" data-content-type="{{ content_type }}" data-content-id="{{ content_id }}">
+    <button class="btn {% if rating_value is same as('1') %}btn-success{% else %}btn-default{% endif %}" data-vote-value="1"><span class="glyphicon glyphicon-thumbs-up"></span> {% trans %}Like{% endtrans %}</button>
+    <button class="btn {% if rating_value is same as('0') %}btn-danger{% else %}btn-default{% endif %}" data-vote-value="0"><span class="glyphicon glyphicon-thumbs-down"></span> {% trans %}Dislike{% endtrans %}</button>
+</span>

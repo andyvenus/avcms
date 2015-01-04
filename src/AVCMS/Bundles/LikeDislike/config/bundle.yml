@@ -5,3 +5,7 @@ require:
 
 services:
     - RatingsServices
+
+assets:
+    avcms_like_dislike.js:
+        env: frontend

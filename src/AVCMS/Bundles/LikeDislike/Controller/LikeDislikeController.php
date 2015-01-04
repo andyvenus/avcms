@@ -32,7 +32,7 @@ class LikeDislikeController extends Controller
         $contentType = $request->get('content_type');
         $contentId = $request->get('content_id');
 
-        if ($rating === null || $contentType === null || $contentId === null || !$this->ratingsManager->contentTypeValid($contentType)) {
+        if ($contentType === null || $contentId === null || !$this->ratingsManager->contentTypeValid($contentType)) {
             throw $this->createNotFoundException('Rating type not found');
         }
 
