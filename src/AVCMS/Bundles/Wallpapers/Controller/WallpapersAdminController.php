@@ -160,7 +160,7 @@ class WallpapersAdminController extends AdminBaseController
 
         $handler = new UploadedFileHandler(UploadedFileHandler::getImageFiletypes());
 
-        if (($fullPath = $handler->moveFile($file, $path)) === false) {
+        if (($fullPath = $handler->moveFile($file, $path, null, $request->request->get('existing_files', UploadedFileHandler::EXISTS_NUMBER))) === false) {
             $fileJson = ['success' => false, 'error' => $handler->getTranslatedError($this->translator)];
         }
         else {

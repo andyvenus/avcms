@@ -18,6 +18,16 @@ class BulkUploadForm extends FormBlueprint
             'label' => 'Folder'
         ]);
 
+        $this->add('existing_files', 'radio', [
+            'choices' => [
+                'number' => 'Rename (append number)',
+                'fail' => "Don't upload",
+                'overwrite' => 'Overwrite'
+            ],
+            'label' => 'If file exists',
+            'default' => 'number'
+        ]);
+
         $this->add('file', 'file', [
             'label' => 'Files',
             'field_template' => '@Wallpapers/form/bulk_upload_field.twig'
