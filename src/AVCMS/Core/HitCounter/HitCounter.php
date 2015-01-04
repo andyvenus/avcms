@@ -23,13 +23,17 @@ class HitCounter
     {
         $recentHits = $this->session->get('hits', []);
 
-        if (!isset($recentHits[$model->getSingular()]) || !isset($recentHits[$model->getSingular()][$id])) {
+        if (!isset($recentHits[$model->getSingular()]) || !isset($recentHits[$model->getSingular()][$id]) || !isset($recentHits[$model->getSingular()][$id][$column])) {
 
             $model->query()->where($idColumn, $id)->update([$column => $model->query()->raw("$column + 1")]);
 
-            $recentHits[$model->getSingular()][$id] = true;
+            if (!isset($recentHits[$model->getSingular()][$id])) {
+                $recentHits[$model->getSingular()][$id] = [];
+            }
+
+            $recentHits[$model->getSingular()][$id][$column] = true;
 
             $this->session->set('hits', $recentHits);
         }
     }
-} 
+}
