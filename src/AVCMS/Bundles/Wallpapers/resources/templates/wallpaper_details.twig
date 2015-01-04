@@ -7,6 +7,12 @@
         <img src="{{ wp_thumbnail_url(wallpaper, 896, 504) }}" alt="{{ wallpaper.name }}" width="100%" class="img-thumbnail" />
     </p>
 
+    <div class="row">
+        <div class="col-md-12 text-center">
+            {{ like_dislike_buttons('wallpaper', wallpaper.id) }}
+        </div>
+    </div>
+
     <div class="box">
         <div class="box-top">
             <h4>{% trans %}Wallpaper Details{% endtrans %}</h4>

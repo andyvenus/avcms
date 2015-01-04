@@ -3,8 +3,9 @@
 namespace AVCMS\Bundles\Wallpapers\Model;
 
 use AV\Model\Entity;
+use AVCMS\Bundles\LikeDislike\RatingsManager\RateInterface;
 
-class Wallpaper extends Entity
+class Wallpaper extends Entity implements RateInterface
 {
     public function setCategoryId($value)
     {
@@ -214,5 +215,25 @@ class Wallpaper extends Entity
     public function setTotalDownloads($value)
     {
         $this->set("total_downloads", $value);
+    }
+
+    public function setLikes($value)
+    {
+        $this->set("likes", $value);
+    }
+
+    public function getLikes()
+    {
+        return $this->get("likes");
+    }
+
+    public function setDislikes($value)
+    {
+        $this->set("dislikes", $value);
+    }
+
+    public function getDislikes()
+    {
+        return $this->get("dislikes");
     }
 }

@@ -46,6 +46,11 @@ comments:
     frontend_route: wallpaper_details
     frontend_route_params: [slug]
 
+ratings:
+  wallpaper:
+    name: Wallpaper
+    model: AVCMS\Bundles\Wallpapers\Model\Wallpapers
+
 modules:
   wallpapers:
     name: Wallpapers
