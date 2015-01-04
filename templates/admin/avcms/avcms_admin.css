@@ -194,10 +194,15 @@ a {
     display: none; }
   .browser-finder-item .finder-item-checkbox-container, .add-item a .finder-item-checkbox-container {
     float: left;
-    margin-top: 12px; }
+    margin-top: 12px;
+    width: 12px; }
   .browser-finder-item .finder-thumbnail, .add-item a .finder-thumbnail {
     float: left;
     margin-right: 5px; }
+  .browser-finder-item .finder-no-checkbox, .add-item a .finder-no-checkbox {
+    float: left;
+    width: 12px;
+    height: 12px; }
 
 .browser-finder-item.unpublished {
   color: #979799; }

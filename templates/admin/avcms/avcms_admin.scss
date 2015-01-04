@@ -294,11 +294,18 @@ a {
   .finder-item-checkbox-container {
     float:left;
     margin-top: 12px;
+    width: 12px;
   }
 
   .finder-thumbnail {
     float:left;
     margin-right: 5px;
+  }
+
+  .finder-no-checkbox {
+    float: left;
+    width: 12px;
+    height: 12px;
   }
 }
 
