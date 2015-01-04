@@ -45,7 +45,12 @@ avcms.general = {
 
             modal.on('hidden.bs.modal', function () {
                 modal.remove();
-            })
+            });
+
+            setTimeout(function() {
+                modal.find('input:text').first().focus();
+            }, 700);
+
         }, 'json').fail(function() {
             alert( "Modal response was not JSON" );
         });
