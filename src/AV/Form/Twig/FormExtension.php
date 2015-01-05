@@ -226,9 +226,9 @@ class FormExtension extends \Twig_Extension
         return $this->baseTemplate->renderBlock('form_rows', array('form_rows' => $limitedFields, 'attr' => $attributes));
     }
 
-    public function form(FormViewInterface $form, $attributes = array())
+    public function form(FormViewInterface $form, $attributes = array(), $template = null)
     {
-        return $this->baseTemplate->renderBlock('form_complete', array('form' => $form, 'attributes' => $attributes));
+        return $this->baseTemplate->renderBlock('form_complete', array('form' => $form, 'attributes' => $attributes, 'template' => $template));
     }
 
     public function formMessages(FormViewInterface $form)
