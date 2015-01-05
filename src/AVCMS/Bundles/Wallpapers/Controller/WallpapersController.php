@@ -40,7 +40,7 @@ class WallpapersController extends Controller
 
             $categoryId = $category->getId();
 
-            $query->getQuery()->where('category_id', $categoryId);
+            $query->getQuery()->where('category_id', $categoryId)->orWhere('category_parent_id', $categoryId);
         }
 
         $wallpapers = $query->get();
