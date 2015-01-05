@@ -23,12 +23,12 @@ class LikeDislikeTwigExtension extends \Twig_Extension
      */
     private $environment;
 
-    private $user;
+    private $tokenStorage;
 
     public function __construct(RatingsManager $ratingsManager, TokenStorage $tokenStorage)
     {
         $this->ratingsManager = $ratingsManager;
-        $this->user = $tokenStorage->getToken()->getUser();
+        $this->tokenStorage = $tokenStorage;
     }
 
     public function initRuntime(\Twig_Environment $environment)
@@ -45,7 +45,7 @@ class LikeDislikeTwigExtension extends \Twig_Extension
 
     public function likeDislikeButtons($contentType, $contentId, RateInterface $content = null, $buttonsTemplate = '@LikeDislike/ratings_buttons.twig')
     {
-        $userId = $this->user->getId();
+        $userId = $this->getUser()->getId();
 
         $rating = $this->ratingsManager->getUsersRating($contentType, $contentId, $userId);
 
@@ -60,5 +60,10 @@ class LikeDislikeTwigExtension extends \Twig_Extension
     public function getName()
     {
         return 'avmcs_like_dislike';
+    }
+
+    protected function getUser()
+    {
+        return $this->tokenStorage->getToken()->getUser();
     }
 }

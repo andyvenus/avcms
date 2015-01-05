@@ -28,7 +28,7 @@ class RatingsManager
     {
         $this->bundleManager = $bundleManager;
         $this->ratings = $ratings;
-        $this->user = $tokenStorage->getToken()->getUser();
+        $this->tokenStorage = $tokenStorage;
         $this->modelFactory = $modelFactory;
 
         foreach ($this->bundleManager->getBundleConfigs() as $bundleConfig) {
@@ -83,7 +83,7 @@ class RatingsManager
         $baseQuery = $this->ratings->query()
             ->where('content_id', $contentId)
             ->where('content_type', $contentType)
-            ->where('user_id', $this->user->getId());
+            ->where('user_id', $this->getUser()->getId());
 
         $entity = $baseQuery->first();
 
@@ -103,7 +103,7 @@ class RatingsManager
             $entity->setContentId($contentId);
             $entity->setContentType($contentType);
             $entity->setDate(time());
-            $entity->setUserId($this->user->getId());
+            $entity->setUserId($this->getUser()->getId());
             $entity->setRating($rating);
 
             $this->ratings->save($entity);
@@ -135,5 +135,10 @@ class RatingsManager
     public function getUsersRating($contentType, $contentId, $userId)
     {
         return $this->ratings->query()->where('content_type', $contentType)->where('content_id', $contentId)->where('user_id', $userId)->first();
+    }
+
+    protected function getUser()
+    {
+        return $this->tokenStorage->getToken()->getUser();
     }
 }
