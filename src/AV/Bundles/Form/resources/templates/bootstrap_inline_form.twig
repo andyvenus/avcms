@@ -4,3 +4,18 @@
     {% set attr = attr|merge({class: attr.class ~ ' form-inline'}) %}
     {{ parent() }}
 {% endblock %}
+
+{% block submit_button %}
+    {% spaceless %}
+        {% set label = label|default('Submit') %}
+        {% set type = type|default('submit') %}
+        <div class="form-group">
+            <div class="control-label hidden-xs hidden-sm" style="margin-bottom: 5px;">&nbsp;</div>
+            {{ block('button') }}</div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block form_label_row %}
+    {{ parent() }}
+    <span class="hidden-xs hidden-sm">&nbsp;</span>
+{% endblock %}

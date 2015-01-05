@@ -113,14 +113,3 @@
     {{ parent() }}
 {% endblock %}
 
-{% block form_complete %}
-    {{ form_start(form) }}
-
-    {{ form_messages(form) }}
-
-    {{ form_rows(form, attributes) }}
-
-    {{ form_submit_button(form) }}
-
-    {{ form_end(form) }}
-{% endblock %}
