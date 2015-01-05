@@ -3,7 +3,7 @@
 {% block title -%}
     {% spaceless %}
         {% if item.id %}
-            {% trans with {'item': item.label} %}Editing {item}{% endtrans %}
+            {% trans with {'menu': menu.label, 'item': item.label} %}Editing {menu} Menu Item: {item}{% endtrans %}
         {% else %}
             {% trans %}New Menu Item{% endtrans %}
         {% endif %}
@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block editor_title_edit %}
-    <span class="light">{% trans %}Editing Menu Item{% endtrans %}: <a href="{{ url('menus_admin_manage_items', {id: menu.id}) }}">{{ menu.label }}</a> /</span> <span data-id="{{ item.id }}" data-field="label">{{ item.label }}</span>
+    <span class="light"><a href="{{ url('menus_admin_manage_items', {id: menu.id}) }}">{{ menu.label }}</a> /</span> <span data-id="{{ item.id }}" data-field="label">{{ item.label }}</span>
 {% endblock %}
 
 {% block editor_title_new %}
