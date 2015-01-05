@@ -17,6 +17,11 @@ class MenuServices implements ServicesInterface
     {
         $container->register('menu_manager', 'AVCMS\Core\Menu\MenuManager')
             ->setArguments(array(new Reference('router'), new Reference('menu_manager.model'), new Reference('menu_manager.items_model'), new Reference('security.context'), new Reference('translator')))
+            ->addMethodCall('addMenuItemType', [new Reference('menu_type.route'), 'route'])
+        ;
+
+        $container->register('menu_type.route', 'AVCMS\Core\Menu\MenuItemType\RouteMenuItemType')
+            ->setArguments([new Reference('router')])
         ;
 
         $container->register('menu_manager.model', 'AVCMS\Bundles\CmsFoundation\Model\Menus')

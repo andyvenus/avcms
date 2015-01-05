@@ -9,7 +9,8 @@ namespace AVCMS\Core\Menu;
 
 use AV\Model\Model;
 use AVCMS\Bundles\CmsFoundation\Model\Menu;
-use AVCMS\Bundles\CmsFoundation\Model\MenuItem;
+use AVCMS\Bundles\CmsFoundation\Model\MenuItemConfig;
+use AVCMS\Core\Menu\MenuItemType\MenuItemTypeInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
@@ -41,6 +42,11 @@ class MenuManager
      */
     protected $translator;
 
+    /**
+     * @var array
+     */
+    protected $menuItemTypes = [];
+
     public function __construct(UrlGeneratorInterface $urlGenerator, Model $menusModel, Model $itemsModel, SecurityContextInterface $securityContext, TranslatorInterface $translator)
     {
         $this->urlGenerator = $urlGenerator;
@@ -48,6 +54,28 @@ class MenuManager
         $this->itemsModel = $itemsModel;
         $this->securityContext = $securityContext;
         $this->translator = $translator;
+    }
+
+    public function addMenuItemType(MenuItemTypeInterface $menuItemType, $id)
+    {
+        $this->menuItemTypes[$id] = $menuItemType;
+    }
+
+    /**
+     * @return MenuItemTypeInterface[]
+     */
+    public function getMenuItemTypes()
+    {
+        return $this->menuItemTypes;
+    }
+
+    /**
+     * @param $id
+     * @return MenuItemTypeInterface
+     */
+    public function getMenuItemType($id)
+    {
+        return isset($this->menuItemTypes[$id]) ? $this->menuItemTypes[$id] : null;
     }
 
     public function getModel()
@@ -60,7 +88,7 @@ class MenuManager
         return $this->itemsModel;
     }
 
-    public function saveMenuItem(MenuItem $menuItem)
+    public function saveMenuItem(MenuItemConfig $menuItem)
     {
         $this->itemsModel->save($menuItem);
     }
@@ -89,16 +117,23 @@ class MenuManager
         $items =  $query->get();
         $childItems = $sortedItems = array();
 
-        foreach ($items as $item) {
+        foreach ($items as $config) {
+
+            if ($config->getTranslatable()) {
+                $config->setLabel($this->translator->trans($config->getLabel()));
+            }
+
+            if (!isset($this->menuItemTypes[$config->getType()])) {
+                continue;
+            }
+
+            $item = $this->menuItemTypes[$config->getType()]->getMenuItems($config);
+
             if ($item->getPermission()) {
                 $permissions = explode(',', str_replace(' ', '', $item->getPermission()));
                 if (!$this->securityContext->isGranted($permissions)) {
                     continue;
                 }
-            }
-
-            if ($item->getTranslatable()) {
-                $item->setLabel($this->translator->trans($item->getLabel()));
             }
 
             $item->children = array();
@@ -108,18 +143,6 @@ class MenuManager
             }
             else {
                 $sortedItems[$item->getId()] = $item;
-            }
-
-            if ($item->getType() == 'route') {
-                try {
-                    $item->setUrl($this->urlGenerator->generate($item->getTarget()));
-                }
-                catch (RouteNotFoundException $e) {
-                    $item->setUrl('#route-'.$item->getTarget().'-not-found');
-                }
-            }
-            else {
-                $item->setUrl($item->getTarget());
             }
         }
 

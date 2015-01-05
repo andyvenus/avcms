@@ -9,7 +9,7 @@ namespace AVCMS\Bundles\CmsFoundation\Subscribers;
 
 use AV\Kernel\Bundle\BundleManagerInterface;
 use AVCMS\Bundles\CmsFoundation\Model\Menu;
-use AVCMS\Bundles\CmsFoundation\Model\MenuItem;
+use AVCMS\Bundles\CmsFoundation\Model\MenuItemConfig;
 use AVCMS\Core\Menu\MenuManager;
 use AVCMS\Core\View\TemplateManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -53,7 +53,7 @@ class UpdateMenusSubscriber implements EventSubscriberInterface
                             $menuItem = $this->menuManager->getItemsModel()->getOne($itemId);
 
                             if (!$menuItem) {
-                                $menuItem = new MenuItem();
+                                $menuItem = new MenuItemConfig();
                             }
 
                             $menuItem->fromArray($menuItemConfig, true);

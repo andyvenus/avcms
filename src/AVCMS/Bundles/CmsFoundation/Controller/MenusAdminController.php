@@ -24,10 +24,16 @@ class MenusAdminController extends AdminBaseController
      */
     protected $menuItems;
 
+    /**
+     * @var \AVCMS\Core\Menu\MenuManager
+     */
+    protected $menuManager;
+
     public function setUp()
     {
         $this->menus = $this->model('Menus');
         $this->menuItems  = $this->model('MenuItems');
+        $this->menuManager = $this->container->get('menu_manager');
 
         if (!$this->isGranted('ADMIN_MENUS')) {
             throw new AccessDeniedException;
@@ -62,13 +68,22 @@ class MenusAdminController extends AdminBaseController
             throw $this->createNotFoundException(sprintf("Menu %s not found", $request->get('menu')));
         }
 
-        $form = $this->buildForm(new MenuItemAdminForm($request->attributes->get('id', 0)));
-
         $menuItem = $this->menuItems->getOneOrNew($request->attributes->get('id', 0));
 
         if (!$menuItem) {
             throw $this->createNotFoundException('Menu Item Not Found');
         }
+
+        $menuItemType = $this->menuManager->getMenuItemType($menuItem->getType());
+
+        if (!$menuItemType) {
+            throw $this->createNotFoundException('Menu Type Not Found');
+        }
+
+        $formBlueprint = new MenuItemAdminForm($request->attributes->get('id', 0), ['a' => 'a']);
+        $menuItemType->getFormFields($formBlueprint);
+
+        $form = $this->buildForm($formBlueprint);
 
         $menuItem->setMenu($menu->getId());
 
@@ -160,7 +175,7 @@ class MenusAdminController extends AdminBaseController
 
             if (isset($menuItems[$id])) {
                 /**
-                 * @var $menu_item \AVCMS\Bundles\CmsFoundation\Model\MenuItem
+                 * @var $menu_item \AVCMS\Bundles\CmsFoundation\Model\MenuItemConfig
                  */
                 $menu_item = $menuItems[$id];
 

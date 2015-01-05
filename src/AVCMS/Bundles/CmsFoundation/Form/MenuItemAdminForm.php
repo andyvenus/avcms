@@ -8,7 +8,7 @@ use AV\Validation\Validator;
 
 class MenuItemAdminForm extends FormBlueprint
 {
-    public function __construct($id)
+    public function __construct($id, $typeChoices)
     {
         $this->id = $id;
 
@@ -24,15 +24,6 @@ class MenuItemAdminForm extends FormBlueprint
         $this->add('label', 'text', array(
             'label' => 'Label',
             'required' => true,
-        ));
-
-        $this->add('type', 'select', array(
-            'label' => 'Target Type',
-            'choices' => array(
-                'url' => 'URL',
-                'route' => 'Route Name',
-                'category' => 'Category',
-            )
         ));
 
         $this->add('target', 'text', array(

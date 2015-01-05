@@ -39,7 +39,6 @@ class BundleConfigValidation implements BundleConfigValidationInterface
                     ->prototype('array')
                         ->children()
                             ->variableNode('target')
-                                ->isRequired()
                             ->end()
                             ->variableNode('icon')
                                 ->isRequired()
@@ -59,6 +58,9 @@ class BundleConfigValidation implements BundleConfigValidationInterface
                             ->end()
                             ->variableNode('default_order')
                                 ->defaultValue(99)
+                            ->end()
+                            ->variableNode('settings')
+
                             ->end()
                         ->end()
                     ->end()

@@ -3,10 +3,13 @@
 namespace AVCMS\Bundles\CmsFoundation\Model;
 
 use AV\Model\Entity;
+use AVCMS\Core\Menu\MenuItemConfigInterface;
 
-class MenuItem extends Entity
+class MenuItemConfig extends Entity implements MenuItemConfigInterface
 {
     protected $url;
+
+    protected $settingsArray;
 
     public function setEnabled($value)
     {
@@ -136,5 +139,52 @@ class MenuItem extends Entity
     public function getUrl()
     {
         return $this->url;
+    }
+
+    public function getSettingsSerial()
+    {
+        return $this->get('settings_serial');
+    }
+
+    public function setSettingsSerial($value)
+    {
+        $this->set("settings_serial", $value);
+    }
+
+    /**
+     * Serializes and sets an array of config data
+     *
+     * @param $value
+     * @return mixed
+     */
+    public function setSettings($value)
+    {
+        unset($this->settingsArray);
+        $this->set("settings_serial", serialize($value));
+    }
+
+    /**
+     * Unserializes and gets an array of config data
+     *
+     * @return mixed
+     */
+    public function getSettings()
+    {
+        if (isset($this->settingsArray)) {
+            return $this->settingsArray;
+        }
+        if (is_array($settings = unserialize($this->get("settings_serial")))) {
+            return $settings;
+        }
+        else {
+            return array();
+        }
+    }
+
+    public function getSetting($setting)
+    {
+        $settings = $this->getSettings();
+
+        return isset($settings[$setting]) ? $settings[$setting] : null;
     }
 }
