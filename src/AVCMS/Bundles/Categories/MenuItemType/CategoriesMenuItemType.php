@@ -35,7 +35,7 @@ class CategoriesMenuItemType implements MenuItemTypeInterface
 
     public function getMenuItems(MenuItemConfigInterface $menuItemConfig)
     {
-        $categories = $this->categoriesModel->getAll();
+        $categories = $this->categoriesModel->getAllCategories();
 
         $menuItems = [];
 
@@ -49,10 +49,14 @@ class CategoriesMenuItemType implements MenuItemTypeInterface
 
         foreach ($categories as $category) {
             $menuItem = new MenuItem();
+            $menuItem->setId('category-'.$category->getId());
+            if ($category->getParent()) {
+                $menuItem->setParent('category-'.$category->getParent());
+            }
             $menuItem->setLabel($category->getName());
             $menuItem->setUrl($this->urlGenerator->generate($this->categoryRoute, ['category' => $category->getSlug()]));
 
-            if ($menuItemConfig->getSetting('display') === 'child') {
+            if ($menuItemConfig->getSetting('display') === 'child' && $menuItem->getParent() === null) {
                 $menuItem->setParent($menuItemConfig->getId());
             }
 
