@@ -15,6 +15,8 @@ interface MenuItemConfigInterface
 
     public function getType();
 
+    public function setLabel($label);
+
     public function getLabel();
 
     public function getOwner();

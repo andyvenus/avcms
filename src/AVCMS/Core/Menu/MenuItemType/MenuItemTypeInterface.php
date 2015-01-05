@@ -8,10 +8,15 @@
 namespace AVCMS\Core\Menu\MenuItemType;
 
 use AV\Form\FormBlueprint;
+use AVCMS\Core\Menu\MenuItem;
 use AVCMS\Core\Menu\MenuItemConfigInterface;
 
 interface MenuItemTypeInterface
 {
+    /**
+     * @param MenuItemConfigInterface $menuItemConfig
+     * @return MenuItem[]|MenuItem
+     */
     public function getMenuItems(MenuItemConfigInterface $menuItemConfig);
 
     public function getFormFields(FormBlueprint $form);

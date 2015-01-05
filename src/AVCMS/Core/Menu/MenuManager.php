@@ -43,7 +43,7 @@ class MenuManager
     protected $translator;
 
     /**
-     * @var array
+     * @var MenuItemTypeInterface[]
      */
     protected $menuItemTypes = [];
 
@@ -112,7 +112,7 @@ class MenuManager
         }
 
         /**
-         * @var $items object[]
+         * @var $configs MenuItemConfigInterface[]
          */
         $configs =  $query->get();
         $childItems = $sortedItems = array();
@@ -133,6 +133,9 @@ class MenuManager
                 $items = [$items];
             }
 
+            /**
+             * @var $item MenuItem
+             */
             foreach ($items as $item) {
                 if ($item->getPermission()) {
                     $permissions = explode(',', str_replace(' ', '', $item->getPermission()));
