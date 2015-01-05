@@ -35,14 +35,20 @@ class CsrfFormPlugin implements EventSubscriberInterface
     {
         $formBlueprint = $event->getFormBlueprint();
 
-        $formBlueprint->add('_csrf_token', 'hidden', array(
-            'default' => $this->token->getToken()
-        ));
+        if ($formBlueprint->getMethod() !== 'GET') {
+            $formBlueprint->add('_csrf_token', 'hidden', array(
+                'default' => $this->token->getToken()
+            ));
+        }
     }
 
     public function validateToken(FormHandlerRequestEvent $event)
     {
         if (!$event->getFormHandler()->isSubmitted()) {
+            return;
+        }
+
+        if (!$event->getFormHandler()->getFormBlueprint()->has('_csrf_token')) {
             return;
         }
 
