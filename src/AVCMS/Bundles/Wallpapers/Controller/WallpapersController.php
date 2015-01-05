@@ -7,6 +7,7 @@
 
 namespace AVCMS\Bundles\Wallpapers\Controller;
 
+use AVCMS\Bundles\Wallpapers\Form\WallpaperFrontendFiltersForm;
 use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,10 +28,11 @@ class WallpapersController extends Controller
     {
         $finder = $this->wallpapers->find();
         $query = $finder->published()
-            ->setResultsPerPage(20)
+            ->setResultsPerPage(12)
             ->setSearchFields(['name'])
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'tags' => null, 'search' => null));
 
+        $category = null;
         if ($request->get('category') !== null) {
             $category = $this->model('WallpaperCategories')->findOne($request->get('category'))->first();
 
@@ -45,7 +47,16 @@ class WallpapersController extends Controller
 
         $wallpapers = $query->get();
 
-        return new Response($this->render('@Wallpapers/browse_wallpapers.twig', array('wallpapers' => $wallpapers, 'total_pages' => $finder->getTotalPages(), 'current_page' => $finder->getCurrentPage(), 'page_type' => $pageType)));
+        $filtersForm = $this->buildForm(new WallpaperFrontendFiltersForm(), $request);
+
+        return new Response($this->render('@Wallpapers/browse_wallpapers.twig', array(
+            'wallpapers' => $wallpapers,
+            'total_pages' => $finder->getTotalPages(),
+            'current_page' => $finder->getCurrentPage(),
+            'page_type' => $pageType,
+            'category' => $category,
+            'filters_form' => $filtersForm->createView()
+        )));
     }
 
     public function wallpaperDetailsAction(Request $request, $slug)

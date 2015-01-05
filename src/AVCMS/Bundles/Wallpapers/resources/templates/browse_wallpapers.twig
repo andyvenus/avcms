@@ -1,6 +1,21 @@
 {% extends 'index.twig' %}
 
+{% block title %}
+    {% if category %}
+        {{ category.name }}
+    {% else %}
+        {% trans %}Browse Wallpapers{% endtrans %}
+    {% endif %}
+{% endblock %}
+
 {% block content %}
+    <h2>{{ block('title') }}</h2>
+
+    <div class="box">
+
+                {{ form(filters_form, {}, '@Form/bootstrap_inline_form.twig') }}
+    </div>
+
     <div class="row">
     {% for wallpaper in wallpapers %}
         <div class="col-sm-6">
@@ -21,6 +36,6 @@
     </div>
 
     {% block wallpapers_pagination %}
-        {{ pagination(total_pages, current_page, 'browse_wallpapers') }}
+        {{ pagination(total_pages, current_page) }}
     {% endblock %}
 {% endblock %}
