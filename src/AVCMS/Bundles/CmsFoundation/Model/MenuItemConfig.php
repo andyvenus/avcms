@@ -101,16 +101,6 @@ class MenuItemConfig extends Entity implements MenuItemConfigInterface
         return $this->get("permission");
     }
 
-    public function getTarget()
-    {
-        return $this->get("target");
-    }
-
-    public function setTarget($value)
-    {
-        $this->set("target", $value);
-    }
-
     public function getTranslatable()
     {
         return $this->get("translatable");
