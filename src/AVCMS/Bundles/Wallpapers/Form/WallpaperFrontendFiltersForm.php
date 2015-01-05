@@ -18,8 +18,13 @@ class WallpaperFrontendFiltersForm extends FormBlueprint
         $this->add('order', 'select', [
             'label' => 'Order',
             'choices' => [
-                'newest' => 'Newest',
-                'oldest' => 'Oldest'
+                'publish-date-newest' => 'Newest',
+                'publish-date-oldest' => 'Oldest',
+                'liked' => 'Most Liked',
+                'top-hits' => 'Most Viewed',
+                'top-downloads' => 'Most Downloaded',
+                'a-z' => 'A-Z',
+                'z-a' => 'Z-A',
             ]
         ]);
     }

@@ -30,7 +30,7 @@ class WallpapersController extends Controller
         $query = $finder->published()
             ->setResultsPerPage(12)
             ->setSearchFields(['name'])
-            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'tags' => null, 'search' => null));
+            ->handleRequest($request, array('page' => 1, 'order' => 'publish-date-newest', 'tags' => null, 'search' => null));
 
         $category = null;
         if ($request->get('category') !== null) {
