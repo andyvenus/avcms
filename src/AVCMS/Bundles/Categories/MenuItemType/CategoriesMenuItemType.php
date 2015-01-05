@@ -35,7 +35,12 @@ class CategoriesMenuItemType implements MenuItemTypeInterface
 
     public function getMenuItems(MenuItemConfigInterface $menuItemConfig)
     {
-        $categories = $this->categoriesModel->getAllCategories();
+        if ($menuItemConfig->getSetting('sub_categories') == 1) {
+            $categories = $this->categoriesModel->getAllCategories();
+        }
+        else {
+            $categories = $this->categoriesModel->getParentCategories();
+        }
 
         $menuItems = [];
 
@@ -74,6 +79,11 @@ class CategoriesMenuItemType implements MenuItemTypeInterface
                 'inline' => 'Inline (categories items appear in the main menu)',
                 'child' => 'Child (categories appear under this menu item, must not be nested)'
             ]
+        ]);
+
+        $form->add('settings[sub_categories]', 'checkbox', [
+            'label' => 'Show Sub-Categories',
+            'default' => 1
         ]);
     }
 
