@@ -25,7 +25,7 @@ class MenuManager
     /**
      * @var \AV\Model\Model
      */
-    protected $itemsModel;
+    protected $menuItemConfigs;
 
     /**
      * @var UrlGeneratorInterface
@@ -51,7 +51,7 @@ class MenuManager
     {
         $this->urlGenerator = $urlGenerator;
         $this->model = $menusModel;
-        $this->itemsModel = $itemsModel;
+        $this->menuItemConfigs = $itemsModel;
         $this->securityContext = $securityContext;
         $this->translator = $translator;
     }
@@ -85,12 +85,12 @@ class MenuManager
 
     public function getItemsModel()
     {
-        return $this->itemsModel;
+        return $this->menuItemConfigs;
     }
 
-    public function saveMenuItem(MenuItemConfig $menuItem)
+    public function saveMenuItemConfig(MenuItemConfig $menuItem)
     {
-        $this->itemsModel->save($menuItem);
+        $this->menuItemConfigs->save($menuItem);
     }
 
     public function saveMenu(Menu $menu)
@@ -105,7 +105,7 @@ class MenuManager
 
     public function getMenuItems($menuId, $showDisabled = false)
     {
-        $query = $this->itemsModel->query()->where('menu', $menuId)->orderBy('order');
+        $query = $this->menuItemConfigs->query()->where('menu', $menuId)->orderBy('order');
 
         if ($showDisabled === false) {
             $query->where('enabled', '1');
@@ -114,10 +114,10 @@ class MenuManager
         /**
          * @var $items object[]
          */
-        $items =  $query->get();
+        $configs =  $query->get();
         $childItems = $sortedItems = array();
 
-        foreach ($items as $config) {
+        foreach ($configs as $config) {
 
             if ($config->getTranslatable()) {
                 $config->setLabel($this->translator->trans($config->getLabel()));
@@ -127,22 +127,50 @@ class MenuManager
                 continue;
             }
 
-            $item = $this->menuItemTypes[$config->getType()]->getMenuItems($config);
+            $items = $this->menuItemTypes[$config->getType()]->getMenuItems($config);
 
-            if ($item->getPermission()) {
-                $permissions = explode(',', str_replace(' ', '', $item->getPermission()));
-                if (!$this->securityContext->isGranted($permissions)) {
-                    continue;
+            if (!is_array($items)) {
+                $items = [$items];
+            }
+
+            foreach ($items as $item) {
+                if ($item->getPermission()) {
+                    $permissions = explode(',', str_replace(' ', '', $item->getPermission()));
+                    if (!$this->securityContext->isGranted($permissions)) {
+                        continue;
+                    }
+                }
+
+                $item->children = array();
+
+                if ($item->getParent()) {
+                    $childItems[$item->getParent()][$item->getId()] = $item;
+                } else {
+                    $sortedItems[$item->getId()] = $item;
                 }
             }
+        }
 
-            $item->children = array();
-
-            if ($item->getParent()) {
-                $childItems[$item->getParent()][$item->getId()] = $item;
+        foreach ($childItems as $parent => $child_item_array) {
+            if (isset($sortedItems[$parent])) {
+                $sortedItems[$parent]->children = $child_item_array;
             }
-            else {
-                $sortedItems[$item->getId()] = $item;
+        }
+
+        return $sortedItems;
+    }
+
+    public function getMenuItemConfigs($menuId)
+    {
+        $configs = $this->menuItemConfigs->query()->where('menu', $menuId)->orderBy('order')->get();
+
+        $childItems = $sortedItems = array();
+
+        foreach ($configs as $config) {
+            if ($config->getParent()) {
+                $childItems[$config->getParent()][$config->getId()] = $config;
+            } else {
+                $sortedItems[$config->getId()] = $config;
             }
         }
 

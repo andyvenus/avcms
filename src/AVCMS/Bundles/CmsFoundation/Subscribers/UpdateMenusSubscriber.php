@@ -73,7 +73,7 @@ class UpdateMenusSubscriber implements EventSubscriberInterface
                                 $menuItem->setTranslatable(0);
                             }
 
-                            $this->menuManager->saveMenuItem($menuItem);
+                            $this->menuManager->saveMenuItemConfig($menuItem);
                         }
                     }
                 }

@@ -116,7 +116,7 @@ class MenusAdminController extends AdminBaseController
             throw $this->createNotFoundException('Menu Not Found');
         }
 
-        $menu_items = $menuManager->getMenuItems($menu->getId(), true);
+        $menu_items = $menuManager->getMenuItemConfigs($menu->getId());
 
         return new Response($this->renderAdminSection('@CmsFoundation/admin/manage_menu_items.twig', $request->get('ajax_depth'), array(
             'item' => $menu,
