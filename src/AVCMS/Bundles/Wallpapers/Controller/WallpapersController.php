@@ -47,7 +47,11 @@ class WallpapersController extends Controller
 
         $wallpapers = $query->get();
 
-        $filtersForm = $this->buildForm(new WallpaperFrontendFiltersForm(), $request);
+        $formBp = new WallpaperFrontendFiltersForm();
+        $attr = $request->attributes->all();
+        $attr['page'] = 1;
+        $formBp->setAction($this->generateUrl($request->attributes->get('_route'), $attr));
+        $filtersForm = $this->buildForm($formBp, $request);
 
         return new Response($this->render('@Wallpapers/browse_wallpapers.twig', array(
             'wallpapers' => $wallpapers,
