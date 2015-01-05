@@ -31,6 +31,7 @@ class WallpaperServices implements ServicesInterface
 
         $container->register('menu_types.wallpaper_categories', 'AVCMS\Bundles\Categories\MenuItemType\CategoriesMenuItemType')
             ->setArguments([new Reference('wallpaper.categories_model'), new Reference('router')])
+            ->addMethodCall('setName', ['Wallpaper Categories'])
             ->addTag('menu.item_type', ['id' => 'wallpaper_categories'])
         ;
 

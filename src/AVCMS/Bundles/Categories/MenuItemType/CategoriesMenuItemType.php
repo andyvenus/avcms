@@ -18,9 +18,9 @@ class CategoriesMenuItemType implements MenuItemTypeInterface
 {
     protected $categoriesModel;
 
-    protected $name;
+    protected $name = 'Content Categories';
 
-    protected $description;
+    protected $description = 'Shows a list of categories for this content type';
 
     protected $urlGenerator;
 
@@ -28,8 +28,6 @@ class CategoriesMenuItemType implements MenuItemTypeInterface
     {
         $this->categoriesModel = $categoriesModel;
         $this->urlGenerator = $urlGenerator;
-        $this->name = ucfirst($categoriesModel->getSingular().' Categories');
-        $this->description = 'Shows a list of categories for this content type';
     }
 
     public function getMenuItems(MenuItemConfigInterface $menuItemConfig)
@@ -53,9 +51,19 @@ class CategoriesMenuItemType implements MenuItemTypeInterface
         // TODO: Implement getFormFields() method.
     }
 
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
     public function getName()
     {
         return $this->name;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 
     public function getDescription()
