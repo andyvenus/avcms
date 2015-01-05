@@ -30,7 +30,7 @@ class LikeDislikeController extends Controller
     public function registerVoteAction(Request $request)
     {
         if (!$this->isGranted(['IS_AUTHENTICATED_REMEMBERED', 'IS_AUTHENTICATED_FULLY'])) {
-            return new AccessDeniedException;
+            return new JsonResponse(['success' => false, 'error' => $this->trans('Not logged in')]);
         }
 
         $rating = $request->get('rating');
