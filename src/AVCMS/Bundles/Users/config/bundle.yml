@@ -70,15 +70,17 @@ menu_items:
       icon: glyphicon glyphicon-user
       label: Users
       type: route
-      target: users_admin_home
       permission: ADMIN_USERS
+      settings:
+        route: users_admin_home
     user_groups_admin:
       icon: glyphicon glyphicon-credit-card
       label: Groups
       type: route
-      target: user_groups_admin_home
       parent: users_admin
       permission: ADMIN_USER_GROUPS
+      settings:
+        route: user_groups_admin_home
 
 permissions:
   ADMIN_USERS:

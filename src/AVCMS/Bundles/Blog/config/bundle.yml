@@ -75,12 +75,13 @@ modules:
 menu_items:
   admin:
     admin_blog_posts:
-      target: blog_admin_home
       icon: glyphicon glyphicon-pencil
       type: route
       label: Blog
       permission: ADMIN_BLOG
       default_order: 20
+      settings:
+        route: blog_admin_home
 
 permissions:
   ADMIN_BLOG:

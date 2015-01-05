@@ -61,11 +61,12 @@ module_positions:
 menu_items:
   admin:
     admin_dashboard:
-      target: admin_dashboard
       icon: glyphicon glyphicon-dashboard
       type: route
       label: Dashboard
       default_order: 1
+      settings:
+        route: admin_dashboard
 
 services:
   - AdminServices

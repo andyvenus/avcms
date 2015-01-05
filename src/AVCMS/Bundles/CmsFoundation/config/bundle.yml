@@ -121,26 +121,29 @@ menus:
 menu_items:
   admin:
     modules:
-      target: modules_admin_home
       icon: glyphicon glyphicon-list-alt
       type: route
       label: Modules
       parent: settings
       permission: ADMIN_MODULES
+      settings:
+        route: modules_admin_home
     menus:
-      target: menus_admin_home
       icon: glyphicon glyphicon-th-list
       type: route
       label: Menus
       parent: settings
       permission: ADMIN_MENUS
+      settings:
+        route: menus_admin_home
     settings:
-      target: avcms_settings
       icon: glyphicon glyphicon-cog
       type: route
       label: Settings
       default_order: 120
       permission: ADMIN_SETTINGS
+      settings:
+        route: avcms_settings
 
 modules:
   html_module:

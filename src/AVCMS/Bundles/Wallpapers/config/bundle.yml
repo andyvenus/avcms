@@ -17,14 +17,16 @@ menu_items:
             label: Wallpapers
             icon: glyphicon glyphicon-picture
             type: route
-            target: wallpapers_admin_home
             default_order: 80
+            settings:
+              route: wallpapers_admin_home
         wallpapers_bulk_admin:
           label: Bulk Import
           icon: glyphicon glyphicon-import
           type: route
-          target: wallpaper_bulk_import_admin_home
           parent: wallpapers_admin
+          settings:
+            route: wallpaper_bulk_import_admin_home
 
 categories:
     wallpaper:

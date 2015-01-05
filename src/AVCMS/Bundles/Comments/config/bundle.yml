@@ -37,10 +37,11 @@ menu_items:
   admin:
     admin_comments:
       label: Comments
-      target: manage_comments
       icon: glyphicon glyphicon-comment
       type: route
       permission: ADMIN_COMMENTS
+      settings:
+        route: manage_comments
 
 user_settings:
   comments_enabled:

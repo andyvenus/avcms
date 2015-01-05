@@ -35,7 +35,8 @@ menu_items:
   admin:
     admin_reports:
       type: route
-      target: manage_reports
       icon: glyphicon glyphicon-warning-sign
       label: Reports
       permission: ADMIN_REPORTS
+      settings:
+        route: manage_reports
