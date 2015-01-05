@@ -35,10 +35,23 @@ class CategoriesMenuItemType implements MenuItemTypeInterface
         $categories = $this->categoriesModel->getAll();
 
         $menuItems = [];
+
+        if ($menuItemConfig->getSetting('display') === 'child') {
+            $menuItem = new MenuItem();
+            $menuItem->fromArray($menuItemConfig->toArray(), true);
+            $menuItem->setUrl('#');
+
+            $menuItems[] = $menuItem;
+        }
+
         foreach ($categories as $category) {
-            $menuItem = new MenuItem($menuItemConfig);
+            $menuItem = new MenuItem();
             $menuItem->setLabel($category->getName());
             $menuItem->setUrl('#');
+
+            if ($menuItemConfig->getSetting('display') === 'child') {
+                $menuItem->setParent($menuItemConfig->getId());
+            }
 
             $menuItems[] = $menuItem;
         }
@@ -48,7 +61,13 @@ class CategoriesMenuItemType implements MenuItemTypeInterface
 
     public function getFormFields(FormBlueprint $form)
     {
-        // TODO: Implement getFormFields() method.
+        $form->add('settings[display]', 'select', [
+            'label' => 'Categories display Type',
+            'choices' => [
+                'inline' => 'Inline (categories items appear in the main menu)',
+                'child' => 'Child (categories appear under this menu item, must not be nested)'
+            ]
+        ]);
     }
 
     public function setName($name)
