@@ -11,13 +11,13 @@ wallpaper_download:
   defaults: { _controller: Wallpapers::WallpapersImageController::imageAction, download: true }
 
 browse_wallpapers:
-  path: /wallpapers
-  defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction }
+  path: /wallpapers/{category}
+  defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction, category: null }
 
 wallpaper_preview:
   path: /wallpapers/{slug}/{resolution}
   defaults: { _controller: Wallpapers::WallpapersController::wallpaperPreviewAction }
 
 wallpaper_details:
-  path: /wallpapers/{slug}
+  path: /wallpaper/{slug}
   defaults: { _controller: Wallpapers::WallpapersController::wallpaperDetailsAction }

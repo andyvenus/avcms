@@ -26,12 +26,24 @@ class WallpapersController extends Controller
     public function browseWallpapersAction(Request $request, $pageType = 'archive')
     {
         $finder = $this->wallpapers->find();
-        $wallpapers = $finder->published()
+        $query = $finder->published()
             ->setResultsPerPage(20)
             ->setSearchFields(['name'])
-            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'tags' => null, 'search' => null))
-            ->join($this->model('WallpaperCategories'), ['id', 'name', 'slug'])
-            ->get();
+            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'tags' => null, 'search' => null));
+
+        if ($request->get('category') !== null) {
+            $category = $this->model('WallpaperCategories')->findOne($request->get('category'))->first();
+
+            if (!$category) {
+                throw $this->createNotFoundException();
+            }
+
+            $categoryId = $category->getId();
+
+            $query->getQuery()->where('category_id', $categoryId);
+        }
+
+        $wallpapers = $query->get();
 
         return new Response($this->render('@Wallpapers/browse_wallpapers.twig', array('wallpapers' => $wallpapers, 'total_pages' => $finder->getTotalPages(), 'current_page' => $finder->getCurrentPage(), 'page_type' => $pageType)));
     }

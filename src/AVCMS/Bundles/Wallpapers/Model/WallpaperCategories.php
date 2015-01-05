@@ -6,6 +6,8 @@ use AVCMS\Bundles\Categories\Model\Categories;
 
 class WallpaperCategories extends Categories
 {
+    protected $textIdentifierColumn = 'slug';
+
     public function getTable()
     {
         return 'wallpaper_categories';

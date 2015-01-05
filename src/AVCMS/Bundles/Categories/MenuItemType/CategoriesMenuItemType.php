@@ -24,10 +24,13 @@ class CategoriesMenuItemType implements MenuItemTypeInterface
 
     protected $urlGenerator;
 
-    public function __construct(Model $categoriesModel, UrlGeneratorInterface $urlGenerator)
+    protected $categoryRoute;
+
+    public function __construct(Model $categoriesModel, UrlGeneratorInterface $urlGenerator, $categoryRoute)
     {
         $this->categoriesModel = $categoriesModel;
         $this->urlGenerator = $urlGenerator;
+        $this->categoryRoute = $categoryRoute;
     }
 
     public function getMenuItems(MenuItemConfigInterface $menuItemConfig)
@@ -47,7 +50,7 @@ class CategoriesMenuItemType implements MenuItemTypeInterface
         foreach ($categories as $category) {
             $menuItem = new MenuItem();
             $menuItem->setLabel($category->getName());
-            $menuItem->setUrl('#');
+            $menuItem->setUrl($this->urlGenerator->generate($this->categoryRoute, ['category' => $category->getSlug()]));
 
             if ($menuItemConfig->getSetting('display') === 'child') {
                 $menuItem->setParent($menuItemConfig->getId());
