@@ -22,4 +22,6 @@ interface MenuItemTypeInterface
     public function getFormFields(FormBlueprint $form);
 
     public function getName();
+
+    public function getDescription();
 }

@@ -50,4 +50,9 @@ class RouteMenuItemType implements MenuItemTypeInterface
     {
         return 'Route';
     }
+
+    public function getDescription()
+    {
+        return 'A menu item that links to a page on your site';
+    }
 }

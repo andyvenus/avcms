@@ -30,8 +30,12 @@ menus_save_order:
   path: /menus/save-order/{id}
   defaults: { _controller: CmsFoundation::MenusAdminController::saveOrderAction }
 
+menu_items_select:
+  path: /menus/{menu}/new
+  defaults: { _controller: CmsFoundation::MenusAdminController::selectMenuItemAction }
+
 menu_items_add:
-  path: /menus/{menu}/new-item
+  path: /menus/{menu}/new/{type}
   defaults: { _controller: CmsFoundation::MenusAdminController::editMenuItemAction }
 
 menu_items_edit:
