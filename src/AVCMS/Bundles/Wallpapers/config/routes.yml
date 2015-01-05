@@ -19,7 +19,7 @@ browse_wallpapers:
   defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction, category: null }
 
 wallpaper_preview:
-  path: /wallpapers/{slug}/{resolution}
+  path: /wallpaper/{slug}/{resolution}
   defaults: { _controller: Wallpapers::WallpapersController::wallpaperPreviewAction }
 
 wallpaper_details:
