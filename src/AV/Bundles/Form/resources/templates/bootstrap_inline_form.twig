@@ -1,0 +1,6 @@
+{% extends '@Form/bootstrap_form.twig' %}
+
+{% block form_start %}
+    {% set attr = attr|merge({class: attr.class ~ ' form-inline'}) %}
+    {{ parent() }}
+{% endblock %}
