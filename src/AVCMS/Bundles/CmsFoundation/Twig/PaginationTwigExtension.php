@@ -44,10 +44,22 @@ class PaginationTwigExtension extends \Twig_Extension
         return 'avcms_pagination_extension';
     }
 
-    public function pagination($pages, $currentPage, $route, $routeAttr = [])
+    public function pagination($pages, $currentPage, $route = null, $routeAttr = [])
     {
         $requestAttr = $this->requestStack->getCurrentRequest()->query->all();
-        $routeAttr = array_merge($routeAttr, $requestAttr);
+
+        $attr = $this->requestStack->getCurrentRequest()->attributes->all();
+        foreach ($attr as $index => $val) {
+            if (strpos($index, '_') === 0) {
+                unset($attr[$index]);
+            }
+        }
+
+        $routeAttr = array_merge($routeAttr, $attr, $requestAttr);
+
+        if ($route === null) {
+            $route = $this->requestStack->getCurrentRequest()->get('_route');
+        }
 
         return $this->environment->render($this->template, [
             'total_pages' => $pages,
