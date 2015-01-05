@@ -23,5 +23,16 @@ class WallpaperServices implements ServicesInterface
         $container->register('wallpaper.resolutions_manager', 'AVCMS\Bundles\Wallpapers\ResolutionsManager\ResolutionsManager')
             ->setArguments(['%root_dir%'])
         ;
+
+        $container->register('wallpaper.categories_model', 'AVCMS\Bundles\Wallpapers\Model\WallpaperCategories')
+            ->setArguments(array('AVCMS\Bundles\Wallpapers\Model\WallpaperCategories'))
+            ->setFactory([new Reference('model_factory'), 'create'])
+        ;
+
+        $container->register('menu_types.wallpaper_categories', 'AVCMS\Bundles\Categories\MenuItemType\CategoriesMenuItemType')
+            ->setArguments([new Reference('wallpaper.categories_model'), new Reference('router')])
+            ->addTag('menu.item_type', ['id' => 'wallpaper_categories'])
+        ;
+
     }
 }
