@@ -11,60 +11,83 @@ use AV\Model\Entity;
 
 class MenuItem extends Entity
 {
-    /**
-     * @var MenuItemConfigInterface
-     */
-    protected $menuItemConfig;
-
-    protected $url;
-
-    public function __construct(MenuItemConfigInterface $menuItemConfig)
+    public function setId($id)
     {
-        $this->menuItemConfig = $menuItemConfig;
+        $this->set('id', $id);
     }
 
     public function getId()
     {
-        return $this->menuItemConfig->getId();
+        return $this->get('id');
+    }
+
+    public function setOwner($owner)
+    {
+        $this->set('owner', $owner);
     }
 
     public function getOwner()
     {
-        return $this->menuItemConfig->getOwner();
+        return $this->get('owner');
+    }
+
+    public function setTranslatable($translatable)
+    {
+        $this->set('translatable', $translatable);
     }
 
     public function getTranslatable()
     {
-        return $this->menuItemConfig->getTranslatable();
+        return $this->get('translatable');
+    }
+
+    public function setLabel($label)
+    {
+        $this->set('label', $label);
     }
 
     public function getLabel()
     {
-        return $this->menuItemConfig->getLabel();
+        return $this->get('label');
+    }
+
+    public function setIcon($icon)
+    {
+        $this->set('icon', $icon);
     }
 
     public function getIcon()
     {
-        return $this->menuItemConfig->getIcon();
+        return $this->get('icon');
+    }
+
+    public function setParent($parent)
+    {
+        $this->set('parent', $parent);
     }
 
     public function getParent()
     {
-        return $this->menuItemConfig->getParent();
+        return $this->get('parent');
+    }
+
+    public function setPermission($permission)
+    {
+        $this->set('permission', $permission);
     }
 
     public function getPermission()
     {
-        return $this->menuItemConfig->getPermission();
+        return $this->get('permission');
     }
 
     public function setUrl($url)
     {
-        $this->url = $url;
+        $this->set('url', $url);
     }
 
     public function getUrl()
     {
-        return $this->url;
+        return $this->get('url');
     }
 }

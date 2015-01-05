@@ -27,7 +27,8 @@ class RouteMenuItemType implements MenuItemTypeInterface
 
     public function getMenuItems(MenuItemConfigInterface $menuItemConfig)
     {
-        $menuItem = new MenuItem($menuItemConfig);
+        $menuItem = new MenuItem();
+        $menuItem->fromArray($menuItemConfig->toArray(), true);
 
         try {
             $menuItem->setUrl($this->urlGenerator->generate($menuItemConfig->getSetting('route')));

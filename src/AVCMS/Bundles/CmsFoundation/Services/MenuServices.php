@@ -8,6 +8,7 @@
 namespace AVCMS\Bundles\CmsFoundation\Services;
 
 use AV\Service\ServicesInterface;
+use AVCMS\Bundles\CmsFoundation\Services\CompilerPass\MenuItemTypesCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
@@ -46,5 +47,7 @@ class MenuServices implements ServicesInterface
             ->setArguments(array(new Reference('menu_manager')))
             ->addTag('twig.extension')
         ;
+
+        $container->addCompilerPass(new MenuItemTypesCompilerPass());
     }
 }

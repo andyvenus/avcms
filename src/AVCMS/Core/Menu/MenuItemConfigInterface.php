@@ -32,4 +32,6 @@ interface MenuItemConfigInterface
     public function getSettings();
 
     public function getSetting($setting);
+
+    public function toArray();
 }

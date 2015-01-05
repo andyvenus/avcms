@@ -15,7 +15,8 @@ class UrlMenuItemType implements MenuItemTypeInterface
 {
     public function getMenuItems(MenuItemConfigInterface $menuItemConfig)
     {
-        $menuItem = new MenuItem($menuItemConfig);
+        $menuItem = new MenuItem();
+        $menuItem->fromArray($menuItemConfig->toArray(), true);
 
         $menuItem->setUrl($menuItemConfig->getSetting('url'));
 
