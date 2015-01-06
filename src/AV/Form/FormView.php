@@ -119,7 +119,14 @@ class FormView implements FormViewInterface
 
             if (isset($field['options']['choices'])) {
                 foreach ($field['options']['choices'] as $value => $label) {
-                    $field['options']['choices'][$value] = $this->translate($field['options']['choices'][$value]);
+                    if (!is_array($label)) {
+                        $field['options']['choices'][$value] = $this->translate($label);
+                    }
+                    else {
+                        foreach ($label as $subValue => $subLabel) {
+                            $field['options']['choices'][$value][$subValue] = $this->translate($subLabel);
+                        }
+                    }
                 }
             }
 

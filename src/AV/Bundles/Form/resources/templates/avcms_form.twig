@@ -56,8 +56,17 @@
         <select name="{{ name }}" {{ block('attributes') }}>
             {% if attribute(attr, 'data-placeholder') is defined %}<option></option>{% endif %}
             {% if options.choices is not empty %}
+
                 {% for choice_value, choice_name in options.choices %}
-                    <option value="{{ choice_value }}" {% if choice_value == value or choice_value in value %}selected="selected"{% endif %}>{{ choice_name }}</option>
+                    {% if choice_name is iterable %}
+                        <optgroup label="{{ choice_value }}">
+                            {% for choice_value, choice_name in choice_name %}
+                                <option value="{{ choice_value }}" {% if choice_value == value or choice_value in value %}selected="selected"{% endif %}>{{ choice_name }}</option>
+                            {% endfor %}
+                        </optgroup>
+                    {% else %}
+                        <option value="{{ choice_value }}" {% if choice_value == value or choice_value in value %}selected="selected"{% endif %}>{{ choice_name }}</option>
+                    {% endif %}
                 {% endfor %}
             {% endif %}
         </select>
