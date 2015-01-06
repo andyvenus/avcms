@@ -37,7 +37,7 @@
     {% for wallpaper in wallpapers %}
         <div class="col-sm-6">
             <a class="thumbnail clearfix" href="{{ url('wallpaper_details', {slug: wallpaper.slug}) }}">
-                <img src="{{ wp_thumbnail_url(wallpaper, 600, 240) }}" width="100%"/>
+                <img src="{{ wp_thumbnail_url(wallpaper) }}" width="100%"/>
                 <div class="pull-left">
                     {{ wallpaper.name }}
                 </div>
