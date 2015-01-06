@@ -14,6 +14,16 @@ class WallpaperAdminForm extends AdminContentForm
             new FileSelectFields($this, 'admin/wallpapers/find-files', 'admin/wallpapers/upload', 'admin/wallpapers/grab-file');
         }
 
+        $this->add('resize_type', 'radio', [
+            'label' => 'Resize Method',
+            'choices' => [
+                'crop' => 'Crop',
+                'stretch' => 'Stretch',
+                'original' => 'Don\'t resize (only offer original resolution)'
+            ],
+            'default' => 'crop'
+        ]);
+
         $this->add('crop_position', 'select', [
             'choices' => [
                 'top-left' => 'Top-Left',

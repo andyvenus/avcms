@@ -57,14 +57,14 @@ class Wallpaper extends Entity implements RateInterface
         $this->set("crop_position", $value);
     }
 
-    public function setCropType($value)
+    public function setResizeType($value)
     {
-        $this->set("crop_type", $value);
+        $this->set("resize_type", $value);
     }
 
-    public function getCropType()
+    public function getResizeType()
     {
-        return $this->get("crop_type");
+        return $this->get("resize_type");
     }
 
     public function setDateAdded($value)

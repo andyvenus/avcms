@@ -57,30 +57,38 @@
         </div>
     </div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">{% trans %}Resolutions{% endtrans %}</h3>
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                {% for resolution_category, category_resolutions in resolutions %}
+    {% if wallpaper.resizeType != 'original' %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{% trans %}Resolutions{% endtrans %}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    {% for resolution_category, category_resolutions in resolutions %}
 
-                    <div class="col-md-4">
-                        <h4>{{ resolution_category }}</h4>
+                        <div class="col-md-4">
+                            <h4>{{ resolution_category }}</h4>
 
-                        {% for resolution, name in category_resolutions %}
-                            <a href="{{ url('wallpaper_preview', {slug: wallpaper.slug, resolution: resolution}) }}">{{ name }}</a><br/>
-                        {% endfor %}
-                    </div>
+                            {% for resolution, name in category_resolutions %}
+                                <a href="{{ url('wallpaper_preview', {slug: wallpaper.slug, resolution: resolution}) }}">{{ name }}</a><br/>
+                            {% endfor %}
+                        </div>
 
-                    {% if loop.index is divisible by(3) %}
-                        </div><div class="row">
-                    {% endif %}
+                        {% if loop.index is divisible by(3) %}
+                            </div><div class="row">
+                        {% endif %}
 
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
+    {% else %}
+        <div class="wallpaper-original-only text-center">
+            <a href="{{ url('wallpaper_preview', {slug: wallpaper.slug, resolution: wallpaper.originalWidth ~ 'x' ~ wallpaper.originalHeight }) }}" class="btn btn-primary btn-lg">
+                {% trans %}Preview & Download{% endtrans %}
+            </a>
+        </div>
+    {% endif %}
 
     {% block blog_post_comments %}
         {% if settings.comments_enabled %}

@@ -65,20 +65,25 @@ class WallpapersImageController extends Controller
             throw $this->createNotFoundException('Wallpaper Source Image Not Found');
         }
 
-        $reqRatio = $width / $height;
-        $origRatio = $img->width() / $img->height();
+        if ($thumbnail === true || $wallpaper->getResizeType() === 'crop') {
+            $reqRatio = $width / $height;
+            $origRatio = $img->width() / $img->height();
 
-        if ($reqRatio > $origRatio) {
-            $img->widen($width);
-        } else {
-            $img->heighten($height);
+            if ($reqRatio > $origRatio) {
+                $img->widen($width);
+            } else {
+                $img->heighten($height);
+            }
+
+            if (!$cropPos = $wallpaper->getCropPosition()) {
+                $cropPos = 'center';
+            }
+
+            $img->resizeCanvas($width, $height, $cropPos);
         }
-
-        if (!$cropPos = $wallpaper->getCropPosition()) {
-            $cropPos = 'center';
+        else {
+            $img->resize($width, $height);
         }
-
-        $img->resizeCanvas($width, $height, $cropPos);
 
         if (!file_exists($cacheDir)) {
             mkdir($cacheDir, 0777, true);
