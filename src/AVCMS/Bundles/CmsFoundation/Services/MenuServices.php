@@ -48,6 +48,15 @@ class MenuServices implements ServicesInterface
             ->addTag('twig.extension')
         ;
 
+        $container->register('menus.model', 'AVCMS\Bundles\CmsFoundation\Model\Menus')
+            ->setArguments(array('AVCMS\Bundles\CmsFoundation\Model\Menus'))
+            ->setFactory([new Reference('model_factory'), 'create'])
+        ;
+
+        $container->register('form.menu_choices_provider', 'AVCMS\Bundles\CmsFoundation\Form\ChoicesProvider\MenuChoicesProvider')
+            ->setArguments([new Reference('menus.model')])
+        ;
+
         $container->addCompilerPass(new MenuItemTypesCompilerPass());
     }
 }

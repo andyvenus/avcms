@@ -24,7 +24,15 @@ class FormServices implements ServicesInterface
         ;
 
         $container->register('form.handler_factory', 'AV\Form\FormHandlerFactory')
-            ->setArguments(array(new Reference('form.request_handler'), new Reference('form.entity_processor'), new Reference('form.transformer_manager'), new Reference('dispatcher')))
+            ->setArguments(array(new Reference('form.request_handler'), new Reference('form.entity_processor'), new Reference('form.transformer_manager'), new Reference('dispatcher'), new Reference('form.type_handler')))
+        ;
+
+        $container->register('form.type_handler', 'AV\Form\Type\TypeHandler')
+            ->setArguments([['select' => new Reference('form_type.container_aware_select')]])
+        ;
+
+        $container->register('form_type.container_aware_select', 'AV\Bundles\Form\Type\ContainerAwareSelectType')
+            ->setArguments([new Reference('service_container')])
         ;
 
         $container->register('form.request_handler', 'AV\Form\RequestHandler\SymfonyRequestHandler');

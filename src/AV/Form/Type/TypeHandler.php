@@ -11,16 +11,18 @@ use AV\Form\FormHandler;
 
 class TypeHandler implements TypeInterface
 {
-    public function __construct()
+    private $types;
+
+    public function __construct($types = [])
     {
-        $this->types = array(
+        $this->types = array_merge(array(
             'checkbox' => new CheckboxType(),
             'collection' => new CollectionType($this),
             'default' => new DefaultType(),
             'select' => new SelectType(),
             'file' => new FileType(),
             'radio' => new RadioType()
-        );
+        ), $types);
     }
 
     /**
@@ -83,4 +85,4 @@ class TypeHandler implements TypeInterface
 
         return $type->makeView($field, $allFormData, $formHandler);
     }
-} 
+}
