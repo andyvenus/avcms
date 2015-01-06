@@ -13,7 +13,19 @@
 {% endblock %}
 
 {% block content %}
-    <h2>{{ block('title') }}</h2>
+    <h2>
+        {% if category.parent %}<a href="{{ path('wallpaper_category', {'category': category.parent.slug}) }}">{{ category.parent.name }}</a> / {% endif %}
+        {{ block('title') }}
+    </h2>
+
+    {% if category.subcategories %}
+        <div class="box">
+            {% trans %}Subcategories{% endtrans %}:<br/>
+            {% for subcategory in category.subcategories %}
+                <a href="{{ path('wallpaper_category', {'category': subcategory.slug}) }}" class="btn btn-default btn-sm">{{ subcategory.name }}</a>
+            {% endfor %}
+        </div>
+    {% endif %}
 
     <div class="box">
         {{ form(filters_form, {}, '@Form/bootstrap_inline_form.twig') }}
