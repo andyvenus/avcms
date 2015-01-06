@@ -80,7 +80,7 @@ class WallpapersBulkImportAdminController extends AdminBaseController
                     }
 
                     $replaceValues['{filename}'] = str_replace('.'.$file->getExtension(), '', $file->getBasename());
-                    $replaceValues['{clean_filename}'] = ucwords(str_replace('_', ' ', str_replace('.'.$file->getExtension(), '', $file->getBasename())));
+                    $replaceValues['{clean_filename}'] = ucwords(str_replace(['_', '-'], ' ', str_replace('.'.$file->getExtension(), '', $file->getBasename())));
                     $replaceValues['{folder_name}'] = basename($folder);
                     $replaceValues['{original_width}'] = $dimensions[0];
                     $replaceValues['{original_height}'] = $dimensions[1];
