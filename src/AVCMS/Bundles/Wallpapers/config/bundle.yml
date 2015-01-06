@@ -106,6 +106,31 @@ modules:
         type: checkbox
         label: Show Category
         default: 1
+  liked_wallpapers:
+    name: Liked Wallpapers
+    description: A list of a user's liked wallpapers
+    controller: Wallpapers::WallpaperModulesController::likedWallpapersModule
+    cachable: true
+    default_cache_time: 0
+    accepted_template_types: [list_panel, none]
+    type: user
+    user_settings:
+      limit:
+        type: text
+        label: Number of wallpapers to display
+        default: 5
+      show_date:
+        type: checkbox
+        label: Show Date
+        default: 0
+      show_hits:
+        type: checkbox
+        label: Show Hits
+        default: 1
+      show_downloads:
+        type: checkbox
+        label: Show Downloads
+        default: 1
 
 config:
     wallpapers_dir: webmaster/wallpapers
