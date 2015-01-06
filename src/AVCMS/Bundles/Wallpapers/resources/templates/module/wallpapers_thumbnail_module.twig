@@ -1,0 +1,21 @@
+{% set column_size = 12 / columns %}
+
+<div class="row">
+    {% for wallpaper in wallpapers %}
+        <div class="col-sm-{{ column_size }}">
+            <a class="thumbnail clearfix" href="{{ url('wallpaper_details', {slug: wallpaper.slug}) }}">
+                <img src="{{ wp_thumbnail_url(wallpaper, 600, 240) }}" width="100%"/>
+                <div class="pull-left">
+                    {{ wallpaper.name }}
+                </div>
+                <div class="pull-right">
+                    {% include '@Wallpapers/module/wallpaper_module_details.twig' %}
+                </div>
+            </a>
+        </div>
+
+        {% if loop.index % columns == 0 %}
+            </div><div class="row">
+        {% endif %}
+    {% endfor %}
+</div>

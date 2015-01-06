@@ -32,7 +32,20 @@ class WallpaperModulesController extends Controller
             ->join($this->model('WallpaperCategories'), ['id', 'name', 'slug'])
             ->get();
 
-        return new Response($this->render('@Wallpapers/module/wallpapers_list_module.twig', array('wallpapers' => $wallpapers, 'user_settings' => $userSettings)));
+        $columns = ($userSettings['columns'] ? $userSettings['columns'] : 1);
+
+        if ($userSettings['layout'] === 'thumbnails') {
+            $template = 'wallpapers_thumbnail_module.twig';
+        }
+        else {
+            $template = 'wallpapers_list_module.twig';
+        }
+
+        return new Response($this->render('@Wallpapers/module/'.$template, array(
+            'wallpapers' => $wallpapers,
+            'user_settings' => $userSettings,
+            'columns' => $columns,
+        )));
     }
 
     public function likedWallpapersModule($userSettings, User $user)
@@ -54,6 +67,19 @@ class WallpaperModulesController extends Controller
 
         $wallpapers = $this->wallpapers->query()->whereIn('id', $ids)->get();
 
-        return new Response($this->render('@Wallpapers/module/wallpapers_list_module.twig', array('wallpapers' => $wallpapers, 'user_settings' => $userSettings)));
+        $columns = ($userSettings['columns'] ? $userSettings['columns'] : 1);
+
+        if ($userSettings['layout'] === 'thumbnails') {
+            $template = 'wallpapers_thumbnail_module.twig';
+        }
+        else {
+            $template = 'wallpapers_list_module.twig';
+        }
+
+        return new Response($this->render('@Wallpapers/module/'.$template, array(
+            'wallpapers' => $wallpapers,
+            'user_settings' => $userSettings,
+            'columns' => $columns,
+        )));
     }
 }

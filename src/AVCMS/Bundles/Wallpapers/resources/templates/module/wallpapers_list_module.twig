@@ -8,18 +8,7 @@
                 <div class="media-body" style="vertical-align: middle;">
                     <h5 class="media-heading">{{ wallpaper.name }} </h5>
                     <span class="small">
-                        {% if user_settings.show_hits %}
-                            <span class="glyphicon glyphicon-eye-open"></span> {{ wallpaper.hits }}
-                        {% endif %}
-                        {% if user_settings.show_downloads %}
-                            &nbsp;<span class="glyphicon glyphicon-download"></span> {{ wallpaper.totalDownloads }}
-                        {% endif %}
-                        {% if user_settings.show_date %}
-                            &nbsp;<span class="glyphicon glyphicon-calendar"></span> {{ wallpaper.publish_date|date(settings.date_format) }}
-                        {% endif %}
-                        {% if user_settings.show_category %}
-                            &nbsp;<span class="glyphicon glyphicon-th"></span> {{ wallpaper.category.name }}
-                        {% endif %}
+                        {% include '@Wallpapers/module/wallpaper_module_details.twig' %}
                     </span>
                 </div>
             </div>

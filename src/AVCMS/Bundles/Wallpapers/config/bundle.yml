@@ -77,7 +77,7 @@ modules:
     cachable: true
     cache_bust_model: Wallpapers
     default_cache_time: 10000
-    accepted_template_types: [list_panel, none]
+    accepted_template_types: [panel, list_panel, none]
     user_settings:
       order:
         type: select
@@ -106,13 +106,29 @@ modules:
         type: checkbox
         label: Show Category
         default: 1
+      layout:
+        type: select
+        label: Layout
+        choices:
+          list: List
+          thumbnails: Thumbnails
+        default: list
+      columns:
+        type: select
+        label: Number of columns (thumbnail layout)
+        default: 1
+        choices:
+          1: 1
+          2: 2
+          3: 3
+          4: 4
   liked_wallpapers:
     name: Liked Wallpapers
     description: A list of a user's liked wallpapers
     controller: Wallpapers::WallpaperModulesController::likedWallpapersModule
     cachable: true
     default_cache_time: 0
-    accepted_template_types: [list_panel, none]
+    accepted_template_types: [panel, list_panel, none]
     type: user
     user_settings:
       limit:
@@ -131,6 +147,22 @@ modules:
         type: checkbox
         label: Show Downloads
         default: 1
+      layout:
+        type: select
+        label: Layout
+        choices:
+          list: List
+          thumbnails: Thumbnails
+        default: list
+      columns:
+        type: select
+        label: Number of columns (thumbnail layout)
+        default: 1
+        choices:
+          1: 1
+          2: 2
+          3: 3
+          4: 4
 
 config:
     wallpapers_dir: webmaster/wallpapers
