@@ -3,6 +3,8 @@
 {% block title %}
     {% if category %}
         {{ category.name }}
+    {% elseif finder_request.tags %}
+        {% trans with {tags: finder_request.tags|replace({'|': ', '})} %}Wallpapers tagged with: {tags}{% endtrans %}
     {% else %}
         {% trans %}Browse Wallpapers{% endtrans %}
     {% endif %}
