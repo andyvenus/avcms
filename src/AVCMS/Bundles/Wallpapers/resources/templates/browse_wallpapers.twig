@@ -6,6 +6,10 @@
     {% else %}
         {% trans %}Browse Wallpapers{% endtrans %}
     {% endif %}
+
+    {% if current_page > 1 %}
+        - {% trans with {page: current_page} %}Page {page}{% endtrans %}
+    {% endif %}
 {% endblock %}
 
 {% block content %}
