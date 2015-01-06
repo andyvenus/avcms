@@ -19,6 +19,8 @@
 Apple:
   2048x2048: 'Retina iPad'
   1024x1024: 'Non-retina iPad'
+  750x1334: iPhone 6
+  1080x1920: iPhone 6 Plus
   640x1136: 'iPhone 5/5S (& iPod)'
   640x960: 'iPhone 4/4S/iPod'
   320x480: 'Older iPhone & iPod'
