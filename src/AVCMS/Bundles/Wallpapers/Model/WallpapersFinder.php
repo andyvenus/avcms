@@ -14,12 +14,14 @@ class WallpapersFinder extends Finder
     public function resolution($resolution)
     {
         if (!is_string($resolution)) {
+            unset($this->requestFilters['resolution']);
             return;
         }
 
         $dimensions = explode('x', $resolution);
 
         if (count($dimensions) !== 2 || !is_numeric($dimensions[0])|| !is_numeric($dimensions[1])) {
+            unset($this->requestFilters['resolution']);
             return;
         }
 
