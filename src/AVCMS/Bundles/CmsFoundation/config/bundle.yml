@@ -157,6 +157,18 @@ modules:
               type: textarea
               label: HTML
               required: true
+  menu_module:
+    controller: CmsFoundation::MenuModulesController::menuModule
+    name: Menu
+    description: Display a menu
+    cachable: false
+    accepted_template_types: [list_panel, none]
+    user_settings:
+      menu:
+        type: select
+        label: Menu
+        choices_provider_service: form.menu_choices_provider
+        default: newest
 
 permissions:
   ADMIN_CLEAR_CACHES:

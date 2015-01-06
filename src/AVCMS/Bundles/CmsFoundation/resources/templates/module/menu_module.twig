@@ -1,0 +1,15 @@
+<div class="list-group">
+    {% for menu_item in menu(menu) %}
+        {% if menu_item.url != '#' %}
+            <a class="list-group-item" href="{{ menu_item.url }}"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}</a>
+        {% else %}
+            <span class="list-group-item"><strong><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}</strong></span>
+        {% endif %}
+
+        {% if menu_item.children|length != 0 %}
+            {% for sub_menu_item in menu_item.children %}
+                <a href="{{ sub_menu_item.url }}" class="list-group-item">&nbsp;&nbsp;<span class="{{ sub_menu_item.icon }}"></span> {{ sub_menu_item.label }}</a>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+</div>
