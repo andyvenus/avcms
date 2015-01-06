@@ -32,7 +32,7 @@ class WallpaperModulesController extends Controller
             ->join($this->model('WallpaperCategories'), ['id', 'name', 'slug'])
             ->get();
 
-        return new Response($this->render('@Wallpapers/wallpapers_list_module.twig', array('wallpapers' => $wallpapers, 'user_settings' => $userSettings)));
+        return new Response($this->render('@Wallpapers/module/wallpapers_list_module.twig', array('wallpapers' => $wallpapers, 'user_settings' => $userSettings)));
     }
 
     public function likedWallpapersModule($userSettings, User $user)
@@ -54,6 +54,6 @@ class WallpaperModulesController extends Controller
 
         $wallpapers = $this->wallpapers->query()->whereIn('id', $ids)->get();
 
-        return new Response($this->render('@Wallpapers/wallpapers_list_module.twig', array('wallpapers' => $wallpapers, 'user_settings' => $userSettings)));
+        return new Response($this->render('@Wallpapers/module/wallpapers_list_module.twig', array('wallpapers' => $wallpapers, 'user_settings' => $userSettings)));
     }
 }
