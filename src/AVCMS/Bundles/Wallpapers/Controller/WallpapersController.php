@@ -76,7 +76,7 @@ class WallpapersController extends Controller
             throw $this->createNotFoundException('Wallpaper Not Found');
         }
 
-        $resolutions = $this->container->get('wallpaper.resolutions_manager')->getResolutions();
+        $resolutions = $this->container->get('wallpaper.resolutions_manager')->getWallpaperResolutions($wallpaper);
 
         $this->container->get('hitcounter')->registerHit($this->wallpapers, $wallpaper->getId());
 

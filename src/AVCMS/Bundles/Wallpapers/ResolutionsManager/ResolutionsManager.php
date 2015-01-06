@@ -7,20 +7,51 @@
 
 namespace AVCMS\Bundles\Wallpapers\ResolutionsManager;
 
+use AVCMS\Bundles\Wallpapers\Model\Wallpaper;
+use AVCMS\Core\SettingsManager\SettingsManager;
 use Symfony\Component\Yaml\Yaml;
 
 class ResolutionsManager
 {
     protected $rootDir;
 
-    public function __construct($rootDir)
+    protected $resolutions;
+
+    protected $settingsManager;
+
+    public function __construct($rootDir, SettingsManager $settingsManager)
     {
         $this->rootDir = $rootDir;
+        $this->settingsManager = $settingsManager;
     }
 
-    public function getResolutions()
+    public function getAllResolutions()
     {
-        return Yaml::parse(file_get_contents($this->getConfigPath()));
+        if (!isset($this->resolutions)) {
+            $this->resolutions = Yaml::parse(file_get_contents($this->getConfigPath()));
+        }
+
+        return $this->resolutions;
+    }
+
+    public function getWallpaperResolutions(Wallpaper $wallpaper)
+    {
+        $resolutions = $this->getAllResolutions();
+
+        if ($this->settingsManager->getSetting('show_higher_resolutions')) {
+            return $resolutions;
+        }
+
+        foreach ($resolutions as $resCatId => $resCat) {
+            foreach ($resCat as $resolution => $name) {
+                $dimensions = explode('x', $resolution);
+                if ($dimensions[0] > $wallpaper->getOriginalWidth() || $dimensions[1] > $wallpaper->getOriginalHeight()) {
+                    unset($resolutions[$resCatId][$resolution]);
+                }
+            }
+        }
+
+        return $resolutions;
     }
 
     public function getResolutionsConfig()

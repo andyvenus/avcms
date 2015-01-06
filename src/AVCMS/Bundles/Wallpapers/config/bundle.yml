@@ -11,6 +11,17 @@ assets:
     env: admin
     priority: 50
 
+user_settings_sections:
+  wallpapers: Wallpapers
+
+user_settings:
+  show_higher_resolutions:
+    type: checkbox
+    label: Show resolutions higher than the source image
+    help: If turned on, all resolutions will be displayed for all wallpapers
+    section: wallpapers
+    default: false
+
 menu_items:
     admin:
         wallpapers_admin:

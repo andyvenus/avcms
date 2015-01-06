@@ -21,7 +21,7 @@ class WallpaperServices implements ServicesInterface
         ;
 
         $container->register('wallpaper.resolutions_manager', 'AVCMS\Bundles\Wallpapers\ResolutionsManager\ResolutionsManager')
-            ->setArguments(['%root_dir%'])
+            ->setArguments(['%root_dir%', new Reference('settings_manager')])
         ;
 
         $container->register('wallpaper.categories_model', 'AVCMS\Bundles\Wallpapers\Model\WallpaperCategories')
