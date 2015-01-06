@@ -8,6 +8,8 @@ class Wallpapers extends ContentModel
 {
     protected $textIdentifierColumn = 'slug';
 
+    protected $finder = 'AVCMS\Bundles\Wallpapers\Model\WallpapersFinder';
+
     public function getTable()
     {
         return 'wallpapers';

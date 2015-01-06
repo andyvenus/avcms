@@ -30,7 +30,13 @@ class WallpapersController extends Controller
         $query = $finder->published()
             ->setResultsPerPage(12)
             ->setSearchFields(['name'])
-            ->handleRequest($request, array('page' => 1, 'order' => 'publish-date-newest', 'tags' => null, 'search' => null));
+            ->handleRequest($request, array(
+                'page' => 1,
+                'order' => 'publish-date-newest',
+                'tags' => null,
+                'search' => null,
+                'resolution' => null
+            ));
 
         $category = null;
         if ($request->get('category') !== null) {
@@ -50,12 +56,14 @@ class WallpapersController extends Controller
                 $category->subcategories = $categories->query()->where('parent', $categoryId)->get();
             }
 
-            $query->getQuery()->where('category_id', $categoryId)->orWhere('category_parent_id', $categoryId);
+            $query->getQuery()->where(function($q) use ($categoryId) {
+                $q->where('category_id', $categoryId)->orWhere('category_parent_id', $categoryId);
+            });
         }
 
         $wallpapers = $query->get();
 
-        $formBp = new WallpaperFrontendFiltersForm();
+        $formBp = new WallpaperFrontendFiltersForm($this->get('wallpaper.resolutions_manager')->getAllResolutions());
         $attr = $request->attributes->all();
         $attr['page'] = 1;
         $formBp->setAction($this->generateUrl($request->attributes->get('_route'), $attr));
