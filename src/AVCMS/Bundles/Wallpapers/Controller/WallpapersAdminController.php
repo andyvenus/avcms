@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
 class WallpapersAdminController extends AdminBaseController
@@ -34,6 +35,10 @@ class WallpapersAdminController extends AdminBaseController
     public function setUp(Request $request)
     {
         $this->wallpapers = $this->model('Wallpapers');
+
+        if (!$this->isGranted('ADMIN_WALLPAPERS')) {
+            throw new AccessDeniedException;
+        }
     }
 
     public function homeAction(Request $request)

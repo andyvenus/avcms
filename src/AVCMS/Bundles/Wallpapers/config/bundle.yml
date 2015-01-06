@@ -64,6 +64,11 @@ ratings:
     name: Wallpaper
     model: AVCMS\Bundles\Wallpapers\Model\Wallpapers
 
+permissions:
+  ADMIN_WALLPAPERS:
+    name: Wallpapers Administration
+    description: Manage wallpapers in the admin panel
+
 modules:
   wallpapers:
     name: Wallpapers

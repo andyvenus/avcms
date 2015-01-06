@@ -10,49 +10,53 @@
     <div class="row">
         <div class="col-md-12 text-center">
             {{ like_dislike_buttons('wallpaper', wallpaper.id, wallpaper) }}
+
+            {% if is_granted('ADMIN_WALLPAPERS') %}
+                <a class="btn btn-default" href="{{ path('wallpapers_admin_edit', {'id': wallpaper.id}) }}">{% trans %}Edit Wallpaper{% endtrans %}</a>
+            {% endif %}
         </div>
     </div>
 
     <div class="box">
         <div class="box-top">
             <h4>{% trans %}Wallpaper Details{% endtrans %}</h4>
+        </div>
 
-            {% if wallpaper.description %}
-                <div class="row">
-                    <div class="col-md-12">
-                        <p>{{ wallpaper.description }}</p>
-                    </div>
-                </div>
-            {% endif %}
-
+        {% if wallpaper.description %}
             <div class="row">
-                <div class="col-md-4">
-                    <p>{% trans %}Name{% endtrans %}: {{ wallpaper.name }}</p>
-                </div>
-                <div class="col-md-4">
-                    <p>{% trans %}Category{% endtrans %}: {{ wallpaper.category.name }}</p>
-                </div>
-                <div class="col-md-4">
-                    {% trans %}Tags{% endtrans %}:
-                    {% for tag in wallpaper.tags %}
-                        <a class="btn btn-default btn-xs" href="{{ url('browse_wallpapers', {tags: tag.name}) }}">{{ tag.name }}</a>
-                    {% else %}
-                        {% trans %}None{% endtrans %}
-                    {% endfor %}
+                <div class="col-md-12">
+                    <p>{{ wallpaper.description }}</p>
                 </div>
             </div>
+        {% endif %}
 
-            <div class="row">
-                <div class="col-md-4">
-                    <p>{% trans %}Date Added{% endtrans %}: {{ wallpaper.publish_date|date(settings.date_format) }}</p>
-                </div>
-                <div class="col-md-4">
-                    <p>{% trans %}Views{% endtrans %}: {{ wallpaper.hits }} &nbsp;{% trans %}Downloads{% endtrans %}: {{ wallpaper.totalDownloads }}</p>
-                </div>
-                <div class="col-md-4">
-                    <p>{% trans %}Original Resolution{% endtrans %}:
-                        <a href="{{ url('wallpaper_preview', {slug: wallpaper.slug, resolution: wallpaper.originalWidth ~ 'x' ~ wallpaper.originalHeight}) }}">{{ wallpaper.originalWidth }}x{{ wallpaper.originalHeight }}</a></p>
-                </div>
+        <div class="row">
+            <div class="col-md-4">
+                <p>{% trans %}Name{% endtrans %}: {{ wallpaper.name }}</p>
+            </div>
+            <div class="col-md-4">
+                <p>{% trans %}Category{% endtrans %}: {{ wallpaper.category.name }}</p>
+            </div>
+            <div class="col-md-4">
+                {% trans %}Tags{% endtrans %}:
+                {% for tag in wallpaper.tags %}
+                    <a class="btn btn-default btn-xs" href="{{ url('browse_wallpapers', {tags: tag.name}) }}">{{ tag.name }}</a>
+                {% else %}
+                    {% trans %}None{% endtrans %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <p>{% trans %}Date Added{% endtrans %}: {{ wallpaper.publish_date|date(settings.date_format) }}</p>
+            </div>
+            <div class="col-md-4">
+                <p>{% trans %}Views{% endtrans %}: {{ wallpaper.hits }} &nbsp;{% trans %}Downloads{% endtrans %}: {{ wallpaper.totalDownloads }}</p>
+            </div>
+            <div class="col-md-4">
+                <p>{% trans %}Original Resolution{% endtrans %}:
+                    <a href="{{ url('wallpaper_preview', {slug: wallpaper.slug, resolution: wallpaper.originalWidth ~ 'x' ~ wallpaper.originalHeight}) }}">{{ wallpaper.originalWidth }}x{{ wallpaper.originalHeight }}</a></p>
             </div>
         </div>
     </div>
