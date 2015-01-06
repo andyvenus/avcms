@@ -53,6 +53,11 @@ class Finder
      */
     protected $validRequestParameters;
 
+    /**
+     * @var array An array of values extracted from the request or the default
+     */
+    protected $requestFilters = [];
+
     public function __construct(Model $model, TaxonomyManager $taxonomyManager = null)
     {
         $this->model = $model;
@@ -95,6 +100,7 @@ class Finder
             }
 
             $validRequestParameters[] = $filter;
+            $this->requestFilters[$filter] = $request->get($filter, $default);
         }
 
         $this->validRequestParameters = $validRequestParameters;
@@ -312,5 +318,10 @@ class Finder
         $totalResults = $this->currentQuery->count();
 
         return ceil($totalResults / $this->resultsPerPage);
+    }
+
+    public function getRequestFilters()
+    {
+        return $this->requestFilters;
     }
 }

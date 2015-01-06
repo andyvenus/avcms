@@ -67,7 +67,8 @@ class WallpapersController extends Controller
             'current_page' => $finder->getCurrentPage(),
             'page_type' => $pageType,
             'category' => $category,
-            'filters_form' => $filtersForm->createView()
+            'filters_form' => $filtersForm->createView(),
+            'finder_request' => $finder->getRequestFilters()
         )));
     }
 
