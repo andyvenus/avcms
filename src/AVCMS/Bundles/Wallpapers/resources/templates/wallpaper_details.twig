@@ -12,7 +12,7 @@
             {{ like_dislike_buttons('wallpaper', wallpaper.id, wallpaper) }}
 
             {% if is_granted('ADMIN_WALLPAPERS') %}
-                <a class="btn btn-default" href="{{ path('wallpapers_admin_edit', {'id': wallpaper.id}) }}">{% trans %}Edit Wallpaper{% endtrans %}</a>
+                <a class="btn btn-default" href="{{ path('wallpapers_admin_edit', {'id': wallpaper.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit Wallpaper{% endtrans %}</a>
             {% endif %}
         </div>
     </div>
