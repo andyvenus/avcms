@@ -129,6 +129,13 @@ modules:
           2: 2
           3: 3
           4: 4
+      filter:
+        type: select
+        label: Filter
+        default: none
+        choices:
+          none: None
+          featured: Featured
   liked_wallpapers:
     name: Liked Wallpapers
     description: A list of a user's liked wallpapers

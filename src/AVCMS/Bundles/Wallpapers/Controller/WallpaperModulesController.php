@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 class WallpaperModulesController extends Controller
 {
     /**
-     * @var \AVCMS\Bundles\Blog\Model\BlogPosts
+     * @var \AVCMS\Bundles\Wallpapers\Model\Wallpapers
      */
     private $wallpapers;
 
@@ -25,12 +25,20 @@ class WallpaperModulesController extends Controller
 
     public function wallpapersListModule($module, $userSettings)
     {
-        $wallpapers = $this->wallpapers->find()
+        $moreButton = null;
+
+        $query = $this->wallpapers->find()
             ->limit($userSettings['limit'])
             ->order($userSettings['order'])
             ->published()
-            ->join($this->model('WallpaperCategories'), ['id', 'name', 'slug'])
-            ->get();
+            ->join($this->model('WallpaperCategories'), ['id', 'name', 'slug']);
+
+        if ($userSettings['filter'] === 'featured') {
+            $query->featured();
+            $moreButton = ['url' => $this->generateUrl('wallpaper_featured'), 'label' => 'All Featured Wallpapers'];
+        }
+
+        $wallpapers = $query->get();
 
         $columns = ($userSettings['columns'] ? $userSettings['columns'] : 1);
 
@@ -45,6 +53,7 @@ class WallpaperModulesController extends Controller
             'wallpapers' => $wallpapers,
             'user_settings' => $userSettings,
             'columns' => $columns,
+            'more_button' => $moreButton
         )));
     }
 

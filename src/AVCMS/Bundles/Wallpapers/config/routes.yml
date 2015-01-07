@@ -2,6 +2,10 @@ wallpapers_home:
   path: /wallpapers
   defaults: { _controller: Wallpapers::WallpapersController::wallpapersHomeAction }
 
+wallpaper_featured:
+  path: /wallpapers/featured
+  defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction, pageType: featured }
+
 wallpaper_thumbnail:
   path: /web/wallpapers/{id}/thumbnail/{width}x{height}.{ext}
   defaults: { _controller: Wallpapers::WallpapersImageController::imageAction, thumbnail: true }

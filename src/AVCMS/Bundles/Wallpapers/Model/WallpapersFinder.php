@@ -27,4 +27,9 @@ class WallpapersFinder extends Finder
 
         $this->currentQuery->where('original_width', '>=', $dimensions[0])->where('original_height', '>=', $dimensions[1]);
     }
+
+    public function featured()
+    {
+        $this->currentQuery->where('featured', 1);
+    }
 }

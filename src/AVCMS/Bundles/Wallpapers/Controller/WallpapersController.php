@@ -65,6 +65,9 @@ class WallpapersController extends Controller
                 $q->where('category_id', $categoryId)->orWhere('category_parent_id', $categoryId);
             });
         }
+        if ($pageType === 'featured') {
+            $query->featured();
+        }
 
         $wallpapers = $query->get();
 
