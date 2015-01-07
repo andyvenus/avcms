@@ -264,6 +264,7 @@ class ModuleManager
         return array(
             'panel' => array('default_template' => '@CmsFoundation/panel_module.twig', 'name' => 'Panel'),
             'list_panel' => array('default_template' => '@CmsFoundation/list_panel_module.twig', 'name' => 'List Panel'),
+            'content' => array('default_template' => '@CmsFoundation/content_module.twig', 'name' => 'Content'),
             'none' => array('default_template' => '@CmsFoundation/blank_module.twig', 'name' => 'None'),
         );
     }

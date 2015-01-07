@@ -1,0 +1,10 @@
+<div class="box">
+    {% if module.showHeader %}
+        <div class="box-top">
+            <h3>{{ module.title }}</h3>
+        </div>
+    {% endif %}
+    <div class="box-main">
+        {{ module.content|raw }}
+    </div>
+</div>
