@@ -35,7 +35,7 @@ class WallpaperModulesController extends Controller
 
         if ($userSettings['filter'] === 'featured') {
             $query->featured();
-            $moreButton = ['url' => $this->generateUrl('wallpaper_featured'), 'label' => 'All Featured Wallpapers'];
+            $moreButton = ['url' => $this->generateUrl('featured_wallpapers'), 'label' => 'All Featured Wallpapers'];
         }
 
         $wallpapers = $query->get();

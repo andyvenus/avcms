@@ -2,7 +2,7 @@ wallpapers_home:
   path: /wallpapers
   defaults: { _controller: Wallpapers::WallpapersController::wallpapersHomeAction }
 
-wallpaper_featured:
+featured_wallpapers:
   path: /wallpapers/featured
   defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction, pageType: featured }
 
