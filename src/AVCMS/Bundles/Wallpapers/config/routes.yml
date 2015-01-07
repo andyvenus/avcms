@@ -1,3 +1,7 @@
+wallpapers_home:
+  path: /wallpapers
+  defaults: { _controller: Wallpapers::WallpapersController::wallpapersHomeAction }
+
 wallpaper_thumbnail:
   path: /web/wallpapers/{id}/thumbnail/{width}x{height}.{ext}
   defaults: { _controller: Wallpapers::WallpapersImageController::imageAction, thumbnail: true }
@@ -11,7 +15,7 @@ wallpaper_download:
   defaults: { _controller: Wallpapers::WallpapersImageController::imageAction, download: true }
 
 browse_wallpapers:
-  path: /wallpapers/{page}
+  path: /wallpapers/browse/{page}
   defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction, category: null, page: 1 }
   requirements:
     page:  \d+

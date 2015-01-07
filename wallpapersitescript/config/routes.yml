@@ -1,7 +1,6 @@
 home:
   path: /
   defaults:
-    _controller: Wallpapers::WallpapersController::browseWallpapersAction
+    _controller: Wallpapers::WallpapersController::wallpapersHomeAction
     _bundle: Wallpapers
     _avcms_env: frontend
-    pageType: site_home

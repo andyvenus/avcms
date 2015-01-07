@@ -69,6 +69,13 @@ permissions:
     name: Wallpapers Administration
     description: Manage wallpapers in the admin panel
 
+module_positions:
+  wallpapers_home:
+    name: Wallpapers Homepage
+    environment: frontend
+    global_modules: 1
+    type: content
+
 modules:
   wallpapers:
     name: Wallpapers
