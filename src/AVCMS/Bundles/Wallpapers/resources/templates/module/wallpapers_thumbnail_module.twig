@@ -5,11 +5,11 @@
         <div class="col-sm-{{ column_size }}">
             <a class="thumbnail clearfix" href="{{ url('wallpaper_details', {slug: wallpaper.slug}) }}">
                 <img src="{{ wp_thumbnail_url(wallpaper) }}" width="100%"/>
-                <div class="pull-left">
+                <div class="pull-left" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;width:100%">
                     {{ wallpaper.name }}
                 </div>
-                <div class="pull-right">
-                    {% include '@Wallpapers/module/wallpaper_module_details.twig' %}
+                <div class="pull-left">
+                    <span class="small">{% include '@Wallpapers/module/wallpaper_module_details.twig' %}</span>
                 </div>
             </a>
         </div>
