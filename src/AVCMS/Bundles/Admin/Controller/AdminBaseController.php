@@ -221,8 +221,8 @@ abstract class AdminBaseController extends Controller
         }
 
         $published = $request->request->get('published', 1);
-        if ($published != 1 && $published != 0) {
-            $published = 1;
+        if ($published !== '1' && $published !== '0') {
+            $published = '1';
         }
 
         if ($request->request->has('ids') && is_array($request->request->get('ids'))) {
