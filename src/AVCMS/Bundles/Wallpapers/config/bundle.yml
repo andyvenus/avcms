@@ -84,7 +84,7 @@ modules:
     cachable: true
     cache_bust_model: Wallpapers
     default_cache_time: 10000
-    accepted_template_types: [panel, list_panel, none]
+    accepted_template_types: [content, panel, list_panel, none]
     user_settings:
       order:
         type: select
