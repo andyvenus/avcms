@@ -306,9 +306,9 @@ class FormHandler
                 }
             }
 
-            /*if (isset($field['fields'])) {
+            if (isset($field['fields'])) {
                 $validRequestData[$fieldName] = $this->checkFieldsSubmitted($field['fields'], isset($validRequestData[$fieldName]) ? $validRequestData[$fieldName] : []);
-            }*/
+            }
         }
 
         return $validRequestData;
