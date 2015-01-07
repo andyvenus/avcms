@@ -24,6 +24,20 @@
     </button>
 {% endmacro %}
 
+{% macro featured(featured, ajax_route) %}
+    {% if featured == 1 %}
+        {% set featured_btn_class = 'btn-warning' %}
+        {% set featured_btn_icon = 'glyphicon-star' %}
+    {% else %}
+        {% set featured_btn_class = 'btn-default' %}
+        {% set featured_btn_icon = 'glyphicon-star-empty' %}
+    {% endif %}
+
+    <button class="btn btn-xs {{ featured_btn_class }} avcms-toggle-featured" data-toggle-featured-url="{{ url(ajax_route) }}">
+        <span class="glyphicon {{ featured_btn_icon }}"></span>
+    </button>
+{% endmacro %}
+
 {% macro delete(ajax_route) %}
     <button class="btn btn-xs btn-default avcms-delete-item" data-delete-url="{{ url(ajax_route) }}">
         <span class="glyphicon glyphicon-remove"></span>
@@ -51,6 +65,18 @@
 {% macro bulk_unpublish(ajax_route) %}
     <button type="button" class="btn btn-default btn-sm" data-toggle-unpublished-url="{{ url(ajax_route) }}">
         <span class="glyphicon glyphicon-eye-close"></span>
+    </button>
+{% endmacro %}
+
+{% macro bulk_feature(ajax_route) %}
+    <button type="button" class="btn btn-default btn-sm" data-toggle-featured-url="{{ url(ajax_route) }}">
+        <span class="glyphicon glyphicon-star"></span>
+    </button>
+{% endmacro %}
+
+{% macro bulk_unfeature(ajax_route) %}
+    <button type="button" class="btn btn-default btn-sm" data-toggle-unfeatured-url="{{ url(ajax_route) }}">
+        <span class="glyphicon glyphicon-star-empty"></span>
     </button>
 {% endmacro %}
 

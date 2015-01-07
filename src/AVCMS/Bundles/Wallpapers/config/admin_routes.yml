@@ -58,6 +58,11 @@ wallpapers_admin_toggle_published:
   path: /wallpapers/publish
   defaults: { _controller: Wallpapers::WallpapersAdminController::togglePublishedAction }
 
+wallpapers_admin_toggle_featured:
+  path: /wallpapers/toggle-featured
+  defaults: { _controller: Wallpapers::WallpapersAdminController::toggleFeaturedAction }
+
+
 
 wallpaper_bulk_import:
     path:     /wallpapers-bulk-import/import/{folder}

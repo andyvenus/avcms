@@ -22,6 +22,8 @@
             {{ buttons.delete('wallpapers_admin_delete') }}
 
             {{ buttons.publish(item.published, 'wallpapers_admin_toggle_published') }}
+
+            {{ buttons.featured(item.featured, 'wallpapers_admin_toggle_featured') }}
         </div>
 
         {{ buttons.view('wallpaper_details', {slug: item.slug}) }}

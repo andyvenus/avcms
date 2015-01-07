@@ -120,6 +120,11 @@ class WallpapersAdminController extends AdminBaseController
         return $this->handleTogglePublished($request, $this->wallpapers);
     }
 
+    public function toggleFeaturedAction(Request $request)
+    {
+        return $this->handleTogglePublished($request, $this->wallpapers, 'featured');
+    }
+
     public function findFilesAction(Request $request)
     {
         $q = $request->get('q');

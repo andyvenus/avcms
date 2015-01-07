@@ -62,11 +62,6 @@ class WallpaperAdminForm extends AdminContentForm
             'choices_provider' => $categoryChoicesProvider
         ));
 
-        
-        $this->add('featured', 'checkbox', array(
-            'label' => 'Featured',
-        ));
-
         parent::__construct($itemId);
 
         if ($import === true) {

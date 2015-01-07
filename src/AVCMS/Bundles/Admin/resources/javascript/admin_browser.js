@@ -16,10 +16,12 @@ $(document).ready(function() {
 
     body.on('click', '[data-bulk-delete-url]', avcms.browser.deleteCheckedResults);
     body.on('click', '[data-toggle-published-url], [data-toggle-unpublished-url]', avcms.browser.togglePublishedCheckedResults);
+    body.on('click', '[data-toggle-featured-url], [data-toggle-unfeatured-url]', avcms.browser.toggleFeaturedCheckedResults);
 
     body.on('click', '.avcms-delete-item', avcms.browser.deleteItemButton);
 
     body.on('click', '.avcms-toggle-published', avcms.browser.togglePublishedButton);
+    body.on('click', '.avcms-toggle-featured', avcms.browser.toggleFeaturedButton);
 
     avcms.event.addEvent('page-modified', avcms.browser.setBrowserFocus);
     avcms.browser.setBrowserFocus();
@@ -315,17 +317,14 @@ avcms.browser = {
             published = 1;
         }
 
-        console.log(id);
+        var form = $('form[data-item-id="'+id+'"');
+        form.find('[name="published"][value="'+published+'"]').prop("checked", true);
 
         $.ajax({
             type: "POST",
             url: $(this).data('toggle-publish-url'),
             data: {'id': id, 'published': published},
-            dataType: 'json',
-            success: function(data) {
-                var form = $('form[data-item-id="'+id+'"');
-                form.find('[name="published"][value="'+published+'"]').prop("checked", true);
-            }
+            dataType: 'json'
         })
     },
 
@@ -366,6 +365,75 @@ avcms.browser = {
                         published_button.removeClass('btn-default');
                         published_button.children('.glyphicon').addClass('glyphicon-eye-close');
                         published_button.children('.glyphicon').removeClass('glyphicon-eye-open');
+                    }
+                })
+            }
+        });
+    },
+
+    toggleFeaturedButton: function() {
+        var button = $(this);
+        var id = button.parents('[data-id]').data('id');
+
+        if (id == undefined) {
+            id = button.parents('[data-item-id]').data('item-id');
+        }
+
+        $(this).children('.glyphicon').toggleClass("glyphicon-star glyphicon-star-empty");
+        $(this).toggleClass("btn-default btn-warning");
+
+        var featured;
+        if ($(this).hasClass('btn-default')) {
+            featured = 0;
+        }
+        else {
+            featured = 1;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: $(this).data('toggle-featured-url'),
+            data: {'id': id, 'featured': featured},
+            dataType: 'json'
+        })
+    },
+
+    toggleFeaturedCheckedResults: function() {
+        var url; var featured;
+        if ($(this).data('toggle-featured-url')) {
+            url = $(this).data('toggle-featured-url');
+            featured = 1;
+        }
+        else {
+            url = $(this).data('toggle-unfeatured-url');
+            featured = 0;
+        }
+
+        var ids = avcms.browser.getFinderSelectedIds();
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {'ids': ids, 'featured': featured},
+            dataType: 'json',
+            success: function(data) {
+                $.each(ids, function(key, id) {
+                    var form = $('form[data-item-id="'+id+'"]');
+
+                    var finder_item = $('.browser-finder-item[data-id='+id+']');
+                    var published_button = finder_item.find('.avcms-toggle-featured');
+
+                    if (featured === 1) {
+                        published_button.removeClass('btn-default');
+                        published_button.addClass('btn-warning');
+                        published_button.children('.glyphicon').removeClass('glyphicon-star-empty');
+                        published_button.children('.glyphicon').addClass('glyphicon-star');
+                    }
+                    else {
+                        published_button.addClass('btn-default');
+                        published_button.removeClass('btn-warning');
+                        published_button.children('.glyphicon').addClass('glyphicon-star-empty');
+                        published_button.children('.glyphicon').removeClass('glyphicon-star');
                     }
                 })
             }

@@ -220,7 +220,7 @@ abstract class AdminBaseController extends Controller
             return $this->invalidCsrfTokenJsonResponse();
         }
 
-        $published = $request->request->get('published', 1);
+        $published = $request->request->get($column, 1);
         if ($published !== '1' && $published !== '0') {
             $published = '1';
         }
