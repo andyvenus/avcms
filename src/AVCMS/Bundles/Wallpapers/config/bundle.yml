@@ -34,6 +34,15 @@ user_settings:
       3: 3
       4: 4
     default: 2
+  browse_wallpapers_per_page:
+    type: text
+    label: Wallpapers Per Page
+    help: How many wallpapers to show when in the main browse wallpapers pages
+    section: wallpapers
+    default: 12
+    validation:
+      numeric:
+        rule: Numeric
 
 menu_items:
     admin:
