@@ -7,9 +7,11 @@ services:
     - WallpaperServices
 
 assets:
-  avcms_wallpapers.js:
+  avcms_wallpapers_admin.js:
     env: admin
     priority: 50
+  avcms_wallpapers_frontend.js:
+    env: frontend
 
 user_settings_sections:
   wallpapers: Wallpapers

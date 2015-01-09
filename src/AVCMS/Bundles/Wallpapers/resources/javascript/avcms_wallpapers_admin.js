@@ -1,6 +1,3 @@
-/**
- * Created by Andy on 04/01/15.
- */
 avcms = avcms || {};
 
 $(document).ready(function() {
