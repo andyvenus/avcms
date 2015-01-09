@@ -11,6 +11,7 @@ avcms.wallpapers = {
         var res = $('a[data-resolution="'+resolution+'"]').first();
 
         if (res.length !== 1) {
+            $('.user-resolution').hide();
             return;
         }
 
