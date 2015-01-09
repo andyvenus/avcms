@@ -1,24 +1,37 @@
 {% extends 'index.twig' %}
 
 {% block wide_content %}
-    <h1>{{ wallpaper.name }} - {{ wallpaper_width }}x{{ wallpaper_height }}</h1>
+    <div class="wallpaper-preview-page">
+        <div class="box wallpaper-preview-box">
+            <div class="box-top">
+                <h1>{{ wallpaper.name }} - {{ wallpaper_width }}x{{ wallpaper_height }}</h1>
+            </div>
+            <div class="box-main">
+                {% block wallpaper_preview_buttons %}
+                <div class="wallpaper-preview-buttons">
+                    <p><a href="{{ wp_download_url(wallpaper, wallpaper_width, wallpaper_height) }}" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> {% trans %}Download{% endtrans %}</a></p>
+                </div>
+                {% endblock %}
 
-    <div class="wallpaper-preview-buttons">
-        <p><a href="{{ wp_download_url(wallpaper, wallpaper_width, wallpaper_height) }}" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> {% trans %}Download{% endtrans %}</a></p>
-    </div>
+                {% block wallpaper_preview_image %}
+                <div class="wallpaper-preview-container">
+                    <a href="{{ wp_image_url(wallpaper, wallpaper_width, wallpaper_height) }}">
+                        <img src="{{ wp_image_url(wallpaper, wallpaper_width, wallpaper_height) }}" style="max-width: 100%" class="img-thumbnail"/>
+                    </a>
+                </div>
+                {% endblock %}
 
-    <div class="wallpaper-preview-container">
-        <a href="{{ wp_image_url(wallpaper, wallpaper_width, wallpaper_height) }}">
-            <img src="{{ wp_image_url(wallpaper, wallpaper_width, wallpaper_height) }}" style="max-width: 100%" class="img-thumbnail"/>
-        </a>
-    </div>
-
-    <br/>
-    <div class="wallpaper-download-info">
-        <div class="alert alert-info">
-            {% trans %}Press the download button to save, or:{% endtrans %}<br/>
-            <span class="glyphicon glyphicon-info-sign"></span> {% trans %}Desktop users - Right click to save or set as desktop background{% endtrans %}<br/>
-            <span class="glyphicon glyphicon-info-sign"></span> {% trans %}Mobile users - Tap and hold your finder over the image for save options{% endtrans %}
+                <br/>
+                {% block wallpaper_download_info %}
+                <div class="wallpaper-download-info">
+                    <div class="alert alert-info">
+                        {% trans %}Press the download button to save, or:{% endtrans %}<br/>
+                        <span class="glyphicon glyphicon-info-sign"></span> {% trans %}Desktop users - Right click to save or set as desktop background{% endtrans %}<br/>
+                        <span class="glyphicon glyphicon-info-sign"></span> {% trans %}Mobile users - Tap and hold your finder over the image for save options{% endtrans %}
+                    </div>
+                </div>
+                {% endblock %}
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -1,115 +1,130 @@
 {% extends 'index.twig' %}
 
 {% block content %}
-    <h1>{{ wallpaper.name }}</h1>
-
-    <p>
-        <img src="{{ wp_thumbnail_url(wallpaper, 896, 504) }}" alt="{{ wallpaper.name }}" width="100%" class="img-thumbnail" />
-    </p>
-
-    <div class="row">
-        <div class="col-md-12 text-center">
-            {{ like_dislike_buttons('wallpaper', wallpaper.id, wallpaper) }}
-
-            {% if is_granted('ADMIN_WALLPAPERS') %}
-                <a class="btn btn-default" href="{{ path('wallpapers_admin_edit', {'id': wallpaper.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit Wallpaper{% endtrans %}</a>
-            {% endif %}
-        </div>
-    </div>
-
-    <div class="box">
-        <div class="box-top">
-            <h4>{% trans %}Wallpaper Details{% endtrans %}</h4>
-        </div>
-
-        {% if wallpaper.description %}
-            <div class="row">
-                <div class="col-md-12">
-                    <p>{{ wallpaper.description }}</p>
-                </div>
+    <div class="wallpaper-details">
+        {% block wallpaper_thumbnail %}
+        <div class="box wallpaper-thumbnail-box">
+            <div class="box-top">
+                <h1>{{ wallpaper.name }}</h1>
             </div>
-        {% endif %}
+            <div class="box-main">
+                <p>
+                    <img src="{{ wp_thumbnail_url(wallpaper, 896, 504) }}" alt="{{ wallpaper.name }}" width="100%" class="img-thumbnail" />
+                </p>
 
-        <div class="row">
-            <div class="col-md-4">
-                <p>{% trans %}Name{% endtrans %}: {{ wallpaper.name }}</p>
-            </div>
-            <div class="col-md-4">
-                <p>{% trans %}Category{% endtrans %}: {{ wallpaper.category.name }}</p>
-            </div>
-            <div class="col-md-4">
-                {% trans %}Tags{% endtrans %}:
-                {% for tag in wallpaper.tags %}
-                    <a class="btn btn-default btn-xs" href="{{ url('browse_wallpapers', {tags: tag.name}) }}">{{ tag.name }}</a>
-                {% else %}
-                    {% trans %}None{% endtrans %}
-                {% endfor %}
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4">
-                <p>{% trans %}Date Added{% endtrans %}: {{ wallpaper.publish_date|date(settings.date_format) }}</p>
-            </div>
-            <div class="col-md-4">
-                <p>{% trans %}Views{% endtrans %}: {{ wallpaper.hits }} &nbsp;{% trans %}Downloads{% endtrans %}: {{ wallpaper.totalDownloads }}</p>
-            </div>
-            <div class="col-md-4">
-                <p>{% trans %}Original Resolution{% endtrans %}:
-                    <a href="{{ url('wallpaper_preview', {slug: wallpaper.slug, resolution: wallpaper.originalWidth ~ 'x' ~ wallpaper.originalHeight}) }}">{{ wallpaper.originalWidth }}x{{ wallpaper.originalHeight }}</a></p>
-            </div>
-        </div>
-    </div>
-
-    {% if wallpaper.resizeType != 'original' %}
-        <div class="panel panel-default wallpaper-resolutions-panel">
-            <div class="panel-heading">
-                <h3 class="panel-title">{% trans %}Resolutions{% endtrans %}</h3>
-            </div>
-            <div class="panel-body">
-                <div class="row user-resolution">
+                <div class="row">
                     <div class="col-md-12 text-center">
-                        {% trans %}Your resolution:{% endtrans %} <a href="#" class="current-res-link btn btn-link"></a>
+                        {{ like_dislike_buttons('wallpaper', wallpaper.id, wallpaper) }}
+
+                        {% if is_granted('ADMIN_WALLPAPERS') %}
+                            <a class="btn btn-default" href="{{ path('wallpapers_admin_edit', {'id': wallpaper.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit Wallpaper{% endtrans %}</a>
+                        {% endif %}
                     </div>
                 </div>
+            </div>
+        </div>
+        {% endblock %}
+
+        {% block wallpaper_info %}
+        <div class="box wallpaper-info-box">
+            <div class="box-top">
+                <h4>{% trans %}Wallpaper Details{% endtrans %}</h4>
+            </div>
+            <div class="box-main">
+                {% if wallpaper.description %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>{{ wallpaper.description }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+
                 <div class="row">
-                    {% for resolution_category, category_resolutions in resolutions %}
+                    <div class="col-md-4">
+                        <p>{% trans %}Name{% endtrans %}: {{ wallpaper.name }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>{% trans %}Category{% endtrans %}: {{ wallpaper.category.name }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        {% trans %}Tags{% endtrans %}:
+                        {% for tag in wallpaper.tags %}
+                            <a class="btn btn-default btn-xs" href="{{ url('browse_wallpapers', {tags: tag.name}) }}">{{ tag.name }}</a>
+                        {% else %}
+                            {% trans %}None{% endtrans %}
+                        {% endfor %}
+                    </div>
+                </div>
 
-                        <div class="col-md-4">
-                            <h4>{{ resolution_category }}</h4>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p>{% trans %}Date Added{% endtrans %}: {{ wallpaper.publish_date|date(settings.date_format) }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>{% trans %}Views{% endtrans %}: {{ wallpaper.hits }} &nbsp;{% trans %}Downloads{% endtrans %}: {{ wallpaper.totalDownloads }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>{% trans %}Original Resolution{% endtrans %}:
+                            <a href="{{ url('wallpaper_preview', {slug: wallpaper.slug, resolution: wallpaper.originalWidth ~ 'x' ~ wallpaper.originalHeight}) }}">{{ wallpaper.originalWidth }}x{{ wallpaper.originalHeight }}</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
 
-                            {% for resolution, name in category_resolutions %}
-                                <a data-resolution="{{ resolution }}" href="{{ url('wallpaper_preview', {slug: wallpaper.slug, resolution: resolution}) }}">{{ name }}</a><br/>
+        {% if wallpaper.resizeType != 'original' %}
+            {% block wallpaper_resolutions %}
+                <div class="box wallpaper-resolutions-box">
+                    <div class="box-top">
+                        <h4>{% trans %}Resolutions{% endtrans %}</h4>
+                    </div>
+                    <div class="box-main">
+                        <div class="row user-resolution">
+                            <div class="col-md-12 text-center">
+                                {% trans %}Your resolution:{% endtrans %} <a href="#" class="current-res-link btn btn-link"></a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            {% for resolution_category, category_resolutions in resolutions %}
+
+                                <div class="col-md-4">
+                                    <h4>{{ resolution_category }}</h4>
+
+                                    {% for resolution, name in category_resolutions %}
+                                        <a data-resolution="{{ resolution }}" href="{{ url('wallpaper_preview', {slug: wallpaper.slug, resolution: resolution}) }}">{{ name }}</a><br/>
+                                    {% endfor %}
+                                </div>
+
+                                {% if loop.index is divisible by(3) %}
+                                    </div><div class="row">
+                                {% endif %}
+
                             {% endfor %}
                         </div>
-
-                        {% if loop.index is divisible by(3) %}
-                            </div><div class="row">
-                        {% endif %}
-
-                    {% endfor %}
+                    </div>
                 </div>
-            </div>
-        </div>
-    {% else %}
-        <div class="wallpaper-original-only text-center">
-            <a href="{{ url('wallpaper_preview', {slug: wallpaper.slug, resolution: wallpaper.originalWidth ~ 'x' ~ wallpaper.originalHeight }) }}" class="btn btn-primary btn-lg">
-                {% trans %}Preview & Download{% endtrans %}
-            </a>
-        </div>
-    {% endif %}
-
-    {% block blog_post_comments %}
-        {% if settings.comments_enabled %}
-            <div class="box">
-                <div class="box-top">
-                    <h4>{% trans %}Comments{% endtrans %} ({{ wallpaper.comments }})</h4>
+            {% endblock %}
+        {% else %}
+            {% block wallpaper_original_resolution %}
+                <div class="wallpaper-original-only text-center">
+                    <a href="{{ url('wallpaper_preview', {slug: wallpaper.slug, resolution: wallpaper.originalWidth ~ 'x' ~ wallpaper.originalHeight }) }}" class="btn btn-primary btn-lg">
+                        {% trans %}Preview & Download{% endtrans %}
+                    </a>
                 </div>
-                <div class="box-main">
-                    {{ comments('wallpaper', wallpaper) }}
-                </div>
-            </div>
+            {% endblock %}
         {% endif %}
-    {% endblock %}
 
+        {% block wallpaper_comments %}
+            {% if settings.comments_enabled %}
+                <div class="box wallpaper-comments-box">
+                    <div class="box-top">
+                        <h4>{% trans %}Comments{% endtrans %} ({{ wallpaper.comments }})</h4>
+                    </div>
+                    <div class="box-main">
+                        {{ comments('wallpaper', wallpaper) }}
+                    </div>
+                </div>
+            {% endif %}
+        {% endblock %}
+    </div>
 {% endblock %}

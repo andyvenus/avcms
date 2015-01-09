@@ -23,44 +23,62 @@
 {%- endblock %}
 
 {% block content %}
-    <h2>
-        {% if category.parent %}<a href="{{ path('wallpaper_category', {'category': category.parent.slug}) }}">{{ category.parent.name }}</a> / {% endif %}
-        {{ block('title') }}
-    </h2>
+    <div class="browse-wallpapers">
+        <div class="box browse-wallpapers-filter-box">
+            <div class="box-top">
+                <h2>
+                    {% if category.parent %}<a href="{{ path('wallpaper_category', {'category': category.parent.slug}) }}">{{ category.parent.name }}</a> / {% endif %}
+                    {{ block('title') }}
+                </h2>
+            </div>
+            <div class="box-main">
+                {% block subcategories -%}
+                    {% if category.subcategories %}
+                        {% trans %}Subcategories{% endtrans %}:<br/>
+                        {% for subcategory in category.subcategories %}
+                            <a href="{{ path('wallpaper_category', {'category': subcategory.slug}) }}" class="btn btn-default btn-sm">{{ subcategory.name }}</a>
+                        {% endfor %}
+                    {% endif %}
+                {%- endblock %}
 
-    {% if category.subcategories %}
-        <div class="box">
-            {% trans %}Subcategories{% endtrans %}:<br/>
-            {% for subcategory in category.subcategories %}
-                <a href="{{ path('wallpaper_category', {'category': subcategory.slug}) }}" class="btn btn-default btn-sm">{{ subcategory.name }}</a>
-            {% endfor %}
+
+                {% block browse_filters -%}
+                    <div class="box">
+                        {{ form(filters_form, {}, '@Form/bootstrap_inline_form.twig') }}
+                    </div>
+                {%- endblock %}
+            </div>
         </div>
-    {% endif %}
 
-    <div class="box">
-        {{ form(filters_form, {}, '@Form/bootstrap_inline_form.twig') }}
-    </div>
+        {% block wallpapers %}
+            <div class="box browse-wallpapers-main-box">
+                <div class="box-main">
+                    <div class="row">
+                    {% for wallpaper in wallpapers %}
+                        <div class="col-sm-6">
+                            {% block wallpaper_thumbnail -%}
+                                <a class="thumbnail clearfix" href="{{ url('wallpaper_details', {slug: wallpaper.slug}) }}">
+                                    <img src="{{ wp_thumbnail_url(wallpaper) }}" width="100%"/>
+                                    <div class="pull-left">
+                                        {{ wallpaper.name }}
+                                    </div>
+                                    <div class="pull-right">
+                                        <span class="glyphicon glyphicon-eye-open"></span> {{ wallpaper.hits }}&nbsp;
+                                        <span class="glyphicon glyphicon-download"></span> {{ wallpaper.totalDownloads }}
+                                    </div>
+                                </a>
+                            {%- endblock %}
+                        </div>
+                    {% else %}
+                        <div class="well well-lg">{% trans %}No Wallpapers Found{% endtrans %}</div>
+                    {% endfor %}
+                    </div>
 
-    <div class="row">
-    {% for wallpaper in wallpapers %}
-        <div class="col-sm-6">
-            <a class="thumbnail clearfix" href="{{ url('wallpaper_details', {slug: wallpaper.slug}) }}">
-                <img src="{{ wp_thumbnail_url(wallpaper) }}" width="100%"/>
-                <div class="pull-left">
-                    {{ wallpaper.name }}
+                    {% block wallpapers_pagination %}
+                        {{ pagination(total_pages, current_page) }}
+                    {% endblock %}
                 </div>
-                <div class="pull-right">
-                    <span class="glyphicon glyphicon-eye-open"></span> {{ wallpaper.hits }}&nbsp;
-                    <span class="glyphicon glyphicon-download"></span> {{ wallpaper.totalDownloads }}
-                </div>
-            </a>
-        </div>
-    {% else %}
-        <div class="well well-lg">{% trans %}No Wallpapers Found{% endtrans %}</div>
-    {% endfor %}
+            </div>
+        {% endblock %}
     </div>
-
-    {% block wallpapers_pagination %}
-        {{ pagination(total_pages, current_page) }}
-    {% endblock %}
 {% endblock %}
