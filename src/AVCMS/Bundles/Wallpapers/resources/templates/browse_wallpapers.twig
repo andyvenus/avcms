@@ -51,23 +51,32 @@
         </div>
 
         {% block wallpapers %}
+            {% set column_size = 12 / settings.browse_wallpaper_columns %}
+
             <div class="box browse-wallpapers-main-box">
                 <div class="box-main">
                     <div class="row">
                     {% for wallpaper in wallpapers %}
-                        <div class="col-sm-6">
+                        <div class="col-sm-{{ column_size }}">
                             {% block wallpaper_thumbnail -%}
                                 <a class="thumbnail clearfix" href="{{ url('wallpaper_details', {slug: wallpaper.slug}) }}">
                                     <img src="{{ wp_thumbnail_url(wallpaper) }}" width="100%"/>
-                                    <div class="pull-left">
+                                    <div class="pull-left" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;width:100%">
                                         {{ wallpaper.name }}
                                     </div>
-                                    <div class="pull-right">
-                                        <span class="glyphicon glyphicon-eye-open"></span> {{ wallpaper.hits }}&nbsp;
-                                        <span class="glyphicon glyphicon-download"></span> {{ wallpaper.totalDownloads }}
+                                    <div class="pull-left">
+                                        <span class="small">
+                                            <span class="glyphicon glyphicon-eye-open"></span> {{ wallpaper.hits }}
+                                            &nbsp;<span class="glyphicon glyphicon-download"></span> {{ wallpaper.totalDownloads }}
+                                            &nbsp;<span class="glyphicon glyphicon-calendar"></span> {{ wallpaper.publish_date|date(settings.date_format) }}
+                                        </span>
                                     </div>
                                 </a>
                             {%- endblock %}
+
+                            {% if loop.index % settings.browse_wallpaper_columns == 0 %}
+                                </div><div class="row">
+                            {% endif %}
                         </div>
                     {% else %}
                         <div class="well well-lg">{% trans %}No Wallpapers Found{% endtrans %}</div>

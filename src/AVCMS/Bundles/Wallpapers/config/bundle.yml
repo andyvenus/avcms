@@ -23,6 +23,17 @@ user_settings:
     help: If turned on, all resolutions will be displayed for all wallpapers
     section: wallpapers
     default: false
+  browse_wallpaper_columns:
+    type: select
+    label: Browse Wallpaper Columns
+    help: How many columns of wallpapers to show when in the main browse wallpapers pages
+    section: wallpapers
+    choices:
+      1: 1
+      2: 2
+      3: 3
+      4: 4
+    default: 2
 
 menu_items:
     admin:
