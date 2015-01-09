@@ -8,7 +8,9 @@ use AV\FileHandler\UploadedFileHandler;
 use AV\Form\FormBlueprint;
 use AV\Form\FormError;
 use AVCMS\Bundles\Categories\Controller\CategoryActionsTrait;
+use AVCMS\Bundles\Categories\Form\CategoryAdminForm;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
+use AVCMS\Bundles\Wallpapers\Form\WallpaperCategoryAdminForm;
 use AVCMS\Bundles\Wallpapers\Form\WallpapersAdminFiltersForm;
 use AVCMS\Bundles\Wallpapers\Form\WallpaperAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
@@ -240,6 +242,11 @@ class WallpapersAdminController extends AdminBaseController
             'form' => $form->createView()
 
         ]));
+    }
+
+    protected function getCategoryForm()
+    {
+        return new WallpaperCategoryAdminForm(new CategoryChoicesProvider($this->model('WallpaperCategories'), false));
     }
 
     protected function getSharedTemplateVars($ajax_depth)

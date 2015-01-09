@@ -92,10 +92,15 @@ trait CategoryActionsTrait
         $categoryConfig = $this->getCategoryConfig($contentType);
         $model = $this->model($categoryConfig['model']);
 
-        $formBlueprint = new CategoryAdminForm(new CategoryChoicesProvider($this->model('WallpaperCategories'), false));
+        $formBlueprint = $this->getCategoryForm();
 
         return $this->handleEdit($request, $model, $formBlueprint, $categoryConfig['route_prefix'].'manage_categories', '@Categories/admin/edit_category.twig', $categoryConfig['browser_template'], ['route_prefix' => $categoryConfig['route_prefix']]);
     }
+
+    /**
+     * @return FormBlueprint
+     */
+    abstract protected function getCategoryForm();
 
     public function deleteCategoryAction(Request $request, $contentType)
     {
