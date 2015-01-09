@@ -16,6 +16,12 @@
     {% endif %}
 {% endblock %}
 
+{% block meta_description -%}
+    {%- if category and current_page == 1 -%}
+        {{ category.description }}
+    {%- endif -%}
+{%- endblock %}
+
 {% block content %}
     <h2>
         {% if category.parent %}<a href="{{ path('wallpaper_category', {'category': category.parent.slug}) }}">{{ category.parent.name }}</a> / {% endif %}
