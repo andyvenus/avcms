@@ -192,17 +192,20 @@ class WallpapersAdminController extends AdminBaseController
 
         $curl = new Curl();
 
-        $file = $curl->get($fileUrl);
+        try {
+            $file = $curl->get($fileUrl);
 
-        $handler = new CurlFileHandler(CurlFileHandler::getImageFiletypes());
+            $handler = new CurlFileHandler(CurlFileHandler::getImageFiletypes());
 
-        $path = $this->container->getParameter('root_dir').'/'.$this->bundle->config->wallpapers_dir.'/'.basename($fileUrl)[0];
+            $path = $this->container->getParameter('root_dir') . '/' . $this->bundle->config->wallpapers_dir . '/' . basename($fileUrl)[0];
 
-        if (($fullPath = $handler->moveFile($fileUrl, $file, $path)) === false) {
-            $fileJson = ['success' => false, 'error' => $handler->getTranslatedError($this->translator)];
-        }
-        else {
-            $fileJson = ['success' => true, 'file' => basename($fileUrl)[0].'/'.basename($fullPath)];
+            if (($fullPath = $handler->moveFile($fileUrl, $file, $path)) === false) {
+                $fileJson = ['success' => false, 'error' => $handler->getTranslatedError($this->translator)];
+            } else {
+                $fileJson = ['success' => true, 'file' => basename($fileUrl)[0] . '/' . basename($fullPath)];
+            }
+        } catch (\Exception $e) {
+            $fileJson = ['success' => false, 'error' => $e->getMessage()];
         }
 
         return new JsonResponse($fileJson);
