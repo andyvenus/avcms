@@ -8,21 +8,23 @@
 namespace AVCMS\Core\Menu\MenuItemType;
 
 use AV\Form\FormBlueprint;
+use AVCMS\Bundles\CmsFoundation\Form\ChoicesProvider\RouteChoicesProvider;
 use AVCMS\Core\Menu\MenuItem;
 use AVCMS\Core\Menu\MenuItemConfigInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class RouteMenuItemType implements MenuItemTypeInterface
 {
     /**
      * @var UrlGeneratorInterface
      */
-    protected $urlGenerator;
+    protected $router;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator)
+    public function __construct(RouterInterface $router)
     {
-        $this->urlGenerator = $urlGenerator;
+        $this->router = $router;
     }
 
     public function getMenuItems(MenuItemConfigInterface $menuItemConfig)
@@ -31,7 +33,7 @@ class RouteMenuItemType implements MenuItemTypeInterface
         $menuItem->fromArray($menuItemConfig->toArray(), true);
 
         try {
-            $menuItem->setUrl($this->urlGenerator->generate($menuItemConfig->getSetting('route')));
+            $menuItem->setUrl($this->router->generate($menuItemConfig->getSetting('route')));
         }
         catch (RouteNotFoundException $e) {
             $menuItem->setUrl('#route-'.$menuItemConfig->getSetting('route').'-not-found');
@@ -42,8 +44,9 @@ class RouteMenuItemType implements MenuItemTypeInterface
 
     public function getFormFields(FormBlueprint $form)
     {
-        $form->add('settings[route]', 'text', [
-            'label' => 'Route Name',
+        $form->add('settings[route]', 'select', [
+            'label' => 'Route',
+            'choices_provider' => new RouteChoicesProvider($this->router)
         ]);
     }
 
