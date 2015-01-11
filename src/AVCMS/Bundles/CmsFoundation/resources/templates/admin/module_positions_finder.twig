@@ -35,8 +35,6 @@
     {% if item.active == false %}
         <div class="label label-warning">{% trans %}Inactive{% endtrans %}</div>
     {% endif %}
-
-    <div class="label label-info">{{ item.owner }}</div>
 {% endblock %}
 
 {% block item_extended_inner %}
