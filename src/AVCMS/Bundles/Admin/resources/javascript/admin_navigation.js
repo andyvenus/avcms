@@ -69,7 +69,7 @@ avcms.nav = {
         if (ajax_depth == 'editor') {
             var existing_editor = $('div[data-ajax-url="'+full_url+'"]');
 
-            if (existing_editor.length > 0) {
+            if (existing_editor.length > 0 && existing_editor.find('.always-refresh').length === 0) {
                 avcms.nav.hideOrRemovePreviousPage(ajax_depth);
                 existing_editor.show();
                 avcms.nav.setPageTitle(full_url);
