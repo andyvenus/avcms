@@ -6,6 +6,7 @@ use AV\Model\Connection;
 use AV\Model\Event\QueryBuilderModelJoinEvent;
 use AV\Model\Model;
 use Pixie\QueryBuilder\QueryBuilderHandler as PixieQueryBuilderHandler;
+use Pixie\QueryBuilder\Raw;
 
 class QueryBuilderHandler extends PixieQueryBuilderHandler {
     /**
@@ -227,7 +228,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
         if (isset($this->model) && $join === false) {
             $fieldsTabled = array();
             foreach ($fields as $field) {
-                if (!strpos($field, '.')) {
+                if (!strpos($field, '.') && !$field instanceof Raw) {
                     $field = $this->model->getTable().'.'.$field;
                 }
                 $fieldsTabled[] = $field;
