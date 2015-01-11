@@ -1,0 +1,3 @@
+{% for tag in tags %}
+    <a href="{{ path('browse_wallpapers', {'tags': tag.name}) }}" style="font-size: {{ tag.size }}px">{{ tag.name }}</a>
+{% endfor %}

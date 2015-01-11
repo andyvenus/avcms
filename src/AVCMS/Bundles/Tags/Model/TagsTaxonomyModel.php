@@ -20,4 +20,22 @@ class TagsTaxonomyModel extends TaxonomyModel
     {
         return 'tag_taxonomy';
     }
+
+    public function getPopularTags($contentType, $limit)
+    {
+        $tagInfo = $this->query()
+            ->groupBy('taxonomy_id')
+            ->orderBy('tag_occurrence', 'DESC')
+            ->limit($limit)
+            ->where('content_type', $contentType)
+            ->select(['taxonomy_id', $this->query()->raw('COUNT(taxonomy_id) AS tag_occurrence')])
+            ->get();
+
+        $popularTags = [];
+        foreach ($tagInfo as $tag) {
+            $popularTags[$tag->taxonomy_id] = $tag->tag_occurrence;
+        }
+
+        return $popularTags;
+    }
 }
