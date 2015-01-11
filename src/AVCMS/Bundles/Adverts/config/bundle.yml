@@ -3,6 +3,9 @@ namespace: AVCMS\Bundles\Adverts
 require:
   - Framework
 
+services:
+  - AdvertServices
+
 menu_items:
   admin:
     admin_adverts:
@@ -11,3 +14,18 @@ menu_items:
       icon: glyphicon glyphicon-certificate
       settings:
         route: adverts_admin_home
+
+modules:
+    advert:
+        name: Advert
+        description: Display an advert from the adverts section
+        controller: Adverts::AdvertModulesController::advertModule
+        cachable: true
+        cache_bust_model: Adverts
+        default_cache_time: 3600
+        accepted_template_types: [panel, content, none]
+        user_settings:
+          advert_id:
+            type: select
+            label: Advert
+            choices_provider_service: adverts.choices_provider
