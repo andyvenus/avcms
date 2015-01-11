@@ -7,12 +7,15 @@
 
 namespace AVCMS\Bundles\Wallpapers\Controller;
 
+use AVCMS\Bundles\Tags\Module\TagsModuleTrait;
 use AVCMS\Bundles\Users\Model\User;
 use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 class WallpaperModulesController extends Controller
 {
+    use TagsModuleTrait;
+
     /**
      * @var \AVCMS\Bundles\Wallpapers\Model\Wallpapers
      */
@@ -90,5 +93,10 @@ class WallpaperModulesController extends Controller
             'user_settings' => $userSettings,
             'columns' => $columns,
         )));
+    }
+
+    public function tagsModule($userSettings)
+    {
+        return $this->getTagsModule($userSettings, 'wallpaper', 'browse_wallpapers', 'ids');
     }
 }
