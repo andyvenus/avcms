@@ -241,19 +241,20 @@ class ModuleManager
         return $this->loadedModuleConfigs[$position];
     }
 
-    public function clearCaches()
+    public function clearCaches($modules = null)
     {
-        $this->doClearCaches($this->cacheDir);
+        $modules = (array) $modules;
+        $this->doClearCaches($this->cacheDir, $modules);
     }
 
-    protected function doClearCaches($dir)
+    protected function doClearCaches($dir, array $dirs = null)
     {
         $files = new \DirectoryIterator($dir);
         foreach($files as $file) {
             if ($file->isFile()) {
                 unlink($file->getPathName());
             }
-            if ($file->isDir() && $file->isDot() === false) {
+            if ($file->isDir() && $file->isDot() === false && ($dirs === null || in_array($file->getFilename(), $dirs))) {
                 $this->doClearCaches($file->getPathname());
             }
         }
