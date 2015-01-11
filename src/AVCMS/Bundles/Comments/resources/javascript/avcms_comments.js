@@ -37,6 +37,11 @@ avcms.comments = {
             if (data) {
                 var comments_area = $('.comments-area');
                 comments_area.html(comments_area.html() + data);
+
+                if ($('#comments-last-page').length === 1) {
+                    button.hide();
+                }
+
                 avcms.comments.loading = false;
             }
             else {

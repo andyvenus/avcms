@@ -17,7 +17,7 @@
                     <h4>{% trans %}Comments{% endtrans %} ({{ post.comments }})</h4>
                 </div>
                 <div class="box-main">
-                    {{ comments('blog_post', post) }}
+                    {{ comments('blog_post', post, post.comments) }}
                 </div>
             </div>
         {% endif %}

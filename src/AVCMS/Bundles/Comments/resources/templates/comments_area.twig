@@ -7,12 +7,14 @@
         <p><a href="{{ url('login') }}">{% trans %}Login to add your own comment{% endtrans %}</a></p>
     {% endif %}
 
-    <a name="comments"></a>
+    <a name="comments" data-total-comments="{{ total_comments }}"></a>
 
     <div class="comments-area" data-ajax-url="{{ url('comments', {content_type: content_type, content_id: content_id}) }}">
     </div>
 
-    <div class="load-comments">
-        <button class="btn btn-primary load-comments-button">{% trans %}Load Comments{% endtrans %}</button>
-    </div>
+    {% if total_comments != 0 %}
+        <div class="load-comments">
+            <button class="btn btn-primary load-comments-button">{% trans %}Load Comments{% endtrans %}</button>
+        </div>
+    {% endif %}
 {% endif %}

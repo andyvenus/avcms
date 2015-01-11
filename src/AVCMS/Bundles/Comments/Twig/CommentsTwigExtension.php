@@ -30,7 +30,7 @@ class CommentsTwigExtension extends \Twig_Extension
         $this->environment = $environment;
     }
 
-    public function renderCommentsArea($contentType, $content, $template = '@Comments/comments_area.twig')
+    public function renderCommentsArea($contentType, $content, $totalComments, $template = '@Comments/comments_area.twig')
     {
         if (is_object($content)) {
             if (!is_callable([$content, 'getId'])) {
@@ -41,7 +41,12 @@ class CommentsTwigExtension extends \Twig_Extension
 
         $this->form->setAction($this->urlGenerator->generate('add_comment', ['content_id' => $content, 'content_type' => $contentType], UrlGeneratorInterface::ABSOLUTE_URL));
 
-        return $this->environment->render($template, ['content_type' => $contentType, 'content_id' => $content, 'form' => $this->form->createView()]);
+        return $this->environment->render($template, [
+            'content_type' => $contentType,
+            'content_id' => $content,
+            'form' => $this->form->createView(),
+            'total_comments' => $totalComments
+        ]);
     }
 
     public function getFunctions()

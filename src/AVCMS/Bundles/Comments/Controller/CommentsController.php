@@ -18,6 +18,8 @@ class CommentsController extends Controller
 {
     public function getCommentsAction(Request $request)
     {
+        $commentsPerLoad = 20;
+
         $contentType = $request->get('content_type');
         $contentId = $request->get('content_id');
 
@@ -30,12 +32,18 @@ class CommentsController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $comments = $this->model('Comments')->getComments($contentType, $contentId, $this->model('@users'), 20, $request->get('page', 1));
+        $comments = $this->model('Comments')->getComments($contentType, $contentId, $this->model('@users'), $commentsPerLoad, $request->get('page', 1));
+
+        $lastPage = false;
+        if (count($comments) < $commentsPerLoad) {
+            $lastPage = true;
+        }
 
         return new Response($this->render("@Comments/comments.twig", [
             'comments' => $comments,
             'content_type' => $contentType,
-            'content_id' => $contentId
+            'content_id' => $contentId,
+            'last_page' => $lastPage
         ]));
     }
 

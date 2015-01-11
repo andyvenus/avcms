@@ -121,7 +121,7 @@
                         <h4>{% trans %}Comments{% endtrans %} ({{ wallpaper.comments }})</h4>
                     </div>
                     <div class="box-main">
-                        {{ comments('wallpaper', wallpaper) }}
+                        {{ comments('wallpaper', wallpaper, wallpaper.comments) }}
                     </div>
                 </div>
             {% endif %}

@@ -17,4 +17,8 @@
             {{ comment.comment }}
         </div>
     </div>
+
+    {% if last_page %}
+        <span id="comments-last-page"></span>
+    {% endif %}
 {% endfor %}
