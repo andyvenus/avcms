@@ -1,8 +1,11 @@
 {% extends '@admin/finder.twig' %}
 
 {% block finder_header_titles %}
-    <div class="col-md-12">
+    <div class="col-md-6">
         {% trans %}Description{% endtrans %}
+    </div>
+    <div class="col-md-6 hidden-xs hidden-sm">
+        {% trans %}Provider{% endtrans %}
     </div>
 {% endblock %}
 
@@ -32,10 +35,15 @@
     {% if item.active == false %}
         <div class="label label-warning">{% trans %}Inactive{% endtrans %}</div>
     {% endif %}
+
+    <div class="label label-info">{{ item.owner }}</div>
 {% endblock %}
 
 {% block item_extended_inner %}
-    <div class="col-md-12">
+    <div class="col-md-6">
         {{ item.description }}
+    </div>
+    <div class="col-md-6 hidden-xs hidden-sm">
+        {{ item.provider|capitalize }}: {{ item.owner }}
     </div>
 {% endblock %}
