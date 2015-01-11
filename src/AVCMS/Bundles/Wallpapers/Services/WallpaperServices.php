@@ -35,5 +35,9 @@ class WallpaperServices implements ServicesInterface
             ->addTag('menu.item_type', ['id' => 'wallpaper_categories'])
         ;
 
+        $container->register('event.wallpaper_module_cache_buster', 'AVCMS\Bundles\Wallpapers\EventSubscriber\WallpaperModuleCacheBusterSubscriber')
+            ->setArguments([new Reference('module_manager')])
+            ->addTag('event.subscriber')
+        ;
     }
 }
