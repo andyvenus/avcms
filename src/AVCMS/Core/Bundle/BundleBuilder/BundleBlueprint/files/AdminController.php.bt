@@ -48,11 +48,6 @@ class {{cc_plural}}AdminController extends AdminBaseController
         return $this->handleDelete($request, $this->{{model_var_name}});
     }
 
-    public function togglePublishedAction(Request $request)
-    {
-        return $this->handleTogglePublished($request, $this->{{model_var_name}});
-    }
-
     protected function getSharedTemplateVars($ajaxDepth)
     {
         $templateVars = parent::getSharedTemplateVars($ajaxDepth);
