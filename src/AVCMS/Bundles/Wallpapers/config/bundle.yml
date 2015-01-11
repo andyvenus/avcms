@@ -105,7 +105,7 @@ modules:
     controller: Wallpapers::WallpaperModulesController::wallpapersListModule
     cachable: true
     cache_bust_model: Wallpapers
-    default_cache_time: 10000
+    default_cache_time: 3600
     accepted_template_types: [content, panel, list_panel, none]
     user_settings:
       order:

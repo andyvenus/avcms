@@ -151,7 +151,7 @@ modules:
     name: HTML Snippet
     description: Add a HTML block to this position
     cachable: true
-    default_cache_time: 600
+    default_cache_time: 1000000
     user_settings:
             html:
               type: textarea

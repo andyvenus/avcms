@@ -53,7 +53,7 @@ modules:
     controller: Blog::BlogModulesController::blogPostsModule
     cachable: true
     cache_bust_model: BlogPosts
-    default_cache_time: 10000
+    default_cache_time: 3600
     accepted_template_types: [list_panel, none]
     user_settings:
       order:
