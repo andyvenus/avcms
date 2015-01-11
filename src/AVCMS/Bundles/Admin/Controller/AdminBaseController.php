@@ -10,6 +10,8 @@ namespace AVCMS\Bundles\Admin\Controller;
 use AV\Form\FormBlueprint;
 use AV\Form\FormHandler;
 use AV\Model\Model;
+use AVCMS\Bundles\Admin\Event\AdminDeleteEvent;
+use AVCMS\Bundles\Admin\Event\AdminTogglePublishedEvent;
 use AVCMS\Core\Content\EditContentHelper;
 use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -203,6 +205,8 @@ abstract class AdminBaseController extends Controller
 
         $model->deleteById($ids);
 
+        $this->dispatchEvent('admin.delete', new AdminDeleteEvent($request, $model));
+
         return new JsonResponse(array('success' => 1));
     }
 
@@ -241,6 +245,8 @@ abstract class AdminBaseController extends Controller
         else {
             return new JsonResponse(array('success' => 0));
         }
+
+        $this->dispatchEvent('admin.toggle_published', new AdminTogglePublishedEvent($request, $model, $column));
 
         return new JsonResponse(array('success' => 1));
     }
