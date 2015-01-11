@@ -94,9 +94,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    {% for module in modules('left_sidebar') %}
-                        {% include module.template %}
-                    {% endfor %}
+                    {{ render_modules('left_sidebar') }}
                 </div>
             </div>
         {% endblock %}

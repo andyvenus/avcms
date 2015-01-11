@@ -40,6 +40,11 @@ class ModuleManagerTwigExtension extends \Twig_Extension
                 'modules',
                 array($this, 'getModules'),
                 array('is_safe' => array('html'))
+            ),
+            'render_modules' => new \Twig_SimpleFunction(
+                'render_modules',
+                array($this, 'renderModules'),
+                array('is_safe' => array('html'))
             )
         );
     }
@@ -55,6 +60,18 @@ class ModuleManagerTwigExtension extends \Twig_Extension
         }
 
         return $modules;
+    }
+
+    public function renderModules($position, $vars = [])
+    {
+        $modules = $this->getModules($position, $vars);
+
+        $allModules = '';
+        foreach ($modules as $module) {
+            $allModules .= $this->environment->render($module->getTemplate(), ['module' => $module]);
+        }
+
+        return $allModules;
     }
 
     public function getName()
