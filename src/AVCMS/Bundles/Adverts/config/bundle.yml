@@ -1,0 +1,13 @@
+name: Adverts
+namespace: AVCMS\Bundles\Adverts
+require:
+  - Framework
+
+menu_items:
+  admin:
+    admin_adverts:
+      type: route
+      label: Adverts
+      icon: glyphicon glyphicon-certificate
+      settings:
+        route: adverts_admin_home

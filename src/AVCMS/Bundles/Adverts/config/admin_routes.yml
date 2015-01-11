@@ -1,0 +1,19 @@
+adverts_admin_edit:
+    path:     /adverts/edit/{id}
+    defaults: { _controller: 'Adverts::AdvertsAdminController::editAction' }
+
+adverts_admin_add:
+    path:     /adverts/new
+    defaults: { _controller: 'Adverts::AdvertsAdminController::editAction' }
+
+adverts_admin_delete:
+    path:     /adverts/delete
+    defaults: { _controller: 'Adverts::AdvertsAdminController::deleteAction' }
+
+adverts_admin_home:
+  path: /adverts
+  defaults: { _controller: 'Adverts::AdvertsAdminController::homeAction' }
+
+adverts_admin_finder:
+  path: /adverts/finder/{page}
+  defaults: { page: 1, _controller: 'Adverts::AdvertsAdminController::finderAction' }

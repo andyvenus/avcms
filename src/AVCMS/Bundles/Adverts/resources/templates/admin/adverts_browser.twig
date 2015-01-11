@@ -1,0 +1,29 @@
+{% extends '@admin/browser.twig' %}
+
+{% block finder_title %}
+    {% trans %}Adverts{% endtrans %}
+{% endblock %}
+
+{% block expand_finder_button %}
+    {{ buttons.expand_finder('adverts_admin_home') }}
+{% endblock %}
+
+{% block add_item %}
+    {{ buttons.add_item('adverts_admin_add', 'Add Advert') }}
+{% endblock %}
+
+{% block finder %}
+    <div data-url="{{ url('adverts_admin_finder') }}">
+        {{ render(path('adverts_admin_finder')) }}
+    </div>
+{% endblock %}
+
+{% block mobile_back_link %}
+    {{ url('adverts_admin_home') }}
+{% endblock %}
+
+{% block checked_options_buttons %}
+    {{ buttons.bulk_delete('adverts_admin_delete') }}
+
+    
+{% endblock %}

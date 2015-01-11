@@ -36,3 +36,5 @@ Categories:
     enabled: true
 LikeDislike:
     enabled: true
+Adverts:
+    enabled: true
