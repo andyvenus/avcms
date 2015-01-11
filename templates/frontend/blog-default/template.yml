@@ -18,6 +18,6 @@ user_settings:
       label: Logo URL
 
 module_positions:
-  left_sidebar:
-        name: Left Sidebar
+  right_sidebar:
+        name: Right Sidebar
         description: The main sidebar on the template
