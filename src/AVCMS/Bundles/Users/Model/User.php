@@ -230,6 +230,7 @@ class User extends Entity implements UserInterface
         return $this->getId();
     }
 
+    // todo: remove hard-coded facebook connect
     public function getFacebookId()
     {
         return $this->get('facebook_id');
