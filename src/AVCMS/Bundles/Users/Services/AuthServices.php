@@ -23,7 +23,7 @@ class AuthServices implements ServicesInterface
         ;
 
         $container->register('auth.manager', 'Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager')
-            ->setArguments(array(array(new Reference('auth.dao_provider'), new Reference('auth.remember_me_provider'))))
+            ->setArguments(array(array(new Reference('auth.dao_provider'), new Reference('auth.remember_me_provider'), new Reference('facebook_connect.provider'))))
         ;
 
         $container->register('auth.dao_provider', 'Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider')

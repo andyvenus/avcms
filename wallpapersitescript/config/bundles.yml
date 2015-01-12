@@ -38,3 +38,5 @@ LikeDislike:
     enabled: true
 Adverts:
     enabled: true
+FacebookConnect:
+    enabled: true

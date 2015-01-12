@@ -229,4 +229,14 @@ class User extends Entity implements UserInterface
     {
         return $this->getId();
     }
+
+    public function getFacebookId()
+    {
+        return $this->get('facebook_id');
+    }
+
+    public function setFacebookId($id)
+    {
+        $this->set('facebook_id', $id);
+    }
 }

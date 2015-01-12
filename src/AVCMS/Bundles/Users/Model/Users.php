@@ -96,6 +96,10 @@ class Users extends Model implements UserProviderInterface
      */
     public function refreshUser(UserInterface $user)
     {
+        if ($user instanceof AnonymousUser) {
+            return $user;
+        }
+
         return $this->loadUserByUsername($user->getUsername());
     }
 

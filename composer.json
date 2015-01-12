@@ -26,7 +26,8 @@
         "cocur/slugify": "@stable",
         "twig/extensions": "~1.1.0",
         "intervention/image": "~2.0",
-        "php-curl-class/php-curl-class": "dev-master"
+        "php-curl-class/php-curl-class": "dev-master",
+        "facebook/php-sdk-v4" : "4.0.*"
     },
     "require-dev": {
         "phpunit/phpunit": "4.3.*",

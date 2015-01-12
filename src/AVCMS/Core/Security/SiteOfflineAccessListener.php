@@ -62,4 +62,4 @@ class SiteOfflineAccessListener implements ListenerInterface
             throw new SiteOfflineException();
         }
     }
-} 
+}

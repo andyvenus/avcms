@@ -1,0 +1,7 @@
+name: FacebookConnect
+namespace: AVCMS\Bundles\FacebookConnect
+require:
+    - Framework
+
+services:
+    - FacebookConnectServices
