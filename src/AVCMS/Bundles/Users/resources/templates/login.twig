@@ -26,6 +26,7 @@
 
             <div class="login-options">
                 <a class="btn btn-default" href="{{ url('user_forgot_password') }}">{% trans %}Forgotten Your Password?{% endtrans %}</a>
+                {{ outlet('login.buttons') }}
             </div>
         </div>
     </div>

@@ -10,25 +10,11 @@ namespace AVCMS\Bundles\FacebookConnect\Controller;
 use AVCMS\Bundles\FacebookConnect\Form\FacebookAccountForm;
 use AVCMS\Bundles\FacebookConnect\Security\Token\FacebookUserToken;
 use AVCMS\Core\Controller\Controller;
-use AVCMS\Bundles\FacebookConnect\FacebookRedirectLoginHelper;
-use Facebook\FacebookSession;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class FacebookConnectController extends Controller
 {
-    public function loginAction()
-    {
-        FacebookSession::setDefaultApplication('1535722406709073', '83145ae5b94ce97884a1e50be68f6991');
-
-        $helper = new FacebookRedirectLoginHelper($this->generateUrl('facebook_login_check', [], UrlGeneratorInterface::ABSOLUTE_URL));
-        $helper->setSession($this->container->get('session'));
-
-        return new Response('<a href="'.$helper->getLoginUrl().'">Login</a>');
-    }
-
     public function registerAction(Request $request)
     {
         $token = $this->container->get('security.token_storage')->getToken();

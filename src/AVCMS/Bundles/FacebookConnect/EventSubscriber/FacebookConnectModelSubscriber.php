@@ -10,7 +10,7 @@ namespace AVCMS\Bundles\FacebookConnect\EventSubscriber;
 use AV\Model\Event\CreateModelEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class FacebookConnectSubscriber implements EventSubscriberInterface
+class FacebookConnectModelSubscriber implements EventSubscriberInterface
 {
     public function addOverflowEntity(CreateModelEvent $event)
     {

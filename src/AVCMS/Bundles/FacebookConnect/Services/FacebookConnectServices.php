@@ -25,8 +25,17 @@ class FacebookConnectServices implements ServicesInterface
             ->setArguments(['facebook_connect', new Reference('users.model'), new Reference('users.groups_model')])
         ;
 
-        $container->register('subscriber.facebook_connect', 'AVCMS\Bundles\FacebookConnect\EventSubscriber\FacebookConnectSubscriber')
+        $container->register('subscriber.facebook_connect_button', 'AVCMS\Bundles\FacebookConnect\EventSubscriber\FacebookConnectButtonSubscriber')
+            ->setArguments([new Reference('facebook_connect'), '%web_path%'])
             ->addTag('event.subscriber')
+        ;
+
+        $container->register('subscriber.facebook_connect_model', 'AVCMS\Bundles\FacebookConnect\EventSubscriber\FacebookConnectModelSubscriber')
+            ->addTag('event.subscriber')
+        ;
+
+        $container->register('facebook_connect', 'AVCMS\Bundles\FacebookConnect\Facebook\FacebookConnect')
+            ->setArguments([new Reference('settings_manager'), new Reference('router'), new Reference('session')])
         ;
     }
 }

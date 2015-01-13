@@ -11,6 +11,9 @@
         </div>
 
         <div class="box-main">
+            <p>{{ outlet('register.top') }}</p>
+
+            <h4>{% trans %}New Account Details{% endtrans %}</h4>
             {% if registration.errors is not empty %}
                 <div class="alert alert-danger">
                     {% for error in login_form.errors %}

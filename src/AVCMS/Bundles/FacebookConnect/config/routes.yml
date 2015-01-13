@@ -1,10 +1,6 @@
-facebook_login:
-  path: /facebook-login
-  defaults: { _controller: FacebookConnect::FacebookConnectController::loginAction }
-
 facebook_login_check:
   path: /facebook-login-check
 
 facebook_register:
-  path: /facebook-login/register
+  path: /facebook-register
   defaults: { _controller: FacebookConnect::FacebookConnectController::registerAction }
