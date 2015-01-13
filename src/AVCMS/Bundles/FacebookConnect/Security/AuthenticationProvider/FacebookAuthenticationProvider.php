@@ -43,7 +43,7 @@ class FacebookAuthenticationProvider implements AuthenticationProviderInterface
         $facebookSession = new FacebookSession($token->getAccessToken());
 
         if ($facebookSession->validate()) {
-            $user = $this->users->query()->where('facebook_id', $token->getUser())->first();
+            $user = $this->users->query()->where('facebook__id', $token->getUser())->first();
             if (!$user) {
                 $user = new AnonymousUser();
                 $user->setUsername("Unregistered");

@@ -49,7 +49,7 @@ class FacebookConnectController extends Controller
         if ($form->isValid()) {
             $form->saveToEntities();
             $newUser->setSlug('testlug');
-            $newUser->setFacebookId('10204857178562662');
+            $newUser->facebook->setId('10204857178562662');
             $users->save($newUser);
 
             $token->setUser($users->refreshUser($newUser));
