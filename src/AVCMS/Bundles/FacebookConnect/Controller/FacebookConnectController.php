@@ -10,6 +10,7 @@ namespace AVCMS\Bundles\FacebookConnect\Controller;
 use AVCMS\Bundles\FacebookConnect\Form\FacebookAccountForm;
 use AVCMS\Bundles\FacebookConnect\Security\Token\FacebookUserToken;
 use AVCMS\Core\Controller\Controller;
+use Facebook\GraphObject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,16 +29,25 @@ class FacebookConnectController extends Controller
             throw $this->createNotFoundException('Account already registered');
         }
 
+        $session = $facebookConnect->createSession($token->getAccessToken());
+        if (!$session->validate()) {
+            throw $this->createNotFoundException('Facebook session has expired, please re-login');
+        }
+
         $users = $this->container->get('users.model');
 
         $form = $this->buildForm(new FacebookAccountForm(), $request);
 
+        $facebookUser = $facebookConnect->createRequest($session, 'GET', '/me?fields=first_name,id,email')->execute()->getGraphObject(GraphObject::className())->asArray();
+
         if ($form->isValid()) {
             $form->saveToEntities();
 
-            $newUser = $this->container->get('users.new_user_builder')->createNewUser($form->getData('username'), 'test@test.com');
+            $email = isset($facebookUser['email']) ? $facebookUser['email'] : null;
 
-            $newUser->facebook->setId('10204857178562662');
+            $newUser = $this->container->get('users.new_user_builder')->createNewUser($form->getData('username'), $email);
+
+            $newUser->facebook->setId($facebookUser['id']);
 
             $users->save($newUser);
 
@@ -47,6 +57,6 @@ class FacebookConnectController extends Controller
             return $this->redirect($this->generateUrl('home'));
         }
 
-        return new Response($this->render('@FacebookConnect/new_account.twig', ['form' => $form->createView()]));
+        return new Response($this->render('@FacebookConnect/new_account.twig', ['form' => $form->createView(), 'facebook_user' => $facebookUser]));
     }
 }

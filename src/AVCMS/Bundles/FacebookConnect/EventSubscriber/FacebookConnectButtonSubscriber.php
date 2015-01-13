@@ -37,7 +37,7 @@ class FacebookConnectButtonSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $url = $this->facebookConnect->getHelper()->getLoginUrl();
+        $url = $this->facebookConnect->getHelper()->getLoginUrl(['email']);
 
         $content = '<a href="'.$url.'" class="btn btn-primary"><img src="'.$this->webDir.'/resources/FacebookConnect/images/fb_icon.png" width="18" height="18" /> Log-in With Facebook</a>';
 
