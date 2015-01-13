@@ -79,7 +79,7 @@ class UsersAdminController extends AdminBaseController
     public function finderAction(Request $request)
     {
         $finder = $this->users->find()
-            ->setSearchFields(array('username', 'last_ip'))
+            ->setSearchFields(array('username', 'last_ip', 'email'))
             ->setResultsPerPage(15)
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
         $items = $finder->get();
