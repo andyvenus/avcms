@@ -7,6 +7,7 @@
 
 namespace AVCMS\Bundles\FacebookConnect\Security\AuthenticationProvider;
 
+use AVCMS\Bundles\FacebookConnect\Facebook\FacebookConnect;
 use AVCMS\Bundles\FacebookConnect\Security\Exception\FacebookAccountNotFoundException;
 use AVCMS\Bundles\FacebookConnect\Security\Token\FacebookUserToken;
 use AVCMS\Bundles\Users\Model\AnonymousUser;
@@ -25,11 +26,14 @@ class FacebookAuthenticationProvider implements AuthenticationProviderInterface
 
     protected $userGroups;
 
-    public function __construct($providerKey, Users $users, UserGroups $userGroups)
+    protected $facebookConnect;
+
+    public function __construct($providerKey, Users $users, UserGroups $userGroups, FacebookConnect $facebookConnect)
     {
         $this->providerKey = $providerKey;
         $this->users = $users;
         $this->userGroups = $userGroups;
+        $this->facebookConnect = $facebookConnect;
     }
 
     /**
@@ -38,9 +42,7 @@ class FacebookAuthenticationProvider implements AuthenticationProviderInterface
      */
     public function authenticate(TokenInterface $token)
     {
-        FacebookSession::setDefaultApplication('1535722406709073', '83145ae5b94ce97884a1e50be68f6991');
-
-        $facebookSession = new FacebookSession($token->getAccessToken());
+        $facebookSession = $this->facebookConnect->createSession($token->getAccessToken());
 
         if ($facebookSession->validate()) {
             $user = $this->users->query()->where('facebook__id', $token->getUser())->first();
