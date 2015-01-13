@@ -9,7 +9,7 @@ namespace AVCMS\Bundles\Blog\Controller;
 
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use AVCMS\Bundles\Blog\Form\BlogPostsFilterForm;
-use AVCMS\Bundles\Blog\Form\PostForm;
+use AVCMS\Bundles\Blog\Form\BlogPostAdminForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -39,7 +39,7 @@ class BlogAdminController extends AdminBaseController
 
     public function editPostAction(Request $request)
     {
-        $form_blueprint = new PostForm($request->get('id', 0), $this->activeUser()->getId());
+        $form_blueprint = new BlogPostAdminForm($request->get('id', 0), $this->activeUser()->getId());
 
         return $this->handleEdit($request, $this->blogPosts, $form_blueprint, 'blog_edit_post', '@Blog/admin/edit_post.twig', '@Blog/admin/blog_browser.twig', array());
     }

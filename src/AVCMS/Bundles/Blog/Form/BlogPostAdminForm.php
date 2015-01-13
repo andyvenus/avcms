@@ -11,7 +11,7 @@ use AV\Validation\Rules\MustNotExist;
 use AV\Validation\Validator;
 use AVCMS\Bundles\Admin\Form\AdminContentForm;
 
-class PostForm extends AdminContentForm
+class BlogPostAdminForm extends AdminContentForm
 {
     public function __construct($itemId, $userId)
     {
