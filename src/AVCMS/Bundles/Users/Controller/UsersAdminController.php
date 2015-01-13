@@ -39,7 +39,7 @@ class UsersAdminController extends AdminBaseController
 
     public function editAction(Request $request)
     {
-        $formBlueprint = new UserAdminForm();
+        $formBlueprint = new UserAdminForm($request->get('id', 0));
 
         return $this->handleEdit($request, $this->users, $formBlueprint, 'users_admin_edit', '@Users/admin/edit_user.twig', '@Users/admin/users_browser.twig', array());
     }

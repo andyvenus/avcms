@@ -2,14 +2,20 @@
 
 namespace AVCMS\Bundles\Wallpapers\Form;
 
+use AV\Validation\Rules\MustNotExist;
+use AV\Validation\Validator;
 use AVCMS\Bundles\Admin\Form\AdminContentForm;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\FileUpload\Form\FileSelectFields;
 
 class WallpaperAdminForm extends AdminContentForm
 {
+    protected $itemId;
+
     public function __construct($itemId, CategoryChoicesProvider $categoryChoicesProvider, $import = false)
     {
+        $this->itemId = $itemId;
+
         if ($import === false) {
             new FileSelectFields($this, 'admin/wallpapers/find-files', 'admin/wallpapers/upload', 'admin/wallpapers/grab-file');
         }
@@ -67,5 +73,10 @@ class WallpaperAdminForm extends AdminContentForm
         if ($import === true) {
             $this->remove('slug');
         }
+    }
+
+    public function getValidationRules(Validator $validator)
+    {
+        $validator->addRule('slug', new MustNotExist('AVCMS\Bundles\Wallpapers\Model\Wallpapers', 'slug', $this->itemId), 'The URL Slug must be unique, slug already in use');
     }
 }

@@ -3,11 +3,17 @@
 namespace AVCMS\Bundles\Users\Form;
 
 use AV\Form\FormBlueprint;
+use AV\Validation\Rules\MustNotExist;
+use AV\Validation\Validator;
 
 class UserAdminForm extends FormBlueprint
 {
-    public function __construct()
+    protected $userId;
+
+    public function __construct($userId)
     {
+        $this->userId = $userId;
+
         $this->add('username', 'text', array(
             'label' => 'Username',
             'required' => true,
@@ -72,5 +78,12 @@ class UserAdminForm extends FormBlueprint
             'field_template' => '@admin/form_fields/slug_field.twig',
             'required' => true
         ));
+    }
+
+    public function getValidationRules(Validator $validator)
+    {
+        $validator->addRule('username', new MustNotExist('AVCMS\Bundles\Users\Model\Users', 'username', $this->userId), 'The entered username is already in use');
+        $validator->addRule('email', new MustNotExist('AVCMS\Bundles\Users\Model\Users', 'email', $this->userId), 'The entered email is already in use');
+        $validator->addRule('slug', new MustNotExist('AVCMS\Bundles\Users\Model\Users', 'slug', $this->userId), 'The URL Slug must be unique, slug already in use');
     }
 }
