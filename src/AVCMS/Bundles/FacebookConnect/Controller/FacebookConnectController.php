@@ -13,6 +13,7 @@ use AVCMS\Core\Controller\Controller;
 use Facebook\GraphObject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class FacebookConnectController extends Controller
 {
@@ -57,6 +58,8 @@ class FacebookConnectController extends Controller
             return $this->redirect($this->generateUrl('home'));
         }
 
-        return new Response($this->render('@FacebookConnect/new_account.twig', ['form' => $form->createView(), 'facebook_user' => $facebookUser]));
+        $logoutUrl = $facebookConnect->getHelper()->getLogoutUrl($session, $this->generateUrl('logout', [], UrlGeneratorInterface::ABSOLUTE_URL));
+
+        return new Response($this->render('@FacebookConnect/new_account.twig', ['form' => $form->createView(), 'facebook_user' => $facebookUser, 'logout_url' => $logoutUrl]));
     }
 }

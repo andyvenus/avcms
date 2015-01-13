@@ -4,4 +4,6 @@
     <div class="alert alert-info"><span class="glyphicon glyphicon-info-sign"></span> {% trans with {name: facebook_user.first_name} %}Hi {name}, we don't want to show your real name when using our site so please enter a username.{% endtrans %}</div>
 
     {{ form(form) }}
+
+    <a href="{{ logout_url }}" class="btn btn-danger">{% trans %}Cancel Sign-up{% endtrans %}</a>
 {% endblock %}
