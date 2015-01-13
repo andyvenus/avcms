@@ -48,5 +48,10 @@ class TemplateServices implements ServicesInterface
             ->setArguments([new Reference('session')])
             ->addTag('twig.extension')
         ;
+
+        $container->register('twig.extension.outlet', 'AVCMS\Bundles\CmsFoundation\Twig\TwigOutletExtension')
+            ->setArguments([new Reference('dispatcher')])
+            ->addTag('twig.extension')
+        ;
     }
 }
