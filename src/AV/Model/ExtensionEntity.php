@@ -9,5 +9,5 @@ namespace AV\Model;
 
 abstract class ExtensionEntity extends Entity
 {
-    
+    abstract public function getPrefix();
 }
