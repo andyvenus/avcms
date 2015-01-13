@@ -9,6 +9,7 @@ namespace AVCMS\Bundles\FacebookConnect\Facebook;
 
 use AVCMS\Bundles\FacebookConnect\FacebookRedirectLoginHelper;
 use AVCMS\Core\SettingsManager\SettingsManager;
+use Facebook\FacebookRequest;
 use Facebook\FacebookSession;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -59,5 +60,19 @@ class FacebookConnect
     public function createSession($accessToken)
     {
         return new FacebookSession($accessToken);
+    }
+
+    /**
+     * @param FacebookSession $session
+     * @param $method
+     * @param $path
+     * @param null $parameters
+     * @param null $version
+     * @param null $etag
+     * @return FacebookRequest
+     */
+    public function createRequest(FacebookSession $session, $method, $path, $parameters = null, $version = null, $etag = null)
+    {
+        return new FacebookRequest($session, $method, $path, $parameters, $version, $etag);
     }
 }
