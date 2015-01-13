@@ -7,7 +7,7 @@ featured_wallpapers:
   defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction, pageType: featured }
 
 wallpaper_thumbnail:
-  path: /web/wallpapers/{id}/thumbnail/{width}x{height}.{ext}
+  path: /web/wallpapers/{id}/thumbnail/{thumbnail_size}.{ext}
   defaults: { _controller: Wallpapers::WallpapersImageController::imageAction, thumbnail: true }
 
 wallpaper_image:

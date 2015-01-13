@@ -76,4 +76,37 @@ class ResolutionsManager
 
         return $configPath;
     }
+
+    public function getThumbnailResolution($size)
+    {
+        $resolutions = [
+            'xs' => '100x56',
+            'sm' => '250x141',
+            'md' => '500x281',
+            'lg' => '896x504',
+            'xl' => '1200x675'
+        ];
+
+        if (isset($resolutions[$size])) {
+            return $resolutions[$size];
+        }
+
+        return null;
+    }
+
+    public function checkValidResolution($width, $height)
+    {
+        $resolution = $width.'x'.$height;
+
+        $resolutions = $this->getAllResolutions();
+        foreach ($resolutions as $resCat) {
+            foreach ($resCat as $res => $resName) {
+                if ($res === $resolution) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }

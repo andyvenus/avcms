@@ -3,7 +3,7 @@
         <a href="{{ url('wallpaper_details', {slug: wallpaper.slug}) }}" class="list-group-item">
             <div class="media">
                 <span class="media-left" href="#">
-                    <img src="{{ wp_thumbnail_url(wallpaper, 84, 47) }}" width="84" height="50"/>
+                    <img src="{{ wp_thumbnail_url(wallpaper, 'xs') }}" width="84" height="50"/>
                 </span>
                 <div class="media-body" style="vertical-align: middle;">
                     <h5 class="media-heading">{{ wallpaper.name }} </h5>

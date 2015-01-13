@@ -17,16 +17,26 @@ class WallpapersImageController extends Controller
 {
     public function imageAction(Request $request, $thumbnail = false, $download = false)
     {
+        $resolutionsManager = $this->container->get('wallpaper.resolutions_manager');
+
         $width = $request->get('width');
         $height = $request->get('height');
 
-        if ($width === null || $height === null) {
-            $resolution = $request->get('resolution');
-            list($width, $height) = explode('x', $resolution);
+        $thumbnailSize = 'md';
+
+        if ($width === null || $height === null && $thumbnail === true && $request->get('thumbnail_size')) {
+            $resolution = $resolutionsManager->getThumbnailResolution($request->get('thumbnail_size'));
+            if ($resolution !== null) {
+                $thumbnailSize = $request->get('thumbnail_size');
+                list($width, $height) = explode('x', $resolution);
+            }
+        }
+        elseif ($resolutionsManager->checkValidResolution($width, $height) === false) {
+            $width = $height = null;
         }
 
         if (!$width || !$height) {
-            throw $this->createNotFoundException('No valid resolution');
+            throw $this->createNotFoundException();
         }
 
         $wallpapers = $this->model('Wallpapers');
@@ -38,10 +48,13 @@ class WallpapersImageController extends Controller
         $cacheDir = $this->container->getParameter('web_path').'/wallpapers/'.$wallpaper->getId();
         if ($thumbnail === true) {
             $cacheDir .= '/thumbnail';
+            $filename = $thumbnailSize.'.'.pathinfo($wallpaper->getFile(), PATHINFO_EXTENSION);
         }
-        $filename = $width.'x'.$height.'.'.pathinfo($wallpaper->getFile(), PATHINFO_EXTENSION);
-        $imagePath = $cacheDir.'/'.$filename;
+        else {
+            $filename = $width.'x'.$height.'.'.pathinfo($wallpaper->getFile(), PATHINFO_EXTENSION);
+        }
 
+        $imagePath = $cacheDir.'/'.$filename;
 
         $headers = [];
         if ($download === true) {
