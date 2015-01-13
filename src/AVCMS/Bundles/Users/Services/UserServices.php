@@ -45,5 +45,9 @@ class UserServices implements ServicesInterface
             ->setArguments([new Reference('bundle_manager'), new Reference('users.permissions_model')])
             ->addTag('event.subscriber')
         ;
+
+        $container->register('users.new_user_builder', 'AVCMS\Bundles\Users\User\NewUserBuilder')
+            ->setArguments([new Reference('users.model'), new Reference('slug.generator'), new Reference('security.bcrypt_encoder'), new Reference('request.stack')])
+        ;
     }
 }

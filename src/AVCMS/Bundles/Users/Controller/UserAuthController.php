@@ -62,27 +62,18 @@ class UserAuthController extends Controller
         }
 
         $users = $this->model('Users');
-        $user = $users->newEntity();
 
-        $form = $this->buildForm(new RegistrationForm(), $request, $user);
+        $form = $this->buildForm(new RegistrationForm(), $request);
 
         if ($form->isValid() && $form->getData('password1') == $form->getData('password2')) {
-            $encodedPassword = $this->container->get('security.bcrypt_encoder')->encodePassword($form->getData('password1'), null);
-            $user->setPassword($encodedPassword);
-            $form->saveToEntities();
-
-            $slugGenerator = $this->container->get('slug.generator');
-            $user->setSlug($slugGenerator->slugify($user->getUsername()));
-
-            $user->setJoined(time());
-            $user->setLastIp($request->getClientIp());
-
             if ($this->setting('validate_email_addresses')) {
-                $user->setRoleList('ROLE_NOT_VALIDATED');
+                $role = 'ROLE_NOT_VALIDATED';
             }
             else {
-                $user->setRoleList('ROLE_USER');
+                $role = 'ROLE_USER';
             }
+
+            $user = $this->container->get('users.new_user_builder')->createNewUser($form->getData('username'), $form->getData('email'), $form->getData('password1'), $role);
 
             $users->insert($user);
 

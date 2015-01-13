@@ -18,6 +18,7 @@ class FacebookConnectController extends Controller
     public function registerAction(Request $request)
     {
         $token = $this->container->get('security.token_storage')->getToken();
+        $facebookConnect = $this->container->get('facebook_connect');
 
         if (!$token instanceof FacebookUserToken) {
             throw $this->createNotFoundException('Not a facebook user');
@@ -28,14 +29,16 @@ class FacebookConnectController extends Controller
         }
 
         $users = $this->container->get('users.model');
-        $newUser = $users->newEntity();
 
-        $form = $this->buildForm(new FacebookAccountForm(), $request, $newUser);
+        $form = $this->buildForm(new FacebookAccountForm(), $request);
 
         if ($form->isValid()) {
             $form->saveToEntities();
-            $newUser->setSlug('testlug');
+
+            $newUser = $this->container->get('users.new_user_builder')->createNewUser($form->getData('username'), 'test@test.com');
+
             $newUser->facebook->setId('10204857178562662');
+
             $users->save($newUser);
 
             $token->setUser($users->refreshUser($newUser));
