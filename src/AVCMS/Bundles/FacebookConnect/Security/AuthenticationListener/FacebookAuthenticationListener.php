@@ -41,6 +41,10 @@ class FacebookAuthenticationListener extends AbstractAuthenticationListener impl
 
     protected function attemptAuthentication(Request $request)
     {
+        if (!$this->facebookConnect->isEnabled()) {
+            return null;
+        }
+
         $session = $this->facebookConnect->getHelper()->getSessionFromRedirect();
 
         if (!$session) {

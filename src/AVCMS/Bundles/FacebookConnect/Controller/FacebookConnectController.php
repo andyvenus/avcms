@@ -22,6 +22,10 @@ class FacebookConnectController extends Controller
         $token = $this->container->get('security.token_storage')->getToken();
         $facebookConnect = $this->container->get('facebook_connect');
 
+        if (!$facebookConnect->isEnabled()) {
+            throw $this->createNotFoundException();
+        }
+
         if (!$token instanceof FacebookUserToken) {
             throw $this->createNotFoundException('Not a facebook user');
         }

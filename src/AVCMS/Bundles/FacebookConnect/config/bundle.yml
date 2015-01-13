@@ -5,3 +5,23 @@ require:
 
 services:
     - FacebookConnectServices
+
+user_settings_sections:
+  facebook: Facebook Connect
+
+user_settings:
+    facebook_connect:
+        type: checkbox
+        default: 0
+        label: Enable Facebook Connect
+        section: facebook
+    facebook_app_id:
+      type: text
+      label: Facebook App Id
+      help: The app id for the app you have created on developers.facebook.com
+      section: facebook
+    facebook_secret:
+      type: text
+      label: Facebook App Secret
+      help: The secret key for the app you have created on developers.facebook.com
+      section: facebook

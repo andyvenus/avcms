@@ -31,6 +31,10 @@ class FacebookConnectButtonSubscriber implements EventSubscriberInterface
 
     public function addButton(OutletEvent $event)
     {
+        if (!$this->facebookConnect->isEnabled()) {
+            return;
+        }
+
         $outlet = $event->getOutletName();
 
         if ($outlet !== 'login.buttons' && $outlet !== 'register.top') {

@@ -42,7 +42,7 @@ class FacebookConnect
         $this->urlGenerator = $urlGenerator;
         $this->session = $session;
 
-        FacebookSession::setDefaultApplication('1535722406709073', '83145ae5b94ce97884a1e50be68f6991');
+        FacebookSession::setDefaultApplication($settings->getSetting('facebook_app_id'), $settings->getSetting('facebook_secret'));
     }
 
     public function getHelper()
@@ -74,5 +74,10 @@ class FacebookConnect
     public function createRequest(FacebookSession $session, $method, $path, $parameters = null, $version = null, $etag = null)
     {
         return new FacebookRequest($session, $method, $path, $parameters, $version, $etag);
+    }
+
+    public function isEnabled()
+    {
+        return ($this->settings->getSetting('facebook_connect') === '1');
     }
 }
