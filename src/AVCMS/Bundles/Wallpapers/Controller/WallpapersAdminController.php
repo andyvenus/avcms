@@ -116,6 +116,23 @@ class WallpapersAdminController extends AdminBaseController
 
     public function deleteAction(Request $request)
     {
+        if (!$this->checkCsrfToken($request)) {
+            return $this->invalidCsrfTokenJsonResponse();
+        }
+
+        $ids = $request->request->get('ids');
+
+        if ($ids) {
+            $ids = (array) $ids;
+
+            $cacheClearer = new CacheClearer($this->container->getParameter('root_dir').'/'.$this->container->getParameter('web_path').'/'.$this->bundle->config->web_dir);
+
+            $wallpapers = $this->wallpapers->query()->whereIn('id', $ids)->get();
+            foreach ($wallpapers as $wallpaper) {
+                $cacheClearer->clearCaches([$wallpaper->getSlug()]);
+            }
+        }
+
         return $this->handleDelete($request, $this->wallpapers);
     }
 
