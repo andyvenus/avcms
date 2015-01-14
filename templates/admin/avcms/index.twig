@@ -56,9 +56,11 @@
                                    {% if is_granted('ADMIN_CLEAR_CACHES') %}
                                        <li><a href="#" data-form-modal-url="{{ url('clear_caches') }}">{% trans %}Clear Caches{% endtrans %}</a></li>
                                        <li><a href="{{ url('generate_assets') }}">{% trans %}Regenerate Assets{% endtrans %}</a></li>
+                                       {{ outlet('admin.options_menu_caches') }}
                                        <li class="divider"></li>
                                    {% endif %}
                                    <li><a href="#">{% trans %}Check for update{% endtrans %}</a></li>
+                                   {{ outlet('admin.options_menu') }}
                                </ul>
                            </li>
                        {% endblock %}
