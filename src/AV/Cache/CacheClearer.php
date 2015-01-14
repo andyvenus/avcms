@@ -21,11 +21,12 @@ class CacheClearer
 
     /**
      * @param string|array $caches
+     * @param bool $keepParent
      */
-    public function clearCaches(array $caches = null)
+    public function clearCaches(array $caches = null, $keepParent = false)
     {
         if ($caches === null) {
-            $this->removeDir($this->cacheDir);
+            $this->removeDir($this->cacheDir, $keepParent);
             return;
         }
 
@@ -40,12 +41,12 @@ class CacheClearer
 
         foreach ($caches as $cacheDir) {
             if (file_exists($this->cacheDir.'/'.$cacheDir)) {
-                $this->removeDir($this->cacheDir . '/' . $cacheDir);
+                $this->removeDir($this->cacheDir . '/' . $cacheDir, $keepParent);
             }
         }
     }
 
-    protected function removeDir($path)
+    protected function removeDir($path, $keepParent = false)
     {
         $it = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($path),
@@ -60,6 +61,8 @@ class CacheClearer
                 unlink($file->getPathname());
             }
         }
-        rmdir($path);
+        if ($keepParent === false) {
+            rmdir($path);
+        }
     }
 } 
