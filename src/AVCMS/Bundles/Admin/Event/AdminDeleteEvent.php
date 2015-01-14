@@ -17,10 +17,13 @@ class AdminDeleteEvent extends Event
 
     protected $model;
 
-    public function __construct(Request $request, Model $model)
+    protected $ids;
+
+    public function __construct(Request $request, Model $model, array $ids)
     {
         $this->request = $request;
         $this->model = $model;
+        $this->ids = $ids;
     }
 
     public function getRequest()
@@ -31,5 +34,10 @@ class AdminDeleteEvent extends Event
     public function getModel()
     {
         return $this->model;
+    }
+
+    public function getIds()
+    {
+        return $this->ids;
     }
 }
