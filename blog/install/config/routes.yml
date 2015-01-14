@@ -1,4 +1,0 @@
-home:
-  path: /
-  defaults:
-    _controller: Installer::InstallerController::installerHomeAction
