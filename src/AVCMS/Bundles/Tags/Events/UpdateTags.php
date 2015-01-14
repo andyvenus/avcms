@@ -7,6 +7,7 @@
 
 namespace AVCMS\Bundles\Tags\Events;
 
+use AVCMS\Bundles\Admin\Event\AdminDeleteEvent;
 use AVCMS\Bundles\Admin\Event\AdminEditFormBuiltEvent;
 use AVCMS\Bundles\Admin\Event\AdminSaveContentEvent;
 use AVCMS\Core\Taxonomy\TaxonomyManager;
@@ -71,6 +72,16 @@ class UpdateTags implements EventSubscriberInterface
         }
     }
 
+    public function deleteTags(AdminDeleteEvent $adminDeleteEvent)
+    {
+        $ids = $adminDeleteEvent->getIds();
+        $singular = $adminDeleteEvent->getModel()->getSingular();
+
+        foreach ($ids as $id) {
+            $this->taxonomy->delete('tags', $id, $singular);
+        }
+    }
+
     /**
      * @return array
      */
@@ -78,7 +89,8 @@ class UpdateTags implements EventSubscriberInterface
     {
         return array(
             'admin.edit.form.built' => array('getTags'),
-            'admin.after.content.save' => array('updateTags')
+            'admin.after.content.save' => array('updateTags'),
+            'admin.delete' => array('deleteTags')
         );
     }
 }
