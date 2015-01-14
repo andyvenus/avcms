@@ -153,7 +153,7 @@ class TagsTaxonomy implements TaxonomyInterface
     public function assign($entity, $contentType)
     {
         if (!is_callable(array($entity, 'getId'))) {
-            throw new \Exception('Cannot assign taxonomy to an entity that doesn\'t have a getId methid');
+            throw new \Exception('Cannot assign taxonomy to an entity that doesn\'t have a getId method');
         }
 
         $entity->tags = $this->get($entity->getId(), $contentType);
