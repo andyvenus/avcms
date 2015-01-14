@@ -69,7 +69,7 @@ class TaxonomyManager
     }
 
     /**
-     * Save the taxonomy belonging to a content type
+     * Save the taxonomy belonging to a piece of content
      *
      * @param $taxonomy
      * @param $contentId
@@ -79,6 +79,19 @@ class TaxonomyManager
     public function update($taxonomy, $contentId, $contentType, $values)
     {
         $this->getTaxonomy($taxonomy)->update($contentId, $contentType, $values);
+    }
+
+    /**
+     * Delete the taxonomy belonging to a piece of content
+     *
+     * @param $taxonomy
+     * @param $contentId
+     * @param $contentType
+     * @throws \Exception
+     */
+    public function delete($taxonomy, $contentId, $contentType)
+    {
+        $this->getTaxonomy($taxonomy)->delete($contentId, $contentType);
     }
 
     /**

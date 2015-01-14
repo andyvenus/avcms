@@ -117,6 +117,17 @@ class TagsTaxonomy implements TaxonomyInterface
     }
 
     /**
+     * Delete the tags that are assigned to a piece of content
+     *
+     * @param $contentId
+     * @param $contentType
+     */
+    public function delete($contentId, $contentType)
+    {
+        $this->relationsModel->deleteContentTaxonomy($contentId, $contentType);
+    }
+
+    /**
      * Get the tags that are assigned to a piece of content
      *
      * @param $contentType

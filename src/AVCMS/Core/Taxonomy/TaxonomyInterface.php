@@ -17,6 +17,8 @@ interface TaxonomyInterface
 
     public function update($contentId, $contentType, array $taxonomyValues);
 
+    public function delete($contentId, $contentType);
+
     public function setTaxonomyJoin($model, QueryBuilderHandler $query, array $taxonomyValues);
 
     public function assign($entity, $contentType);
