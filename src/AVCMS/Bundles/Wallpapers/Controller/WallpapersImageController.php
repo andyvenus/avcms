@@ -40,12 +40,12 @@ class WallpapersImageController extends Controller
         }
 
         $wallpapers = $this->model('Wallpapers');
-        $wallpaper = $wallpapers->findOne($request->get('id'))->first();
+        $wallpaper = $wallpapers->findOne($request->get('slug'))->first();
         if (!$wallpaper) {
             throw $this->createNotFoundException();
         }
 
-        $cacheDir = $this->container->getParameter('web_path').'/wallpapers/'.$wallpaper->getId();
+        $cacheDir = $this->container->getParameter('web_path').'/wallpapers/'.$wallpaper->getSlug();
         if ($thumbnail === true) {
             $cacheDir .= '/thumbnail';
             $filename = $thumbnailSize.'.'.pathinfo($wallpaper->getFile(), PATHINFO_EXTENSION);

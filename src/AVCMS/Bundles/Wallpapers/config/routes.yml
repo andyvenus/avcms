@@ -7,15 +7,15 @@ featured_wallpapers:
   defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction, pageType: featured }
 
 wallpaper_thumbnail:
-  path: /web/wallpapers/{id}/thumbnail/{thumbnail_size}.{ext}
+  path: /web/wallpapers/{slug}/thumbnail/{thumbnail_size}.{ext}
   defaults: { _controller: Wallpapers::WallpapersImageController::imageAction, thumbnail: true }
 
 wallpaper_image:
-  path: /wallpapers/{id}/image/{width}x{height}.{ext}
+  path: /web/wallpapers/{slug}/{width}x{height}.{ext}
   defaults: { _controller: Wallpapers::WallpapersImageController::imageAction }
 
 wallpaper_download:
-  path: /wallpapers/{id}/download/{width}x{height}.{ext}
+  path: /wallpapers/{slug}/download/{width}x{height}.{ext}
   defaults: { _controller: Wallpapers::WallpapersImageController::imageAction, download: true }
 
 browse_wallpapers:

@@ -41,14 +41,14 @@ class WallpaperTwigExtension extends \Twig_Extension
 
         $extension = pathinfo($wallpaper->getFile())['extension'];
 
-        return $this->urlGenerator->generate('wallpaper_thumbnail', ['id' => $wallpaper->getId(), 'thumbnail_size' => $size, 'ext' => $extension]);
+        return $this->urlGenerator->generate('wallpaper_thumbnail', ['slug' => $wallpaper->getSlug(), 'thumbnail_size' => $size, 'ext' => $extension]);
     }
 
     public function imageUrl(Wallpaper $wallpaper, $width, $height, $route = 'wallpaper_image')
     {
         $extension = pathinfo($wallpaper->getFile())['extension'];
 
-        return $this->urlGenerator->generate($route, ['id' => $wallpaper->getId(), 'width' => $width, 'height' => $height, 'ext' => $extension]);
+        return $this->urlGenerator->generate($route, ['slug' => $wallpaper->getSlug(), 'width' => $width, 'height' => $height, 'ext' => $extension]);
     }
 
     public function downloadUrl(Wallpaper $wallpaper, $width, $height)

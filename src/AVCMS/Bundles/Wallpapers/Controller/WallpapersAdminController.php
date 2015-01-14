@@ -58,6 +58,8 @@ class WallpapersAdminController extends AdminBaseController
 
         $helper->handleRequest($request);
 
+        $previousSlug = $helper->getEntity()->getSlug();
+
         if ($helper->formValid()) {
             $imagePath = $this->container->getParameter('root_dir').'/'.$this->bundle->config->wallpapers_dir.'/'.$helper->getForm()->getData('file');
 
@@ -85,9 +87,9 @@ class WallpapersAdminController extends AdminBaseController
             $id = 0;
         }
 
-        if ($helper->formValid()) {
+        if ($helper->formValid() && $previousSlug) {
             $cacheClearer = new CacheClearer($this->container->getParameter('root_dir').'/'.$this->container->getParameter('web_path').'/'.$this->bundle->config->web_dir);
-            $cacheClearer->clearCaches([$helper->getEntity()->getId()]);
+            $cacheClearer->clearCaches([$previousSlug]);
         }
 
         return $this->createEditResponse(
