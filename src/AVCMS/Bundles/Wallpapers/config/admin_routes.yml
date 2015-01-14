@@ -62,7 +62,9 @@ wallpapers_admin_toggle_featured:
   path: /wallpapers/toggle-featured
   defaults: { _controller: Wallpapers::WallpapersAdminController::toggleFeaturedAction }
 
-
+wallpapers_admin_clear_image_cache:
+  path: /wallpapers/clear-cache
+  defaults: { _controller: Wallpapers::WallpapersAdminController::clearWallpaperImageCacheAction }
 
 wallpaper_bulk_import:
     path:     /wallpapers-bulk-import/import/{folder}

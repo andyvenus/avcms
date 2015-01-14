@@ -247,6 +247,19 @@ class WallpapersAdminController extends AdminBaseController
         ]));
     }
 
+    public function clearWallpaperImageCacheAction(Request $request)
+    {
+        if (!$this->checkCsrfToken($request)) {
+            return $this->invalidCsrfTokenJsonResponse();
+        }
+
+        $clearer = new CacheClearer($this->container->getParameter('root_dir').'/'.$this->container->getParameter('web_path').'/'.$this->bundle->config->web_dir);
+
+        $clearer->clearCaches(null, true);
+
+        return new JsonResponse(['success' => true]);
+    }
+
     protected function getCategoryForm()
     {
         return new WallpaperCategoryAdminForm(new CategoryChoicesProvider($this->model('WallpaperCategories'), false));
