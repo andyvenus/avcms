@@ -274,7 +274,9 @@ class Finder
     {
         $result = $this->currentQuery->first();
 
-        $this->assignTaxonomies($result);
+        if ($result !== null) {
+            $this->assignTaxonomies($result);
+        }
 
         return $result;
     }
