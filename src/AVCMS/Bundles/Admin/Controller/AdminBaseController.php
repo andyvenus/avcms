@@ -205,7 +205,7 @@ abstract class AdminBaseController extends Controller
 
         $model->deleteById($ids);
 
-        $this->dispatchEvent('admin.delete', new AdminDeleteEvent($request, $model));
+        $this->dispatchEvent('admin.delete', new AdminDeleteEvent($request, $model, (array) $ids));
 
         return new JsonResponse(array('success' => 1));
     }
