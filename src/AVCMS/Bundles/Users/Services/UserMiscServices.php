@@ -23,5 +23,9 @@ class UserMiscServices implements ServicesInterface
             ->setArguments([new Reference('security.token_storage'), new Reference('users.model')])
             ->addTag('event.subscriber')
         ;
+
+        $container->register('users.groups_choices_provider', 'AVCMS\Bundles\Users\Form\ChoicesProvider\UserGroupChoicesProvider')
+            ->setArguments([new Reference('users.groups_model')])
+        ;
     }
 }

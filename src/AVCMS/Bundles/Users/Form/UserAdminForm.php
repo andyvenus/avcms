@@ -40,13 +40,7 @@ class UserAdminForm extends FormBlueprint
         
         $this->add('role_list', 'select', array(
             'label' => 'Group',
-            'choices' => array(
-                'ROLE_USER' => 'User',
-                'ROLE_NOT_VALIDATED' => 'Not Validated',
-                'ROLE_BANNED' => 'Banned',
-                'ROLE_ADMIN' => 'Admin',
-                'ROLE_SUPER_ADMIN' => 'Super Admin'
-            )
+            'choices_provider_service' => 'users.groups_choices_provider'
         ));
         
         $this->add('location', 'text', array(
