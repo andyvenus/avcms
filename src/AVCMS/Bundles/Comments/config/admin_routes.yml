@@ -5,7 +5,3 @@ manage_comments:
 comments_finder:
   path: /comments/finder
   defaults: { _controller: Comments::CommentsAdminController::commentsFinderAction }
-
-delete_comments:
-  path: /comments/delete
-  defaults: { _controller: Comments::CommentsAdminController::deleteCommentsAction }

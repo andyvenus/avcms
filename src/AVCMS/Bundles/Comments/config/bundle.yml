@@ -32,6 +32,9 @@ permissions:
   ADMIN_COMMENTS:
     name: Manage Comments
     description: Ability to view & delete comments in the admin and frontend
+  MODERATOR_COMMENTS_DELETE:
+    name: Frontend Delete Comments
+    description: Delete comments from the frontend, no admin access
 
 menu_items:
   admin:

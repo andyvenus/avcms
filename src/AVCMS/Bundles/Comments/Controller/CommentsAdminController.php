@@ -9,7 +9,6 @@ namespace AVCMS\Bundles\Comments\Controller;
 
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use AVCMS\Bundles\Comments\Form\CommentFiltersForm;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -107,39 +106,6 @@ class CommentsAdminController extends AdminBaseController
         }
 
         return new Response($this->renderAdminSection('@Comments/admin/comments_finder.twig', $request->get('ajax_depth'), ['comments' => $comments]));
-    }
-
-    public function deleteCommentsAction(Request $request)
-    {
-        if (!$this->checkCsrfToken($request)) {
-            return $this->invalidCsrfTokenJsonResponse();
-        }
-
-        $ids = $request->request->get('ids');
-
-        if (!$ids) {
-            return new JsonResponse(array('success' => 0, 'error' => 'No ids set'));
-        }
-
-        $ids = (array) $ids;
-        foreach ($ids as $id) {
-            $comment = $this->comments->getOne($id);
-            $type = $comment->getContentType();
-
-            $typeConfig = $this->commentTypes->getContentType($type);
-
-            $model = $this->model($typeConfig['model']);
-            $content = $model->getOne($comment->getContentId());
-
-            if (is_callable([$content, 'getComments']) && is_callable([$content, 'setComments'])) {
-                $content->setComments(intval($content->getComments()) - 1);
-                $model->save($content);
-            }
-        }
-
-        $this->comments->deleteById($ids);
-
-        return new JsonResponse(array('success' => 1));
     }
 
     protected function getSharedTemplateVars($ajaxDepth)

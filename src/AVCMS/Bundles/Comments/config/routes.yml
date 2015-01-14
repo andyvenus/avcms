@@ -5,3 +5,7 @@ comments:
 add_comment:
   path: /comments/{content_type}/{content_id}/add
   defaults: { _controller: Comments::CommentsController::addCommentAction }
+
+delete_comments:
+  path: /moderator/comments/delete
+  defaults: { _controller: Comments::CommentsModerationController::deleteCommentsAction }

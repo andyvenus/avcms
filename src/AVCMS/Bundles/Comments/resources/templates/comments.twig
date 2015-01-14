@@ -8,7 +8,7 @@
                     <button class="btn btn-default btn-xs" data-report-button data-user-id="{{ comment.userId }}" data-content-type="comments" data-content-id="{{ comment.id }}">{% trans %}Report{% endtrans %}</button>
                 {% endif %}
 
-                {% if is_granted('ADMIN_COMMENTS') %}
+                {% if is_granted(['MODERATOR_COMMENTS_DELETE', 'ADMIN_COMMENTS']) %}
                     <button class="btn btn-danger btn-xs delete-comment">{% trans %}Delete{% endtrans %}</button>
                 {% endif %}
             </div>

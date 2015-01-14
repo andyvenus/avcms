@@ -92,7 +92,7 @@ avcms.comments = {
 
             $.ajax({
                 type: "POST",
-                url: avcms.config.site_url+'admin/comments/delete',
+                url: avcms.config.site_url+'moderator/comments/delete',
                 data: {'ids': id},
                 dataType: 'json',
                 success: function(data) {
