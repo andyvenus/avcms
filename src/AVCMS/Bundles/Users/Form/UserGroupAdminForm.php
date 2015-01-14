@@ -17,22 +17,31 @@ class UserGroupAdminForm extends FormBlueprint
             'help' => 'Length of time before users can post another comment and other similar activities'
         ));
         
-        $this->add('admin_default', 'radio', array(
-            'label' => 'Default Admin Permission',
-            'choices' => [
-                'deny' => 'Deny',
-                'allow' => 'Allow'
-            ],
-            'default' => '0'
-        ));
-        
         $this->add('perm_default', 'radio', array(
             'label' => 'Default General Permission',
             'choices' => [
                 'deny' => 'Deny',
                 'allow' => 'Allow'
             ],
-            'default' => '1'
+            'default' => 'allow'
+        ));
+
+        $this->add('moderator_default', 'radio', array(
+            'label' => 'Default Moderator Permission',
+            'choices' => [
+                'deny' => 'Deny',
+                'allow' => 'Allow'
+            ],
+            'default' => 'deny'
+        ));
+
+        $this->add('admin_default', 'radio', array(
+            'label' => 'Default Admin Permission',
+            'choices' => [
+                'deny' => 'Deny',
+                'allow' => 'Allow'
+            ],
+            'default' => 'deny'
         ));
 
         $this->add('admin_panel_access', 'checkbox', [
