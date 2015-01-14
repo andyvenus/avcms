@@ -41,7 +41,7 @@ class AdminServices implements ServicesInterface
         ;
 
         $container->register('admin.access_map', 'Symfony\Component\Security\Http\AccessMap')
-            ->addMethodCall('add', [new Reference('admin.request_matcher'), ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']])
+            ->addMethodCall('add', [new Reference('admin.request_matcher'), ['ADMIN_ACCESS']])
         ;
 
         $container->register('admin.access_listener.fully', 'Symfony\Component\Security\Http\Firewall\AccessListener')

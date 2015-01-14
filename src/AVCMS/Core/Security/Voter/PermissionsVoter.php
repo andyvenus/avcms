@@ -62,6 +62,12 @@ class PermissionsVoter implements VoterInterface
         $roles = $token->getUser()->getRoles();
         $group = $token->getUser()->group;
 
+        if (strpos($attribute, $this->adminPrefix) === 0) {
+            if ($group->getAdminPanelAccess() !== '1') {
+                return false;
+            }
+        }
+
         foreach ($roles as $role) {
             // Super admins always have permission
             if ($role->getRole() == 'ROLE_SUPER_ADMIN') {

@@ -43,7 +43,13 @@ class UserGroupsAdminController extends AdminBaseController
     {
         $formBlueprint = new UserGroupAdminForm();
 
-        return $this->handleEdit($request, $this->userGroups, $formBlueprint, 'user_groups_admin_edit', '@Users/admin/edit_user_group.twig', '@Users/admin/user_groups_browser.twig', array());
+        $userGroup = $this->userGroups->getOne($request->get('id'));
+
+        if ($userGroup && $userGroup->getCustomPermissions() !== '1') {
+            $formBlueprint->remove('admin_panel_access');
+        }
+
+        return $this->handleEdit($request, $this->userGroups, $formBlueprint, 'user_groups_admin_edit', '@Users/admin/edit_user_group.twig', '@Users/admin/user_groups_browser.twig', array(), $userGroup);
     }
 
     public function finderAction(Request $request)
@@ -82,6 +88,12 @@ class UserGroupsAdminController extends AdminBaseController
         $groupedPermissions = ['PERM' => [], 'ADMIN' => []];
 
         foreach ($permissions as $permission) {
+            $permType = explode('_', $permission->getId())[0];
+
+            if ($permType === 'ADMIN' && $userGroup->getAdminPanelAccess() !== '1') {
+                continue;
+            }
+
             $formBlueprint->add("permissions[{$permission->getId()}]", 'radio', [
                 'label' => $permission->getName(),
                 'choices' => [
@@ -91,8 +103,6 @@ class UserGroupsAdminController extends AdminBaseController
                 ],
                 'default' => 'default'
             ]);
-
-            $permType = explode('_', $permission->getId())[0];
 
             $groupedPermissions[$permType][] = $permission;
         }
@@ -113,7 +123,11 @@ class UserGroupsAdminController extends AdminBaseController
             return new JsonResponse(['form' => $form->createView()->getJsonResponseData()]);
         }
 
-        $permissionTypes = ['ADMIN' => $this->trans('Admin Permissions'), 'PERM' => $this->trans('Main Permissions')];
+        $permissionTypes = [];
+        if ($userGroup->getAdminPanelAccess()) {
+            $permissionTypes['ADMIN'] = $this->trans('Admin Permissions');
+        }
+        $permissionTypes['PERM'] = $this->trans('Main Permissions');
 
         return new Response($this->renderAdminSection('@Users/admin/manage_user_group_permissions.twig', $request->get('ajax_depth'),
             ['form' => $form->createView(), 'grouped_permissions' => $groupedPermissions, 'item' => $userGroup, 'permission_types' => $permissionTypes]

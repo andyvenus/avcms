@@ -13,7 +13,8 @@ class UserGroupAdminForm extends FormBlueprint
         ));
         
         $this->add('flood_control_time', 'text', array(
-            'label' => 'Flood Control Time',
+            'label' => 'Flood Control Time (seconds)',
+            'help' => 'Length of time before users can post another comment and other similar activities'
         ));
         
         $this->add('admin_default', 'radio', array(
@@ -33,5 +34,9 @@ class UserGroupAdminForm extends FormBlueprint
             ],
             'default' => '1'
         ));
+
+        $this->add('admin_panel_access', 'checkbox', [
+            'label' => 'Admin Panel Access'
+        ]);
     }
 }

@@ -75,4 +75,14 @@ class UserGroup extends Entity
     {
         return $this->get("perm_default");
     }
+
+    public function setAdminPanelAccess($value)
+    {
+        $this->set('admin_panel_access', $value);
+    }
+
+    public function getAdminPanelAccess()
+    {
+        return $this->get('admin_panel_access');
+    }
 }
