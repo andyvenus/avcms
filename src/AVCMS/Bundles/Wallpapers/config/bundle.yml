@@ -43,6 +43,15 @@ user_settings:
     validation:
       numeric:
         rule: Numeric
+  wallpaper_image_manipulation_library:
+    type: select
+    label: Image Library
+    help: The underlying image manipulation library that should be used
+    section: wallpapers
+    default: Gd
+    choices:
+      Gd: Gd
+      Imagick: Imagick
 
 menu_items:
     admin:

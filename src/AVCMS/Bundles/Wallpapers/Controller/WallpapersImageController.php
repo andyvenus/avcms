@@ -69,7 +69,7 @@ class WallpapersImageController extends Controller
             return new Response($file, 200, $headers);
         }
 
-        $imageManager = new ImageManager(['driver' => 'Gd']);
+        $imageManager = new ImageManager(['driver' => $this->setting('wallpaper_image_manipulation_library')]);
 
         try {
             $img = $imageManager->make($this->container->getParameter('root_dir') . '/' . $this->bundle->config->wallpapers_dir . '/' . $wallpaper->getFile());
