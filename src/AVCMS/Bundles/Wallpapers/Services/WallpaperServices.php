@@ -44,5 +44,10 @@ class WallpaperServices implements ServicesInterface
             ->setArguments([new Reference('translator')])
             ->addTag('event.subscriber')
         ;
+
+        $container->register('subscriber.wallpaper_cache_limiter', 'AVCMS\Bundles\Wallpapers\EventSubscriber\WallpaperCacheLimiterSubscriber')
+            ->setArguments(['%root_dir%', '%web_path%', new Reference('bundle_manager'), new Reference('settings_manager')])
+            ->addTag('event.subscriber')
+        ;
     }
 }

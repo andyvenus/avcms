@@ -52,6 +52,21 @@ user_settings:
     choices:
       Gd: Gd
       Imagick: Imagick
+  wallpaper_image_cache_limit:
+    type: select
+    label: Image cache limit
+    help: Limit the number of wallpaper resolutions that are cached before they are cleared. Only enable if you are running out of disk space.
+    section: wallpapers
+    default: 0
+    choices:
+      0: No limit
+      1: 1
+      2: 2
+      3: 3
+      4: 4
+      5: 5
+      8: 8
+      10: 10
 
 menu_items:
     admin:
