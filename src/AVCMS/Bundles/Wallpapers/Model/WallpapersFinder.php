@@ -32,4 +32,11 @@ class WallpapersFinder extends Finder
     {
         $this->currentQuery->where('featured', 1);
     }
+
+    public function category($categoryId)
+    {
+        $this->currentQuery->where(function($q) use ($categoryId) {
+            $q->where('category_id', $categoryId)->orWhere('category_parent_id', $categoryId);
+        });
+    }
 }

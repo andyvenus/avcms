@@ -61,9 +61,7 @@ class WallpapersController extends Controller
                 $category->subcategories = $categories->query()->where('parent', $categoryId)->get();
             }
 
-            $query->getQuery()->where(function($q) use ($categoryId) {
-                $q->where('category_id', $categoryId)->orWhere('category_parent_id', $categoryId);
-            });
+            $query->category($categoryId);
         }
         if ($pageType === 'featured') {
             $query->featured();
