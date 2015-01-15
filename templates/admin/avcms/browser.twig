@@ -10,12 +10,14 @@
     <div class="{% block browser_class %}browser{% endblock %}">
         <div class="browser-finder animated fadeIn {%- block finder_extra_class -%}{%- endblock -%}">
             <div class="browser-finder-top">
+                <div class="browser-finder-title">
+                    <h3>{% block finder_title %}Browser{% endblock %}</h3>
+
+                    {% block expand_finder_button %}{% endblock %}
+                </div>
+
                 <div class="browser-finder-filters">
-                    {% block finder_top -%}
-                        <h3>{% block finder_title %}Browser{% endblock %}</h3>
-
-                        {% block expand_finder_button %}{% endblock %}
-
+                    {% block finder_filters_form -%}
                         {% block finder_filters %}
                             {{ form_start(finder_filters_form) }}
 
@@ -24,6 +26,9 @@
                             {{ form_end(finder_filters_form) }}
                         {% endblock %}
                     {%- endblock %}
+                </div>
+                <div class="browser-finder-show-filters">
+                    <a href="#" class="browser-finder-show-filters-button text-muted"><span class="glyphicon glyphicon-filter"></span> {% trans %}Show Filters{% endtrans %}</a>
                 </div>
 
                 {% block add_item %}{% endblock %}

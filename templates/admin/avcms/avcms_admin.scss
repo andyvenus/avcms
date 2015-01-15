@@ -167,13 +167,27 @@ a {
   width: 220px;
 }
 
-.browser-finder-filters {
-  padding: 10px;
+.browser-finder-title {
+  padding: 10px 10px 0px 10px;
   position: relative;
 
   h3 {
     margin: 0px 0px 4px 0px;
   }
+
+  .expand-browser {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 12px;
+    margin-top: 12px;
+  }
+}
+
+.browser-finder-filters {
+  padding: 5px 10px;
+  position: relative;
+  display: none;
 
   .select2-container {
     width: 100%;
@@ -183,20 +197,28 @@ a {
     margin-bottom: 4px;
   }
 
-  .expand-browser {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin-right: 12px;
-    margin-top: 10px;
-  }
-
   .control-label {
     display: none;
   }
 
   .form-group {
     margin-bottom: 5px;
+  }
+}
+
+.browser-finder-show-filters {
+  padding: 5px 10px;
+  text-align: center;
+
+  a {
+    display: block;
+    padding: 4px;
+    border: 1px solid #e3e3e3;
+    text-decoration: none;
+  }
+
+  a:hover {
+    background-color: lighten($finder_background, 1);
   }
 }
 

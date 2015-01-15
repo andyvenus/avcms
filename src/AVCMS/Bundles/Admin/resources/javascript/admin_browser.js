@@ -23,6 +23,8 @@ $(document).ready(function() {
     body.on('click', '.avcms-toggle-published', avcms.browser.togglePublishedButton);
     body.on('click', '.avcms-toggle-featured', avcms.browser.toggleFeaturedButton);
 
+    body.on('click', '.browser-finder-show-filters-button', avcms.browser.showFilters);
+
     avcms.event.addEvent('page-modified', avcms.browser.setBrowserFocus);
     avcms.browser.setBrowserFocus();
 
@@ -438,5 +440,12 @@ avcms.browser = {
                 })
             }
         });
+    },
+
+    showFilters: function() {
+        $('.browser-finder-filters').toggle();
+        $('.browser-finder-show-filters').toggle();
+
+        avcms.nav.onPageModified();
     }
 }

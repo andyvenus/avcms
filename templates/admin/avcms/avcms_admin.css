@@ -110,25 +110,41 @@ a {
   display: none;
   width: 220px; }
 
-.browser-finder-filters {
-  padding: 10px;
+.browser-finder-title {
+  padding: 10px 10px 0px 10px;
   position: relative; }
-  .browser-finder-filters h3 {
+  .browser-finder-title h3 {
     margin: 0px 0px 4px 0px; }
-  .browser-finder-filters .select2-container {
-    width: 100%; }
-  .browser-finder-filters .filter-form-row {
-    margin-bottom: 4px; }
-  .browser-finder-filters .expand-browser {
+  .browser-finder-title .expand-browser {
     position: absolute;
     top: 0;
     right: 0;
     margin-right: 12px;
-    margin-top: 10px; }
+    margin-top: 12px; }
+
+.browser-finder-filters {
+  padding: 5px 10px;
+  position: relative;
+  display: none; }
+  .browser-finder-filters .select2-container {
+    width: 100%; }
+  .browser-finder-filters .filter-form-row {
+    margin-bottom: 4px; }
   .browser-finder-filters .control-label {
     display: none; }
   .browser-finder-filters .form-group {
     margin-bottom: 5px; }
+
+.browser-finder-show-filters {
+  padding: 5px 10px;
+  text-align: center; }
+  .browser-finder-show-filters a {
+    display: block;
+    padding: 4px;
+    border: 1px solid #e3e3e3;
+    text-decoration: none; }
+  .browser-finder-show-filters a:hover {
+    background-color: whitesmoke; }
 
 .browser-finder-results {
   overflow: auto; }
