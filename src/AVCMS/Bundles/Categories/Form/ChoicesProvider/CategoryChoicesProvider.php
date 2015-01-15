@@ -35,6 +35,10 @@ class CategoryChoicesProvider implements ChoicesProviderInterface
     {
         $choices = [];
 
+        if ($this->allowNone) {
+            $choices[0] = 'All';
+        }
+
         if ($this->subCategories === true) {
             $categories = $this->model->getAllCategories();
         }

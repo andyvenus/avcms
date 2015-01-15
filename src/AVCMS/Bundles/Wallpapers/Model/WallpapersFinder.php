@@ -35,6 +35,10 @@ class WallpapersFinder extends Finder
 
     public function category($categoryId)
     {
+        if (!$categoryId) {
+            return;
+        }
+
         $this->currentQuery->where(function($q) use ($categoryId) {
             $q->where('category_id', $categoryId)->orWhere('category_parent_id', $categoryId);
         });

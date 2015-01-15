@@ -108,7 +108,7 @@ class WallpapersAdminController extends AdminBaseController
             ->setSearchFields(array('name'))
             ->setResultsPerPage(15)
             ->join($this->model('WallpaperCategories'), ['id', 'name', 'slug'])
-            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
+            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null, 'category' => 0));
         $items = $finder->get();
 
         return new Response($this->render('@Wallpapers/admin/wallpapers_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));
@@ -288,7 +288,7 @@ class WallpapersAdminController extends AdminBaseController
     {
         $template_vars = parent::getSharedTemplateVars($ajax_depth);
 
-        $template_vars['finder_filters_form'] = $this->buildForm(new WallpapersAdminFiltersForm())->createView();
+        $template_vars['finder_filters_form'] = $this->buildForm(new WallpapersAdminFiltersForm(new CategoryChoicesProvider($this->model('WallpaperCategories'), true, true)))->createView();
 
         return $template_vars;
     }
