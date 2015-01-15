@@ -84,6 +84,20 @@ menu_items:
           parent: wallpapers_admin
           settings:
             route: wallpaper_bulk_import_admin_home
+        wallpapers_categories_admin:
+          label: Categories
+          icon: glyphicon glyphicon-th-list
+          type: route
+          parent: wallpapers_admin
+          settings:
+            route: wallpapers_manage_categories
+        wallpapers_resolutions_admin:
+          label: Resolutions
+          icon: glyphicon glyphicon-fullscreen
+          type: route
+          parent: wallpapers_admin
+          settings:
+            route: wallpapers_manage_resolutions
 
 categories:
     wallpaper:
