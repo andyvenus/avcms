@@ -136,13 +136,6 @@ class ModulesAdminController extends AdminBaseController
         )));
     }
 
-    public function editAction(Request $request)
-    {
-        $formBlueprint = new ModulePositionAdminForm();
-
-        return $this->handleEdit($request, $this->modulePositions, $formBlueprint, 'module_positions_admin_edit', '@CmsFoundation/admin/edit_module_position.twig', '@CmsFoundation/admin/modules_browser.twig', array());
-    }
-
     public function managePositionModulesAction(Request $request)
     {
         $position = $this->modulePositions->getOne($request->get('id'));
