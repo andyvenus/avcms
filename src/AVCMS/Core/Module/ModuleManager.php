@@ -243,7 +243,9 @@ class ModuleManager
 
     public function clearCaches($modules = null)
     {
-        $modules = (array) $modules;
+        if ($modules !== null) {
+            $modules = (array)$modules;
+        }
         $this->doClearCaches($this->cacheDir, $modules);
     }
 

@@ -120,7 +120,7 @@ class ModulesAdminController extends AdminBaseController
                 $this->modules->save($moduleConfig);
             }
 
-            $this->container->get('module_manager')->clearCaches();
+            $this->container->get('module_manager')->clearCaches([$moduleConfig->getModule()]);
 
             return new JsonResponse(array(
                 'form' => $formHandler->createView()->getJsonResponseData(),
