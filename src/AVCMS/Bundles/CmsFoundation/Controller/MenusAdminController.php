@@ -3,6 +3,7 @@
 namespace AVCMS\Bundles\CmsFoundation\Controller;
 
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
+use AVCMS\Bundles\CmsFoundation\Form\ChoicesProvider\IconChoicesProvider;
 use AVCMS\Bundles\CmsFoundation\Form\MenuAdminForm;
 use AVCMS\Bundles\CmsFoundation\Form\MenuItemAdminForm;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -97,7 +98,7 @@ class MenusAdminController extends AdminBaseController
             throw $this->createNotFoundException('Menu Type Not Found');
         }
 
-        $formBlueprint = new MenuItemAdminForm();
+        $formBlueprint = new MenuItemAdminForm(new IconChoicesProvider);
         $menuItemType->getFormFields($formBlueprint);
 
         $form = $this->buildForm($formBlueprint);

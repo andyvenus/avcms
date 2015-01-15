@@ -3,10 +3,11 @@
 namespace AVCMS\Bundles\CmsFoundation\Form;
 
 use AV\Form\FormBlueprint;
+use AVCMS\Bundles\CmsFoundation\Form\ChoicesProvider\IconChoicesProvider;
 
 class MenuItemAdminForm extends FormBlueprint
 {
-    public function __construct()
+    public function __construct(IconChoicesProvider $iconChoices)
     {
         $this->setName('menu_item_form');
 
@@ -15,9 +16,13 @@ class MenuItemAdminForm extends FormBlueprint
             'required' => true,
         ));
 
-        $this->add('icon', 'text', array(
+        $this->add('icon', 'select', array(
             'label' => 'Icon',
             'required' => true,
+            'choices_provider' => $iconChoices,
+            'attr' => [
+                'class' => 'no_select2 icon-selector'
+            ]
         ));
     }
 }

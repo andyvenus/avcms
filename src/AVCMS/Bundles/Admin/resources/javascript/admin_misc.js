@@ -41,6 +41,13 @@ $(document).ready(function() {
         });
 
         $(".nano").nanoScroller({ iOSNativeScrolling: false });
+
+        //icons select2
+        $('select.icon-selector').select2({
+            formatResult: avcms.admin.iconSelectFormat,
+            formatSelection: avcms.admin.iconSelectFormat,
+            escapeMarkup: function(m) { return m; }
+        });
     });
 
     var body = $('body');
@@ -118,5 +125,10 @@ avcms.admin = {
 
     disableAutoGenerateSlug: function() {
         $(this).data('modified', 'true');
+    },
+
+    iconSelectFormat: function(state) {
+        if (!state.id) return state.text; // optgroup
+        return "<span class='" + state.id + "'/></span> " + state.text;
     }
-}
+};
