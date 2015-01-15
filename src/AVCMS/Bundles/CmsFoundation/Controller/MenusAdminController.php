@@ -97,7 +97,7 @@ class MenusAdminController extends AdminBaseController
             throw $this->createNotFoundException('Menu Type Not Found');
         }
 
-        $formBlueprint = new MenuItemAdminForm($request->attributes->get('id', 0), ['a' => 'a']);
+        $formBlueprint = new MenuItemAdminForm();
         $menuItemType->getFormFields($formBlueprint);
 
         $form = $this->buildForm($formBlueprint);

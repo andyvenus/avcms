@@ -81,6 +81,16 @@ class MenuItemConfig extends Entity implements MenuItemConfigInterface
         return $this->get("owner");
     }
 
+    public function setProviderId($id)
+    {
+        $this->set('provider_id', $id);
+    }
+
+    public function getProviderId()
+    {
+        return $this->get('provider_id');
+    }
+
     public function setParent($value)
     {
         $this->set("parent", $value);

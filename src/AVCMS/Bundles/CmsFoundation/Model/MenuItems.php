@@ -26,13 +26,10 @@ class MenuItems extends Model
 
     public function save(Entity $entity, $column = null)
     {
-        $id = $entity->getId();
+        if ($entity->getId() === null && $entity->getProviderId() !== null) {
+            $column = 'provider_id';
+        }
 
-        if ($this->query()->where('id', $id)->count() >= 1) {
-            return $this->update($entity);
-        }
-        else {
-            return $this->insert($entity);
-        }
+        parent::save($entity, $column);
     }
 }

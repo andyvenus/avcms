@@ -50,19 +50,32 @@ class UpdateMenusSubscriber implements EventSubscriberInterface
                 if (isset($bundle['menu_items']) && is_array($bundle['menu_items'])) {
                     foreach ($bundle['menu_items'] as $menu => $menuItems) {
                         foreach ($menuItems as $itemId => $menuItemConfig) {
-                            $menuItem = $this->menuManager->getItemsModel()->getOne($itemId);
+                            $menuItem = $this->menuManager->getItemsModel()->query()->where('provider_id', $itemId)->first();
 
                             if (!$menuItem) {
                                 $menuItem = new MenuItemConfig();
                             }
 
+                            unset($parent);
+                            if (isset($menuItemConfig['parent'])) {
+                                $parent = $menuItemConfig['parent'];
+                                unset($menuItemConfig['parent']);
+                            }
+
                             $menuItem->fromArray($menuItemConfig, true);
                             $menuItem->setMenu($menu);
-                            $menuItem->setId($itemId);
+                            $menuItem->setProviderId($itemId);
                             $menuItem->setOwner($bundle->name);
 
                             if ($menuItem->getOrder() === null && isset($menuItemConfig['default_order'])) {
                                $menuItem->setOrder($menuItemConfig['default_order']);
+                            }
+
+                            if (isset($parent) && $menuItem->getId() === null) {
+                                $parentItem = $this->menuManager->getItemsModel()->query()->where('provider_id', $parent)->first();
+                                if ($parentItem) {
+                                    $menuItem->setParent($parentItem->getId());
+                                }
                             }
 
                             // In case someone has used true/false for the translatable parameter

@@ -3,23 +3,12 @@
 namespace AVCMS\Bundles\CmsFoundation\Form;
 
 use AV\Form\FormBlueprint;
-use AV\Validation\Rules\MustNotExist;
-use AV\Validation\Validator;
 
 class MenuItemAdminForm extends FormBlueprint
 {
-    public function __construct($id, $typeChoices)
+    public function __construct()
     {
-        $this->id = $id;
-
         $this->setName('menu_item_form');
-
-        if ($id === 0) {
-            $this->add('id', 'text', array(
-                'label' => 'Identifier (permanent)',
-                'required' => true,
-            ));
-        }
 
         $this->add('label', 'text', array(
             'label' => 'Label',
@@ -30,12 +19,5 @@ class MenuItemAdminForm extends FormBlueprint
             'label' => 'Icon',
             'required' => true,
         ));
-    }
-
-    public function getValidationRules(Validator $validator)
-    {
-        if ($this->id === 0) {
-            $validator->addRule('id', new MustNotExist('AVCMS\Bundles\CmsFoundation\Model\MenuItems', 'id', $this->id));
-        }
     }
 }
