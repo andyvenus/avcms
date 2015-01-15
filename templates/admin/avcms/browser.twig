@@ -17,19 +17,19 @@
                 </div>
 
                 <div class="browser-finder-filters">
-                    {% block finder_filters_form -%}
-                        {% block finder_filters %}
-                            {{ form_start(finder_filters_form) }}
+                    {% block finder_filters -%}
+                        {{ form_start(finder_filters_form) }}
 
-                            {{ form_rows(finder_filters_form) }}
+                        {{ form_rows(finder_filters_form) }}
 
-                            {{ form_end(finder_filters_form) }}
-                        {% endblock %}
+                        {{ form_end(finder_filters_form) }}
                     {%- endblock %}
                 </div>
+                {% if finder_filters_form %}
                 <div class="browser-finder-show-filters">
                     <a href="#" class="browser-finder-show-filters-button text-muted"><span class="glyphicon glyphicon-filter"></span> {% trans %}Show Filters{% endtrans %}</a>
                 </div>
+                {% endif %}
 
                 {% block add_item %}{% endblock %}
             </div>
