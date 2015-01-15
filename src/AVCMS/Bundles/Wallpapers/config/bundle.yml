@@ -136,6 +136,10 @@ module_positions:
     environment: frontend
     global_modules: 1
     type: content
+  wallpaper_details:
+    name: Wallpaper Details Lower
+    description: The wallpaper details page, underneath the resolutions
+    environment: frontend
 
 modules:
   wallpapers:

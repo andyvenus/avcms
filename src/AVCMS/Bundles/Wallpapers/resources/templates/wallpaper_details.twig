@@ -114,6 +114,8 @@
             {% endblock %}
         {% endif %}
 
+        {{ render_modules('wallpaper_details') }}
+
         {% block wallpaper_comments %}
             {% if settings.comments_enabled %}
                 <div class="box wallpaper-comments-box">
