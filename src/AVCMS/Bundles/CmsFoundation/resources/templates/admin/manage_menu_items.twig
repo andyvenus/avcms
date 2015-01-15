@@ -26,7 +26,11 @@
         <div class="alert alert-info">{% trans %}Please note, you will need to refresh the admin panel to see changes to the admin panel menu.{% endtrans %}</div>
     {% endif %}
 
-    <p><a href="{{ url('menu_items_select', {menu: item.id}) }}" class="btn btn-primary">{% trans %}Add Menu Item{% endtrans %}</a></p>
+    <p>
+        <a href="{{ url('menu_items_select', {menu: item.id}) }}" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus"></span> {% trans %}Add Menu Item{% endtrans %}
+        </a>
+    </p>
 
     <div class="sortable-container">
         <ul class="sortable" style="position: absolute;" data-sortable-levels="2" data-ajax-action="{{ url('menus_save_order', {id: item.id}) }}" data-ajax-delete-action="{{ url('menus_admin_delete_item') }}">
