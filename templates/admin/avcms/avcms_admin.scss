@@ -116,13 +116,14 @@ a {
   }
 
   .version {
-    position: fixed;
     bottom:0px;
     font-size: 12px;
     color: lighten($main_menu_color, 50);
     width: inherit;
     text-align: center;
-    margin-bottom: 5px;
+    margin: 10px;
+    padding-top: 10px;
+    border-top: 1px solid lighten($main_menu_color, 10);
   }
 }
 

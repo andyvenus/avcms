@@ -443,9 +443,9 @@ avcms.browser = {
     },
 
     showFilters: function() {
-        $('.browser-finder-filters').toggle();
-        $('.browser-finder-show-filters').toggle();
-
-        avcms.nav.onPageModified();
+        $('.browser-finder-filters').slideDown(300, function() {
+            avcms.nav.onPageModified();
+        });
+        $('.browser-finder-show-filters').slideUp(300);
     }
 }

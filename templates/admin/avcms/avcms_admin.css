@@ -70,13 +70,14 @@ a {
     .admin-menu .top-menu-sidebar .dropdown-menu a {
       color: black; }
   .admin-menu .version {
-    position: fixed;
     bottom: 0px;
     font-size: 12px;
     color: #b9c3d0;
     width: inherit;
     text-align: center;
-    margin-bottom: 5px; }
+    margin: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #4b5c72; }
 
 .admin-menu-focused {
   display: inherit;

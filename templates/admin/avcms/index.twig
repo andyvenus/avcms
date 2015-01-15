@@ -94,7 +94,7 @@
         {{ block('top_menu') }}
     </div>
 
-    <div class="nano">
+    <div class="nano admin-menu-main">
         <div class="nano-content">
             <ul>
                 {% for menu_item in menu('admin') %}
@@ -104,11 +104,11 @@
                     {% endfor %}
                 {% endfor %}
             </ul>
-        </div>
-    </div>
 
-    <div class="version">
-        {{ app_config.info.name }} {{ app_config.info.version }}
+            <div class="version hidden-xs hidden-sm">
+                {{ app_config.info.name }} {{ app_config.info.version }}
+            </div>
+        </div>
     </div>
 </aside>
 
