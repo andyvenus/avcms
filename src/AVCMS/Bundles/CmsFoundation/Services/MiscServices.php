@@ -24,5 +24,9 @@ class MiscServices implements ServicesInterface
             ->setArguments([new Reference('auth.access_denied_handler')])
             ->addTag('event.listener', ['event' => KernelEvents::EXCEPTION, 'method' => 'onKernelException', 'priority' => 100])
         ;
+
+        $container->register('site_url', 'AVCMS\Core\Kernel\SiteRootUrl')
+            ->setArguments([new Reference('request.stack')])
+        ;
     }
 }
