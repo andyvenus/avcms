@@ -31,7 +31,11 @@ class ControllerInjectBundle implements EventSubscriberInterface
 
         $bundleConfig = $this->bundleManager->getBundleConfig($bundle);
 
-        $event->getController()[0]->setBundle($bundleConfig);
+        $controller = $event->getController()[0];
+
+        if (is_callable([$controller, 'setBundle'])) {
+            $controller->setBundle($bundleConfig);
+        }
     }
 
     public static function getSubscribedEvents()
