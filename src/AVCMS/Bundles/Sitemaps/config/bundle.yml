@@ -1,0 +1,7 @@
+name: Sitemaps
+namespace: AVCMS\Bundles\Sitemaps
+require:
+  - Framework
+
+services:
+  - SitemapServices

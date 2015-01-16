@@ -1,0 +1,3 @@
+sitemap_test:
+  path: /sitemap.xml
+  defaults: { _controller: Sitemaps::SitemapsController::sitemapAction }

@@ -40,3 +40,5 @@ Adverts:
     enabled: true
 FacebookConnect:
     enabled: true
+Sitemaps:
+    enabled: true
