@@ -15,6 +15,11 @@ class WallpaperServices implements ServicesInterface
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
+        $container->register('wallpapers.model', 'AVCMS\Bundles\Wallpapers\Model\Wallpapers')
+            ->setArguments(array('AVCMS\Bundles\Wallpapers\Model\Wallpapers'))
+            ->setFactory([new Reference('model_factory'), 'create'])
+        ;
+
         $container->register('wallpaper.twig.extension', 'AVCMS\Bundles\Wallpapers\Twig\WallpaperTwigExtension')
             ->setArguments([new Reference('router')])
             ->addTag('twig.extension')
@@ -48,6 +53,11 @@ class WallpaperServices implements ServicesInterface
         $container->register('subscriber.wallpaper_cache_limiter', 'AVCMS\Bundles\Wallpapers\EventSubscriber\WallpaperCacheLimiterSubscriber')
             ->setArguments(['%root_dir%', '%web_path%', new Reference('bundle_manager'), new Reference('settings_manager')])
             ->addTag('event.subscriber')
+        ;
+
+        $container->register('sitemap.wallpapers', 'AVCMS\Bundles\Wallpapers\Sitemap\WallpapersSitemap')
+            ->setArguments([new Reference('wallpapers.model'), new Reference('router')])
+            ->addTag('sitemap')
         ;
     }
 }
