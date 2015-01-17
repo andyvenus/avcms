@@ -4,7 +4,7 @@ Model:
   enabled: true
   config:
     container_params:
-      database_config_location: wallpapersitescript/config/database.php
+      database_config_location: webmaster/config/database.php
 Twig:
   enabled: true
 Form:

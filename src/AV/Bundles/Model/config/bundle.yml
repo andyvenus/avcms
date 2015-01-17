@@ -8,4 +8,4 @@ services:
  - DatabaseServices
 
 container_params:
-  database_config_location: %config_dir%/database.php
+  database_config_location: %root_dir%/webmaster/config/database.php
