@@ -63,12 +63,12 @@ class ResolutionsManager
     {
         Yaml::parse($config);
 
-        file_put_contents($this->rootDir.'/webmaster/wallpaper_resolutions.yml', $config);
+        file_put_contents($this->rootDir.'/webmaster/config/wallpaper_resolutions.yml', $config);
     }
 
     private function getConfigPath()
     {
-        $configPath = $this->rootDir.'/webmaster/wallpaper_resolutions.yml';
+        $configPath = $this->rootDir.'/webmaster/config/wallpaper_resolutions.yml';
 
         if (!file_exists($configPath)) {
             $configPath = __DIR__.'/../config/wallpaper_resolutions.yml';
