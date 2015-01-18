@@ -1,6 +1,6 @@
 {% macro edit(ajax_route, item_id) %}
     <a class="btn btn-xs btn-default" href="{{ url(ajax_route, {'id': item_id}) }}">
-        <span class="glyphicon glyphicon-edit"></span> Edit
+        <span class="glyphicon glyphicon-edit"></span> {% trans %}Edit{% endtrans %}
     </a>
 {% endmacro %}
 
