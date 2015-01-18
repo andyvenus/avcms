@@ -40,9 +40,9 @@
                     <span class="glyphicon glyphicon-align-justify handle"></span> <span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}
                     {% block menu_item_buttons %}
                         <div class="pull-right">
-                            {{ buttons.publish(menu_item.enabled, 'toggle_menu_item_enabled') }}
                             {% if menu_item.owner is null %}
-                                <a class="btn btn-xs btn-default" href="{{ url('menu_items_edit', {menu: item.id, id: menu_item.id}) }}">{% trans %}Edit{% endtrans %}</a>
+                                <a class="btn btn-xs btn-default" href="{{ url('menu_items_edit', {menu: item.id, id: menu_item.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit{% endtrans %}</a>
+                                {{ buttons.publish(menu_item.enabled, 'toggle_menu_item_enabled') }}
                                 <button class="btn btn-danger btn-xs delete-item"><span class="glyphicon glyphicon-remove"></span></button>
                             {% endif %}
                         </div>
