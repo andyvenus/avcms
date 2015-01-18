@@ -50,7 +50,19 @@ class MenusAdminController extends AdminBaseController
     {
         $form = $this->buildForm(new MenuAdminForm($request->attributes->get('id', 0)));
 
-        $helper = $this->editContentHelper($this->menus, $form);
+        $menu = $this->menus->getOneOrNew($request->attributes->get('id', 0));
+
+        if ($menu->getId() === null) {
+            $menu->setCustom(1);
+            $menu->setProvider('user');
+            $menu->setOwner('user');
+        }
+
+        if ($menu->getCustom() != '1') {
+            throw $this->createNotFoundException('Menu item is not custom');
+        }
+
+        $helper = $this->editContentHelper($this->menus, $form, $menu);
 
         $helper->handleRequestAndSave($request);
 

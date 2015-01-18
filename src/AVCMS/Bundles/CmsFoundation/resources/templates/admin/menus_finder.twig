@@ -13,6 +13,9 @@
 {% block item_options %}
     <div class="btn-group">
         {{ buttons.manage('menus_admin_manage_items', item.id) }}
+        {% if item.custom == 1 %}
+            {{ buttons.edit('menus_admin_edit', item.id) }}
+        {% endif %}
         {% if item.custom == 1 or item.active == 0 %}
             {{ buttons.delete('menus_admin_delete') }}
         {% endif %}
