@@ -13,13 +13,13 @@ class TemplateChoicesProvider implements ChoicesProviderInterface
 {
     public function getChoices()
     {
-        $template_dir = 'templates/frontend';
+        $template_dir = 'webmaster/templates/frontend'; //todo: remove hardcode
 
         $dirs = scandir($template_dir);
         $choices = array();
         foreach ($dirs as $dir) {
             if (is_dir($template_dir.'/'.$dir) && $dir != '.' && $dir != '..' && file_exists($template_dir.'/'.$dir.'/template.yml')) {
-                $choices['templates/frontend/'.$dir] = $dir;
+                $choices['webmaster/templates/frontend/'.$dir] = $dir;
             }
         }
 

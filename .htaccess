@@ -9,7 +9,7 @@ DirectoryIndex front.php
     RewriteEngine On
 
     # Block access to AVCMS code folders
-    RewriteRule ^(src/|cache/|webmaster/|vendor/) - [F,L,NC]
+    RewriteRule ^(src/|cache/|webmaster/(?!templates)|vendor/) - [F,L,NC]
 
     # Determine the RewriteBase automatically and set it as environment variable.
     # If you are using Apache aliases to do mass virtual hosting or installed the

@@ -31,7 +31,7 @@ class TemplateServices implements ServicesInterface
             ->setArguments(array(new Reference('bundle.resource_locator'), new Reference('settings_manager'), '%root_dir%'))
             ->addMethodCall('addPath', array('%root_dir%/src/AVCMS/Bundles/Admin/resources/templates', 'admin'))
             ->addMethodCall('addPath', array('%root_dir%/templates/dev/avcms', 'dev'))
-            ->addMethodCall('addPath', array('%root_dir%/templates/email/avcms', 'email'))
+            ->addMethodCall('addPath', array('%root_dir%/webmaster/templates/email/avcms', 'email'))
         ;
 
         $container->register('twig.extension.pagination', 'AVCMS\Bundles\CmsFoundation\Twig\PaginationTwigExtension')
