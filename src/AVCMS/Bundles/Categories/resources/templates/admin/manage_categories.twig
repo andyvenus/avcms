@@ -7,7 +7,7 @@
 {% block editor_content %}
     <span class="always-refresh"></span>
 
-    <p><a href="{{ url(route_prefix ~ 'admin_add_category') }}" class="btn btn-primary">{% trans %}Add Category{% endtrans %}</a></p>
+    <p><a href="{{ url(route_prefix ~ 'admin_add_category') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> {% trans %}Add Category{% endtrans %}</a></p>
 
     <div class="sortable-container">
         <ul class="sortable" style="position: absolute;" data-sortable-levels="2" data-ajax-action="{{ url(route_prefix ~ 'save_categories_order') }}" data-ajax-delete-action="{{ url('menus_admin_delete_item') }}">
