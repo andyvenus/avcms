@@ -11,15 +11,36 @@ use AV\Form\ChoicesProviderInterface;
 
 class TemplateChoicesProvider implements ChoicesProviderInterface
 {
+    /**
+     * @var string
+     */
+    protected $templatesDir;
+
+    /**
+     * @var bool
+     */
+    protected $checkConfig;
+
+    /**
+     * @param $templatesDir string
+     * @param bool $checkConfig
+     */
+    public function __construct($templatesDir, $checkConfig = true)
+    {
+        $this->templatesDir = $templatesDir;
+        $this->checkConfig = $checkConfig;
+    }
+
+    /**
+     * @return array
+     */
     public function getChoices()
     {
-        $template_dir = 'webmaster/templates/frontend'; //todo: remove hardcode
-
-        $dirs = scandir($template_dir);
+        $dirs = scandir($this->templatesDir);
         $choices = array();
         foreach ($dirs as $dir) {
-            if (is_dir($template_dir.'/'.$dir) && $dir != '.' && $dir != '..' && file_exists($template_dir.'/'.$dir.'/template.yml')) {
-                $choices['webmaster/templates/frontend/'.$dir] = $dir;
+            if (is_dir($this->templatesDir.'/'.$dir) && $dir != '.' && $dir != '..' && (file_exists($this->templatesDir.'/'.$dir.'/template.yml') || $this->checkConfig === false)) {
+                $choices[$this->templatesDir.'/'.$dir] = $dir;
             }
         }
 

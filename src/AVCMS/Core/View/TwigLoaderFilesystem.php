@@ -20,12 +20,14 @@ class TwigLoaderFilesystem extends \Twig_Loader_Filesystem
         $this->settings_manager = $settings_manager;
 
         $templateDir = $rootDir.'/'.$settings_manager->getSetting('template');
+        $emailTemplateDir = $rootDir.'/'.$settings_manager->getSetting('email_template');
 
         if (!is_dir($templateDir)) {
             return;
         }
 
-        $this->setPaths(array($templateDir));
+        $this->setPaths([$templateDir]);
+        $this->setPaths([$emailTemplateDir], 'email');
     }
 
     protected function findTemplate($name)

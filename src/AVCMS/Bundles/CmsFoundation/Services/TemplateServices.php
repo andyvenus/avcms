@@ -19,6 +19,14 @@ class TemplateServices implements ServicesInterface
             ->setArguments(array(new Reference('settings_manager'), '%dev_mode%'))
         ;
 
+        $container->register('template_choices_provider', 'AVCMS\Bundles\CmsFoundation\Settings\TemplateChoicesProvider')
+            ->setArguments(['%root_dir%/webmaster/templates/frontend'])
+        ;
+
+        $container->register('email_template_choices_provider', 'AVCMS\Bundles\CmsFoundation\Settings\TemplateChoicesProvider')
+            ->setArguments(['%root_dir%/webmaster/templates/email', false])
+        ;
+
         $container->register('assets.loader.template', 'AVCMS\Core\View\AssetLoader\TemplateAssetLoader')
             ->setArguments(array(new Reference('template_manager')))
         ;
@@ -30,7 +38,6 @@ class TemplateServices implements ServicesInterface
         $container->register('twig.filesystem', 'AVCMS\Core\View\TwigLoaderFilesystem')
             ->setArguments(array(new Reference('bundle.resource_locator'), new Reference('settings_manager'), '%root_dir%'))
             ->addMethodCall('addPath', array('%root_dir%/src/AVCMS/Bundles/Admin/resources/templates', 'admin'))
-            ->addMethodCall('addPath', array('%root_dir%/webmaster/templates/email/avcms', 'email'))
         ;
 
         $container->register('twig.extension.pagination', 'AVCMS\Bundles\CmsFoundation\Twig\PaginationTwigExtension')

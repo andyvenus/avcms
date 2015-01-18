@@ -69,11 +69,18 @@ user_settings:
 
   template:
     type: select
-    choices_provider: { class: AVCMS\Bundles\CmsFoundation\Settings\TemplateChoicesProvider }
+    choices_provider_service: template_choices_provider
     label: Template
     help: The frontend template
     section: main
-    default: templates/frontend/blog-default
+    default: webmaster/templates/frontend/blog-default
+  email_template:
+    type: select
+    choices_provider_service: email_template_choices_provider
+    label: Email Template
+    help: The template for emails sent from your site
+    section: main
+    default: webmaster/templates/email/avcms
   language:
     type: select
     choices_provider: { class: AVCMS\Bundles\CmsFoundation\Settings\LanguageChoicesProvider }
