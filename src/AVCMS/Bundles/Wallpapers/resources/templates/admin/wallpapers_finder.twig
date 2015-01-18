@@ -35,11 +35,11 @@
         <div class="btn-group">
             {{ buttons.edit('wallpapers_admin_edit', item.id) }}
 
-            {{ buttons.delete('wallpapers_admin_delete') }}
-
             {{ buttons.publish(item.published, 'wallpapers_admin_toggle_published') }}
 
             {{ buttons.featured(item.featured, 'wallpapers_admin_toggle_featured') }}
+
+            {{ buttons.delete('wallpapers_admin_delete') }}
         </div>
 
         {{ buttons.view('wallpaper_details', {slug: item.slug}) }}
