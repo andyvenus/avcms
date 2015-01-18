@@ -9,16 +9,11 @@
         <link href="{{ site_url }}{{ css }}" rel="stylesheet">
     {% endfor %}
 
-    <link href="{{ site_url }}templates/admin/avcms/animate.css" rel="stylesheet">
-    <link href="{{ site_url }}templates/admin/avcms/avcms_admin.css" rel="stylesheet">
-
     {% include '@CmsFoundation/inline_js.twig' %}
 
     {% for js in javascripts('admin') -%}
         <script type="text/javascript" src="{{ site_url }}{{ js }}"></script>
     {% endfor %}
-
-    <script src="{{ site_url }}templates/admin/avcms/javascript/avcms_admin.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

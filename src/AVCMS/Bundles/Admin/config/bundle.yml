@@ -38,6 +38,8 @@ assets:
     env: admin
   bootstrap.min.css:
     env: admin
+  animate.css:
+    env: admin
 
   admin_navigation.js:
       env: admin
@@ -50,6 +52,12 @@ assets:
   admin_sortable.js:
     env: admin
     priority: 15
+
+  avcms_admin_template.js:
+    env: admin
+  avcms_admin.css:
+    env: admin
+    priority: -10
 
 module_positions:
   admin_dashboard:
