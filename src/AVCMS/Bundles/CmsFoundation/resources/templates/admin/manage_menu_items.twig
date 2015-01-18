@@ -37,7 +37,7 @@
             {% for menu_item in menu_items %}
             <li id="menu_order_{{ menu_item.id|replace({'_': 'UNDERSCORE'}) }}" data-item-id="{{ menu_item.id }}">
                 <div class="sortable-item">
-                    <span class="glyphicon glyphicon-align-justify handle"></span> {{ menu_item.label }}
+                    <span class="glyphicon glyphicon-align-justify handle"></span> <span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}
                     {% block menu_item_buttons %}
                         <div class="pull-right">
                             {{ buttons.publish(menu_item.enabled, 'toggle_menu_item_enabled') }}
@@ -53,7 +53,7 @@
                     {% for menu_item in menu_item.children %}
                         <li id="menu_order_{{ menu_item.id }}">
                             <div class="sortable-item">
-                                <span class="glyphicon glyphicon-align-justify handle"></span> {{ menu_item.label }}
+                                <span class="glyphicon glyphicon-align-justify handle"></span> <span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}
                                 {{ block('menu_item_buttons') }}
                             </div>
                         </li>
