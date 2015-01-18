@@ -10,7 +10,8 @@ interface ModuleConfigModelInterface
 {
     /**
      * @param $position
+     * @param $includeUnpublished
      * @return ModuleConfigInterface[]
      */
-    public function getPositionModuleConfigs($position);
+    public function getPositionModuleConfigs($position, $includeUnpublished = true);
 }

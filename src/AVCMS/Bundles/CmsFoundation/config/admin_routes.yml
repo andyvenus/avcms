@@ -90,6 +90,10 @@ modules_get_template_styles:
   path: /modules/template-styles/{postiionId}/{templateType}
   defaults: { _controller: 'CmsFoundation::ModulesAdminController::getTemplatesListAction' }
 
+modules_admin_toggle_published:
+  path: /modules/publish
+  defaults: { _controller: 'CmsFoundation::ModulesAdminController::togglePublishedAction' }
+
 clear_caches:
   path: /clear-caches
   defaults: { _controller: CmsFoundation::ClearCachesController::clearCachesAction }

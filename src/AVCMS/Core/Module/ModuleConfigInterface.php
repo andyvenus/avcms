@@ -77,6 +77,10 @@ interface ModuleConfigInterface
 
     public function getPermissions();
 
+    public function setPublished($value);
+
+    public function getPublished();
+
     public function setPermissionsArray($value);
 
     public function getPermissionsArray();

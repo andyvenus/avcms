@@ -33,6 +33,7 @@
                         {% else %}
                             <span class="label label-danger">{% trans with {module: module.module} %}Module type "{module}" missing{% endtrans %}</span>
                         {% endif %}
+                        {{ buttons.publish(module.published, 'modules_admin_toggle_published') }}
                         <button class="btn btn-xs btn-danger delete-item"><span class="glyphicon glyphicon-remove"></span></button>
                     </div>
                 </div>

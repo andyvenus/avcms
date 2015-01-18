@@ -214,7 +214,7 @@ class ModulesAdminController extends AdminBaseController
 
     public function togglePublishedAction(Request $request)
     {
-        return $this->handleTogglePublished($request, $this->modulePositions);
+        return $this->handleTogglePublished($request, $this->modules);
     }
 
     public function getTemplatesListAction($positionId, $templateType)

@@ -22,8 +22,14 @@ class Modules extends Model implements ModuleConfigModelInterface
         return 'AVCMS\Bundles\CmsFoundation\Model\Module';
     }
 
-    public function getPositionModuleConfigs($position)
+    public function getPositionModuleConfigs($position, $includeUnpublished = true)
     {
-        return $this->query()->where('position', $position)->orderBy('order')->get();
+        $q = $this->query()->where('position', $position)->orderBy('order');
+
+        if ($includeUnpublished === false) {
+            $q->where('published', 1);
+        }
+
+        return $q->get();
     }
 }

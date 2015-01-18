@@ -121,6 +121,16 @@ class Module extends Entity implements ModuleConfigInterface
         return $this->get("permissions");
     }
 
+    public function setPublished($value)
+    {
+        $this->set("published", $value);
+    }
+
+    public function getPublished()
+    {
+        return $this->get("published");
+    }
+
     public function setPermissionsArray($value)
     {
         if (is_array($value)) {

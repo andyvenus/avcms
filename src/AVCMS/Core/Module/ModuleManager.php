@@ -143,7 +143,7 @@ class ModuleManager
             return [];
         }
 
-        $configs = $this->loadModuleConfigs($positionId);
+        $configs = $this->loadModuleConfigs($positionId, $ignorePermissions);
 
         foreach ($configs as $configId => $moduleConfig) {
 
@@ -186,9 +186,9 @@ class ModuleManager
         return $configs;
     }
 
-    public function getPositionModuleCount($position)
+    public function getPositionModuleCount($position, $includeUnpublished = true)
     {
-        return count($this->loadModuleConfigs($position));
+        return count($this->loadModuleConfigs($position, $includeUnpublished));
     }
 
     public function getPosition($position)
@@ -230,12 +230,13 @@ class ModuleManager
 
     /**
      * @param $position
+     * @param bool $includeUnpublished
      * @return ModuleConfigInterface[]
      */
-    protected function loadModuleConfigs($position)
+    protected function loadModuleConfigs($position, $includeUnpublished = true)
     {
         if (!isset($this->loadedModuleConfigs[$position])) {
-            $this->loadedModuleConfigs[$position] = $this->moduleModel->getPositionModuleConfigs($position);
+            $this->loadedModuleConfigs[$position] = $this->moduleModel->getPositionModuleConfigs($position, $includeUnpublished);
         }
 
         return $this->loadedModuleConfigs[$position];
