@@ -52,6 +52,10 @@ class MenusAdminController extends AdminBaseController
 
         $menu = $this->menus->getOneOrNew($request->attributes->get('id', 0));
 
+        if (!$menu) {
+            throw $this->createNotFoundException('Menu not found');
+        }
+
         if ($menu->getId() === null) {
             $menu->setCustom(1);
             $menu->setProvider('user');
@@ -59,7 +63,7 @@ class MenusAdminController extends AdminBaseController
         }
 
         if ($menu->getCustom() != '1') {
-            throw $this->createNotFoundException('Menu item is not custom');
+            throw $this->createNotFoundException('Menu is not custom');
         }
 
         $helper = $this->editContentHelper($this->menus, $form, $menu);
