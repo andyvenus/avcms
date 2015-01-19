@@ -68,6 +68,13 @@ class WallpaperAdminForm extends AdminContentForm
             'choices_provider' => $categoryChoicesProvider
         ));
 
+        $this->add('submitter_id', 'text', array(
+            'label' => 'Credited User',
+            'attr' => array(
+                'class' => 'user_selector no_select2'
+            )
+        ));
+
         parent::__construct($itemId);
 
         if ($import === true) {

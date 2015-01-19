@@ -1,0 +1,25 @@
+{% extends '@admin/browser.twig' %}
+
+{% block finder_title %}
+    {% trans %}Wallpaper Submissions{% endtrans %}
+{% endblock %}
+
+{% block expand_finder_button %}
+    {{ buttons.expand_finder('wallpaper_submissions_admin_home') }}
+{% endblock %}
+
+{% block finder %}
+    <div data-url="{{ url('wallpaper_submissions_admin_finder') }}">
+        {{ render(path('wallpaper_submissions_admin_finder')) }}
+    </div>
+{% endblock %}
+
+{% block mobile_back_link %}
+    {{ url('wallpaper_submissions_admin_home') }}
+{% endblock %}
+
+{% block checked_options_buttons %}
+    {{ buttons.bulk_delete('wallpaper_submissions_admin_delete') }}
+
+    
+{% endblock %}

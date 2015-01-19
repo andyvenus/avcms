@@ -207,6 +207,16 @@ class Wallpaper extends Entity implements RateInterface
         $this->set("slug", $value);
     }
 
+    public function getSubmitterId()
+    {
+        return $this->get("submitter_id");
+    }
+
+    public function setSubmitterId($value)
+    {
+        $this->set("submitter_id", $value);
+    }
+
     public function getTotalDownloads()
     {
         return $this->get("total_downloads");

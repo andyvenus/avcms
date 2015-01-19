@@ -7,10 +7,14 @@
 
 namespace AVCMS\Bundles\Wallpapers\Controller;
 
+use AV\FileHandler\UploadedFileHandler;
+use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
+use AVCMS\Bundles\Wallpapers\Form\SubmitWallpaperForm;
 use AVCMS\Bundles\Wallpapers\Form\WallpaperFrontendFiltersForm;
 use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class WallpapersController extends Controller
 {
@@ -121,5 +125,55 @@ class WallpapersController extends Controller
         }
 
         return new Response($this->render('@Wallpapers/wallpaper_preview.twig', ['wallpaper' => $wallpaper, 'wallpaper_width' => $width, 'wallpaper_height' => $height]));
+    }
+
+    public function submitWallpaperAction(Request $request)
+    {
+        if (!$this->isGranted(['PERM_SUBMIT_WALLPAPERS'])) {
+            if (!$this->isGranted(['IS_AUTHENTICATED_FULLY', 'IS_AUTHENTICATED_REMEMBERED'])) {
+                return $this->redirect($this->generateUrl('login'), 302, 'info', $this->trans('Please login to submit a wallpaper'));
+            }
+            else {
+                throw new AccessDeniedException;
+            }
+        }
+
+        $submissions = $this->model('WallpaperSubmissions');
+
+        $newSubmission = $submissions->newEntity();
+
+        $formBlueprint = new SubmitWallpaperForm(new CategoryChoicesProvider($this->model('WallpaperCategories')));
+
+        $form = $this->buildForm($formBlueprint, $request, $newSubmission);
+
+        if ($form->isValid()) {
+            $form->saveToEntities();
+
+            $fileHandler = new UploadedFileHandler();
+
+            $submissionsDir = $this->bundle->config->wallpapers_dir.'/submissions';
+            if (!file_exists($submissionsDir)) {
+                mkdir($submissionsDir, 0777, true);
+            }
+
+            $fullPath = $fileHandler->moveFile($form->getData('file'), $this->bundle->config->wallpapers_dir.'/submissions');
+            $relPath = str_replace($this->bundle->config->wallpapers_dir.'/', '', $fullPath);
+
+            $newSubmission->setFile($relPath);
+
+            $newSubmission->setCreatorId($this->activeUser()->getId());
+            $newSubmission->setSubmitterId($this->activeUser()->getId());
+            $newSubmission->setDateAdded(time());
+
+            $dimensions = getimagesize($fullPath);
+
+            $newSubmission->setOriginalWidth($dimensions[0]);
+            $newSubmission->setOriginalHeight($dimensions[1]);
+
+            $submissions->save($newSubmission);
+
+        }
+
+        return new Response($this->render('@Wallpapers/submit_wallpaper.twig', ['form' => $form->createView()]));
     }
 }

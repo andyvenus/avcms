@@ -8,7 +8,6 @@ use AV\FileHandler\UploadedFileHandler;
 use AV\Form\FormBlueprint;
 use AV\Form\FormError;
 use AVCMS\Bundles\Categories\Controller\CategoryActionsTrait;
-use AVCMS\Bundles\Categories\Form\CategoryAdminForm;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Wallpapers\Form\WallpaperCategoryAdminForm;
 use AVCMS\Bundles\Wallpapers\Form\WallpapersAdminFiltersForm;
@@ -16,6 +15,7 @@ use AVCMS\Bundles\Wallpapers\Form\WallpaperAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 
 use Curl\Curl;
+use Intervention\Image\ImageManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -277,6 +277,28 @@ class WallpapersAdminController extends AdminBaseController
         $clearer->clearCaches(null, true);
 
         return new JsonResponse(['success' => true]);
+    }
+
+    public function viewOriginalImageAction(Request $request)
+    {
+        $file = str_replace('..', '', $request->get('file'));
+
+        $filePath = $this->container->getParameter('root_dir') . '/' . $this->bundle->config->wallpapers_dir . '/' . $file;
+
+        if (!file_exists($filePath)) {
+            throw $this->createNotFoundException();
+        }
+
+        try {
+            $imageManager = new ImageManager(['driver' => $this->setting('wallpaper_image_manipulation_library')]);
+
+            $img = $imageManager->make($filePath);
+        }
+        catch (\Exception $e) {
+            throw $this->createNotFoundException($e->getMessage());
+        }
+
+        return new Response($img->encode(), 200, ['Content-Type' => $img->mime]);
     }
 
     protected function getCategoryForm()

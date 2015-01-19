@@ -98,6 +98,13 @@ menu_items:
           parent: wallpapers_admin
           settings:
             route: wallpapers_manage_resolutions
+        wallpaper_submissions_admin:
+          label: Submissions
+          icon: glyphicon glyphicon-inbox
+          type: route
+          parent: wallpapers_admin
+          settings:
+            route: wallpaper_submissions_admin_home
 
 categories:
     wallpaper:
@@ -128,6 +135,9 @@ permissions:
   ADMIN_WALLPAPERS:
     name: Wallpapers Administration
     description: Manage wallpapers in the admin panel
+  PERM_SUBMIT_WALLPAPERS:
+    name: Submit Wallpapers
+    description: Ability for users to submit wallpapers for review by an admin
 
 module_positions:
   wallpapers_home:

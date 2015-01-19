@@ -24,6 +24,10 @@ browse_wallpapers:
   requirements:
     page:  \d+
 
+wallpaper_submit:
+  path: /wallpapers/submit
+  defaults: { _controller: Wallpapers::WallpapersController::submitWallpaperAction }
+
 wallpaper_category:
   path: /wallpapers/{category}/{page}
   defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction, page: 1 }
