@@ -10,19 +10,27 @@ namespace AVCMS\Core\View;
 
 use AV\Kernel\Bundle\ResourceLocator;
 use AVCMS\Core\SettingsManager\SettingsManager;
+use AVCMS\Core\View\Exception\TemplateConfigException;
 use Twig_Error_Loader;
 
 class TwigLoaderFilesystem extends \Twig_Loader_Filesystem
 {
-    public function __construct(ResourceLocator $resource_locator, SettingsManager $settings_manager, $rootDir)
-    {
-        $this->resource_locator = $resource_locator;
-        $this->settings_manager = $settings_manager;
+    protected $templateInvalid = false;
 
-        $templateDir = $rootDir.'/'.$settings_manager->getSetting('template');
-        $emailTemplateDir = $rootDir.'/'.$settings_manager->getSetting('email_template');
+    protected $resourceLocator;
+
+    protected $settingsManager;
+
+    public function __construct(ResourceLocator $resourceLocator, SettingsManager $settingsManager, $rootDir)
+    {
+        $this->resourceLocator = $resourceLocator;
+        $this->settingsManager = $settingsManager;
+
+        $templateDir = $rootDir.'/'.$settingsManager->getSetting('template');
+        $emailTemplateDir = $rootDir.'/'.$settingsManager->getSetting('email_template');
 
         if (!is_dir($templateDir)) {
+            $this->templateInvalid = true;
             return;
         }
 
@@ -32,6 +40,10 @@ class TwigLoaderFilesystem extends \Twig_Loader_Filesystem
 
     protected function findTemplate($name)
     {
+        if ($name === 'index.twig' && $this->templateInvalid === true) {
+            throw new TemplateConfigException(sprintf('Template %s doesn\'t exist', $this->settingsManager->getSetting('template')));
+        }
+
         $name = $this->normalizeName($name);
 
         if (isset($this->cache[$name])) {
@@ -48,8 +60,8 @@ class TwigLoaderFilesystem extends \Twig_Loader_Filesystem
             $namespace = str_replace('@', '', $namespace);
         }
 
-        if ($this->resource_locator->bundleExists($namespace)) {
-            return $this->resource_locator->findFileDirectory($namespace, $shortname, 'templates', $originalOnly);
+        if ($this->resourceLocator->bundleExists($namespace)) {
+            return $this->resourceLocator->findFileDirectory($namespace, $shortname, 'templates', $originalOnly);
         }
 
         if (!isset($this->paths[$namespace])) {
