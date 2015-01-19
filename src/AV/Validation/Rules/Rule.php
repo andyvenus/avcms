@@ -4,13 +4,17 @@ namespace AV\Validation\Rules;
 
 abstract class Rule implements RuleInterface {
 
-    protected $rule_data;
+    protected $ruleData;
 
     protected $error;
 
-    protected function setError($error)
+    protected function setError($error, $params = [])
     {
         $this->error = $error;
+
+        if (!empty($params)) {
+            $this->ruleData = array_merge($this->ruleData, $params);
+        }
     }
 
     public function getError()
@@ -25,8 +29,8 @@ abstract class Rule implements RuleInterface {
 
     public function getRuleData()
     {
-        if (isset($this->rule_data)) {
-            return $this->rule_data;
+        if (isset($this->ruleData)) {
+            return $this->ruleData;
         }
         else {
             return array();
