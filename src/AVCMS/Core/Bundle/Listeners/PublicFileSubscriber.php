@@ -10,6 +10,7 @@ namespace AVCMS\Core\Bundle\Listeners;
 use AVCMS\Core\Bundle\PublicFileMover;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class PublicFileSubscriber implements EventSubscriberInterface
@@ -25,7 +26,9 @@ class PublicFileSubscriber implements EventSubscriberInterface
 
     public function moveFiles(GetResponseEvent $event)
     {
-        $this->publicFileMover->doMove();
+        if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST) {
+            $this->publicFileMover->doMove();
+        }
     }
 
     public static function getSubscribedEvents()
