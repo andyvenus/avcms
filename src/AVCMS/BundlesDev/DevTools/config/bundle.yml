@@ -3,3 +3,6 @@ namespace: AVCMS\BundlesDev\DevTools
 
 services:
   - DevToolsServices
+
+config:
+  lock_site: false

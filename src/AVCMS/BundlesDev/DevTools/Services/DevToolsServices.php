@@ -22,17 +22,16 @@ class DevToolsServices implements ServicesInterface
         ;
 
         // Deny non-admin access to everything apart from /login in dev mode
-        $container->register('auth.access_listener_dev', 'AVCMS\Core\Security\SiteOfflineAccessListener')
-            ->setArguments([new Reference('security.token_storage'), new Reference('auth.access_decision_manager'), new Reference('auth.access_map_dev'), new Reference('auth.manager')])
-            ->addTag('event.listener', ['event' => KernelEvents::REQUEST, 'method' => 'handle', 'priority' => -101])
-        ;
+        if ($configuration->config->lock_site) {
+            $container->register('auth.access_listener_dev', 'AVCMS\Core\Security\SiteOfflineAccessListener')
+                ->setArguments([new Reference('security.token_storage'), new Reference('auth.access_decision_manager'), new Reference('auth.access_map_dev'), new Reference('auth.manager')])
+                ->addTag('event.listener', ['event' => KernelEvents::REQUEST, 'method' => 'handle', 'priority' => -101]);
 
-        $container->register('auth.access_map_dev', 'Symfony\Component\Security\Http\AccessMap')
-            ->addMethodCall('add', [new Reference('auth.dev_request_matcher'), ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']])
-        ;
+            $container->register('auth.access_map_dev', 'Symfony\Component\Security\Http\AccessMap')
+                ->addMethodCall('add', [new Reference('auth.dev_request_matcher'), ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']]);
 
-        $container->register('auth.dev_request_matcher', 'Symfony\Component\HttpFoundation\RequestMatcher')
-            ->setArguments(['^/(?!login)(?!facebook-register)'])
-        ;
+            $container->register('auth.dev_request_matcher', 'Symfony\Component\HttpFoundation\RequestMatcher')
+                ->setArguments(['^/(?!login)(?!facebook-register)']);
+        }
     }
 }
