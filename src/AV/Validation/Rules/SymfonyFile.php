@@ -24,7 +24,7 @@ class SymfonyFile extends Rule
     public function __construct($maxFileSize = null, $mimeTypes = null, $displayUnit = 'MB')
     {
         $this->maxFileSize = $maxFileSize;
-        $this->mimeTypes = (array) $mimeTypes;
+        $this->mimeTypes = $this->setMimeTypes($mimeTypes);
         $this->unit = $displayUnit;
     }
 
@@ -39,11 +39,8 @@ class SymfonyFile extends Rule
             return false;
         }
 
-        if ($this->mimeTypes && !in_array($param->getMimeType(), $this->mimeTypes)) {
-            $friendlyFileTypes = [];
-            foreach ($this->mimeTypes as $fileTypeName => $mimeType) {
-                $friendlyFileTypes[] = $fileTypeName;
-            }
+        if ($this->mimeTypes && (!isset($this->mimeTypes[$param->getClientOriginalExtension()]) || !in_array($param->getMimeType(), $this->mimeTypes[$param->getClientOriginalExtension()]))) {
+            $friendlyFileTypes = array_keys($this->mimeTypes);
 
             $friendlyFileTypesStr = implode(', ', $friendlyFileTypes);
 
@@ -80,5 +77,15 @@ class SymfonyFile extends Rule
 
         // Format output
         return sprintf('%.' . $decimals . 'f '.$unit, $value);
+    }
+
+    protected function setMimeTypes(array $mimeTypes)
+    {
+        $processedMimeTypes = [];
+        foreach ($mimeTypes as $extension => $mimeType) {
+            $processedMimeTypes[$extension] = (array) $mimeType;
+        }
+
+        return $processedMimeTypes;
     }
 }
