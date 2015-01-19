@@ -68,6 +68,9 @@ avcms.form = {
             error: function(jqXHR, textStatus, errorThrown) {
                 var messages = $(form).find('.form-messages');
                 messages.html('<div class="alert alert-danger animated bounce">Save Error: '+errorThrown+'</div>');
+
+                submit_button.text(original_submit_text);
+                submit_button.removeAttr('disabled');
             }
         });
 
