@@ -8,6 +8,7 @@ $(document).ready(function() {
 
     avcms.event.addEvent('page-modified', avcms.wallpaper_bulk.loadFileUploader);
     avcms.event.addEvent('submit-form-success', avcms.wallpaper_bulk.folderAdded);
+    avcms.event.addEvent('submit-form-success', avcms.wallpaper_submissions.onReviewSuccess);
 });
 
 avcms.wallpaper_bulk = {
@@ -108,3 +109,12 @@ avcms.wallpapers = {
         }
     }
 };
+
+avcms.wallpaper_submissions = {
+    onReviewSuccess: function(form)
+    {
+        if (form.hasClass('review-wallpaper-submission')) {
+            $('.browser-finder-item[data-id="'+form.data('item-id')+'"]').remove();
+        }
+    }
+}
