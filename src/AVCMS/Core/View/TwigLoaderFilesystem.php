@@ -61,7 +61,7 @@ class TwigLoaderFilesystem extends \Twig_Loader_Filesystem
         }
 
         if ($this->resourceLocator->bundleExists($namespace)) {
-            return $this->resourceLocator->findFileDirectory($namespace, $shortname, 'templates', $originalOnly);
+            return $this->cache[$name] = $this->resourceLocator->findFileDirectory($namespace, $shortname, 'templates', $originalOnly);
         }
 
         if (!isset($this->paths[$namespace])) {
