@@ -34,7 +34,7 @@ class AssetServices implements ServicesInterface
         ;
 
         $container->register('listener.bundle.public_file', 'AVCMS\Core\Bundle\Listeners\PublicFileSubscriber')
-            ->setArguments(array(new Reference('public_file_mover')))
+            ->setArguments(array(new Reference('public_file_mover'), '%dev_mode%'))
             ->addTag('event.subscriber')
         ;
     }

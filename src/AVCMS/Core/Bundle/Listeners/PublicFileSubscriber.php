@@ -19,14 +19,17 @@ class PublicFileSubscriber implements EventSubscriberInterface
 
     protected $cacheDir;
 
-    public function __construct(PublicFileMover $publicFileMover)
+    protected $devMode;
+
+    public function __construct(PublicFileMover $publicFileMover, $devMode)
     {
         $this->publicFileMover = $publicFileMover;
+        $this->devMode = $devMode;
     }
 
     public function moveFiles(GetResponseEvent $event)
     {
-        if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST) {
+        if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST && $this->devMode) {
             $this->publicFileMover->doMove();
         }
     }
