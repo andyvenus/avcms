@@ -11,7 +11,7 @@ class Numeric extends Rule {
 
     private $type;
 
-    protected $error = "{param_name} must be a number";
+    protected $error = "'{param_name}' must be a number";
 
     public function __construct($type = self::INTEGER)
     {
