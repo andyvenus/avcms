@@ -21,11 +21,11 @@ class SymfonyFile extends Rule
 
     protected $unit;
 
-    public function __construct($maxFileSize = null, $mimeTypes = null, $unit = 'MB')
+    public function __construct($maxFileSize = null, $mimeTypes = null, $displayUnit = 'MB')
     {
         $this->maxFileSize = $maxFileSize;
         $this->mimeTypes = (array) $mimeTypes;
-        $this->unit = $unit;
+        $this->unit = $displayUnit;
     }
 
     public function assert($param)
