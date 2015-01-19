@@ -9,28 +9,25 @@ namespace AVCMS\Core\Config;
 
 class Config implements \ArrayAccess
 {
-    protected $config;
-
     protected $configArray;
 
     public function __construct(array $config)
     {
         $this->configArray = $config;
-        $this->config = $this->arrayToObject($this->configArray);
     }
 
     public function __get($name)
     {
-        if (!isset($this->config->$name)) {
+        if (!isset($this->configArray[$name])) {
             return null;
         }
 
-        return $this->config->$name;
+        return $this->arrayToObject($this->configArray[$name]);
     }
 
     public function __isset($name)
     {
-        return isset($this->config->$name);
+        return isset($this->configArray[$name]);
     }
 
     public function offsetExists($offset)
@@ -58,11 +55,6 @@ class Config implements \ArrayAccess
         return $this->configArray;
     }
 
-    public function getConfigObject()
-    {
-        return $this->config;
-    }
-
     protected function arrayToObject($array)
     {
         if (is_array($array)) {
@@ -76,6 +68,5 @@ class Config implements \ArrayAccess
     public function setSetting($name, $value)
     {
         $this->configArray[$name] = $value;
-        $this->config->$name = $this->arrayToObject($value);
     }
-} 
+}
