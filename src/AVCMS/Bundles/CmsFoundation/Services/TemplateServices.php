@@ -20,11 +20,11 @@ class TemplateServices implements ServicesInterface
         ;
 
         $container->register('template_choices_provider', 'AVCMS\Bundles\CmsFoundation\Settings\TemplateChoicesProvider')
-            ->setArguments(['%root_dir%/webmaster/templates/frontend'])
+            ->setArguments(['%root_dir%', 'webmaster/templates/frontend'])
         ;
 
         $container->register('email_template_choices_provider', 'AVCMS\Bundles\CmsFoundation\Settings\TemplateChoicesProvider')
-            ->setArguments(['%root_dir%/webmaster/templates/email', false])
+            ->setArguments(['%root_dir%', 'webmaster/templates/email', false])
         ;
 
         $container->register('assets.loader.template', 'AVCMS\Core\View\AssetLoader\TemplateAssetLoader')

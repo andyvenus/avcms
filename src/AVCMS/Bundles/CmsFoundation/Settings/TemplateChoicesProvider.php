@@ -22,11 +22,18 @@ class TemplateChoicesProvider implements ChoicesProviderInterface
     protected $checkConfig;
 
     /**
+     * @var string
+     */
+    protected $rootDir;
+
+    /**
+     * @param $rootDir
      * @param $templatesDir string
      * @param bool $checkConfig
      */
-    public function __construct($templatesDir, $checkConfig = true)
+    public function __construct($rootDir, $templatesDir, $checkConfig = true)
     {
+        $this->rootDir = $rootDir;
         $this->templatesDir = $templatesDir;
         $this->checkConfig = $checkConfig;
     }
@@ -36,10 +43,11 @@ class TemplateChoicesProvider implements ChoicesProviderInterface
      */
     public function getChoices()
     {
-        $dirs = scandir($this->templatesDir);
+        $fullPath = $this->rootDir.'/'.$this->templatesDir;
+        $dirs = scandir($fullPath);
         $choices = array();
         foreach ($dirs as $dir) {
-            if (is_dir($this->templatesDir.'/'.$dir) && $dir != '.' && $dir != '..' && (file_exists($this->templatesDir.'/'.$dir.'/template.yml') || $this->checkConfig === false)) {
+            if (is_dir($fullPath.'/'.$dir) && $dir != '.' && $dir != '..' && (file_exists($fullPath.'/'.$dir.'/template.yml') || $this->checkConfig === false)) {
                 $choices[$this->templatesDir.'/'.$dir] = $dir;
             }
         }
