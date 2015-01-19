@@ -22,8 +22,8 @@ class Length extends Rule {
             throw new RuleInvalidException("No minimum or maximum length set");
         }
 
-        $this->rule_data['min'] = $min;
-        $this->rule_data['max'] = $max;
+        $this->ruleData['min'] = $min;
+        $this->ruleData['max'] = $max;
     }
 
     public function assert($param)
@@ -36,16 +36,16 @@ class Length extends Rule {
             $length = strlen($param);
         }
 
-        if (($this->rule_data['max'] == $this->rule_data['min']) && $length != $this->rule_data['min']) {
+        if (($this->ruleData['max'] == $this->ruleData['min']) && $length != $this->ruleData['min']) {
             $this->setError($this->exact_error);
             return false;
         }
 
-        if ($this->rule_data['max'] !== null && $length > $this->rule_data['max']) {
+        if ($this->ruleData['max'] !== null && $length > $this->ruleData['max']) {
             $this->setError($this->max_error);
             return false;
         }
-        if ($this->rule_data['min'] !== null && $length < $this->rule_data['min']) {
+        if ($this->ruleData['min'] !== null && $length < $this->ruleData['min']) {
             $this->setError($this->min_error);
             return false;
         }
