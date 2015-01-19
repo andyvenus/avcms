@@ -68,6 +68,14 @@
                             <a href="{{ url('wallpaper_preview', {slug: wallpaper.slug, resolution: wallpaper.originalWidth ~ 'x' ~ wallpaper.originalHeight}) }}">{{ wallpaper.originalWidth }}x{{ wallpaper.originalHeight }}</a></p>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        {% if wallpaper.submitter %}
+                            {% trans %}Submitted By{% endtrans %}: <a href="{{ url('user_profile', {slug: wallpaper.submitter.slug}) }}">{{ wallpaper.submitter.username }}</a>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
         {% endblock %}

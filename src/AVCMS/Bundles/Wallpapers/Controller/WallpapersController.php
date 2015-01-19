@@ -103,6 +103,10 @@ class WallpapersController extends Controller
             throw $this->createNotFoundException('Wallpaper Not Found');
         }
 
+        if ($wallpaper->getSubmitterId()) {
+            $wallpaper->submitter = $this->model('@users')->getOne($wallpaper->getSubmitterId());
+        }
+
         $resolutions = $this->container->get('wallpaper.resolutions_manager')->getWallpaperResolutions($wallpaper);
 
         $this->container->get('hitcounter')->registerHit($this->wallpapers, $wallpaper->getId());
