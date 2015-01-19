@@ -148,6 +148,11 @@ class WallpapersController extends Controller
 
         $submissions = $this->model('WallpaperSubmissions');
 
+        $pendingCount = $submissions->query()->where('submitter_id', $this->activeUser()->getId())->count();
+        if ($pendingCount >= $this->setting('wallpapers_max_submissions')) {
+            return $this->redirect($this->generateUrl('home'), 302, 'info', $this->trans('You have already submitted {count} wallpapers, please wait for them to be accepted first', ['count' => $this->setting('wallpapers_max_submissions')]));
+        }
+
         $newSubmission = $submissions->newEntity();
 
         $formBlueprint = new SubmitWallpaperForm(new CategoryChoicesProvider($this->model('WallpaperCategories')));

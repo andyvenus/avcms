@@ -73,6 +73,15 @@ user_settings:
     help: Allow users to submit wallpapers to your site for admins to review
     section: wallpapers
     default: 1
+  wallpapers_max_submissions:
+    type: text
+    label: Maximum User Submissions
+    help: The maximum amount of wallpapers a user can submit for review. They can submit more after an admin has accepted their existing submissions.
+    section: wallpapers
+    default: 10
+    validation:
+      numeric:
+        rule: Numeric
 
 menu_items:
     admin:
