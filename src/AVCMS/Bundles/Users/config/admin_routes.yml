@@ -18,6 +18,9 @@ users_admin_change_password:
   path: /users/change-password/{id}
   defaults: { _controller: Users::UsersAdminController::changePasswordAction }
 
+users_admin_options:
+  path: /users/options
+  defaults: { _controller: Users::UsersAdminController::userOptionsAction }
 
 user_groups_admin_edit:
     path:     /user-groups/edit/{id}

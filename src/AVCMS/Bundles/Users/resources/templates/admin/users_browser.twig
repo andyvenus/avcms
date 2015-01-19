@@ -8,6 +8,10 @@
     {{ buttons.expand_finder('users_admin_home') }}
 {% endblock %}
 
+{% block add_item %}
+    {{ buttons.add_item('users_admin_options', 'Users Options', 'glyphicon-cog') }}
+{% endblock %}
+
 {% block finder %}
     <div data-url="{{ url('users_admin_finder') }}">
         {{ render(path('users_admin_finder')) }}

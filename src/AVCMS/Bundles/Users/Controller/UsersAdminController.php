@@ -109,6 +109,41 @@ class UsersAdminController extends AdminBaseController
         return new JsonResponse(array('success' => 1));
     }
 
+    public function userOptionsAction(Request $request)
+    {
+        // remove accounts
+        $removeAccountsFormBlueprint = new FormBlueprint();
+        $removeAccountsFormBlueprint->add('remove_accounts_age', 'select', [
+            'label' => 'Accounts Created',
+            'choices' => [
+                '604800' => '1 week ago and older',
+                '1209600' => '2 weeks ago and older',
+                '2592000' => '1 month ago and older'
+            ],
+            'strict' => true
+        ]);
+
+        $removeAccountsForm = $this->buildForm($removeAccountsFormBlueprint, $request);
+
+        if ($removeAccountsForm->isValid()) {
+            $age = time() - $removeAccountsForm->getData('remove_accounts_age');
+
+            $totalAccounts = $this->users->query()->count();
+
+            $this->users->query()->where('joined', '<', $age)->where('last_activity', 0)->delete();
+
+            $totalDeleted = $totalAccounts - $this->users->query()->count();
+
+            $removeAccountsFormBlueprint->setSuccessMessage($totalDeleted.' '.$this->trans('Accounts Deleted'));
+
+            return new JsonResponse(['form' => $removeAccountsForm->createView()->getJsonResponseData(), 'success' => true, 'total_deleted' => $totalDeleted]);
+        }
+
+        // main page
+
+        return new Response($this->renderAdminSection('@Users/admin/user_options.twig', $request->get('ajax_depth'), ['remove_accounts_form' => $removeAccountsForm->createView()]));
+    }
+
     protected function getSharedTemplateVars($ajax_depth)
     {
         $template_vars = parent::getSharedTemplateVars($ajax_depth);

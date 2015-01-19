@@ -1,0 +1,13 @@
+{% extends '@admin/editor.twig' %}
+
+{% block title %}{% trans %}User Options{% endtrans %}{% endblock %}
+
+{% block editor_title %}{{ block('title') }}{% endblock %}
+
+{% block editor_content %}
+    <h4>{% trans %}Remove unused accounts{% endtrans %}</h4>
+    <p>{% trans %}Delete accounts that have never been logged into{% endtrans %}</p>
+    <div class="well well-sm">
+        {{ form(remove_accounts_form) }}
+    </div>
+{% endblock %}
