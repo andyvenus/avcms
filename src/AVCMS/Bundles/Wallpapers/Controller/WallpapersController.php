@@ -142,6 +142,10 @@ class WallpapersController extends Controller
             }
         }
 
+        if (!$this->setting('wallpapers_allow_uploads')) {
+            throw $this->createNotFoundException();
+        }
+
         $submissions = $this->model('WallpaperSubmissions');
 
         $newSubmission = $submissions->newEntity();

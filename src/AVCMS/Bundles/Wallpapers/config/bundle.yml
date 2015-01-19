@@ -67,6 +67,12 @@ user_settings:
       5: 5
       8: 8
       10: 10
+  wallpapers_allow_uploads:
+    type: checkbox
+    label: Allow Wallpaper Submissions
+    help: Allow users to submit wallpapers to your site for admins to review
+    section: wallpapers
+    default: 1
 
 menu_items:
     admin:
