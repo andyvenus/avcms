@@ -37,7 +37,6 @@ class FormHandlerRequestEvent extends Event
      * @param FormHandler $formHandler
      * @param mixed $request
      * @param $formData
-     * @internal param \AV\Form\FormBlueprintInterface $form_blueprint
      */
     public function __construct(FormHandler $formHandler, $request, $formData)
     {

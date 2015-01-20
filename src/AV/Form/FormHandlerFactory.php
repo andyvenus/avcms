@@ -32,7 +32,7 @@ class FormHandlerFactory
     {
         if ($this->eventDispatcher !== null) {
             $event = new FilterNewFormEvent($form, $formView, $validator);
-            $this->eventDispatcher->dispatch('create.form', $event);
+            $this->eventDispatcher->dispatch('form_factory.create', $event);
 
             $form = $event->getFormBlueprint();
             $formView = $event->getFormView();
