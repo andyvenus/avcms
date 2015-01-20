@@ -12,8 +12,11 @@ use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Wallpapers\Form\SubmitWallpaperForm;
 use AVCMS\Bundles\Wallpapers\Form\WallpaperFrontendFiltersForm;
 use AVCMS\Core\Controller\Controller;
+use AVCMS\Core\Rss\RssItem;
+use AVCMS\Core\Rss\RssFeed;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class WallpapersController extends Controller
@@ -188,5 +191,29 @@ class WallpapersController extends Controller
         }
 
         return new Response($this->render('@Wallpapers/submit_wallpaper.twig', ['form' => $form->createView()]));
+    }
+
+    public function wallpapersRssFeedAction()
+    {
+        /**
+         * @var \AVCMS\Bundles\Wallpapers\Model\Wallpaper[] $wallpapers
+         */
+        $wallpapers = $this->wallpapers->find()->published()->limit(30)->order('publish-date-newest')->get();
+
+        $feed = new RssFeed(
+            $this->trans('Wallpapers'),
+            $this->generateUrl('browse_wallpapers', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            $this->trans('The latest wallpapers')
+        );
+
+        foreach ($wallpapers as $wallpaper) {
+            $url = $this->generateUrl('wallpaper_details', ['slug' => $wallpaper->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL);
+            $date = new \DateTime();
+            $date->setTimestamp($wallpaper->getPublishDate());
+
+            $feed->addItem(new RssItem($wallpaper->getName(), $url, $date, $wallpaper->getDescription()));
+        }
+
+        return new Response($feed->build(), 200, ['Content-Type' => 'application/xml']);
     }
 }

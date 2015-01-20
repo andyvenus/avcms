@@ -6,6 +6,10 @@ featured_wallpapers:
   path: /wallpapers/featured
   defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction, pageType: featured }
 
+wallpaper_rss_feed:
+  path: /wallpapers/rss.xml
+  defaults: { _controller: Wallpapers::WallpapersController::wallpapersRssFeedAction }
+
 wallpaper_thumbnail:
   path: /web/wallpapers/{slug}/thumbnail/{thumbnail_size}.{ext}
   defaults: { _controller: Wallpapers::WallpapersImageController::imageAction, thumbnail: true }
