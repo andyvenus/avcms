@@ -59,5 +59,7 @@ class RegistrationForm extends FormBlueprint
             'required' => true,
             'label' => 'Confirm Password'
         ]);
+
+        $this->add('recaptcha', 'recaptcha');
     }
 } 
