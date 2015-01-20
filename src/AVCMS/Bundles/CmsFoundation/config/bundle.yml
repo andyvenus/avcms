@@ -94,6 +94,12 @@ user_settings:
     default: Y-m-d
     section: main
     required: true
+  time_format:
+    type: text
+    label: Time Format
+    default: Y-m-d H:i
+    section: main
+    required: true
 
 assets:
   jquery.js:
