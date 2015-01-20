@@ -1,9 +1,9 @@
 {% extends '@admin/edit_item.twig' %}
 
-{% block title -%}{% trans %}Review Wallpaper Submission:{% endtrans %} {{ item.name }}{% endblock %}
+{% block title -%}{% trans %}Review Wallpaper Submission{% endtrans %}: {{ item.name }}{% endblock %}
 
 {% block editor_title %}
-    <span class="light">{% trans %}Review Wallpaper Submission:{% endtrans %}</span> <span data-id="{{ item.id }}" data-field="name">{{ item.name }}</span>
+    <span class="light">{% trans %}Review Wallpaper Submission{% endtrans %}:</span> <span data-id="{{ item.id }}" data-field="name">{{ item.name }}</span>
 {% endblock %}
 
 {% block before_form %}
@@ -11,7 +11,7 @@
         <a href="{{ url('wallpapers_admin_view_original_image', {file: item.file}) }}" target="_blank">
             <img class="img-thumbnail" src="{{ url('wallpapers_admin_view_original_image', {file: item.file}) }}" width="60%" />
         </a>
-        <p>{% trans %}Original Resolution:{% endtrans %} {{ item.originalWidth }}x{{ item.originalHeight }}</p>
+        <p>{% trans %}Original Resolution{% endtrans %}: {{ item.originalWidth }}x{{ item.originalHeight }}</p>
     </div>
 {% endblock %}
 
