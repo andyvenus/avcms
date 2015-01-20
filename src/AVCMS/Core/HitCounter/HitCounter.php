@@ -34,6 +34,11 @@ class HitCounter
             $recentHits[$model->getSingular()][$id][$column] = true;
 
             $this->session->set('hits', $recentHits);
+
+            return true;
+        }
+        else {
+            return false;
         }
     }
 }
