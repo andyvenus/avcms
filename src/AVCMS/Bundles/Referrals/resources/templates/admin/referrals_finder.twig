@@ -1,23 +1,57 @@
 {% extends '@admin/finder.twig' %}
 
 {% block finder_header_titles %}
-
+    <div class="col-md-2 hidden-xs hidden-sm">
+        {% trans %}User{% endtrans %}
+    </div>
+    <div class="col-md-4">
+        {% trans %}Referral link{% endtrans %}
+    </div>
+    <div class="col-md-1 hidden-sm hidden-xs">
+        <abbr title="{% trans %}Inbound Clicks{% endtrans %}">{% trans %}In{% endtrans %}</abbr>
+    </div>
+    <div class="col-md-1 hidden-sm hidden-xs">
+        <abbr title="{% trans %}Outbound Clicks{% endtrans %}">{% trans %}Out{% endtrans %}</abbr>
+    </div>
+    <div class="col-md-1 hidden-sm hidden-xs">
+        <abbr title="{% trans %}Registrations{% endtrans %}">{% trans %}Reg{% endtrans %}</abbr>
+    </div>
+    <div class="col-md-3 hidden-sm hidden-xs">
+        {% trans %}Last Referral{% endtrans %}
+    </div>
 {% endblock %}
 
 {% block item_title %}
     <div class="finder-item-title" data-field="name">
-        {{ item.name }}
+        {{ item.name }} <span class="label label-default">{{ item.type }}</span>
     </div>
 {% endblock %}
 
 {% block item_options %}
     <div class="btn-group">
-        {{ buttons.edit('referrals_admin_edit', item.id) }}
+        {{ buttons.edit('referrals_admin_edit', item.id, 'Manage') }}
 
         {{ buttons.delete('referrals_admin_delete') }}
     </div>
 {% endblock %}
 
 {% block item_extended_inner %}
-
+    <div class="col-md-2 hidden-xs hidden-sm">
+        <a href="{{ path('users_admin_edit', {'id': item.user.id}) }}">{{ item.user.username }}</a>
+    </div>
+    <div class="col-md-4">
+        <input class="form-control" type="text" value="{{ url('home', {'ref_id': item.id}) }}"/>
+    </div>
+    <div class="col-md-1 hidden-sm hidden-xs">
+        <span class="badge">{{ item.inbound }}</span>
+    </div>
+    <div class="col-md-1 hidden-sm hidden-xs">
+        <span class="badge">{{ item.outbound }}</span>
+    </div>
+    <div class="col-md-1 hidden-sm hidden-xs">
+        <span class="badge">{{ item.conversions }}</span>
+    </div>
+    <div class="col-md-3 hidden-sm hidden-xs">
+        {{ item.lastReferral|date(settings.time_format) }}
+    </div>
 {% endblock %}

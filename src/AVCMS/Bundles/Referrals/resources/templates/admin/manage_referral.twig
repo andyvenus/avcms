@@ -1,0 +1,39 @@
+{% extends '@admin/edit_item.twig' %}
+
+{% block title -%}
+    {% spaceless %}
+        {% if item.id %}
+            {% trans with {'item': item.name} %}Manage Referral {item}{% endtrans %}
+        {% else %}
+            {% trans %}New Referral{% endtrans %}
+        {% endif %}
+    {% endspaceless  %}
+{% endblock %}
+
+{% block editor_title_edit %}
+    <span class="light">{% trans %}Manage Referral{% endtrans %}:</span> <span data-id="{{ item.id }}" data-field="name">{{ item.name }}</span>
+{% endblock %}
+
+{% block editor_title_new %}
+    {% trans %}New Referral{% endtrans %}
+{% endblock %}
+
+{% block before_form %}
+    <div class="well well-sm">
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 15px;">
+                <label for="referral_link">{% trans %}Referral Link{% endtrans %}</label>
+                <input name="referral_link" class="form-control" type="text" value="{{ url('home', {'ref_id': item.id}) }}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <span class="text-success"><strong>{% trans %}Inbound Clicks{% endtrans %}:</strong> {{ item.inbound }}</span>&nbsp;&nbsp;
+
+                <span class="text-warning"><strong>{% trans %}Outbound Clicks{% endtrans %}:</strong> {{ item.outbound }}</span>&nbsp;&nbsp;
+
+                <span class="text-primary"><strong>{% trans %}Registrations{% endtrans %}:</strong> {{ item.conversions }}</span>
+            </div>
+        </div>
+    </div>
+{% endblock %}

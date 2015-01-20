@@ -29,7 +29,7 @@ class ReferralsAdminController extends AdminBaseController
     {
         $formBlueprint = new ReferralAdminForm();
 
-        return $this->handleEdit($request, $this->referrals, $formBlueprint, 'referrals_admin_edit', '@Referrals/admin/edit_referral.twig', '@Referrals/admin/referrals_browser.twig', array());
+        return $this->handleEdit($request, $this->referrals, $formBlueprint, 'referrals_admin_edit', '@Referrals/admin/manage_referral.twig', '@Referrals/admin/referrals_browser.twig', array());
     }
 
     public function finderAction(Request $request)
@@ -37,6 +37,7 @@ class ReferralsAdminController extends AdminBaseController
         $finder = $this->referrals->find()
             ->setSearchFields(array('name'))
             ->setResultsPerPage(15)
+            ->join($this->model('@users'), ['id', 'slug', 'username'])
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
         $items = $finder->get();
 
