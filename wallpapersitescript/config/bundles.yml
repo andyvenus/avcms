@@ -42,3 +42,5 @@ FacebookConnect:
     enabled: true
 Sitemaps:
     enabled: true
+Recaptcha:
+    enabled: true

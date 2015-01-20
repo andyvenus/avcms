@@ -1,0 +1,27 @@
+name: Recaptcha
+namespace: AVCMS\Bundles\Recaptcha
+require:
+    - Framework
+
+services:
+    - RecaptchaServices
+
+user_settings_sections:
+  recaptcha: reCaptcha
+
+user_settings:
+    recaptcha_enabled:
+        type: checkbox
+        label: Enable reCaptcha
+        help: Enable reCaptcha on forms that support it to prevent bot activity
+        section: recaptcha
+    recaptcha_site_key:
+      type: text
+      label: reCaptcha Site Key
+      help: The site key, find it on https://www.google.com/recaptcha
+      section: recaptcha
+    recaptcha_secret:
+      type: text
+      label: reCaptcha Secret Key
+      help: The secret key, find it on https://www.google.com/recaptcha
+      section: recaptcha
