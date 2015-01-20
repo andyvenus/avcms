@@ -1,6 +1,9 @@
-{% macro edit(ajax_route, item_id) %}
+{% macro edit(ajax_route, item_id, label) %}
+    {% if label == null %}
+        {% set label = 'Edit' %}
+    {% endif %}
     <a class="btn btn-xs btn-default" href="{{ url(ajax_route, {'id': item_id}) }}">
-        <span class="glyphicon glyphicon-edit"></span> {% trans %}Edit{% endtrans %}
+        <span class="glyphicon glyphicon-edit"></span> {{ label|trans }}
     </a>
 {% endmacro %}
 
