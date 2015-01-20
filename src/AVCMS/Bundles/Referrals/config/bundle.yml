@@ -1,0 +1,7 @@
+name: Referrals
+namespace: AVCMS\Bundles\Referrals
+require:
+    - Framework
+
+services:
+    - ReferralServices

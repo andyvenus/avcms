@@ -1,0 +1,21 @@
+
+
+referrals_admin_edit:
+    path:     /referrals/edit/{id}
+    defaults: { _controller: 'Referrals::ReferralsAdminController::editAction' }
+
+referrals_admin_add:
+    path:     /referrals/new
+    defaults: { _controller: 'Referrals::ReferralsAdminController::editAction' }
+
+referrals_admin_delete:
+    path:     /referrals/delete
+    defaults: { _controller: 'Referrals::ReferralsAdminController::deleteAction' }
+
+referrals_admin_home:
+  path: /referrals
+  defaults: { _controller: 'Referrals::ReferralsAdminController::homeAction' }
+
+referrals_admin_finder:
+  path: /referrals/finder/{page}
+  defaults: { page: 1, _controller: 'Referrals::ReferralsAdminController::finderAction' }

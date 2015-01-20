@@ -44,3 +44,5 @@ Sitemaps:
     enabled: true
 Recaptcha:
     enabled: true
+Referrals:
+    enabled: true
