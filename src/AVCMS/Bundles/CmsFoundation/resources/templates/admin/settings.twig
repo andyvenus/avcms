@@ -1,6 +1,13 @@
 {% extends '@admin/simple_page.twig' %}
 
-{% block title %}{% trans %}Settings{% endtrans %}{% endblock %}
+{% block title %}
+    {% trans %}Settings{% endtrans %}
+    <div class="pull-right light small" style="margin-top: 3px;">
+    {% for section_id, section in form.sections %}
+         {% if loop.first == false %}&nbsp;{% endif %} <a href="#{{ section_id }}">{{ section.label }}</a>
+    {% endfor %}
+        </div>
+{% endblock %}
 
 {% block content_body %}
     <div class="container-fluid">
@@ -11,7 +18,7 @@
         </div>
 
         {% for section_id, section in form.sections %}
-            <h4>{{ section.label }}</h4>
+            <h4><a name="{{ section_id }}"></a>{{ section.label }}</h4>
             {% for field in form.sectionFields(section_id) %}
                 {% if loop.index is odd %}
                     <div class="row">
