@@ -2,3 +2,19 @@ name: Links
 namespace: AVCMS\Bundles\Links
 require:
     - Framework
+
+menu_items:
+    admin:
+        admin_links:
+            label: Links
+            icon: glyphicon glyphicon-link
+            type: route
+            permission: ADMIN_LINKS
+            default_order: 80
+            settings:
+                route: links_admin_home
+
+permissions:
+  ADMIN_LINKS:
+    name: Links Administration
+    description: Ability to manage links

@@ -8,6 +8,7 @@ use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use AVCMS\Bundles\Referrals\Form\ChoicesProvider\ReferralsChoicesProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class LinksAdminController extends AdminBaseController
 {
@@ -25,6 +26,10 @@ class LinksAdminController extends AdminBaseController
     {
         $this->links = $this->model('Links');
         $this->referrals = $this->model('AVCMS\Bundles\Referrals\Model\Referrals');
+
+        if (!$this->isGranted('ADMIN_LINKS')) {
+            throw new AccessDeniedException;
+        }
     }
 
     public function homeAction(Request $request)
