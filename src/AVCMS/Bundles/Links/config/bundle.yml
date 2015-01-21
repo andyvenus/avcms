@@ -1,0 +1,4 @@
+name: Links
+namespace: AVCMS\Bundles\Links
+require:
+    - Framework

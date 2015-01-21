@@ -1,0 +1,24 @@
+links:
+    bundle: Links
+    namespace: AVCMS\Bundles\Links
+    singular: link
+    plural: links
+    uc_singular: Link
+    uc_plural: Links
+    cc_singular: Link
+    cc_plural: Links
+    dash_singular: link
+    dash_plural: links
+    admin_home_route: links_admin_home
+    admin_finder_route: links_admin_finder
+    admin_delete_route: links_admin_delete
+    admin_edit_route: links_admin_edit
+    admin_add_route: links_admin_add
+    admin_controller: 'Links::LinksAdminController'
+    finder_item_extra_buttons: ''
+    database: links
+    entity: AVCMS\Bundles\Links\Model\Link
+    admin_form: AVCMS\Bundles\Links\Form\LinkAdminForm
+    model_class: Links
+    model_var_name: links
+    title_field: anchor

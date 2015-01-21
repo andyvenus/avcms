@@ -46,3 +46,5 @@ Recaptcha:
     enabled: true
 Referrals:
     enabled: true
+Links:
+    enabled: true

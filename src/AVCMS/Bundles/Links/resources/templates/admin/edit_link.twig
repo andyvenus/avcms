@@ -1,0 +1,19 @@
+{% extends '@admin/edit_item.twig' %}
+
+{% block title -%}
+    {% spaceless %}
+        {% if item.id %}
+            {% trans with {'item': item.anchor} %}Editing {item}{% endtrans %}
+        {% else %}
+            {% trans %}New Link{% endtrans %}
+        {% endif %}
+    {% endspaceless  %}
+{% endblock %}
+
+{% block editor_title_edit %}
+    <span class="light">{% trans %}Editing Link{% endtrans %}:</span> <span data-id="{{ item.id }}" data-field="anchor">{{ item.anchor }}</span>
+{% endblock %}
+
+{% block editor_title_new %}
+    {% trans %}New Link{% endtrans %}
+{% endblock %}

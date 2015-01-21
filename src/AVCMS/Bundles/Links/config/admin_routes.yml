@@ -1,0 +1,21 @@
+
+
+links_admin_edit:
+    path:     /links/edit/{id}
+    defaults: { _controller: 'Links::LinksAdminController::editAction' }
+
+links_admin_add:
+    path:     /links/new
+    defaults: { _controller: 'Links::LinksAdminController::editAction' }
+
+links_admin_delete:
+    path:     /links/delete
+    defaults: { _controller: 'Links::LinksAdminController::deleteAction' }
+
+links_admin_home:
+  path: /links
+  defaults: { _controller: 'Links::LinksAdminController::homeAction' }
+
+links_admin_finder:
+  path: /links/finder/{page}
+  defaults: { page: 1, _controller: 'Links::LinksAdminController::finderAction' }

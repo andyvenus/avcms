@@ -1,0 +1,29 @@
+{% extends '@admin/browser.twig' %}
+
+{% block finder_title %}
+    {% trans %}Links{% endtrans %}
+{% endblock %}
+
+{% block expand_finder_button %}
+    {{ buttons.expand_finder('links_admin_home') }}
+{% endblock %}
+
+{% block add_item %}
+    {{ buttons.add_item('links_admin_add', 'Add Link') }}
+{% endblock %}
+
+{% block finder %}
+    <div data-url="{{ url('links_admin_finder') }}">
+        {{ render(path('links_admin_finder')) }}
+    </div>
+{% endblock %}
+
+{% block mobile_back_link %}
+    {{ url('links_admin_home') }}
+{% endblock %}
+
+{% block checked_options_buttons %}
+    {{ buttons.bulk_delete('links_admin_delete') }}
+
+    
+{% endblock %}
