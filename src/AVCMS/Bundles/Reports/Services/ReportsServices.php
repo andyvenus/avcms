@@ -18,5 +18,15 @@ class ReportsServices implements ServicesInterface
         $container->register('report_types_manager', 'AVCMS\Bundles\Reports\ReportTypesManager')
             ->setArguments([new Reference('bundle_manager')])
         ;
+
+        $container->register('reports.model', 'AVCMS\Bundles\Reports\Model\Reports')
+            ->setArguments(['AVCMS\Bundles\Reports\Model\Reports'])
+            ->setFactory([new Reference('model_factory'), 'create'])
+        ;
+
+        $container->register('subscriber.report_menu_item', 'AVCMS\Bundles\Reports\EventSubscriber\ReportMenuItemSubscriber')
+            ->setArguments([new Reference('reports.model')])
+            ->addTag('event.subscriber')
+        ;
     }
 }
