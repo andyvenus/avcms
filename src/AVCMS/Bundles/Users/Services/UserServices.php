@@ -47,7 +47,7 @@ class UserServices implements ServicesInterface
         ;
 
         $container->register('users.new_user_builder', 'AVCMS\Bundles\Users\User\NewUserBuilder')
-            ->setArguments([new Reference('users.model'), new Reference('slug.generator'), new Reference('security.bcrypt_encoder'), new Reference('request.stack')])
+            ->setArguments([new Reference('users.model'), new Reference('slug.generator'), new Reference('security.bcrypt_encoder'), new Reference('request.stack'), new Reference('dispatcher')])
         ;
     }
 }
