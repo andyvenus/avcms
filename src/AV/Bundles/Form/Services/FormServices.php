@@ -50,6 +50,10 @@ class FormServices implements ServicesInterface
             ->addTag('form.transformer')
         ;
 
+        $container->register('form.url_transformer', 'AV\Form\Transformer\UrlTransformer')
+            ->addTag('form.transformer')
+        ;
+
         // Twig Extension
 
         $container->register('twig.form.extension', 'AV\Form\Twig\FormExtension')
