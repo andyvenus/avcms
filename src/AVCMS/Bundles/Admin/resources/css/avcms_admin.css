@@ -52,6 +52,9 @@ a {
         font-size: 16px;
         color: #d7dde5;
         text-decoration: none; }
+        .admin-menu ul li a .badge {
+          background-color: #d7dde5;
+          color: #374353; }
     .admin-menu ul li:hover {
       background-color: #414f62; }
     .admin-menu ul .sub-menu-item a {

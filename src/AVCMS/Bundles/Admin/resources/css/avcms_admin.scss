@@ -82,6 +82,11 @@ a {
         font-size: 16px;
         color: lighten($main_menu_color, 60);
         text-decoration: none;
+
+        .badge {
+          background-color: lighten($main_menu_color, 60);
+          color: $main_menu_color;
+        }
       }
     }
 
