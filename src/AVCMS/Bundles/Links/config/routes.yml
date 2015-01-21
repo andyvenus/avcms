@@ -1,0 +1,3 @@
+link_exchange:
+  path: /link-exchange
+  defaults: { _controller: Links::LinksController::linkExchangeAction }

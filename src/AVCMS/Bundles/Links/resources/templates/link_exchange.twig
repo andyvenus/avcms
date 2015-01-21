@@ -1,0 +1,14 @@
+{% extends 'index.twig' %}
+
+{% block content %}
+    <h2>{% trans %}Link Exchange{% endtrans %}</h2>
+
+    {% if form.isSubmitted() == false %}
+        <div class="alert alert-info">
+            <span class="glyphicon glyphicon-info-sign"></span>
+            {% trans %}Submit your site for a link exchange. After submission you will be given a unique referral URL to add to your site. The more traffic you send to us, the higher your link will appear on our site.{% endtrans %}
+        </div>
+    {% endif %}
+
+    {{ form(form) }}
+{% endblock %}

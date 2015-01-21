@@ -1,0 +1,11 @@
+{% extends 'index.twig' %}
+
+{% block content %}
+    <h2>{% trans %}Link Exchange Details{% endtrans %}</h2>
+
+    <div class="alert alert-success"> {% trans %}Thanks for submitting your link. Please add the following referral link to your site. Our admin have been notified of your submission and will activate your link shortly.{% endtrans %}</div>
+
+    <div class="well">
+        {{ form_rows(form) }}
+    </div>
+{% endblock %}
