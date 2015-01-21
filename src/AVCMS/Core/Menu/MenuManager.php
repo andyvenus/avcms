@@ -10,8 +10,9 @@ namespace AVCMS\Core\Menu;
 use AV\Model\Model;
 use AVCMS\Bundles\CmsFoundation\Model\Menu;
 use AVCMS\Bundles\CmsFoundation\Model\MenuItemConfig;
+use AVCMS\Core\Menu\Event\FilterMenuItemEvent;
 use AVCMS\Core\Menu\MenuItemType\MenuItemTypeInterface;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -47,13 +48,19 @@ class MenuManager
      */
     protected $menuItemTypes = [];
 
-    public function __construct(UrlGeneratorInterface $urlGenerator, Model $menusModel, Model $itemsModel, SecurityContextInterface $securityContext, TranslatorInterface $translator)
+    /**
+     * @var null|EventDispatcherInterface
+     */
+    protected $eventDispatcher = null;
+
+    public function __construct(UrlGeneratorInterface $urlGenerator, Model $menusModel, Model $itemsModel, SecurityContextInterface $securityContext, TranslatorInterface $translator, EventDispatcherInterface $eventDispatcher)
     {
         $this->urlGenerator = $urlGenerator;
         $this->model = $menusModel;
         $this->menuItemConfigs = $itemsModel;
         $this->securityContext = $securityContext;
         $this->translator = $translator;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function addMenuItemType(MenuItemTypeInterface $menuItemType, $id)
@@ -145,6 +152,10 @@ class MenuManager
                 }
 
                 $item->children = array();
+
+                if ($this->eventDispatcher !== null) {
+                    $this->eventDispatcher->dispatch('menu_manager.filter_item', new FilterMenuItemEvent($item));
+                }
 
                 if ($item->getParent()) {
                     $childItems[$item->getParent()][$item->getId()] = $item;
