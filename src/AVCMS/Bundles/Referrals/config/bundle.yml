@@ -5,3 +5,19 @@ require:
 
 services:
     - ReferralServices
+
+menu_items:
+    admin:
+        admin_referrals:
+            label: Referrals
+            icon: glyphicon glyphicon-bullhorn
+            type: route
+            permission: ADMIN_REFERRALS
+            default_order: 80
+            settings:
+                route: referrals_admin_home
+
+permissions:
+  ADMIN_REFERRALS:
+    name: Referrals Administration
+    description: Ability to manage referrals
