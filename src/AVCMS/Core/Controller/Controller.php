@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 
 abstract class Controller extends ContainerAware
 {
@@ -236,5 +237,15 @@ abstract class Controller extends ContainerAware
     protected function trans($id, $parameters = array(), $domain = null, $locale = null)
     {
         return $this->translator->trans($id, $parameters, $domain, $locale);
+    }
+
+    /**
+     * Check if a user is logged in
+     *
+     * @return bool
+     */
+    protected function userLoggedIn()
+    {
+        return $this->isGranted([AuthenticatedVoter::IS_AUTHENTICATED_FULLY, AuthenticatedVoter::IS_AUTHENTICATED_REMEMBERED]);
     }
 }
