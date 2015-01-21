@@ -153,6 +153,12 @@ a {
   background-color: $finder_background;
   border-right: 1px solid darken($finder_background, 5);
   display:none;
+
+  .finder-padded {
+    padding: 10px;
+    max-width: 900px;
+    margin: auto;
+  }
 }
 
 .finder-has-focus {
