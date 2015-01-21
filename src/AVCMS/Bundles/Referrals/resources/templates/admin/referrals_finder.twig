@@ -37,7 +37,11 @@
 
 {% block item_extended_inner %}
     <div class="col-md-2 hidden-xs hidden-sm">
-        <a href="{{ path('users_admin_edit', {'id': item.user.id}) }}">{{ item.user.username }}</a>
+        {% if item.userId %}
+            <a href="{{ path('users_admin_edit', {'id': item.user.id}) }}">{{ item.user.username }}</a>
+        {% elseif item.userEmail %}
+            <a href="mailto:{{ item.userEmail }}">{{ item.userEmail }}</a>
+        {% endif %}
     </div>
     <div class="col-md-4">
         <input class="form-control" type="text" value="{{ url('home', {'ref_id': item.id}) }}"/>

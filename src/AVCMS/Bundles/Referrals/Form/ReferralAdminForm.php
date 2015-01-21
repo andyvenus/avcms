@@ -18,5 +18,9 @@ class ReferralAdminForm extends FormBlueprint
                 'class' => 'user_selector no_select2'
             )
         ));
+
+        $this->add('user_email', 'text', [
+            'label' => 'User Email (if no user set)'
+        ]);
     }
 }

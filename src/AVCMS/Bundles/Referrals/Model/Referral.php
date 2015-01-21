@@ -86,13 +86,13 @@ class Referral extends Entity
         $this->set("user_id", $value);
     }
 
-    public function getUserIp()
+    public function getUserEmail()
     {
-        return $this->get("user_ip");
+        return $this->get("user_email");
     }
 
-    public function setUserIp($value)
+    public function setUserEmail($value)
     {
-        $this->set("user_ip", $value);
+        $this->set("user_email", $value);
     }
 }
