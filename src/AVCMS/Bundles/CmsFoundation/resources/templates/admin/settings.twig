@@ -2,11 +2,15 @@
 
 {% block title %}
     {% trans %}Settings{% endtrans %}
+{% endblock %}
+
+{% block content_header %}
+    {{ block('title') }}
     <div class="pull-right light small" style="margin-top: 3px;">
-    {% for section_id, section in form.sections %}
-         {% if loop.first == false %}&nbsp;{% endif %} <a href="#{{ section_id }}">{{ section.label }}</a>
-    {% endfor %}
-        </div>
+        {% for section_id, section in form.sections %}
+            {% if loop.first == false %}&nbsp;{% endif %} <a href="#{{ section_id }}">{{ section.label }}</a>
+        {% endfor %}
+    </div>
 {% endblock %}
 
 {% block content_body %}
