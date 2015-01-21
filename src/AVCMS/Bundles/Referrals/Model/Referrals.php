@@ -25,4 +25,9 @@ class Referrals extends Model
     {
         return $this->query()->where('user_id', $userId)->where('type', 'user')->first();
     }
+
+    public function increaseConversions($refID)
+    {
+        $this->query()->where('id', $refID)->update(['conversions' => $this->query()->raw('`conversions` + 1')]);
+    }
 }

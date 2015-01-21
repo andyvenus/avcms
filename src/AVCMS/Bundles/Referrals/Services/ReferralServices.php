@@ -20,6 +20,10 @@ class ReferralServices implements ServicesInterface
             ->addTag('event.subscriber');
         ;
 
+        $container->register('subscriber.referral_overflow', 'AVCMS\Bundles\Referrals\EventSubscriber\ReferralOverflowSubscriber')
+            ->addTag('event.subscriber');
+        ;
+
         $container->register('referrals.model', 'AVCMS\Bundles\Referrals\Model\Referrals')
             ->setArguments(['AVCMS\Bundles\Referrals\Model\Referrals'])
             ->setFactory([new Reference('model_factory'), 'create'])

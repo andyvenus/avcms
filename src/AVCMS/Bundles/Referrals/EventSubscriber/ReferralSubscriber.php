@@ -7,8 +7,10 @@
 
 namespace AVCMS\Bundles\Referrals\EventSubscriber;
 
+use AV\Model\Event\CreateModelEvent;
 use AVCMS\Bundles\Referrals\Model\Referral;
 use AVCMS\Bundles\Referrals\Model\Referrals;
+use AVCMS\Bundles\Users\Event\CreateUserEvent;
 use AVCMS\Bundles\Users\Model\Users;
 use AVCMS\Core\HitCounter\HitCounter;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -77,10 +79,19 @@ class ReferralSubscriber implements EventSubscriberInterface
         $this->session->set('ref_id', $referral->getId());
     }
 
+    public function checkRegistration(CreateUserEvent $event)
+    {
+        if ($this->session->has('ref_id')) {
+            $this->referrals->increaseConversions($this->session->get('ref_id'));
+            $event->getUser()->referral->setReferral($this->session->get('ref_id'));
+        }
+    }
+
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::REQUEST => ['checkReferral']
+            KernelEvents::REQUEST => ['checkReferral'],
+            'user.create' => ['checkRegistration'],
         ];
     }
 }
