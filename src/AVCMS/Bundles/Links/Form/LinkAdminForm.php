@@ -16,7 +16,8 @@ class LinkAdminForm extends FormBlueprint
         
         $this->add('url', 'text', array(
             'label' => 'URL',
-            'required' => true
+            'required' => true,
+            'transform' => 'url',
         ));
         
         $this->add('description', 'textarea', array(
