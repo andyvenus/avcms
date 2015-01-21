@@ -154,7 +154,7 @@ class MenuManager
                 $item->children = array();
 
                 if ($this->eventDispatcher !== null) {
-                    $this->eventDispatcher->dispatch('menu_manager.filter_item', new FilterMenuItemEvent($item));
+                    $this->eventDispatcher->dispatch('menu_manager.filter_item', new FilterMenuItemEvent($item, $config));
                 }
 
                 if ($item->getParent()) {
