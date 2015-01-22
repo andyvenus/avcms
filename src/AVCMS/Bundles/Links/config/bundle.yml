@@ -3,6 +3,9 @@ namespace: AVCMS\Bundles\Links
 require:
     - Framework
 
+services:
+    - LinksServices
+
 menu_items:
     admin:
         admin_links:
