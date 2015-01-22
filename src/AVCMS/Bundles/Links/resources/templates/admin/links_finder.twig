@@ -13,7 +13,7 @@
 {% block item_options %}
     <div class="btn-group">
         {{ buttons.edit('links_admin_edit', item.id) }}
-
+        {{ buttons.publish(item.published, 'links_admin_toggle_published') }}
         {{ buttons.delete('links_admin_delete') }}
     </div>
 {% endblock %}

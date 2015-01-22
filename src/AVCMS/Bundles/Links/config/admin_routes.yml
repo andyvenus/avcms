@@ -1,5 +1,3 @@
-
-
 links_admin_edit:
     path:     /links/edit/{id}
     defaults: { _controller: 'Links::LinksAdminController::editAction' }
@@ -11,6 +9,10 @@ links_admin_add:
 links_admin_delete:
     path:     /links/delete
     defaults: { _controller: 'Links::LinksAdminController::deleteAction' }
+
+links_admin_toggle_published:
+    path:     /links/publish
+    defaults: { _controller: 'Links::LinksAdminController::togglePublishedAction' }
 
 links_admin_home:
   path: /links

@@ -67,6 +67,8 @@ class LinksController extends Controller
             $this->referrals->save($referral);
 
             $link->setReferralId($referral->getId());
+            $link->setDateAdded(time());
+            $link->setAdminSeen(0);
 
             $this->links->save($link);
 

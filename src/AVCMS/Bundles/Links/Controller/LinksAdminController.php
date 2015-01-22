@@ -58,7 +58,33 @@ class LinksAdminController extends AdminBaseController
 
     public function deleteAction(Request $request)
     {
+        if ($this->checkCsrfToken($request) === false) {
+            return $this->invalidCsrfTokenJsonResponse();
+        }
+
+        if (is_array($request->request->get('ids'))) {
+            $this->links->query()->whereIn('id', $request->get('ids'))->update(['admin_seen' => 1]);
+        }
+
         return $this->handleDelete($request, $this->links);
+    }
+
+    public function togglePublishedAction(Request $request)
+    {
+        if ($this->checkCsrfToken($request) === false) {
+            return $this->invalidCsrfTokenJsonResponse();
+        }
+
+        $seenQuery = $this->links->query();
+
+        if (is_array($request->request->get('ids'))) {
+            $seenQuery->whereIn('id', $request->get('ids'))->update(['admin_seen' => 1]);
+        }
+        elseif ($request->request->has('id')) {
+            $seenQuery->where('id', $request->get('id'))->update(['admin_seen' => 1]);
+        }
+
+        $this->handleTogglePublished($request, $this->links);
     }
 
     protected function getSharedTemplateVars($ajaxDepth)
