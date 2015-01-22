@@ -13,6 +13,12 @@ use Swift_SmtpTransport;
 
 class Mailer
 {
+    protected $settings;
+
+    protected $transport;
+
+    protected $mailer;
+
     public function __construct(SettingsManager $settings)
     {
         $this->settings = $settings;
