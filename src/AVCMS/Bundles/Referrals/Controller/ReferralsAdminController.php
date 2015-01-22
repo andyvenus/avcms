@@ -30,11 +30,11 @@ class ReferralsAdminController extends AdminBaseController
        return $this->handleManage($request, '@Referrals/admin/referrals_browser.twig');
     }
 
-    public function editAction(Request $request)
+    public function manageAction(Request $request)
     {
         $formBlueprint = new ReferralAdminForm();
 
-        return $this->handleEdit($request, $this->referrals, $formBlueprint, 'referrals_admin_edit', '@Referrals/admin/manage_referral.twig', '@Referrals/admin/referrals_browser.twig', array());
+        return $this->handleEdit($request, $this->referrals, $formBlueprint, 'referrals_admin_manage', '@Referrals/admin/manage_referral.twig', '@Referrals/admin/referrals_browser.twig', array());
     }
 
     public function finderAction(Request $request)
