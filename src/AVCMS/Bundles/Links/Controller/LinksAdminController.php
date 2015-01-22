@@ -49,7 +49,7 @@ class LinksAdminController extends AdminBaseController
         $finder = $this->links->find()
             ->setSearchFields(array('anchor'))
             ->setResultsPerPage(15)
-            //->join($this->referrals, ['id'])
+            ->join($this->referrals, ['id', 'name', 'inbound', 'outbound', 'conversions'])
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
         $items = $finder->get();
 

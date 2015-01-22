@@ -1,7 +1,17 @@
 {% extends '@admin/finder.twig' %}
 
 {% block finder_header_titles %}
-
+    <div class="col-md-3">
+        {% trans %}Referral{% endtrans %}
+    </div>
+    <div class="col-md-4 hidden-sm hidden-xs">
+        {% trans %}URL{% endtrans %}
+    </div>
+    <div class="col-md-3 hidden-sm hidden-xs">
+        {% trans %}Date Added{% endtrans %}
+    </div>
+    <div class="col-md-2 hidden-sm hidden-xs">
+    </div>
 {% endblock %}
 
 {% block item_title %}
@@ -16,8 +26,27 @@
         {{ buttons.publish(item.published, 'links_admin_toggle_published') }}
         {{ buttons.delete('links_admin_delete') }}
     </div>
+
+    <a class="btn btn-default btn-xs" href="{{ item.url }}"><span class="glyphicon glyphicon-new-window"></span></a>
 {% endblock %}
 
 {% block item_extended_inner %}
-
+    <div class="col-md-3">
+        {% if item.referralId != 0 %}
+            <a href="{{ path('referrals_admin_manage', {'id': item.referralId}) }}">{{ item.referral.name }}</a><br/>
+            <span class="text-success"><strong>{% trans %}In{% endtrans %}:</strong> {{ item.referral.inbound }}</span> &nbsp;
+            <span class="text-warning"><strong>{% trans %}Out{% endtrans %}:</strong> {{ item.referral.outbound }} </span>
+        {% else %}
+            {% trans %}None{% endtrans %}
+        {% endif %}
+    </div>
+    <div class="col-md-4 hidden-sm hidden-xs">
+        <a href="{{ item.url }}">{{ item.url }}</a>
+    </div>
+    <div class="col-md-3 hidden-sm hidden-xs">
+        {{ item.dateAdded|date(settings.date_format) }}
+    </div>
+    <div class="col-md-2 hidden-sm hidden-xs">
+        {{ item.hits }}
+    </div>
 {% endblock %}
