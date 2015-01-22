@@ -232,7 +232,7 @@ class BundleBuilderController extends BundleBaseController
         $entity_class = PhpClass::fromReflection(new \ReflectionClass($content['entity']), false);
 
         $admin_form = null;
-        if (class_exists($content['admin_form'])) {
+        if (class_exists($content['admin_form']) && $request->get('noform', null) === null) {
             $admin_form = new $content['admin_form'];
         }
 
