@@ -1,6 +1,6 @@
 referrals_admin_manage:
     path:     /referrals/manage/{id}
-    defaults: { _controller: 'Referrals::ReferralsAdminController::editAction' }
+    defaults: { _controller: 'Referrals::ReferralsAdminController::manageAction' }
 
 referrals_admin_add:
     path:     /referrals/new
