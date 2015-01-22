@@ -74,7 +74,12 @@ class LinksController extends Controller
 
             $linkExchangeSuccessForm = $this->buildForm(new LinkExchangeSuccessForm($url, $this->setting('site_name')), $request);
 
-            //todo email user & admin
+            $emailSubject = $this->trans('Your link exchange with {site_name}', ['site_name' => $this->setting('site_name')]);
+
+            $mailer = $this->container->get('mailer');
+            $email = $mailer->newEmail($emailSubject, $this->render('@Links/email/email.link_exchange.twig', ['url' => $url]), 'text/html');
+            $email->setTo($referral->getUserEmail());
+            $mailer->send($email);
 
             return new Response($this->render('@Links/link_exchange_complete.twig', [
                 'link' => $link,

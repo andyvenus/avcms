@@ -1,0 +1,11 @@
+{% extends '@email/main.twig' %}
+
+{% block content %}
+    <p>{% trans %}Thanks for submitting your link for link exchange. Below is a reminder of our link details and your referral URL.{% endtrans %}</p>
+
+    <p><b>{% trans %}HTML{% endtrans %}:</b> {{ '<a href="'~url~'">'~settings.site_name~'</a>' }}</p>
+
+    <p><b>{% trans %}Your unique URL{% endtrans %}:</b> {{ url }}</p>
+
+    <p><b>{% trans %}Our preferred link anchor{% endtrans %}:</b> {{ settings.site_name }}</p>
+{% endblock %}
