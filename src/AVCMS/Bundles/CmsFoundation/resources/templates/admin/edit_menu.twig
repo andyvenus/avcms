@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block before_form %}
-   {% if item.id == 0 %}
-        <div class="alert alert-info">{% trans %}Add a new menu that you can display in a module or by editing your template.{% endtrans %}</div>
+   {% if item.id is null %}
+        <div class="alert alert-info"><span class="glyphicon glyphicon-info-sign"></span> {% trans %}Add a new menu that you can display in a module or by editing your template.{% endtrans %}</div>
     {% endif %}
 {% endblock %}
