@@ -5,7 +5,9 @@
         </a>
     {% endfor %}
 
-    <a href="{{ url('links') }}" class="list-group-item text-center">
-        {% trans %}Link Exchange{% endtrans %} <span class="glyphicon glyphicon-chevron-right"></span>
-    </a>
+    {% if settings.link_exchange %}
+        <a href="{{ url('links') }}" class="list-group-item text-center" {% if settings.link_exchange_no_follow %}rel="nofollow"{% endif %}>
+            {% trans %}Link Exchange{% endtrans %} <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+    {% endif %}
 </div>

@@ -36,3 +36,19 @@ modules:
         type: text
         label: Links to show
         default: 10
+
+user_settings_sections:
+  links: Links
+
+user_settings:
+  link_exchange:
+    label: Enable Link Exchange
+    type: checkbox
+    section: links
+    default: 1
+  link_exchange_no_follow:
+    label: Make Link Exchange Links 'No Follow'
+    type: checkbox
+    help: If links are set to nofollow, search engines will not follow the link
+    section: links
+    default: 1

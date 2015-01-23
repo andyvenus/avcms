@@ -35,6 +35,10 @@ class LinksController extends Controller
 
     public function linkExchangeAction(Request $request)
     {
+        if (!$this->setting('link_exchange')) {
+            throw $this->createNotFoundException();
+        }
+
         $link = $this->links->newEntity();
         $link->setPublished(0);
         $referral = $this->referrals->newEntity();

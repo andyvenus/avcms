@@ -3,11 +3,13 @@
 {% block content %}
     <h2>{% trans %}Our Friends{% endtrans %}</h2>
 
+    {% if settings.link_exchange %}
     <p>
         <a class="btn btn-default btn-success" href="{{ path('link_exchange') }}">
             <span class="glyphicon glyphicon-plus"></span> {% trans %}Add Your Site Here{% endtrans %}
         </a>
     </p>
+    {% endif %}
 
     <table class="table">
         {% for link in links %}
