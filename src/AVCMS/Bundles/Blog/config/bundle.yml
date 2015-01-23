@@ -9,6 +9,9 @@ require:
   - Comments
   - Tags
 
+services:
+  - BlogServices
+
 model:
   posts: Posts
   users: AVCMS\Bundles\Users\Model\Users
