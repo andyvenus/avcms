@@ -59,10 +59,11 @@ class NewUserBuilder
 
         $user->setRoleList($role);
 
-        $user->setLastIp($this->requestStack->getCurrentRequest()->getClientIp());
+        $ip = $this->requestStack->getCurrentRequest()->getClientIp();
+        $user->setRegistrationIp($ip);
+        $user->setLastIp($ip);
 
         $user->setJoined(time());
-
 
         $event = new CreateUserEvent($user);
         $this->eventDispatcher->dispatch('user.create', $event);
