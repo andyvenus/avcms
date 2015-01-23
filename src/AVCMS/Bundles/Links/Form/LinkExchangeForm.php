@@ -8,6 +8,8 @@
 namespace AVCMS\Bundles\Links\Form;
 
 use AV\Form\FormBlueprint;
+use AV\Validation\Rules\MustNotExist;
+use AV\Validation\Validator;
 
 class LinkExchangeForm extends FormBlueprint
 {
@@ -28,5 +30,10 @@ class LinkExchangeForm extends FormBlueprint
             'label' => 'Description',
             'required' => true
         ));
+    }
+
+    public function getValidationRules(Validator $validator)
+    {
+        $validator->addRule('url', new MustNotExist('AVCMS\Bundles\Links\Model\Links', 'url'), 'That URL has already been submitted.');
     }
 }
