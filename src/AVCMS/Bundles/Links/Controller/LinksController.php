@@ -92,4 +92,15 @@ class LinksController extends Controller
 
         return new Response($this->render('@Links/link_exchange.twig', ['form' => $form->createView()]));
     }
+
+    public function linksAction(Request $request)
+    {
+        $linksPerPage = 25;
+        $page = $request->get('page', 1);
+
+        $finder = $this->links->getTopLinksFinder($this->referrals, $page, $linksPerPage);
+        $links = $finder->get();
+
+        return new Response($this->render('@Links/links.twig', ['links' => $links, 'current_page' => $finder->getCurrentPage(), 'total_pages' => $finder->getTotalPages()]));
+    }
 }
