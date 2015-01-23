@@ -1,0 +1,35 @@
+{% extends '@admin/finder.twig' %}
+
+{% block finder_header_titles %}
+    <div class="col-md-3">
+        {% trans %}Hits{% endtrans %}
+    </div>
+    <div class="col-md-3">
+        {% trans %}URI{% endtrans %}
+    </div>
+{% endblock %}
+
+{% block item_title %}
+    <div class="finder-item-title" data-field="title">
+        {{ item.title }}
+    </div>
+{% endblock %}
+
+{% block item_options %}
+    <div class="btn-group">
+        {{ buttons.edit('pages_admin_edit', item.id) }}
+
+        {{ buttons.delete('pages_admin_delete') }}
+    </div>
+
+    {{ buttons.view('page', {slug: item.slug}) }}
+{% endblock %}
+
+{% block item_extended_inner %}
+    <div class="col-md-3">
+        {{ item.hits }}
+    </div>
+    <div class="col-md-3">
+        <a href="{{ path('page', {'slug': item.slug}) }}">{{ item.slug }}</a>
+    </div>
+{% endblock %}

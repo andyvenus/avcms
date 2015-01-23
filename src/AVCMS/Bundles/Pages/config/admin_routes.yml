@@ -1,0 +1,21 @@
+
+
+pages_admin_edit:
+    path:     /pages/edit/{id}
+    defaults: { _controller: 'Pages::PagesAdminController::editAction' }
+
+pages_admin_add:
+    path:     /pages/new
+    defaults: { _controller: 'Pages::PagesAdminController::editAction' }
+
+pages_admin_delete:
+    path:     /pages/delete
+    defaults: { _controller: 'Pages::PagesAdminController::deleteAction' }
+
+pages_admin_home:
+  path: /pages
+  defaults: { _controller: 'Pages::PagesAdminController::homeAction' }
+
+pages_admin_finder:
+  path: /pages/finder/{page}
+  defaults: { page: 1, _controller: 'Pages::PagesAdminController::finderAction' }

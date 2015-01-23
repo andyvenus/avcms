@@ -1,0 +1,11 @@
+{% extends 'index.twig' %}
+
+{% block title %}{{ page.title }}{% endblock %}
+
+{% block content %}
+    {% if page.showTitle %}
+        <h2>{{ page.title }}</h2>
+    {% endif %}
+
+    {{ page.content|raw }}
+{% endblock %}

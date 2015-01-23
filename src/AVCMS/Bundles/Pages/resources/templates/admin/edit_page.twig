@@ -1,0 +1,19 @@
+{% extends '@admin/edit_item.twig' %}
+
+{% block title -%}
+    {% spaceless %}
+        {% if item.id %}
+            {% trans with {'item': item.title} %}Editing {item}{% endtrans %}
+        {% else %}
+            {% trans %}New Page{% endtrans %}
+        {% endif %}
+    {% endspaceless  %}
+{% endblock %}
+
+{% block editor_title_edit %}
+    <span class="light">{% trans %}Editing Page{% endtrans %}:</span> <span data-id="{{ item.id }}" data-field="title">{{ item.title }}</span>
+{% endblock %}
+
+{% block editor_title_new %}
+    {% trans %}New Page{% endtrans %}
+{% endblock %}

@@ -48,3 +48,5 @@ Referrals:
     enabled: true
 Links:
     enabled: true
+Pages:
+    enabled: true

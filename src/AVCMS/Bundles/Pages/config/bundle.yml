@@ -1,0 +1,20 @@
+name: Pages
+namespace: AVCMS\Bundles\Pages
+require:
+    - Framework
+
+menu_items:
+    admin:
+        admin_pages:
+          type: route
+          icon: glyphicon glyphicon-file
+          label: Pages
+          permission: ADMIN_PAGES
+          default_order: 40
+          settings:
+            route: pages_admin_home
+
+permissions:
+  ADMIN_PAGES:
+      name: Manage Pages
+      description: Ability to view & manage HTML pages
