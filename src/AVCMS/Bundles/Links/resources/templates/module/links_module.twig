@@ -1,0 +1,11 @@
+<div class="list-group">
+    {% for link in links %}
+        <a href="{{ path('link_out', {'id': link.id}) }}" class="list-group-item">
+            {{ link.anchor }}
+        </a>
+    {% endfor %}
+
+    <a href="{{ url('links') }}" class="list-group-item text-center">
+        {% trans %}Link Exchange{% endtrans %} <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+</div>

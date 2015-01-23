@@ -21,3 +21,18 @@ permissions:
   ADMIN_LINKS:
     name: Links Administration
     description: Ability to manage links
+
+modules:
+  links:
+    name: Links
+    description: The top links from link exchanges
+    controller: Links::LinksModuleController::linksModule
+    cachable: true
+    cache_bust_model: Links
+    default_cache_time: 3600
+    accepted_template_types: [list_panel, none]
+    user_settings:
+      total_links:
+        type: text
+        label: Links to show
+        default: 10
