@@ -47,7 +47,7 @@ class BlogSitemap implements SitemapInterface
     public function getSitemapLinks($page)
     {
         /**
-         * @var \AVCMS\Bundles\Wallpapers\Model\Wallpaper[] $blogPosts
+         * @var \AVCMS\Bundles\Blog\Model\BlogPosts[] $blogPosts
          */
         $finder = $this->blogPosts->find()
             ->setResultsPerPage(self::LINKS_PER_PAGE)
@@ -61,11 +61,11 @@ class BlogSitemap implements SitemapInterface
 
         $links = [];
 
-        foreach ($blogPosts as $wallpaper) {
+        foreach ($blogPosts as $post) {
             try {
-                $url = $this->urlGenerator->generate('blog_post', ['slug' => $wallpaper->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL);
+                $url = $this->urlGenerator->generate('blog_post', ['slug' => $post->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL);
 
-                $timestamp = ($wallpaper->getDateEdited() ? $wallpaper->getDateEdited() : $wallpaper->getDateAdded());
+                $timestamp = ($post->getDateEdited() ? $post->getDateEdited() : $post->getDateAdded());
                 $dateModified = new \DateTime();
                 $dateModified->setTimestamp($timestamp);
             }
