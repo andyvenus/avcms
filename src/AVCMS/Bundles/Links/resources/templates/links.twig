@@ -1,7 +1,9 @@
 {% extends 'index.twig' %}
 
+{% block title %}{% trans %}Our Friends{% endtrans %}{% endblock %}
+
 {% block content %}
-    <h2>{% trans %}Our Friends{% endtrans %}</h2>
+    <h2>{{ block('title') }}</h2>
 
     {% if settings.link_exchange %}
     <p>
