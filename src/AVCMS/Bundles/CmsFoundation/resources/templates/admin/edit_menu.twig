@@ -17,3 +17,9 @@
 {% block editor_title_new %}
     {% trans %}New Menu{% endtrans %}
 {% endblock %}
+
+{% block before_form %}
+   {% if item.id == 0 %}
+        <div class="alert alert-info">{% trans %}Add a new menu that you can display in a module or by editing your template.{% endtrans %}</div>
+    {% endif %}
+{% endblock %}

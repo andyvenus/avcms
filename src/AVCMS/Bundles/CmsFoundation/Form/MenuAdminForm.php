@@ -17,11 +17,13 @@ class MenuAdminForm extends FormBlueprint
         if ($id === 0) {
             $this->add('id', 'text', array(
                 'label' => 'Identifier',
+                'required' => true,
             ));
         }
 
         $this->add('label', 'text', array(
             'label' => 'Menu Name',
+            'required' => true,
         ));
     }
 
