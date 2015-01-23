@@ -47,7 +47,7 @@ class BlogSitemap implements SitemapInterface
     public function getSitemapLinks($page)
     {
         /**
-         * @var \AVCMS\Bundles\Blog\Model\BlogPosts[] $blogPosts
+         * @var \AVCMS\Bundles\Blog\Model\BlogPost[] $blogPosts
          */
         $finder = $this->blogPosts->find()
             ->setResultsPerPage(self::LINKS_PER_PAGE)
