@@ -7,6 +7,7 @@ use AVCMS\Bundles\Pages\Form\PageAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class PagesAdminController extends AdminBaseController
 {
@@ -18,6 +19,10 @@ class PagesAdminController extends AdminBaseController
     public function setUp(Request $request)
     {
         $this->pages = $this->model('Pages');
+
+        if (!$this->isGranted('ADMIN_PAGES')) {
+            throw new AccessDeniedException;
+        }
     }
 
     public function homeAction(Request $request)
