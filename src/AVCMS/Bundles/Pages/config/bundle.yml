@@ -3,6 +3,9 @@ namespace: AVCMS\Bundles\Pages
 require:
     - Framework
 
+services:
+    - PageServices
+
 menu_items:
     admin:
         admin_pages:
