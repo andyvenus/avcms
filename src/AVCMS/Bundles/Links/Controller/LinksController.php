@@ -10,6 +10,7 @@ namespace AVCMS\Bundles\Links\Controller;
 use AVCMS\Bundles\Links\Form\LinkExchangeForm;
 use AVCMS\Bundles\Links\Form\LinkExchangeSuccessForm;
 use AVCMS\Core\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -102,5 +103,18 @@ class LinksController extends Controller
         $links = $finder->get();
 
         return new Response($this->render('@Links/links.twig', ['links' => $links, 'current_page' => $finder->getCurrentPage(), 'total_pages' => $finder->getTotalPages()]));
+    }
+
+    public function linkOutAction($id)
+    {
+        $link = $this->links->getOne($id);
+
+        if (!$link) {
+            throw $this->createNotFoundException();
+        }
+
+        $this->container->get('hitcounter')->registerHit($this->referrals, $link->getReferralId(), 'outbound');
+
+        return new RedirectResponse($link->getUrl());
     }
 }

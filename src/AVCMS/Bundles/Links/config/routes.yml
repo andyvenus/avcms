@@ -5,3 +5,7 @@ link_exchange:
 links:
   path: /links
   defaults: { _controller: Links::LinksController::linksAction }
+
+link_out:
+  path: /links/go/{id}
+  defaults: { _controller: Links::LinksController::linkOutAction }

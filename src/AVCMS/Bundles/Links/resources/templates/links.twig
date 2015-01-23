@@ -12,7 +12,7 @@
     <table class="table">
         {% for link in links %}
             <tr>
-                <td> <strong><a href="{{ link.url }}" {% if settings.link_exchange_no_follow %}rel="nofollow"{% endif %}>{{ link.anchor }}</a></strong>
+                <td> <strong><a href="{{ path('link_out', {'id': link.id}) }}" {% if settings.link_exchange_no_follow %}rel="nofollow"{% endif %}>{{ link.anchor }}</a></strong>
                     {% if link.description %} - {{ link.description }}{% endif %}</td>
             </tr>
         {% endfor %}
