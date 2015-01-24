@@ -7,11 +7,11 @@ class Length extends Rule {
 
     protected $charset = 'UTF-8';
 
-    protected $min_error = "Parameter '{param_name}' must be at least {min} characters long";
+    protected $min_error = "'{param_name}' must be at least {min} characters long";
 
-    protected $max_error = "Parameter '{param_name}' must be no more than {max} characters long";
+    protected $max_error = "'{param_name}' must be no more than {max} characters long";
 
-    protected $exact_error = "Parameter '{param_name}' must be exactly {min} characters long";
+    protected $exact_error = "'{param_name}' must be exactly {min} characters long";
 
     public function __construct($min = null, $max = null)
     {
