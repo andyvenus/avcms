@@ -110,7 +110,7 @@ class UserProfileController extends Controller
             }
         }
 
-        $emailForm = $this->buildForm(new ChangeEmailForm(), $request, $user);
+        $emailForm = $this->buildForm(new ChangeEmailForm($this->activeUser()->getEmail()), $request, $user);
 
         if ($emailForm->isValid()) {
             $emailForm->saveToEntities();

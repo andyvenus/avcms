@@ -11,14 +11,15 @@ use AV\Form\FormBlueprint;
 
 class ChangeEmailForm extends FormBlueprint
 {
-    public function __construct()
+    public function __construct($currentEmail)
     {
         $this->add('email_address', 'text', [
             'label' => 'Email Address',
             'required' => true,
             'validation' => [
                 ['rule' => 'EmailAddress']
-            ]
+            ],
+            'default' => $currentEmail
         ]);
 
         $this->setSuccessMessage('Email Updated');
