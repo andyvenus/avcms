@@ -1,10 +1,9 @@
 avcms = avcms || {};
 
 $(document).ready(function() {
-    var lcb = $('.load-comments-button');
-    if (lcb.length > 0) {
+    if ($('.comments-area').length > 0) {
         $(document).scroll(avcms.comments.scrollCheck);
-        lcb.click(avcms.comments.loadComments);
+        $('.load-comments-button').click(avcms.comments.loadComments);
 
         $('[name=new_comment_form]').submit(avcms.comments.submitComment);
         $('body').on('click', '.delete-comment', avcms.comments.deleteComment);
