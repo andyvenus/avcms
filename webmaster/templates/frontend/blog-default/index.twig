@@ -2,103 +2,120 @@
 
 {% block body %}
 
-<header class="header">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 text-right">
-                {% if user.loggedIn %}
-                    {{ user_info(user) }}
-                    - <a href="{{ url('logout') }}">{% trans %}Logout{% endtrans %}</a>
-                    {% if is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']) %}
-                        | <a href="{{ url('admin_dashboard') }}">{% trans %}Admin{% endtrans %}</a>
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    {% if user.loggedIn %}
+                        {{ user_info(user) }}
+                        - <a href="{{ url('logout') }}">{% trans %}Logout{% endtrans %}</a>
+                        {% if is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']) %}
+                            | <a href="{{ url('admin_dashboard') }}">{% trans %}Admin{% endtrans %}</a>
+                        {% endif %}
+                    {% elseif settings.users_enabled %}
+                        <a href="{{ url('login') }}">{% trans %}Login{% endtrans %}</a> / <a href="{{ url('register') }}">{% trans %}Register{% endtrans %}</a>
                     {% endif %}
-                {% elseif settings.users_enabled %}
-                    <a href="{{ url('login') }}">{% trans %}Login{% endtrans %}</a> / <a href="{{ url('register') }}">{% trans %}Register{% endtrans %}</a>
-                {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="{{ url('home') }}">
+                        {% if settings.logo_image_url %}
+                            <img class="logo-image" src="{{ settings.logo_image_url }}" />
+                        {% else %}
+                            <h1>{{ settings.site_name }}</h1>
+                        {% endif %}
+                    </a>
+                </div>
+
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <a href="{{ url('home') }}">
-                    {% if settings.logo_image_url %}
-                        <img class="logo-image" src="{{ settings.logo_image_url }}" />
-                    {% else %}
-                        <h1>{{ settings.site_name }}</h1>
-                    {% endif %}
-                </a>
+    </header>
+
+    <nav class="navbar navbar-default navbar-static-top main-menu" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    {% trans %}Menu{% endtrans %}
+                </button>
             </div>
+            <div class="collapse navbar-collapse" id="main-menu-collapse">
+                <ul class="nav navbar-nav">
+                    {% for menu_item in menu('frontend') %}
+                        {% if menu_item.children|length == 0 %}
+                            <li><a href="{{ menu_item.url }}"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}</a></li>
+                        {% else %}
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }} <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    {% if menu_item.url != '#' %}
+                                        <li><a href="{{ menu_item.url }}"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}</a></li>
+                                        <li role="presentation" class="divider"></li>
+                                    {% endif %}
+                                    {% for sub_menu_item in menu_item.children %}
+                                        <li class="sub-menu-item"><a href="{{ sub_menu_item.url }}"><span class="{{ sub_menu_item.icon }}"></span> {{ sub_menu_item.label }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
 
-        </div>
-    </div>
-</header>
+                        {% endif %}
 
-<nav class="navbar navbar-default navbar-static-top main-menu" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                {% trans %}Menu{% endtrans %}
-            </button>
-        </div>
-        <div class="collapse navbar-collapse" id="main-menu-collapse">
-            <ul class="nav navbar-nav">
-                {% for menu_item in menu('frontend') %}
-                    {% if menu_item.children|length == 0 %}
-                        <li><a href="{{ menu_item.url }}"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}</a></li>
-                    {% else %}
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }} <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                {% if menu_item.url != '#' %}
-                                    <li><a href="{{ menu_item.url }}"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}</a></li>
-                                    <li role="presentation" class="divider"></li>
-                                {% endif %}
-                                {% for sub_menu_item in menu_item.children %}
-                                    <li class="sub-menu-item"><a href="{{ sub_menu_item.url }}"><span class="{{ sub_menu_item.icon }}"></span> {{ sub_menu_item.label }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </li>
+                    {% endfor %}
+                </ul>
 
-                    {% endif %}
+                <form class="navbar-form navbar-right" role="search" id="search_form">
+                    <div class="form-group">
+                        <div class="input-group">
+                            {{ form_field(search_form.search) }}
+                            <div class="input-group-btn">
+                                {{ form_field(search_form.content_type, {class: 'search-select'}) }}
 
-                {% endfor %}
-            </ul>
-
-            <form class="navbar-form navbar-right" role="search" id="search_form">
-                <div class="form-group">
-                    <div class="input-group">
-                        {{ form_field(search_form.search) }}
-                        <div class="input-group-btn">
-                            {{ form_field(search_form.content_type, {class: 'search-select'}) }}
-
-                            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> </button>
+                                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</nav>
-
-{% block full_width_content %}
-<section class="container avcms-main">
-        {% for message in get_messages() %}
-            <div class="alert alert-info">{{ message.message }}</div>
-        {% endfor %}
-
-        {% block wide_content %}
-            <div class="row">
-
-                <div class="col-md-8">
-                    {% block content %}{% endblock %}
-                </div>
-
-                <div class="col-md-4">
-                    {{ render_modules('right_sidebar') }}
-                </div>
+                </form>
             </div>
-        {% endblock %}
-</section>
-{% endblock %}
+        </div>
+    </nav>
+
+    {% block full_width_content %}
+    <section class="container avcms-main">
+            {% for message in get_messages() %}
+                <div class="alert alert-info">{{ message.message }}</div>
+            {% endfor %}
+
+            {% block wide_content %}
+                <div class="row">
+                    {% if settings.template_no_sidebar != 0 %}
+                        {% set content_w = 12 %}
+                    {% else %}
+                        {% set content_w = 8 %}
+                    {% endif %}
+
+                    <div class="col-md-{{ content_w }}">
+                        {{ render_modules('content_top') }}
+
+                        {% block content %}{% endblock %}
+
+                        {{ render_modules('content_bottom') }}
+                    </div>
+
+                    {% if settings.template_no_sidebar == 0 %}
+                        <div class="col-md-4">
+                            {{ render_modules('right_sidebar') }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endblock %}
+    </section>
+    {% endblock %}
+
+    <section class="container footer">
+        <div class="col-md-12">
+            {{ render_modules('page_footer') }}
+        </div>
+    </section>
 
 {% endblock %}

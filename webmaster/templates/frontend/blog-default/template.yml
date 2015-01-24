@@ -16,8 +16,23 @@ user_settings:
       type: text
       section: template
       label: Logo URL
+  template_no_sidebar:
+      type: checkbox
+      section: template
+      label: No sidebar
+      help: Disable the right sidebar throughout the site
+      default: 0
 
 module_positions:
   right_sidebar:
         name: Right Sidebar
         description: The main sidebar on the template
+  content_top:
+      name: Content Top
+      description: The top of content pages (not on pages without the sidebar)
+  content_bottom:
+        name: Content Bottom
+        description: The bottom of content pages (not on pages without the sidebar)
+  page_footer:
+        name: Page Footer
+        description: The bottom of all pages, full-width
