@@ -18,7 +18,7 @@
         {% endif %}
 
         {% if settings.comments_enabled %}
-            <a class="btn btn-link btn-sm" href="{{ url('blog_post', {slug: post.slug}) }}#comments"><span class="glyphicon glyphicon-comment"></span> {% trans %}Comments{% endtrans %} ({{ post.comments }})</a>
+            <a class="btn btn-link btn-sm" href="{{ url('blog_post', {slug: post.slug}) }}#comments"><span class="glyphicon glyphicon-comment"></span> {% trans %}Comments{% endtrans %} {% if post.comments %}({{ post.comments }}){% endif %}</a>
         {% endif %}
 
         {% if is_granted('ADMIN_BLOG')  %}
