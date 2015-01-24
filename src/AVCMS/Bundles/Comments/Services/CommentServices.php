@@ -27,7 +27,7 @@ class CommentServices implements ServicesInterface
         ;
 
         $container->register('twig.comments_extension', 'AVCMS\Bundles\Comments\Twig\CommentsTwigExtension')
-            ->setArguments([new Reference('comment_form_handler'), new Reference('router')])
+            ->setArguments([new Reference('comment_form_handler'), new Reference('router'), new Reference('dispatcher')])
             ->addTag('twig.extension')
         ;
     }

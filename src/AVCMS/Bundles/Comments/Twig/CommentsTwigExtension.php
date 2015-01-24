@@ -8,6 +8,8 @@
 namespace AVCMS\Bundles\Comments\Twig;
 
 use AV\Form\FormHandler;
+use AVCMS\Bundles\Comments\Event\CommentsAreaEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CommentsTwigExtension extends \Twig_Extension
@@ -19,10 +21,13 @@ class CommentsTwigExtension extends \Twig_Extension
 
     protected $urlGenerator;
 
-    public function __construct(FormHandler $form, UrlGeneratorInterface $urlGenerator)
+    protected $eventDispatcher;
+
+    public function __construct(FormHandler $form, UrlGeneratorInterface $urlGenerator, EventDispatcherInterface $eventDispatcher)
     {
         $this->form = $form;
         $this->urlGenerator = $urlGenerator;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function initRuntime(\Twig_Environment $environment)
@@ -37,6 +42,12 @@ class CommentsTwigExtension extends \Twig_Extension
                 throw new \Exception('The content passed to the twig comment() function must be an ID or an object with a getId method');
             }
             $content = $content->getId();
+        }
+
+        $event = new CommentsAreaEvent($contentType, $content, $totalComments, $template);
+        $this->eventDispatcher->dispatch('comments_area', $event);
+        if ($event->getCommentsArea() !== null) {
+            return $event->getCommentsArea();
         }
 
         $this->form->setAction($this->urlGenerator->generate('add_comment', ['content_id' => $content, 'content_type' => $contentType], UrlGeneratorInterface::ABSOLUTE_URL));
