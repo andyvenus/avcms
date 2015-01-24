@@ -29,14 +29,15 @@ class TemplateManager
         $this->cacheFile = $cacheDir.'/template_config.php';
         $this->devMode = $devMode;
 
-        $templateSettingsProvider = new TemplateSettingsLoader($this);
-        $settingsManager->load('template', $templateSettingsProvider);
-
         if ($this->currentTemplate === null) {
             throw new \Exception("No template set in user settings");
         }
 
         $this->getTemplateConfig();
+
+        $templateSettingsProvider = new TemplateSettingsLoader($this);
+        $settingsManager->load('template', $templateSettingsProvider);
+
     }
 
     public function getTemplateConfig()
