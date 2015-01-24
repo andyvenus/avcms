@@ -1,0 +1,23 @@
+name: Disqus
+namespace: AVCMS\Bundles\Disqus
+require:
+    - Framework
+
+services:
+    - DisqusServices
+
+user_settings_sections:
+    disqus: Disqus
+
+user_settings:
+    use_disqus:
+        type: checkbox
+        default: 0
+        label: Use Disqus comment system
+        help: Use disqus.com comments instead of AVCMS comments
+        section: disqus
+    disqus_shortname:
+        type: text
+        label: Disqus Shortname
+        help: The shortname of your Disqus forum. If you want to use Disqus for comments this must be set.
+        section: disqus

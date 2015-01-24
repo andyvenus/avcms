@@ -52,3 +52,5 @@ Pages:
     enabled: true
 ContactUs:
     enabled: true
+Disqus:
+    enabled: true
