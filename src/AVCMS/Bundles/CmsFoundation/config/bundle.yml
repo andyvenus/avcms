@@ -104,6 +104,10 @@ user_settings:
     default: Y-m-d H:i
     section: main
     required: true
+  google_analytics_id:
+    type: text
+    label: Google Analytics ID
+    help: The ID of your Google Analytics campaign
 
 assets:
   jquery.js:

@@ -20,6 +20,8 @@
     {% if meta_description is not empty %}
         <meta name="description" content="{{ meta_description }}">
     {% endif %}
+
+    {% include '@CmsFoundation/google_analytics.twig' %}
 {% endblock %}
 </head>
 
