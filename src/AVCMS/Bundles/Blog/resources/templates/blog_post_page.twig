@@ -10,15 +10,6 @@
     {% endblock %}
 
     {% block blog_post_comments %}
-        {% if settings.comments_enabled %}
-            <div class="box">
-                <div class="box-top">
-                    <h4>{% trans %}Comments{% endtrans %} ({{ post.comments }})</h4>
-                </div>
-                <div class="box-main">
-                    {{ comments('blog_post', post, post.comments) }}
-                </div>
-            </div>
-        {% endif %}
+        {{ comments('blog_post', post, post.comments) }}
     {% endblock %}
 {% endblock %}

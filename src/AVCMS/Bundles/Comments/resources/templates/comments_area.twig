@@ -1,20 +1,27 @@
 {% if settings.comments_enabled %}
-    <a name="comments" data-total-comments="{{ total_comments }}"></a>
-
-    {% if is_granted('PERM_ADD_COMMENT') %}
-        <div class="new-comment">
-            {{ form(form) }}
-        </div>
-    {% elseif is_granted(['IS_AUTHENTICATED_REMEMBERED', 'IS_AUTHENTICATED_FULLY']) == false %}
-        <p><a href="{{ url('login') }}">{% trans %}Login to add your own comment{% endtrans %}</a></p>
-    {% endif %}
-
-    <div class="comments-area" data-ajax-url="{{ url('comments', {content_type: content_type, content_id: content_id}) }}">
+<div class="box">
+    <div class="box-top">
+        <h4>{% trans %}Comments{% endtrans %} ({{ total_comments }})</h4>
     </div>
+    <div class="box-main">
+        <a name="comments" data-total-comments="{{ total_comments }}"></a>
 
-    {% if total_comments != 0 %}
-        <div class="load-comments">
-            <button class="btn btn-primary load-comments-button">{% trans %}Load Comments{% endtrans %}</button>
+        {% if is_granted('PERM_ADD_COMMENT') %}
+            <div class="new-comment">
+                {{ form(form) }}
+            </div>
+        {% elseif is_granted(['IS_AUTHENTICATED_REMEMBERED', 'IS_AUTHENTICATED_FULLY']) == false %}
+            <p><a href="{{ url('login') }}">{% trans %}Login to add your own comment{% endtrans %}</a></p>
+        {% endif %}
+
+        <div class="comments-area" data-ajax-url="{{ url('comments', {content_type: content_type, content_id: content_id}) }}">
         </div>
-    {% endif %}
+
+        {% if total_comments != 0 %}
+            <div class="load-comments">
+                <button class="btn btn-primary load-comments-button">{% trans %}Load Comments{% endtrans %}</button>
+            </div>
+        {% endif %}
+        </div>
+    </div>
 {% endif %}
