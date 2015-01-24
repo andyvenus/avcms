@@ -41,7 +41,8 @@ class UserInfoTwigExtension extends \Twig_Extension
     {
         $defaults = [
             'avatar_width' => 25,
-            'avatar_height' => 25
+            'avatar_height' => 25,
+            'active_user' => false
         ];
 
         return array_replace_recursive($defaults, $options);
