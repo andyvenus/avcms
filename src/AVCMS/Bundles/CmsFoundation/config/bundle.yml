@@ -65,7 +65,11 @@ user_settings:
         none: None
         ssl: SSL
         tls: TLS
-
+  admin_emails:
+    type: text
+    label: Admin Emails
+    help: Email addresses to send admin emails to, separated by a comma
+    section: email
 
   template:
     type: select
