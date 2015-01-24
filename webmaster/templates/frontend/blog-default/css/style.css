@@ -43,6 +43,10 @@ a {
 footer {
   margin-top: 10px; }
 
+.footer-menu {
+  text-align: center;
+  margin-bottom: 10px; }
+
 select[name=author] {
   width: 500px; }
 

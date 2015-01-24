@@ -116,6 +116,25 @@
         <div class="col-md-12">
             {{ render_modules('page_footer') }}
         </div>
+
+        <div class="col-md-12 footer-menu">
+            {% for menu_item in menu('frontend_footer') %}
+                <div class="btn-group dropup">
+                    <a href="{{ menu_item.url }}" class="btn btn-sm btn-default"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}</a>
+                    {% if menu_item.children|length != 0 %}
+                        <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            {% for sub_menu_item in menu_item.children %}
+                                <li><a href="{{ sub_menu_item.url }}"><span class="{{ sub_menu_item.icon }}"></span> {{ sub_menu_item.label }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
     </section>
 
 {% endblock %}
