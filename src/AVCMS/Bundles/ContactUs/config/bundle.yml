@@ -1,0 +1,12 @@
+name: ContactUs
+namespace: AVCMS\Bundles\ContactUs
+require:
+    - Framework
+
+user_settings:
+    enable_contact_us:
+        type: checkbox
+        label: Enable Contact Us Form
+        help: Will only work if admin emails are set
+        default: 1
+        section: email

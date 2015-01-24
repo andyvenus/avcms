@@ -1,0 +1,3 @@
+contact_us:
+  path: /contact-us
+  defaults: { _controller: ContactUs::ContactUsController::contactUsAction }
