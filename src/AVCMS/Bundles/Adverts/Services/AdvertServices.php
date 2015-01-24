@@ -20,8 +20,7 @@ class AdvertServices implements ServicesInterface
         ;
 
         $container->register('adverts.model', 'AVCMS\Bundles\Adverts\Model\Adverts')
-            ->setArguments(array('AVCMS\Bundles\Adverts\Model\Adverts'))
-            ->setFactory([new Reference('model_factory'), 'create'])
+            ->addTag('model')
         ;
     }
 }

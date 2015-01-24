@@ -16,8 +16,7 @@ class PageServices implements ServicesInterface
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('pages.model', 'AVCMS\Bundles\Pages\Model\Pages')
-            ->setArguments(['AVCMS\Bundles\Pages\Model\Pages'])
-            ->setFactory([new Reference('model_factory'), 'create'])
+            ->addTag('model')
         ;
 
         $container->register('page.menu_item_type', 'AVCMS\Bundles\Pages\MenuItem\PageMenuItemType')

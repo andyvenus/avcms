@@ -25,8 +25,7 @@ class ReferralServices implements ServicesInterface
         ;
 
         $container->register('referrals.model', 'AVCMS\Bundles\Referrals\Model\Referrals')
-            ->setArguments(['AVCMS\Bundles\Referrals\Model\Referrals'])
-            ->setFactory([new Reference('model_factory'), 'create'])
+            ->addTag('model')
         ;
     }
 }

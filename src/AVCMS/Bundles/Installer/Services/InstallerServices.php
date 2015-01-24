@@ -20,8 +20,7 @@ class InstallerServices implements ServicesInterface
         ;
 
         $container->register('installer.versions_model', 'AVCMS\Bundles\Installer\Model\Versions')
-            ->setArguments(array('AVCMS\Bundles\Installer\Model\Versions'))
-            ->setFactory([new Reference('model_factory'), 'create'])
+            ->addTag('model')
         ;
 
         $container->register('bundle_finder', 'AVCMS\Core\Installer\InstallerBundleFinder');

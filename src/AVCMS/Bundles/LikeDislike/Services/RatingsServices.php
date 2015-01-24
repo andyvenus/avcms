@@ -16,8 +16,7 @@ class RatingsServices implements ServicesInterface
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('ratings.model', 'AVCMS\Bundles\LikeDislike\Model\Ratings')
-            ->setArguments(array('AVCMS\Bundles\LikeDislike\Model\Ratings'))
-            ->setFactory([new Reference('model_factory'), 'create'])
+            ->addTag('model')
         ;
 
         $container->register('ratings_manager', 'AVCMS\Bundles\LikeDislike\RatingsManager\RatingsManager')

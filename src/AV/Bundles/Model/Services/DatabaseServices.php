@@ -7,6 +7,7 @@
 
 namespace AV\Bundles\Model\Services;
 
+use AV\Bundles\Model\Services\CompilerPass\ModelCompilerPass;
 use AV\Service\ServicesInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -33,5 +34,7 @@ class DatabaseServices implements ServicesInterface
             ->setArguments(array(new Reference('model_factory')))
             ->addTag('event.subscriber')
         ;
+
+        $container->addCompilerPass(new ModelCompilerPass());
     }
 }

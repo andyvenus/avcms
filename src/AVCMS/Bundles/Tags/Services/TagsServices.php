@@ -20,13 +20,11 @@ class TagsServices implements ServicesInterface
         ;
 
         $container->register('tags.model', 'AVCMS\Bundles\Tags\Model\TagsModel')
-            ->setArguments(array('AVCMS\Bundles\Tags\Model\TagsModel'))
-            ->setFactory([new Reference('model_factory'), 'create'])
+            ->addTag('model')
         ;
 
         $container->register('taxonomy.tags.model', 'AVCMS\Bundles\Tags\Model\TagsTaxonomyModel')
-            ->setArguments(array('AVCMS\Bundles\Tags\Model\TagsTaxonomyModel'))
-            ->setFactory([new Reference('model_factory'), 'create'])
+            ->addTag('model')
         ;
 
         $container->register('listener.update_tags', 'AVCMS\Bundles\Tags\Events\UpdateTags')

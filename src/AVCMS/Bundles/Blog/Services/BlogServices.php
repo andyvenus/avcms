@@ -16,8 +16,7 @@ class BlogServices implements ServicesInterface
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('blog.posts_model', 'AVCMS\Bundles\Blog\Model\BlogPosts')
-            ->setArguments(['AVCMS\Bundles\Blog\Model\BlogPosts'])
-            ->setFactory([new Reference('model_factory'), 'create'])
+            ->addTag('model')
         ;
 
         $container->register('sitemap.blog_posts', 'AVCMS\Bundles\Blog\Sitemap\BlogSitemap')

@@ -16,8 +16,7 @@ class WallpaperServices implements ServicesInterface
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('wallpapers.model', 'AVCMS\Bundles\Wallpapers\Model\Wallpapers')
-            ->setArguments(array('AVCMS\Bundles\Wallpapers\Model\Wallpapers'))
-            ->setFactory([new Reference('model_factory'), 'create'])
+            ->addTag('model')
         ;
 
         $container->register('wallpaper.twig.extension', 'AVCMS\Bundles\Wallpapers\Twig\WallpaperTwigExtension')
@@ -30,8 +29,7 @@ class WallpaperServices implements ServicesInterface
         ;
 
         $container->register('wallpaper.categories_model', 'AVCMS\Bundles\Wallpapers\Model\WallpaperCategories')
-            ->setArguments(array('AVCMS\Bundles\Wallpapers\Model\WallpaperCategories'))
-            ->setFactory([new Reference('model_factory'), 'create'])
+            ->addTag('model')
         ;
 
         $container->register('menu_types.wallpaper_categories', 'AVCMS\Bundles\Categories\MenuItemType\CategoriesMenuItemType')

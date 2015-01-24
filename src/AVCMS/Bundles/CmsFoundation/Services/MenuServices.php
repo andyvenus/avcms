@@ -29,13 +29,11 @@ class MenuServices implements ServicesInterface
         $container->register('menu_type.url', 'AVCMS\Core\Menu\MenuItemType\UrlMenuItemType');
 
         $container->register('menu_manager.model', 'AVCMS\Bundles\CmsFoundation\Model\Menus')
-            ->setArguments(array('AVCMS\Bundles\CmsFoundation\Model\Menus'))
-            ->setFactory([new Reference('model_factory'), 'create'])
+            ->addTag('model')
         ;
 
         $container->register('menu_manager.items_model', 'AVCMS\Bundles\CmsFoundation\Model\MenuItems')
-            ->setArguments(array('AVCMS\Bundles\CmsFoundation\Model\MenuItems'))
-            ->setFactory([new Reference('model_factory'), 'create'])
+            ->addTag('model')
         ;
 
         $container->register('menu_manager.subscriber', 'AVCMS\Bundles\CmsFoundation\Subscribers\UpdateMenusSubscriber')
@@ -49,8 +47,7 @@ class MenuServices implements ServicesInterface
         ;
 
         $container->register('menus.model', 'AVCMS\Bundles\CmsFoundation\Model\Menus')
-            ->setArguments(array('AVCMS\Bundles\CmsFoundation\Model\Menus'))
-            ->setFactory([new Reference('model_factory'), 'create'])
+            ->addTag('model')
         ;
 
         $container->register('form.menu_choices_provider', 'AVCMS\Bundles\CmsFoundation\Form\ChoicesProvider\MenuChoicesProvider')

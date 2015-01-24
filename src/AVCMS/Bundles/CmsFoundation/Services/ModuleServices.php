@@ -26,13 +26,11 @@ class ModuleServices implements ServicesInterface
         ;
 
         $container->register('module.model', 'AVCMS\Bundles\CmsFoundation\Model\Modules')
-            ->setArguments(array('AVCMS\Bundles\CmsFoundation\Model\Modules'))
-            ->setFactory([new Reference('model_factory'), 'create'])
+            ->addTag('model')
         ;
 
         $container->register('module.positions_model', 'AVCMS\Bundles\CmsFoundation\Model\ModulePositions')
-            ->setArguments(array('AVCMS\Bundles\CmsFoundation\Model\ModulePositions'))
-            ->setFactory([new Reference('model_factory'), 'create'])
+            ->addTag('model')
         ;
 
         $container->register('modules.twig_extension', 'AVCMS\Core\Module\Twig\ModuleManagerTwigExtension')

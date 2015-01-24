@@ -21,8 +21,7 @@ class LinksServices implements ServicesInterface
         ;
 
         $container->register('links.model', 'AVCMS\Bundles\Links\Model\Links')
-            ->setArguments(['AVCMS\Bundles\Links\Model\Links'])
-            ->setFactory([new Reference('model_factory'), 'create'])
+            ->addTag('model')
         ;
     }
 }
