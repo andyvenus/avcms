@@ -26,7 +26,7 @@ class WallpaperCacheOutletSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $outletEvent->addContent('<li><a class="clear-wallpaper-cache" href="#">'.$this->translator->trans('Clear Wallpaper Image Cache').'</a></li>');
+        $outletEvent->addContent('<li><a class="clear-wallpaper-cache" href="#"><span class="glyphicon glyphicon-picture"></span> '.$this->translator->trans('Clear Wallpaper Image Cache').'</a></li>');
     }
 
     public static function getSubscribedEvents()
