@@ -29,13 +29,17 @@ class SelectType extends DefaultType
 
     public function getDefaultOptions($field)
     {
+        if (!isset($field['choices'])) {
+            $field['choices'] = [];
+        }
+
         if (isset($field['options']['choices_provider'])) {
             if (is_object($field['options']['choices_provider']) && $field['options']['choices_provider'] instanceof ChoicesProviderInterface) {
-                $field['options']['choices'] = $field['options']['choices_provider']->getChoices();
+                $field['options']['choices'] = array_merge($field['options']['choices'], $field['options']['choices_provider']->getChoices());
             }
             elseif (isset($field['options']['choices_provider']['class']) && class_exists($field['options']['choices_provider']['class'])) {
                 $choicesProvider = new $field['options']['choices_provider']['class']();
-                $field['options']['choices'] = call_user_func(array($choicesProvider, 'getChoices'));
+                $field['options']['choices'] = array_merge($field['options']['choices'], call_user_func(array($choicesProvider, 'getChoices')));
             }
         }
 
