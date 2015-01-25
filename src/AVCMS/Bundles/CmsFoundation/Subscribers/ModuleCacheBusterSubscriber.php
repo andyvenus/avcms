@@ -85,6 +85,8 @@ class ModuleCacheBusterSubscriber implements EventSubscriberInterface
         return [
             'model.insert' => ['bustModuleCache'],
             'model.update' => ['bustModuleCache'],
+            'admin.toggle_published' => ['bustModuleCache'],
+            'admin.delete' => ['bustModuleCache'],
             KernelEvents::REQUEST => ['bustSelfCache']
         ];
     }
