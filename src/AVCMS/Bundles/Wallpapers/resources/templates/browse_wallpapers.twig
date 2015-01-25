@@ -34,18 +34,17 @@
             <div class="box-main">
                 {% block subcategories -%}
                     {% if category.subcategories %}
-                        {% trans %}Subcategories{% endtrans %}:<br/>
-                        {% for subcategory in category.subcategories %}
-                            <a href="{{ path('wallpaper_category', {'category': subcategory.slug}) }}" class="btn btn-default btn-sm">{{ subcategory.name }}</a>
-                        {% endfor %}
+                        <p>
+                            {% trans %}Subcategories{% endtrans %}:<br/>
+                            {% for subcategory in category.subcategories %}
+                                <a href="{{ path('wallpaper_category', {'category': subcategory.slug}) }}" class="btn btn-default btn-sm">{{ subcategory.name }}</a>
+                            {% endfor %}
+                        </p>
                     {% endif %}
                 {%- endblock %}
 
-
                 {% block browse_filters -%}
-                    <div class="box">
-                        {{ form(filters_form, {}, '@Form/bootstrap_inline_form.twig') }}
-                    </div>
+                    {{ form(filters_form, {}, '@Form/bootstrap_inline_form.twig') }}
                 {%- endblock %}
             </div>
         </div>
