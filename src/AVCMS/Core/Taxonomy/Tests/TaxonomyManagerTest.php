@@ -24,7 +24,7 @@ class TaxonomyManagerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->taxonomyManager = new TaxonomyManager();
-        $this->mockTaxonomy = $this->getMock('AVCMS\Core\Taxonomy\Taxonomy');
+        $this->mockTaxonomy = $this->getMock('AVCMS\Core\Taxonomy\TaxonomyInterface');
     }
 
     public function testAddRetrieveTaxonomy()
@@ -79,4 +79,3 @@ class TaxonomyManagerTest extends \PHPUnit_Framework_TestCase
         $this->taxonomyManager->get('tags', 1, 'content');
     }
 }
- 
