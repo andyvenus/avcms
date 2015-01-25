@@ -82,7 +82,7 @@ class UsersAdminController extends AdminBaseController
             ->setSearchFields(array('username', 'registration_ip', 'last_ip', 'email'))
             ->setResultsPerPage(15)
             ->join($this->model('UserGroups'), ['id', 'name'])
-            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
+            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null, 'group' => null));
         $items = $finder->get();
 
         return new Response($this->render('@Users/admin/users_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));
