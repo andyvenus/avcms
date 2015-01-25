@@ -76,4 +76,4 @@ class EditProfileForm extends FormBlueprint
         $this->setName('edit_profile');
         $this->setSuccessMessage('Profile Updated');
     }
-} 
+}
