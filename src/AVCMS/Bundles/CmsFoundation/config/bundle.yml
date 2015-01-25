@@ -182,7 +182,9 @@ modules:
     controller: CmsFoundation::MenuModulesController::menuModule
     name: Menu
     description: Display a menu
-    cachable: false
+    cachable: true
+    default_cache_time: 3600
+    cache_bust_model: MenuItems
     accepted_template_types: [list_panel, none]
     user_settings:
       menu:
@@ -190,6 +192,30 @@ modules:
         label: Menu
         choices_provider_service: form.menu_choices_provider
         default: newest
+      type:
+        type: select
+        label: Type
+        choices:
+          list: List
+          buttons: Buttons
+        default: buttons
+      button_size:
+        type: select
+        label: Button Size (Button Type)
+        choices:
+          xs: Extra Small
+          sm: Small
+          md: Medium
+          lg: Large
+        default: md
+      button_style:
+        label: Button Style (Button Type)
+        type: select
+        choices:
+          default: Default
+          link: Link
+          primary: Primary
+        default: default
 
 permissions:
   ADMIN_CLEAR_CACHES:

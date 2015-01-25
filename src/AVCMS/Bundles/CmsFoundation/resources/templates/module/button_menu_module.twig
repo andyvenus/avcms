@@ -1,0 +1,22 @@
+<div style="margin: 10px 0px">
+    {% for menu_item in menu(menu) %}
+        {% if menu_item.children|length != 0 and user_settings.button_style == 'link' %}
+            {% set no_padding = 'style="padding-right: 0;"' %}
+        {% endif %}
+
+        <div class="btn-group">
+            <a href="{{ menu_item.url }}" class="btn btn-{{ user_settings.button_size }} btn-{{ user_settings.button_style }}" {{ no_padding|raw }}><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}</a>
+            {% if menu_item.children|length != 0 %}
+                <button type="button" class="btn btn-{{ user_settings.button_size }} btn-{{ user_settings.button_style }} dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">{% trans %}Toggle Dropdown{% endtrans %}</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    {% for sub_menu_item in menu_item.children %}
+                        <li><a href="{{ sub_menu_item.url }}"><span class="{{ sub_menu_item.icon }}"></span> {{ sub_menu_item.label }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>

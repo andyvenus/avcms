@@ -16,6 +16,13 @@ class MenuModulesController extends Controller
     {
         $menu = $userSettings['menu'];
 
-        return new Response($this->render('@CmsFoundation/module/menu_module.twig', ['menu' => $menu]));
+        if ($userSettings['type'] === 'buttons') {
+            $template = '@CmsFoundation/module/button_menu_module.twig';
+        }
+        else {
+            $template = '@CmsFoundation/module/list_menu_module.twig';
+        }
+
+        return new Response($this->render($template, ['menu' => $menu, 'user_settings' => $userSettings]));
     }
 }
