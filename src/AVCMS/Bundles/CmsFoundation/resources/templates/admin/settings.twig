@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block content_body %}
-    <div class="container-fluid">
+    <div class="container-fluid admin-settings">
         {{ form_start(form) }}
 
         <div class="row">
@@ -28,7 +28,7 @@
                     <div class="row">
                 {% endif %}
 
-                <div class="col-sm-6">{{ form_row(field) }}</div>
+                <div class="col-sm-6 {% if field.type == 'checkbox' %}checkbox-row{% endif %}">{{ form_row(field) }}</div>
 
                 {% if loop.index is even or loop.last %}
                     </div>
