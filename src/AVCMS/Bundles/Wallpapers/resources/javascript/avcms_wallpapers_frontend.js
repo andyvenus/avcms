@@ -6,7 +6,9 @@ $(document).ready(function () {
 
 avcms.wallpapers = {
     selectCurrentResolution: function() {
-        var resolution = screen.width+'x'+screen.height;
+        var dpr = window.devicePixelRatio || 0;
+
+        var resolution = (screen.width * dpr)+'x'+(screen.height * dpr);
 
         var res = $('a[data-resolution="'+resolution+'"]').first();
 
