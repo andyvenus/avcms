@@ -1,7 +1,7 @@
 {% extends '@CmsFoundation/frontend.twig' %}
 
 {% block body %}
-
+    {# HEADER #}
     <header class="header">
         <div class="container">
             <div class="row">
@@ -32,6 +32,7 @@
         </div>
     </header>
 
+    {# MAIN MENU #}
     <nav class="navbar navbar-default navbar-static-top main-menu" role="navigation">
         <div class="container">
             <div class="navbar-header">
@@ -80,12 +81,14 @@
         </div>
     </nav>
 
+    {# SECONDARY MENU #}
     <div class="header-extra">
         <div class="container">
             {{ render_modules('header_bottom') }}
         </div>
     </div>
 
+    {# MAIN CONTENT #}
     {% block full_width_content %}
     <section class="container avcms-main">
             {% for message in get_messages() %}
@@ -118,6 +121,7 @@
     </section>
     {% endblock %}
 
+    {# FOOTER #}
     <section class="container footer">
         <div class="col-md-12">
             {{ render_modules('page_footer') }}
