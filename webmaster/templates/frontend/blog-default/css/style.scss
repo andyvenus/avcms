@@ -47,6 +47,10 @@ a {
     margin-top: 0px;
 }
 
+.header-extra {
+  background-color: lighten($header-base-color, 15);
+}
+
 .logo-image {
   margin: 10px 0px;
 }
@@ -129,7 +133,7 @@ select[name=author] {
 
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu>li>a {
-    color: white;
+    color: $header-text-color;
   }
 }
 

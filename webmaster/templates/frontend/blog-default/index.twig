@@ -80,6 +80,12 @@
         </div>
     </nav>
 
+    <div class="header-extra">
+        <div class="container">
+            {{ render_modules('header_bottom') }}
+        </div>
+    </div>
+
     {% block full_width_content %}
     <section class="container avcms-main">
             {% for message in get_messages() %}

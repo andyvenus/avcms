@@ -36,6 +36,9 @@ module_positions:
   page_footer:
         name: Page Footer
         description: The bottom of all pages, full-width
+  header_bottom:
+    name: Header Bottom
+    description: Under the main navigation on all pages
 
 menus:
   frontend_footer:
