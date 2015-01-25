@@ -81,6 +81,7 @@ class UsersAdminController extends AdminBaseController
         $finder = $this->users->find()
             ->setSearchFields(array('username', 'registration_ip', 'last_ip', 'email'))
             ->setResultsPerPage(15)
+            ->join($this->model('UserGroups'), ['id', 'name'])
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
         $items = $finder->get();
 

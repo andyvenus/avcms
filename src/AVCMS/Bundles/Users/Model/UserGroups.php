@@ -33,4 +33,13 @@ class UserGroups extends Model
             return $this->insert($entity);
         }
     }
+
+    public function getJoinColumn($table = null)
+    {
+        if ($table === 'users') {
+            return 'role_list';
+        }
+        
+        return $this->getSingular().'_id';
+    }
 }

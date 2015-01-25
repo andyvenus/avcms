@@ -1,13 +1,13 @@
 {% extends '@admin/finder.twig' %}
 
 {% block finder_header_titles %}
-    <div class="col-md-3">{% trans %}Join Date{% endtrans %}</div>
+    <div class="col-xs-12 col-sm-4 col-md-3">{% trans %}Join Date{% endtrans %}</div>
 
-    <div class="col-md-3">{% trans %}Last Active{% endtrans %}</div>
+    <div class="col-xs-6 col-sm-3 hidden-xs">{% trans %}Last Active{% endtrans %}</div>
 
-    <div class="col-md-3">{% trans %}Last IP{% endtrans %}</div>
+    <div class="col-xs-3 col-sm-4 col-md-3 hidden-xs">{% trans %}Last IP / Reg IP{% endtrans %}</div>
 
-    <div class="col-md-3">{% trans %}Email address{% endtrans %}</div>
+    <div class="col-xs-3 hidden-xs hidden-sm">{% trans %}User Group{% endtrans %}</div>
 {% endblock %}
 
 {% block item_title %}
@@ -23,13 +23,16 @@
         {{ buttons.delete('users_admin_delete') }}
     </div>
 
-    {{ buttons.view('user_profile', {slug: item.slug}) }}
+    <div class="btn-group">
+        <a href="mailto:{{ user.email }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-envelope"></span> </a>
+        {{ buttons.view('user_profile', {slug: item.slug}) }}
+    </div>
 {% endblock %}
 
 {% block item_extended_inner %}
-    <div class="col-md-3">{{ item.joined|date(settings.date_format) }}</div>
+    <div class="col-xs-12 col-sm-4 col-md-3">{{ item.joined|date(settings.date_format) }}</div>
 
-    <div class="col-md-3">
+    <div class="col-xs-6 col-sm-3 hidden-xs">
         {% if item.lastActivity != 0 %}
             {{ item.lastActivity|date(settings.date_format ~ ' H:i') }}
         {% else %}
@@ -37,7 +40,10 @@
         {% endif %}
     </div>
 
-    <div class="col-md-3">{{ item.lastIp|default('None') }}</div>
+    <div class="col-xs-3 col-sm-4 col-md-3 hidden-xs">
+        {{ item.lastIp|default('-') }}<br/>
+        {{ item.registrationIp|default('-') }}<br/>
+    </div>
 
-    <div class="col-md-3">{{ item.email }}</div>
+    <div class="col-xs-3 hidden-xs hidden-sm"><a href="{{ path('user_groups_admin_edit', {'id': item.group.id}) }}">{{ item.group.name }}</a></div>
 {% endblock %}
