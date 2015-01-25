@@ -8,6 +8,7 @@
 namespace AVCMS\Core\Security;
 
 use AVCMS\Core\Security\Exception\SiteOfflineException;
+use AVCMS\Core\SettingsManager\SettingsManager;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -22,13 +23,15 @@ class SiteOfflineAccessListener implements ListenerInterface
     private $accessDecisionManager;
     private $map;
     private $authManager;
+    private $settingsManager;
 
-    public function __construct(TokenStorageInterface $tokenStorage, AccessDecisionManagerInterface $accessDecisionManager, AccessMapInterface $map, AuthenticationManagerInterface $authManager)
+    public function __construct(TokenStorageInterface $tokenStorage, AccessDecisionManagerInterface $accessDecisionManager, AccessMapInterface $map, AuthenticationManagerInterface $authManager, SettingsManager $settingsManager)
     {
         $this->tokenStorage = $tokenStorage;
         $this->accessDecisionManager = $accessDecisionManager;
         $this->map = $map;
         $this->authManager = $authManager;
+        $this->settingsManager = $settingsManager;
     }
 
     /**
@@ -41,6 +44,10 @@ class SiteOfflineAccessListener implements ListenerInterface
      */
     public function handle(GetResponseEvent $event)
     {
+        if ($this->settingsManager->getSetting('site_offline') !== '1') {
+            return;
+        }
+
         if (null === $token = $this->tokenStorage->getToken()) {
             throw new AuthenticationCredentialsNotFoundException('A Token was not found in the SecurityContext.');
         }

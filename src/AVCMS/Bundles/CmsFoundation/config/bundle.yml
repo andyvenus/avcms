@@ -32,6 +32,18 @@ user_settings:
         class: AV\Validation\Rules\Length
         arguments:
           - 5
+  site_offline:
+    type: checkbox
+    label: Site Offline
+    help: Make your site offline, only accessible to admins
+    type: checkbox
+    default: 0
+    section: main
+  site_offline_message:
+    type: text
+    label: Site Offline Message
+    default: Down for maintenance, back soon!
+    section: main
 
   site_email_address:
     type: text

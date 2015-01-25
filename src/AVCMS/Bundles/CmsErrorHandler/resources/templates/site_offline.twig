@@ -12,4 +12,4 @@
     {{ settings.site_offline_message }}
 {% endblock %}
 
-{% block error_home_link %}{% endblock %}
+{% block error_home_link %}<a href="{{ path('login') }}" style="font-size: 14px;">{% trans %}Admin Login{% endtrans %}</a>{% endblock %}
