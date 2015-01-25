@@ -26,6 +26,7 @@ class UserTwigServices implements ServicesInterface
         ;
 
         $container->register('twig.user_info_extension', 'AVCMS\Bundles\Users\TwigExtension\UserInfoTwigExtension')
+            ->setArguments([new Reference('security.token_storage')])
             ->addTag('twig.extension')
         ;
     }
