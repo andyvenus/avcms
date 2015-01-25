@@ -1,0 +1,31 @@
+{% macro simple_user_area() %}
+    {% if user.loggedIn %}
+        {{ user_info(user, {'active_user': true}) }}
+        &nbsp;<a href="{{ url('logout') }}"><span class="glyphicon glyphicon-log-out"></span> {% trans %}Logout{% endtrans %}</a>
+        {% if is_granted(['ADMIN_ACCESS']) %}
+            &nbsp;<a href="{{ url('admin_dashboard') }}"><span class="glyphicon glyphicon-wrench"></span> {% trans %}Admin{% endtrans %}</a>
+        {% endif %}
+    {% elseif settings.users_enabled %}
+        <a href="{{ url('login') }}">{% trans %}Login{% endtrans %}</a> / <a href="{{ url('register') }}">{% trans %}Register{% endtrans %}</a>
+    {% endif %}
+{% endmacro %}
+
+
+{% macro button_menu(menu, button_size, button_style, group_class) %}
+    {% for menu_item in menu(menu) %}
+        <div class="btn-group {{ group_class }}">
+            <a href="{{ menu_item.url }}" class="btn btn-{{ button_style|default('default') }} btn-{{ button_size|default('md') }}"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}</a>
+            {% if menu_item.children|length != 0 %}
+                <button type="button" class="btn btn-{{ button_style|default('default') }} btn-{{ button_size|default('md') }} dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    {% for sub_menu_item in menu_item.children %}
+                        <li><a href="{{ sub_menu_item.url }}"><span class="{{ sub_menu_item.icon }}"></span> {{ sub_menu_item.label }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endmacro %}
