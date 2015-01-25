@@ -17,7 +17,7 @@ class Users extends Model implements UserProviderInterface
 {
     protected $textIdentifierColumn = 'slug';
 
-    protected $finder = 'AVCMS\Bundles\Users\Model\UsersFinder';
+    protected $finder = 'AVCMS\Bundles\Users\Model\UserFinder';
 
     protected $groupsModel;
 
