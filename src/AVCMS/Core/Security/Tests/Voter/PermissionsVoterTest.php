@@ -23,12 +23,13 @@ class PermissionsVoterTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider getVoteTests
      */
-    public function testVote($userRole, $attributes, $expected, $permDefault, $adminDefault)
+    public function testVote($userRole, $attributes, $expected, $permDefault, $adminDefault, $adminPanelAccess = 0)
     {
         $user = new UserFixture();
         $user->roleList = $userRole;
         $user->group->permDefault = $permDefault;
         $user->group->adminDefault = $adminDefault;
+        $user->group->setAdminPanelAccess($adminPanelAccess);
 
         $voter = new PermissionsVoter($this->getPermissionsProvider());
 
@@ -39,7 +40,7 @@ class PermissionsVoterTest extends \PHPUnit_Framework_TestCase
 
         $vote = $voter->vote($token, null, (array) $attributes);
 
-        $this->assertEquals($expected, $vote);
+        $this->assertEquals($expected, $vote, 'Permission '.$attributes.' for role '.$userRole.' granted unexpected permission');
     }
 
     public function getVoteTests()
@@ -47,7 +48,8 @@ class PermissionsVoterTest extends \PHPUnit_Framework_TestCase
         return array(
             array('ROLE_ADMIN', 'PERM_ADMIN_ONLY', VoterInterface::ACCESS_GRANTED, 'allow', 'allow'),
             array('ROLE_ADMIN', 'PERM_ADMIN_FALSE', VoterInterface::ACCESS_DENIED, 'allow', 'allow'),
-            array('ROLE_ADMIN', 'ADMIN_PERM_ALLOW', VoterInterface::ACCESS_GRANTED, 'deny', 'deny'),
+            array('ROLE_ADMIN', 'ADMIN_PERM_ALLOW', VoterInterface::ACCESS_GRANTED, 'deny', 'deny', '1'),
+            array('ROLE_ADMIN', 'ADMIN_PERM_ALLOW', VoterInterface::ACCESS_DENIED, 'deny', 'deny'), // allowed permission but no admin access
             array('ROLE_ADMIN', 'ADMIN_PERM_NOT_DEFINED', VoterInterface::ACCESS_DENIED, 'deny', 'deny'),
             array('ROLE_USER', 'ADMIN_PERM_ALLOW', VoterInterface::ACCESS_DENIED, 'deny', 'deny'),
             array('ROLE_ADMIN', 'PERM_NOT_DEFINED', VoterInterface::ACCESS_GRANTED, 'allow', 'allow'),
@@ -83,4 +85,3 @@ class PermissionsVoterTest extends \PHPUnit_Framework_TestCase
         return $provider;
     }
 }
- 

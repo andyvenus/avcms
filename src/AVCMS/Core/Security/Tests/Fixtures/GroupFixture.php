@@ -7,7 +7,9 @@
 
 namespace AVCMS\Core\Security\Tests\Fixtures;
 
-class GroupFixture
+use AVCMS\Bundles\Users\Model\UserGroup;
+
+class GroupFixture extends UserGroup
 {
     public $adminDefault = false;
 
