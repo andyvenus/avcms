@@ -29,8 +29,8 @@ class SelectType extends DefaultType
 
     public function getDefaultOptions($field)
     {
-        if (!isset($field['choices'])) {
-            $field['choices'] = [];
+        if (!isset($field['options']['choices'])) {
+            $field['options']['choices'] = [];
         }
 
         if (isset($field['options']['choices_provider'])) {
