@@ -47,7 +47,7 @@
 
 {% block other_bundles_dropdown %}
     <label>Add To Another Bundle
-        <select class="other_bundle_dropdown" id="{{ string }}">
+        <select class="other_bundle_dropdown no_select2" id="{{ string }}">
             <option disabled selected>Select...</option>
         {% for bundle in all_bundles %}
             <option value="{{ bundle }}">{{ bundle }}</option>

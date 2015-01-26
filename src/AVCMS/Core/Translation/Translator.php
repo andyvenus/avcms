@@ -126,4 +126,4 @@ class Translator extends TranslatorBase
             }
         }
     }
-} 
+}

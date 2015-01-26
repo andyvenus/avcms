@@ -1,7 +1,7 @@
 var avcms = avcms || {};
 
 $(document).ready(function() {
-    $('select').select2();
+    $("select:not(.no_select2)").select2();
 
     $('select[name=database_table]').change(avcms.dev.loadDatabaseColumns);
 
