@@ -73,7 +73,7 @@ class TranslationExtractionController extends Controller
                 $translationInfo['usages'] = [];
             }
 
-            if (count($usages) > 0) {
+            if (count($usages) > 0 && ((isset($allStrings[$string]) && !in_array($allStrings[$string], ['CmsFoundation', 'Admin'])) || !isset($allStrings[$string]))) {
                 $usedTranslationStrings[$string] = $translationInfo;
             }
             elseif (isset($allStrings[$string])) {
