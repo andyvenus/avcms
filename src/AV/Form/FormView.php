@@ -117,7 +117,7 @@ class FormView implements FormViewInterface
                 $field['options']['label'] = $this->translate($field['options']['label']);
             }
 
-            if (isset($field['options']['choices'])) {
+            if (isset($field['options']['choices']) && (!isset($field['options']['choices_translate']) || $field['options']['choices_translate'] === true)) {
                 foreach ($field['options']['choices'] as $value => $label) {
                     if (!is_array($label)) {
                         $field['options']['choices'][$value] = $this->translate($label);
