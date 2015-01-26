@@ -10,6 +10,7 @@ namespace AVCMS\Bundles\FacebookConnect\EventSubscriber;
 use AVCMS\Bundles\CmsFoundation\Event\OutletEvent;
 use AVCMS\Bundles\FacebookConnect\Facebook\FacebookConnect;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class FacebookConnectButtonSubscriber implements EventSubscriberInterface
 {
@@ -23,10 +24,16 @@ class FacebookConnectButtonSubscriber implements EventSubscriberInterface
      */
     private $webDir;
 
-    public function __construct(FacebookConnect $facebookConnect, $webDir)
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    public function __construct(FacebookConnect $facebookConnect, $webDir, TranslatorInterface $translator)
     {
         $this->facebookConnect = $facebookConnect;
         $this->webDir = $webDir;
+        $this->translator = $translator;
     }
 
     public function addButton(OutletEvent $event)
@@ -43,7 +50,7 @@ class FacebookConnectButtonSubscriber implements EventSubscriberInterface
 
         $url = $this->facebookConnect->getHelper()->getLoginUrl(['email']);
 
-        $content = '<a href="'.$url.'" class="btn btn-primary"><img src="'.$this->webDir.'/resources/FacebookConnect/images/fb_icon.png" width="18" height="18" /> Log-in With Facebook</a>';
+        $content = '<a href="'.$url.'" class="btn btn-primary"><img src="'.$this->webDir.'/resources/FacebookConnect/images/fb_icon.png" width="18" height="18" /> '.$this->translator->trans('Login With Facebook').'</a>';
 
         if ($outlet === 'register.top') {
             $content .= ' - or -';

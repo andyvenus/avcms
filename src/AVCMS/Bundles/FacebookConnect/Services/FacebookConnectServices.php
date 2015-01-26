@@ -26,7 +26,7 @@ class FacebookConnectServices implements ServicesInterface
         ;
 
         $container->register('subscriber.facebook_connect_button', 'AVCMS\Bundles\FacebookConnect\EventSubscriber\FacebookConnectButtonSubscriber')
-            ->setArguments([new Reference('facebook_connect'), '%web_path%'])
+            ->setArguments([new Reference('facebook_connect'), '%web_path%', new Reference('translator')])
             ->addTag('event.subscriber')
         ;
 
