@@ -95,6 +95,13 @@ class WallpaperModulesController extends Controller
         )));
     }
 
+    public function resolutionsModule()
+    {
+        $resCategories = $this->container->get('wallpaper.resolutions_manager')->getAllResolutions();
+
+        return new Response($this->render('@Wallpapers/module/resolutions_module.twig', ['resolution_categories' => $resCategories]));
+    }
+
     public function tagsModule($userSettings)
     {
         return $this->getTagsModule($userSettings, 'wallpaper', 'browse_wallpapers', 'ids');

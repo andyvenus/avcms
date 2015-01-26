@@ -80,6 +80,11 @@ class WallpapersController extends Controller
         $attr = $request->attributes->all();
         $attr['page'] = 1;
         $formBp->setAction($this->generateUrl($request->attributes->get('_route'), $attr));
+
+        if ($request->get('_route') === 'wallpaper_browse_resolution') {
+            $formBp->remove('resolution');
+        }
+
         $filtersForm = $this->buildForm($formBp, $request);
 
         return new Response($this->render('@Wallpapers/browse_wallpapers.twig', array(
