@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class SymfonyFile extends Rule
 {
-    protected $tooBigError = "File uploaded for '{param_name}' is too big, the file must be no larger than %s";
+    protected $tooBigError = "File uploaded for '{param_name}' is too big, the file must be no larger than {size}";
 
-    protected $wrongTypeError = "File uploaded for '{param_name}' must be one of the following file types: %s";
+    protected $wrongTypeError = "File uploaded for '{param_name}' must be one of the following file types: {file_types}";
 
     protected $maxFileSize;
 
@@ -34,18 +34,18 @@ class SymfonyFile extends Rule
             return false;
         }
 
-        if ($this->maxFileSize && $param->getSize() > $this->maxFileSize) {
-            $this->setError(sprintf($this->tooBigError, $this->byteFormat($this->maxFileSize, $this->unit)));
-            return false;
-        }
-
         if ($this->mimeTypes && (!isset($this->mimeTypes[$param->getClientOriginalExtension()]) || !in_array($param->getMimeType(), $this->mimeTypes[$param->getClientOriginalExtension()]))) {
             $friendlyFileTypes = array_keys($this->mimeTypes);
 
             $friendlyFileTypesStr = implode(', ', $friendlyFileTypes);
 
-            $this->setError(sprintf($this->wrongTypeError, $friendlyFileTypesStr));
+            $this->setError($this->wrongTypeError, ['file_types' => $friendlyFileTypesStr]);
 
+            return false;
+        }
+
+        if ($this->maxFileSize && $param->getSize() > $this->maxFileSize) {
+            $this->setError($this->tooBigError, ['size' => $this->byteFormat($this->maxFileSize, $this->unit)]);
             return false;
         }
 
