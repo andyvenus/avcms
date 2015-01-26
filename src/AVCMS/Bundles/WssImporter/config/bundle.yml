@@ -1,0 +1,4 @@
+name: WssImporter
+namespace: AVCMS\Bundles\WssImporter
+require:
+    - Framework

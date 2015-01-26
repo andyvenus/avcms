@@ -1,0 +1,3 @@
+wss_importer_home:
+  path: /admin/import
+  defaults: { _controller: WssImporter::WssImporterController::importerHomeAction }

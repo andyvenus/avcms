@@ -54,3 +54,5 @@ ContactUs:
     enabled: true
 Disqus:
     enabled: true
+WssImporter:
+    enabled: true
