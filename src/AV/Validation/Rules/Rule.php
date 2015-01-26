@@ -4,7 +4,7 @@ namespace AV\Validation\Rules;
 
 abstract class Rule implements RuleInterface {
 
-    protected $ruleData;
+    protected $ruleData = [];
 
     protected $error;
 
@@ -29,11 +29,6 @@ abstract class Rule implements RuleInterface {
 
     public function getRuleData()
     {
-        if (isset($this->ruleData)) {
-            return $this->ruleData;
-        }
-        else {
-            return array();
-        }
+        return $this->ruleData;
     }
 } 
