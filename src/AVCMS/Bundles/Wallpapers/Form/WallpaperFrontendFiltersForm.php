@@ -31,6 +31,7 @@ class WallpaperFrontendFiltersForm extends FormBlueprint
         $this->add('resolution', 'select', [
             'label' => 'Resolution',
             'choices' => array_merge(['all' => 'All Resolutions'], $resolutionChoices),
+            'choices_translate' => false,
             'default' => 'all'
         ]);
 

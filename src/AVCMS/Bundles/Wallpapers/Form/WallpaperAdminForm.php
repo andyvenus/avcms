@@ -65,7 +65,8 @@ class WallpaperAdminForm extends AdminContentForm
 
         $this->add('category_id', 'select', array(
             'label' => 'Category',
-            'choices_provider' => $categoryChoicesProvider
+            'choices_provider' => $categoryChoicesProvider,
+            'choices_translate' => false
         ));
 
         $this->add('submitter_id', 'text', array(
