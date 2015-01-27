@@ -30,8 +30,17 @@ class UserInfoTwigExtension extends \Twig_Extension
 
     public function getGlobals()
     {
+        $token = $this->tokenStorage->getToken();
+
+        if (is_callable([$token, 'getUser'])) {
+            $user = $token->getUser();
+        }
+        else {
+            $user = null;
+        }
+
         return [
-            'user' => $this->tokenStorage->getToken()->getUser()
+            'user' => $user
         ];
     }
 
