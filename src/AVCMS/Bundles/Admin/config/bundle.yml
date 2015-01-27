@@ -43,6 +43,7 @@ assets:
 
   admin_navigation.js:
       env: admin
+      priority: -100
   admin_browser.js:
       env: admin
       priority: 15

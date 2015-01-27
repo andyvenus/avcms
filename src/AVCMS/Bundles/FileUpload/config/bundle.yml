@@ -9,8 +9,11 @@ assets:
     priority: 20
   jquery.ui.widget.js:
     env: admin
+    compile: false
   jquery.fileupload.js:
     env: admin
+    compile: false
+    priority: -100
   jquery.iframe-transport.js:
     env: admin
 
