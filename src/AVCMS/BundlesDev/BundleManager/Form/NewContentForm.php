@@ -73,7 +73,8 @@ class NewContentForm extends FormBlueprint
 
             $this->add('columns['.$column_name.'][form_label]', 'text', array(
                 'label' => 'Form Label',
-                'default' => ucwords(str_replace('_', ' ', $column_name))
+                'default' => ucwords(str_replace('_', ' ', $column_name)),
+                'allow_unset' => true
             ));
         }
     }
