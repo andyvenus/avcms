@@ -40,7 +40,7 @@ class SetCategoryParentOnContentSubscriber implements EventSubscriberInterface
         $categoriesModel = $this->getCategoriesModel($contentType);
         $category = $categoriesModel->getOne($entity->getCategoryId());
 
-        if ($category->getParent()) {
+        if ($category && $category->getParent()) {
             $entity->setCategoryParentId($category->getParent());
         }
         else {
