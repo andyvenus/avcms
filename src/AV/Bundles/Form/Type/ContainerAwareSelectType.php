@@ -27,7 +27,7 @@ class ContainerAwareSelectType extends SelectType
         $field = parent::getDefaultOptions($field);
 
         if (isset($field['options']['choices_provider_service']) && $this->container->has($field['options']['choices_provider_service'])) {
-            $field['options']['choices'] = array_merge_recursive($field['options']['choices'], $this->container->get($field['options']['choices_provider_service'])->getChoices());
+            $field['options']['choices'] = array_replace_recursive($field['options']['choices'], $this->container->get($field['options']['choices_provider_service'])->getChoices());
         }
 
         return $field;
