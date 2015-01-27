@@ -1,0 +1,18 @@
+{% extends 'index.twig' %}
+
+{% block content %}
+    <ol class="breadcrumb">
+        <li>
+            <a href="{{ path('translation_helper') }}">My Translations</a>
+        </li>
+    	<li>
+    		<a href="{{ path('translate', {'id': translation.id}) }}">{{ translation.name }}</a>
+    	</li>
+        <li>
+            {{ bundle_name }}
+        </li>
+    </ol>
+    <h1>{{ bundle_name }} Translations</h1>
+
+    {{ form(form) }}
+{% endblock %}

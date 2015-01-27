@@ -1,0 +1,54 @@
+{% extends 'index.twig' %}
+
+{% block content %}
+    <ol class="breadcrumb">
+        <li>
+            <a href="{{ path('translation_helper') }}">My Translations</a>
+        </li>
+        <li>
+            {{ translation_config.name }}
+        </li>
+    </ol>
+
+    <h2>Translation: {{ translation_config.name }}</h2>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {% set untranslated = total_strings - total_translations %}
+            {% if untranslated > 0 %}
+                <p>Strings not translated: <strong>{{ untranslated }}</strong></p>
+            {% endif %}
+
+            <a href="{{ path('download_translation', {'id': translation_config.id}) }}" class="btn btn-success"><span class="glyphicon glyphicon-download-alt"></span> Download</a>
+            {% if user.id != translation_config.userId %}
+                <a href="{{ path('clone_translation', {'id': translation_config.id}) }}" class="btn btn-primary"><span class="glyphicon glyphicon-copy"></span> Clone & Edit</a>
+            {% else %}
+                <a href="{{ path('edit_translation', {'id': translation_config.id}) }}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Edit Details</a>
+            {% endif %}
+        </div>
+    </div>
+
+    {% for bundle, translation in translations %}
+        <div class="well well-sm">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4>{{ bundle }}</h4>
+                    {% if translation.untranslated > 0 %}
+                        <p class="text-danger"><strong>{{ translation.untranslated }}</strong> strings need translating
+                            {% if translation_config.userId == user.id %}
+                                <a class="btn btn-default btn-xs" href="{{ path('translate_bundle', {'bundle': bundle, 'id': translation_config.id, 'already_translated': 0}) }}"><span class="glyphicon glyphicon-pencil"></span> Add Missing Strings</a>
+                            {% endif %}
+                        </p>
+                    {% else %}
+                        <p class="text-success"><strong>All Translated</strong></p>
+                    {% endif %}
+                </div>
+                <div class="col-md-4 text-right">
+                    {% if translation_config.userId == user.id %}
+                        <a class="btn btn-default" href="{{ path('translate_bundle', {'bundle': bundle, 'id': translation_config.id}) }}"><span class="glyphicon glyphicon-pencil"></span> Edit All Translations</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

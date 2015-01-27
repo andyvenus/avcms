@@ -1,0 +1,23 @@
+{% extends 'index.twig' %}
+
+{% block content %}
+    <h2>Your translations</h2>
+
+    <p><a class="btn btn-success" href="{{ path('add_translation') }}"><span class="glyphicon glyphicon-plus"></span> New Translation</a></p>
+
+    {% for translation in translations %}
+        <div class="well well-sm">
+            <h3 style="margin-top: 0px;">{{ translation.name }} <span class="small">{% if translation.public == 0 %}Not Public{% endif %}</span> </h3>
+
+            <p>
+                <a href="{{ path('translate', {'id': translation.id}) }}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Manage Translations</a>
+                <a href="{{ path('edit_translation', {'id': translation.id}) }}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Edit {% if translation.public == 0 %}/ Publish{% endif %}</a>
+                <a href="{{ path('download_translation', {'id': translation.id}) }}" class="btn btn-success"><span class="glyphicon glyphicon-download-alt"></span> Download</a>
+            </p>
+        </div>
+    {% else %}
+        <div class="well well-sm">
+            No translations yet
+        </div>
+    {% endfor %}
+{% endblock %}

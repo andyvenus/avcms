@@ -1,0 +1,40 @@
+{% extends 'index.twig' %}
+
+{% block content %}
+    <ol class="breadcrumb">
+        <li>
+            <a href="{{ path('translation_helper') }}">My Translations</a>
+        </li>
+        <li>
+            {{ translation.name }}
+        </li>
+    </ol>
+
+    {% if translation.id %}
+        <h2>Edit Translation: {{ translation.name }}</h2>
+    {% else %}
+        <h2>Add Translation</h2>
+    {% endif %}
+
+    {{ form_start(form) }}
+
+    {{ form_messages(form) }}
+
+    <div class="alert alert-info">A two-character representation of your language. Find it on this list under the "639-1" column: <a href="http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes</a></div>
+    {{ form_row(form.language) }}
+
+    <div class="alert alert-info"><strong>Optional</strong> A two-character representation of your country. Find it on this list under the "Alpha-2 code" column: <a href="http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes">http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes</a></div>
+    {{ form_row(form.country) }}
+
+    <div class="alert alert-info">A name of your choice</div>
+    {{ form_row(form.name) }}
+
+    <div class="alert alert-info">Allow other users to use & download this translation (can be changed at any time)</div>
+    {{ form_row(form.public) }}
+
+    {{ form_rows_after(form, 'public') }}
+
+    {{ form_submit_button(form) }}
+
+    {{ form_end(form) }}
+{% endblock %}

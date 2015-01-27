@@ -1,0 +1,24 @@
+translations:
+    bundle: TranslationHelper
+    namespace: AVCMS\Bundles\TranslationHelper
+    singular: translation
+    plural: translations
+    uc_singular: Translation
+    uc_plural: Translations
+    cc_singular: Translation
+    cc_plural: Translations
+    dash_singular: translation
+    dash_plural: translations
+    admin_home_route: translations_admin_home
+    admin_finder_route: translations_admin_finder
+    admin_delete_route: translations_admin_delete
+    admin_edit_route: translations_admin_edit
+    admin_add_route: translations_admin_add
+    admin_controller: 'TranslationHelper::TranslationsAdminController'
+    finder_item_extra_buttons: ''
+    database: translations
+    entity: AVCMS\Bundles\TranslationHelper\Model\Translation
+    admin_form: AVCMS\Bundles\TranslationHelper\Form\TranslationAdminForm
+    model_class: Translations
+    model_var_name: translations
+    title_field: id

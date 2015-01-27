@@ -1,0 +1,4 @@
+name: TranslationHelper
+namespace: AVCMS\Bundles\TranslationHelper
+require:
+    - Framework

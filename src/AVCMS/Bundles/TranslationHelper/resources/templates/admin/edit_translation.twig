@@ -1,0 +1,19 @@
+{% extends '@admin/edit_item.twig' %}
+
+{% block title -%}
+    {% spaceless %}
+        {% if item.id %}
+            {% trans with {'item': item.id} %}Editing {item}{% endtrans %}
+        {% else %}
+            {% trans %}New Translation{% endtrans %}
+        {% endif %}
+    {% endspaceless  %}
+{% endblock %}
+
+{% block editor_title_edit %}
+    <span class="light">{% trans %}Editing Translation{% endtrans %}:</span> <span data-id="{{ item.id }}" data-field="id">{{ item.id }}</span>
+{% endblock %}
+
+{% block editor_title_new %}
+    {% trans %}New Translation{% endtrans %}
+{% endblock %}

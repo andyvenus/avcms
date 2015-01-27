@@ -1,0 +1,21 @@
+
+
+translations_admin_edit:
+    path:     /translations/edit/{id}
+    defaults: { _controller: 'TranslationHelper::TranslationsAdminController::editAction' }
+
+translations_admin_add:
+    path:     /translations/new
+    defaults: { _controller: 'TranslationHelper::TranslationsAdminController::editAction' }
+
+translations_admin_delete:
+    path:     /translations/delete
+    defaults: { _controller: 'TranslationHelper::TranslationsAdminController::deleteAction' }
+
+translations_admin_home:
+  path: /translations
+  defaults: { _controller: 'TranslationHelper::TranslationsAdminController::homeAction' }
+
+translations_admin_finder:
+  path: /translations/finder/{page}
+  defaults: { page: 1, _controller: 'TranslationHelper::TranslationsAdminController::finderAction' }
