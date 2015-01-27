@@ -23,14 +23,19 @@ class Mailer
     {
         $this->settings = $settings;
 
-        $encryption = $settings->smtp_encryption;
-        if ($encryption == 'none') {
-            $encryption = null;
-        }
+        if ($settings->getSetting('use_smtp')) {
+            $encryption = $settings->smtp_encryption;
+            if ($encryption == 'none') {
+                $encryption = null;
+            }
 
-        $this->transport = Swift_SmtpTransport::newInstance($settings->smtp_server, $settings->smtp_port, $encryption);
-        $this->transport->setUsername($settings->smtp_username);
-        $this->transport->setPassword($settings->smtp_password);
+            $this->transport = Swift_SmtpTransport::newInstance($settings->smtp_server, $settings->smtp_port, $encryption);
+            $this->transport->setUsername($settings->smtp_username);
+            $this->transport->setPassword($settings->smtp_password);
+        }
+        else {
+            $this->transport = \Swift_MailTransport::newInstance();
+        }
 
         $this->mailer = Swift_Mailer::newInstance($this->transport);
     }

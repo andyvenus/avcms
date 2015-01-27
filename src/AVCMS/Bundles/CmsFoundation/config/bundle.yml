@@ -53,6 +53,11 @@ user_settings:
     validation:
       Email:
         rule: EmailAddress
+  use_smtp:
+    type: checkbox
+    label: Use SMTP
+    section: email
+    default: 0
   smtp_username:
     type: text
     label: SMTP Username
