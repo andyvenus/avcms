@@ -11,10 +11,17 @@ use AV\Form\ChoicesProviderInterface;
 
 class LanguageChoicesProvider implements ChoicesProviderInterface
 {
+    private $dir = 'webmaster/translations';
+
     public function getChoices()
     {
         $choices = ['en' => 'Default (English)'];
-        $langFolders = new \DirectoryIterator('webmaster/translations');
+
+        if (!file_exists($this->dir)) {
+            return $choices;
+        }
+
+        $langFolders = new \DirectoryIterator($this->dir);
         foreach ($langFolders as $langFolder) {
             if ($langFolder->isDot()) {
                 continue;
