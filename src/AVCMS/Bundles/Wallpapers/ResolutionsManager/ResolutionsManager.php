@@ -19,16 +19,35 @@ class ResolutionsManager
 
     protected $settingsManager;
 
-    public function __construct($rootDir, SettingsManager $settingsManager)
+    protected $cacheDir;
+
+    public function __construct($rootDir, SettingsManager $settingsManager, $cacheDir)
     {
         $this->rootDir = $rootDir;
         $this->settingsManager = $settingsManager;
+        $this->cacheDir = $cacheDir;
     }
 
     public function getAllResolutions()
     {
         if (!isset($this->resolutions)) {
-            $this->resolutions = Yaml::parse(file_get_contents($this->getConfigPath()));
+            $cacheFile = $this->cacheDir.'/wallpaper_resolutions.php';
+
+            $cacheTime = 0;
+            if (file_exists($cacheFile)) {
+                $cacheTime = filemtime($cacheFile);
+            }
+
+            $resTime = filemtime($this->getConfigPath());
+
+            if ($resTime > $cacheTime) {
+                $this->resolutions = Yaml::parse(file_get_contents($this->getConfigPath()));
+
+                file_put_contents($cacheFile, '<?php return '.var_export($this->resolutions, true).';');
+            }
+            else {
+                $this->resolutions = include $cacheFile;
+            }
         }
 
         return $this->resolutions;
