@@ -18,6 +18,8 @@ class Translator extends TranslatorBase
 
     protected $debug;
 
+    private $selector;
+
     public function __construct(SettingsManager $settings, MessageSelector $selector = null, $debug = false)
     {
         $locale = $settings->getSetting('language');
@@ -26,6 +28,7 @@ class Translator extends TranslatorBase
         }
 
         $this->debug = $debug;
+        $this->selector = $selector ?: new MessageSelector();
 
         parent::__construct($locale, $selector);
     }
@@ -54,14 +57,38 @@ class Translator extends TranslatorBase
             $params['{'.$placeholder.'}'] = $value;
         }
 
-        $raw_translation = $this->catalogues[$locale]->get((string) $id, $domain);
-        $translation = strtr($raw_translation, $params);
+        $rawTranslation = $this->catalogues[$locale]->get((string) $id, $domain);
+        $translation = strtr($rawTranslation, $params);
 
         if ($this->debug === true) {
             $this->translatedStrings[$id] = array(
                 'raw' => $id,
                 'translation' => $translation,
-                'raw_translation' => $raw_translation,
+                'raw_translation' => $rawTranslation,
+                'parameters' => $parameters
+            );
+        }
+
+        return $translation;
+    }
+
+    public function transChoice($id, $number, array $parameters = array(), $domain = null, $locale = null)
+    {
+        $translation = parent::transChoice($id, $number, $parameters, $domain, $locale);
+
+        if ($this->debug === true) {
+            if (null === $locale) {
+                $locale = $this->getLocale();
+            }
+
+            $catalogue = $this->catalogues[$locale];
+
+            $rawTranslation = $catalogue->get($id, $domain);
+
+            $this->translatedStrings[$id] = array(
+                'raw' => $id,
+                'translation' => 'Multiple',
+                'raw_translation' => $rawTranslation,
                 'parameters' => $parameters
             );
         }
