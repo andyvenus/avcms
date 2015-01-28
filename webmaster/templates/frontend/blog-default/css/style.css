@@ -20,20 +20,22 @@ a {
 .header {
   background-color: #c9dccb;
   color: #55845a; }
-
-.header a {
-  color: #55845a;
-  text-decoration: none; }
-
-.header a:hover {
-  text-decoration: none;
-  color: #6ca072; }
-
-.header h1 {
-  margin-top: 0px; }
+  .header a {
+    color: #55845a;
+    text-decoration: none; }
+  .header a:hover {
+    text-decoration: none;
+    color: #6ca072; }
+  .header h1 {
+    margin-top: 0px; }
+  .header .user-area .user-area-inner {
+    margin-top: 5px; }
 
 .header-extra {
   background-color: #f7faf8; }
+
+.logo-text {
+  margin-top: 15px; }
 
 .logo-image {
   margin: 10px 0px; }
@@ -99,6 +101,16 @@ select[name=author] {
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
     color: #55845a; } }
+@media (min-width: 992px) {
+  .header .user-area {
+    text-align: right; }
+    .header .user-area .user-area-inner {
+      margin-top: 15px;
+      background-color: #d8e6da;
+      padding: 4px 10px;
+      display: inline-block;
+      border: 1px solid #dce8dd;
+      border-radius: 4px; } }
 .copyright {
   text-align: center;
   margin-bottom: 8px; }

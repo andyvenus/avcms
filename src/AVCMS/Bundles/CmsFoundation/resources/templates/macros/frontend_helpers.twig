@@ -6,7 +6,7 @@
             &nbsp;<a href="{{ url('admin_dashboard') }}"><span class="glyphicon glyphicon-wrench"></span> {% trans %}Admin{% endtrans %}</a>
         {% endif %}
     {% elseif settings.users_enabled %}
-        <a href="{{ url('login') }}">{% trans %}Login{% endtrans %}</a> / <a href="{{ url('register') }}">{% trans %}Register{% endtrans %}</a>
+        <span class="glyphicon glyphicon-log-in"></span> <a href="{{ url('login') }}">{% trans %}Login{% endtrans %}</a> &nbsp;<span class="glyphicon glyphicon-check"></span> <a href="{{ url('register') }}">{% trans %}Register{% endtrans %}</a>
     {% endif %}
 {% endmacro %}
 

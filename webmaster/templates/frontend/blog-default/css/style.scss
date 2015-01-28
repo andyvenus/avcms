@@ -29,26 +29,36 @@ a {
 }
 
 .header {
-    background-color: $header-base-color;
-    color: $header-text-color;
-}
+  background-color: $header-base-color;
+  color: $header-text-color;
 
-.header a {
+  a {
     color: $header-text-color;
     text-decoration: none;
-}
+  }
 
-.header a:hover {
+  a:hover {
     text-decoration: none;
     color: lighten($header-text-color, 10);
-}
+  }
 
-.header h1 {
+  h1 {
     margin-top: 0px;
+  }
+
+  .user-area {
+    .user-area-inner {
+      margin-top: 5px;
+    }
+  }
 }
 
 .header-extra {
   background-color: lighten($header-base-color, 15);
+}
+
+.logo-text {
+  margin-top: 15px;
 }
 
 .logo-image {
@@ -134,6 +144,23 @@ select[name=author] {
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu>li>a {
     color: $header-text-color;
+  }
+}
+
+@media (min-width: 992px) {
+  .header {
+    .user-area {
+      text-align: right;
+
+      .user-area-inner {
+        margin-top: 15px;
+        background-color: lighten($header-base-color, 5);
+        padding: 4px 10px;
+        display: inline-block;
+        border: 1px solid lighten($header-base-color, 6);
+        border-radius: 4px;
+      }
+    }
   }
 }
 

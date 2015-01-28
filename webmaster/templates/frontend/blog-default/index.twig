@@ -5,21 +5,18 @@
     <header class="header">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 text-right">
-                    {{ helper.simple_user_area }}
+                <div class="col-md-4 col-md-push-8 user-area">
+                    <div class="user-area-inner">{{ helper.simple_user_area }}</div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-8 col-md-pull-4 logo">
                     <a href="{{ url('home') }}">
                         {% if settings.logo_image_url %}
                             <img class="logo-image" src="{{ settings.logo_image_url }}" />
                         {% else %}
-                            <h1>{{ settings.site_name }}</h1>
+                            <div class="logo-text"><h1>{{ settings.site_name }}</h1></div>
                         {% endif %}
                     </a>
                 </div>
-
             </div>
         </div>
     </header>
