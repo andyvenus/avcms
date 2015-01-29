@@ -1,5 +1,7 @@
 {% extends 'index.twig' %}
 
+{% block title %}{{ wallpaper.name }} {{ wallpaper_width }}x{{ wallpaper_height }}{% endblock %}
+
 {% block wide_content %}
     <div class="wallpaper-preview-page">
         <div class="box wallpaper-preview-box">
