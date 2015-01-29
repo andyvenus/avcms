@@ -1,0 +1,12 @@
+Add Page
+Title
+Content
+URL Slug
+New Page
+Editing {item}
+Editing Page
+The URL Slug must be unique, slug already in use
+Show Page Title
+Hits
+URI
+Manage Pages

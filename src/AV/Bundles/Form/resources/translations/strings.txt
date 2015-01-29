@@ -1,5 +1,13 @@
-Field {field_label} must be set
 Field '{param_name}' requires a valid email address
 Field '{field_label}' must be set
 Unidentified {param_name} error
 Could not find the value you entered for '{param_name}' in our records
+File uploaded for '{param_name}' must be one of the following file types: {file_types}
+The file provided for {param_name} is not a valid image file
+'{param_name}' must be at least {min} characters long
+'{param_name}' must be no more than {max} characters long
+'{param_name}' must be exactly {min} characters long
+Field "{param_name}" requires a valid email address
+Parameter '{param_name}' not set
+The field '{param_name}' must be unique, value already exists
+{param_name} must be a number

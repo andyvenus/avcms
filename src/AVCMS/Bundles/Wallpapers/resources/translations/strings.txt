@@ -1,0 +1,140 @@
+Wallpapers
+Add Wallpaper
+Name
+File
+Featured
+Slug
+New Wallpaper
+Crop Position
+No Wallpapers Found
+Editing Wallpaper
+URL Slug
+Tags
+Upload File
+Select files...
+Select file...
+Categories
+Top
+a
+Editing {item}
+Top-Left
+Top-Center
+Top-Right
+Left
+Center
+Right
+Bottom-Left
+Bottom-Center
+Bottom-Right
+No URL Entered
+Resolutions
+Wallpaper Resolutions Config
+Manage Resolutions
+Download
+Desktop users - Right click to save or set as desktop background
+Mobile users - Tap and hold your finder over the image for save options
+Wallpaper Details
+Original Resolution
+Date Added
+Views
+Wallpaper Bulk Import
+Import
+Import From Folder
+Bulk Import
+Import Wallpapers
+The following placeholders can be used when importing wallpapers
+The filename without an extension and made more presentable.
+The original filename.
+The folder name the image is contained within.
+Show Single Character Dirs
+Imported Wallpaper Details
+wallpapers imported
+Total Files
+Already Imported
+Created
+The dimensions of the source image.
+Bulk Upload Files
+Folder
+Files
+Start Upload
+Upload Images
+New Upload
+If file exists
+Rename (append number)
+Overwrite
+Don't upload
+Add New Folder
+Add Folder
+Folder not empty
+Downloads
+Browse Wallpapers
+Newest
+Oldest
+A-Z
+Z-A
+Most Viewed
+Most Liked
+Most Downloaded
+Page {page}
+Subcategories
+Wallpapers tagged with: {tags}
+Resize Method
+Crop
+Stretch
+Preview & Download
+Edit Wallpaper
+Resolution
+All Resolutions
+No Modules Assigned To Wallpapers Homepage
+All Featured Wallpapers
+Featured Wallpapers
+Your resolution
+Hits
+The URL Slug must be unique, slug already in use
+Clear Wallpaper Image Cache
+Top Hits
+Lowest Hits
+All
+Wallpaper Submissions
+Review
+Submissions
+Wallpaper Image
+Submit a Wallpaper Image
+I am the copyright owner of this image or have permission from the copyright owner
+Submit a wallpaper for us to use on our site! By submitting a wallpaper you give us full permission to use the image on our website.
+You must check the permissions field
+Thanks for your submission, it's now pending review.
+Click here to submit another image
+Credited User
+User
+Source Image Dimensions
+Date submitted
+Submit a Wallpaper
+Submitted By
+You have already submitted {count} wallpapers, please wait for them to be accepted first
+The latest wallpapers
+Press the download button to save, or
+{resolution} Wallpapers
+Folder cannot be deleted because it doesn't exist
+Number of wallpapers to display
+Show Hits
+Show Category
+Show Downloads
+Show resolutions higher than the source image
+Layout
+Thumbnails
+Filter
+Browse Wallpaper Columns
+Wallpapers Per Page
+Image Library
+Gd
+Image cache limit
+No limit
+Allow Wallpaper Submissions
+Maximum User Submissions
+Submit Wallpapers
+Resolutions display Type
+Inline (resolutions items appear in the main menu)
+Child (resolutions appear under this menu item, must not be nested)
+Top Downloads
+Don't resize (only offer original resolution)

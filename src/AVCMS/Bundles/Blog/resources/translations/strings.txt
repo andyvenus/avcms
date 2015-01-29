@@ -33,3 +33,4 @@ Show Date
 Blog Administration
 Show post hits
 Blog Post
+Blog Archive

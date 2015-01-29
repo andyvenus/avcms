@@ -1,1 +1,2 @@
 Regenerate Assets
+Assets Regenerated

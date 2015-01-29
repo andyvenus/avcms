@@ -58,7 +58,6 @@ Add Menu
 Add Menu Item
 Edit
 Please note, you will need to refresh the admin panel to see changes to the admin panel menu.
-
 Publish
 Publish / Scheduled Publish
 Hidden
@@ -79,3 +78,33 @@ Language
 Site Offline Message
 Manage Modules
 Manage Menus
+Loading
+Published
+Menu
+Files must be one of the following file types: {file_types}
+Config
+Pages
+Toggle Dropdown
+Admin Login
+Show Filters
+Name
+Logout
+Primary
+Site Offline
+Use SMTP
+Button Style (Button Type)
+Button Size (Button Type)
+Buttons
+Extra Small
+Small
+Medium
+Large
+Type
+Google Analytics ID
+Admin Emails
+Add a new menu that you can display in a module or by editing your template.
+Time Format
+Email Template
+Menu Name
+Route
+Provider

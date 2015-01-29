@@ -13,3 +13,6 @@ Load Comments
 New Comment
 Login to add your own comment
 Enable Comments
+Frontend Delete Comments
+Comment
+Login to comment

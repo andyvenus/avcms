@@ -41,7 +41,6 @@ Default
 Allow
 Deny
 Editing permissions
-Editing Permissions
 Email Address
 Name
 Flood Control Time
@@ -84,3 +83,25 @@ Main Permissions
 Admin Permissions
 The presented password is invalid.
 Email validated
+Last Activity
+New Account Details
+The entered username is already in use
+The entered email is already in use
+Admin Panel Access
+Flood Control Time (seconds)
+Editing User Group: {item}
+Default Moderator Permission
+Moderation Permissions
+User Options
+Remove unused accounts
+Delete accounts that have never been logged into
+Accounts Created
+1 week ago and older
+2 weeks ago and older
+1 month ago and older
+Accounts Deleted
+Users Options
+Last IP / Reg IP
+User Group
+All
+Profile

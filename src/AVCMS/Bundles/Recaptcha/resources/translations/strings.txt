@@ -1,0 +1,5 @@
+Please confirm you are not a robot
+Something went wrong verifying the captcha
+Enable reCaptcha
+reCaptcha Site Key
+reCaptcha Secret Key

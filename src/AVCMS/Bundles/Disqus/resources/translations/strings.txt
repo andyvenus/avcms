@@ -1,0 +1,3 @@
+Disqus Shortname
+Use Disqus
+Use Disqus comment system

@@ -68,7 +68,7 @@ class WallpaperResolutionsMenuItemType implements MenuItemTypeInterface
     public function getFormFields(FormBlueprint $form)
     {
         $form->add('settings[display]', 'select', [
-            'label' => 'Resolutions display Type',
+            'label' => 'Resolutions Display Type',
             'choices' => [
                 'inline' => 'Inline (resolutions items appear in the main menu)',
                 'child' => 'Child (resolutions appear under this menu item, must not be nested)'

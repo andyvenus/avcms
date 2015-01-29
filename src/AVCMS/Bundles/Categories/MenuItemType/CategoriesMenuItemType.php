@@ -74,7 +74,7 @@ class CategoriesMenuItemType implements MenuItemTypeInterface
     public function getFormFields(FormBlueprint $form)
     {
         $form->add('settings[display]', 'select', [
-            'label' => 'Categories display Type',
+            'label' => 'Categories Display Type',
             'choices' => [
                 'inline' => 'Inline (categories items appear in the main menu)',
                 'child' => 'Child (categories appear under this menu item, must not be nested)'

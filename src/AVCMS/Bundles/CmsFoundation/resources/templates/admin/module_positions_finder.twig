@@ -19,7 +19,7 @@
 
 {% block item_title %}
     <div class="finder-item-title" data-field="name">
-        {{ item.name }}
+        {{ item.name|trans }}
     </div>
 {% endblock %}
 
@@ -39,7 +39,7 @@
 
 {% block item_extended_inner %}
     <div class="col-md-6">
-        {{ item.description }}
+        {{ item.description|trans }}
     </div>
     <div class="col-md-6 hidden-xs hidden-sm">
         {{ item.provider|capitalize }}: {{ item.owner }}

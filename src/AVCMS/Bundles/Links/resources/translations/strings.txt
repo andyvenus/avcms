@@ -1,0 +1,23 @@
+Link Exchange
+Links
+Add Link
+Anchor
+Referrer
+New Link
+Editing Link
+Your unique URL
+Our preferred link anchor
+Link Exchange Details
+Submit your site for a link exchange. After submission you will be given a unique referral URL to add to your site. The more traffic you send to us, the higher your link will appear on our site.
+Your link exchange with {site_name}
+Thanks for submitting your link for link exchange. Below is a reminder of our link details and your referral URL.
+Referral
+Date Added
+Our Friends
+Add Your Site Here
+That URL has already been submitted.
+Link
+Links Administration
+Links to show
+Enable Link Exchange
+Make Link Exchange Links 'No Follow'

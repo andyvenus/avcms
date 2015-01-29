@@ -1,0 +1,17 @@
+Referrals
+Add Referral
+Name
+New Referral
+Registrations
+Last Referral
+Referral link
+Manage Referral {item}
+Manage Referral
+Referral Link
+In
+Out
+Inbound Clicks
+Outbound Clicks
+Reg
+User Email (if no user set)
+Referrals Administration

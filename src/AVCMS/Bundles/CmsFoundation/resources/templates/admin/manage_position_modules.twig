@@ -30,7 +30,7 @@
                     <div class="pull-right">
                         {% if module.moduleInfo %}
                             {{ module.moduleInfo.name }} &nbsp;
-                            <a class="btn btn-xs btn-default" href="{{ url('modules_admin_edit', {id: module.id}) }}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                            <a class="btn btn-xs btn-default" href="{{ url('modules_admin_edit', {id: module.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit{% endtrans %}</a>
                         {% else %}
                             <span class="label label-danger">{% trans with {module: module.module} %}Module type "{module}" missing{% endtrans %}</span>
                         {% endif %}

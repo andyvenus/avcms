@@ -1,0 +1,14 @@
+Categories
+Add Category
+Manage Categories
+Parent category
+Editing Category
+New Category
+Move existing items to
+Delete Category
+Delete Sub-Categories
+Categories Display Type
+Inline (categories items appear in the main menu)
+Child (categories appear under this menu item)
+Child (categories appear under this menu item, must not be nested)
+Show Sub-Categories
