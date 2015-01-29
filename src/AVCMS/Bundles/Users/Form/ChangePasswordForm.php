@@ -14,7 +14,13 @@ class ChangePasswordForm extends FormBlueprint
     public function __construct()
     {
         $this->add('password1', 'password', [
-            'label' => 'New Password'
+            'label' => 'New Password',
+            'validation' => [
+                [
+                    'rule' => 'Length',
+                    'arguments' => array('4')
+                ]
+            ]
         ]);
 
         $this->add('password2', 'password', [
