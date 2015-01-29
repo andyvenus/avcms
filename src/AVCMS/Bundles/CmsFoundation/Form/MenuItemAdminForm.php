@@ -20,6 +20,7 @@ class MenuItemAdminForm extends FormBlueprint
             'label' => 'Icon',
             'required' => true,
             'choices_provider' => $iconChoices,
+            'choices_translate' => false,
             'attr' => [
                 'class' => 'no_select2 icon-selector'
             ]
