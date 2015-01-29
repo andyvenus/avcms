@@ -59,11 +59,11 @@ class RecaptchaFormSubscriber implements EventSubscriberInterface
             $response = $curl->get('https://www.google.com/recaptcha/api/siteverify?secret='.$secretKey.'&response='.$response);
 
             if (!isset($response->success)) {
-                $formHandler->addCustomErrors([new FormError('recaptcha', 'Something went wrong verifying the captcha')]);
+                $formHandler->addCustomErrors([new FormError('recaptcha', 'Something went wrong verifying the captcha', true)]);
             }
 
             if ($response->success !== true) {
-                $formHandler->addCustomErrors([new FormError('recaptcha', 'Please confirm you are not a robot')]);
+                $formHandler->addCustomErrors([new FormError('recaptcha', 'Please confirm you are not a robot', true)]);
             }
         }
     }
