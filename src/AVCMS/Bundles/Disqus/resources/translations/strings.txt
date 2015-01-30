@@ -1,3 +1,5 @@
 Disqus Shortname
 Use Disqus
 Use Disqus comment system
+Use disqus.com comments instead of AVCMS comments
+The shortname of your Disqus forum. If you want to use Disqus for comments this must be set.

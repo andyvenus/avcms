@@ -46,7 +46,8 @@ class RouteMenuItemType implements MenuItemTypeInterface
     {
         $form->add('settings[route]', 'select', [
             'label' => 'Route',
-            'choices_provider' => new RouteChoicesProvider($this->router)
+            'choices_provider' => new RouteChoicesProvider($this->router),
+            'choices_translate' => false
         ]);
     }
 

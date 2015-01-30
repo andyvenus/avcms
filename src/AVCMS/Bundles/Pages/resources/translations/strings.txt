@@ -10,3 +10,4 @@ Show Page Title
 Hits
 URI
 Manage Pages
+Ability to view & manage HTML pages

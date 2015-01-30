@@ -104,4 +104,17 @@ Users Options
 Last IP / Reg IP
 User Group
 All
-Profile
+The presented password cannot be empty.
+User Profile Sidebar
+User profile sidebar
+User Profile Main
+User profile main section
+If disabled, users cannot register and any user related-features are disabled.
+If on, a user will need to validate their email address when registering
+The email address you used to register
+Editing Permissions
+Moderator
+Unregistered
+Member
+Manage users in the admin panel
+Manage user groups in the admin panel

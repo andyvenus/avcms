@@ -15,3 +15,4 @@ Outbound Clicks
 Reg
 User Email (if no user set)
 Referrals Administration
+Ability to manage referrals

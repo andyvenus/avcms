@@ -5,3 +5,5 @@ Navigation
 Check for update
 View Site
 Admin Settings
+Admin Dashboard
+The admin dashboard

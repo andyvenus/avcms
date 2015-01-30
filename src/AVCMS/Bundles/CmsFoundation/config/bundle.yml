@@ -105,6 +105,7 @@ user_settings:
   language:
     type: select
     choices_provider: { class: AVCMS\Bundles\CmsFoundation\Settings\LanguageChoicesProvider }
+    choices_translate: false
     label: Site Language
     help: The default site language
     section: main

@@ -138,3 +138,17 @@ Inline (resolutions items appear in the main menu)
 Child (resolutions appear under this menu item, must not be nested)
 Top Downloads
 Don't resize (only offer original resolution)
+Wallpaper Details Lower
+The wallpaper details page, underneath the resolutions
+Wallpapers Homepage
+The content area of the homepage
+If turned on, all resolutions will be displayed for all wallpapers
+How many columns of wallpapers to show when in the main browse wallpapers pages
+How many wallpapers to show when in the main browse wallpapers pages
+The underlying image manipulation library that should be used
+Limit the number of wallpaper resolutions that are cached before they are cleared. Only enable if you are running out of disk space.
+Allow users to submit wallpapers to your site for admins to review
+The maximum amount of wallpapers a user can submit for review. They can submit more after an admin has accepted their existing submissions.
+Ability for users to submit wallpapers for review by an admin
+Wallpapers Administration
+Manage wallpapers in the admin panel

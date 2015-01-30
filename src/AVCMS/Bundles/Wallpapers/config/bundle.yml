@@ -33,6 +33,7 @@ user_settings:
       2: 2
       3: 3
       4: 4
+    choices_translate: false
     default: 2
   browse_wallpapers_per_page:
     type: text
@@ -58,6 +59,7 @@ user_settings:
     help: Limit the number of wallpaper resolutions that are cached before they are cleared. Only enable if you are running out of disk space.
     section: wallpapers
     default: 0
+    choices_translate: false
     choices:
       0: No limit
       1: 1

@@ -108,3 +108,15 @@ Email Template
 Menu Name
 Route
 Provider
+Add
+Translate Label
+Make your site offline, only accessible to admins
+Email addresses to send admin emails to, separated by a comma
+The frontend template
+The template for emails sent from your site
+The default site language
+The ID of your Google Analytics campaign
+Clear app caches
+Manage menus in the admin panel
+Manage modules in the admin panel
+Manage the site settings in the admin panel

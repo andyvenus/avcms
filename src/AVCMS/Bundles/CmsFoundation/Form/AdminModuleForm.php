@@ -42,14 +42,16 @@ class AdminModuleForm extends FormBlueprint
         $this->add('limit_routes_array[]', 'select', [
             'label' => 'Limit to pages (leave blank for all pages)',
             'choices_provider' => $routesProvider,
-            'attr' => ['multiple' => 'multiple']
+            'attr' => ['multiple' => 'multiple'],
+            'choices_translate' => false
         ]);
 
         $this->add('permissions_array[]', 'select', [
             'label' => 'Permissions (only one needs to match for access)',
             'choices_provider' => $permissionsProvider,
             'attr' => ['multiple' => 'multiple'],
-            'default' => $defaultPermission
+            'default' => $defaultPermission,
+            'choices_translate' => false
         ]);
     }
 } 
