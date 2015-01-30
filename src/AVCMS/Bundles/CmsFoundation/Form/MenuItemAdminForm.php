@@ -16,6 +16,10 @@ class MenuItemAdminForm extends FormBlueprint
             'required' => true,
         ));
 
+        $this->add('translatable', 'checkbox', [
+            'label' => 'Translate Label'
+        ]);
+
         $this->add('icon', 'select', array(
             'label' => 'Icon',
             'required' => true,
