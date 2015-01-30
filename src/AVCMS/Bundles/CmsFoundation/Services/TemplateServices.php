@@ -38,6 +38,7 @@ class TemplateServices implements ServicesInterface
         $container->register('twig.filesystem', 'AVCMS\Core\View\TwigLoaderFilesystem')
             ->setArguments(array(new Reference('bundle.resource_locator'), new Reference('settings_manager'), '%root_dir%'))
             ->addMethodCall('addPath', array('%root_dir%/src/AVCMS/Bundles/Admin/resources/templates', 'admin'))
+            ->addMethodCall('addPath', array('%root_dir%/webmaster/templates', 'templates'))
         ;
 
         $container->register('twig.extension.pagination', 'AVCMS\Bundles\CmsFoundation\Twig\PaginationTwigExtension')
