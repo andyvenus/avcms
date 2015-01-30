@@ -33,7 +33,15 @@ class TemplateAssetLoader extends AssetLoader
 
                 $assetConfig['priority'] = (isset($assetConfig['priority']) ? $assetConfig['priority'] : 10);
 
-                $asset = new TemplateFileAsset($this->templateManager->getCurrentTemplate(), $assetType, $file);
+                $templateConfig = $this->templateManager->getTemplateConfig();
+
+                $template = $this->templateManager->getCurrentTemplate();
+
+                if (!file_exists($this->templateManager->getCurrentTemplate().'/'.$assetType.'/'.$file) && isset($templateConfig['parent_template_dir'])) {
+                    $template = $templateConfig['parent_template_dir'];
+                }
+
+                $asset = new TemplateFileAsset($template, $assetType, $file);
 
                 $assetManager->add($asset, 'frontend', $assetConfig['priority']);
             }

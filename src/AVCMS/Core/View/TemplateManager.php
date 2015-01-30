@@ -58,8 +58,13 @@ class TemplateManager
             $templateConfig = include $this->cacheFile;
         }
 
-        if ($this->cacheFresh && $this->devMode === true && filemtime($this->cacheFile) < filemtime($this->currentTemplate.'/template.yml')) {
-            $this->cacheFresh = false;
+        if ($this->cacheFresh && $this->devMode === true) {
+            if (filemtime($this->cacheFile) < filemtime($this->currentTemplate.'/template.yml')) {
+                $this->cacheFresh = false;
+            }
+            elseif (isset($templateConfig['parent_template_dir']) && filemtime($this->cacheFile) < filemtime($templateConfig['parent_template_dir'].'/template.yml')) {
+                $this->cacheFresh = false;
+            }
         }
         elseif ($templateConfig['template_dir'] !== $this->currentTemplate) {
             $this->cacheFresh = false;
@@ -68,6 +73,16 @@ class TemplateManager
         if ($this->cacheFresh === false) {
             $templateConfig = Yaml::parse(file_get_contents($this->currentTemplate.'/template.yml'));
             $templateConfig['template_dir'] = $this->currentTemplate;
+
+            if (isset($templateConfig['parent'])) {
+                $parentTemplateDir = $this->currentTemplate.'/../'.$templateConfig['parent'];
+                $templateConfig['parent_template_dir'] = $parentTemplateDir;
+
+                $parentTemplateConfig = Yaml::parse(file_get_contents($parentTemplateDir.'/template.yml'));
+
+                $templateConfig = array_replace_recursive($parentTemplateConfig, $templateConfig);
+            }
+
             file_put_contents($this->cacheFile, '<?php return '.var_export($templateConfig, true).';');
         }
 
