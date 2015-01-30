@@ -79,7 +79,7 @@
 
     {# MAIN CONTENT #}
     {% block full_width_content %}
-    <section class="container avcms-main">
+        <section class="container avcms-main">
             {% for message in get_messages() %}
                 <div class="alert alert-info">{{ message.message }}</div>
             {% endfor %}
@@ -92,7 +92,7 @@
                         {% set content_w = 8 %}
                     {% endif %}
 
-                    <div class="col-md-{{ content_w }}">
+                    <div class="col-md-{{ content_w }}  {% if settings.template_sidebar_position == 'left' %}col-md-push-{{ 12 - content_w }}{% endif %}">
                         {{ render_modules('content_top') }}
 
                         {% block content %}{% endblock %}
@@ -101,13 +101,13 @@
                     </div>
 
                     {% if settings.template_no_sidebar == 0 %}
-                        <div class="col-md-4">
+                        <div class="col-md-4 {% if settings.template_sidebar_position == 'left' %}col-md-pull-8{% endif %}">
                             {{ render_modules('right_sidebar') }}
                         </div>
                     {% endif %}
                 </div>
             {% endblock %}
-    </section>
+        </section>
     {% endblock %}
 
     {# FOOTER #}

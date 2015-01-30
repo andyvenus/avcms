@@ -1,8 +1,8 @@
 details:
-  name: Blog Default
-  description: A simple theme for the blog
+  name: Flatly
+  description: Flatly Theme
   version: 1.0
-  author: Andy Venus
+  author: AV Scripts & Bootswatch
 
 assets:
   style.css:
@@ -22,11 +22,19 @@ user_settings:
       label: No sidebar
       help: Disable the right sidebar throughout the site
       default: 0
+  template_sidebar_position:
+    type: radio
+    label: Sidebar Position
+    choices:
+      left: Left
+      right: Right
+    default: right
+    section: template
 
 module_positions:
-  right_sidebar:
-        name: Right Sidebar
-        description: The main sidebar on the template
+  sidebar:
+        name: Sidebar
+        description: The main sidebar on the site
   content_top:
       name: Content Top
       description: The top of content pages (not on pages without the sidebar)
@@ -39,6 +47,7 @@ module_positions:
   header_bottom:
     name: Header Bottom
     description: Under the main navigation on all pages
+
 
 menus:
   frontend_footer:
