@@ -54,7 +54,7 @@
                                        {{ outlet('admin.options_menu_caches') }}
                                        <li class="divider"></li>
                                    {% endif %}
-                                   <li><a href="#"><span class="glyphicon glyphicon-download-alt"></span> {% trans %}Check for update{% endtrans %}</a></li>
+                                   <li><a href="{{ path('updates') }}"><span class="glyphicon glyphicon-download-alt"></span> {% trans %}Check for update{% endtrans %}</a></li>
                                    {{ outlet('admin.options_menu') }}
                                </ul>
                            </li>

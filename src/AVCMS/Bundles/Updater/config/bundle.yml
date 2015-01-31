@@ -1,0 +1,11 @@
+name: Updater
+namespace: AVCMS\Bundles\Updater
+require:
+    - Framework
+
+services:
+    - UpdaterServices
+
+assets:
+    avcms_updates.js:
+        env: admin

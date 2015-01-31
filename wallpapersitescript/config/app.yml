@@ -1,10 +1,11 @@
 info:
   name: Wallpaper Site Script
   version: '2.0'
+  id: wallpapersitescript
 
 bundle_dirs:
   - src/AV/Bundles
   - src/AVCMS/Bundles
   - src/AVCMS/BundlesDev
 
-default_content_installer: BlogDefaultContentInstaller
+default_content_installer: WallpaperDefaultContentInstaller

@@ -58,3 +58,5 @@ WssImporter:
     enabled: true
 TranslationHelper:
     enabled: true
+Updater:
+    enabled: true
