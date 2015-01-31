@@ -7,7 +7,7 @@
 {% block content_body %}
     <div class="updater">
         <div class="app_name">
-            <h1>{{ app_info.name }}</h1>
+            <h1 style="margin-top: 0px;">{{ app_info.name }}</h1>
             <p style="font-size: 18px">{% trans with {version: app_info.version} %}You are running version {version}{% endtrans %}</p>
         </div>
 
@@ -33,5 +33,7 @@
                 {% trans %}Update instructions can be found within the zip file{% endtrans %}
             </p>
         </div>
+
+        <a class="btn btn-sm btn-default" href="https://www.avscripts.net/store/customers" target="_blank"><span class="glyphicon glyphicon-new-window"></span> {% trans %}AV Scripts Customer Area{% endtrans %}</a>
     </div>
 {% endblock %}
