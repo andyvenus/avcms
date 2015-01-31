@@ -34,10 +34,10 @@ class ClearCachesController extends Controller
 
         $form = $this->buildForm($formBlueprint, $request);
 
-        if ($form->isSubmitted()) {
-            $this->get('cache.clearer')->clearCaches($form->getData('cache_dirs'));
+        if ($request->request->has('cache_dirs')) {
+            $this->get('cache.clearer')->clearCaches($request->request->get('cache_dirs'));
 
-            return new JsonResponse(['success' => true, 'form' => $form->createView()->getJsonResponseData()]);
+            return new JsonResponse(['success' => true, 'form' => ['success' => true]]);
         }
 
         return new JsonResponse(['html' => $this->render('@CmsFoundation/modal_form.twig', ['form' => $form->createView(), 'modal_title' => 'Clear Caches'])]);

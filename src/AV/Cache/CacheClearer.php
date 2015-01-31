@@ -40,6 +40,7 @@ class CacheClearer
         }
 
         foreach ($caches as $cacheDir) {
+            $cacheDir = str_replace('..', '', $cacheDir);
             if (file_exists($this->cacheDir.'/'.$cacheDir)) {
                 $this->removeDir($this->cacheDir . '/' . $cacheDir, $keepParent);
             }
