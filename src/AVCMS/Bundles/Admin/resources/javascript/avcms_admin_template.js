@@ -17,6 +17,10 @@ $(document).ready(function() {
     $('body').on('click', '#menu_toggle', avcms.adminTemplate.toggleMenu);
 
     avcms.event.addEvent('url-change', avcms.adminTemplate.menuOff);
+
+    $('body').on('click', '.dropdown-menu a', function() {
+        $(this).parents('.dropdown').find('.dropdown-toggle').dropdown('toggle');
+    });
 });
 
 avcms.adminTemplate = {
