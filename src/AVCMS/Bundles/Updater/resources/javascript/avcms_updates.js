@@ -11,8 +11,6 @@ avcms.updates = {
         }
 
         $.get(avcms.config.site_url + 'admin/update-checker', function(data) {
-            console.log(data);
-
             if (data.update_available === true) {
                 var btn = $('.avcms-update-version-button');
                 btn.html(btn.html() + ' ' + data.version);

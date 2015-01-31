@@ -9,3 +9,13 @@ services:
 assets:
     avcms_updates.js:
         env: admin
+
+modules:
+  avcms_updates:
+    name: Updates
+    description: Shows if a new version is available
+    type: admin
+    controller: Updater::UpdaterModuleController::updaterModule
+    cachable: true
+    default_cache_time: 86400
+    accepted_template_types: [panel, content, none]

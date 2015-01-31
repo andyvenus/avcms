@@ -1,0 +1,24 @@
+<div class="avcms-update-loading">
+    <p>{% trans %}Checking for update...{% endtrans %}</p>
+</div>
+
+<div class="avcms-no-update text-success" style="display: none;"><p><strong>{% trans %}Up to date{% endtrans %}</strong></p></div>
+
+<div class="avcms-update-error text-danger" style="display: none;"></div>
+
+<div class="avcms-update-info" style="display: none;">
+    <p class="text-success"><strong class="avcms-update-version-info">{% trans %}An update is available{% endtrans %}</strong></p>
+
+    <p class="avcms-update-notes"></p>
+
+    <p>
+        <a class="btn btn-primary avcms-update-version-button" href="{{ download_url }}"><span class="glyphicon glyphicon-download-alt"></span> {% trans %}Download Version{% endtrans %}</a>
+        <a class="btn btn-default avcms-update-release-notes-button"><span class="glyphicon glyphicon-info-sign"></span> {% trans %}Full Release Info{% endtrans %}</a>
+    </p>
+
+    <p>
+        {% trans %}Update instructions can be found within the zip file{% endtrans %}
+    </p>
+</div>
+
+<a class="btn btn-sm btn-default" href="https://www.avscripts.net/store/customers" target="_blank"><span class="glyphicon glyphicon-new-window"></span> {% trans %}AV Scripts Customer Area{% endtrans %}</a>
