@@ -14,7 +14,7 @@
             {% for category in categories %}
                 <li id="category_order_{{ category.id }}" data-item-id="{{ category.id }}">
                     <div class="sortable-item">
-                        <span class="glyphicon glyphicon-align-justify handle"></span> {{ category.name }}
+                        <span class="glyphicon glyphicon-menu-hamburger handle"></span> {{ category.name }}
                         {% block category_buttons %}
                             <div class="pull-right">
                                 <a href="{{ url(route_prefix ~ 'admin_edit_category', {id: category.id}) }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit{% endtrans %}</a>
@@ -27,7 +27,7 @@
                             {% for category in category.subCategories %}
                                 <li id="category_order_{{ category.id }}">
                                     <div class="sortable-item">
-                                        <span class="glyphicon glyphicon-align-justify handle"></span> {{ category.name }}
+                                        <span class="glyphicon glyphicon-menu-hamburger handle"></span> {{ category.name }}
                                         {{ block('category_buttons') }}
                                     </div>
                                 </li>
