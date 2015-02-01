@@ -78,10 +78,12 @@ class UsersInstaller extends BundleInstaller
                   `id` varchar(40) NOT NULL DEFAULT '',
                   `name` varchar(80) DEFAULT NULL,
                   `flood_control_time` int(11) NOT NULL DEFAULT '30',
-                  `admin_default` varchar(11) NOT NULL DEFAULT '',
-                  `perm_default` varchar(11) NOT NULL DEFAULT '',
+                  `admin_default` varchar(11) NOT NULL DEFAULT 'deny',
+                  `perm_default` varchar(11) NOT NULL DEFAULT 'deny',
+                  `moderator_default` varchar(11) NOT NULL DEFAULT 'deny',
                   `owner` varchar(30) DEFAULT NULL,
                   `custom_permissions` tinyint(1) NOT NULL DEFAULT '0',
+                  `admin_panel_access` tinyint(1) NOT NULL DEFAULT '0',
                   PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
@@ -98,10 +100,11 @@ class UsersInstaller extends BundleInstaller
                   `location` varchar(50) NOT NULL DEFAULT '',
                   `interests` text NOT NULL,
                   `website` varchar(200) NOT NULL DEFAULT '',
-                  `joined` text NOT NULL,
+                  `joined` int(11) NOT NULL DEFAULT '0',
                   `avatar` varchar(25) NOT NULL,
                   `cover_image` varchar(25) NOT NULL,
-                  `last_ip` varchar(15) NOT NULL DEFAULT '',
+                  `registration_ip` varchar(20) DEFAULT NULL,
+                  `last_ip` varchar(20) NOT NULL DEFAULT '',
                   `last_activity` int(11) NOT NULL,
                   `timezone` varchar(80) NOT NULL DEFAULT '',
                   `slug` varchar(200) NOT NULL,

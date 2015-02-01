@@ -36,7 +36,9 @@ class BlogInstaller extends BundleInstaller
                   `comments` int(11) NOT NULL DEFAULT '0',
                   `hits` int(11) NOT NULL DEFAULT '0',
                   PRIMARY KEY (`id`),
-                  UNIQUE KEY `slug` (`slug`(255))
+                  UNIQUE KEY `slug` (`slug`(255)),
+                  KEY `published` (`published`),
+                  KEY `publish_date` (`publish_date`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
     }

@@ -5,7 +5,7 @@
  * Time: 19:06
  */
 
-class BlogDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentInstaller
+class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentInstaller
 {
     public function getHooks()
     {
@@ -25,10 +25,10 @@ class BlogDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentIn
         $homeItem->setMenu('frontend');
         $homeItem->setType('route');
         $homeItem->setLabel('Home');
-        $homeItem->setTarget('home');
+        //$homeItem->setTarget('home');
         $homeItem->setIcon('glyphicon glyphicon-home');
 
-        $menuItems->save($homeItem);
+        //$menuItems->save($homeItem);
 
         // Modules
         $modules = $this->modelFactory->create('AVCMS\Bundles\CmsFoundation\Model\Modules');
