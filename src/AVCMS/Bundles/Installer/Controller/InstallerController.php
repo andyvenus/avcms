@@ -41,7 +41,7 @@ class InstallerController extends Controller
 
     public function newInstallAction(Request $request)
     {
-        $databaseConfigFile = $this->container->getParameter('root_dir').'/config/database.php';
+        $databaseConfigFile = $this->container->getParameter('root_dir').'/webmaster/config/database.php';
 
         // Secure, if database.php already exists only run update-bundles
         if (file_exists($databaseConfigFile)) {
@@ -96,6 +96,9 @@ class InstallerController extends Controller
 
         // Secure, admin can't be created here unless there are 0 users in the database
         if ($users->query()->count() !== 0) {
+            $cacheClearer = new CacheClearer('cache');
+            $cacheClearer->clearCaches(null, true);
+
             return new RedirectResponse('../admin');
         }
 
