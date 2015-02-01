@@ -96,7 +96,7 @@ class InstallerController extends Controller
 
         // Secure, admin can't be created here unless there are 0 users in the database
         if ($users->query()->count() !== 0) {
-            return new RedirectResponse('../admin/');
+            return new RedirectResponse('../admin');
         }
 
         $newUser = $users->newEntity();
