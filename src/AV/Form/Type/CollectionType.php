@@ -11,19 +11,21 @@ use AV\Form\FormHandler;
 
 class CollectionType implements TypeInterface
 {
-    public function __construct(TypeHandler $type_handler)
+    protected $typeHandler;
+
+    public function __construct(TypeHandler $typeHandler)
     {
-        $this->type_handler = $type_handler;
+        $this->typeHandler = $typeHandler;
     }
 
     public function getDefaultOptions($field)
     {
-        $fields_updated = array();
-        foreach ($field['fields'] as $field_name => $inner_field) {
-            $fields_updated[$field_name] = $this->type_handler->getDefaultOptions($inner_field);
+        $fieldsUpdated = array();
+        foreach ($field['fields'] as $fieldName => $innerField) {
+            $fieldsUpdated[$fieldName] = $this->typeHandler->getDefaultOptions($innerField);
         }
 
-        $field['fields'] = $fields_updated;
+        $field['fields'] = $fieldsUpdated;
 
         return $field;
     }
@@ -62,36 +64,36 @@ class CollectionType implements TypeInterface
     /**
      * Process a collection of fields
      *
-     * @param $field_collection
+     * @param $fieldCollection
      * @param $data
-     * @param \AV\Form\FormHandler $form_handler
+     * @param \AV\Form\FormHandler $formHandler
      * @return array
      */
-    protected function processFieldsCollection($field_collection, $data, FormHandler $form_handler)
+    protected function processFieldsCollection($fieldCollection, $data, FormHandler $formHandler)
     {
         $fields = array();
-        foreach ($field_collection as $field) {
+        foreach ($fieldCollection as $field) {
             // Unnamed array fields
             if ($field['name'] === null) {
                 if (!isset($i)) $i = 0;
 
                 $field['name'] = $i;
-                $field = $this->type_handler->makeView($field, $data, $form_handler);
+                $field = $this->typeHandler->makeView($field, $data, $formHandler);
                 $fields[] = $field;
 
                 $i++;
             }
             // Named array fields
             else {
-                $field_name = $field['name'];
-                $field = $this->type_handler->makeView($field, $data, $form_handler);
+                $fieldName = $field['name'];
+                $field = $this->typeHandler->makeView($field, $data, $formHandler);
 
                 $field['has_error'] = false;
-                if ($form_handler->fieldHasError($field['name'])) {
+                if ($formHandler->fieldHasError($field['name'])) {
                     $field['has_error'] = true;
                 }
 
-                $fields[$field_name] = $field;
+                $fields[$fieldName] = $field;
             }
         }
 

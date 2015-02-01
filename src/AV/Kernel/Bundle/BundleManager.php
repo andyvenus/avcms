@@ -72,6 +72,11 @@ class BundleManager implements BundleManagerInterface
      */
     protected $configCache;
 
+    /**
+     * @var string
+     */
+    protected $configDir;
+
     public function __construct(array $bundleLocations, $configDir = 'app/config', $cacheDir = 'cache')
     {
         $this->bundleLocations = $bundleLocations;

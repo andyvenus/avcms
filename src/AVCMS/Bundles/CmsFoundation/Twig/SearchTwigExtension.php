@@ -17,7 +17,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 class SearchTwigExtension extends \Twig_Extension
 {
     /**
-     * @var \AV\Form\FormHandler
+     * @var \AV\Form\FormView
      */
     private $searchForm;
 

@@ -23,6 +23,8 @@ class FileMaker
 
     protected $fileBasePath = '';
 
+    protected $bundleConfig;
+
     public function __construct(BundleConfig $bundleConfig, $database, $plural, $singular, $titleField)
     {
         $this->bundleConfig = $bundleConfig;

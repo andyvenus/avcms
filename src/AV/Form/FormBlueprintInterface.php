@@ -79,7 +79,7 @@ interface FormBlueprintInterface
      * Retrieve a field from the form
      *
      * @param string $name The name of the field to retrieve
-     * @return null
+     * @return mixed
      */
     public function get($name);
 

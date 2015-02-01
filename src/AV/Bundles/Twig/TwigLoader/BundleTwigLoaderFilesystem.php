@@ -13,9 +13,11 @@ use Twig_Error_Loader;
 
 class BundleTwigLoaderFilesystem extends \Twig_Loader_Filesystem
 {
-    public function __construct(ResourceLocator $resource_locator)
+    protected $resourceLocator;
+
+    public function __construct(ResourceLocator $resourceLocator)
     {
-        $this->resource_locator = $resource_locator;
+        $this->resourceLocator = $resourceLocator;
     }
 
     protected function findTemplate($name)
@@ -30,8 +32,8 @@ class BundleTwigLoaderFilesystem extends \Twig_Loader_Filesystem
 
         list($namespace, $shortname) = $this->parseName($name);
 
-        if ($this->resource_locator->bundleExists($namespace)) {
-            return $this->resource_locator->findFileDirectory($namespace, $shortname, 'templates');
+        if ($this->resourceLocator->bundleExists($namespace)) {
+            return $this->resourceLocator->findFileDirectory($namespace, $shortname, 'templates');
         }
 
         if (!isset($this->paths[$namespace])) {

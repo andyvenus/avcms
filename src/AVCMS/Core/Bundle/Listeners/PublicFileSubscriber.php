@@ -21,6 +21,8 @@ class PublicFileSubscriber implements EventSubscriberInterface
 
     protected $devMode;
 
+    protected $publicFileMover;
+
     public function __construct(PublicFileMover $publicFileMover, $devMode)
     {
         $this->publicFileMover = $publicFileMover;

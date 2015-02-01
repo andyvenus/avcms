@@ -25,7 +25,7 @@ abstract class Model {
     protected $lastInsertId;
 
     /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcher
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
     protected $eventDispatcher;
 
@@ -167,7 +167,7 @@ abstract class Model {
      *
      * @param Entity $entity
      * @param string $columnMatch
-     * @return array|null|int
+     * @return array|null|int|string
      * @throws \Exception
      */
     public function save(Entity $entity, $columnMatch = null)

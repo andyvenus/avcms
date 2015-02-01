@@ -21,6 +21,8 @@ class UpdateMenusSubscriber implements EventSubscriberInterface
 
     private $templateManager;
 
+    private $menuManager;
+
     public function __construct(MenuManager $menuManager, TemplateManager $templateManager, BundleManagerInterface $bundleManager)
     {
         $this->bundleManager = $bundleManager;

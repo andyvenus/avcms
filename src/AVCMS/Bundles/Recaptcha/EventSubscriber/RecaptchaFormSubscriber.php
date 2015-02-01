@@ -16,7 +16,15 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class RecaptchaFormSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var SettingsManager
+     */
     protected $settingsManager;
+
+    /**
+     * @var bool
+     */
+    protected $enabled;
 
     public function __construct(SettingsManager $settingsManager)
     {

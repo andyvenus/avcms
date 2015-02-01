@@ -24,6 +24,8 @@ class RatingsManager
 
     private $lastContent;
 
+    private $tokenStorage;
+
     public function __construct(BundleManagerInterface $bundleManager, Ratings $ratings, TokenStorage $tokenStorage, ModelFactory $modelFactory)
     {
         $this->bundleManager = $bundleManager;

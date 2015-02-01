@@ -96,6 +96,7 @@ class ModulesAdminController extends AdminBaseController
         $templateStyles = $moduleManager->getTemplateTypes();
 
         $acceptedTemplates = $module->getAcceptedTemplateTypes();
+        $templateList = [];
         foreach ($acceptedTemplates as $acceptedTemplate) {
             if (isset($templateStyles[$acceptedTemplate])) {
                 $templateList[$acceptedTemplate] = $templateStyles[$acceptedTemplate]['name'];

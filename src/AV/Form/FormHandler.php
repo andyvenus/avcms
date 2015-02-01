@@ -54,7 +54,7 @@ class FormHandler
     protected $entities = array();
 
     /**
-     * @var GetterSetterEntityProcessor The entity processor to set and get values from an entity
+     * @var EntityProcessorInterface The entity processor to set and get values from an entity
      */
     protected $entityProcessor;
 

@@ -26,6 +26,11 @@ class FormExtension extends \Twig_Extension
      */
     protected $baseTemplate;
 
+    /**
+     * @var string
+     */
+    protected $defaultTemplate;
+
     public function __construct($defaultTemplate = '@Form/bootstrap_form.twig')
     {
         $this->defaultTemplate = $defaultTemplate;

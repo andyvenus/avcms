@@ -7,13 +7,12 @@
 
 namespace AVCMS\Bundles\FacebookConnect;
 
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class FacebookRedirectLoginHelper extends \Facebook\FacebookRedirectLoginHelper
 {
     /**
-     * @var Session
+     * @var SessionInterface
      */
     protected $session;
 

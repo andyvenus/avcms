@@ -58,6 +58,16 @@ class Finder
      */
     protected $requestFilters = [];
 
+    /**
+     * @var TaxonomyManager
+     */
+    protected $taxonomyManager;
+
+    /**
+     * @var array
+     */
+    protected $sortOptions;
+
     public function __construct(Model $model, TaxonomyManager $taxonomyManager = null)
     {
         $this->model = $model;

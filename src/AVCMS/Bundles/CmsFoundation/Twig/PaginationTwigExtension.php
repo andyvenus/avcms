@@ -11,12 +11,20 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class PaginationTwigExtension extends \Twig_Extension
 {
+    /**
+     * @var string
+     */
     protected $template = '@CmsFoundation/pagination.twig';
 
     /**
      * @var \Twig_Environment
      */
     protected $environment;
+
+    /**
+     * @var RequestStack
+     */
+    protected $requestStack;
 
     public function __construct(RequestStack $requestStack)
     {

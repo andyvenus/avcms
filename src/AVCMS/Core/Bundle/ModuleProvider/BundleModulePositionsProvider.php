@@ -18,6 +18,8 @@ class BundleModulePositionsProvider implements ModulePositionsProviderInterface
 
     private $forceRefresh = false;
 
+    protected $bundleManager;
+
     public function __construct(BundleManagerInterface $bundleManager)
     {
         $this->bundleManager = $bundleManager;

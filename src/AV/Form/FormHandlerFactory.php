@@ -17,7 +17,35 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class FormHandlerFactory
 {
+    /**
+     * @var \Symfony\Component\Translation\TranslatorInterface
+     */
     protected $translator;
+
+    /**
+     * @var RequestHandlerInterface
+     */
+    protected $requestHandler;
+
+    /**
+     * @var EntityProcessorInterface
+     */
+    protected $entityProcessor;
+
+    /**
+     * @var TransformerManager
+     */
+    protected $transformerManager;
+
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
+    /**
+     * @var TypeHandler
+     */
+    protected $typeHandler;
 
     public function __construct(RequestHandlerInterface $requestHandler, EntityProcessorInterface $entityProcessor, TransformerManager $transformerManager, EventDispatcherInterface $eventDispatcher = null, TypeHandler $typeHandler = null)
     {

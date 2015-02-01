@@ -8,7 +8,6 @@
 namespace AVCMS\Bundles\Users\TwigExtension;
 
 use AVCMS\Bundles\Users\Model\User;
-use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class UserInfoTwigExtension extends \Twig_Extension
@@ -19,7 +18,7 @@ class UserInfoTwigExtension extends \Twig_Extension
     private $environment;
 
     /**
-     * @var AuthenticationManagerInterface
+     * @var TokenStorageInterface
      */
     private $tokenStorage;
 

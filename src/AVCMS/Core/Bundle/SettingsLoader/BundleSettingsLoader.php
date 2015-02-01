@@ -19,6 +19,8 @@ class BundleSettingsLoader implements SettingsLoaderInterface
 
     protected $fieldSections = array();
 
+    protected $bundleManager;
+
     public function __construct(BundleManagerInterface $bundleManager)
     {
         $this->bundleManager = $bundleManager;

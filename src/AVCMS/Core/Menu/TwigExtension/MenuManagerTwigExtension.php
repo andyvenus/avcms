@@ -11,6 +11,8 @@ use AVCMS\Core\Menu\MenuManager;
 
 class MenuManagerTwigExtension extends \Twig_Extension
 {
+    private $menuManager;
+
     public function __construct(MenuManager $menuManager)
     {
         $this->menuManager = $menuManager;

@@ -19,6 +19,8 @@ class Installer
 
     protected $container;
 
+    protected $appConfig;
+
     protected $bundleInstallers = [];
 
     protected $bundleConfigs = [];

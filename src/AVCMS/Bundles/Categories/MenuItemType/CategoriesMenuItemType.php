@@ -8,7 +8,7 @@
 namespace AVCMS\Bundles\Categories\MenuItemType;
 
 use AV\Form\FormBlueprint;
-use AV\Model\Model;
+use AVCMS\Bundles\Categories\Model\Categories;
 use AVCMS\Core\Menu\MenuItem;
 use AVCMS\Core\Menu\MenuItemConfigInterface;
 use AVCMS\Core\Menu\MenuItemType\MenuItemTypeInterface;
@@ -26,7 +26,7 @@ class CategoriesMenuItemType implements MenuItemTypeInterface
 
     protected $categoryRoute;
 
-    public function __construct(Model $categoriesModel, UrlGeneratorInterface $urlGenerator, $categoryRoute)
+    public function __construct(Categories $categoriesModel, UrlGeneratorInterface $urlGenerator, $categoryRoute)
     {
         $this->categoriesModel = $categoriesModel;
         $this->urlGenerator = $urlGenerator;

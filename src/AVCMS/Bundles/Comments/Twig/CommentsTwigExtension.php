@@ -15,12 +15,23 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class CommentsTwigExtension extends \Twig_Extension
 {
     /**
+     * @var FormHandler
+     */
+    protected $form;
+
+    /**
      * @var \Twig_Environment
      */
     protected $environment;
 
+    /**
+     * @var UrlGeneratorInterface
+     */
     protected $urlGenerator;
 
+    /**
+     * @var EventDispatcherInterface
+     */
     protected $eventDispatcher;
 
     public function __construct(FormHandler $form, UrlGeneratorInterface $urlGenerator, EventDispatcherInterface $eventDispatcher)

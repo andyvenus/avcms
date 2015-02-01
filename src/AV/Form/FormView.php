@@ -58,7 +58,7 @@ class FormView implements FormViewInterface
     protected $sections;
 
     /**
-     * @var FormBlueprint
+     * @var FormBlueprintInterface
      */
     protected $formBlueprint;
 

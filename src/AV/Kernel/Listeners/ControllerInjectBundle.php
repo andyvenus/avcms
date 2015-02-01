@@ -14,6 +14,11 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class ControllerInjectBundle implements EventSubscriberInterface
 {
+    /**
+     * @var BundleManagerInterface
+     */
+    protected $bundleManager;
+
     public function __construct(BundleManagerInterface $bundleManager)
     {
         $this->bundleManager = $bundleManager;

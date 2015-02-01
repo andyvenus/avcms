@@ -19,6 +19,9 @@ use Symfony\Component\Yaml\Yaml;
 
 class BundleKernel implements HttpKernelInterface, TerminableInterface
 {
+    /**
+     * @var string
+     */
     private $rootDir;
 
     /**
@@ -27,12 +30,12 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
     protected $booted = false;
 
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerBuilder
+     * @var \Symfony\Component\DependencyInjection\Container
      */
     protected $container;
 
     /**
-     * @var
+     * @var bool
      */
     protected $debug;
 
@@ -41,7 +44,20 @@ class BundleKernel implements HttpKernelInterface, TerminableInterface
      */
     protected $bundleManager;
 
+    /**
+     * @var array
+     */
+    protected $options;
+
+    /**
+     * @var array
+     */
     protected $appConfig;
+
+    /**
+     * @var array
+     */
+    protected $bundleDirs;
 
     public function __construct($rootDir, $debug = false, array $options = array())
     {

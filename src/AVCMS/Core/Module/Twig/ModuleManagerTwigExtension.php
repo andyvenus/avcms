@@ -21,6 +21,11 @@ class ModuleManagerTwigExtension extends \Twig_Extension
      */
     protected $moduleManager;
 
+    /**
+     * @var array
+     */
+    protected $templates;
+
     public function __construct(ModuleManager $moduleManager)
     {
         $this->moduleManager = $moduleManager;

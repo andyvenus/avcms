@@ -45,6 +45,7 @@ class TranslationExtractionController extends Controller
         }
 
         $allStrings = [];
+        $allBundles = [];
         $allBundleConfigs = $this->container->get('bundle_manager')->getBundleConfigs();
         foreach ($allBundleConfigs as $otherBundleConfig) {
             if (file_exists($otherBundleConfig->directory.'/resources/translations/strings.txt')) {

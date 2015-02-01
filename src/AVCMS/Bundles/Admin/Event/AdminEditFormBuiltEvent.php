@@ -40,6 +40,11 @@ class AdminEditFormBuiltEvent extends Event
     protected $form;
 
     /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
      * @param Entity $entity
      * @param Model $model
      * @param FormHandler $form

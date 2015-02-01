@@ -21,8 +21,10 @@ use AVCMS\Core\AssetManager\AssetManager;
 class BundleAssetLoader extends AssetLoader
 {
     /**
-     * @param BundleManagerInterface $bundleManager
+     * @var BundleManagerInterface
      */
+    protected $bundleManager;
+
     public function __construct(BundleManagerInterface $bundleManager)
     {
         $this->bundleManager = $bundleManager;

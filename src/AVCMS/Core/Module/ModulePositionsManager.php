@@ -18,6 +18,11 @@ class ModulePositionsManager
     protected $providers;
 
     /**
+     * @var Model
+     */
+    protected $positionsModel;
+
+    /**
      * @param Model $positionsModel
      */
     public function __construct(Model $positionsModel)

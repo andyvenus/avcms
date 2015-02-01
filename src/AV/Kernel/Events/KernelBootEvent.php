@@ -12,6 +12,8 @@ use Symfony\Component\EventDispatcher\Event;
 
 class KernelBootEvent extends Event
 {
+    private $container;
+
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;

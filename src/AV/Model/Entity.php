@@ -28,7 +28,7 @@ abstract class Entity implements Validatable
 
     /**
      * @param $param
-     * @return null
+     * @return null|string|int
      */
     protected function get($param)
     {

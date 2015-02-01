@@ -31,6 +31,11 @@ class InstallerBase
      */
     protected $modelFactory;
 
+    /**
+     * @var null|string
+     */
+    protected $prefix;
+
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;

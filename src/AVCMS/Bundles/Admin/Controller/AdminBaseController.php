@@ -20,6 +20,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 abstract class AdminBaseController extends Controller
 {
+    /**
+     * @var string
+     */
+    protected $browserTemplate;
 
     /**
      * Renders an admin template with the shared context vars
