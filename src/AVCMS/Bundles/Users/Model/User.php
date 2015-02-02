@@ -100,14 +100,6 @@ class User extends Entity implements UserInterface
         return $this->get('website');
     }
 
-    public function setAdmin($value) {
-        $this->set('admin', $value);
-    }
-
-    public function getAdmin() {
-        return $this->get('admin');
-    }
-
     public function setJoined($value) {
         $this->set('joined', $value);
     }
@@ -130,14 +122,6 @@ class User extends Entity implements UserInterface
 
     public function getCoverImage() {
         return $this->get('cover_image');
-    }
-
-    public function setReferrer($value) {
-        $this->set('referrer', $value);
-    }
-
-    public function getReferrer() {
-        return $this->get('referrer');
     }
 
     public function setSlug($value) {
