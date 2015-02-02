@@ -7,6 +7,8 @@
 
 namespace AVCMS\Bundles\WssImporter\Controller;
 
+use AV\Form\FormBlueprint;
+use AV\Form\FormError;
 use AVCMS\Bundles\Adverts\Model\Advert;
 use AVCMS\Bundles\Blog\Model\BlogPost;
 use AVCMS\Bundles\Comments\Model\Comment;
@@ -17,6 +19,7 @@ use AVCMS\Bundles\Users\Model\User;
 use AVCMS\Bundles\Wallpapers\Model\Wallpaper;
 use AVCMS\Bundles\Wallpapers\Model\WallpaperCategory;
 use AVCMS\Core\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -26,11 +29,66 @@ class WssImporterController extends Controller
 
     public function importerHomeAction(Request $request)
     {
+        $databaseForm = new FormBlueprint();
+        $databaseForm->add('database_host', 'text', ['label' => 'Database Host']);
+        $databaseForm->add('database_database', 'text', ['label' => 'Database Name']);
+        $databaseForm->add('database_username', 'text', ['label' => 'Database Username']);
+        $databaseForm->add('database_password', 'password', ['label' => 'Database Password']);
 
+        $form = $this->buildForm($databaseForm, $request);
+
+        if ($form->isValid()) {
+            $databaseConfig = array(
+                'driver' => 'mysql', // Db driver
+                'charset' => 'utf8', // Optional
+                'collation' => 'utf8_unicode_ci', // Optional
+            );
+
+            $databaseConfig['host'] = $form->getData('database_host');
+            $databaseConfig['database'] = $form->getData('database_database');
+            $databaseConfig['username'] = $form->getData('database_username');
+            $databaseConfig['password'] = $form->getData('database_password');
+            $databaseConfig['prefix'] = 'wss_';
+
+            try {
+                $s = new \Pixie\Connection('mysql', $databaseConfig);
+            } catch (\PDOException $e) {
+                $form->addCustomErrors([new FormError('all', 'The database details you entered to not appear to be valid.')]);
+                $form->addCustomErrors([new FormError('all', $e->getMessage())]);
+            }
+
+            if (isset($s)) {
+                try {
+                    $s->getQueryBuilder()->table('wallpapers')->count();
+                }
+                catch (\PDOException $e) {
+                    $form->addCustomErrors([new FormError('database_database', 'Cannot find Wallpaper Site Script install in that database')]);
+                    $form->addCustomErrors([new FormError('all', $e->getMessage())]);
+                }
+            }
+
+            if ($form->isValid()) {
+                $session = $this->container->get('session');
+                $session->set('database_host', $databaseConfig['host']);
+                $session->set('database_database', $databaseConfig['database']);
+                $session->set('database_username', $databaseConfig['username']);
+                $session->set('database_password', $databaseConfig['password']);
+
+                return new RedirectResponse($this->generateUrl('wss_importer_run'));
+            }
+        }
+
+
+        return new Response($this->render('@WssImporter/admin/import_home.twig', ['form' => $form->createView()]));
     }
 
     public function doImportAction(Request $request)
     {
+        $session = $this->container->get('session');
+
+        if (!$session->has('database_host')) {
+            $this->redirect($this->generateUrl('wss_importer_home'));
+        }
 
         $stages = ['wallpapers', 'wallpaper_categories', 'tags', 'tag_relations', 'users', 'wallpaper_comments', 'news', 'news_comments', 'pages', 'links', 'adverts'];
 
@@ -377,11 +435,11 @@ class WssImporterController extends Controller
                 $url = $this->generateUrl('wss_importer_run', ['stage' => $newStage, 'run' => 1]);
             }
             else {
-                return new Response('done');
+                return $this->redirect($this->generateUrl('home'), 302, 'Import Finished');
             }
         }
 
-        return new Response('<html><head><meta http-equiv="refresh" content="1; url='.$url.'" /></head>'.$message.'</html>');
+        return new Response($this->render('@WssImporter/admin/import_progress.twig', ['url' => $url, 'message' => $message]));
     }
 
     protected function renameFields(&$row, $renames)
@@ -403,6 +461,7 @@ class WssImporterController extends Controller
 
     /**
      * @return \Pixie\Connection
+     * @throws \Exception
      */
     protected function getDatabaseConnection()
     {
@@ -410,12 +469,18 @@ class WssImporterController extends Controller
             return $this->connection;
         }
 
+        $session = $this->container->get('session');
+
+        if (!$session->has('database_host')) {
+            throw new \Exception('No database details in the session');
+        }
+
         $config = array(
             'driver'    => 'mysql', // Db driver
-            'host'      => 'localhost',
-            'database'  => 'wss',
-            'username'  => 'root',
-            'password'  => 'root',
+            'host'      => $session->get('database_host'),
+            'database'  => $session->get('database_database'),
+            'username'  => $session->get('database_username'),
+            'password'  => $session->get('database_password'),
             'prefix'    => 'wss_', // Table prefix, optional
         );
 
