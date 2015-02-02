@@ -5,7 +5,7 @@
     &nbsp;<span class="glyphicon glyphicon-download"></span> {{ wallpaper.totalDownloads }}
 {% endif %}
 {% if user_settings.show_date %}
-    &nbsp;<span class="glyphicon glyphicon-calendar"></span> {{ wallpaper.publish_date|date(settings.date_format) }}
+    &nbsp;<span class="glyphicon glyphicon-calendar"></span> {{ wallpaper.publishDate|date(settings.date_format) }}
 {% endif %}
 {% if user_settings.show_category %}
     &nbsp;<span class="glyphicon glyphicon-folder-close"></span> {{ wallpaper.category.name }}

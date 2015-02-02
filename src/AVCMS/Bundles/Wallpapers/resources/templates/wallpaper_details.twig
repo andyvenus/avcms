@@ -62,7 +62,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <p>{% trans %}Date Added{% endtrans %}: {{ wallpaper.publish_date|date(settings.date_format) }}</p>
+                        <p>{% trans %}Date Added{% endtrans %}: {{ wallpaper.publishDate|date(settings.date_format) }}</p>
                     </div>
                     <div class="col-md-4">
                         <p>{% trans %}Views{% endtrans %}: {{ wallpaper.hits }} &nbsp;{% trans %}Downloads{% endtrans %}: {{ wallpaper.totalDownloads }}</p>
