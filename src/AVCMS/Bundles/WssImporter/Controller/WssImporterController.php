@@ -74,6 +74,18 @@ class WssImporterController extends Controller
                 $session->set('database_username', $databaseConfig['username']);
                 $session->set('database_password', $databaseConfig['password']);
 
+                $qb = $this->container->get('query_builder');
+                $qb->table('wallpapers')->delete();
+                $qb->table('wallpaper_categories')->delete();
+                $qb->table('tags')->delete();
+                $qb->table('tag_taxonomy')->delete();
+                $qb->table('users')->whereNot('id', 1)->delete();
+                $qb->table('comments')->delete();
+                $qb->table('blog_posts')->delete();
+                $qb->table('pages')->delete();
+                $qb->table('links')->delete();
+                $qb->table('adverts')->delete();
+
                 return new RedirectResponse($this->generateUrl('wss_importer_run'));
             }
         }
