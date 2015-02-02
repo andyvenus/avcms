@@ -17,6 +17,13 @@
                     <strong>Note:</strong> The first account from version 1.3 (the first ever admin account) will not be imported. This account you are currently using will replace that user. The old user account's comments and other data will be imported, but will be attributed to this new account.
                 </div>
 
+                <div class="alert alert-info">
+                    <p><strong>Important:</strong> Some files need to be moved or copied to make the import functional.</p>
+
+                    <p><strong>1.</strong> Move or copy the contents of the WSS 1.3 <strong>/files</strong> folder to <strong>/webmaster/wallpapers</strong></p>
+                    <p><strong>2.</strong> Move or copy the contents of the WSS 1.3 <strong>/uploads/avatars</strong> folder to <strong>/web/avatars</strong></p>
+                </div>
+
                 <h4>Wallpaper Site Script 1.3 Database Details</h4>
                 {{ form(form) }}
             {% endblock %}
