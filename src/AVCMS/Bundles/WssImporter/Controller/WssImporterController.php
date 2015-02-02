@@ -12,6 +12,7 @@ use AV\Form\FormError;
 use AVCMS\Bundles\Adverts\Model\Advert;
 use AVCMS\Bundles\Blog\Model\BlogPost;
 use AVCMS\Bundles\Comments\Model\Comment;
+use AVCMS\Bundles\LikeDislike\Model\Rating;
 use AVCMS\Bundles\Links\Model\Link;
 use AVCMS\Bundles\Pages\Model\Page;
 use AVCMS\Bundles\Tags\Model\Tag;
@@ -85,6 +86,7 @@ class WssImporterController extends Controller
                 $qb->table('pages')->delete();
                 $qb->table('links')->delete();
                 $qb->table('adverts')->delete();
+                $qb->table('ratings')->delete();
 
                 return new RedirectResponse($this->generateUrl('wss_importer_run'));
             }
@@ -102,7 +104,7 @@ class WssImporterController extends Controller
             $this->redirect($this->generateUrl('wss_importer_home'));
         }
 
-        $stages = ['wallpapers', 'wallpaper_categories', 'tags', 'tag_relations', 'users', 'wallpaper_comments', 'news', 'news_comments', 'pages', 'links', 'adverts'];
+        $stages = ['wallpapers', 'wallpaper_categories', 'tags', 'tag_relations', 'users', 'wallpaper_comments', 'news', 'news_comments', 'pages', 'links', 'adverts', 'ratings'];
 
         $importPerRun = 1000;
         $stage = $request->get('stage', $stages[0]);
@@ -433,6 +435,42 @@ class WssImporterController extends Controller
 
             if ($totalImported)
                 $this->model('AVCMS\Bundles\Adverts\Model\Adverts')->insert($advertsProcessed);
+        }
+        elseif ($stage == 'ratings') {
+            $ratingsProcessed = [];
+            $ratings = $this->getQB('ratings')->limit($importPerRun)->offset($offset)->get();
+
+            foreach ($ratings as $r) {
+                $this->renameFields($r, [
+                    'wallpaper_id' => 'content_id',
+                ]);
+
+                $r['content_type'] = 'wallpaper';
+
+                if ($r['rating'] > 3) {
+                    $r['rating'] = 1;
+                }
+                elseif ($r['rating'] == 1) {
+                    $r['rating'] = 0;
+                }
+                else {
+                    continue;
+                }
+
+                $r['date'] = time();
+
+                $rating = new Rating();
+                $rating->fromArray($r, true);
+
+                $ratingsProcessed[] = $rating;
+
+                $totalImported++;
+            }
+
+            $message = ($offset + $totalImported).' Ratings Imported (Run '.$run.')';
+
+            if ($totalImported)
+                $this->model('AVCMS\Bundles\LikeDislike\Model\Ratings')->insert($ratingsProcessed);
         }
 
         if ($totalImported == $importPerRun) {
