@@ -451,7 +451,7 @@ class FormHandler
     /**
      * Get the values of all the form fields or a single form field
      *
-     * @param null $name
+     * @param null|string|int $name
      * @param bool $transform
      * @return mixed
      */
