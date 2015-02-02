@@ -91,7 +91,7 @@ menu_items:
             label: Wallpapers
             icon: glyphicon glyphicon-picture
             type: route
-            default_order: 80
+            default_order: 2
             settings:
               route: wallpapers_admin_home
         wallpapers_bulk_admin:

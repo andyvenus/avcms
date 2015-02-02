@@ -159,6 +159,14 @@ menus:
 
 menu_items:
   admin:
+    settings:
+      icon: glyphicon glyphicon-cog
+      type: route
+      label: Settings
+      default_order: 120
+      permission: ADMIN_SETTINGS
+      settings:
+        route: avcms_settings
     modules:
       icon: glyphicon glyphicon-list-alt
       type: route
@@ -175,14 +183,6 @@ menu_items:
       permission: ADMIN_MENUS
       settings:
         route: menus_admin_home
-    settings:
-      icon: glyphicon glyphicon-cog
-      type: route
-      label: Settings
-      default_order: 120
-      permission: ADMIN_SETTINGS
-      settings:
-        route: avcms_settings
 
 modules:
   html_module:
