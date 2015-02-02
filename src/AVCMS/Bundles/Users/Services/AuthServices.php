@@ -26,7 +26,7 @@ class AuthServices implements ServicesInterface
             ->setArguments(array(array(new Reference('auth.dao_provider'), new Reference('auth.remember_me_provider'), new Reference('facebook_connect.provider'))))
         ;
 
-        $container->register('auth.dao_provider', 'Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider')
+        $container->register('auth.dao_provider', 'AVCMS\Core\Security\AuthProvider\BCDaoAuthenticationProvider')
             ->setArguments(array(new Reference('users.model'), new Reference('auth.user_checker'), 'username.password', new Reference('security.encoder_factory'), false))
         ;
 
