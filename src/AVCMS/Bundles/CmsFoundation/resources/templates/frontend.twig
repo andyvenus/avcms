@@ -7,7 +7,7 @@
 {% block head %}
     {% block head_title %}
         {% set title = block('title') %}
-        <title>{{ title }}{% if title is not empty %} - {% endif %}{{ settings.site_name }}</title>
+        <title>{{ title|raw }}{% if title is not empty %} - {% endif %}{{ settings.site_name }}</title>
     {% endblock %}
 
     {% include '@CmsFoundation/common_header.twig' %}
