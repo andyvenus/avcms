@@ -94,7 +94,7 @@ user_settings:
     label: Template
     help: The frontend template
     section: main
-    default: webmaster/templates/frontend/blog-default
+    default: webmaster/templates/frontend/mint
   email_template:
     type: select
     choices_provider_service: email_template_choices_provider
