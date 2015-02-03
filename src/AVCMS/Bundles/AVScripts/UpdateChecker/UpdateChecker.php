@@ -86,7 +86,6 @@ class UpdateChecker
         $postData = [
             'app_id' => $this->appConfig['info']['id'],
             'app_version' => $this->appConfig['info']['version'],
-            'license_key' => 'ava-26c7ad5045b51cb0bdca43f18eff38'
         ];
 
         if (file_exists($this->rootDir.'/webmaster/license.php')) {
