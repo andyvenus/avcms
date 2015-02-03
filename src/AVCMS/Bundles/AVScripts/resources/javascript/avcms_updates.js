@@ -25,7 +25,7 @@ avcms.updates = {
             }
             else if (data.update_available === null) {
                 $('.avcms-update-loading').hide();
-                $('.avcms-update-error').html(data.status_message);
+                $('.avcms-update-error').html(data.status_message).show();
             }
             else {
                 $('.avcms-no-update').show();

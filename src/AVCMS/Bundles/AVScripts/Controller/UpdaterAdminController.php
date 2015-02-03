@@ -28,8 +28,10 @@ class UpdaterAdminController extends AdminBaseController
     {
         $updateManager = $this->container->get('update_checker');
 
-        if ($updateManager->isUpToDate() === true || $updateManager->isUpToDate() === null) {
-            return new JsonResponse(['update_available' => !$updateManager->isUpToDate(), 'status_message' => $updateManager->getStatusMessage()]);
+        $upToDate = $updateManager->isUpToDate();
+
+        if ($updateManager->isUpToDate() === true || $upToDate  === null) {
+            return new JsonResponse(['update_available' => ($upToDate === null ? null : !$upToDate), 'status_message' => $updateManager->getStatusMessage()]);
         }
 
         return new JsonResponse((array) $updateManager->getUpdateInfo() + ['update_available' => true]);

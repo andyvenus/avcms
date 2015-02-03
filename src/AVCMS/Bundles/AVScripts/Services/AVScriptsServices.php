@@ -16,7 +16,7 @@ class AVScriptsServices implements ServicesInterface
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('update_checker', 'AVCMS\Bundles\AVScripts\UpdateChecker\UpdateChecker')
-            ->setArguments(['%app_config%'])
+            ->setArguments(['%app_config%', '%root_dir%'])
         ;
 
         $container->register('subscriber.license', 'AVCMS\Bundles\AVScripts\Subscriber\LicenseSubscriber')
