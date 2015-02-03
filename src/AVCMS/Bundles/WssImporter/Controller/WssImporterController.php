@@ -131,7 +131,7 @@ class WssImporterController extends Controller
                     'submitter' => 'submitter_id'
                 ]);
 
-                //$wp['file'] = preg_replace('/files\//', '', $wp['file'], 1);
+                $wp['file'] = preg_replace('/files\//', '', $wp['file'], 1);
                 $wp['creator_id'] = $this->activeUser()->getId();
 
                 $wp['publish_date'] = ($wp['date_added'] ? $wp['date_added'] : time());
