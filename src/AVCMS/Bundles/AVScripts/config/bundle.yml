@@ -1,5 +1,5 @@
-name: Updater
-namespace: AVCMS\Bundles\Updater
+name: AVScripts
+namespace: AVCMS\Bundles\AVScripts
 require:
     - Framework
 
@@ -15,7 +15,7 @@ modules:
     name: Updates
     description: Shows if a new version is available
     type: admin
-    controller: Updater::UpdaterModuleController::updaterModule
+    controller: AVScripts::UpdaterModuleController::updaterModule
     cachable: true
     default_cache_time: 86400
     accepted_template_types: [panel, content, none]

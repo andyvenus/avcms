@@ -5,7 +5,7 @@
  * Time: 13:19
  */
 
-namespace AVCMS\Bundles\Updater\Services;
+namespace AVCMS\Bundles\AVScripts\Services;
 
 use AV\Service\ServicesInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -14,7 +14,7 @@ class UpdaterServices implements ServicesInterface
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
-        $container->register('update_checker', 'AVCMS\Bundles\Updater\UpdateChecker\UpdateChecker')
+        $container->register('update_checker', 'AVCMS\Bundles\AVScripts\UpdateChecker\UpdateChecker')
             ->setArguments(['%app_config%']);
     }
 }

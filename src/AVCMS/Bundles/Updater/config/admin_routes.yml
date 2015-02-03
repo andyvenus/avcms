@@ -1,7 +1,0 @@
-updates:
-  path: /updates
-  defaults: { _controller: Updater::UpdaterAdminController::updatesAction }
-
-check_for_updates:
-  path: /update-checker
-  defaults: { _controller: Updater::UpdaterAdminController::checkForUpdateAction }

@@ -58,5 +58,5 @@ WssImporter:
     enabled: true
 TranslationHelper:
     enabled: true
-Updater:
+AVScripts:
     enabled: true

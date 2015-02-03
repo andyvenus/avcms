@@ -5,9 +5,9 @@
  * Time: 17:29
  */
 
-namespace AVCMS\Bundles\Updater\Controller;
+namespace AVCMS\Bundles\AVScripts\Controller;
 
-use AVCMS\Bundles\Updater\UpdateChecker\UpdateChecker;
+use AVCMS\Bundles\AVScripts\UpdateChecker\UpdateChecker;
 use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,6 +19,6 @@ class UpdaterModuleController extends Controller
 
         $downloadUrl = UpdateChecker::SERVER.'/download-latest?app_id='.$appConfigInfo['id'];
 
-        return new Response($this->render('@Updater/admin/update_info.twig', ['download_url' => $downloadUrl]));
+        return new Response($this->render('@AVScripts/admin/update_info.twig', ['download_url' => $downloadUrl]));
     }
 }

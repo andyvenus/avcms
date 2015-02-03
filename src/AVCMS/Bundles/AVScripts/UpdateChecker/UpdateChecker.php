@@ -5,7 +5,7 @@
  * Time: 13:01
  */
 
-namespace AVCMS\Bundles\Updater\UpdateChecker;
+namespace AVCMS\Bundles\AVScripts\UpdateChecker;
 
 use Curl\Curl;
 
