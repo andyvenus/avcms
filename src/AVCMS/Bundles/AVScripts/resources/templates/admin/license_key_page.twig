@@ -1,0 +1,12 @@
+{% extends '@admin/simple_page.twig' %}
+
+{% block title %}{% trans %}Enter License Key{% endtrans %}{% endblock %}
+
+{% block content_body %}
+    <div class="alert alert-success">
+        <span class="glyphicon glyphicon-alert"></span>
+        {% trans %}Thanks for your purchase! Please enter your license key below to start using the admin panel.{% endtrans %}
+    </div>
+
+    {{ form(form) }}
+{% endblock %}
