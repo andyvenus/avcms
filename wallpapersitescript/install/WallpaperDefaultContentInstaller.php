@@ -100,7 +100,7 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
         $featuredWallpapersHome->setTitle('Featured Wallpapers');
         $featuredWallpapersHome->setShowHeader(1);
         $featuredWallpapersHome->setTemplateType('content');
-        $featuredWallpapersHome->setSettingsArray(['filter' => 'featured', 'layout' => 'thumbnails']);
+        $featuredWallpapersHome->setSettingsArray(['filter' => 'featured', 'layout' => 'thumbnails', 'columns' => 3]);
         $featuredWallpapersHome->setCacheTime(3600);
 
         // Newest Wallpapers - Homepage
@@ -111,7 +111,7 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
         $newestWallpapersHome->setTitle('Newest Wallpapers');
         $newestWallpapersHome->setShowHeader(1);
         $newestWallpapersHome->setTemplateType('content');
-        $newestWallpapersHome->setSettingsArray(['layout' => 'thumbnails']);
+        $newestWallpapersHome->setSettingsArray(['layout' => 'thumbnails', 'columns' => 3]);
         $newestWallpapersHome->setCacheTime(3600);
 
         // Newest Blog Posts - Sidebar

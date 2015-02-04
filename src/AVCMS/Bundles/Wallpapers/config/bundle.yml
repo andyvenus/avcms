@@ -217,7 +217,7 @@ modules:
       columns:
         type: select
         label: Number of columns (thumbnail layout)
-        default: 1
+        default: 3
         choices:
           1: 1
           2: 2
