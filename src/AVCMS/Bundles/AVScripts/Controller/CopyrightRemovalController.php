@@ -24,7 +24,7 @@ class CopyrightRemovalController extends AdminBaseController
         $form = $this->buildForm(new CopyrightRemovalForm($this->setting('copyright_message')), $request);
 
         if ($form->isSubmitted()) {
-            $this->model('AVCMS\Bundles\CmsFoundation\Model\Settings')->saveSetting('copyright_message', $form->getData('copyright_message'));
+            $this->model('CmsFoundation:Settings')->saveSetting('copyright_message', $form->getData('copyright_message'));
 
             return new JsonResponse(['form' => $form->createView()->getJsonResponseData()]);
         }

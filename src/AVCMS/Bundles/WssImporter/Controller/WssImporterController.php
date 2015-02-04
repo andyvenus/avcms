@@ -149,7 +149,7 @@ class WssImporterController extends Controller
             $message = ($offset + $totalImported).' Wallpapers Imported (Run '.$run.')';
 
             if ($totalImported) {
-                $this->model('AVCMS\Bundles\Wallpapers\Model\Wallpapers')->insert($wallpapersProcessed);
+                $this->model('Wallpapers')->insert($wallpapersProcessed);
             }
         }
         elseif ($stage === 'wallpaper_categories') {
@@ -177,7 +177,7 @@ class WssImporterController extends Controller
             $message = ($offset + $totalImported).' Categories Imported (Run '.$run.')';
 
             if ($totalImported)
-                $this->model('AVCMS\Bundles\Wallpapers\Model\WallpaperCategories')->insert($catsProcessed);
+                $this->model('Wallpapers:WallpaperCategories')->insert($catsProcessed);
         }
         elseif ($stage === 'tags') {
             // TAGS //
@@ -200,7 +200,7 @@ class WssImporterController extends Controller
             $message = ($offset + $totalImported).' Tags Imported (Run '.$run.')';
 
             if ($totalImported)
-                $this->model('AVCMS\Bundles\Tags\Model\TagsModel')->insert($tagsProcessed);
+                $this->model('Tags:TagsModel')->insert($tagsProcessed);
         }
         elseif ($stage === 'tag_relations') {
             // TAG RELATIONS //
@@ -216,7 +216,7 @@ class WssImporterController extends Controller
 
                 unset($r['id']);
 
-                $this->model('AVCMS\Bundles\Tags\Model\TagsTaxonomyModel')->query()->insert($r);
+                $this->model('Tags:TagsTaxonomyModel')->query()->insert($r);
 
                 $totalImported++;
             }
@@ -255,7 +255,7 @@ class WssImporterController extends Controller
             $message = ($offset + $totalImported).' Users Imported (Run '.$run.')';
 
             if ($totalImported)
-                $this->model('AVCMS\Bundles\Users\Model\Users')->insert($usersProcessed);
+                $this->model('Users')->insert($usersProcessed);
         }
         elseif ($stage == 'wallpaper_comments') {
             $commentsProcessed = [];
@@ -266,7 +266,7 @@ class WssImporterController extends Controller
                 $this->unencodeFields($c, ['comment']);
                 $c['content_type'] = 'wallpaper';
 
-                $wallpapers = $this->model('AVCMS\Bundles\Wallpapers\Model\Wallpapers');
+                $wallpapers = $this->model('Wallpapers');
                 $wallpaper = $wallpapers->query()->where('id', $c['content_id'])->select(['name', 'comments'])->first();
                 if ($wallpaper) {
                     $c['content_title'] = $wallpaper->getName();
@@ -290,7 +290,7 @@ class WssImporterController extends Controller
             $message = ($offset + $totalImported).' Wallpaper Comments Imported (Run '.$run.')';
 
             if ($totalImported)
-                $this->model('AVCMS\Bundles\Comments\Model\Comments')->insert($commentsProcessed);
+                $this->model('Comments')->insert($commentsProcessed);
         }
         elseif ($stage == 'news') {
             $newsProcessed = [];
@@ -320,7 +320,7 @@ class WssImporterController extends Controller
             $message = ($offset + $totalImported).' Blog Posts Imported (Run '.$run.')';
 
             if ($totalImported)
-                $this->model('AVCMS\Bundles\Blog\Model\BlogPosts')->insert($newsProcessed);
+                $this->model('Blog:BlogPosts')->insert($newsProcessed);
         }
         elseif ($stage == 'news_comments') {
             $commentsProcessed = [];
@@ -331,7 +331,7 @@ class WssImporterController extends Controller
                 $this->unencodeFields($c, ['comment']);
                 $c['content_type'] = 'blog_post';
 
-                $blogPosts = $this->model('AVCMS\Bundles\Blog\Model\BlogPosts');
+                $blogPosts = $this->model('Blog:BlogPosts');
                 $wallpaper = $blogPosts->query()->where('id', $c['content_id'])->select(['title', 'comments'])->first();
                 if ($wallpaper) {
                     $c['content_title'] = $wallpaper->getTitle();
@@ -355,7 +355,7 @@ class WssImporterController extends Controller
             $message = ($offset + $totalImported).' News Comments Imported (Run '.$run.')';
 
             if ($totalImported)
-                $this->model('AVCMS\Bundles\Comments\Model\Comments')->insert($commentsProcessed);
+                $this->model('Comments')->insert($commentsProcessed);
         }
         elseif ($stage == 'pages') {
             $pagesProcessed = [];
@@ -385,7 +385,7 @@ class WssImporterController extends Controller
             $message = ($offset + $totalImported).' Pages Imported (Run '.$run.')';
 
             if ($totalImported)
-                $this->model('AVCMS\Bundles\Pages\Model\Pages')->insert($pagesProcessed);
+                $this->model('Pages')->insert($pagesProcessed);
         }
         elseif ($stage == 'links') {
             $linksProcessed = [];
@@ -411,7 +411,7 @@ class WssImporterController extends Controller
             $message = ($offset + $totalImported).' Links Imported (Run '.$run.')';
 
             if ($totalImported)
-                $this->model('AVCMS\Bundles\Links\Model\Links')->insert($linksProcessed);
+                $this->model('Links')->insert($linksProcessed);
         }
         elseif ($stage == 'adverts') {
             $advertsProcessed = [];
@@ -434,7 +434,7 @@ class WssImporterController extends Controller
             $message = ($offset + $totalImported).' Adverts Imported (Run '.$run.')';
 
             if ($totalImported)
-                $this->model('AVCMS\Bundles\Adverts\Model\Adverts')->insert($advertsProcessed);
+                $this->model('Adverts')->insert($advertsProcessed);
         }
         elseif ($stage == 'ratings') {
             $ratingsProcessed = [];
@@ -470,7 +470,7 @@ class WssImporterController extends Controller
             $message = ($offset + $totalImported).' Ratings Imported (Run '.$run.')';
 
             if ($totalImported)
-                $this->model('AVCMS\Bundles\LikeDislike\Model\Ratings')->insert($ratingsProcessed);
+                $this->model('LikeDislike:Ratings')->insert($ratingsProcessed);
         }
 
         if ($totalImported == $importPerRun) {

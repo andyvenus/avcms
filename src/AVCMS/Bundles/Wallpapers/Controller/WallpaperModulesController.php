@@ -62,7 +62,7 @@ class WallpaperModulesController extends Controller
 
     public function likedWallpapersModule($userSettings, User $user)
     {
-        $ratings = $this->model('AVCMS\Bundles\LikeDislike\Model\Ratings');
+        $ratings = $this->model('LikeDislike:Ratings');
 
         $liked = $ratings->query()
             ->where('user_id', $user->getId())

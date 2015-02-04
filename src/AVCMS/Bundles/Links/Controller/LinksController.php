@@ -30,7 +30,7 @@ class LinksController extends Controller
     public function setUp()
     {
         $this->links = $this->model('Links');
-        $this->referrals = $this->model('AVCMS\Bundles\Referrals\Model\Referrals');
+        $this->referrals = $this->model('Referrals');
     }
 
     public function linkExchangeAction(Request $request)

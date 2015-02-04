@@ -25,7 +25,7 @@ class LinksAdminController extends AdminBaseController
     public function setUp(Request $request)
     {
         $this->links = $this->model('Links');
-        $this->referrals = $this->model('AVCMS\Bundles\Referrals\Model\Referrals');
+        $this->referrals = $this->model('Referrals');
 
         if (!$this->isGranted('ADMIN_LINKS')) {
             throw new AccessDeniedException;

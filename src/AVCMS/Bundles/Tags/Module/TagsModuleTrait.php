@@ -19,13 +19,13 @@ trait TagsModuleTrait
 {
     public function getTagsModule($userSettings, $contentType, $routeName, $routeParam = 'tags')
     {
-        $commonTags = $this->model('AVCMS\Bundles\Tags\Model\TagsTaxonomyModel')->getPopularTags($contentType, $userSettings['limit']);
+        $commonTags = $this->model('Tags:TagsTaxonomyModel')->getPopularTags($contentType, $userSettings['limit']);
 
         if (!$commonTags) {
             return new Response($this->render('@Tags/module/tags_module.twig'));
         }
 
-        $tags = $this->model('AVCMS\Bundles\Tags\Model\TagsModel')->query()->whereIn('id', array_keys($commonTags))->orderBy('name')->get();
+        $tags = $this->model('Tags:TagsModel')->query()->whereIn('id', array_keys($commonTags))->orderBy('name')->get();
 
         $maxSize = 24; // max font size in pixels
         $minSize = 12; // min font size in pixels

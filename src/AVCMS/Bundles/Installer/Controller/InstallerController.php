@@ -92,7 +92,7 @@ class InstallerController extends Controller
 
     public function createAdminAction(Request $request)
     {
-        $users = $this->model('AVCMS\Bundles\Users\Model\Users');
+        $users = $this->model('Users');
 
         // Secure, admin can't be created here unless there are 0 users in the database
         if ($users->query()->count() !== 0) {
@@ -121,7 +121,7 @@ class InstallerController extends Controller
 
             $users->save($newUser);
 
-            $settings = $this->model('AVCMS\Bundles\CmsFoundation\Model\Settings');
+            $settings = $this->model('CmsFoundation:Settings');
             $settings->addSetting('admin_emails', $newUser->getEmail(), 'bundle', 'CmsFoundation');
 
             file_put_contents('webmaster/installer_lock.txt', '1');
