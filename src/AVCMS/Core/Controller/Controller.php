@@ -85,23 +85,35 @@ abstract class Controller extends ContainerAware
     /**
      * Get a database model
      *
-     * @param $model_name
+     * @param $modelName
      * @return \AV\Model\Model|mixed
      */
-    protected function model($model_name)
+    protected function model($modelName)
     {
         if (!isset($this->modelFactory)) {
             $this->modelFactory = $this->container->get('model_factory');
         }
 
-        // If no namespace seems to be specified, use the same namespace that the controller uses
-        if (strpos($model_name, '\\') === false && strpos($model_name, '@') === false) {
-            $class = get_class($this);
-            $namespace = substr($class, 0, strpos($class, '\\Controller'));
+        // If no namespace seems to be specified, use the same bundle namespace
+        if (strpos($modelName, '\\') === false && strpos($modelName, '@') === false && strpos($modelName, ':') === false) {
+            $originalName = $modelName;
+            $namespace = $this->bundle->namespace;
 
-            $model_name = "$namespace\\Model\\$model_name";
+            $modelName = "$namespace\\Model\\$modelName";
+
+            if (!class_exists($modelName)) {
+                try {
+                    $config = $this->container->get('bundle_manager')->getBundleConfig($originalName);
+                } catch (\Exception $e) {
+                    // doing nothing
+                }
+
+                if (isset($config)) {
+                    $modelName = $config->namespace.'\\Model\\'.$originalName;
+                }
+            }
         }
-        return $this->modelFactory->create($model_name);
+        return $this->modelFactory->create($modelName);
     }
 
     /**

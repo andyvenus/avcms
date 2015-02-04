@@ -46,7 +46,7 @@ class BlogAdminController extends AdminBaseController
 
     public function finderAction(Request $request)
     {
-        $usersModel = $this->model($this->bundle->model->users);
+        $usersModel = $this->model('Users');
 
         $finder = $this->blogPosts->find()
             ->setSearchFields(array('title'))

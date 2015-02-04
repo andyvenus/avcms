@@ -24,8 +24,8 @@ class DatabaseServices implements ServicesInterface
             ->setFactory([new Reference('query_builder.factory'), 'getQueryBuilder'])
         ;
 
-        $container->register('model_factory', 'AV\Model\ModelFactory')
-            ->setArguments(array(new Reference('query_builder'), new Reference('dispatcher')))
+        $container->register('model_factory', 'AV\Bundles\Model\ModelFactory\BundleModelFactory')
+            ->setArguments(array(new Reference('query_builder'), new Reference('dispatcher'), new Reference('bundle_manager')))
             ->addMethodCall('addModelAlias', array('users', 'AVCMS\Bundles\Users\Model\Users'))
         ;
 
