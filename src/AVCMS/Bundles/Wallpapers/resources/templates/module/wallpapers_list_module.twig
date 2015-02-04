@@ -13,6 +13,10 @@
                 </div>
             </div>
         </a>
+    {% else %}
+        <div class="list-group-item">
+            {% trans %}None{% endtrans %}
+        </div>
     {% endfor %}
 
     {% if more_button %}

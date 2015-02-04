@@ -17,6 +17,10 @@
         {% if loop.index % columns == 0 %}
             </div><div class="row">
         {% endif %}
+    {% else %}
+        <div class="col-md-12">
+            {% trans %}None{% endtrans %}
+        </div>
     {% endfor %}
 </div>
 

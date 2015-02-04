@@ -77,7 +77,12 @@ class WallpaperModulesController extends Controller
             $ids[] = $like->getContentId();
         }
 
-        $wallpapers = $this->wallpapers->query()->whereIn('id', $ids)->get();
+        if (!empty($ids)) {
+            $wallpapers = $this->wallpapers->query()->whereIn('id', $ids)->get();
+        }
+        else {
+            $wallpapers = [];
+        }
 
         $columns = ($userSettings['columns'] ? $userSettings['columns'] : 1);
 
