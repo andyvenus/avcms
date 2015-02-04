@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
 use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class ModuleManager
 {
@@ -34,7 +35,9 @@ class ModuleManager
 
     protected $authChecker;
 
-    public function __construct(FragmentHandler $fragmentHandler, ModuleConfigModelInterface $moduleModel, RequestStack $requestStack, AuthorizationCheckerInterface $authChecker, $cacheDir, $devMode = false)
+    protected $translator;
+
+    public function __construct(FragmentHandler $fragmentHandler, ModuleConfigModelInterface $moduleModel, RequestStack $requestStack, AuthorizationCheckerInterface $authChecker, $cacheDir, $devMode = false, TranslatorInterface $translator = null)
     {
         $this->fragmentHandler = $fragmentHandler;
         $this->moduleModel = $moduleModel;
@@ -42,6 +45,7 @@ class ModuleManager
         $this->cacheDir = $cacheDir;
         $this->devMode = $devMode;
         $this->authChecker = $authChecker;
+        $this->translator = $translator;
     }
 
     public function setProvider(ModuleProviderInterface $moduleProviders)
@@ -180,6 +184,10 @@ class ModuleManager
 
                     $moduleConfig->setContent($content);
                 }
+            }
+
+            if ($this->translator !== null) {
+                $moduleConfig->setTitle($this->translator->trans($moduleConfig->getTitle()));
             }
         }
 

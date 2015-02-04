@@ -17,7 +17,7 @@ class ModuleServices implements ServicesInterface
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('module_manager', 'AVCMS\Core\Module\ModuleManager')
-            ->setArguments(array(new Reference('fragment_handler'), new Reference('module.model'), new Reference('request.stack'), new Reference('security.auth_checker'), '%cache_dir%/modules'))
+            ->setArguments(array(new Reference('fragment_handler'), new Reference('module.model'), new Reference('request.stack'), new Reference('security.auth_checker'), '%cache_dir%/modules', false, new Reference('translator')))
             ->addMethodCall('setProvider', array(new Reference('module.bundle_provider')))
         ;
 
