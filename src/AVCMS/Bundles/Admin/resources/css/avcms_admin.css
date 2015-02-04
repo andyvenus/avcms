@@ -155,28 +155,30 @@ a {
 
 .browser-finder-results {
   overflow: auto; }
-  .browser-finder-results .nano .nano-pane {
-    background: rgba(0, 0, 0, 0.1);
-    width: 7px; }
-    .browser-finder-results .nano .nano-pane .nano-slider {
-      background: rgba(0, 0, 0, 0.3); }
-  .browser-finder-results .nano .browser-finder-page {
-    float: left;
-    margin-left: 24px;
-    font-weight: bold;
-    padding-top: 1px; }
-  .browser-finder-results .nano .browser-finder-header {
-    height: 22px;
-    margin-top: 2px;
-    font-weight: bold;
-    border-bottom: 1px solid #dddddd;
-    overflow: hidden; }
-    .browser-finder-results .nano .browser-finder-header .page {
+  .browser-finder-results .nano {
+    -webkit-overflow-scrolling: touch; }
+    .browser-finder-results .nano .nano-pane {
+      background: rgba(0, 0, 0, 0.1);
+      width: 7px; }
+      .browser-finder-results .nano .nano-pane .nano-slider {
+        background: rgba(0, 0, 0, 0.3); }
+    .browser-finder-results .nano .browser-finder-page {
       float: left;
-      margin-left: 24px; }
-    .browser-finder-results .nano .browser-finder-header .fields {
-      padding-left: 265px;
-      padding-right: 6px; }
+      margin-left: 24px;
+      font-weight: bold;
+      padding-top: 1px; }
+    .browser-finder-results .nano .browser-finder-header {
+      height: 22px;
+      margin-top: 2px;
+      font-weight: bold;
+      border-bottom: 1px solid #dddddd;
+      overflow: hidden; }
+      .browser-finder-results .nano .browser-finder-header .page {
+        float: left;
+        margin-left: 24px; }
+      .browser-finder-results .nano .browser-finder-header .fields {
+        padding-left: 265px;
+        padding-right: 6px; }
   .browser-finder-results .finder-no-results {
     text-align: center;
     margin-top: 20px;
@@ -306,7 +308,8 @@ a {
     max-width: 330px; }
 
   .editor-content, .simple-content {
-    overflow-y: scroll; }
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch; }
 
   .fluid-browser .browser-finder-filters {
     max-width: 3000px;

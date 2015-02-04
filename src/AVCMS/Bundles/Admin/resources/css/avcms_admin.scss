@@ -237,6 +237,7 @@ a {
   overflow: auto;
 
   .nano {
+    -webkit-overflow-scrolling: touch;
     .nano-pane {
       background : rgba(0,0,0,.10);
       width: 7px;
@@ -462,6 +463,7 @@ a {
 
   .editor-content, .simple-content {
     overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
   }
 
   .fluid-browser {
