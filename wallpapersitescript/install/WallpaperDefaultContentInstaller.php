@@ -11,7 +11,8 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
     {
         return array(
             'Blog' => ['1.0' => 'blogDefaults'],
-            'CmsFoundation' => ['1.0' => 'cmsDefaults']
+            'CmsFoundation' => ['1.0' => 'cmsDefaults'],
+            'Wallpapers' => ['1.0' => 'wallpaperDefaults']
         );
     }
 
@@ -21,28 +22,129 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
         $menuItems = $this->modelFactory->create('AVCMS\Bundles\CmsFoundation\Model\MenuItems');
 
         $homeItem = $menuItems->newEntity();
-        $homeItem->setId('main_menu_home');
         $homeItem->setMenu('frontend');
         $homeItem->setType('route');
         $homeItem->setLabel('Home');
-        //$homeItem->setTarget('home');
+        $homeItem->setSettings(['route' => 'home']);
         $homeItem->setIcon('glyphicon glyphicon-home');
 
-        //$menuItems->save($homeItem);
+        $browseItem = $menuItems->newEntity();
+        $browseItem->setMenu('frontend');
+        $browseItem->setType('route');
+        $browseItem->setLabel('Browse');
+        $browseItem->setSettings(['route' => 'browse_wallpapers']);
+        $browseItem->setIcon('glyphicon glyphicon-picture');
+
+        $featuredItem = $menuItems->newEntity();
+        $featuredItem->setMenu('frontend');
+        $featuredItem->setType('route');
+        $featuredItem->setLabel('Featured');
+        $featuredItem->setSettings(['route' => 'featured_wallpapers']);
+        $featuredItem->setIcon('glyphicon glyphicon-star');
+
+        $categoriesItem = $menuItems->newEntity();
+        $categoriesItem->setMenu('frontend');
+        $categoriesItem->setType('wallpaper_categories');
+        $categoriesItem->setLabel('Categories');
+        $categoriesItem->setSettings(['display' => 'child']);
+        $categoriesItem->setIcon('glyphicon glyphicon-tags');
+
+        $blogItem = $menuItems->newEntity();
+        $blogItem->setMenu('frontend');
+        $blogItem->setType('route');
+        $blogItem->setLabel('Blog');
+        $blogItem->setSettings(['route' => 'blog_home']);
+        $blogItem->setIcon('glyphicon glyphicon-pencil');
+
+        $submitItem = $menuItems->newEntity();
+        $submitItem->setMenu('frontend');
+        $submitItem->setType('route');
+        $submitItem->setLabel('Submit');
+        $submitItem->setSettings(['route' => 'wallpaper_submit']);
+        $submitItem->setIcon('glyphicon glyphicon-upload');
+
+        $contactItem = $menuItems->newEntity();
+        $contactItem->setMenu('frontend_footer');
+        $contactItem->setType('route');
+        $contactItem->setLabel('Contact Us');
+        $contactItem->setSettings(['route' => 'contact_us']);
+        $contactItem->setIcon('glyphicon glyphicon-envelope');
+
+        $linksItem = $menuItems->newEntity();
+        $linksItem->setMenu('frontend_footer');
+        $linksItem->setType('route');
+        $linksItem->setLabel('Link Exchange');
+        $linksItem->setSettings(['route' => 'links']);
+        $linksItem->setIcon('glyphicon glyphicon-link');
+
+        $menuItems->insert([$homeItem, $browseItem, $featuredItem, $categoriesItem, $submitItem, $contactItem, $linksItem]);
 
         // Modules
         $modules = $this->modelFactory->create('AVCMS\Bundles\CmsFoundation\Model\Modules');
 
-        // Newest Blog Posts - Left Sidebar
+        // Newest Wallpapers - Sidebar
+        $newestWallpapersSidebar = $modules->newEntity();
+        $newestWallpapersSidebar->setModule('wallpapers');
+        $newestWallpapersSidebar->setActive(1);
+        $newestWallpapersSidebar->setPosition('sidebar');
+        $newestWallpapersSidebar->setTitle('Latest Wallpapers');
+        $newestWallpapersSidebar->setShowHeader(1);
+        $newestWallpapersSidebar->setTemplateType('list_panel');
+        $newestWallpapersSidebar->setCacheTime(3600);
+
+        // Featured Wallpapers - Homepage
+        $featuredWallpapersHome = $modules->newEntity();
+        $featuredWallpapersHome->setModule('wallpapers');
+        $featuredWallpapersHome->setActive(1);
+        $featuredWallpapersHome->setPosition('wallpapers_home');
+        $featuredWallpapersHome->setTitle('Featured Wallpapers');
+        $featuredWallpapersHome->setShowHeader(1);
+        $featuredWallpapersHome->setTemplateType('content');
+        $featuredWallpapersHome->setSettingsArray(['filter' => 'featured', 'layout' => 'thumbnails']);
+        $featuredWallpapersHome->setCacheTime(3600);
+
+        // Newest Wallpapers - Homepage
+        $newestWallpapersHome = $modules->newEntity();
+        $newestWallpapersHome->setModule('wallpapers');
+        $newestWallpapersHome->setActive(1);
+        $newestWallpapersHome->setPosition('wallpapers_home');
+        $newestWallpapersHome->setTitle('Newest Wallpapers');
+        $newestWallpapersHome->setShowHeader(1);
+        $newestWallpapersHome->setTemplateType('content');
+        $newestWallpapersHome->setSettingsArray(['layout' => 'thumbnails']);
+        $newestWallpapersHome->setCacheTime(3600);
+
+        // Newest Blog Posts - Sidebar
         $newestPostsModule = $modules->newEntity();
         $newestPostsModule->setModule('blog_posts');
         $newestPostsModule->setActive(1);
-        $newestPostsModule->setPosition('left_sidebar');
+        $newestPostsModule->setPosition('sidebar');
         $newestPostsModule->setTitle('Latest Posts');
         $newestPostsModule->setShowHeader(1);
         $newestPostsModule->setTemplateType('list_panel');
+        $newestPostsModule->setCacheTime(3600);
 
-        $modules->save($newestPostsModule);
+        // Wallpaper Tags - Sidebar
+        $wallpaperTags = $modules->newEntity();
+        $wallpaperTags->setModule('wallpaper_tags');
+        $wallpaperTags->setActive(1);
+        $wallpaperTags->setPosition('sidebar');
+        $wallpaperTags->setTitle('Tags');
+        $wallpaperTags->setShowHeader(1);
+        $wallpaperTags->setTemplateType('list_panel');
+        $wallpaperTags->setCacheTime(43200);
+
+        $modules->insert([$newestWallpapersSidebar, $featuredWallpapersHome, $newestWallpapersHome, $wallpaperTags, $newestPostsModule]);
+
+        // Updates - Admin Dashboard
+        $updatesModule = $modules->newEntity();
+        $updatesModule->setModule('avcms_updates');
+        $updatesModule->setActive(1);
+        $updatesModule->setPosition('admin_dashboard');
+        $updatesModule->setTitle('Updates');
+        $updatesModule->setShowHeader(1);
+        $updatesModule->setTemplateType('panel');
+        $updatesModule->setCacheTime(999999);
 
         // Reports - Admin Dashboard
         $reportsModule = $modules->newEntity();
@@ -53,8 +155,26 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
         $reportsModule->setShowHeader(1);
         $reportsModule->setTemplateType('panel');
         $reportsModule->setPermissions('ADMIN_REPORTS');
+        $reportsModule->setCacheTime(3600);
 
-        $modules->save($reportsModule);
+        // AVS News - Admin Dashboard
+        $avsNewsModule = $modules->newEntity();
+        $avsNewsModule->setModule('avcms_news');
+        $avsNewsModule->setActive(1);
+        $avsNewsModule->setPosition('admin_dashboard');
+        $avsNewsModule->setTitle('AV Scripts News');
+        $avsNewsModule->setShowHeader(1);
+        $avsNewsModule->setTemplateType('panel');
+
+        // Top Wallpapers - Admin Dashboard
+        $topWallpapersAdminModule = $modules->newEntity();
+        $topWallpapersAdminModule->setModule('wallpapers');
+        $topWallpapersAdminModule->setActive(1);
+        $topWallpapersAdminModule->setPosition('admin_dashboard');
+        $topWallpapersAdminModule->setTitle('Top Wallpapers');
+        $topWallpapersAdminModule->setShowHeader(1);
+        $topWallpapersAdminModule->setTemplateType('list_panel');
+        $topWallpapersAdminModule->setSettingsArray(['order' => 'top-hits']);
 
         // User Info - User Profile
         $userInfoModule = $modules->newEntity();
@@ -65,7 +185,17 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
         $userInfoModule->setShowHeader(1);
         $userInfoModule->setTemplateType('panel');
 
-        $modules->save($userInfoModule);
+        // Liked Wallpapers - User Profile
+        $likedWallpapersModule = $modules->newEntity();
+        $likedWallpapersModule->setModule('liked_wallpapers');
+        $likedWallpapersModule->setActive(1);
+        $likedWallpapersModule->setPosition('user_profile_main');
+        $likedWallpapersModule->setTitle('Liked Wallpapers');
+        $likedWallpapersModule->setShowHeader(1);
+        $likedWallpapersModule->setTemplateType('panel');
+        $likedWallpapersModule->setSettingsArray(['layout' => 'thumbnails', 'columns' => 2, 'limit' => 6]);
+
+        $modules->insert([$updatesModule, $reportsModule, $avsNewsModule, $topWallpapersAdminModule, $userInfoModule, $likedWallpapersModule]);
     }
 
     public function blogDefaults()
@@ -74,12 +204,26 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
 
         $post = $blogPosts->newEntity();
         $post->setTitle('Welcome to AVCMS');
-        $post->setBody('<p>Welcome to AVCMS, a new modular content management system for 2015.</p>
+        $post->setBody('<p>Welcome to AVCMS, a new modular content management system.</p>
             <p>This first version is just a simple blog to test out the system and get it running well for the upcoming major releases from AV Scripts. Check out the custom menus and modules, or the powerful new admin panel and please send any feedback you have.</p>
             <p>Andy</p>');
         $post->setSlug('welcome-to-avcms');
         $post->setPublishDate(time());
 
         $blogPosts->save($post);
+    }
+
+    public function wallpaperDefaults()
+    {
+        $wallpapers = $this->modelFactory->create('AVCMS\Bundles\Wallpapers\Model\Wallpapers');
+
+        $wallpaperCategories = $this->modelFactory->create('AVCMS\Bundles\Wallpapers\Model\WallpaperCategories');
+
+        $firstCategory = $wallpaperCategories->newEntity();
+        $firstCategory->setName('First Category');
+        $firstCategory->setDescription('A first category to get going. Edit me or delete me!');
+        $firstCategory->setSlug('first-category');
+
+        $wallpaperCategories->insert($firstCategory);
     }
 }

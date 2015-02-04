@@ -35,7 +35,7 @@ class CmsFoundationInstaller extends BundleInstaller
         $this->sql("
             CREATE TABLE `{$this->prefix}menu_items` (
                   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-                  `provider_id` varchar(60) NOT NULL DEFAULT '',
+                  `provider_id` varchar(60) DEFAULT NULL,
                   `menu` varchar(30) DEFAULT NULL,
                   `type` varchar(30) DEFAULT NULL,
                   `label` varchar(80) DEFAULT NULL,
