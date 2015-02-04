@@ -121,6 +121,9 @@ class InstallerController extends Controller
 
             $users->save($newUser);
 
+            $settings = $this->model('AVCMS\Bundles\CmsFoundation\Model\Settings');
+            $settings->addSetting('admin_emails', $newUser->getEmail(), 'bundle', 'CmsFoundation');
+
             file_put_contents('webmaster/installer_lock.txt', '1');
 
             return new RedirectResponse('../');

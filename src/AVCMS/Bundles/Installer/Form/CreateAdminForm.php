@@ -29,7 +29,8 @@ class CreateAdminForm extends FormBlueprint
         ]);
 
         $this->add('email', 'text', [
-            'label' => 'Email'
+            'label' => 'Email',
+            'required' => true
         ]);
     }
 } 
