@@ -24,7 +24,7 @@ user_settings:
   site_name:
     type: text
     label: Site Name
-    default: My AVCMS Site
+    default: AVCMS
     section: main
     required: true
     validation:
