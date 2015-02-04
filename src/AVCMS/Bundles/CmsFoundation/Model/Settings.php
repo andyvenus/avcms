@@ -39,12 +39,17 @@ class Settings extends Model implements SettingsModelInterface
         return $settings;
     }
 
-    public function saveSettings(array $settings, $existing_settings = null)
+    public function saveSettings(array $settings)
     {
         foreach ($settings as $name => $value) {
-            $setting = array('value' => $value);
-            $this->query()->where('name', $name)->update($setting);
+            $this->saveSetting($name, $value);
         }
+    }
+
+    public function saveSetting($name, $value)
+    {
+        $setting = array('value' => $value);
+        $this->query()->where('name', $name)->update($setting);
     }
 
     public function addSetting($name, $value, $loader, $owner)
