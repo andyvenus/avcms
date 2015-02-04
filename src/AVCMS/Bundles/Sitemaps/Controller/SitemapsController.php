@@ -15,7 +15,6 @@ class SitemapsController extends Controller
     public function sitemapAction()
     {
         $smm = $this->container->get('sitemaps_manager');
-        //$smm->addSitemap(new WallpapersSitemap($this->model('AVCMS\Bundles\Wallpapers\Model\Wallpapers'), $this->container->get('router')));
 
         $smm->writeSitemaps();
 
