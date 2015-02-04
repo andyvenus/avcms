@@ -21,6 +21,10 @@ trait TagsModuleTrait
     {
         $commonTags = $this->model('AVCMS\Bundles\Tags\Model\TagsTaxonomyModel')->getPopularTags($contentType, $userSettings['limit']);
 
+        if (!$commonTags) {
+            return new Response($this->trans('No Tags'));
+        }
+
         $tags = $this->model('AVCMS\Bundles\Tags\Model\TagsModel')->query()->whereIn('id', array_keys($commonTags))->orderBy('name')->get();
 
         $maxSize = 24; // max font size in pixels
