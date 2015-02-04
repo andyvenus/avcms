@@ -99,6 +99,8 @@ class InstallerController extends Controller
             $cacheClearer = new CacheClearer('cache');
             $cacheClearer->clearCaches(null, true);
 
+            file_put_contents('webmaster/installer_lock.txt', '1');
+
             return new RedirectResponse('../admin');
         }
 
@@ -118,6 +120,8 @@ class InstallerController extends Controller
             $newUser->setSlug($slugGen->slugify($newUser->getUsername()));
 
             $users->save($newUser);
+
+            file_put_contents('webmaster/installer_lock.txt', '1');
 
             return new RedirectResponse('../');
         }
