@@ -19,3 +19,11 @@ modules:
     cachable: true
     default_cache_time: 86400
     accepted_template_types: [panel, content, none]
+  avcms_news:
+    name: AV Scripts News
+    description: Shows the latest AV Scripts news
+    type: admin
+    controller: AVScripts::NewsModuleController::AVSNewsModule
+    cachable: true
+    default_cache_time: 86400
+    accepted_template_types: [panel, none]
