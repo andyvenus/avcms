@@ -121,5 +121,10 @@ avcms.general = {
         else {
             return str;
         }
+    },
+
+    isMobile: function () {
+        try{ document.createEvent("TouchEvent"); return true; }
+        catch(e){ return false; }
     }
 };

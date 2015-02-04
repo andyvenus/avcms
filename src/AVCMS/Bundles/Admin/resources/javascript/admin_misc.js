@@ -36,9 +36,11 @@ $(document).ready(function() {
 
         $('[data-toggle="tooltip"]').tooltip();
 
-        $("select:not(.no_select2)").select2({
-            minimumResultsForSearch: 10
-        });
+        if (avcms.general.isMobile() === false) {
+            $("select:not(.no_select2)").select2({
+                minimumResultsForSearch: 10
+            });
+        }
 
         $(".nano").nanoScroller({ iOSNativeScrolling: false });
 
