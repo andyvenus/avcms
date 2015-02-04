@@ -1,0 +1,16 @@
+{% extends '@admin/simple_page.twig' %}
+
+{% block title %}Copyright Removal{% endblock %}
+
+{% block content_body %}
+    {% if api_response.success == false %}
+        {{ api_response.error }}
+    {% elseif api_response.copyright_status == false %}
+        {% trans with {email: 'sales@avscripts.net'} %}You do not seem to have purchased copyright removal. If you think you are seeing this message in error, contact {email}{% endtrans %}
+    {% else %}
+        <div class="alert alert-success">
+            {% trans %}Thanks for purchasing copyright removal. You can enter your own copyright notice below. Return to this page any time to change it.{% endtrans %}
+        </div>
+        {{ form(form) }}
+    {% endif %}
+{% endblock %}

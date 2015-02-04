@@ -5,3 +5,7 @@ updates:
 check_for_updates:
   path: /update-checker
   defaults: { _controller: AVScripts::UpdaterAdminController::checkForUpdateAction }
+
+copyright_removal:
+  path: /copyright-removal
+  defaults: { _controller: AVScripts::CopyrightRemovalController::copyrightRemovalAction }

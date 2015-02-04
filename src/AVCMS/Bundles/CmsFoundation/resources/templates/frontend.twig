@@ -36,7 +36,13 @@
     {% endblock %}
 
     {% block copyright %}
-        <div class="copyright">{{ app_config.info.name }} by <a href="http://www.avscripts.net">AV Scripts</a></div>
+        <div class="copyright">
+            {% if settings.copyright_message %}
+                {{ settings.copyright_message|raw }}
+            {% else %}
+                {{ app_config.info.name }} by <a href="http://www.avscripts.net">AV Scripts</a>
+            {% endif %}
+        </div>
     {% endblock %}
 {% endblock %}
 </body>
