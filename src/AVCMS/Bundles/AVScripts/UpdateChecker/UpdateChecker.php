@@ -19,12 +19,13 @@ class UpdateChecker
 
     private $rootDir;
 
-    const SERVER = 'http://localhost:8888/avcms-updates/public';
+    private $server;
 
-    public function __construct(array $appConfig, $rootDir)
+    public function __construct(array $appConfig, $rootDir, $server)
     {
         $this->appConfig = $appConfig;
         $this->rootDir = $rootDir;
+        $this->server = $server;
     }
 
     public function isUpToDate()
@@ -92,7 +93,7 @@ class UpdateChecker
             $postData['license_key'] = include $this->rootDir.'/webmaster/license.php';
         }
 
-        $response = $curl->post(self::SERVER.'/latest-version', $postData);
+        $response = $curl->post($this->server.'/latest-version', $postData);
 
         if (!isset($response->success) || $response->success === false) {
             $this->statusMessage = 'Could not get update information';

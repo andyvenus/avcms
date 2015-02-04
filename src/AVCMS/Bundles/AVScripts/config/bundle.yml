@@ -27,3 +27,6 @@ modules:
     cachable: true
     default_cache_time: 86400
     accepted_template_types: [panel, none]
+
+container_params:
+  avs_api_url: http://localhost:8888/avcms-updates/public

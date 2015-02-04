@@ -19,7 +19,7 @@ class UpdaterAdminController extends AdminBaseController
     {
         $appConfigInfo = $this->container->getParameter('app_config')['info'];
 
-        $downloadUrl = UpdateChecker::SERVER.'/download-latest?app_id='.$appConfigInfo['id'];
+        $downloadUrl = $this->container->getParameter('avs_api_url').'/download-latest?app_id='.$appConfigInfo['id'];
 
         return new Response($this->renderAdminSection('@AVScripts/admin/check_for_update.twig', $request->get('ajax_depth'), ['app_info' => $this->container->getParameter('app_config')['info'], 'download_url' => $downloadUrl]));
     }
