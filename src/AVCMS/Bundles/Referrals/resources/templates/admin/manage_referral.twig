@@ -19,21 +19,23 @@
 {% endblock %}
 
 {% block before_form %}
-    <div class="well well-sm">
-        <div class="row">
-            <div class="col-md-12" style="margin-bottom: 15px;">
-                <label for="referral_link">{% trans %}Referral Link{% endtrans %}</label>
-                <input name="referral_link" class="form-control" type="text" value="{{ url('home', {'ref_id': item.id}) }}"/>
+    {% if item.id %}
+        <div class="well well-sm">
+            <div class="row">
+                <div class="col-md-12" style="margin-bottom: 15px;">
+                    <label for="referral_link">{% trans %}Referral Link{% endtrans %}</label>
+                    <input name="referral_link" class="form-control" type="text" value="{{ url('home', {'ref_id': item.id}) }}"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="text-success"><strong>{% trans %}Inbound Clicks{% endtrans %}:</strong> {{ item.inbound }}</span>&nbsp;&nbsp;
+
+                    <span class="text-warning"><strong>{% trans %}Outbound Clicks{% endtrans %}:</strong> {{ item.outbound }}</span>&nbsp;&nbsp;
+
+                    <span class="text-primary"><strong>{% trans %}Registrations{% endtrans %}:</strong> {{ item.conversions }}</span>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <span class="text-success"><strong>{% trans %}Inbound Clicks{% endtrans %}:</strong> {{ item.inbound }}</span>&nbsp;&nbsp;
-
-                <span class="text-warning"><strong>{% trans %}Outbound Clicks{% endtrans %}:</strong> {{ item.outbound }}</span>&nbsp;&nbsp;
-
-                <span class="text-primary"><strong>{% trans %}Registrations{% endtrans %}:</strong> {{ item.conversions }}</span>
-            </div>
-        </div>
-    </div>
+    {% endif %}
 {% endblock %}
