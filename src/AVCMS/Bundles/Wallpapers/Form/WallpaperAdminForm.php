@@ -12,9 +12,12 @@ class WallpaperAdminForm extends AdminContentForm
 {
     protected $itemId;
 
+    protected $import;
+
     public function __construct($itemId, CategoryChoicesProvider $categoryChoicesProvider, $import = false)
     {
         $this->itemId = $itemId;
+        $this->import = $import;
 
         if ($import === false) {
             new FileSelectFields($this, 'admin/wallpapers/find-files', 'admin/wallpapers/upload', 'admin/wallpapers/grab-file');
@@ -85,6 +88,8 @@ class WallpaperAdminForm extends AdminContentForm
 
     public function getValidationRules(Validator $validator)
     {
-        $validator->addRule('slug', new MustNotExist('AVCMS\Bundles\Wallpapers\Model\Wallpapers', 'slug', $this->itemId), 'The URL Slug must be unique, slug already in use');
+        if ($this->import === false) {
+            $validator->addRule('slug', new MustNotExist('AVCMS\Bundles\Wallpapers\Model\Wallpapers', 'slug', $this->itemId), 'The URL Slug must be unique, slug already in use');
+        }
     }
 }
