@@ -34,7 +34,7 @@ avcms.wallpaper_bulk = {
                     var file_extension = file.name.split('.').pop();
                     var valid_extensions = ['png', 'gif', 'jpg', 'jpeg', 'bmp'];
 
-                    if (valid_extensions.indexOf(file_extension) !== -1) {
+                    if (valid_extensions.indexOf(file_extension) !== -1 && window.FileReader !== undefined) {
                         var reader = new FileReader();
                         reader.onload = function (e) {
                             $('.new-image[src=""]').first().attr('src', e.target.result);
