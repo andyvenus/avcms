@@ -32,7 +32,12 @@ avcms.adminTemplate = {
 
         var window_width = $(window).width();
 
-        $('.admin-menu').height(target_height);
+        if (window_width < 992) {
+            $('.admin-menu').height('auto');
+        }
+        else {
+            $('.admin-menu').height(target_height);
+        }
 
         var finder = $('.browser-finder');
         if (finder) {
