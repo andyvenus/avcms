@@ -67,10 +67,7 @@ class ControllerResolver extends BaseControllerResolver
 
     public function getArguments(Request $request, $controller)
     {
-        if (is_callable(array($controller, 'setUp'))) {
-            $controller->setUp($request);
-        }
-        elseif (is_array($controller) && is_callable(array($controller[0], 'setUp'))) {
+        if (is_array($controller) && is_callable(array($controller[0], 'setUp'))) {
             $controller[0]->setUp($request);
         }
 
