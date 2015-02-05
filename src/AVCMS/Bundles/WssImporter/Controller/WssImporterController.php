@@ -101,7 +101,7 @@ class WssImporterController extends Controller
         $session = $this->container->get('session');
 
         if (!$session->has('database_host')) {
-            $this->redirect($this->generateUrl('wss_importer_home'));
+            $this->redirect('wss_importer_home');
         }
 
         $stages = ['wallpapers', 'wallpaper_categories', 'tags', 'tag_relations', 'users', 'wallpaper_comments', 'news', 'news_comments', 'pages', 'links', 'adverts', 'ratings'];
@@ -485,7 +485,7 @@ class WssImporterController extends Controller
                 $url = $this->generateUrl('wss_importer_run', ['stage' => $newStage, 'run' => 1]);
             }
             else {
-                return $this->redirect($this->generateUrl('home'), 302, 'Import Finished');
+                return $this->redirect('home', [], 302, 'Import Finished');
             }
         }
 

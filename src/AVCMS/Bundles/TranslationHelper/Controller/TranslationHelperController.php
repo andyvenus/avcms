@@ -198,7 +198,7 @@ class TranslationHelperController extends Controller
             }
         }
 
-        return $this->redirect($this->generateUrl('translate', ['id' => $translation->getId()]));
+        return $this->redirect('translate', ['id' => $translation->getId()]);
     }
 
     public function downloadTranslationAction($id)
@@ -258,7 +258,7 @@ class TranslationHelperController extends Controller
 
             $this->translations->save($translation);
 
-            return $this->redirect($this->generateUrl('translate', ['id' => $translation->getId()]));
+            return $this->redirect('translate', ['id' => $translation->getId()]);
         }
 
         return new Response($this->render('@TranslationHelper/add_edit_translation.twig', ['form' => $form->createView(), 'translation' => $translation]));

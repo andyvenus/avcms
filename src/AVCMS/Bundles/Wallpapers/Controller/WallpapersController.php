@@ -143,7 +143,7 @@ class WallpapersController extends Controller
     {
         if (!$this->isGranted(['PERM_SUBMIT_WALLPAPERS'])) {
             if (!$this->isGranted(['IS_AUTHENTICATED_FULLY', 'IS_AUTHENTICATED_REMEMBERED'])) {
-                return $this->redirect($this->generateUrl('login'), 302, 'info', $this->trans('Please login to submit a wallpaper'));
+                return $this->redirect('login', [], 302, 'info', $this->trans('Please login to submit a wallpaper'));
             }
             else {
                 throw new AccessDeniedException;
@@ -158,7 +158,7 @@ class WallpapersController extends Controller
 
         $pendingCount = $submissions->query()->where('submitter_id', $this->activeUser()->getId())->count();
         if ($pendingCount >= $this->setting('wallpapers_max_submissions')) {
-            return $this->redirect($this->generateUrl('home'), 302, 'info', $this->trans('You have already submitted {count} wallpapers, please wait for them to be accepted first', ['count' => $this->setting('wallpapers_max_submissions')]));
+            return $this->redirect('home', [], 302, 'info', $this->trans('You have already submitted {count} wallpapers, please wait for them to be accepted first', ['count' => $this->setting('wallpapers_max_submissions')]));
         }
 
         $newSubmission = $submissions->newEntity();

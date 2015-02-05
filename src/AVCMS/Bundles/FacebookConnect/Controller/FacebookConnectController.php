@@ -59,7 +59,7 @@ class FacebookConnectController extends Controller
             $token->setUser($users->refreshUser($newUser));
             $token->setAuthenticated(true);
 
-            return $this->redirect($this->generateUrl('home'));
+            return $this->redirect('home');
         }
 
         $logoutUrl = $facebookConnect->getHelper()->getLogoutUrl($session, $this->generateUrl('logout', [], UrlGeneratorInterface::ABSOLUTE_URL));

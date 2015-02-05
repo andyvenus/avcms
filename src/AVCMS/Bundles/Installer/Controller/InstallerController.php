@@ -36,7 +36,7 @@ class InstallerController extends Controller
 
     public function installerHomeAction()
     {
-        return $this->redirect($this->generateUrl('new_install'));
+        return $this->redirect('new_install');
     }
 
     public function newInstallAction(Request $request)
@@ -45,7 +45,7 @@ class InstallerController extends Controller
 
         // Secure, if database.php already exists only run update-bundles
         if (file_exists($databaseConfigFile)) {
-            return $this->redirect($this->generateUrl('update_bundles'));
+            return $this->redirect('update_bundles');
         }
 
         $form = $this->buildForm(new NewInstallForm(), $request);
@@ -83,7 +83,7 @@ class InstallerController extends Controller
                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
                 ");
 
-                return $this->redirect($this->generateUrl('update_bundles'));
+                return $this->redirect('update_bundles');
             }
         }
 

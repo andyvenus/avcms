@@ -63,17 +63,20 @@ abstract class Controller extends ContainerAware
     }
 
     /**
-     * Returns a RedirectResponse to the given URL.
+     * Returns a RedirectResponse to the given route.
      *
-     * @param string $url The URL to redirect to
+     * @param $route
+     * @param $parameters
      * @param int $status The status code to use for the Response
      *
      * @param null $flashMessageType
      * @param null $flashMessage
      * @return RedirectResponse
      */
-    public function redirect($url, $status = 302, $flashMessageType = null, $flashMessage = null)
+    public function redirect($route, $parameters = [], $status = 302, $flashMessageType = null, $flashMessage = null)
     {
+        $url = $this->generateUrl($route, $parameters);
+
         if ($flashMessage && $flashMessageType) {
             $this->container->get('session');
             $this->get('session')->getFlashBag()->add($flashMessageType, $flashMessage);
@@ -84,6 +87,20 @@ abstract class Controller extends ContainerAware
 
     /**
      * Get a database model
+     *
+     * You can use just the base class name (without namespace) if the Model is in the
+     * same bundle as the calling controller. You can also use the base class name if
+     * the model is in a bundle of the same name.
+     *
+     * Examples:
+     *
+     * "Users"              Will look for [ControllerBundleNamespace]/Model/Users and if not found
+     *                      it will see if there's a bundle called "Users" and try to find
+     *                      [UsersBundleNamespace]/Model/Users
+     *
+     * "Blog:Users"         Will find a model called "Users" in the bundle "Blog"
+     *
+     * "Any\Namespace\Users"    Will load the explicitly requested model class
      *
      * @param $modelName
      * @return \AV\Model\Model|mixed
@@ -117,7 +134,10 @@ abstract class Controller extends ContainerAware
     }
 
     /**
-     * Build a form
+     * Uses a FormBlueprint to build a FormHandler instance.
+     *
+     * If a request is passed in the form will automatically handle the request meaning
+     * you can then use the isSubmitted method to check if the form was submitted or not.
      *
      * @param FormBlueprint $form
      * @param null $request
@@ -132,6 +152,8 @@ abstract class Controller extends ContainerAware
     }
 
     /**
+     * Generate the URL to a route
+     *
      * @param $route
      * @param array $parameters
      * @param bool $referenceType

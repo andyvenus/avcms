@@ -60,7 +60,7 @@ class UserForgotPasswordController extends Controller
         $reset = $resets->findReset($request->get('userId'), $request->get('code'));
 
         if ($reset === null) {
-            return $this->redirect($this->generateUrl('home'), 302, 'error', $this->trans("The password reset request is invalid"));
+            return $this->redirect('home', [], 302, 'error', $this->trans("The password reset request is invalid"));
         }
 
         $form = $this->buildForm(new ChangePasswordForm(), $request);
@@ -77,7 +77,7 @@ class UserForgotPasswordController extends Controller
 
                 $resets->deleteUserResets($user->getId());
 
-                return $this->redirect($this->generateUrl('home'), 302, 'info', $this->trans("Your password has been reset"));
+                return $this->redirect('home', [], 302, 'info', $this->trans("Your password has been reset"));
             }
         }
 

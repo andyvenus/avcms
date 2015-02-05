@@ -43,7 +43,7 @@ class ContactUsController extends Controller
 
             $mailer->send($email);
 
-            return $this->redirect($this->generateUrl('home'), 302, 'success', $this->trans('Your message has been sent, we will respond to {email}', ['email' => $emailAddress]));
+            return $this->redirect('home', [], 302, 'success', $this->trans('Your message has been sent, we will respond to {email}', ['email' => $emailAddress]));
         }
 
         return new Response($this->render('@ContactUs/contact_us.twig', ['form' => $form->createView()]));
