@@ -39,9 +39,9 @@ class BlogAdminController extends AdminBaseController
 
     public function editPostAction(Request $request)
     {
-        $form_blueprint = new BlogPostAdminForm($request->get('id', 0), $this->activeUser()->getId());
+        $formBlueprint = new BlogPostAdminForm($request->get('id', 0), $this->activeUser()->getId());
 
-        return $this->handleEdit($request, $this->blogPosts, $form_blueprint, 'blog_edit_post', '@Blog/admin/edit_post.twig', array());
+        return $this->handleEdit($request, $this->blogPosts, $formBlueprint, 'blog_edit_post', '@Blog/admin/edit_post.twig', array());
     }
 
     public function finderAction(Request $request)
