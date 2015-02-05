@@ -45,7 +45,7 @@ class WallpapersImageController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $cacheDir = $this->container->getParameter('web_path').'/wallpapers/'.$wallpaper->getSlug();
+        $cacheDir = $this->getParam('web_path').'/wallpapers/'.$wallpaper->getSlug();
         if ($thumbnail === true) {
             $cacheDir .= '/thumbnail';
             $filename = $thumbnailSize.'.'.pathinfo($wallpaper->getFile(), PATHINFO_EXTENSION);
@@ -72,7 +72,7 @@ class WallpapersImageController extends Controller
         $imageManager = new ImageManager(['driver' => $this->setting('wallpaper_image_manipulation_library')]);
 
         try {
-            $img = $imageManager->make($this->container->getParameter('root_dir') . '/' . $this->bundle->config->wallpapers_dir . '/' . $wallpaper->getFile());
+            $img = $imageManager->make($this->getParam('root_dir') . '/' . $this->bundle->config->wallpapers_dir . '/' . $wallpaper->getFile());
         }
         catch (NotReadableException $e) {
             throw $this->createNotFoundException('Wallpaper Source Image Not Found');

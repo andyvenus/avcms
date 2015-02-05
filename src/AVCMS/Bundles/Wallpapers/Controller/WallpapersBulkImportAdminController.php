@@ -178,7 +178,7 @@ class WallpapersBulkImportAdminController extends AdminBaseController
 
     public function bulkUploadAction(Request $request)
     {
-        $form = $this->buildForm(new BulkUploadForm(new RecursiveDirectoryChoicesProvider($this->container->getParameter('root_dir').'/'.$this->bundle->config->wallpapers_dir, false)), $request);
+        $form = $this->buildForm(new BulkUploadForm(new RecursiveDirectoryChoicesProvider($this->getParam('root_dir').'/'.$this->bundle->config->wallpapers_dir, false)), $request);
 
         return new Response($this->renderAdminSection('@Wallpapers/admin/bulk_upload.twig', ['form' => $form->createView()]));
     }
@@ -219,7 +219,7 @@ class WallpapersBulkImportAdminController extends AdminBaseController
         }
 
         $folder = str_replace(['.', '@'], ['', '/'], $request->request->get('ids'));
-        $fullPath = $this->container->getParameter('root_dir').'/'.$this->bundle->config->wallpapers_dir.'/'.$folder;
+        $fullPath = $this->getParam('root_dir').'/'.$this->bundle->config->wallpapers_dir.'/'.$folder;
         if (!$folder || !file_exists($fullPath)) {
             return new JsonResponse(['success' => 0, 'error' => $this->trans('Folder cannot be deleted because it doesn\'t exist')]);
         }

@@ -17,11 +17,11 @@ class UpdaterAdminController extends AdminBaseController
 {
     public function updatesAction(Request $request)
     {
-        $appConfigInfo = $this->container->getParameter('app_config')['info'];
+        $appConfigInfo = $this->getParam('app_config')['info'];
 
-        $downloadUrl = $this->container->getParameter('avs_api_url').'/download-latest?app_id='.$appConfigInfo['id'];
+        $downloadUrl = $this->getParam('avs_api_url').'/download-latest?app_id='.$appConfigInfo['id'];
 
-        return new Response($this->renderAdminSection('@AVScripts/admin/check_for_update.twig', ['app_info' => $this->container->getParameter('app_config')['info'], 'download_url' => $downloadUrl]));
+        return new Response($this->renderAdminSection('@AVScripts/admin/check_for_update.twig', ['app_info' => $this->getParam('app_config')['info'], 'download_url' => $downloadUrl]));
     }
 
     public function checkForUpdateAction()

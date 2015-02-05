@@ -18,8 +18,8 @@ class CopyrightRemovalController extends AdminBaseController
 {
     public function copyrightRemovalAction(Request $request)
     {
-        $appInfo = $this->container->getParameter('app_config')['info'];
-        $webmasterDir = $this->container->getParameter('root_dir').'/webmaster';
+        $appInfo = $this->getParam('app_config')['info'];
+        $webmasterDir = $this->getParam('root_dir').'/webmaster';
 
         $form = $this->buildForm(new CopyrightRemovalForm($this->setting('copyright_message')), $request);
 
@@ -33,7 +33,7 @@ class CopyrightRemovalController extends AdminBaseController
         if (file_exists($webmasterDir.'/license.php')) {
             $curl = new Curl();
 
-            $apiResponse = $curl->post($this->container->getParameter('avs_api_url') . '/validate-copyright-removal', ['app_id' => $appInfo['id'], 'license_key' => include $webmasterDir . '/license.php']);
+            $apiResponse = $curl->post($this->getParam('avs_api_url') . '/validate-copyright-removal', ['app_id' => $appInfo['id'], 'license_key' => include $webmasterDir . '/license.php']);
 
             if (!is_object($apiResponse)) {
                 $apiResponse = ['success' => false, 'error' => 'Invalid Server Response'];

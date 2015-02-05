@@ -18,7 +18,7 @@ class TranslationExtractionController extends Controller
     {
         $this->saveStringsAction($request);
 
-        $rootDir = $this->container->getParameter('root_dir');
+        $rootDir = $this->getParam('root_dir');
         $bundle = $request->get('bundle');
         $bundleConfig = $this->container->get('bundle_manager')->getBundleConfig($bundle);
         $bundleDir = $rootDir.'/'.$bundleConfig->directory;
@@ -94,7 +94,7 @@ class TranslationExtractionController extends Controller
 
     public function saveStringsAction(Request $request)
     {
-        $rootDir = $this->container->getParameter('root_dir');
+        $rootDir = $this->getParam('root_dir');
         $bundle = $request->get('bundle');
         $bundleConfig = $this->container->get('bundle_manager')->getBundleConfig($bundle);
         $bundleDir = $rootDir.'/'.$bundleConfig->directory;

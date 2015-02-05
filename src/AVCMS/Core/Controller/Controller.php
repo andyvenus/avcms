@@ -100,7 +100,7 @@ abstract class Controller extends ContainerAware
      *
      * "Blog:Users"         Will find a model called "Users" in the bundle "Blog"
      *
-     * "Any\Namespace\Users"    Will load the explicitly requested model class
+     * "Namespace\Users"    Will load the explicitly requested model class
      *
      * @param $modelName
      * @return \AV\Model\Model|mixed
@@ -206,6 +206,17 @@ abstract class Controller extends ContainerAware
     protected function get($service)
     {
         return $this->container->get($service);
+    }
+
+    /**
+     * Get a parameter from the container
+     *
+     * @param $paramName
+     * @return mixed
+     */
+    protected function getParam($paramName)
+    {
+        return $this->getParam($paramName);
     }
 
     /**

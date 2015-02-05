@@ -89,7 +89,7 @@ class ManageBundlesController extends BundleBaseController
             return new Response('Bundle not found');
         }
 
-        $appDir = $this->container->getParameter('app_dir');
+        $appDir = $this->getParam('app_dir');
         $app_bundles_config = Yaml::parse(file_get_contents($appDir.'/config/bundles.yml'));
         $bundle_config = array();
         if (isset($app_bundles_config[$bundle])) {

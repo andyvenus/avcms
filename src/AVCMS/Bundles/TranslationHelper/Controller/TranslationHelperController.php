@@ -92,7 +92,7 @@ class TranslationHelperController extends Controller
 
         $formBp = new FormBlueprint();
 
-        $folder = $this->container->getParameter('root_dir').'/webmaster/user_translations/'.$this->activeUser()->getId().'/'.$translation->getId();
+        $folder = $this->getParam('root_dir').'/webmaster/user_translations/'.$this->activeUser()->getId().'/'.$translation->getId();
         $file = $folder.'/'.$bundle.'.php';
 
         if (file_exists($file)) {
@@ -159,7 +159,7 @@ class TranslationHelperController extends Controller
 
     protected function getBundleTranslations($bundle, $user, Translation $translation)
     {
-        $folder = $this->container->getParameter('root_dir').'/webmaster/user_translations/'.$user.'/'.$translation->getId();
+        $folder = $this->getParam('root_dir').'/webmaster/user_translations/'.$user.'/'.$translation->getId();
         $file = $folder.'/'.$bundle.'.php';
 
         if (file_exists($file)) {
@@ -213,7 +213,7 @@ class TranslationHelperController extends Controller
 
         $zip = new \ZipArchive();
 
-        $zipPath = $this->container->getParameter('cache_dir').'/'.$langName.'-'.$translation->getId().'.zip';
+        $zipPath = $this->getParam('cache_dir').'/'.$langName.'-'.$translation->getId().'.zip';
         if ($zip->open($zipPath, ZipArchive::CREATE)!==TRUE) {
             exit("cannot open");
         }
@@ -283,7 +283,7 @@ class TranslationHelperController extends Controller
 
     protected function getTranslationsDir($user, $id)
     {
-        return $this->container->getParameter('root_dir').'/webmaster/user_translations/'.$user.'/'.$id;
+        return $this->getParam('root_dir').'/webmaster/user_translations/'.$user.'/'.$id;
     }
 
     protected function getBundleStrings($bundle)
