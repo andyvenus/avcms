@@ -8,7 +8,6 @@
 namespace AVCMS\Bundles\AVScripts\Controller;
 
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
-use AVCMS\Bundles\AVScripts\UpdateChecker\UpdateChecker;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +20,7 @@ class UpdaterAdminController extends AdminBaseController
 
         $downloadUrl = $this->getParam('avs_api_url').'/download-latest?app_id='.$appConfigInfo['id'];
 
-        return new Response($this->renderAdminSection('@AVScripts/admin/check_for_update.twig', ['app_info' => $this->getParam('app_config')['info'], 'download_url' => $downloadUrl]));
+        return new Response($this->renderAdminSection('@AVScripts/admin/check_for_update.twig', ['download_url' => $downloadUrl]));
     }
 
     public function checkForUpdateAction()
