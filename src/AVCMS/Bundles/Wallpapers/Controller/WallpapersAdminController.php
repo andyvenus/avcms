@@ -61,7 +61,7 @@ class WallpapersAdminController extends AdminBaseController
         $previousSlug = $helper->getEntity()->getSlug();
 
         if ($helper->formValid()) {
-            $imagePath = $this->getParam('root_dir').'/'.$this->bundle->config->wallpapers_dir.'/'.$helper->getForm()->getData('file');
+            $imagePath = $this->wallpaperPath($helper->getForm()->getData('file'));
 
             if (!file_exists($imagePath)) {
                 $form->addCustomErrors([new FormError('file', 'File does not exist: '.$imagePath)]);
@@ -88,8 +88,7 @@ class WallpapersAdminController extends AdminBaseController
         }
 
         if ($helper->formValid() && $previousSlug) {
-            $cacheClearer = new CacheClearer($this->getParam('root_dir').'/'.$this->getParam('web_path').'/'.$this->bundle->config->web_dir);
-            $cacheClearer->clearCaches([$previousSlug]);
+            $this->clearWallpaperCaches([$previousSlug]);
         }
 
         return $this->createEditResponse(
@@ -122,11 +121,9 @@ class WallpapersAdminController extends AdminBaseController
         if ($ids) {
             $ids = (array) $ids;
 
-            $cacheClearer = new CacheClearer($this->getParam('root_dir').'/'.$this->getParam('web_path').'/'.$this->bundle->config->web_dir);
-
             $wallpapers = $this->wallpapers->query()->whereIn('id', $ids)->get();
             foreach ($wallpapers as $wallpaper) {
-                $cacheClearer->clearCaches([$wallpaper->getSlug()]);
+                $this->clearWallpaperCaches($wallpaper->getSlug());
             }
         }
 
@@ -147,7 +144,7 @@ class WallpapersAdminController extends AdminBaseController
     {
         $q = $request->get('q');
 
-        $dir = $this->bundle->config->wallpapers_dir;
+        $dir = $this->wallpaperPath();
 
         $itr = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir));
 
@@ -177,13 +174,11 @@ class WallpapersAdminController extends AdminBaseController
             $file = $request->files->get($request->query->get('type'), null)['upload'];
         }
 
-        $wpDir = $this->getParam('root_dir').'/'.$this->bundle->config->wallpapers_dir.'/';
-
         if ($request->request->has('folder')) {
-            $path = $wpDir.str_replace('.', '', $request->request->get('folder'));
+            $path = $this->wallpaperPath(str_replace('.', '', $request->request->get('folder')));
         }
         else {
-            $path = $wpDir.$file->getClientOriginalName()[0];
+            $path = $this->wallpaperPath($file->getClientOriginalName()[0]);
         }
 
         $handler = new UploadedFileHandler(UploadedFileHandler::getImageFiletypes());
@@ -213,7 +208,7 @@ class WallpapersAdminController extends AdminBaseController
 
             $handler = new CurlFileHandler(CurlFileHandler::getImageFiletypes());
 
-            $path = $this->getParam('root_dir') . '/' . $this->bundle->config->wallpapers_dir . '/' . basename($fileUrl)[0];
+            $path = $this->wallpaperPath(basename($fileUrl)[0]);
 
             if (($fullPath = $handler->moveFile($fileUrl, $file, $path)) === false) {
                 $fileJson = ['success' => false, 'error' => $handler->getTranslatedError($this->translator)];
@@ -280,7 +275,7 @@ class WallpapersAdminController extends AdminBaseController
     {
         $file = str_replace('..', '', $request->get('file'));
 
-        $filePath = $this->getParam('root_dir') . '/' . $this->bundle->config->wallpapers_dir . '/' . $file;
+        $filePath = $this->wallpaperPath($file);
 
         if (!file_exists($filePath)) {
             throw $this->createNotFoundException();
@@ -303,12 +298,28 @@ class WallpapersAdminController extends AdminBaseController
         return new WallpaperCategoryAdminForm(new CategoryChoicesProvider($this->model('WallpaperCategories'), false));
     }
 
+    protected function clearWallpaperCaches(array $dirs)
+    {
+        $cacheClearer = new CacheClearer($this->getParam('root_dir').'/'.$this->getParam('web_path').'/'.$this->bundle->config->web_dir);
+        $cacheClearer->clearCaches($dirs);
+    }
+
+    protected function wallpaperPath($file = null)
+    {
+        $path = $this->getParam('root_dir') . '/' . $this->bundle->config->wallpapers_dir;
+        if ($file !== null) {
+            $path .= '/' . $file;
+        }
+
+        return $path;
+    }
+
     protected function getSharedTemplateVars()
     {
-        $template_vars = parent::getSharedTemplateVars();
+        $templateVars = parent::getSharedTemplateVars();
 
-        $template_vars['finder_filters_form'] = $this->buildForm(new WallpapersAdminFiltersForm(new CategoryChoicesProvider($this->model('WallpaperCategories'), true, true)))->createView();
+        $templateVars['finder_filters_form'] = $this->buildForm(new WallpapersAdminFiltersForm(new CategoryChoicesProvider($this->model('WallpaperCategories'), true, true)))->createView();
 
-        return $template_vars;
+        return $templateVars;
     }
 } 
