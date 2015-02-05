@@ -61,7 +61,7 @@ class ModulesAdminController extends AdminBaseController
             }
         }
 
-        return new Response($this->renderAdminSection('@CmsFoundation/admin/add_module.twig', $request->get('ajax_depth'), array('item' => $position, 'module_positions' => $modulePositions)));
+        return new Response($this->renderAdminSection('@CmsFoundation/admin/add_module.twig', array('item' => $position, 'module_positions' => $modulePositions)));
     }
 
     public function manageSelectedModuleAction(Request $request)
@@ -129,7 +129,7 @@ class ModulesAdminController extends AdminBaseController
             ));
         }
 
-        return new Response($this->renderAdminSection('@CmsFoundation/admin/add_module_selected.twig', $request->get('ajax_depth'), array(
+        return new Response($this->renderAdminSection('@CmsFoundation/admin/add_module_selected.twig', array(
             'item' => $moduleConfig,
             'position' => $position,
             'module' => $module,
@@ -147,7 +147,7 @@ class ModulesAdminController extends AdminBaseController
 
         $modules = $this->container->get('module_manager')->getPositionModules($request->get('id'), array(), false, false, true);
 
-        return new Response($this->renderAdminSection('@CmsFoundation/admin/manage_position_modules.twig', $request->get('ajax_depth'), array(
+        return new Response($this->renderAdminSection('@CmsFoundation/admin/manage_position_modules.twig', array(
             'item' => $position,
             'modules' => $modules,
         )));
@@ -245,9 +245,9 @@ class ModulesAdminController extends AdminBaseController
         return $templates;
     }
 
-    protected function getSharedTemplateVars($ajax_depth)
+    protected function getSharedTemplateVars()
     {
-        $template_vars = parent::getSharedTemplateVars($ajax_depth);
+        $template_vars = parent::getSharedTemplateVars();
 
         $template_vars['finder_filters_form'] = $this->buildForm(new ModulePositionsAdminFiltersForm())->createView();
 

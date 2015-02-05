@@ -87,7 +87,7 @@ class MenusAdminController extends AdminBaseController
             throw $this->createNotFoundException(sprintf("Menu %s not found", $request->get('menu')));
         }
 
-        return new Response($this->renderAdminSection('@CmsFoundation/admin/select_menu_item.twig', $request->get('ajax_depth'), ['types' => $types, 'menu' => $menu]));
+        return new Response($this->renderAdminSection('@CmsFoundation/admin/select_menu_item.twig', ['types' => $types, 'menu' => $menu]));
     }
 
     public function editMenuItemAction(Request $request)
@@ -152,7 +152,7 @@ class MenusAdminController extends AdminBaseController
 
         $menu_items = $menuManager->getMenuItemConfigs($menu->getId());
 
-        return new Response($this->renderAdminSection('@CmsFoundation/admin/manage_menu_items.twig', $request->get('ajax_depth'), array(
+        return new Response($this->renderAdminSection('@CmsFoundation/admin/manage_menu_items.twig', array(
             'item' => $menu,
             'menu_items' => $menu_items,
         )));

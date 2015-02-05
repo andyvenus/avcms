@@ -43,6 +43,6 @@ class CopyrightRemovalController extends AdminBaseController
             $apiResponse = ['success' => true];
         }
 
-        return new Response($this->renderAdminSection('@AVScripts/admin/copyright_removal.twig', $request->get('ajax_depth'), ['api_response' => $apiResponse, 'form' => $form->createView()]));
+        return new Response($this->renderAdminSection('@AVScripts/admin/copyright_removal.twig', ['api_response' => $apiResponse, 'form' => $form->createView()]));
     }
 }

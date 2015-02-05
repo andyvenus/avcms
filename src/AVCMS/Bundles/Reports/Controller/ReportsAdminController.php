@@ -121,9 +121,9 @@ class ReportsAdminController extends AdminBaseController
         return $this->handleDelete($request, $this->reports);
     }
 
-    protected function getSharedTemplateVars($ajaxDepth)
+    protected function getSharedTemplateVars()
     {
-        $templateVars = parent::getSharedTemplateVars($ajaxDepth);
+        $templateVars = parent::getSharedTemplateVars();
 
         $contentTypes = $this->reportTypes->getContentTypes();
 

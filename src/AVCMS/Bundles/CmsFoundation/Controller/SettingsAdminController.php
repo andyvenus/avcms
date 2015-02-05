@@ -52,7 +52,6 @@ class SettingsAdminController extends AdminBaseController
 
         return new Response($this->renderAdminSection(
                 '@CmsFoundation/admin/settings.twig',
-                $request->get('ajax_depth'),
                 array('form' => $form->createView())
             )
         );

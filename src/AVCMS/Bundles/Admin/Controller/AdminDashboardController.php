@@ -14,6 +14,6 @@ class AdminDashboardController extends AdminBaseController
 {
     public function dashboardAction(Request $request)
     {
-        return new Response($this->renderAdminSection('@Admin/dashboard.twig', $request->get('ajax_depth')));
+        return new Response($this->renderAdminSection('@Admin/dashboard.twig'));
     }
 } 

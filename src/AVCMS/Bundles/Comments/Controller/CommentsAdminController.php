@@ -105,12 +105,12 @@ class CommentsAdminController extends AdminBaseController
 
         }
 
-        return new Response($this->renderAdminSection('@Comments/admin/comments_finder.twig', $request->get('ajax_depth'), ['comments' => $comments]));
+        return new Response($this->renderAdminSection('@Comments/admin/comments_finder.twig', ['comments' => $comments]));
     }
 
-    protected function getSharedTemplateVars($ajaxDepth)
+    protected function getSharedTemplateVars()
     {
-        $templateVars = parent::getSharedTemplateVars($ajaxDepth);
+        $templateVars = parent::getSharedTemplateVars();
 
         $contentTypes = $this->commentTypes->getContentTypes();
 

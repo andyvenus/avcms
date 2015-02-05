@@ -53,9 +53,9 @@ class PagesAdminController extends AdminBaseController
         return $this->handleDelete($request, $this->pages);
     }
 
-    protected function getSharedTemplateVars($ajaxDepth)
+    protected function getSharedTemplateVars()
     {
-        $templateVars = parent::getSharedTemplateVars($ajaxDepth);
+        $templateVars = parent::getSharedTemplateVars();
 
         $templateVars['finder_filters_form'] = $this->buildForm(new PagesAdminFiltersForm())->createView();
 

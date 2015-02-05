@@ -62,7 +62,6 @@ class WallpaperSubmissionsAdminController extends AdminBaseController
         else {
             return new Response($this->renderAdminSection(
                 '@Wallpapers/admin/review_wallpaper_submission.twig',
-                $request->get('ajax_depth'),
                 ['form' => $form->createView(), 'item' => $wallpaperSubmission]
             ));
         }
@@ -85,9 +84,9 @@ class WallpaperSubmissionsAdminController extends AdminBaseController
         return $this->handleDelete($request, $this->wallpaperSubmissions);
     }
 
-    protected function getSharedTemplateVars($ajaxDepth)
+    protected function getSharedTemplateVars()
     {
-        $templateVars = parent::getSharedTemplateVars($ajaxDepth);
+        $templateVars = parent::getSharedTemplateVars();
 
         $templateVars['finder_filters_form'] = $this->buildForm(new WallpaperSubmissionsAdminFiltersForm())->createView();
 

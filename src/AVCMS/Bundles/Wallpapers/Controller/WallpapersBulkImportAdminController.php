@@ -129,7 +129,7 @@ class WallpapersBulkImportAdminController extends AdminBaseController
 
         $importedFiles = $this->wallpapers->query()->where('file', 'LIKE', $folder.'%')->count();
 
-        return new Response($this->renderAdminSection('@Wallpapers/admin/wallpaper_bulk_import.twig', $request->get('ajax_depth'), [
+        return new Response($this->renderAdminSection('@Wallpapers/admin/wallpaper_bulk_import.twig', [
             'item' => ['id' => $folder],
             'folder' => $folder,
             'form' => $form->createView(),
@@ -180,7 +180,7 @@ class WallpapersBulkImportAdminController extends AdminBaseController
     {
         $form = $this->buildForm(new BulkUploadForm(new RecursiveDirectoryChoicesProvider($this->container->getParameter('root_dir').'/'.$this->bundle->config->wallpapers_dir, false)), $request);
 
-        return new Response($this->renderAdminSection('@Wallpapers/admin/bulk_upload.twig', $request->get('ajax_depth'), ['form' => $form->createView()]));
+        return new Response($this->renderAdminSection('@Wallpapers/admin/bulk_upload.twig', ['form' => $form->createView()]));
     }
 
     public function addFolderAction(Request $request)
@@ -233,9 +233,9 @@ class WallpapersBulkImportAdminController extends AdminBaseController
         }
     }
 
-    protected function getSharedTemplateVars($ajaxDepth)
+    protected function getSharedTemplateVars()
     {
-        $templateVars = parent::getSharedTemplateVars($ajaxDepth);
+        $templateVars = parent::getSharedTemplateVars();
 
         $fbp = new WallpapersBulkImportFiltersForm();
         $fbp->remove('order');

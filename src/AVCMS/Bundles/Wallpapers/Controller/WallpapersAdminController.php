@@ -260,7 +260,7 @@ class WallpapersAdminController extends AdminBaseController
             return new JsonResponse(['success' => false, 'form' => $form->createView()->getJsonResponseData()]);
         }
 
-        return new Response($this->renderAdminSection('@Wallpapers/admin/manage_resolutions.twig', $request->get('ajax_depth'), [
+        return new Response($this->renderAdminSection('@Wallpapers/admin/manage_resolutions.twig', [
             'form' => $form->createView()
 
         ]));
@@ -306,9 +306,9 @@ class WallpapersAdminController extends AdminBaseController
         return new WallpaperCategoryAdminForm(new CategoryChoicesProvider($this->model('WallpaperCategories'), false));
     }
 
-    protected function getSharedTemplateVars($ajax_depth)
+    protected function getSharedTemplateVars()
     {
-        $template_vars = parent::getSharedTemplateVars($ajax_depth);
+        $template_vars = parent::getSharedTemplateVars();
 
         $template_vars['finder_filters_form'] = $this->buildForm(new WallpapersAdminFiltersForm(new CategoryChoicesProvider($this->model('WallpaperCategories'), true, true)))->createView();
 

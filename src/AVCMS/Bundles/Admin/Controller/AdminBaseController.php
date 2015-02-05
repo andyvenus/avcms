@@ -29,13 +29,12 @@ abstract class AdminBaseController extends Controller
      * Renders an admin template with the shared context vars
      *
      * @param $template
-     * @param null $ajaxDepth
      * @param array $context
-     * @return string|Response
+     * @return string
      */
-    protected function renderAdminSection($template, $ajaxDepth = null, $context = array())
+    protected function renderAdminSection($template, $context = array())
     {
-        $vars = $this->getSharedTemplateVars($ajaxDepth);
+        $vars = $this->getSharedTemplateVars();
 
         $context = array_merge($vars, $context);
 
@@ -45,20 +44,16 @@ abstract class AdminBaseController extends Controller
     /**
      * Get the shared template context and automatically set the browser template if set
      *
-     * @param $ajaxDepth
      * @return array
      */
-    protected function getSharedTemplateVars($ajaxDepth)
+    protected function getSharedTemplateVars()
     {
-        $templateVars = array('ajax_depth' => $ajaxDepth);
+        $templateVars = [];
 
         if (isset($this->browserTemplate)) {
             $templateVars['browser_template'] = $this->browserTemplate;
         }
 
-        if ($ajaxDepth == 'editor') {
-            return $templateVars;
-        }
         return $templateVars;
     }
 
@@ -84,7 +79,6 @@ abstract class AdminBaseController extends Controller
 
         return new Response($this->renderAdminSection(
             $template,
-            $request->get('ajax_depth'),
             $templateVars
         ));
     }
@@ -181,7 +175,6 @@ abstract class AdminBaseController extends Controller
 
             return new Response($this->renderAdminSection(
                 $template,
-                $request->get('ajax_depth'),
                 $templateVars
             ));
         }

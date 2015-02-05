@@ -36,6 +36,6 @@ class LicenseController extends AdminBaseController
             }
         }
 
-        return new Response($this->renderAdminSection('@AVScripts/admin/license_key_page.twig', $request->get('ajax_depth'), ['form' => $form->createView()]));
+        return new Response($this->renderAdminSection('@AVScripts/admin/license_key_page.twig', ['form' => $form->createView()]));
     }
 }

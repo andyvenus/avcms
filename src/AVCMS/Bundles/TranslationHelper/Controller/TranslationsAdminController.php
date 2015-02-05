@@ -48,9 +48,9 @@ class TranslationsAdminController extends AdminBaseController
         return $this->handleDelete($request, $this->translations);
     }
 
-    protected function getSharedTemplateVars($ajaxDepth)
+    protected function getSharedTemplateVars()
     {
-        $templateVars = parent::getSharedTemplateVars($ajaxDepth);
+        $templateVars = parent::getSharedTemplateVars();
 
         $templateVars['finder_filters_form'] = $this->buildForm(new TranslationsAdminFiltersForm())->createView();
 

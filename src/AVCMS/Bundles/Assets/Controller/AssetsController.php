@@ -33,7 +33,6 @@ class AssetsController extends AdminBaseController
         if ($request->get('ajax_depth') !== null || !$request->isXmlHttpRequest()) {
             return new Response($this->renderAdminSection(
                     '@Assets/asset_regen.twig',
-                    $request->get('ajax_depth'),
                     array('error' => $error)
                 )
             );

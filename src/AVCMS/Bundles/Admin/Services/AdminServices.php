@@ -52,5 +52,11 @@ class AdminServices implements ServicesInterface
         $container->register('admin.access_map.fully', 'Symfony\Component\Security\Http\AccessMap')
             ->addMethodCall('add', [new Reference('admin.request_matcher'), ['IS_AUTHENTICATED_FULLY']])
         ;
+
+        // AJAX DEPTH TWIG EXTENSION
+        $container->register('ajax_depth.twig_extension', 'AVCMS\Bundles\Admin\TwigExtension\AjaxDepthTwigExtension')
+            ->setArguments([new Reference('request.stack')])
+            ->addTag('twig.extension')
+        ;
     }
 }

@@ -69,9 +69,9 @@ class BlogAdminController extends AdminBaseController
         return $this->handleTogglePublished($request, $this->blogPosts);
     }
 
-    protected function getSharedTemplateVars($ajaxDepth)
+    protected function getSharedTemplateVars()
     {
-        $templateVars = parent::getSharedTemplateVars($ajaxDepth);
+        $templateVars = parent::getSharedTemplateVars();
 
         $templateVars['finder_filters_form'] = $this->buildForm(new BlogPostsFilterForm())->createView();
 

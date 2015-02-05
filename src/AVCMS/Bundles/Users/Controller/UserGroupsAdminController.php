@@ -128,14 +128,14 @@ class UserGroupsAdminController extends AdminBaseController
             $permissionTypes['ADMIN'] = $this->trans('Admin Permissions');
         }
 
-        return new Response($this->renderAdminSection('@Users/admin/manage_user_group_permissions.twig', $request->get('ajax_depth'),
+        return new Response($this->renderAdminSection('@Users/admin/manage_user_group_permissions.twig',
             ['form' => $form->createView(), 'grouped_permissions' => $groupedPermissions, 'item' => $userGroup, 'permission_types' => $permissionTypes]
         ));
     }
 
-    protected function getSharedTemplateVars($ajax_depth)
+    protected function getSharedTemplateVars()
     {
-        $template_vars = parent::getSharedTemplateVars($ajax_depth);
+        $template_vars = parent::getSharedTemplateVars();
 
         $template_vars['finder_filters_form'] = $this->buildForm(new UserGroupsAdminFiltersForm())->createView();
 

@@ -73,7 +73,7 @@ class UsersAdminController extends AdminBaseController
             return new JsonResponse(['form' => $form->createView()->getJsonResponseData()]);
         }
 
-        return new Response($this->renderAdminSection('@Users/admin/admin_change_user_password.twig', $request->get('ajax_depth'), ['item' => $user, 'form' => $form->createView()]));
+        return new Response($this->renderAdminSection('@Users/admin/admin_change_user_password.twig', ['item' => $user, 'form' => $form->createView()]));
     }
 
     public function finderAction(Request $request)
@@ -142,12 +142,12 @@ class UsersAdminController extends AdminBaseController
 
         // main page
 
-        return new Response($this->renderAdminSection('@Users/admin/user_options.twig', $request->get('ajax_depth'), ['remove_accounts_form' => $removeAccountsForm->createView()]));
+        return new Response($this->renderAdminSection('@Users/admin/user_options.twig', ['remove_accounts_form' => $removeAccountsForm->createView()]));
     }
 
-    protected function getSharedTemplateVars($ajax_depth)
+    protected function getSharedTemplateVars()
     {
-        $template_vars = parent::getSharedTemplateVars($ajax_depth);
+        $template_vars = parent::getSharedTemplateVars();
 
         $template_vars['finder_filters_form'] = $this->buildForm(new UsersAdminFiltersForm())->createView();
 
