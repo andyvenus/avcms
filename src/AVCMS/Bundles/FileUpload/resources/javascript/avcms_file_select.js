@@ -11,39 +11,40 @@ $(document).ready(function() {
             avcms.file_select.doChange($(this));
         });
 
-        var file_selector = $(".file_selector_dropdown");
+        var file_selector = $(".file-selector-dropdown");
 
-        file_selector.select2({
-            placeholder: "Find file",
-            minimumInputLength: 2,
-            ajax: {
-                url: avcms.config.site_url + file_selector.data('file-select-url'),
-                dataType: 'json',
-                data: function (term, page) {
-                    return {
-                        q: term
-                    };
+        file_selector.each(function() {
+            $(this).select2({
+                placeholder: "Find file",
+                minimumInputLength: 2,
+                ajax: {
+                    url: avcms.config.site_url + $(this).data('file-select-url'),
+                    dataType: 'json',
+                    data: function (term, page) {
+                        return {
+                            q: term
+                        };
+                    },
+                    results: function (data, page) { // parse the results into the format expected by Select2.
+                        return {results: data};
+                    }
                 },
-                results: function (data, page) { // parse the results into the format expected by Select2.
-                    return {results: data};
+                initSelection: function (element, callback) {
+                    var id = $(element).val();
+                    if (id !== "") {
+                        $.ajax(avcms.config.site_url + $(this).data('file-select-url'), {
+                            data: {
+                                q: id,
+                                id_search: 1
+                            },
+                            dataType: "json"
+                        }).done(function (data) {
+                            callback(data[0]);
+                        });
+                    }
                 }
-            },
-            initSelection: function (element, callback) {
-                var id = $(element).val();
-                if (id !== "") {
-                    $.ajax(avcms.config.site_url + file_selector.data('file-select-url'), {
-                        data: {
-                            q: id,
-                            id_search: 1
-                        },
-                        dataType: "json"
-                    }).done(function (data) {
-                        callback(data[0]);
-                    });
-                }
-            }
+            });
         });
-
 
         var file_upload = $('form').filter(':visible').find('.file-upload');
 

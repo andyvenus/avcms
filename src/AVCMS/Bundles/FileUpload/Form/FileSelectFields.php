@@ -31,7 +31,7 @@ class FileSelectFields {
         $formBlueprint->add($groupName.'[find]', 'text', array(
             'label' => 'Find File',
             'attr' => array(
-                'class' => 'file_selector_dropdown no_select2',
+                'class' => 'file-selector-dropdown no_select2',
                 'data-file-select-url' => $fileSelectUrl
             )
         ));
