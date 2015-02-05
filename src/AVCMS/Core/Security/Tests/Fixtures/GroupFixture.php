@@ -11,9 +11,11 @@ use AVCMS\Bundles\Users\Model\UserGroup;
 
 class GroupFixture extends UserGroup
 {
-    public $adminDefault = false;
+    public $adminDefault = 0;
 
-    public $permDefault = false;
+    public $permDefault = 0;
+
+    public $modDefault = 0;
 
     public function getAdminDefault()
     {
@@ -23,5 +25,10 @@ class GroupFixture extends UserGroup
     public function getPermDefault()
     {
         return $this->permDefault;
+    }
+
+    public function getModeratorDefault()
+    {
+        return $this->modDefault;
     }
 } 

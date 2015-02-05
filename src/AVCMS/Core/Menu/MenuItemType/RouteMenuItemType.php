@@ -12,13 +12,12 @@ use AVCMS\Bundles\CmsFoundation\Form\ChoicesProvider\RouteChoicesProvider;
 use AVCMS\Core\Menu\MenuItem;
 use AVCMS\Core\Menu\MenuItemConfigInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class RouteMenuItemType implements MenuItemTypeInterface
 {
     /**
-     * @var UrlGeneratorInterface
+     * @var RouterInterface
      */
     protected $router;
 
