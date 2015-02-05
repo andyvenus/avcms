@@ -80,7 +80,7 @@ class WallpapersAdminController extends AdminBaseController
         }
 
         if (!$helper->contentExists()) {
-            throw $this->createNotFoundException(ucwords(str_replace('_', ' ', $this->wallpapers->getSingular())).' not found');
+            throw $this->createNotFoundException('Wallpaper Not Found');
         }
 
         if (!$id = $helper->getEntity()->getId()) {
