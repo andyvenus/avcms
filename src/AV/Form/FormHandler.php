@@ -282,14 +282,14 @@ class FormHandler
             }
 
             if (isset($requestData[ $fieldName ])) {
-                $field_submitted = $this->typeHandler->isValidRequestData($field, $requestData[$fieldName]);
+                $fieldSubmitted = $this->typeHandler->isValidRequestData($field, $requestData[$fieldName]);
             }
             else {
-                $field_submitted = $this->typeHandler->allowUnsetRequest($field);
+                $fieldSubmitted = $this->typeHandler->allowUnsetRequest($field);
             }
 
             // Form was not submitted
-            if ($field_submitted === false) {
+            if ($fieldSubmitted === false) {
                 $this->submitted = false;
                 break;
             }
