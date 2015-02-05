@@ -6,13 +6,45 @@
     <option name="objectRepositoryTypeProvider" value="false" />
     <option name="objectRepositoryResultTypeProvider" value="false" />
     <option name="objectManagerFindTypeProvider" value="false" />
+    <option name="objectSignatureTypeProvider" value="true" />
     <option name="twigAnnotateAsset" value="false" />
     <option name="twigAnnotateAssetTags" value="false" />
     <option name="twigNamespaces">
       <list>
-        <twig_namespace custom="true" namespace="admin" namespaceType="ADD_PATH" path="templates/admin/avcms" />
-        <twig_namespace custom="true" namespace="Blog" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Blog/resources/templates" />
-        <twig_namespace custom="true" namespace="CmsFoundation" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/CmsFoundation/resources/templates" />
+        <twig_namespace custom="true" namespace="Framework" namespaceType="ADD_PATH" path="src/AV/Bundles/Framework/resources/templates" />
+		<twig_namespace custom="true" namespace="Twig" namespaceType="ADD_PATH" path="src/AV/Bundles/Twig/resources/templates" />
+		<twig_namespace custom="true" namespace="Form" namespaceType="ADD_PATH" path="src/AV/Bundles/Form/resources/templates" />
+		<twig_namespace custom="true" namespace="Model" namespaceType="ADD_PATH" path="src/AV/Bundles/Model/resources/templates" />
+		<twig_namespace custom="true" namespace="CmsFoundation" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/CmsFoundation/resources/templates" />
+		<twig_namespace custom="true" namespace="Users" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Users/resources/templates" />
+		<twig_namespace custom="true" namespace="Admin" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Admin/resources/templates" />
+		<twig_namespace custom="true" namespace="Blog" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Blog/resources/templates" />
+		<twig_namespace custom="true" namespace="Tags" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Tags/resources/templates" />
+		<twig_namespace custom="true" namespace="Assets" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Assets/resources/templates" />
+		<twig_namespace custom="true" namespace="Translation" namespaceType="ADD_PATH" path="src/AV/Bundles/Translation/resources/templates" />
+		<twig_namespace custom="true" namespace="Comments" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Comments/resources/templates" />
+		<twig_namespace custom="true" namespace="CkEditor" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/CkEditor/resources/templates" />
+		<twig_namespace custom="true" namespace="Reports" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Reports/resources/templates" />
+		<twig_namespace custom="true" namespace="CmsErrorHandler" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/CmsErrorHandler/resources/templates" />
+		<twig_namespace custom="true" namespace="Wallpapers" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Wallpapers/resources/templates" />
+		<twig_namespace custom="true" namespace="FileUpload" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/FileUpload/resources/templates" />
+		<twig_namespace custom="true" namespace="Categories" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Categories/resources/templates" />
+		<twig_namespace custom="true" namespace="LikeDislike" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/LikeDislike/resources/templates" />
+		<twig_namespace custom="true" namespace="Adverts" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Adverts/resources/templates" />
+		<twig_namespace custom="true" namespace="FacebookConnect" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/FacebookConnect/resources/templates" />
+		<twig_namespace custom="true" namespace="Sitemaps" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Sitemaps/resources/templates" />
+		<twig_namespace custom="true" namespace="Recaptcha" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Recaptcha/resources/templates" />
+		<twig_namespace custom="true" namespace="Referrals" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Referrals/resources/templates" />
+		<twig_namespace custom="true" namespace="Links" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Links/resources/templates" />
+		<twig_namespace custom="true" namespace="Pages" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Pages/resources/templates" />
+		<twig_namespace custom="true" namespace="ContactUs" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/ContactUs/resources/templates" />
+		<twig_namespace custom="true" namespace="Disqus" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Disqus/resources/templates" />
+		<twig_namespace custom="true" namespace="WssImporter" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/WssImporter/resources/templates" />
+		<twig_namespace custom="true" namespace="TranslationHelper" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/TranslationHelper/resources/templates" />
+		<twig_namespace custom="true" namespace="AVScripts" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/AVScripts/resources/templates" />
+		<twig_namespace custom="true" namespace="Profiler" namespaceType="ADD_PATH" path="src/AVCMS/BundlesDev/Profiler/resources/templates" />
+		<twig_namespace custom="true" namespace="BundleManager" namespaceType="ADD_PATH" path="src/AVCMS/BundlesDev/BundleManager/resources/templates" />
+		<twig_namespace custom="true" namespace="DevTools" namespaceType="ADD_PATH" path="src/AVCMS/BundlesDev/DevTools/resources/templates" />
       </list>
     </option>
     <option name="containerFiles">
@@ -20,6 +52,10 @@
         <container_file path="cache/debugContainer.xml" />
       </list>
     </option>
+    <option name="methodSignatureSettings">
+      <list>
+        <method_signature_settings CallTo="\AVCMS\Core\Controller\Controller" MethodName="get" ReferenceProviderName="Service" />
+      </list>
+    </option>
   </component>
 </project>
-

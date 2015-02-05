@@ -5,3 +5,7 @@ review_bundle_translations:
 save_strings:
   path: /dev/save-translations
   defaults: { _controller: DevTools::TranslationExtractionController::saveStringsAction }
+
+twig_namespaces:
+  path: /dev/twig-namespaces
+  defaults: { _controller: DevTools::MiscToolsController::twigNamespacesForPhpStormAction }
