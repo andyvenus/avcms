@@ -10,11 +10,16 @@ namespace AV\Validation\Tests\Fixtures;
 use AV\Validation\Validatable;
 use AV\Validation\Validator;
 
-class ParentValidatableObject implements Validatable {
+class ParentValidatableObject implements Validatable
+{
+    /**
+     * @var ChildValidatableObject
+     */
+    protected $childValidatable;
 
     public function __construct()
     {
-        $this->child_validatable = new ChildValidatableObject();
+        $this->childValidatable = new ChildValidatableObject();
     }
 
     public function getValidationRules(Validator $validator)
@@ -37,7 +42,7 @@ class ParentValidatableObject implements Validatable {
 
         $validator->addRule('shared_parameter_four', new FailureRule(), "Shared Param Error 4 - Parent", false, true); // Error, not set
 
-        $validator->addSubValidation($this->child_validatable);
+        $validator->addSubValidation($this->childValidatable);
     }
 
 
@@ -71,6 +76,6 @@ class ParentValidatableObject implements Validatable {
 
     public function getChildValidatable()
     {
-        return $this->child_validatable;
+        return $this->childValidatable;
     }
 }

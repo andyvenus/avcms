@@ -17,11 +17,6 @@ class FormExtension extends \Twig_Extension
     protected $environment;
 
     /**
-     * @var \Twig_Compiler
-     */
-    protected $compiler;
-
-    /**
      * @var \Twig_Template
      */
     protected $baseTemplate;
@@ -39,7 +34,6 @@ class FormExtension extends \Twig_Extension
     public function initRuntime(\Twig_Environment $environment)
     {
         $this->environment = $environment;
-        $this->compiler = $environment->getCompiler();
         $this->baseTemplate = $this->environment->loadTemplate($this->defaultTemplate);
     }
 

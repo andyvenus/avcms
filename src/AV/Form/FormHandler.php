@@ -89,12 +89,12 @@ class FormHandler
     protected $encoding = 'application/x-www-form-urlencoded';
 
     /**
-     * @var RequestHandler\StandardRequestHandler
+     * @var RequestHandler\RequestHandlerInterface
      */
     protected $requestHandler;
 
     /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcher
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
     protected $eventDispatcher;
 

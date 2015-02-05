@@ -15,22 +15,22 @@ class FormEntityProcessorTest extends \PHPUnit_Framework_TestCase {
     /**
      * @var GetterSetterEntityProcessor
      */
-    private $form_entity_processor;
+    private $formEntityProcessor;
     /**
      * @var Fixtures\StandardFormEntity
      */
-    private $standard_entity;
+    private $standardEntity;
     /**
-     * @var String
+     * @var array
      */
-    private $form_data;
+    private $formData;
 
     public function setUp()
     {
-        $this->form_entity_processor = new GetterSetterEntityProcessor();
-        $this->standard_entity = new StandardFormEntity();
+        $this->formEntityProcessor = new GetterSetterEntityProcessor();
+        $this->standardEntity = new StandardFormEntity();
 
-        $this->form_data = array(
+        $this->formData = array(
             'name' => 'FormBlueprint name',
             'description' => 'FormBlueprint description',
             'published' => 0
@@ -39,12 +39,12 @@ class FormEntityProcessorTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetFromEntity()
     {
-        $entity = $this->standard_entity;
+        $entity = $this->standardEntity;
         $entity->setName('Dog');
         $entity->setDescription('Dogs are one of the oldest domesticated animals');
         $entity->setPublished(1);
 
-        $extracted = $this->form_entity_processor->getFromEntity($entity, array('name', 'description', 'published', 'not_in_entity'));
+        $extracted = $this->formEntityProcessor->getFromEntity($entity, array('name', 'description', 'published', 'not_in_entity'));
 
         $expected = array('name' => 'Dog', 'description' => 'Dogs are one of the oldest domesticated animals', 'published' => 1);
 
@@ -53,11 +53,10 @@ class FormEntityProcessorTest extends \PHPUnit_Framework_TestCase {
 
     public function testSaveToEntity()
     {
-        $this->form_entity_processor->saveToEntity($this->standard_entity, $this->form_data);
+        $this->formEntityProcessor->saveToEntity($this->standardEntity, $this->formData);
 
-        $this->assertEquals($this->form_data['name'], $this->standard_entity->getName());
-        $this->assertEquals($this->form_data['description'], $this->standard_entity->getDescription());
-        $this->assertEquals($this->form_data['published'], $this->standard_entity->getPublished());
+        $this->assertEquals($this->formData['name'], $this->standardEntity->getName());
+        $this->assertEquals($this->formData['description'], $this->standardEntity->getDescription());
+        $this->assertEquals($this->formData['published'], $this->standardEntity->getPublished());
     }
 }
- 
