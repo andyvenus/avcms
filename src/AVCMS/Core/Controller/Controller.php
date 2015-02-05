@@ -175,7 +175,7 @@ abstract class Controller extends ContainerAware
     /**
      * Render a twig template
      *
-     * @param $template
+     * @param $template string #Template
      * @param array $context
      * @param bool $return_response
      * @return string|Response
