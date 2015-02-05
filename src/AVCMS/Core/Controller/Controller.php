@@ -216,7 +216,7 @@ abstract class Controller extends ContainerAware
      */
     protected function getParam($paramName)
     {
-        return $this->getParam($paramName);
+        return $this->container->getParameter($paramName);
     }
 
     /**
