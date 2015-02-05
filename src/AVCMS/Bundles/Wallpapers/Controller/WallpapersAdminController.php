@@ -34,7 +34,7 @@ class WallpapersAdminController extends AdminBaseController
 
     protected $browserTemplate = '@Wallpapers/admin/wallpapers_browser.twig';
 
-    public function setUp(Request $request)
+    public function setUp()
     {
         $this->wallpapers = $this->model('Wallpapers');
 
@@ -94,11 +94,8 @@ class WallpapersAdminController extends AdminBaseController
 
         return $this->createEditResponse(
             $helper,
-            $request,
             '@Wallpapers/admin/edit_wallpaper.twig',
-            '@Wallpapers/admin/wallpapers_browser.twig',
-            array('wallpapers_admin_edit', array('id' => $id)),
-            []
+            array('wallpapers_admin_edit', array('id' => $id))
         );
     }
 

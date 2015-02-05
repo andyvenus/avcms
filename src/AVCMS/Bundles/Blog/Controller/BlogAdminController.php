@@ -41,7 +41,7 @@ class BlogAdminController extends AdminBaseController
     {
         $form_blueprint = new BlogPostAdminForm($request->get('id', 0), $this->activeUser()->getId());
 
-        return $this->handleEdit($request, $this->blogPosts, $form_blueprint, 'blog_edit_post', '@Blog/admin/edit_post.twig', '@Blog/admin/blog_browser.twig', array());
+        return $this->handleEdit($request, $this->blogPosts, $form_blueprint, 'blog_edit_post', '@Blog/admin/edit_post.twig', array());
     }
 
     public function finderAction(Request $request)

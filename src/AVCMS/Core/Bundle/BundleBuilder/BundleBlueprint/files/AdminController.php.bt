@@ -15,7 +15,9 @@ class {{cc_plural}}AdminController extends AdminBaseController
      */
     protected ${{model_var_name}};
 
-    public function setUp(Request $request)
+    protected $browserTemplate = '@{{bundle}}/admin/{{plural}}_browser.twig';
+
+    public function setUp()
     {
         $this->{{model_var_name}} = $this->model('{{model_class}}');
     }
@@ -29,7 +31,7 @@ class {{cc_plural}}AdminController extends AdminBaseController
     {
         $formBlueprint = new {{cc_singular}}AdminForm();
 
-        return $this->handleEdit($request, $this->{{model_var_name}}, $formBlueprint, '{{admin_edit_route}}', '@{{bundle}}/admin/edit_{{singular}}.twig', '@{{bundle}}/admin/{{plural}}_browser.twig', array());
+        return $this->handleEdit($request, $this->{{model_var_name}}, $formBlueprint, '{{admin_edit_route}}', '@{{bundle}}/admin/edit_{{singular}}.twig', array());
     }
 
     public function finderAction(Request $request)

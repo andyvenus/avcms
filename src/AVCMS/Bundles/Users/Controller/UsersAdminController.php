@@ -41,7 +41,7 @@ class UsersAdminController extends AdminBaseController
     {
         $formBlueprint = new UserAdminForm($request->get('id', 0));
 
-        return $this->handleEdit($request, $this->users, $formBlueprint, 'users_admin_edit', '@Users/admin/edit_user.twig', '@Users/admin/users_browser.twig', array());
+        return $this->handleEdit($request, $this->users, $formBlueprint, 'users_admin_edit', '@Users/admin/edit_user.twig', array());
     }
 
     public function changePasswordAction(Request $request, $id)

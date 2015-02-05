@@ -91,14 +91,13 @@ abstract class AdminBaseController extends Controller
      * @param FormBlueprint $formBlueprint
      * @param string $editRedirectUrl
      * @param string $editTemplate
-     * @param string $browserTemplate
      * @param array $templateVars
      * @param null $entity
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @return JsonResponse|Response
      * @depreciated
      */
-    protected function handleEdit(Request $request, Model $model, FormBlueprint $formBlueprint, $editRedirectUrl, $editTemplate, $browserTemplate, $templateVars = array(), $entity = null)
+    protected function handleEdit(Request $request, Model $model, FormBlueprint $formBlueprint, $editRedirectUrl, $editTemplate, $templateVars = array(), $entity = null)
     {
         $form = $this->buildForm($formBlueprint);
 
@@ -116,9 +115,7 @@ abstract class AdminBaseController extends Controller
 
         return $this->createEditResponse(
             $helper,
-            $request,
             $editTemplate,
-            $browserTemplate,
             array($editRedirectUrl, array('id' => $id)),
             $templateVars
         );
@@ -142,14 +139,12 @@ abstract class AdminBaseController extends Controller
      * Create a response for editing content. Returns a JsonResponse when the form is submitted.
      *
      * @param EditContentHelper $helper
-     * @param $request
      * @param $template
-     * @param $browserTemplate
      * @param $successRedirect
      * @param array $templateVars
      * @return JsonResponse|Response
      */
-    protected function createEditResponse(EditContentHelper $helper, $request, $template, $browserTemplate, $successRedirect, $templateVars = array())
+    protected function createEditResponse(EditContentHelper $helper, $template, $successRedirect, $templateVars = array())
     {
         if ($helper->formSubmitted()) {
 
@@ -170,7 +165,6 @@ abstract class AdminBaseController extends Controller
             $templateVars = array_merge(array(
                 'item' => $helper->getEntity(),
                 'form' => $helper->getForm()->createView(),
-                'browser_template' => $browserTemplate
             ), $templateVars);
 
             return new Response($this->renderAdminSection(

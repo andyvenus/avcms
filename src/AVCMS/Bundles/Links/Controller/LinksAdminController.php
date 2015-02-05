@@ -22,6 +22,8 @@ class LinksAdminController extends AdminBaseController
      */
     protected $referrals;
 
+    protected $browserTemplate = '@Links/admin/links_browser.twig';
+
     public function setUp(Request $request)
     {
         $this->links = $this->model('Links');
@@ -41,7 +43,7 @@ class LinksAdminController extends AdminBaseController
     {
         $formBlueprint = new LinkAdminForm(new ReferralsChoicesProvider($this->referrals, $this->trans('None')));
 
-        return $this->handleEdit($request, $this->links, $formBlueprint, 'links_admin_edit', '@Links/admin/edit_link.twig', '@Links/admin/links_browser.twig', array());
+        return $this->handleEdit($request, $this->links, $formBlueprint, 'links_admin_edit', '@Links/admin/edit_link.twig', array());
     }
 
     public function finderAction(Request $request)

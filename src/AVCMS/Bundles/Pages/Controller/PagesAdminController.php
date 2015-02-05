@@ -16,6 +16,8 @@ class PagesAdminController extends AdminBaseController
      */
     protected $pages;
 
+    protected $browserTemplate = '@Pages/admin/pages_browser.twig';
+
     public function setUp(Request $request)
     {
         $this->pages = $this->model('Pages');
@@ -27,14 +29,14 @@ class PagesAdminController extends AdminBaseController
 
     public function homeAction(Request $request)
     {
-       return $this->handleManage($request, '@Pages/admin/pages_browser.twig');
+       return $this->handleManage($request, $this->browserTemplate);
     }
 
     public function editAction(Request $request)
     {
         $formBlueprint = new PageAdminForm($request->get('id', 0));
 
-        return $this->handleEdit($request, $this->pages, $formBlueprint, 'pages_admin_edit', '@Pages/admin/edit_page.twig', '@Pages/admin/pages_browser.twig', array());
+        return $this->handleEdit($request, $this->pages, $formBlueprint, 'pages_admin_edit', '@Pages/admin/edit_page.twig', array());
     }
 
     public function finderAction(Request $request)

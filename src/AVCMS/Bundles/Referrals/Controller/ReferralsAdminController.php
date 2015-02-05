@@ -16,6 +16,8 @@ class ReferralsAdminController extends AdminBaseController
      */
     protected $referrals;
 
+    protected $browserTemplate = '@Referrals/admin/referrals_browser.twig';
+
     public function setUp(Request $request)
     {
         $this->referrals = $this->model('Referrals');
@@ -34,7 +36,7 @@ class ReferralsAdminController extends AdminBaseController
     {
         $formBlueprint = new ReferralAdminForm();
 
-        return $this->handleEdit($request, $this->referrals, $formBlueprint, 'referrals_admin_manage', '@Referrals/admin/manage_referral.twig', '@Referrals/admin/referrals_browser.twig', array());
+        return $this->handleEdit($request, $this->referrals, $formBlueprint, 'referrals_admin_manage', '@Referrals/admin/manage_referral.twig', array());
     }
 
     public function finderAction(Request $request)

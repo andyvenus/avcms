@@ -15,6 +15,8 @@ class TranslationsAdminController extends AdminBaseController
      */
     protected $translations;
 
+    protected $browserTemplate = '@TranslationHelper/admin/translations_browser.twig';
+
     public function setUp(Request $request)
     {
         $this->translations = $this->model('Translations');
@@ -22,14 +24,14 @@ class TranslationsAdminController extends AdminBaseController
 
     public function homeAction(Request $request)
     {
-       return $this->handleManage($request, '@TranslationHelper/admin/translations_browser.twig');
+       return $this->handleManage($request, $this->browserTemplate);
     }
 
     public function editAction(Request $request)
     {
         $formBlueprint = new TranslationAdminForm();
 
-        return $this->handleEdit($request, $this->translations, $formBlueprint, 'translations_admin_edit', '@TranslationHelper/admin/edit_translation.twig', '@TranslationHelper/admin/translations_browser.twig', array());
+        return $this->handleEdit($request, $this->translations, $formBlueprint, 'translations_admin_edit', '@TranslationHelper/admin/edit_translation.twig', array());
     }
 
     public function finderAction(Request $request)

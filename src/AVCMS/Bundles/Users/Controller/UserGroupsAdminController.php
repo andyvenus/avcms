@@ -36,7 +36,7 @@ class UserGroupsAdminController extends AdminBaseController
 
     public function homeAction(Request $request)
     {
-        return $this->handleManage($request, '@Users/admin/user_groups_browser.twig');
+        return $this->handleManage($request, $this->browserTemplate);
     }
 
     public function editAction(Request $request)
@@ -49,7 +49,7 @@ class UserGroupsAdminController extends AdminBaseController
             $formBlueprint->remove('admin_panel_access');
         }
 
-        return $this->handleEdit($request, $this->userGroups, $formBlueprint, 'user_groups_admin_edit', '@Users/admin/edit_user_group.twig', '@Users/admin/user_groups_browser.twig', array(), $userGroup);
+        return $this->handleEdit($request, $this->userGroups, $formBlueprint, 'user_groups_admin_edit', '@Users/admin/edit_user_group.twig', array(), $userGroup);
     }
 
     public function finderAction(Request $request)

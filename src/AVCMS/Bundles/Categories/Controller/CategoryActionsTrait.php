@@ -40,7 +40,7 @@ trait CategoryActionsTrait
 
         $categories = $model->getAllCategories(true);
 
-        return new Response($this->renderAdminSection('@Categories/admin/manage_categories.twig', $request->get('ajax_depth'), ['categories' => $categories, 'browser_template' => $categoryConfig['browser_template'], 'route_prefix' => $categoryConfig['route_prefix']]));
+        return new Response($this->renderAdminSection('@Categories/admin/manage_categories.twig', ['categories' => $categories, 'route_prefix' => $categoryConfig['route_prefix']]));
     }
 
     public function saveOrderAction(Request $request, $contentType)
@@ -94,7 +94,7 @@ trait CategoryActionsTrait
 
         $formBlueprint = $this->getCategoryForm();
 
-        return $this->handleEdit($request, $model, $formBlueprint, $categoryConfig['route_prefix'].'manage_categories', '@Categories/admin/edit_category.twig', $categoryConfig['browser_template'], ['route_prefix' => $categoryConfig['route_prefix']]);
+        return $this->handleEdit($request, $model, $formBlueprint, $categoryConfig['route_prefix'].'manage_categories', '@Categories/admin/edit_category.twig', ['route_prefix' => $categoryConfig['route_prefix']]);
     }
 
     /**
