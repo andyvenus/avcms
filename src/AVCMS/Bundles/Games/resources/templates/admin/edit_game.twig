@@ -17,3 +17,16 @@
 {% block editor_title_new %}
     {% trans %}New Game{% endtrans %}
 {% endblock %}
+
+{% block form_rows %}
+    {{ form_rows_before(form, 'width') }}
+
+    <div class="form-group">
+        <label>{% trans %}Dimensions{% endtrans %}</label><br/>
+        {{ form_field(form.width, {class: 'input-short'}) }} x {{ form_field(form.height, {class: 'input-short'}) }}
+        
+        <button class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span> {% trans %}Auto{% endtrans %}</button>
+    </div>
+
+    {{ form_rows_after(form, 'height') }}
+{% endblock %}

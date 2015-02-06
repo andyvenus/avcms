@@ -381,6 +381,10 @@ a {
   border: 1px solid red !important;
   visibility: visible !important; }
 
+.input-short {
+  width: 70px;
+  display: inline; }
+
 .lightbar {
   height: 5px;
   top: 0px;
