@@ -85,7 +85,6 @@ avcms.nav = {
         if (ajax_required === true) {
             avcms.admin.mainLoaderOn();
             $.get(full_url+'&ajax_depth='+ajax_depth, function(data, textStatus, xhr) {
-                console.log(data.indexOf('<head>'));
                 if (data.indexOf('<head>') > -1) {
                     var newDoc = document.open("text/html", "replace");
                     newDoc.write(data);
