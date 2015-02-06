@@ -30,15 +30,15 @@ wallpapers_admin_toggle_featured:
 # File Uploads #
 wallpapers_admin_find_files:
   path: /wallpapers/find-files
-  defaults: { _controller: 'Wallpapers::WallpapersAdminController::findFilesAction' }
+  defaults: { _controller: 'Wallpapers::WallpaperFilesAdminController::findFilesAction' }
 
 wallpapers_admin_upload:
   path: /wallpapers/upload
-  defaults: { _controller: 'Wallpapers::WallpapersAdminController::uploadFilesAction' }
+  defaults: { _controller: 'Wallpapers::WallpaperFilesAdminController::uploadFilesAction' }
 
 wallpapers_grab_file:
   path: /wallpapers/grab-file
-  defaults: { _controller: Wallpapers::WallpapersAdminController::grabFileAction }
+  defaults: { _controller: Wallpapers::WallpaperFilesAdminController::grabFileAction }
 
 # Categories #
 wallpapers_manage_categories:

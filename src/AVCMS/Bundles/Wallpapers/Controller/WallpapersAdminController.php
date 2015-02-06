@@ -3,8 +3,6 @@
 namespace AVCMS\Bundles\Wallpapers\Controller;
 
 use AV\Cache\CacheClearer;
-use AV\FileHandler\CurlFileHandler;
-use AV\FileHandler\UploadedFileHandler;
 use AV\Form\FormBlueprint;
 use AV\Form\FormError;
 use AVCMS\Bundles\Categories\Controller\CategoryActionsTrait;
@@ -14,9 +12,7 @@ use AVCMS\Bundles\Wallpapers\Form\WallpapersAdminFiltersForm;
 use AVCMS\Bundles\Wallpapers\Form\WallpaperAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 
-use Curl\Curl;
 use Intervention\Image\ImageManager;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -138,88 +134,6 @@ class WallpapersAdminController extends AdminBaseController
     public function toggleFeaturedAction(Request $request)
     {
         return $this->handleTogglePublished($request, $this->wallpapers, 'featured');
-    }
-
-    public function findFilesAction(Request $request)
-    {
-        $q = $request->get('q');
-
-        $dir = $this->wallpaperPath();
-
-        $itr = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir));
-
-        $data = [];
-
-        foreach ($itr as $file) {
-            if ($file->isFile() && strpos($file->getFilename(), $q) !== false) {
-                $relativeDir = str_replace($dir, '', $file->getPath().'/'.$file->getFilename());
-                $relativeDir = ($relativeDir[0] === '/' ? substr($relativeDir, 1) : $relativeDir);
-                $relativePretty = str_replace('/', ' » ', $relativeDir);
-                $data[] = ['id' => $relativeDir, 'text' => $relativePretty];
-            }
-        }
-
-        return new JsonResponse($data);
-    }
-
-    public function uploadFilesAction(Request $request)
-    {
-        /**
-         * @var $file UploadedFile
-         */
-        if ($request->files->has('file')) {
-            $file = $request->files->get('file');
-        }
-        else {
-            $file = $request->files->get($request->query->get('type'), null)['upload'];
-        }
-
-        if ($request->request->has('folder')) {
-            $path = $this->wallpaperPath(str_replace('.', '', $request->request->get('folder')));
-        }
-        else {
-            $path = $this->wallpaperPath($file->getClientOriginalName()[0]);
-        }
-
-        $handler = new UploadedFileHandler(UploadedFileHandler::getImageFiletypes());
-
-        if (($fullPath = $handler->moveFile($file, $path, null, $request->request->get('existing_files', UploadedFileHandler::EXISTS_NUMBER))) === false) {
-            $fileJson = ['success' => false, 'error' => $handler->getTranslatedError($this->translator)];
-        }
-        else {
-            $fileJson = ['success' => true, 'file' => $file->getClientOriginalName()[0].'/'.basename($fullPath)];
-        }
-
-        return new JsonResponse($fileJson);
-    }
-
-    public function grabFileAction(Request $request)
-    {
-        $fileUrl = $request->get('file_url');
-
-        if (!$fileUrl) {
-            return new JsonResponse(['success' => false, 'error' => $this->trans('No URL Entered')]);
-        }
-
-        $curl = new Curl();
-
-        try {
-            $file = $curl->get($fileUrl);
-
-            $handler = new CurlFileHandler(CurlFileHandler::getImageFiletypes());
-
-            $path = $this->wallpaperPath(basename($fileUrl)[0]);
-
-            if (($fullPath = $handler->moveFile($fileUrl, $file, $path)) === false) {
-                $fileJson = ['success' => false, 'error' => $handler->getTranslatedError($this->translator)];
-            } else {
-                $fileJson = ['success' => true, 'file' => basename($fileUrl)[0] . '/' . basename($fullPath)];
-            }
-        } catch (\Exception $e) {
-            $fileJson = ['success' => false, 'error' => $e->getMessage()];
-        }
-
-        return new JsonResponse($fileJson);
     }
 
     public function editResolutionsAction(Request $request)
