@@ -1,0 +1,12 @@
+info:
+  name: AVCMS
+  version: '1.0'
+  id: avcms
+  url: http://www.avscripts.net
+
+bundle_dirs:
+  - src/AV/Bundles
+  - src/AVCMS/Bundles
+  - src/AVCMS/BundlesDev
+
+default_content_installer: WallpaperDefaultContentInstaller

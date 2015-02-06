@@ -1,0 +1,6 @@
+Profiler:
+  enabled: true
+BundleManager:
+  enabled: true
+DevTools:
+  enabled: true

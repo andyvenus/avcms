@@ -1,0 +1,6 @@
+home:
+  path: /
+  defaults:
+    _controller: Wallpapers::WallpapersController::wallpapersHomeAction
+    _bundle: Wallpapers
+    _avcms_env: frontend

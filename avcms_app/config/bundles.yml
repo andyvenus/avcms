@@ -1,0 +1,64 @@
+Framework:
+    enabled: true
+Twig:
+    enabled: true
+Form:
+    enabled: true
+Model:
+    enabled: true
+CmsFoundation:
+    enabled: true
+Users:
+    enabled: true
+Admin:
+    enabled: true
+Blog:
+    enabled: true
+Tags:
+    enabled: true
+Assets:
+    enabled: true
+Translation:
+    enabled: true
+Comments:
+    enabled: true
+CkEditor:
+    enabled: true
+Reports:
+    enabled: true
+CmsErrorHandler:
+    enabled: true
+Wallpapers:
+    enabled: true
+FileUpload:
+    enabled: true
+Categories:
+    enabled: true
+LikeDislike:
+    enabled: true
+Adverts:
+    enabled: true
+FacebookConnect:
+    enabled: true
+Sitemaps:
+    enabled: true
+Recaptcha:
+    enabled: true
+Referrals:
+    enabled: true
+Links:
+    enabled: true
+Pages:
+    enabled: true
+ContactUs:
+    enabled: true
+Disqus:
+    enabled: true
+WssImporter:
+    enabled: true
+TranslationHelper:
+    enabled: true
+AVScripts:
+    enabled: true
+Games:
+    enabled: true
