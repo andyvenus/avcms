@@ -24,8 +24,8 @@ class WallpapersInstaller extends BundleInstaller
             CREATE TABLE `{$this->prefix}wallpapers` (
                   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
                   `name` varchar(255) DEFAULT NULL,
-                  `description` varchar(255) DEFAULT NULL,
-                  `file` varchar(255) DEFAULT NULL,
+                  `description` text,
+                  `file` text,
                   `category_id` int(11) unsigned DEFAULT NULL,
                   `category_parent_id` int(11) unsigned DEFAULT NULL,
                   `date_added` int(11) unsigned DEFAULT NULL,
