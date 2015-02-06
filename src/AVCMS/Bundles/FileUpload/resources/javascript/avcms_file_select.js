@@ -11,9 +11,10 @@ $(document).ready(function() {
             avcms.file_select.doChange($(this));
         });
 
-        var file_selector = $(".file-selector-dropdown");
+        var file_selector = $("input.file-selector-dropdown");
 
         file_selector.each(function() {
+            console.log($(this));
             var field_group = $(this).attr('name').substr(0, $(this).attr('name').indexOf('['));
 
             $(this).select2({
