@@ -99,6 +99,11 @@ class EditContentHelper
         }
     }
 
+    public function saveToEntities()
+    {
+        $this->form->saveToEntities();
+    }
+
     public function contentExists()
     {
         return (!is_null($this->entity));
