@@ -71,6 +71,6 @@ class GamesAdminController extends AdminBaseController
      */
     protected function getCategoryForm($itemId)
     {
-        return new GamesCategoryAdminForm($itemId, $this->model('GamesCategories'));
+        return new GamesCategoryAdminForm($itemId, $this->model('GameCategories'));
     }
 }
