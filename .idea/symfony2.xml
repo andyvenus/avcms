@@ -12,6 +12,7 @@
     <option name="twigNamespaces">
       <list>
         <twig_namespace custom="true" namespace="Admin" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Admin/resources/templates" />
+        <twig_namespace custom="true" namespace="admin" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Admin/resources/templates" />
         <twig_namespace custom="true" namespace="Adverts" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Adverts/resources/templates" />
         <twig_namespace custom="true" namespace="Assets" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Assets/resources/templates" />
         <twig_namespace custom="true" namespace="AVScripts" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/AVScripts/resources/templates" />
@@ -45,7 +46,7 @@
         <twig_namespace custom="true" namespace="Users" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Users/resources/templates" />
         <twig_namespace custom="true" namespace="Wallpapers" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Wallpapers/resources/templates" />
         <twig_namespace custom="true" namespace="WssImporter" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/WssImporter/resources/templates" />
-        <twig_namespace custom="true" namespace="admin" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Admin/resources/templates" />
+        <twig_namespace custom="true" namespace="Games" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Games/resources/templates" />
       </list>
     </option>
     <option name="containerFiles">
