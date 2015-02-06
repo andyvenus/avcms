@@ -16,6 +16,7 @@ class GameAdminForm extends AdminContentForm
 
         $this->add('name', 'text', array(
             'label' => 'Name',
+            'required' => true
         ));
         
         $this->add('description', 'textarea', array(
