@@ -22,3 +22,27 @@ games:
     model_class: Games
     model_var_name: games
     title_field: name
+game_categories:
+    bundle: Games
+    namespace: AVCMS\Bundles\Games
+    singular: game_category
+    plural: game_categories
+    uc_singular: 'Game Category'
+    uc_plural: 'Game Categories'
+    cc_singular: GameCategory
+    cc_plural: GameCategories
+    dash_singular: game-category
+    dash_plural: game-categories
+    admin_home_route: game_categories_admin_home
+    admin_finder_route: game_categories_admin_finder
+    admin_delete_route: game_categories_admin_delete
+    admin_edit_route: game_categories_admin_edit
+    admin_add_route: game_categories_admin_add
+    admin_controller: 'Games::GameCategoriesAdminController'
+    finder_item_extra_buttons: ''
+    database: game_categories
+    entity: AVCMS\Bundles\Games\Model\GameCategory
+    admin_form: AVCMS\Bundles\Games\Form\GameCategoryAdminForm
+    model_class: GameCategories
+    model_var_name: gameCategories
+    title_field: name

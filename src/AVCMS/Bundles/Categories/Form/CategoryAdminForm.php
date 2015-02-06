@@ -8,12 +8,21 @@
 namespace AVCMS\Bundles\Categories\Form;
 
 use AV\Form\FormBlueprint;
-use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
+use AV\Validation\Rules\MustNotExist;
+use AV\Validation\Validator;
+use AVCMS\Bundles\Categories\Model\Categories;
 
 class CategoryAdminForm extends FormBlueprint
 {
-    public function __construct(CategoryChoicesProvider $categoryChoicesProvider)
+    protected $itemId;
+
+    protected $categories;
+
+    public function __construct($itemId, Categories $categories)
     {
+        $this->itemId = $itemId;
+        $this->categories = $categories;
+
         $this->add('name', 'text', [
             'label' => 'Name',
             'attr' => array(
@@ -26,5 +35,10 @@ class CategoryAdminForm extends FormBlueprint
             'required' => true,
             'field_template' => '@admin/form_fields/slug_field.twig'
         ));
+    }
+
+    public function getValidationRules(Validator $validator)
+    {
+        $validator->addRule('slug', new MustNotExist($this->categories, 'slug', $this->itemId));
     }
 }

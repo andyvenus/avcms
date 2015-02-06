@@ -3,11 +3,12 @@
 namespace AVCMS\Bundles\Games\Form;
 
 use AVCMS\Bundles\Admin\Form\AdminContentForm;
+use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\FileUpload\Form\FileSelectFields;
 
 class GameAdminForm extends AdminContentForm
 {
-    public function __construct($itemId)
+    public function __construct($itemId, CategoryChoicesProvider $categoryChoicesProvider)
     {
         new FileSelectFields($this, 'admin/games/find-files', 'admin/games/upload', 'admin/games/grab-file', 'file', 'game_file');
 
@@ -22,7 +23,9 @@ class GameAdminForm extends AdminContentForm
         ));
         
         $this->add('category_id', 'select', array(
-            'label' => 'Category Id',
+            'label' => 'Category',
+            'choices_provider' => $categoryChoicesProvider,
+            'choices_translate' => false
         ));
         
         $this->add('width', 'text', array(
@@ -36,13 +39,20 @@ class GameAdminForm extends AdminContentForm
         $this->add('instructions', 'textarea', array(
             'label' => 'Instructions',
         ));
-        
-        $this->add('advert_id', 'select', array(
-            'label' => 'Advert Id',
+
+        $this->add('tags', 'text', array(
+            'label' => 'Tags'
         ));
         
-        $this->add('submitter_id', 'select', array(
-            'label' => 'Submitter Id',
+        $this->add('advert_id', 'select', array(
+            'label' => 'Advert',
+        ));
+        
+        $this->add('submitter_id', 'text', array(
+            'label' => 'Credited User',
+            'attr' => array(
+                'class' => 'user_selector no_select2'
+            )
         ));
         
         $this->add('embed_code', 'textarea', array(

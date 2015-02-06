@@ -30,3 +30,24 @@ games_admin_upload_file:
 games_grab_file:
   path: /games/grab-file
   defaults: { _controller: Games::GameFilesAdminController::grabFileAction }
+
+# Categories #
+games_manage_categories:
+  path: /games/categories
+  defaults: { _controller: 'Games::GamesAdminController::manageCategoriesAction', contentType: game }
+
+games_save_categories_order:
+  path: /games/categories/save-order
+  defaults: { _controller: Games::GamesAdminController::saveOrderAction, contentType: game }
+
+games_admin_add_category:
+  path: /games/categories/new
+  defaults: { _controller: Games::GamesAdminController::editCategoryAction, contentType: game }
+
+games_admin_delete_category:
+  path: /games/categories/delete/{id}
+  defaults: { _controller: Games::GamesAdminController::deleteCategoryAction, contentType: game }
+
+games_admin_edit_category:
+  path: /games/categories/edit/{id}
+  defaults: { _controller: Games::GamesAdminController::editCategoryAction, contentType: game }

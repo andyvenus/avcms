@@ -207,9 +207,9 @@ class WallpapersAdminController extends AdminBaseController
         return new Response($img->encode(), 200, ['Content-Type' => $img->mime]);
     }
 
-    protected function getCategoryForm()
+    protected function getCategoryForm($itemId)
     {
-        return new WallpaperCategoryAdminForm(new CategoryChoicesProvider($this->model('WallpaperCategories'), false));
+        return new WallpaperCategoryAdminForm($itemId, $this->model('WallpaperCategories'));
     }
 
     protected function clearWallpaperCaches(array $dirs)

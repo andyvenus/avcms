@@ -92,15 +92,16 @@ trait CategoryActionsTrait
         $categoryConfig = $this->getCategoryConfig($contentType);
         $model = $this->model($categoryConfig['model']);
 
-        $formBlueprint = $this->getCategoryForm();
+        $formBlueprint = $this->getCategoryForm($request->get('id', 0));
 
         return $this->handleEdit($request, $model, $formBlueprint, $categoryConfig['route_prefix'].'manage_categories', '@Categories/admin/edit_category.twig', ['route_prefix' => $categoryConfig['route_prefix']]);
     }
 
     /**
+     * @param $itemId
      * @return FormBlueprint
      */
-    abstract protected function getCategoryForm();
+    abstract protected function getCategoryForm($itemId);
 
     public function deleteCategoryAction(Request $request, $contentType)
     {

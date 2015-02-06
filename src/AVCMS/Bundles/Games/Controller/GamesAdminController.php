@@ -2,14 +2,20 @@
 
 namespace AVCMS\Bundles\Games\Controller;
 
+use AV\Form\FormBlueprint;
+use AVCMS\Bundles\Categories\Controller\CategoryActionsTrait;
+use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Games\Form\GamesAdminFiltersForm;
 use AVCMS\Bundles\Games\Form\GameAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
+use AVCMS\Bundles\Games\Form\GamesCategoryAdminForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class GamesAdminController extends AdminBaseController
 {
+    use CategoryActionsTrait;
+
     /**
      * @var \AVCMS\Bundles\Games\Model\Games
      */
@@ -29,7 +35,7 @@ class GamesAdminController extends AdminBaseController
 
     public function editAction(Request $request)
     {
-        $formBlueprint = new GameAdminForm($request->get('id', 0));
+        $formBlueprint = new GameAdminForm($request->get('id', 0), new CategoryChoicesProvider($this->model('GameCategories'), true, true));
 
         return $this->handleEdit($request, $this->games, $formBlueprint, 'games_admin_edit', '@Games/admin/edit_game.twig', array());
     }
@@ -58,4 +64,13 @@ class GamesAdminController extends AdminBaseController
 
         return $templateVars;
     }
-} 
+
+    /**
+     * @param $itemId
+     * @return FormBlueprint
+     */
+    protected function getCategoryForm($itemId)
+    {
+        return new GamesCategoryAdminForm($itemId, $this->model('GamesCategories'));
+    }
+}

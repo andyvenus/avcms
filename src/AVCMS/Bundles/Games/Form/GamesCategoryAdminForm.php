@@ -1,16 +1,16 @@
 <?php
 /**
  * User: Andy
- * Date: 09/01/15
- * Time: 11:14
+ * Date: 06/02/15
+ * Time: 13:54
  */
 
-namespace AVCMS\Bundles\Wallpapers\Form;
+namespace AVCMS\Bundles\Games\Form;
 
 use AVCMS\Bundles\Categories\Form\CategoryAdminForm;
 use AVCMS\Bundles\Categories\Model\Categories;
 
-class WallpaperCategoryAdminForm extends CategoryAdminForm
+class GamesCategoryAdminForm extends CategoryAdminForm
 {
     public function __construct($itemId, Categories $categories)
     {
