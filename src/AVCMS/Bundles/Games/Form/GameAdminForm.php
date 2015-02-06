@@ -43,9 +43,12 @@ class GameAdminForm extends AdminContentForm
         $this->add('tags', 'text', array(
             'label' => 'Tags'
         ));
-        
+
         $this->add('advert_id', 'select', array(
             'label' => 'Advert',
+            'choices' => ['0' => 'None'],
+            'choices_provider_service' => 'adverts.choices_provider',
+            'translate_choices' => false
         ));
         
         $this->add('submitter_id', 'text', array(
