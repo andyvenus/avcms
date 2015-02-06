@@ -112,6 +112,10 @@ class GamesAdminController extends AdminBaseController
             $height = $imageSize[1];
         }
 
+        if ($width === 0 || $height === 0) {
+            return new JsonResponse(['success' => false, 'error' => $this->trans('Could not get dimensions')]);
+        }
+
         return new JsonResponse(['success' => true, 'width' => $width, 'height' => $height]);
     }
 

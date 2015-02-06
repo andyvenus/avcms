@@ -26,7 +26,7 @@ avcms.gamesAdmin = {
                 form.find('input[name=height]').val(data.height);
             }
             else {
-                alert(data.error);
+                button.parent().find('.avcms-game-dimensions-error').text(data.error);
             }
         });
 
