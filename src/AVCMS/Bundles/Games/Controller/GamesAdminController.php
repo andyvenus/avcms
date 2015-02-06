@@ -9,6 +9,7 @@ use AVCMS\Bundles\Games\Form\GamesAdminFiltersForm;
 use AVCMS\Bundles\Games\Form\GameAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use AVCMS\Bundles\Games\Form\GamesCategoryAdminForm;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -88,6 +89,34 @@ class GamesAdminController extends AdminBaseController
     public function deleteAction(Request $request)
     {
         return $this->handleDelete($request, $this->games);
+    }
+
+    public function getDimensionsAction(Request $request)
+    {
+        $file = $request->get('file');
+
+        if ($file === null) {
+            throw $this->createNotFoundException();
+        }
+
+        if (strpos('', '://') !== false) {
+            return new JsonResponse(['success' => false, 'error' => 'Cannot get dimensions of an external file']);
+        }
+
+        $file = $this->getParam('root_dir').'/'.$this->getParam('games_dir').'/'.$file;
+
+        $imageSize = @getimagesize($file);
+
+        if (!$imageSize) {
+            $width = 0;
+            $height = 0;
+        }
+        else {
+            $width = $imageSize[0];
+            $height = $imageSize[1];
+        }
+
+        return new JsonResponse(['success' => true, 'width' => $width, 'height' => $height]);
     }
 
     protected function getSharedTemplateVars()

@@ -3,6 +3,10 @@ namespace: AVCMS\Bundles\Games
 require:
   - Framework
 
+assets:
+  avcms_games_admin.js:
+    env: admin
+
 categories:
   game:
     model: AVCMS\Bundles\Games\Model\GameCategories
@@ -25,3 +29,7 @@ menu_items:
       parent: games_admin
       settings:
         route: games_manage_categories
+
+container_params:
+  games_dir: web/games
+  game_thumbnails_dir: web/games

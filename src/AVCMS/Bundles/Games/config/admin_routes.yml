@@ -18,6 +18,11 @@ games_admin_finder:
   path: /games/finder/{page}
   defaults: { page: 1, _controller: 'Games::GamesAdminController::finderAction' }
 
+# Get Dimensions #
+games_admin_dimensions:
+  path: /games/get-dimensions
+  defaults: { _controller: 'Games::GamesAdminController::getDimensionsAction' }
+
 # File Select #
 games_admin_find_files:
   path: /games/find-files
