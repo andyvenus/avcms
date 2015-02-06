@@ -10,10 +10,12 @@ namespace AVCMS\Bundles\FileUpload\Form;
 use AV\Form\FormBlueprintInterface;
 
 class FileSelectFields {
-    public function __construct(FormBlueprintInterface $formBlueprint, $fileSelectUrl, $uploadUrl, $grabUrl, $fieldName = 'file', $groupName = 'wallpaper_file')
+    public function __construct(FormBlueprintInterface $formBlueprint, $fileSelectUrl, $uploadUrl, $grabUrl, $fieldName = 'file', $groupName = 'file')
     {
+        $fieldNameUc = ucfirst($fieldName);
+
         $formBlueprint->add($groupName.'[file_type]', 'radio', [
-            'label' => 'File Type',
+            'label' => $fieldNameUc.' Type',
             'choices' => [
                 $fieldName => 'Path',
                 $groupName.'[find]' => 'Find',
@@ -25,11 +27,11 @@ class FileSelectFields {
         ]);
 
         $formBlueprint->add($fieldName, 'text', array(
-            'label' => 'File Path',
+            'label' => $fieldNameUc.' Path',
         ));
 
         $formBlueprint->add($groupName.'[find]', 'text', array(
-            'label' => 'Find File',
+            'label' => 'Find '.$fieldNameUc,
             'attr' => array(
                 'class' => 'file-selector-dropdown no_select2',
                 'data-file-select-url' => $fileSelectUrl
@@ -37,7 +39,7 @@ class FileSelectFields {
         ));
 
         $formBlueprint->add($groupName.'[upload]', 'file', [
-            'label' => 'Upload File',
+            'label' => 'Upload '.$fieldNameUc,
             'field_template' => '@FileUpload/file_upload_field.twig',
             'attr' => [
                 'data-upload-url' => $uploadUrl
@@ -45,7 +47,7 @@ class FileSelectFields {
         ]);
 
         $formBlueprint->add($groupName.'[grab]', 'text', [
-            'label' => 'Grab File From URL',
+            'label' => 'Grab '.$fieldNameUc.' From URL',
             'field_template' => '@FileUpload/grab_file_field.twig',
             'attr' => array(
                 'data-grab-file-url' => $grabUrl

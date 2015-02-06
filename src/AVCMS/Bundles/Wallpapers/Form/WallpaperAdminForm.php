@@ -20,7 +20,7 @@ class WallpaperAdminForm extends AdminContentForm
         $this->import = $import;
 
         if ($import === false) {
-            new FileSelectFields($this, 'admin/wallpapers/find-files', 'admin/wallpapers/upload', 'admin/wallpapers/grab-file');
+            new FileSelectFields($this, 'admin/wallpapers/find-files', 'admin/wallpapers/upload', 'admin/wallpapers/grab-file', 'file', 'wallpaper_file');
         }
 
         $this->add('resize_type', 'radio', [
