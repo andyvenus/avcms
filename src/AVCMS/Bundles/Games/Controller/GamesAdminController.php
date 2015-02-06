@@ -60,7 +60,7 @@ class GamesAdminController extends AdminBaseController
         }
 
         if (!$helper->contentExists()) {
-            throw $this->createNotFoundException(ucwords(str_replace('_', ' ', $this->games->getSingular())).' not found');
+            throw $this->createNotFoundException('Game not found');
         }
 
         if (!$id = $helper->getEntity()->getId()) {
