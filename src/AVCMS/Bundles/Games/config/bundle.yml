@@ -3,9 +3,14 @@ namespace: AVCMS\Bundles\Games
 require:
   - Framework
 
+services:
+  - GamesServices
+
 assets:
   avcms_games_admin.js:
     env: admin
+  avcms_games.js:
+    env: frontend
 
 categories:
   game:

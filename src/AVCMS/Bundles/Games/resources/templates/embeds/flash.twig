@@ -1,0 +1,14 @@
+{% extends '@Games/embeds/embed_base.twig' %}
+
+{% block embed_code %}
+    <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%" id="ieID">
+        <param name="movie" value="{{ game.file }}" />
+        <PARAM NAME="SCALE" VALUE="exactfit">
+        <!--[if !IE]>-->
+        <object type="application/x-shockwave-flash" data="{{ game.file }}" width="100%" height="100%" id="eID" SCALE="exactfit">
+            <!--<![endif]-->
+            <!--[if !IE]>-->
+        </object>
+        <!--<![endif]-->
+    </object>
+{% endblock %}

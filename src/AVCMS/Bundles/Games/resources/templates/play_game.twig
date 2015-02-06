@@ -3,20 +3,7 @@
 {% block wide_content %}
     <h2>{{ game.name }}</h2>
 
-    <div id="avcms-game-container" data-original-width="{{ game.width }}" data-original-height="{{ game.height }}">
-        <div id="avcms-game-container-inner" style="width: {{ game.width }}px;height: {{ game.height }}px;margin: auto;">
-            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%" id="ieID">
-                <param name="movie" value="{{ game.file }}" />
-                <PARAM NAME="SCALE" VALUE="exactfit">
-                <!--[if !IE]>-->
-                <object type="application/x-shockwave-flash" data="{{ game.file }}" width="100%" height="100%" id="eID" SCALE="exactfit">
-                    <!--<![endif]-->
-                    <!--[if !IE]>-->
-                </object>
-                <!--<![endif]-->
-            </object>
-        </div>
-    </div>
+    {{ embed_game(game) }}
 
     <script type="text/javascript">
         window.onresize = function() {
