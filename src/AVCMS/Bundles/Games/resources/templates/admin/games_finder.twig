@@ -14,6 +14,10 @@
     <div class="btn-group">
         {{ buttons.edit('games_admin_edit', item.id) }}
 
+        {{ buttons.publish(item.published, 'games_admin_toggle_published') }}
+
+        {{ buttons.featured(item.featured, 'games_admin_toggle_featured') }}
+
         {{ buttons.delete('games_admin_delete') }}
     </div>
 {% endblock %}

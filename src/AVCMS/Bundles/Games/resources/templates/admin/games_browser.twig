@@ -25,5 +25,9 @@
 {% block checked_options_buttons %}
     {{ buttons.bulk_delete('games_admin_delete') }}
 
-    
+    {{ buttons.bulk_publish('games_admin_toggle_published') }}
+    {{ buttons.bulk_unpublish('games_admin_toggle_published') }}
+
+    {{ buttons.bulk_feature('games_admin_toggle_featured') }}
+    {{ buttons.bulk_unfeature('games_admin_toggle_featured') }}
 {% endblock %}

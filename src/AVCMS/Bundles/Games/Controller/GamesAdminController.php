@@ -86,6 +86,16 @@ class GamesAdminController extends AdminBaseController
         return new Response($this->render('@Games/admin/games_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));
     }
 
+    public function togglePublishedAction(Request $request)
+    {
+        return $this->handleTogglePublished($request, $this->games);
+    }
+
+    public function toggleFeaturedAction(Request $request)
+    {
+        return $this->handleTogglePublished($request, $this->games, 'featured');
+    }
+
     public function deleteAction(Request $request)
     {
         return $this->handleDelete($request, $this->games);

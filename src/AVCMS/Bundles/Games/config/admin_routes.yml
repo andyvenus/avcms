@@ -18,6 +18,14 @@ games_admin_finder:
   path: /games/finder/{page}
   defaults: { page: 1, _controller: 'Games::GamesAdminController::finderAction' }
 
+games_admin_toggle_published:
+  path: /games/publish
+  defaults: { _controller: Games::GamesAdminController::togglePublishedAction }
+
+games_admin_toggle_featured:
+  path: /games/toggle-featured
+  defaults: { _controller: Games::GamesAdminController::toggleFeaturedAction }
+
 # Get Dimensions #
 games_admin_dimensions:
   path: /games/get-dimensions
