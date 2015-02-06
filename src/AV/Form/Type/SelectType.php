@@ -11,6 +11,15 @@ use AV\Form\ChoicesProviderInterface;
 
 class SelectType extends DefaultType
 {
+    public function allowUnsetRequest($field)
+    {
+        if (empty($field['options']['choices'])) {
+            return true;
+        }
+
+        return parent::allowUnsetRequest($field);
+    }
+
     public function isValidRequestData($field, $data)
     {
         if (is_array($data) && !isset($field['options']['attr']['multiple'])) {
