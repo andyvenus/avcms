@@ -99,10 +99,6 @@ class GamesAdminController extends AdminBaseController
             throw $this->createNotFoundException();
         }
 
-        if (strpos('', '://') !== false) {
-            return new JsonResponse(['success' => false, 'error' => 'Cannot get dimensions of an external file']);
-        }
-
         $file = $this->getParam('root_dir').'/'.$this->getParam('games_dir').'/'.$file;
 
         $imageSize = @getimagesize($file);
