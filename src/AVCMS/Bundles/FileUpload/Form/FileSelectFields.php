@@ -10,20 +10,26 @@ namespace AVCMS\Bundles\FileUpload\Form;
 use AV\Form\FormBlueprintInterface;
 
 class FileSelectFields {
-    public function __construct(FormBlueprintInterface $formBlueprint, $fileSelectUrl, $uploadUrl, $grabUrl, $fieldName = 'file', $groupName = 'file')
+    public function __construct(FormBlueprintInterface $formBlueprint, $fileSelectUrl, $uploadUrl, $grabUrl, $fieldName = 'file', $groupName = 'file', $additionalChoices = [], $defaultSelected = null)
     {
+        $defaultSelected = ($defaultSelected ? $defaultSelected : $fieldName);
+
         $fieldNameUc = ucfirst($fieldName);
+
+        $choices = [
+            $fieldName => 'Path',
+            $groupName.'[find]' => 'Find',
+            $groupName.'[upload]' => 'Upload',
+            $groupName.'[grab]' => 'Grab'
+        ];
+
+        $choices = $choices + $additionalChoices;
 
         $formBlueprint->add($groupName.'[file_type]', 'radio', [
             'label' => $fieldNameUc.' Type',
-            'choices' => [
-                $fieldName => 'Path',
-                $groupName.'[find]' => 'Find',
-                $groupName.'[upload]' => 'Upload',
-                $groupName.'[grab]' => 'Grab'
-            ],
+            'choices' => $choices,
             'attr' => ['data-file-selector-group' => $groupName, 'data-file-selector-target' => $fieldName],
-            'default' => $fieldName
+            'default' => $defaultSelected
         ]);
 
         $formBlueprint->add($fieldName, 'text', array(

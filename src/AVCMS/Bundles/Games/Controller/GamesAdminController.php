@@ -35,9 +35,43 @@ class GamesAdminController extends AdminBaseController
 
     public function editAction(Request $request)
     {
-        $formBlueprint = new GameAdminForm($request->get('id', 0), new CategoryChoicesProvider($this->model('GameCategories'), true, true));
+        $game = $this->games->getOneOrNew($request->get('id', 0));
 
-        return $this->handleEdit($request, $this->games, $formBlueprint, 'games_admin_edit', '@Games/admin/edit_game.twig', array());
+        $formBlueprint = new GameAdminForm($game, new CategoryChoicesProvider($this->model('GameCategories'), true, true));
+
+        $form = $this->buildForm($formBlueprint);
+
+        $helper = $this->editContentHelper($this->games, $form, $game);
+
+        $helper->handleRequest($request);
+
+        if ($helper->formValid()) {
+            $helper->saveToEntities();
+
+            $game = $helper->getEntity();
+            if ($request->request->get('game_file')['file_type'] === 'embed_code') {
+                $game->setFile(null);
+            }
+            else {
+                $game->setEmbedCode('');
+            }
+
+            $helper->save(false);
+        }
+
+        if (!$helper->contentExists()) {
+            throw $this->createNotFoundException(ucwords(str_replace('_', ' ', $this->games->getSingular())).' not found');
+        }
+
+        if (!$id = $helper->getEntity()->getId()) {
+            $id = 0;
+        }
+
+        return $this->createEditResponse(
+            $helper,
+            '@Games/admin/edit_game.twig',
+            ['games_admin_edit', ['id' => $id]]
+        );
     }
 
     public function finderAction(Request $request)
