@@ -1,0 +1,4 @@
+name: Games
+namespace: AVCMS\Bundles\Games
+require:
+    - Framework

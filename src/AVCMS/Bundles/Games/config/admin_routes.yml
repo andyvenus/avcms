@@ -1,0 +1,21 @@
+
+
+games_admin_edit:
+    path:     /games/edit/{id}
+    defaults: { _controller: 'Games::GamesAdminController::editAction' }
+
+games_admin_add:
+    path:     /games/new
+    defaults: { _controller: 'Games::GamesAdminController::editAction' }
+
+games_admin_delete:
+    path:     /games/delete
+    defaults: { _controller: 'Games::GamesAdminController::deleteAction' }
+
+games_admin_home:
+  path: /games
+  defaults: { _controller: 'Games::GamesAdminController::homeAction' }
+
+games_admin_finder:
+  path: /games/finder/{page}
+  defaults: { page: 1, _controller: 'Games::GamesAdminController::finderAction' }
