@@ -1,4 +1,27 @@
 name: Games
 namespace: AVCMS\Bundles\Games
 require:
-    - Framework
+  - Framework
+
+categories:
+  game:
+    model: AVCMS\Bundles\Games\Model\GameCategories
+    content_model: AVCMS\Bundles\Games\Model\Games
+    route_prefix: games_
+
+menu_items:
+  admin:
+    games_admin:
+      label: Games
+      icon: glyphicon glyphicon-tower
+      type: route
+      default_order: 2
+      settings:
+        route: games_admin_home
+    games_categories_admin:
+      label: Categories
+      icon: glyphicon glyphicon-th-list
+      type: route
+      parent: games_admin
+      settings:
+        route: games_manage_categories
