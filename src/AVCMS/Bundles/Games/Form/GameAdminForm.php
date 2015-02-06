@@ -11,7 +11,7 @@ class GameAdminForm extends AdminContentForm
     {
         new FileSelectFields($this, 'admin/games/find-files', 'admin/games/upload', 'admin/games/grab-file', 'file', 'game_file');
 
-        new FileSelectFields($this, 'admin/games/find-files?type=thumbnail', 'admin/games/upload', 'admin/games/grab-file?type=thumbnail', 'thumbnail', 'game_thumbnail');
+        new FileSelectFields($this, 'admin/games/find-files', 'admin/games/upload', 'admin/games/grab-file', 'thumbnail', 'game_thumbnail');
 
         $this->add('name', 'text', array(
             'label' => 'Name',

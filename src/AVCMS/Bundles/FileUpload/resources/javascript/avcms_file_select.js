@@ -14,11 +14,13 @@ $(document).ready(function() {
         var file_selector = $(".file-selector-dropdown");
 
         file_selector.each(function() {
+            var field_group = $(this).attr('name').substr(0, $(this).attr('name').indexOf('['));
+
             $(this).select2({
                 placeholder: "Find file",
                 minimumInputLength: 2,
                 ajax: {
-                    url: avcms.config.site_url + $(this).data('file-select-url'),
+                    url: avcms.config.site_url + $(this).data('file-select-url') + '?type='+field_group,
                     dataType: 'json',
                     data: function (term, page) {
                         return {
@@ -134,10 +136,12 @@ avcms.file_select = {
         var btn = $(this);
 
         var origBtn = $(this).html();
-        $(this).html('Downloading...');
-        $.post(avcms.config.site_url + urlField.data('grab-file-url'), 'file_url='+urlField.val(), function(data) {
+        $(this).html(avcms.general.trans('Downloading...'));
+
+        var field_group = urlField.attr('name').substr(0, urlField.attr('name').indexOf('['));
+
+        $.post(avcms.config.site_url + urlField.data('grab-file-url')+'?type='+field_group, 'file_url='+urlField.val(), function(data) {
             if (data.success === true) {
-                var field_group = urlField.attr('name').substr(0, urlField.attr('name').indexOf('['));
                 var file_field = $('[data-file-selector-group="'+field_group+'"]').filter(':visible').data('file-selector-target');
 
                 $('form').filter(':visible').find('input[name="'+file_field+'"]').val(data.file);
