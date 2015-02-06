@@ -14,7 +14,6 @@ $(document).ready(function() {
         var file_selector = $("input.file-selector-dropdown");
 
         file_selector.each(function() {
-            console.log($(this));
             var field_group = $(this).attr('name').substr(0, $(this).attr('name').indexOf('['));
 
             $(this).select2({
