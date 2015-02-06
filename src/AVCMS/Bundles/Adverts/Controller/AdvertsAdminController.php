@@ -15,21 +15,23 @@ class AdvertsAdminController extends AdminBaseController
      */
     protected $adverts;
 
-    public function setUp(Request $request)
+    protected $browserTemplate = '@Adverts/admin/adverts_browser.twig';
+
+    public function setUp()
     {
         $this->adverts = $this->model('Adverts');
     }
 
     public function homeAction(Request $request)
     {
-       return $this->handleManage($request, '@Adverts/admin/adverts_browser.twig');
+       return $this->handleManage($request, $this->browserTemplate);
     }
 
     public function editAction(Request $request)
     {
         $formBlueprint = new AdvertAdminForm();
 
-        return $this->handleEdit($request, $this->adverts, $formBlueprint, 'adverts_admin_edit', '@Adverts/admin/edit_advert.twig', '@Adverts/admin/adverts_browser.twig', array());
+        return $this->handleEdit($request, $this->adverts, $formBlueprint, 'adverts_admin_edit', '@Adverts/admin/edit_advert.twig', array());
     }
 
     public function finderAction(Request $request)
