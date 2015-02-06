@@ -1,3 +1,4 @@
+# Manage Wallpapers #
 wallpapers_admin_edit:
     path:     /wallpapers/edit/{id}
     defaults: { _controller: 'Wallpapers::WallpapersAdminController::editAction' }
@@ -18,6 +19,15 @@ wallpapers_admin_finder:
   path: /wallpapers/finder/{page}
   defaults: { page: 1, _controller: 'Wallpapers::WallpapersAdminController::finderAction' }
 
+wallpapers_admin_toggle_published:
+  path: /wallpapers/publish
+  defaults: { _controller: Wallpapers::WallpapersAdminController::togglePublishedAction }
+
+wallpapers_admin_toggle_featured:
+  path: /wallpapers/toggle-featured
+  defaults: { _controller: Wallpapers::WallpapersAdminController::toggleFeaturedAction }
+
+# File Uploads #
 wallpapers_admin_find_files:
   path: /wallpapers/find-files
   defaults: { _controller: 'Wallpapers::WallpapersAdminController::findFilesAction' }
@@ -26,6 +36,11 @@ wallpapers_admin_upload:
   path: /wallpapers/upload
   defaults: { _controller: 'Wallpapers::WallpapersAdminController::uploadFilesAction' }
 
+wallpapers_grab_file:
+  path: /wallpapers/grab-file
+  defaults: { _controller: Wallpapers::WallpapersAdminController::grabFileAction }
+
+# Categories #
 wallpapers_manage_categories:
   path: /wallpapers/categories
   defaults: { _controller: 'Wallpapers::WallpapersAdminController::manageCategoriesAction', contentType: wallpaper }
@@ -46,30 +61,22 @@ wallpapers_admin_edit_category:
   path: /wallpapers/categories/edit/{id}
   defaults: { _controller: Wallpapers::WallpapersAdminController::editCategoryAction, contentType: wallpaper }
 
+# View Original Image #
 wallpapers_admin_view_original_image:
   path: /wallpapers/original-image
   defaults: { _controller: Wallpapers::WallpapersAdminController::viewOriginalImageAction }
 
-wallpapers_grab_file:
-  path: /wallpapers/grab-file
-  defaults: { _controller: Wallpapers::WallpapersAdminController::grabFileAction }
-
+# Manage Resolutions #
 wallpapers_manage_resolutions:
   path: /wallpapers/manage-resolutions
   defaults: { _controller: Wallpapers::WallpapersAdminController::editResolutionsAction }
 
-wallpapers_admin_toggle_published:
-  path: /wallpapers/publish
-  defaults: { _controller: Wallpapers::WallpapersAdminController::togglePublishedAction }
-
-wallpapers_admin_toggle_featured:
-  path: /wallpapers/toggle-featured
-  defaults: { _controller: Wallpapers::WallpapersAdminController::toggleFeaturedAction }
-
+# Clear Wallpaper Image Cache #
 wallpapers_admin_clear_image_cache:
   path: /wallpapers/clear-cache
   defaults: { _controller: Wallpapers::WallpapersAdminController::clearWallpaperImageCacheAction }
 
+# Bulk Import #
 wallpaper_bulk_import:
     path:     /wallpapers-bulk-import/import/{folder}
     defaults: { _controller: 'Wallpapers::WallpapersBulkImportAdminController::importAction' }
@@ -94,6 +101,7 @@ wallpapers_bulk_import_new_folder:
   path: /wallpapers-bulk-import/add-folder
   defaults: { _controller: 'Wallpapers::WallpapersBulkImportAdminController::addFolderAction' }
 
+# Manage Submissions #
 wallpaper_submissions_admin_review:
     path:     /wallpaper-submissions/review/{id}
     defaults: { _controller: 'Wallpapers::WallpaperSubmissionsAdminController::reviewAction' }

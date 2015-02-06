@@ -1,5 +1,3 @@
-
-
 games_admin_edit:
     path:     /games/edit/{id}
     defaults: { _controller: 'Games::GamesAdminController::editAction' }
@@ -19,3 +17,16 @@ games_admin_home:
 games_admin_finder:
   path: /games/finder/{page}
   defaults: { page: 1, _controller: 'Games::GamesAdminController::finderAction' }
+
+# File Select #
+games_admin_find_files:
+  path: /games/find-files
+  defaults: { _controller: 'Games::GameFilesAdminController::findFilesAction' }
+
+games_admin_upload_file:
+  path: /games/upload
+  defaults: { _controller: 'Games::GameFilesAdminController::uploadFilesAction' }
+
+games_grab_file:
+  path: /games/grab-file
+  defaults: { _controller: Games::GameFilesAdminController::grabFileAction }
