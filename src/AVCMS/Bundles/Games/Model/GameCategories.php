@@ -13,7 +13,7 @@ class GameCategories extends Categories
 
     public function getSingular()
     {
-        return 'game_category';
+        return 'category';
     }
 
     public function getEntity()

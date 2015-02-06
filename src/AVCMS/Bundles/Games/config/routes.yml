@@ -1,0 +1,3 @@
+play_game:
+  path: /game/{slug}
+  defaults: { _controller: Games::GamesController::playGameAction }

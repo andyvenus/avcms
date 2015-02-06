@@ -1,0 +1,63 @@
+{% extends 'index.twig' %}
+
+{% block wide_content %}
+    <h2>{{ game.name }}</h2>
+
+    <div id="avcms-game-container" data-original-width="{{ game.width }}" data-original-height="{{ game.height }}">
+        <div id="avcms-game-container-inner" style="width: {{ game.width }}px;height: {{ game.height }}px;margin: auto;">
+            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%" id="ieID">
+                <param name="movie" value="{{ game.file }}" />
+                <PARAM NAME="SCALE" VALUE="exactfit">
+                <!--[if !IE]>-->
+                <object type="application/x-shockwave-flash" data="{{ game.file }}" width="100%" height="100%" id="eID" SCALE="exactfit">
+                    <!--<![endif]-->
+                    <!--[if !IE]>-->
+                </object>
+                <!--<![endif]-->
+            </object>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        window.onresize = function() {
+            var game_container = $('#avcms-game-container');
+            var game_container_inner = $('#avcms-game-container-inner');
+
+            var original_width = game_container.data('original-width');
+            var original_height = game_container.data('original-height');
+
+            if (game_container.width() < original_width) {
+                game_container_inner.css('width', '100%');
+
+                var new_height = original_height / original_width * game_container_inner.width();
+                game_container_inner.css('height', new_height);
+            }
+            else {
+                game_container_inner.css('width', original_width);
+                game_container_inner.css('height', original_height);
+            }
+        };
+    </script>
+
+    <div class="row">
+        <div class="col-md-4">
+            <p>{% trans %}Date Added{% endtrans %}: {{ game.dateAdded|date(settings.date_format) }}</p>
+        </div>
+        <div class="col-md-4">
+            <p>{% trans %}Category{% endtrans %}: {{ game.category.name }}</p>
+        </div>
+        <div class="col-md-4">
+            {% trans %}Tags{% endtrans %}:
+            {% for tag in game.tags %}
+                <a class="btn btn-default btn-xs" href="#">{{ tag.name }}</a>
+            {% else %}
+                {% trans %}None{% endtrans %}
+            {% endfor %}
+        </div>
+     </div>
+    <div class="row">
+        <div class="col-md-4">
+            <p>{% trans with {plays: game.hits} %}Played {plays} times{% endtrans %}</p>
+        </div>
+    </div>
+{% endblock %}

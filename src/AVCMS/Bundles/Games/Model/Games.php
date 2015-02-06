@@ -2,10 +2,12 @@
 
 namespace AVCMS\Bundles\Games\Model;
 
-use AV\Model\Model;
+use AVCMS\Core\Model\ContentModel;
 
-class Games extends Model
+class Games extends ContentModel
 {
+    protected $textIdentifierColumn = 'slug';
+
     public function getTable()
     {
         return 'games';
