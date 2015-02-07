@@ -27,11 +27,25 @@ class EmbedGameTwigExtension extends \Twig_Extension
 
     private $rootUrl;
 
-    public function __construct(GameEmbeds $gameEmbeds, $rootUrl, $gamesPath)
+    private $thumbnailsPath;
+
+    public function __construct(GameEmbeds $gameEmbeds, $rootUrl, $gamesPath, $thumbnailsPath)
     {
         $this->gameEmbeds = $gameEmbeds;
         $this->rootUrl = $rootUrl;
         $this->gamesPath = $gamesPath;
+        $this->thumbnailsPath = $thumbnailsPath;
+    }
+
+    public function gameThumbnailUrl(Game $game)
+    {
+        $thumbnail = $game->getThumbnail();
+
+        if (strpos($thumbnail, '://') === false) {
+            return $this->rootUrl.'/'.$this->thumbnailsPath.'/'.$thumbnail;
+        }
+
+        return $thumbnail;
     }
 
     public function embedGame(Game $game)
@@ -67,6 +81,11 @@ class EmbedGameTwigExtension extends \Twig_Extension
             'embed_game' => new \Twig_SimpleFunction(
                 'embed_game',
                 array($this, 'embedGame'),
+                array('is_safe' => array('html'))
+            ),
+            'game_thumbnail' => new \Twig_SimpleFunction(
+                'game_thumbnail',
+                array($this, 'gameThumbnailUrl'),
                 array('is_safe' => array('html'))
             )
         ];

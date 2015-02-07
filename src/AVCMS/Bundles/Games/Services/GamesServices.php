@@ -20,7 +20,7 @@ class GamesServices implements ServicesInterface
         ;
 
         $container->register('twig_extension.embed_game', 'AVCMS\Bundles\Games\TwigExtension\EmbedGameTwigExtension')
-            ->setArguments([new Reference('game_embeds.model'), new Reference('site_url'), '%games_dir%'])
+            ->setArguments([new Reference('game_embeds.model'), new Reference('site_url'), '%games_dir%', '%game_thumbnails_dir%'])
             ->addTag('twig.extension')
         ;
     }
