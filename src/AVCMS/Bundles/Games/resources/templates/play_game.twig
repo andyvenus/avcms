@@ -2,6 +2,7 @@
 
 {% block wide_content %}
     <h2>{{ game.name }}</h2>
+    <p class="game-description">{{ game.description }}</p>
 
     {{ embed_game(game) }}
 
@@ -26,6 +27,7 @@
         };
     </script>
 
+    <h4>{% trans %}Game Details{% endtrans %}</h4>
     <div class="row">
         <div class="col-md-4">
             <p>{% trans %}Date Added{% endtrans %}: {{ game.dateAdded|date(settings.date_format) }}</p>
