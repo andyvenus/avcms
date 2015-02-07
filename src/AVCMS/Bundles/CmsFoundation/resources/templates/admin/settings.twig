@@ -28,7 +28,10 @@
                     <div class="row">
                 {% endif %}
 
-                <div class="col-sm-6 {% if field.type == 'checkbox' %}checkbox-row{% endif %}">{{ form_row(field) }}</div>
+                <div class="col-sm-6 {% if field.type == 'checkbox' %}checkbox-row{% endif %}">
+                    {% if field.type == 'checkbox' %}<label>{{ field.options.label }}</label>{% endif %}
+                    {{ form_row(field) }}
+                </div>
 
                 {% if loop.index is even or loop.last %}
                     </div>
