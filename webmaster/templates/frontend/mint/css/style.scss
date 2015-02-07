@@ -172,3 +172,31 @@ select[name=author] {
 .box {
   margin-bottom: 15px;
 }
+
+.game-box {
+  border: 1px solid darken($panel-header-color, 10);
+
+  .box-top {
+    background-color: $panel-header-color;
+    padding: 10px;
+    border-bottom: 1px solid darken($panel-header-color, 10);
+    color: darken($panel-header-color, 40);
+
+
+    h1, h2, h3, h4, h5, h6 {
+      margin: 0px;
+      font-weight: normal;
+      color: darken($panel-header-color, 50);
+      font-family: "HelveticaNeue-Light", sans-serif;
+    }
+  }
+
+  .box-main {
+    padding: 15px;
+  }
+
+  .box-footer {
+    background-color: lighten($panel-header-color, 2);
+    padding: 10px;
+  }
+}

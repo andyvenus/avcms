@@ -117,3 +117,21 @@ select[name=author] {
 
 .box {
   margin-bottom: 15px; }
+
+.game-box {
+  border: 1px solid #e6dbc8; }
+  .game-box .box-top {
+    background-color: #f6f2eb;
+    padding: 10px;
+    border-bottom: 1px solid #e6dbc8;
+    color: #b7975e; }
+    .game-box .box-top h1, .game-box .box-top h2, .game-box .box-top h3, .game-box .box-top h4, .game-box .box-top h5, .game-box .box-top h6 {
+      margin: 0px;
+      font-weight: normal;
+      color: #9c7d46;
+      font-family: "HelveticaNeue-Light", sans-serif; }
+  .game-box .box-main {
+    padding: 15px; }
+  .game-box .box-footer {
+    background-color: #f9f7f2;
+    padding: 10px; }
