@@ -81,6 +81,11 @@ comments:
     frontend_route: play_game
     frontend_route_params: [slug]
 
+ratings:
+  game:
+    name: Game
+    model: AVCMS\Bundles\Games\Model\Games
+
 module_positions:
   beside_game_comments:
       name: Beside Game Comments
