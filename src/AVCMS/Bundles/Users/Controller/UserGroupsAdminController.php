@@ -123,7 +123,7 @@ class UserGroupsAdminController extends AdminBaseController
             return new JsonResponse(['form' => $form->createView()->getJsonResponseData()]);
         }
 
-        $permissionTypes = ['PERM' => $this->trans('Main Permissions'), 'MODERATOR' => $this->trans('Moderation Permissions')];
+        $permissionTypes = ['PERM' => $this->trans('Main Permissions'), 'MODERATOR' => $this->trans('Moderation Permissions'), 'ELEVATED' => $this->trans('Elevated Permissions')];
         if ($userGroup->getAdminPanelAccess()) {
             $permissionTypes['ADMIN'] = $this->trans('Admin Permissions');
         }
