@@ -21,19 +21,22 @@ class PermissionsVoter implements VoterInterface
 
     protected $moderatorPrefix;
 
+    protected $elevatedPrefix;
+
     protected $permissions;
 
-    public function __construct(RolePermissionsProviderInterface $permissionsModel, $prefix = 'PERM_', $adminPrefix = 'ADMIN_', $moderatorPrefix = 'MODERATOR_')
+    public function __construct(RolePermissionsProviderInterface $permissionsModel, $prefix = 'PERM_', $adminPrefix = 'ADMIN_', $moderatorPrefix = 'MODERATOR_', $elevatedPrefix = 'ELEVATED_')
     {
         $this->permissionsModel = $permissionsModel;
         $this->prefix = $prefix;
         $this->adminPrefix = $adminPrefix;
         $this->moderatorPrefix = $moderatorPrefix;
+        $this->elevatedPrefix = $elevatedPrefix;
     }
 
     public function supportsAttribute($attribute)
     {
-        return (0 === strpos($attribute, $this->prefix) || 0 === strpos($attribute, $this->adminPrefix) || 0 === strpos($attribute, $this->moderatorPrefix));
+        return (0 === strpos($attribute, $this->prefix) || 0 === strpos($attribute, $this->adminPrefix) || 0 === strpos($attribute, $this->moderatorPrefix) || 0 === strpos($attribute, $this->elevatedPrefix));
     }
 
     public function supportsClass($class)

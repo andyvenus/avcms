@@ -19,6 +19,7 @@ class UserGroupAdminForm extends FormBlueprint
         
         $this->add('perm_default', 'radio', array(
             'label' => 'Default General Permission',
+            'help' => 'Safe permissions like commenting or sending reports',
             'choices' => [
                 'deny' => 'Deny',
                 'allow' => 'Allow'
@@ -26,8 +27,19 @@ class UserGroupAdminForm extends FormBlueprint
             'default' => 'allow'
         ));
 
+        $this->add('elevated_default', 'radio', array(
+            'label' => 'Default Elevated Permission',
+            'help' => 'Special permissions like not having to see adverts',
+            'choices' => [
+                'deny' => 'Deny',
+                'allow' => 'Allow'
+            ],
+            'default' => 'deny'
+        ));
+
         $this->add('moderator_default', 'radio', array(
             'label' => 'Default Moderator Permission',
+            'help' => 'Moderator-level permissions like deleting comments',
             'choices' => [
                 'deny' => 'Deny',
                 'allow' => 'Allow'
@@ -37,6 +49,7 @@ class UserGroupAdminForm extends FormBlueprint
 
         $this->add('admin_default', 'radio', array(
             'label' => 'Default Admin Permission',
+            'help' => 'Admin permissions. Requires "Admin Panel Access" to be checked.',
             'choices' => [
                 'deny' => 'Deny',
                 'allow' => 'Allow'

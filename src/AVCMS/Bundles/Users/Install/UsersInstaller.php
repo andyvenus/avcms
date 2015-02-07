@@ -81,6 +81,7 @@ class UsersInstaller extends BundleInstaller
                   `admin_default` varchar(11) NOT NULL DEFAULT 'deny',
                   `perm_default` varchar(11) NOT NULL DEFAULT 'deny',
                   `moderator_default` varchar(11) NOT NULL DEFAULT 'deny',
+                  `elevated_default` varchar(11) NOT NULL DEFAULT 'deny',
                   `owner` varchar(30) DEFAULT NULL,
                   `custom_permissions` tinyint(1) NOT NULL DEFAULT '0',
                   `admin_panel_access` tinyint(1) NOT NULL DEFAULT '0',

@@ -16,6 +16,16 @@ class UserGroup extends Entity
         $this->set("admin_default", $value);
     }
 
+    public function getElevatedDefault()
+    {
+        return $this->get("elevated_default");
+    }
+
+    public function setElevatedDefault($value)
+    {
+        $this->set("elevated_default", $value);
+    }
+
     public function getModeratorDefault()
     {
         return $this->get("moderator_default");
