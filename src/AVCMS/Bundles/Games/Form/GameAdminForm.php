@@ -26,6 +26,9 @@ class GameAdminForm extends AdminContentForm
 
         $this->add('name', 'text', array(
             'label' => 'Name',
+            'attr' => [
+                'data-slug-target' => 'slug'
+            ],
             'required' => true
         ));
         
