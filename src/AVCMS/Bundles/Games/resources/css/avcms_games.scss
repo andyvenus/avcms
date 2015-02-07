@@ -1,0 +1,25 @@
+#avcms-game-container {
+  margin-bottom: 15px;
+}
+
+#avcms-game-advert {
+  text-align: center;
+  margin-bottom: 15px;
+  display: none;
+}
+
+#avcms-game-advert-countdown {
+  font-size: 20px;
+}
+
+#avcms-game-advert-countdown, #avcms-game-advert-skip {
+  display: inline-block;
+}
+
+#avcms-game-advert-countdown {
+  width: 40px;
+}
+
+.game-advert-info {
+  margin-bottom: 15px;
+}

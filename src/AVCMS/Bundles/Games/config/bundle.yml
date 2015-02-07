@@ -12,6 +12,9 @@ assets:
   avcms_games.js:
     env: frontend
 
+  avcms_games.css:
+    env: frontend
+
 categories:
   game:
     model: AVCMS\Bundles\Games\Model\GameCategories
@@ -34,6 +37,36 @@ menu_items:
       parent: games_admin
       settings:
         route: games_manage_categories
+
+user_settings_sections:
+  game_ads: Adverts Before Games
+
+user_settings:
+  game_ad_default:
+    label: Default Game Ad
+    help: The ad shown before games without a specific ad selected
+    type: select
+    default: 0
+    choices:
+      0: None
+    choices_provider_service: adverts.choices_provider
+    section: game_ads
+  game_ad_countdown:
+    label: Game Ads Duration
+    help: How long to show the advert before the game automatically loads
+    type: text
+    default: 15
+    section: game_ads
+    validation:
+      numeric:
+        rule: Numeric
+  game_ad_allow_skip:
+    label: Allow Skipping
+    help: Allow users to skip the ads
+    type: checkbox
+    default: 1
+    section: game_ads
+
 
 container_params:
   games_dir: web/games

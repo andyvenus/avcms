@@ -3,3 +3,23 @@
         {% block embed_code %}{% endblock %}
     </div>
 </div>
+
+{% if game.advertId or settings.game_ad_default %}
+    <div id="avcms-game-advert">
+        <div class="game-advert-info">
+            <div id="avcms-game-advert-countdown" data-countdown-time="{{ settings.game_ad_countdown }}">{{ settings.game_ad_countdown }}</div>
+            {% if settings.game_ad_allow_skip %}
+                <div id="avcms-game-advert-skip">
+                    <button class="btn btn-default btn-sm">{% trans %}Skip Advert{% endtrans %} <span class="glyphicon glyphicon-arrow-right"></span> </button>
+                </div>
+            {% endif %}
+        </div>
+        <div class="game-advert-main">
+            {% if game.advertId %}
+                {{ advert(game.advertId) }}
+            {% else %}
+                {{ advert(settings.game_ad_default) }}
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
