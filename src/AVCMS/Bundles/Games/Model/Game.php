@@ -6,19 +6,14 @@ use AV\Model\Entity;
 
 class Game extends Entity
 {
-    public function setAdvertId($value)
-    {
-        $this->set("advert_id", $value);
-    }
-
     public function getAdvertId()
     {
         return $this->get("advert_id");
     }
 
-    public function setCategoryId($value)
+    public function setAdvertId($value)
     {
-        $this->set("category_id", $value);
+        $this->set("advert_id", $value);
     }
 
     public function getCategoryId()
@@ -26,14 +21,29 @@ class Game extends Entity
         return $this->get("category_id");
     }
 
-    public function setCategoryParent($value)
+    public function setCategoryId($value)
     {
-        $this->set("category_parent", $value);
+        $this->set("category_id", $value);
     }
 
     public function getCategoryParent()
     {
         return $this->get("category_parent");
+    }
+
+    public function setCategoryParent($value)
+    {
+        $this->set("category_parent", $value);
+    }
+
+    public function setComments($value)
+    {
+        $this->set("comments", $value);
+    }
+
+    public function getComments()
+    {
+        return $this->get("comments");
     }
 
     public function setCreatorId($value)
@@ -46,24 +56,24 @@ class Game extends Entity
         return $this->get("creator_id");
     }
 
-    public function setDateAdded($value)
-    {
-        $this->set("date_added", $value);
-    }
-
     public function getDateAdded()
     {
         return $this->get("date_added");
     }
 
-    public function setDateEdited($value)
+    public function setDateAdded($value)
     {
-        $this->set("date_edited", $value);
+        $this->set("date_added", $value);
     }
 
     public function getDateEdited()
     {
         return $this->get("date_edited");
+    }
+
+    public function setDateEdited($value)
+    {
+        $this->set("date_edited", $value);
     }
 
     public function setDescription($value)
@@ -76,24 +86,24 @@ class Game extends Entity
         return $this->get("description");
     }
 
-    public function getDislikes()
-    {
-        return $this->get("dislikes");
-    }
-
     public function setDislikes($value)
     {
         $this->set("dislikes", $value);
     }
 
-    public function setEditorId($value)
+    public function getDislikes()
     {
-        $this->set("editor_id", $value);
+        return $this->get("dislikes");
     }
 
     public function getEditorId()
     {
         return $this->get("editor_id");
+    }
+
+    public function setEditorId($value)
+    {
+        $this->set("editor_id", $value);
     }
 
     public function getEmbedCode()
@@ -126,19 +136,14 @@ class Game extends Entity
         $this->set("file", $value);
     }
 
-    public function setFiletype($value)
-    {
-        $this->set("filetype", $value);
-    }
-
     public function getFiletype()
     {
         return $this->get("filetype");
     }
 
-    public function setHeight($value)
+    public function setFiletype($value)
     {
-        $this->set("height", $value);
+        $this->set("filetype", $value);
     }
 
     public function getHeight()
@@ -146,14 +151,19 @@ class Game extends Entity
         return $this->get("height");
     }
 
-    public function getHits()
+    public function setHeight($value)
     {
-        return $this->get("hits");
+        $this->set("height", $value);
     }
 
     public function setHits($value)
     {
         $this->set("hits", $value);
+    }
+
+    public function getHits()
+    {
+        return $this->get("hits");
     }
 
     public function getId()
@@ -166,19 +176,14 @@ class Game extends Entity
         $this->set("id", $value);
     }
 
-    public function setInstructions($value)
-    {
-        $this->set("instructions", $value);
-    }
-
     public function getInstructions()
     {
         return $this->get("instructions");
     }
 
-    public function setLikes($value)
+    public function setInstructions($value)
     {
-        $this->set("likes", $value);
+        $this->set("instructions", $value);
     }
 
     public function getLikes()
@@ -186,9 +191,9 @@ class Game extends Entity
         return $this->get("likes");
     }
 
-    public function getName()
+    public function setLikes($value)
     {
-        return $this->get("name");
+        $this->set("likes", $value);
     }
 
     public function setName($value)
@@ -196,9 +201,9 @@ class Game extends Entity
         $this->set("name", $value);
     }
 
-    public function setPublishDate($value)
+    public function getName()
     {
-        $this->set("publish_date", $value);
+        return $this->get("name");
     }
 
     public function getPublishDate()
@@ -206,9 +211,9 @@ class Game extends Entity
         return $this->get("publish_date");
     }
 
-    public function setPublished($value)
+    public function setPublishDate($value)
     {
-        $this->set("published", $value);
+        $this->set("publish_date", $value);
     }
 
     public function getPublished()
@@ -216,14 +221,19 @@ class Game extends Entity
         return $this->get("published");
     }
 
-    public function getSlug()
+    public function setPublished($value)
     {
-        return $this->get("slug");
+        $this->set("published", $value);
     }
 
     public function setSlug($value)
     {
         $this->set("slug", $value);
+    }
+
+    public function getSlug()
+    {
+        return $this->get("slug");
     }
 
     public function setSubmitterId($value)

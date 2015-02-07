@@ -73,6 +73,22 @@ user_settings:
     default: 0
     section: game_ads
 
+comments:
+  game:
+    name: Game
+    model: AVCMS\Bundles\Games\Model\Games
+    title_field: name
+    frontend_route: play_game
+    frontend_route_params: [slug]
+
+module_positions:
+  beside_game_comments:
+      name: Beside Game Comments
+      description: Next to the game comments
+      environment: frontend
+      global_modules: 1
+      type: content
+
 permissions:
   ELEVATED_NO_GAME_ADS:
     name: No Game Adverts

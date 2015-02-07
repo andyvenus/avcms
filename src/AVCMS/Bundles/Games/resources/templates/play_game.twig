@@ -1,52 +1,54 @@
 {% extends 'index.twig' %}
 
 {% block wide_content %}
-    <h2>{{ game.name }}</h2>
-    <p class="game-description">{{ game.description }}</p>
+    <div class="box game-box">
+        <div class="box-top">
+            <h2>{{ game.name }}</h2>
+            <p class="game-description">{{ game.description }}</p>
+        </div>
 
-    {{ embed_game(game) }}
+        <div class="box-main">
+            {{ embed_game(game) }}
+        </div>
+    </div>
 
-    <script type="text/javascript">
-        window.onresize = function() {
-            var game_container = $('#avcms-game-container');
-            var game_container_inner = $('#avcms-game-container-inner');
+    <div class="box game-details-box">
+        <div class="box-top">
+            <h4>{% trans %}Game Details{% endtrans %}</h4>
+        </div>
+        <div class="box-main">
+            <div class="row">
+                <div class="col-md-4">
+                    <p>{% trans %}Date Added{% endtrans %}: {{ game.dateAdded|date(settings.date_format) }}</p>
+                </div>
+                <div class="col-md-4">
+                    <p>{% trans %}Category{% endtrans %}: {{ game.category.name }}</p>
+                </div>
+                <div class="col-md-4">
+                    {% trans %}Tags{% endtrans %}:
+                    {% for tag in game.tags %}
+                        <a class="btn btn-default btn-xs" href="#">{{ tag.name }}</a>
+                    {% else %}
+                        {% trans %}None{% endtrans %}
+                    {% endfor %}
+                </div>
+             </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>{% trans with {plays: game.hits} %}Played {plays} times{% endtrans %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            var original_width = game_container.data('original-width');
-            var original_height = game_container.data('original-height');
-
-            if (game_container.width() < original_width) {
-                game_container_inner.css('width', '100%');
-
-                var new_height = original_height / original_width * game_container_inner.width();
-                game_container_inner.css('height', new_height);
-            }
-            else {
-                game_container_inner.css('width', original_width);
-                game_container_inner.css('height', original_height);
-            }
-        };
-    </script>
-
-    <h4>{% trans %}Game Details{% endtrans %}</h4>
     <div class="row">
-        <div class="col-md-4">
-            <p>{% trans %}Date Added{% endtrans %}: {{ game.dateAdded|date(settings.date_format) }}</p>
+        <div class="col-md-4 col-md-push-8">
+            {{ render_modules('beside_game_comments', {game: game}) }}
         </div>
-        <div class="col-md-4">
-            <p>{% trans %}Category{% endtrans %}: {{ game.category.name }}</p>
-        </div>
-        <div class="col-md-4">
-            {% trans %}Tags{% endtrans %}:
-            {% for tag in game.tags %}
-                <a class="btn btn-default btn-xs" href="#">{{ tag.name }}</a>
-            {% else %}
-                {% trans %}None{% endtrans %}
-            {% endfor %}
-        </div>
-     </div>
-    <div class="row">
-        <div class="col-md-4">
-            <p>{% trans with {plays: game.hits} %}Played {plays} times{% endtrans %}</p>
+        <div class="col-md-8 col-md-pull-4">
+            {% block game_comments %}
+                {{ comments('game', game, game.comments) }}
+            {% endblock %}
         </div>
     </div>
 {% endblock %}
