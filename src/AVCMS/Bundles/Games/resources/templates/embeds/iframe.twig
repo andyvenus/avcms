@@ -1,1 +1,5 @@
-Iframe
+{% extends '@Games/embeds/embed_base.twig' %}
+
+{% block embed_code %}
+    <iframe src="{{ game.file }}" width="100%" height="100%"></iframe>
+{% endblock %}
