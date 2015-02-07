@@ -66,7 +66,17 @@ user_settings:
     type: checkbox
     default: 1
     section: game_ads
+  game_ad_show_to_everyone:
+    label: Ignore Permission
+    help: Who sees ads before games can be set in the group permissions area. When this is on, everyone sees the ads regardless of that permission.
+    type: checkbox
+    default: 0
+    section: game_ads
 
+permissions:
+  ELEVATED_NO_GAME_ADS:
+    name: No Game Adverts
+    description: If allowed, users in this group will not see ads before games
 
 container_params:
   games_dir: web/games
