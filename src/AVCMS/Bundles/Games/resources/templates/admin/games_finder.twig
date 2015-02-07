@@ -20,6 +20,8 @@
 
         {{ buttons.delete('games_admin_delete') }}
     </div>
+
+    {{ buttons.view('play_game', {slug: item.slug}) }}
 {% endblock %}
 
 {% block item_extended_inner %}
