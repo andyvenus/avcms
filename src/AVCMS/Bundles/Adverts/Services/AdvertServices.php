@@ -22,5 +22,10 @@ class AdvertServices implements ServicesInterface
         $container->register('adverts.model', 'AVCMS\Bundles\Adverts\Model\Adverts')
             ->addTag('model')
         ;
+
+        $container->register('twig.extension.adverts', 'AVCMS\Bundles\Adverts\TwigExtension\AdvertsTwigExtension')
+            ->setArguments([new Reference('adverts.model')])
+            ->addTag('twig.extension')
+        ;
     }
 }
