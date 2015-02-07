@@ -9,6 +9,7 @@ namespace AVCMS\Bundles\Games\TwigExtension;
 
 use AVCMS\Bundles\Games\Model\Game;
 use AVCMS\Bundles\Games\Model\GameEmbeds;
+use AVCMS\Core\Kernel\SiteRootUrl;
 
 class EmbedGameTwigExtension extends \Twig_Extension
 {
@@ -22,13 +23,21 @@ class EmbedGameTwigExtension extends \Twig_Extension
      */
     private $environment;
 
-    public function __construct(GameEmbeds $gameEmbeds)
+    private $gamesPath;
+
+    private $rootUrl;
+
+    public function __construct(GameEmbeds $gameEmbeds, $rootUrl, $gamesPath)
     {
         $this->gameEmbeds = $gameEmbeds;
+        $this->rootUrl = $rootUrl;
+        $this->gamesPath = $gamesPath;
     }
 
     public function embedGame(Game $game)
     {
+        $this->setRealGameUrl($game);
+
         $gameEmbedTemplate = $this->gameEmbeds->getEmbedTemplate($game->getFiletype());
 
         if (!$gameEmbedTemplate) {
@@ -36,6 +45,15 @@ class EmbedGameTwigExtension extends \Twig_Extension
         }
 
         return $this->environment->render($gameEmbedTemplate, ['game' => $game]);
+    }
+
+    private function setRealGameUrl(Game $game)
+    {
+        $url = $game->getFile();
+
+        if (strpos($url, '://') === false) {
+            $game->setFile($this->rootUrl.'/'.$this->gamesPath.'/'.$url);
+        }
     }
 
     public function getName()

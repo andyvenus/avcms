@@ -80,4 +80,4 @@ permissions:
 
 container_params:
   games_dir: web/games
-  game_thumbnails_dir: web/games
+  game_thumbnails_dir: web/game-thumbnails

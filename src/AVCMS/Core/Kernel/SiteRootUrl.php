@@ -30,4 +30,9 @@ class SiteRootUrl
     {
         return $this->siteUrl;
     }
+
+    public function __toString()
+    {
+        return $this->siteUrl;
+    }
 }
