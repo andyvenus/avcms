@@ -52,7 +52,14 @@ class EmbedGameTwigExtension extends \Twig_Extension
     {
         $this->setRealGameUrl($game);
 
-        $gameEmbedTemplate = $this->gameEmbeds->getEmbedTemplate($game->getFiletype());
+        if (!$game->getFile()) {
+            $fileExtension = 'html_embed';
+        }
+        else {
+            $fileExtension = pathinfo($game->getFile(), PATHINFO_EXTENSION);
+        }
+
+        $gameEmbedTemplate = $this->gameEmbeds->getEmbedTemplate($fileExtension);
 
         if (!$gameEmbedTemplate) {
             $gameEmbedTemplate = '@Games/embeds/iframe.twig';

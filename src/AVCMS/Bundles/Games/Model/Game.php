@@ -137,16 +137,6 @@ class Game extends Entity implements RateInterface
         $this->set("file", $value);
     }
 
-    public function getFiletype()
-    {
-        return $this->get("filetype");
-    }
-
-    public function setFiletype($value)
-    {
-        $this->set("filetype", $value);
-    }
-
     public function getHeight()
     {
         return $this->get("height");
