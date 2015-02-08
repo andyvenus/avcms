@@ -5,6 +5,7 @@ require:
 
 services:
   - GamesServices
+  - GameFeedServices
 
 assets:
   avcms_games_admin.js:
@@ -40,6 +41,7 @@ menu_items:
 
 user_settings_sections:
   game_ads: Adverts Before Games
+  game_feeds: Game Feeds
 
 user_settings:
   game_ad_default:
@@ -72,6 +74,12 @@ user_settings:
     type: checkbox
     default: 0
     section: game_ads
+  game_feed_limit:
+    type: text
+    label: Game Feed Limit
+    help: The number of games to fetch when updating a game feed
+    default: 1000
+    section: game_feeds
 
 comments:
   game:

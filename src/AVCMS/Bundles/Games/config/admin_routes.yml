@@ -64,3 +64,19 @@ games_admin_delete_category:
 games_admin_edit_category:
   path: /games/categories/edit/{id}
   defaults: { _controller: Games::GamesAdminController::editCategoryAction, contentType: game }
+
+download_games_feed:
+  path:     /game-feeds/download
+  defaults: { _controller: 'Games::FeedGamesAdminController::downloadFeedAction' }
+
+feed_games_admin_delete:
+  path:     /game-feeds/delete
+  defaults: { _controller: 'Games::FeedGamesAdminController::deleteAction' }
+
+feed_games_admin_home:
+  path: /game-feeds
+  defaults: { _controller: 'Games::FeedGamesAdminController::homeAction' }
+
+feed_games_admin_finder:
+  path: /game-feeds/finder/{page}
+  defaults: { page: 1, _controller: 'Games::FeedGamesAdminController::finderAction' }

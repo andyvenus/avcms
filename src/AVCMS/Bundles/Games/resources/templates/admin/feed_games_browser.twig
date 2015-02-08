@@ -1,0 +1,33 @@
+{% extends '@admin/browser.twig' %}
+
+{% block finder_title %}
+    {% trans %}Feed Games{% endtrans %}
+{% endblock %}
+
+{% block expand_finder_button %}
+    {{ buttons.expand_finder('feed_games_admin_home') }}
+{% endblock %}
+
+{% block add_item %}
+
+{% endblock %}
+
+{% block finder_extra_class %}
+    finder-wide
+{% endblock %}
+
+{% block finder %}
+    <div data-url="{{ url('feed_games_admin_finder') }}">
+        {{ render(path('feed_games_admin_finder')) }}
+    </div>
+{% endblock %}
+
+{% block mobile_back_link %}
+    {{ url('feed_games_admin_home') }}
+{% endblock %}
+
+{% block checked_options_buttons %}
+    {{ buttons.bulk_delete('feed_games_admin_delete') }}
+
+    
+{% endblock %}

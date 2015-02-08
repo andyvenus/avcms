@@ -70,3 +70,27 @@ game_embeds:
     model_class: GameEmbeds
     model_var_name: gameEmbeds
     title_field: id
+feed_games:
+    bundle: Games
+    namespace: AVCMS\Bundles\Games
+    singular: feed_game
+    plural: feed_games
+    uc_singular: 'Feed Game'
+    uc_plural: 'Feed Games'
+    cc_singular: FeedGame
+    cc_plural: FeedGames
+    dash_singular: feed-game
+    dash_plural: feed-games
+    admin_home_route: feed_games_admin_home
+    admin_finder_route: feed_games_admin_finder
+    admin_delete_route: feed_games_admin_delete
+    admin_edit_route: feed_games_admin_edit
+    admin_add_route: feed_games_admin_add
+    admin_controller: 'Games::FeedGamesAdminController'
+    finder_item_extra_buttons: ''
+    database: feed_games
+    entity: AVCMS\Bundles\Games\Model\FeedGame
+    admin_form: AVCMS\Bundles\Games\Form\FeedGameAdminForm
+    model_class: FeedGames
+    model_var_name: feedGames
+    title_field: name

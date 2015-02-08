@@ -1,0 +1,34 @@
+{% extends '@admin/finder.twig' %}
+
+{% block finder_header_titles %}
+    <div style="margin-left: 85px">
+        <div class="col-md-3">
+            {% trans %}Feed{% endtrans %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block item_main %}
+    <div class="finder-thumbnail">
+        <img src="{{ item.thumbnail }}" width="45" height="45"/>
+    </div>
+
+    {% block item_title %}
+        <div class="finder-item-title" data-field="name">
+            {{ item.name }}
+        </div>
+    {% endblock %}
+
+    {% block item_options %}
+        <button class="btn btn-xs btn-success"><span class="glyphicon glyphicon-download-alt"></span> {% trans %}Download{% endtrans %}</button>
+        <button class="btn btn-xs btn-info"><span class="glyphicon glyphicon-download-alt"></span> {% trans %}Import{% endtrans %}</button>
+        <a href="#" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-play-circle"></span> {% trans %}Play{% endtrans %}</a>
+        {{ buttons.delete('feed_games_admin_delete') }}
+    {% endblock %}
+{% endblock %}
+
+{% block item_extended_inner %}
+    <div class="col-md-3">
+        {{ feeds[item.provider].info.name }}
+    </div>
+{% endblock %}
