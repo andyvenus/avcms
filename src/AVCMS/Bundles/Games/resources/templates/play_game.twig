@@ -1,5 +1,9 @@
 {% extends 'index.twig' %}
 
+{% block title %}{{ game.name }}{% endblock %}
+
+{% block meta_description %}{{ game.description }}{% endblock %}
+
 {% block wide_content %}
     {% block game_box %}
         <div class="box game-box">
