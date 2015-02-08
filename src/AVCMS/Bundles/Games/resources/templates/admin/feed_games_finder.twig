@@ -24,8 +24,7 @@
 
     <button class="btn btn-xs btn-success"><span class="glyphicon glyphicon-download-alt"></span> {% trans %}Import{% endtrans %}</button>
 
-    <select style="width: 120px;" class="no_select2"><option value="test">Arcade Games</option></select>
-
+    {{ form_field(categories.fields()['category-' ~ item.id], {'class': 'no_select2 input-sm', style: 'width: 120px;display: inline;height: 22px;'}) }}
 
     {{ buttons.delete('feed_games_admin_delete') }}
 

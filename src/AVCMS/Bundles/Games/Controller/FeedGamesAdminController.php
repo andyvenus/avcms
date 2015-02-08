@@ -2,6 +2,8 @@
 
 namespace AVCMS\Bundles\Games\Controller;
 
+use AV\Form\FormBlueprint;
+use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Games\Form\FeedGamesAdminFiltersForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -53,9 +55,40 @@ class FeedGamesAdminController extends AdminBaseController
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
         $items = $finder->get();
 
+        $categoryFields = new FormBlueprint();
+
+        $categories = (new CategoryChoicesProvider($this->model('GameCategories')))->getChoices();
+
+        foreach ($items as $item) {
+            $itemCategory = $item->getCategory();
+
+            $default = null;
+            foreach ($categories as $id => $categoryName) {
+                if (strpos($itemCategory, $categoryName) !== false) {
+                    $default = $id;
+                    break;
+                }
+            }
+
+            $categoryFields->add('category-'.$item->getId(), 'select', [
+                'choices' => $categories,
+                'default' => $default
+            ]);
+        }
+
+        $categoryFieldsForm = $this->buildForm($categoryFields);
+
         $feeds = $this->get('game_feed_downloader')->getFeeds();
 
-        return new Response($this->render('@Games/admin/feed_games_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage(), 'feeds' => $feeds)));
+        return new Response($this->render(
+            '@Games/admin/feed_games_finder.twig',
+            [
+                'items' => $items,
+                'page' => $finder->getCurrentPage(),
+                'feeds' => $feeds,
+                'categories' => $categoryFieldsForm->createView()
+            ]
+        ));
     }
 
     public function deleteAction(Request $request)
