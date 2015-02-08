@@ -28,7 +28,7 @@ abstract class AdminBaseController extends Controller
     /**
      * Renders an admin template with the shared context vars
      *
-     * @param $template
+     * @param $template string #Template
      * @param array $context
      * @return string
      */

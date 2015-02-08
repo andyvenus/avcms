@@ -3,7 +3,6 @@
 namespace AVCMS\Bundles\Games\Controller;
 
 use AVCMS\Bundles\Games\Form\FeedGamesAdminFiltersForm;
-use AVCMS\Bundles\Games\Form\FeedGameAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,6 +32,17 @@ class FeedGamesAdminController extends AdminBaseController
         $games = $this->container->get('game_feed_downloader')->downloadFeed('flash_game_distribution');
 
         return new JsonResponse(['new_games' => count($games)]);
+    }
+
+    public function playGameAction(Request $request)
+    {
+        $game = $this->feedGames->getOne($request->get('id'));
+
+        if (!$game) {
+            throw $this->createNotFoundException();
+        }
+
+        return new Response($this->renderAdminSection('@Games/admin/play_game_admin.twig', ['game' => $game]));
     }
 
     public function finderAction(Request $request)

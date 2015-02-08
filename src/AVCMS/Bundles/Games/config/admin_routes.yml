@@ -69,6 +69,10 @@ download_games_feed:
   path:     /game-feeds/download
   defaults: { _controller: 'Games::FeedGamesAdminController::downloadFeedAction' }
 
+play_feed_game:
+  path:     /game-feeds/play/{id}
+  defaults: { _controller: 'Games::FeedGamesAdminController::playGameAction' }
+
 feed_games_admin_delete:
   path:     /game-feeds/delete
   defaults: { _controller: 'Games::FeedGamesAdminController::deleteAction' }

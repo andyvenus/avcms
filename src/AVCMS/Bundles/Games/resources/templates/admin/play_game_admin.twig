@@ -1,0 +1,9 @@
+{% extends '@admin/editor.twig' %}
+
+{% block title %}{% trans with {name: game.name} %}Play Game: {name}{% endtrans %}{% endblock %}
+
+{% block editor_title %}{{ block('title') }}{% endblock %}
+
+{% block editor_content %}
+    {{ embed_game(game) }}
+{% endblock %}

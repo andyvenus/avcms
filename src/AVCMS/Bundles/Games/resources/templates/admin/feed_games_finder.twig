@@ -5,30 +5,37 @@
         <div class="col-md-3">
             {% trans %}Feed{% endtrans %}
         </div>
+        <div class="col-md-3">
+            {% trans %}Categories{% endtrans %}
+        </div>
     </div>
 {% endblock %}
 
 {% block item_main %}
     <div class="finder-thumbnail">
-        <img src="{{ item.thumbnail }}" width="45" height="45"/>
+        <a href="{{ path('play_feed_game', {'id': item.id}) }}">
+            <img src="{{ item.thumbnail }}" width="50" height="50"/>
+        </a>
     </div>
 
-    {% block item_title %}
-        <div class="finder-item-title" data-field="name">
-            {{ item.name }}
-        </div>
-    {% endblock %}
+    <div class="finder-item-title" data-field="name">
+        <a href="{{ path('play_feed_game', {'id': item.id}) }}"> {{ item.name }}</a>
+    </div>
 
-    {% block item_options %}
-        <button class="btn btn-xs btn-success"><span class="glyphicon glyphicon-download-alt"></span> {% trans %}Download{% endtrans %}</button>
-        <button class="btn btn-xs btn-info"><span class="glyphicon glyphicon-download-alt"></span> {% trans %}Import{% endtrans %}</button>
-        <a href="#" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-play-circle"></span> {% trans %}Play{% endtrans %}</a>
-        {{ buttons.delete('feed_games_admin_delete') }}
-    {% endblock %}
+    <button class="btn btn-xs btn-success"><span class="glyphicon glyphicon-download-alt"></span> {% trans %}Import{% endtrans %}</button>
+
+    <select style="width: 120px;" class="no_select2"><option value="test">Arcade Games</option></select>
+
+
+    {{ buttons.delete('feed_games_admin_delete') }}
+
 {% endblock %}
 
 {% block item_extended_inner %}
     <div class="col-md-3">
         {{ feeds[item.provider].info.name }}
+    </div>
+    <div class="col-md-3">
+        {{ item.category }}
     </div>
 {% endblock %}
