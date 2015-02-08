@@ -12,12 +12,10 @@
 
                      {% trans %}reported{% endtrans %}
                     {% if report.content.url or report.content.title %}
-                        <a href="{{ report.content.url }}">{{ report.content.title }}</a> {% trans %}by{% endtrans %}
+                        <a href="{{ report.content.url }}">{{ report.content.title }}</a>
                     {% endif %}
                     {% if report.reportedUserId != null %}
-                        <a href="{{ url('users_admin_edit', {id: report.reportedUserId}) }}">{{ report.reported_user.username }}</a>
-                    {% else %}
-                        {% trans %}Unknown{% endtrans %}
+                        {% trans %}by{% endtrans %} <a href="{{ url('users_admin_edit', {id: report.reportedUserId}) }}">{{ report.reported_user.username }}</a>
                     {% endif %}
                     - {{ report.date|date(settings.date_format) }}
                     <div class="pull-right">
