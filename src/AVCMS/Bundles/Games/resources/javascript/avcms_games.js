@@ -8,6 +8,7 @@ $(document).ready(function() {
         avcms.games.showAd();
 
         $('#avcms-game-advert-skip').find('button').click(avcms.games.showGame);
+        $('#avcms-game-fullscreen').click(avcms.games.goFullscreen);
     }
 });
 
@@ -72,5 +73,19 @@ avcms.games = {
 
         $('#avcms-game-container').show();
         $('#avcms-game-advert').hide();
+    },
+
+    goFullscreen: function() {
+        var game_container = document.getElementById("avcms-game-container");
+
+        if (game_container.requestFullscreen) {
+            game_container.requestFullscreen();
+        } else if (game_container.webkitRequestFullscreen) {
+            game_container.webkitRequestFullscreen();
+        } else if (game_container.mozRequestFullScreen) {
+            game_container.mozRequestFullScreen();
+        } else if (game_container.msRequestFullscreen) {
+            game_container.msRequestFullscreen();
+        }
     }
 };

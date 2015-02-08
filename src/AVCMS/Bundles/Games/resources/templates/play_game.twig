@@ -34,6 +34,8 @@
                     {% if is_granted('ADMIN_GAMES') %}
                         <a class="btn btn-default" href="{{ path('games_admin_edit', {'id': game.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit Game{% endtrans %}</a>
                     {% endif %}
+
+                    <button class="btn btn-default" id="avcms-game-fullscreen"><span class="glyphicon glyphicon-fullscreen"></span> {% trans %}Fullscreen{% endtrans %}</button>
                 </div>
             </div>
         </div>
@@ -46,11 +48,9 @@
                 <h4>{% trans %}Instructions{% endtrans %}</h4>
             </div>
             <div class="box-main">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <p>{{ game.instructions }}</p>
-                        </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p>{{ game.instructions }}</p>
                     </div>
                 </div>
             </div>

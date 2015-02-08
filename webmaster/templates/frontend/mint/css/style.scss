@@ -198,5 +198,11 @@ select[name=author] {
   .box-footer {
     background-color: lighten($panel-header-color, 2);
     padding: 10px;
+
+    .btn-default {
+      border-color: darken($panel-header-color, 20);
+      background: lighten($panel-header-color, 3);
+      color: darken($panel-header-color, 50);
+    }
   }
 }

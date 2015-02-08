@@ -2,6 +2,39 @@
   margin-bottom: 15px;
 }
 
+@mixin fullscreen-game-container() {
+  position: fixed;
+  width: 100% !important;
+  height: 100% !important;
+  top: 0;
+  left: 0;
+  background: none;
+}
+
+#avcms-game-container:fullscreen {
+  #avcms-game-container-inner {
+    @include fullscreen-game-container();
+  }
+}
+
+#avcms-game-container:-webkit-full-screen {
+  #avcms-game-container-inner {
+    @include fullscreen-game-container();
+  }
+}
+
+#avcms-game-container:-moz-full-screen {
+  #avcms-game-container-inner {
+    @include fullscreen-game-container();
+  }
+}
+
+#avcms-game-container:-ms-fullscreen {
+  #avcms-game-container-inner {
+    @include fullscreen-game-container();
+  }
+}
+
 #avcms-game-advert {
   text-align: center;
   margin-bottom: 15px;
