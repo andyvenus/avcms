@@ -81,6 +81,14 @@ comments:
     frontend_route: play_game
     frontend_route_params: [slug]
 
+reports:
+  games:
+    name: Game
+    model: AVCMS\Bundles\Games\Model\Games
+    route: games_admin_edit
+    title_field: name
+    route_params: [id]
+
 ratings:
   game:
     name: Game
