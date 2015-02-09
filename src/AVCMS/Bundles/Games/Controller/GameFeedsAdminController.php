@@ -149,6 +149,7 @@ class GameFeedsAdminController extends AdminBaseController
         $finder = $this->feedGames->find()
             ->setSearchFields(array('name'))
             ->setResultsPerPage(15)
+            ->where('status', 'pending')
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
 
         /* @var $items \AVCMS\Bundles\Games\Model\FeedGame[] */
@@ -190,9 +191,21 @@ class GameFeedsAdminController extends AdminBaseController
         ));
     }
 
-    public function deleteAction(Request $request)
+    public function rejectAction(Request $request)
     {
-        return $this->handleDelete($request, $this->feedGames);
+        if (!$this->checkCsrfToken($request)) {
+            return $this->invalidCsrfTokenJsonResponse();
+        }
+
+        $ids = $request->request->get('ids');
+
+        if (!$ids) {
+            return new JsonResponse(array('success' => 0, 'error' => 'No ids set'));
+        }
+
+        $this->feedGames->rejectGames($ids);
+
+        return new JsonResponse(array('success' => 1));
     }
 
     protected function getSharedTemplateVars()

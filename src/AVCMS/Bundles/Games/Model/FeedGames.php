@@ -25,4 +25,11 @@ class FeedGames extends Model
     {
         return $this->query()->where('provider', $provider)->where('provider_id', $providerId)->count();
     }
+
+    public function rejectGames($ids)
+    {
+        $ids = (array) $ids;
+
+        $this->query()->whereIn('id', $ids)->update(['status' => 'rejected']);
+    }
 }
