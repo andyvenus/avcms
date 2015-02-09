@@ -86,6 +86,10 @@ game_feeds_admin_reject:
   path:     /game-feeds/delete
   defaults: { _controller: 'Games::GameFeedsAdminController::rejectAction' }
 
+game_feed_categories:
+  path:     /game-feeds/categories
+  defaults: { _controller: 'Games::GameFeedsAdminController::categoriesSetupAction' }
+
 game_feeds_admin_home:
   path: /game-feeds
   defaults: { _controller: 'Games::GameFeedsAdminController::homeAction' }

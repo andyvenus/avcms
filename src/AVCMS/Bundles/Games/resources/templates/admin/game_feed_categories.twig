@@ -1,0 +1,15 @@
+{% extends '@admin/editor.twig' %}
+
+{% block title %}{% trans %}Feed Categories{% endtrans %}{% endblock %}
+
+{% block editor_title %}{{ block('title') }}{% endblock %}
+
+{% block editor_content %}
+    <div class="alert alert-info">
+        <p>{% trans %}If you have a category called "Action" you might want all "Shooter" games from feeds to go into that category. So you would type "Shooter" into the "Action" field to make that happen.{% endtrans %}</p>
+
+        <p>{% trans %}Your selected category will then be automatically selected for that keyword in the main feed browser.{% endtrans %}</p>
+    </div>
+
+    {{ form(form) }}
+{% endblock %}

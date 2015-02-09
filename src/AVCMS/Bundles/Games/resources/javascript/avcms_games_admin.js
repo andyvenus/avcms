@@ -16,6 +16,18 @@ $(document).ready(function() {
         avcms.gamesAdmin.updateAllFeeds();
         $(this).fadeOut();
     });
+
+    avcms.event.addEvent('page-modified', function() {
+        $('.avcms-category-keywords').select2({
+            tags: []
+        })
+    });
+
+    avcms.event.addEvent('submit-form-success', function(form) {
+        if (form.attr('name') == 'game-feed-categories') {
+            avcms.browser.changeFinderFilters();
+        }
+    })
 });
 
 avcms.gamesAdmin = {

@@ -156,16 +156,21 @@ class GameFeedsAdminController extends AdminBaseController
 
         $categoryFields = new FormBlueprint();
 
-        $categories = [0 => 'Default'] + (new CategoryChoicesProvider($this->model('GameCategories')))->getChoices();
+        $categories = (new CategoryChoicesProvider($this->model('GameCategories')))->getChoices();
+
+        $gameFeedCats = $this->model('GameFeedCategories');
 
         foreach ($items as $item) {
             $itemCategory = $item->getCategory();
 
-            $default = null;
-            foreach ($categories as $id => $categoryName) {
-                if (strpos($itemCategory, $categoryName) !== false) {
-                    $default = $id;
-                    break;
+            $default = $gameFeedCats->getCategoryId($itemCategory);
+
+            if ($default === null) {
+                foreach ($categories as $id => $categoryName) {
+                    if (strpos($itemCategory, $categoryName) !== false) {
+                        $default = $id;
+                        break;
+                    }
                 }
             }
 
@@ -205,6 +210,41 @@ class GameFeedsAdminController extends AdminBaseController
         $this->feedGames->rejectGames($ids);
 
         return new JsonResponse(array('success' => 1));
+    }
+
+    public function categoriesSetupAction(Request $request)
+    {
+        $gameFeedCats = $this->model('GameFeedCategories');
+        $categories = $this->model('GameCategories')->getAll();
+
+        $formBlueprint = new FormBlueprint();
+        $formBlueprint->setSuccessMessage('Category Mapping Updated');
+        $formBlueprint->setName('game-feed-categories');
+
+        foreach ($categories as $category) {
+            $formBlueprint->add('categories['.$category->getId().']', 'text', [
+                'label' => $category->getName(),
+                'default' => implode(', ', $gameFeedCats->getKeywords($category->getId())),
+                'attr' => [
+                    'class' => 'avcms-category-keywords'
+                ]
+            ]);
+        }
+
+        $form = $this->buildForm($formBlueprint, $request);
+
+        if ($form->isValid()) {
+            $gameFeedCats->query()->delete();
+            foreach ($form->getData('categories') as $categoryId => $keywords) {
+                if ($keywords) {
+                    $gameFeedCats->setKeywords($categoryId, $keywords);
+                }
+            }
+
+            return new JsonResponse(['success' => true, 'form' => $form->createView()->getJsonResponseData()]);
+        }
+
+        return new Response($this->renderAdminSection('@Games/admin/game_feed_categories.twig', ['form' => $form->createView()]));
     }
 
     protected function getSharedTemplateVars()
