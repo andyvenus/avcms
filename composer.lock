@@ -457,12 +457,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-curl-class/php-curl-class.git",
-                "reference": "1707167890aac8203e720550983e227f72ee83dd"
+                "reference": "dc4e45fd12bc316f18e82a637fd7ed8781a2d7c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-curl-class/php-curl-class/zipball/1707167890aac8203e720550983e227f72ee83dd",
-                "reference": "1707167890aac8203e720550983e227f72ee83dd",
+                "url": "https://api.github.com/repos/php-curl-class/php-curl-class/zipball/dc4e45fd12bc316f18e82a637fd7ed8781a2d7c2",
+                "reference": "dc4e45fd12bc316f18e82a637fd7ed8781a2d7c2",
                 "shasum": ""
             },
             "require": {
@@ -482,6 +482,11 @@
             "license": [
                 "Unlicense"
             ],
+            "authors": [
+                {
+                    "name": "Zach Borboa"
+                }
+            ],
             "description": "PHP Curl Class is an object-oriented wrapper of the PHP cURL extension.",
             "homepage": "https://github.com/php-curl-class/php-curl-class",
             "keywords": [
@@ -489,7 +494,7 @@
                 "curl",
                 "php"
             ],
-            "time": "2014-11-14 17:49:58"
+            "time": "2015-01-27 07:30:12"
         },
         {
             "name": "psr/log",
@@ -1749,12 +1754,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "cce38ee95d444190e8aac2d46c6d5e7b94ea44ef"
+                "reference": "c9fbdd9fb044cf1dd7c2abecfc9cce6ca714d1fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/cce38ee95d444190e8aac2d46c6d5e7b94ea44ef",
-                "reference": "cce38ee95d444190e8aac2d46c6d5e7b94ea44ef",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/c9fbdd9fb044cf1dd7c2abecfc9cce6ca714d1fe",
+                "reference": "c9fbdd9fb044cf1dd7c2abecfc9cce6ca714d1fe",
                 "shasum": ""
             },
             "require": {
@@ -1807,7 +1812,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2015-01-18 20:11:41"
+            "time": "2015-02-09 15:10:41"
         },
         {
             "name": "pdepend/pdepend",
