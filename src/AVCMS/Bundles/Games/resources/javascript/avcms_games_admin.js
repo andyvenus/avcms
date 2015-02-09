@@ -1,8 +1,21 @@
 avcms = avcms || {};
 
 $(document).ready(function() {
-    $('body').on('click', '.avcms-get-game-dimensions', avcms.gamesAdmin.getDimensions);
-    $('body').on('click', '.avcms-download-feed-game', avcms.gamesAdmin.downloadFeedGame);
+    var body = $('body');
+    body.on('click', '.avcms-get-game-dimensions', avcms.gamesAdmin.getDimensions);
+    body.on('click', '.avcms-download-feed-game', avcms.gamesAdmin.downloadFeedGame);
+
+    body.on('click', '.avcms-update-feed', function() {
+        avcms.gamesAdmin.updateFeed($(this).parents('[data-feed-id]').data('feed-id'), false);
+    });
+
+    body.on('click', '.avcms-update-all-feeds', function() {
+        var container_status = $('.avcms-feed-status');
+        container_status.find('.avcms-buttons').hide();
+        container_status.find('.avcms-pending').show();
+        avcms.gamesAdmin.updateAllFeeds();
+        $(this).fadeOut();
+    });
 });
 
 avcms.gamesAdmin = {
@@ -54,6 +67,45 @@ avcms.gamesAdmin = {
             }
             else {
                 status.text(response.error);
+            }
+        });
+    },
+
+    updateAllFeeds: function()
+    {
+        var selected_feed = $('.pending[data-feed-id]').first();
+
+        if (selected_feed.length === 1) {
+            avcms.gamesAdmin.updateFeed(selected_feed.data('feed-id'), false);
+        }
+        else {
+            avcms.browser.changeFinderFilters();
+        }
+    },
+
+    updateFeed: function(feed_id, all_feeds) {
+        var container = $('.pending[data-feed-id='+feed_id+']');
+        container.removeClass('pending');
+
+        var container_status = container.find('.avcms-feed-status');
+
+        container_status.find('.avcms-buttons, .avcms-pending').hide();
+        container_status.find('.avcms-loading').show();
+
+        $.post(avcms.config.site_url+'admin/game-feeds/download', {id: feed_id}, function(response) {
+            container_status.find('.avcms-loading').hide();
+
+            if (response.success) {
+                container_status.find('.avcms-done').show().text(response.message);
+                if (all_feeds) {
+                    avcms.gamesAdmin.updateAllFeeds();
+                }
+                else {
+                    avcms.browser.changeFinderFilters();
+                }
+            }
+            else {
+                container_status.find('.avcms-error').show().text(response.error);
             }
         });
     }

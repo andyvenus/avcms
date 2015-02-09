@@ -1,0 +1,41 @@
+{% extends '@admin/editor.twig' %}
+
+{% block title %}{% trans %}Update Game Feeds{% endtrans %}{% endblock %}
+
+{% block editor_title %}{{ block('title') }}{% endblock %}
+
+{% block editor_content %}
+
+    <p>
+        <button class="btn btn-success avcms-update-all-feeds">
+            <span class="glyphicon glyphicon-refresh"></span> {% trans %}Update All Feeds{% endtrans %}
+        </button>
+    </p>
+
+    {% for feed in feeds %}
+        <div class="panel panel-default pending" data-feed-id="{{ feed.id }}">
+            <div class="panel-body">
+                <div class="pull-left">
+                    <h5>{{ feed.name }}</h5>
+                </div>
+                <div class="pull-right avcms-feed-status">
+                    <div class="avcms-buttons">
+                        <button class="btn btn-sm btn-success avcms-update-feed"><span class="glyphicon glyphicon-refresh"></span> {% trans %}Update{% endtrans %}</button>
+                    </div>
+                    <div class="avcms-pending" style="display:none;margin-top: 5px;">
+                        {% trans %}Pending...{% endtrans %}
+                    </div>
+                    <div class="avcms-done text-success" style="display: none;margin-top: 5px;">
+                        {% trans %}Done{% endtrans %}
+                    </div>
+                    <div class="avcms-loading" style="display: none;margin-top: 5px;">
+                        <img src="{{ web_url }}/resources/CmsFoundation/images/loader.gif" />
+                    </div>
+                    <div class="avcms-error text-danger" style="display: none;margin-top: 5px;">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

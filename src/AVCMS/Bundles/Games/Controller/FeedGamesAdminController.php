@@ -39,11 +39,26 @@ class FeedGamesAdminController extends AdminBaseController
        return $this->handleManage($request, '@Games/admin/feed_games_browser.twig');
     }
 
+    public function updateFeedsAction()
+    {
+        $feeds = $this->get('game_feed_downloader')->getFeeds();
+
+        $feedInfoArray = [];
+        foreach ($feeds as $feed) {
+            $feedInfo = $feed->getInfo();
+            $feedInfo['id'] = $feed->getId();
+
+            $feedInfoArray[] = $feedInfo;
+        }
+
+        return new Response($this->renderAdminSection('@Games/admin/update_feeds.twig', ['feeds' => $feedInfoArray]));
+    }
+
     public function downloadFeedAction()
     {
         $games = $this->container->get('game_feed_downloader')->downloadFeed('flash_game_distribution');
 
-        return new JsonResponse(['success' => true, 'new_games' => count($games)]);
+        return new JsonResponse(['success' => true, 'new_games' => count($games), 'message' => $this->trans('{count} games added', ['count' => count($games)])]);
     }
 
     public function importGameAction(Request $request)
