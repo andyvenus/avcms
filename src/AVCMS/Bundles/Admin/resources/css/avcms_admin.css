@@ -26,7 +26,9 @@ a {
     display: none; }
   .admin-header .admin-header-logo {
     margin-top: 8px; }
-  .admin-header .nav > li > a:hover, .admin-header .nav > li > a:focus, .admin-header .nav .open > a, .admin-header .nav .open > a:focus {
+  .admin-header .nav > li > a:focus {
+    background: none; }
+  .admin-header .nav > li > a:hover, .admin-header .nav .open > a, .admin-header .nav .open > a:focus {
     background: #4b5c72; }
 
 .admin-container {

@@ -51,7 +51,11 @@ a {
     margin-top: 8px;
   }
 
-  .nav>li>a:hover, .nav>li>a:focus, .nav .open>a, .nav .open>a:focus {
+  .nav>li>a:focus {
+    background: none;
+  }
+
+  .nav>li>a:hover, .nav .open>a, .nav .open>a:focus {
     background: lighten($header_color, 10);
   }
 }
