@@ -291,6 +291,10 @@ a {
   display: block;
 }
 
+.add-item a:hover {
+  text-decoration: none;
+}
+
 .browser-finder-item {
   padding: 4px;
 }
