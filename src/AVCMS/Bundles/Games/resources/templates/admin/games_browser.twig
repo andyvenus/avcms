@@ -12,6 +12,10 @@
     {{ buttons.add_item('games_admin_add', 'Add Game') }}
 {% endblock %}
 
+{% block finder_extra_class %}
+    finder-wide
+{% endblock %}
+
 {% block finder %}
     <div data-url="{{ url('games_admin_finder') }}">
         {{ render(path('games_admin_finder')) }}
