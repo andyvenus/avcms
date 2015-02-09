@@ -280,7 +280,7 @@ abstract class Model {
      * Create a new entity from the getEntity() method and assign any sub-entities that
      * have been assigned to this Model
      *
-     * @return mixed
+     * @return mixed|Entity
      */
     public function newEntity()
     {
