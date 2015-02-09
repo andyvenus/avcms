@@ -130,6 +130,16 @@ a {
     padding-top: 10px;
     border-top: 1px solid lighten($main_menu_color, 10);
   }
+
+  .nano > .nano-pane {
+    background: none;
+    width: 8px;
+  }
+
+  .nano > .nano-pane > .nano-slider {
+    background: lighten($main_menu_color, 20);
+    border-radius: 0;
+  }
 }
 
 .admin-menu-focused {

@@ -81,6 +81,12 @@ a {
     margin: 10px;
     padding-top: 10px;
     border-top: 1px solid #4b5c72; }
+  .admin-menu .nano > .nano-pane {
+    background: none;
+    width: 8px; }
+  .admin-menu .nano > .nano-pane > .nano-slider {
+    background: #607590;
+    border-radius: 0; }
 
 .admin-menu-focused {
   display: inherit;
