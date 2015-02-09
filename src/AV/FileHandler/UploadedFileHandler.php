@@ -19,35 +19,24 @@ class UploadedFileHandler extends FileHandlerBase
             return false;
         }
 
-        if ($this->acceptedFileTypes !== null) {
-            foreach ($this->acceptedFileTypes as $extension => $mimeTypes) {
-                $mimeTypes = (array) $mimeTypes;
-
-                if ($extension === $uploadedFile->guessClientExtension() && in_array($uploadedFile->getMimeType(), $mimeTypes)) {
-                    $mimeTypeValid = true;
-                }
-            }
-
-            if (!isset($mimeTypeValid)) {
-                $this->setFileTypeError();
-                return false;
-            }
-        }
-
-        return true;
+        return $this->checkFileType($uploadedFile->guessClientExtension(), $uploadedFile->getMimeType());
     }
 
-    public function moveFile(UploadedFile $file, $path, $filename = null, $fileExistsStrategy = self::EXISTS_NUMBER)
+    public function moveFile(UploadedFile $file, $destinationPath, $filename = null, $fileExistsStrategy = self::EXISTS_NUMBER)
     {
         if ($this->validateFile($file) === false) {
             return false;
+        }
+
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0777, true);
         }
 
         if ($filename === null) {
             $filename = $file->getClientOriginalName();
         }
 
-        $fullPath = $newPath = $path . '/' . $filename;
+        $fullPath = $newPath = $destinationPath . '/' . $filename;
 
         if (file_exists($fullPath)) {
             if ($fileExistsStrategy === self::EXISTS_NUMBER) {
@@ -70,7 +59,7 @@ class UploadedFileHandler extends FileHandlerBase
         }
 
         try {
-            $file->move($path, basename($fullPath));
+            $file->move($destinationPath, basename($fullPath));
         }
         catch (FileException $e) {
             $this->setError($e->getMessage());

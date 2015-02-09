@@ -7,11 +7,9 @@
 
 namespace AV\FileHandler;
 
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-
 class CurlFileHandler extends FileHandlerBase
 {
+    //todo: support size
     public function validateFile($fileUrl, $file)
     {
         /*
@@ -23,39 +21,35 @@ class CurlFileHandler extends FileHandlerBase
         $mimeGetter = new \finfo(FILEINFO_MIME_TYPE);
         $mimeType = $mimeGetter->buffer($file);
 
-        if ($this->acceptedFileTypes !== null) {
-            foreach ($this->acceptedFileTypes as $extension => $mimeTypes) {
-                $mimeTypes = (array) $mimeTypes;
-
-                if ($extension === pathinfo($fileUrl, PATHINFO_EXTENSION) && in_array($mimeType, $mimeTypes)) {
-                    $mimeTypeValid = true;
-                }
-            }
-
-            if (!isset($mimeTypeValid)) {
-                $this->setFileTypeError();
-                return false;
-            }
-        }
-
-        return true;
+        return $this->checkFileType(pathinfo($fileUrl, PATHINFO_EXTENSION), $mimeType);
     }
 
-    public function moveFile($fileUrl, $file, $path, $filename = null, $fileExistsStrategy = self::EXISTS_NUMBER)
+    /**
+     * Move a downloaded CURL file to a new destination
+     *
+     * @param $remoteUrl string             The remote URL where the file was downloaded from
+     * @param $file mixed                   The downloaded file
+     * @param $destinationPath string       The directory where the file will be saved
+     * @param null $filename string         The new filename. If none is set, the original filename will be used
+     * @param string $fileExistsStrategy    What to do if the file exists
+     *
+     * @return bool|string
+     */
+    public function moveFile($remoteUrl, $file, $destinationPath, $filename = null, $fileExistsStrategy = self::EXISTS_NUMBER)
     {
-        if ($this->validateFile($fileUrl, $file) === false) {
+        if ($this->validateFile($remoteUrl, $file) === false) {
             return false;
         }
 
-        if (!file_exists($path)) {
-            mkdir($path, 0777, true);
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0777, true);
         }
 
         if ($filename === null) {
-            $filename = basename($fileUrl);
+            $filename = basename($remoteUrl);
         }
 
-        $fullPath = $newPath = $path . '/' . $filename;
+        $fullPath = $newPath = $destinationPath . '/' . $filename;
 
         if (file_exists($fullPath)) {
             if ($fileExistsStrategy === self::EXISTS_NUMBER) {
