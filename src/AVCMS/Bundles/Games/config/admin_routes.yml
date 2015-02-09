@@ -82,14 +82,14 @@ play_feed_game:
   path:     /game-feeds/play/{id}
   defaults: { _controller: 'Games::FeedGamesAdminController::playGameAction' }
 
-feed_games_admin_delete:
+game_feeds_admin_reject:
   path:     /game-feeds/delete
   defaults: { _controller: 'Games::FeedGamesAdminController::deleteAction' }
 
-feed_games_admin_home:
+game_feeds_admin_home:
   path: /game-feeds
   defaults: { _controller: 'Games::FeedGamesAdminController::homeAction' }
 
-feed_games_admin_finder:
+game_feeds_admin_finder:
   path: /game-feeds/finder/{page}
   defaults: { page: 1, _controller: 'Games::FeedGamesAdminController::finderAction' }

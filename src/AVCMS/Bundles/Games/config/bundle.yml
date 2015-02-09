@@ -38,6 +38,13 @@ menu_items:
       parent: games_admin
       settings:
         route: games_manage_categories
+    games_feeds_admin:
+      label: Game Feeds
+      icon: glyphicon glyphicon-cloud-download
+      type: route
+      default_order: 3
+      settings:
+        route: game_feeds_admin_home
 
 user_settings_sections:
   game_ads: Adverts Before Games

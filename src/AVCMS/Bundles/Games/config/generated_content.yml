@@ -81,9 +81,9 @@ feed_games:
     cc_plural: FeedGames
     dash_singular: feed-game
     dash_plural: feed-games
-    admin_home_route: feed_games_admin_home
-    admin_finder_route: feed_games_admin_finder
-    admin_delete_route: feed_games_admin_delete
+    admin_home_route: game_feeds_admin_home
+    admin_finder_route: game_feeds_admin_finder
+    admin_delete_route: game_feeds_admin_reject
     admin_edit_route: feed_games_admin_edit
     admin_add_route: feed_games_admin_add
     admin_controller: 'Games::FeedGamesAdminController'
