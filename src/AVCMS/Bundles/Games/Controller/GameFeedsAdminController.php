@@ -149,8 +149,7 @@ class GameFeedsAdminController extends AdminBaseController
         $finder = $this->feedGames->find()
             ->setSearchFields(array('name'))
             ->setResultsPerPage(15)
-            ->where('status', 'pending')
-            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
+            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null, 'feed' => null, 'status' => 'pending', 'category' => null));
 
         /* @var $items \AVCMS\Bundles\Games\Model\FeedGame[] */
         $items = $finder->get();
@@ -212,7 +211,13 @@ class GameFeedsAdminController extends AdminBaseController
     {
         $templateVars = parent::getSharedTemplateVars();
 
-        $templateVars['finder_filters_form'] = $this->buildForm(new FeedGamesAdminFiltersForm())->createView();
+        $feedChoices = ['0' => $this->trans('All Feeds')];
+
+        foreach ($this->get('game_feed_downloader')->getFeeds() as $feed) {
+            $feedChoices[$feed->getId()] = $feed->getInfo()['name'];
+        }
+
+        $templateVars['finder_filters_form'] = $this->buildForm(new FeedGamesAdminFiltersForm($feedChoices))->createView();
 
         return $templateVars;
     }

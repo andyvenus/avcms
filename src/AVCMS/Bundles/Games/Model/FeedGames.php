@@ -6,6 +6,8 @@ use AV\Model\Model;
 
 class FeedGames extends Model
 {
+    protected $finder = 'AVCMS\Bundles\Games\Model\FeedGamesFinder';
+
     public function getTable()
     {
         return 'feed_games';
