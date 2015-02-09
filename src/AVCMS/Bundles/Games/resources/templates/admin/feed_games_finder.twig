@@ -22,11 +22,17 @@
         <a href="{{ path('play_feed_game', {'id': item.id}) }}"> {{ item.name }}</a>
     </div>
 
-    {{ form_field(categories.fields()['category-' ~ item.id], {'class': 'no_select2 input-sm', style: 'width: 120px;display: inline;height: 22px;'}) }}
+    <div class="avcms-feed-game-buttons">
+        {{ form_field(categories.fields()['category-' ~ item.id], {'class': 'no_select2 input-sm', style: 'width: 120px;display: inline;height: 22px;'}) }}
 
-    <button class="btn btn-xs btn-success"><span class="glyphicon glyphicon-download-alt"></span> {% trans %}Import{% endtrans %}</button>
+        <button class="btn btn-xs btn-success avcms-download-feed-game"><span class="glyphicon glyphicon-download-alt"></span> {% trans %}Import{% endtrans %}</button>
 
-    {{ buttons.delete('feed_games_admin_delete') }}
+        {{ buttons.delete('feed_games_admin_delete') }}
+    </div>
+    <div class="avcms-feed-game-status" style="display:none;"></div>
+    <div class="avcms-feed-game-installed" style="display:none;">
+        <a href="#" target="_blank" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit{% endtrans %}</a>
+    </div>
 {% endblock %}
 
 {% block item_extended_inner %}

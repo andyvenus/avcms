@@ -2,13 +2,17 @@
 
 namespace AVCMS\Bundles\Games\Controller;
 
+use AV\FileHandler\CurlFileHandler;
+use AV\FileHandler\FileHandlerBase;
 use AV\Form\FormBlueprint;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Games\Form\FeedGamesAdminFiltersForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
+use Curl\Curl;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class FeedGamesAdminController extends AdminBaseController
 {
@@ -17,11 +21,17 @@ class FeedGamesAdminController extends AdminBaseController
      */
     protected $feedGames;
 
+    /**
+     * @var \AVCMS\Bundles\Games\Model\Games
+     */
+    protected $games;
+
     protected $browserTemplate = '@Games/admin/feed_games_browser.twig';
 
     public function setUp()
     {
         $this->feedGames = $this->model('FeedGames');
+        $this->games = $this->model('Games');
     }
 
     public function homeAction(Request $request)
@@ -33,7 +43,79 @@ class FeedGamesAdminController extends AdminBaseController
     {
         $games = $this->container->get('game_feed_downloader')->downloadFeed('flash_game_distribution');
 
-        return new JsonResponse(['new_games' => count($games)]);
+        return new JsonResponse(['success' => true, 'new_games' => count($games)]);
+    }
+
+    public function importGameAction(Request $request)
+    {
+        if (!$this->checkCsrfToken($request)) {
+            throw new AccessDeniedException;
+        }
+
+        $id = $request->get('id');
+        $category = $request->get('category');
+
+        $feedGame = $this->feedGames->getOne($id);
+
+        if (!$feedGame) {
+            return new JsonResponse(['success' => false, 'error' => 'Game Not Found']);
+        }
+
+        $game = $this->games->newEntity();
+        $game->fromArray($feedGame->toArray(), true);
+
+        $game->setCategoryId($category);
+        $game->setId(null);
+
+        if ($this->setting('download_feed_games')) {
+            $curl = new Curl();
+
+            try {
+                // Game File
+                $file = $curl->get($game->getFile());
+
+                $handler = new CurlFileHandler(null, ['php' => '*']);
+
+                $filePath = $handler->moveFile($game->getFile(), $file, $this->getParam('games_dir').'/'.basename($game->getFile())[0]);
+
+                if ($filePath === false) {
+                    return new JsonResponse(['success' => false, 'error' => $handler->getTranslatedError($this->translator)]);
+                }
+
+                // Thumbnail
+                $file = $curl->get($game->getThumbnail());
+
+                $handler = new CurlFileHandler(FileHandlerBase::getImageFiletypes());
+
+                $thumbnailPath = $handler->moveFile($game->getThumbnail(), $file, $this->getParam('game_thumbnails_dir').'/'.basename($game->getFile())[0]);
+
+                if ($thumbnailPath === false) {
+                    return new JsonResponse(['success' => false, 'error' => $handler->getTranslatedError($this->translator)]);
+                }
+
+            } catch (\Exception $e) {
+                return new JsonResponse(['success' => false, 'error' => $e->getMessage()]);
+            }
+
+            $game->setFile(str_replace($this->getParam('games_dir').'/', '', $filePath));
+            $game->setThumbnail(str_replace($this->getParam('game_thumbnails_dir').'/', '', $thumbnailPath));
+        }
+
+        $slug = $this->container->get('slug.generator')->slugify($game->getName());
+        if ($this->games->query()->where('slug', $slug)->count() > 0) {
+            $slug .= '-'.time();
+        }
+        $game->setSlug($slug);
+        $game->setPublished(1);
+        $game->setPublishDate(time());
+
+        $helper = $this->editContentHelper($this->games, null, $game);
+        $helper->save();
+
+        $feedGame->setStatus('imported');
+        $this->feedGames->save($feedGame);
+
+        return new JsonResponse(['success' => true, 'url' => $this->generateUrl('games_admin_edit', ['id' => $game->getId()])]);
     }
 
     public function playGameAction(Request $request)

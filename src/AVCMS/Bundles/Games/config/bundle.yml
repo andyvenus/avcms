@@ -80,6 +80,12 @@ user_settings:
     help: The number of games to fetch when updating a game feed
     default: 1000
     section: game_feeds
+  download_feed_games:
+    type: checkbox
+    label: Download Games
+    help: Download game files & thumbnails to your server. If off, files will be hotlinked.
+    default: 1
+    section: game_feeds
 
 comments:
   game:

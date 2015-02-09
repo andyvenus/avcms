@@ -65,9 +65,14 @@ games_admin_edit_category:
   path: /games/categories/edit/{id}
   defaults: { _controller: Games::GamesAdminController::editCategoryAction, contentType: game }
 
+# Game Feeds #
 download_games_feed:
   path:     /game-feeds/download
   defaults: { _controller: 'Games::FeedGamesAdminController::downloadFeedAction' }
+
+import_feed_game:
+  path:     /game-feeds/import
+  defaults: { _controller: 'Games::FeedGamesAdminController::importGameAction' }
 
 play_feed_game:
   path:     /game-feeds/play/{id}
