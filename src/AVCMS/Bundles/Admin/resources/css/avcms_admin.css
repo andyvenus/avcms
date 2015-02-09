@@ -190,9 +190,7 @@ a {
 
 .add-item a {
   padding: 7px 4px 7px 10px;
-  display: block; }
-
-.add-item a:hover {
+  display: block;
   text-decoration: none; }
 
 .browser-finder-item {
