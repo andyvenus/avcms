@@ -40,7 +40,7 @@ class EditContentHelper
 
     protected $eventDispatcher;
 
-    public function __construct(Model $model, FormHandler $form, Entity $entity = null, EventDispatcherInterface $eventDispatcher)
+    public function __construct(Model $model, FormHandler $form = null, Entity $entity = null, EventDispatcherInterface $eventDispatcher)
     {
         $this->model = $model;
         $this->form = $form;
@@ -75,12 +75,8 @@ class EditContentHelper
 
     public function save($saveToEntities = true)
     {
-        if (!isset($this->request)) {
-            throw new \Exception("Cannot save, request not handled");
-        }
-
-        if ($this->form->isValid() && $this->contentExists()) {
-            if ($saveToEntities === true) {
+        if ($this->form === null || ($this->form->isValid() && $this->contentExists())) {
+            if ($this->form !== null && $saveToEntities === true) {
                 $this->form->saveToEntities();
             }
 

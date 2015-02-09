@@ -32,7 +32,7 @@ class AdminSaveContentEvent extends Event
     protected $model;
 
     /**
-     * @var \AV\Form\FormHandler
+     * @var \AV\Form\FormHandler|null
      */
     protected $form;
 
@@ -46,7 +46,7 @@ class AdminSaveContentEvent extends Event
      * @param Model $model
      * @param FormHandler $form
      */
-    public function __construct(Entity $entity, Model $model, FormHandler $form)
+    public function __construct(Entity $entity, Model $model, FormHandler $form = null)
     {
         $this->entity = $entity;
         $this->model = $model;
@@ -70,7 +70,7 @@ class AdminSaveContentEvent extends Event
     }
 
     /**
-     * @return FormHandler
+     * @return FormHandler|null
      */
     public function getForm()
     {

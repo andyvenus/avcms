@@ -28,11 +28,11 @@ class UpdateTags implements EventSubscriberInterface
     protected $taxonomy;
 
     /**
-     * @param TaxonomyManager $taxonomy_manager
+     * @param TaxonomyManager $taxonomyManager
      */
-    public function __construct(TaxonomyManager $taxonomy_manager)
+    public function __construct(TaxonomyManager $taxonomyManager)
     {
-        $this->taxonomy = $taxonomy_manager;
+        $this->taxonomy = $taxonomyManager;
     }
 
     /**
@@ -65,11 +65,20 @@ class UpdateTags implements EventSubscriberInterface
     public function updateTags(AdminSaveContentEvent $event)
     {
         $form = $event->getForm();
+        $entity = $event->getEntity();
 
-        if ($tags = $form->getData('tags')) {
+        if ($form !== null) {
+            $tags = $form->getData('tags');
+        }
+        elseif (isset($entity->tags)) {
+            $tags = $form->getData($entity->tags);
+        }
+
+        if (isset($tags)) {
             $tags = explode(',', $tags);
             $this->taxonomy->update('tags', $event->getEntity()->getId(), $event->getModel()->getSingular(), $tags);
         }
+
     }
 
     public function deleteTags(AdminDeleteEvent $adminDeleteEvent)

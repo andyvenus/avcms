@@ -129,7 +129,7 @@ abstract class AdminBaseController extends Controller
      * @param null $entity
      * @return EditContentHelper
      */
-    protected function editContentHelper(Model $model, FormHandler $form, $entity = null)
+    protected function editContentHelper(Model $model, FormHandler $form = null, $entity = null)
     {
         $eventDispatcher = $this->container->get('dispatcher');
         return new EditContentHelper($model, $form, $entity, $eventDispatcher);
