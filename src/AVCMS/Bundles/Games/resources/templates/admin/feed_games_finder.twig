@@ -22,12 +22,11 @@
         <a href="{{ path('play_feed_game', {'id': item.id}) }}"> {{ item.name }}</a>
     </div>
 
-    <button class="btn btn-xs btn-success"><span class="glyphicon glyphicon-download-alt"></span> {% trans %}Import{% endtrans %}</button>
-
     {{ form_field(categories.fields()['category-' ~ item.id], {'class': 'no_select2 input-sm', style: 'width: 120px;display: inline;height: 22px;'}) }}
 
-    {{ buttons.delete('feed_games_admin_delete') }}
+    <button class="btn btn-xs btn-success"><span class="glyphicon glyphicon-download-alt"></span> {% trans %}Import{% endtrans %}</button>
 
+    {{ buttons.delete('feed_games_admin_delete') }}
 {% endblock %}
 
 {% block item_extended_inner %}

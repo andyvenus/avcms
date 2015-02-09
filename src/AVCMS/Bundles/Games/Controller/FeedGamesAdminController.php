@@ -53,11 +53,13 @@ class FeedGamesAdminController extends AdminBaseController
             ->setSearchFields(array('name'))
             ->setResultsPerPage(15)
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
+
+        /* @var $items \AVCMS\Bundles\Games\Model\FeedGame[] */
         $items = $finder->get();
 
         $categoryFields = new FormBlueprint();
 
-        $categories = (new CategoryChoicesProvider($this->model('GameCategories')))->getChoices();
+        $categories = [0 => 'Default'] + (new CategoryChoicesProvider($this->model('GameCategories')))->getChoices();
 
         foreach ($items as $item) {
             $itemCategory = $item->getCategory();
