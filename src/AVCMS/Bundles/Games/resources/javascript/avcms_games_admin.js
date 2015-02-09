@@ -3,7 +3,10 @@ avcms = avcms || {};
 $(document).ready(function() {
     var body = $('body');
     body.on('click', '.avcms-get-game-dimensions', avcms.gamesAdmin.getDimensions);
-    body.on('click', '.avcms-download-feed-game', avcms.gamesAdmin.downloadFeedGame);
+    body.on('click', '.avcms-download-feed-game', function() {
+        avcms.gamesAdmin.downloadFeedGame($(this).parents('.browser-finder-item').data('id'));
+    });
+    body.on('click', '.avcms-bulk-download-feed-games', avcms.gamesAdmin.startBulkDownloadFeedGames);
 
     body.on('click', '.avcms-update-feed', function() {
         avcms.gamesAdmin.updateFeed($(this).parents('[data-feed-id]').data('feed-id'), false);
@@ -58,19 +61,26 @@ avcms.gamesAdmin = {
 
     },
 
-    downloadFeedGame: function() {
-        var category_id = $(this).siblings('select').val();
-        var finder_item = $(this).parents('.browser-finder-item')
-        var id = finder_item.data('id');
+    downloadFeedGame: function(game_id) {
+        var finder_item = $('.browser-finder-item[data-id='+game_id+']');
+        finder_item.removeClass('avcms-pending');
 
-        $(this).attr('disabled');
+        var category_id = finder_item.find('select').val();
+        var id = finder_item.data('id');
 
         finder_item.find('.avcms-feed-game-buttons').hide();
 
-        var status = finder_item.find('.avcms-feed-game-status');
-        status.show().text('Downloading...');
+        finder_item.find('.avcms-feed-game-pending').hide();
+        var status = finder_item.find('.avcms-feed-game-downloading');
+        status.show();
+
+        var thumbnail_loader = finder_item.find('.avcms-thumbnail-loader')
+        thumbnail_loader.show().html('<img src="'+avcms.config.site_url+'/web/resources/CmsFoundation/images/loader-round.gif">');
 
         $.post(avcms.config.site_url+'admin/game-feeds/import', {id: id, category: category_id}, function(response) {
+            thumbnail_loader.hide();
+            finder_item.find('input:checkbox').remove();
+
             if (response.success) {
                 status.hide();
                 var installed = finder_item.find('.avcms-feed-game-installed');
@@ -80,7 +90,30 @@ avcms.gamesAdmin = {
             else {
                 status.text(response.error);
             }
+
+            avcms.gamesAdmin.bulkDownloadFeedGames();
         });
+    },
+
+    startBulkDownloadFeedGames: function() {
+        var checkboxes = $('.finder-item-checkbox-container :checkbox:checked');
+
+        checkboxes.each(function() {
+            var container = $(this).parents('[data-id]');
+            container.addClass('avcms-pending');
+            container.find('.avcms-feed-game-buttons').hide();
+            container.find('.avcms-feed-game-pending').show();
+        });
+
+        avcms.gamesAdmin.bulkDownloadFeedGames();
+    },
+
+    bulkDownloadFeedGames: function() {
+        var finder_item = $('.avcms-pending.browser-finder-item[data-id]').first();
+
+        if (finder_item.length === 1) {
+            avcms.gamesAdmin.downloadFeedGame(finder_item.data('id'));
+        }
     },
 
     updateAllFeeds: function()

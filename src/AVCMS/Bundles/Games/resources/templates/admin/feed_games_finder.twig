@@ -13,6 +13,7 @@
 
 {% block item_main %}
     <div class="finder-thumbnail">
+        <div class="avcms-thumbnail-loader"></div>
         <a href="{{ path('play_feed_game', {'id': item.id}) }}">
             <img src="{{ item.thumbnail }}" width="50" height="50"/>
         </a>
@@ -29,7 +30,12 @@
 
         {{ buttons.delete('game_feeds_admin_reject', 'glyphicon glyphicon-thumbs-down') }}
     </div>
-    <div class="avcms-feed-game-status" style="display:none;"></div>
+    <div class="avcms-feed-game-downloading text-info" style="display:none;">
+        {% trans %}Downloading...{% endtrans %}
+    </div>
+    <div class="avcms-feed-game-pending text-warning" style="display:none;">
+        {% trans %}Pending...{% endtrans %}
+    </div>
     <div class="avcms-feed-game-installed" style="display:none;">
         <a href="#" target="_blank" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit{% endtrans %}</a>
     </div>

@@ -580,6 +580,20 @@ a {
   display: inline;
 }
 
+// MISC
+.avcms-thumbnail-loader {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  vertical-align: middle;
+  padding-top: 13px;
+  display: none;
+
+  background: rgb(182, 182, 182); /* The Fallback */
+  background: rgba(255, 255, 255, 0.76);
+}
+
 // ANIMATION
 
 $lightbar-offset: 2000px;
