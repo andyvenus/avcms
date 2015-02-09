@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class FeedGamesAdminController extends AdminBaseController
+class GameFeedsAdminController extends AdminBaseController
 {
     /**
      * @var \AVCMS\Bundles\Games\Model\FeedGames

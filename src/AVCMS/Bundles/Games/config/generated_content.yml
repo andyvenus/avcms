@@ -86,7 +86,7 @@ feed_games:
     admin_delete_route: game_feeds_admin_reject
     admin_edit_route: feed_games_admin_edit
     admin_add_route: feed_games_admin_add
-    admin_controller: 'Games::FeedGamesAdminController'
+    admin_controller: 'Games::GameFeedsAdminController'
     finder_item_extra_buttons: ''
     database: feed_games
     entity: AVCMS\Bundles\Games\Model\FeedGame

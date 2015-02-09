@@ -41,9 +41,12 @@
     </button>
 {% endmacro %}
 
-{% macro delete(ajax_route) %}
+{% macro delete(ajax_route, icon) %}
+    {% if icon == null %}
+        {% set icon = 'glyphicon glyphicon-remove' %}
+    {% endif %}
     <button class="btn btn-xs btn-default avcms-delete-item" data-delete-url="{{ url(ajax_route) }}">
-        <span class="glyphicon glyphicon-remove"></span>
+        <span class="{{ icon }}"></span>
     </button>
 {% endmacro %}
 
@@ -53,9 +56,12 @@
     </a>
 {% endmacro %}
 
-{% macro bulk_delete(ajax_route) %}
+{% macro bulk_delete(ajax_route, icon) %}
+    {% if icon == null %}
+        {% set icon = 'glyphicon glyphicon-remove' %}
+    {% endif %}
     <button type="button" class="btn btn-default btn-sm" data-bulk-delete-url="{{ url(ajax_route) }}">
-        <span class="glyphicon glyphicon-remove"></span>
+        <span class="{{ icon }}"></span>
     </button>
 {% endmacro %}
 

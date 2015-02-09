@@ -68,28 +68,28 @@ games_admin_edit_category:
 # Game Feeds #
 update_game_feeds:
   path:     /game-feeds/update
-  defaults: { _controller: 'Games::FeedGamesAdminController::updateFeedsAction' }
+  defaults: { _controller: 'Games::GameFeedsAdminController::updateFeedsAction' }
 
 download_games_feed:
   path:     /game-feeds/download
-  defaults: { _controller: 'Games::FeedGamesAdminController::downloadFeedAction' }
+  defaults: { _controller: 'Games::GameFeedsAdminController::downloadFeedAction' }
 
 import_feed_game:
   path:     /game-feeds/import
-  defaults: { _controller: 'Games::FeedGamesAdminController::importGameAction' }
+  defaults: { _controller: 'Games::GameFeedsAdminController::importGameAction' }
 
 play_feed_game:
   path:     /game-feeds/play/{id}
-  defaults: { _controller: 'Games::FeedGamesAdminController::playGameAction' }
+  defaults: { _controller: 'Games::GameFeedsAdminController::playGameAction' }
 
 game_feeds_admin_reject:
   path:     /game-feeds/delete
-  defaults: { _controller: 'Games::FeedGamesAdminController::deleteAction' }
+  defaults: { _controller: 'Games::GameFeedsAdminController::deleteAction' }
 
 game_feeds_admin_home:
   path: /game-feeds
-  defaults: { _controller: 'Games::FeedGamesAdminController::homeAction' }
+  defaults: { _controller: 'Games::GameFeedsAdminController::homeAction' }
 
 game_feeds_admin_finder:
   path: /game-feeds/finder/{page}
-  defaults: { page: 1, _controller: 'Games::FeedGamesAdminController::finderAction' }
+  defaults: { page: 1, _controller: 'Games::GameFeedsAdminController::finderAction' }
