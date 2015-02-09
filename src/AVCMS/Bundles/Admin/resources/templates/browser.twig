@@ -47,8 +47,8 @@
 
             <div class="browser-finder-checked-options">
                 <div class="btn-group" style="margin-bottom: 5px">
-                    <button type="button" class="btn btn-default btn-xs select-all-button">Select All</button>
-                    <button type="button" class="btn btn-default btn-xs deselect-all-button">Deselect All</button>
+                    <button type="button" class="btn btn-default btn-xs select-all-button">{% trans %}Select All{% endtrans %}</button>
+                    <button type="button" class="btn btn-default btn-xs deselect-all-button">{% trans %}Deselect All{% endtrans %}</button>
                     <button type="button" class="btn btn-default btn-xs selected-count" disabled="disabled">0</button>
                 </div><br/>
                 <div class="btn-group">
@@ -60,7 +60,7 @@
         </div>
         <div class="browser-editor">
             <div class="mobile-back">
-                <a href="{% block mobile_back_link %}#{% endblock %}" class="btn btn-link"><span class="glyphicon glyphicon-chevron-left"></span> {% trans %}Back To Finder{% endtrans %}</a>
+                <a href="{% block mobile_back_link %}#{% endblock %}" class="btn btn-link"><span class="glyphicon glyphicon-chevron-left"></span> {{ block('finder_title') }}</a>
             </div>
 
             <div class="ajax-editor">
