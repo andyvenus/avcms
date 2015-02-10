@@ -21,7 +21,9 @@ class CurlFileHandler extends FileHandlerBase
         $mimeGetter = new \finfo(FILEINFO_MIME_TYPE);
         $mimeType = $mimeGetter->buffer($file);
 
-        return $this->checkFileType(pathinfo($fileUrl, PATHINFO_EXTENSION), $mimeType);
+        $fileUrlNoQuery = strtok($fileUrl,'?');
+
+        return $this->checkFileType(pathinfo($fileUrlNoQuery, PATHINFO_EXTENSION), $mimeType);
     }
 
     /**

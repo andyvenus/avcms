@@ -18,6 +18,7 @@ class GameFeedServices implements ServicesInterface
         $container->register('game_feed_downloader', 'AVCMS\Bundles\Games\GameFeeds\Downloader\GameFeedDownloader')
             ->setArguments([new Reference('settings_manager'), new Reference('feed_games.model')])
             ->addMethodCall('addFeed', [new Reference('feed.fgd')])
+            ->addMethodCall('addFeed', [new Reference('feed.kongregate')])
         ;
 
         $container->register('feed_games.model', 'AVCMS\Bundles\Games\Model\FeedGames')
@@ -25,5 +26,7 @@ class GameFeedServices implements ServicesInterface
         ;
 
         $container->register('feed.fgd', 'AVCMS\Bundles\Games\GameFeeds\FlashGameDistributionFeed');
+
+        $container->register('feed.kongregate', 'AVCMS\Bundles\Games\GameFeeds\KongregateFeed');
     }
 }

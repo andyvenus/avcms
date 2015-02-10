@@ -54,9 +54,14 @@ class GameFeedsAdminController extends AdminBaseController
         return new Response($this->renderAdminSection('@Games/admin/update_feeds.twig', ['feeds' => $feedInfoArray]));
     }
 
-    public function downloadFeedAction()
+    public function downloadFeedAction(Request $request)
     {
-        $games = $this->container->get('game_feed_downloader')->downloadFeed('flash_game_distribution');
+        try {
+            $games = $this->container->get('game_feed_downloader')->downloadFeed($request->get('id'));
+        }
+        catch (\Exception $e) {
+            return new JsonResponse(['success' => false, 'error' => $e->getMessage()]);
+        }
 
         return new JsonResponse(['success' => true, 'new_games' => count($games), 'message' => $this->trans('{count} games added', ['count' => count($games)])]);
     }
@@ -100,9 +105,9 @@ class GameFeedsAdminController extends AdminBaseController
                 // Thumbnail
                 $file = $curl->get($game->getThumbnail());
 
-                $handler = new CurlFileHandler(FileHandlerBase::getImageFiletypes());
+                $handler = new CurlFileHandler(null, ['php' => '*']);
 
-                $thumbnailPath = $handler->moveFile($game->getThumbnail(), $file, $this->getParam('game_thumbnails_dir').'/'.basename($game->getFile())[0]);
+                $thumbnailPath = $handler->moveFile(strtok($game->getThumbnail(), '?'), $file, $this->getParam('game_thumbnails_dir').'/'.basename($game->getFile())[0]);
 
                 if ($thumbnailPath === false) {
                     return new JsonResponse(['success' => false, 'error' => $handler->getTranslatedError($this->translator)]);
