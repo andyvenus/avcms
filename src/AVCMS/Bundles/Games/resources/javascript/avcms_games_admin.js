@@ -121,7 +121,7 @@ avcms.gamesAdmin = {
         var selected_feed = $('.pending[data-feed-id]').first();
 
         if (selected_feed.length === 1) {
-            avcms.gamesAdmin.updateFeed(selected_feed.data('feed-id'), false);
+            avcms.gamesAdmin.updateFeed(selected_feed.data('feed-id'), true);
         }
         else {
             avcms.browser.changeFinderFilters();
