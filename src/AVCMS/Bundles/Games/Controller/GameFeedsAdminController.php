@@ -174,7 +174,7 @@ class GameFeedsAdminController extends AdminBaseController
 
             $default = $gameFeedCats->getCategoryId($itemCategory);
 
-            if ($default === null) {
+            if ($default === 0) {
                 foreach ($categories as $id => $categoryName) {
                     if (strpos($itemCategory, $categoryName) !== false) {
                         $default = $id;
