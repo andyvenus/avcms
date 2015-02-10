@@ -8,6 +8,7 @@
 namespace AVCMS\Bundles\Games\GameFeeds;
 
 use AVCMS\Bundles\Games\GameFeeds\ResponseHandler\ResponseHandlerInterface;
+use AVCMS\Bundles\Games\Model\FeedGame;
 use AVCMS\Core\SettingsManager\SettingsManager;
 
 interface GameFeedInterface {
@@ -21,6 +22,13 @@ interface GameFeedInterface {
      * @return null|array
      */
     public function getParameterMap();
+
+    /**
+     * @param FeedGame $game
+     * @param $feedData
+     * @return mixed
+     */
+    public function filterGame(FeedGame $game, $feedData);
 
     /**
      * @return ResponseHandlerInterface

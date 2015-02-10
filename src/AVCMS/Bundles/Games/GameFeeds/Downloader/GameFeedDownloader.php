@@ -85,6 +85,8 @@ class GameFeedDownloader
 
             $game->setProvider($feed->getId());
 
+            $feed->filterGame($game, $response);
+
             if (!$this->model->feedGameExists($feed->getId(), $game->getProviderId()) && $game->getProviderId()) {
                 $games[] = $game;
             }

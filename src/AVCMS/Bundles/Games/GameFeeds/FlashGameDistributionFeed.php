@@ -9,6 +9,7 @@ namespace AVCMS\Bundles\Games\GameFeeds;
 
 use AVCMS\Bundles\Games\GameFeeds\ResponseHandler\JsonResponseHandler;
 use AVCMS\Bundles\Games\GameFeeds\ResponseHandler\ResponseHandlerInterface;
+use AVCMS\Bundles\Games\Model\FeedGame;
 use AVCMS\Core\SettingsManager\SettingsManager;
 
 class FlashGameDistributionFeed implements GameFeedInterface
@@ -35,6 +36,17 @@ class FlashGameDistributionFeed implements GameFeedInterface
             'thumbnail' => 'thumb_filename',
             'category' => 'genres'
         ];
+    }
+
+
+    /**
+     * @param FeedGame $game
+     * @param $feedData
+     * @return mixed
+     */
+    public function filterGame(FeedGame $game, $feedData)
+    {
+        return $game;
     }
 
     /**
