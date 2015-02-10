@@ -9,7 +9,7 @@
             {% trans %}Categories{% endtrans %}
         </div>
         <div class="col-sm-6 hidden-xs hidden-sm">
-            {% trans %}Tags{% endtrans %}
+            {% trans %}File Type{% endtrans %}
         </div>
     </div>
 {% endblock %}
@@ -52,6 +52,6 @@
         {{ item.category }}
     </div>
     <div class="col-sm-6 hidden-xs hidden-sm">
-        {{ item.tags }}
+        {{ item.fileType|default('html') }}
     </div>
 {% endblock %}

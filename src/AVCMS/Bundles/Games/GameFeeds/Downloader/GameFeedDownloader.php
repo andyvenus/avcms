@@ -106,6 +106,10 @@ class GameFeedDownloader
 
             $feed->filterGame($game, $feedGame);
 
+            $fileType = $this->getFileType($game->getFile());
+
+            $game->setFileType($fileType);
+
             if (!$this->model->feedGameExists($feed->getId(), $game->getProviderId()) && $game->getProviderId()) {
                 $games[] = $game;
             }
@@ -119,8 +123,31 @@ class GameFeedDownloader
         return null;
     }
 
-    protected function getFields()
+    private function getFields()
     {
         return ['name', 'description', 'file', 'thumbnail', 'category', 'width', 'height', 'instructions', 'tags', 'provider_id', 'downloadable'];
+    }
+
+    private function getFileType($file)
+    {
+        $fileType = pathinfo($file, PATHINFO_EXTENSION);
+
+        if (!$fileType) {
+            $fileType = 'html';
+        }
+
+        $fileTypes = [
+            'swf' => 'Flash',
+            'unity3d' => 'Unity',
+            'html' => 'HTML5',
+            'htm' => 'HTML5',
+            'dcr' => 'Shockwave'
+        ];
+
+        if (isset($fileTypes[$fileType])) {
+            $fileType = $fileTypes[$fileType];
+        }
+
+        return $fileType;
     }
 }

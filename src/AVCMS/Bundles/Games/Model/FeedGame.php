@@ -55,24 +55,34 @@ class FeedGame extends Game
         return $this->get("category");
     }
 
-    public function setDownloadable($value)
-    {
-        $this->set("downloadable", $value);
-    }
-
     public function getDownloadable()
     {
         return $this->get("downloadable");
     }
 
-    public function getProvider()
+    public function setDownloadable($value)
     {
-        return $this->get("provider");
+        $this->set("downloadable", $value);
+    }
+
+    public function setFileType($value)
+    {
+        $this->set("file_type", $value);
+    }
+
+    public function getFileType()
+    {
+        return $this->get("file_type");
     }
 
     public function setProvider($value)
     {
         $this->set("provider", $value);
+    }
+
+    public function getProvider()
+    {
+        return $this->get("provider");
     }
 
     public function getProviderId()
@@ -85,24 +95,24 @@ class FeedGame extends Game
         $this->set("provider_id", $value);
     }
 
-    public function getStatus()
-    {
-        return $this->get("status");
-    }
-
     public function setStatus($value)
     {
         $this->set("status", $value);
     }
 
-    public function getTags()
+    public function getStatus()
     {
-        return $this->get("tags");
+        return $this->get("status");
     }
 
     public function setTags($value)
     {
         $this->set("tags", $value);
+    }
+
+    public function getTags()
+    {
+        return $this->get("tags");
     }
 
     public function getValidationData()
@@ -191,6 +201,15 @@ class FeedGame extends Game
 
     /**
      * @param $param
+     * @param $value
+     */
+    protected function set($param, $value)
+    {
+        $this->data[$param] = $value;
+    }
+
+    /**
+     * @param $param
      * @return null|string|int
      */
     protected function get($param)
@@ -201,14 +220,5 @@ class FeedGame extends Game
         else {
             return null;
         }
-    }
-
-    /**
-     * @param $param
-     * @param $value
-     */
-    protected function set($param, $value)
-    {
-        $this->data[$param] = $value;
     }
 }
