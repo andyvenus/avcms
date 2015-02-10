@@ -11,6 +11,10 @@ class JsonResponseHandler implements ResponseHandlerInterface
 {
     public function getGames($response)
     {
+        if (is_array($response)) {
+            return $response;
+        }
+
         return json_decode($response);
     }
 }
