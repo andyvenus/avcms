@@ -12,6 +12,8 @@ assets:
     env: admin
   avcms_games.js:
     env: frontend
+  unity_embed.js:
+      env: shared
 
   avcms_games.css:
     env: frontend
