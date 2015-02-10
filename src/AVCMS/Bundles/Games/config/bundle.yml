@@ -93,6 +93,12 @@ user_settings:
     help: Download game files & thumbnails to your server. If off, files will be hotlinked.
     default: 1
     section: game_feeds
+  get_feed_game_tags:
+    type: checkbox
+    label: Get Tags
+    help: If a feed has tags, apply them to games when downloading. Can result in a lot of tags building up.
+    default: 0
+    section: game_feeds
 
 comments:
   game:

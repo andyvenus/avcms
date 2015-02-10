@@ -124,6 +124,10 @@ class GameFeedsAdminController extends AdminBaseController
         $game->setPublished(1);
         $game->setPublishDate(time());
 
+        if ($this->setting('get_feed_game_tags') && $feedGame->getTags()) {
+            $game->tags = $feedGame->getTags();
+        }
+
         $helper = $this->editContentHelper($this->games, null, $game);
         $helper->save();
 

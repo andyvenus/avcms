@@ -71,7 +71,7 @@ class UpdateTags implements EventSubscriberInterface
             $tags = $form->getData('tags');
         }
         elseif (isset($entity->tags)) {
-            $tags = $form->getData($entity->tags);
+            $tags = $entity->tags;
         }
 
         if (isset($tags)) {
