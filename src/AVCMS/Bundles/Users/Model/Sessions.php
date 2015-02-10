@@ -62,7 +62,7 @@ class Sessions extends Model implements TokenProviderInterface
         $token = $this->query()->where('series', $series)->first();
 
         if (!$token) {
-            throw new TokenNotFoundException;
+            throw new TokenNotFoundException("Token with series '$series' was not found");
         }
 
         return $token;
