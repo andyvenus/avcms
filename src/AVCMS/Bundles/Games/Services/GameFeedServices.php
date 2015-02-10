@@ -20,6 +20,7 @@ class GameFeedServices implements ServicesInterface
             ->addMethodCall('addFeed', [new Reference('feed.fgd')])
             ->addMethodCall('addFeed', [new Reference('feed.kongregate')])
             ->addMethodCall('addFeed', [new Reference('feed.spil_games')])
+            ->addMethodCall('addFeed', [new Reference('feed.free_online_games')])
         ;
 
         $container->register('feed_games.model', 'AVCMS\Bundles\Games\Model\FeedGames')
@@ -31,5 +32,7 @@ class GameFeedServices implements ServicesInterface
         $container->register('feed.kongregate', 'AVCMS\Bundles\Games\GameFeeds\KongregateFeed');
 
         $container->register('feed.spil_games', 'AVCMS\Bundles\Games\GameFeeds\SpilGamesFeed');
+
+        $container->register('feed.free_online_games', 'AVCMS\Bundles\Games\GameFeeds\FreeOnlineGamesFeed');
     }
 }

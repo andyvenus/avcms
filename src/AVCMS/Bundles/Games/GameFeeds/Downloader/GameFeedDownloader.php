@@ -130,7 +130,7 @@ class GameFeedDownloader
 
     private function getFileType($file)
     {
-        $fileType = pathinfo($file, PATHINFO_EXTENSION);
+        $fileType = strtok(pathinfo($file, PATHINFO_EXTENSION), '?');
 
         if (!$fileType) {
             $fileType = 'html';
