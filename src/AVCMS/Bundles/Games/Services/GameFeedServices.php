@@ -23,6 +23,7 @@ class GameFeedServices implements ServicesInterface
             ->addMethodCall('addFeed', [new Reference('feed.free_online_games')])
             ->addMethodCall('addFeed', [new Reference('feed.arcade_game_feed')])
             ->addMethodCall('addFeed', [new Reference('feed.2_player_games')])
+            ->addMethodCall('addFeed', [new Reference('feed.unity_feeds')])
         ;
 
         $container->register('feed_games.model', 'AVCMS\Bundles\Games\Model\FeedGames')
@@ -40,5 +41,7 @@ class GameFeedServices implements ServicesInterface
         $container->register('feed.arcade_game_feed', 'AVCMS\Bundles\Games\GameFeeds\ArcadeGameFeed');
 
         $container->register('feed.2_player_games', 'AVCMS\Bundles\Games\GameFeeds\TwoPlayerGamesFeed');
+
+        $container->register('feed.unity_feeds', 'AVCMS\Bundles\Games\GameFeeds\UnityFeedsFeed');
     }
 }
