@@ -20,6 +20,10 @@ class XmlResponseHandler implements ResponseHandlerInterface
 
     public function getGames($gamesXml)
     {
+        if (!is_object($gamesXml)) {
+            $gamesXml = new \SimpleXMLElement($gamesXml);
+        }
+
         foreach ($this->gamesTreeStructure as $element) {
             $gamesXml = $gamesXml->$element;
         }

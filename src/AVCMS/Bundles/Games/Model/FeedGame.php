@@ -55,6 +55,16 @@ class FeedGame extends Game
         return $this->get("category");
     }
 
+    public function setDownloadable($value)
+    {
+        $this->set("downloadable", $value);
+    }
+
+    public function getDownloadable()
+    {
+        return $this->get("downloadable");
+    }
+
     public function getProvider()
     {
         return $this->get("provider");
@@ -65,24 +75,24 @@ class FeedGame extends Game
         $this->set("provider", $value);
     }
 
-    public function setProviderId($value)
-    {
-        $this->set("provider_id", $value);
-    }
-
     public function getProviderId()
     {
         return $this->get("provider_id");
     }
 
-    public function setStatus($value)
+    public function setProviderId($value)
     {
-        $this->set("status", $value);
+        $this->set("provider_id", $value);
     }
 
     public function getStatus()
     {
         return $this->get("status");
+    }
+
+    public function setStatus($value)
+    {
+        $this->set("status", $value);
     }
 
     public function getTags()

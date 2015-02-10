@@ -70,22 +70,41 @@ class GameFeedDownloader
         $gamesResponse = $feed->getResponseHandler()->getGames($response);
 
         foreach ($gamesResponse as $feedGame) {
-
             $game = $this->model->newEntity();
             foreach ($fields as $field) {
+                unset($feedGameValue);
+
                 $feedField = $field;
                 if (isset($parameterMap[$field])) {
                     $feedField = $parameterMap[$field];
                 }
 
-                if (isset($feedGame->$feedField)) {
-                    $game->{"set" . str_replace('_', '', $field)}($feedGame->$feedField);
+                if (is_array($feedField)) {
+                    $feedGameValue = $feedGame;
+                    foreach ($feedField as $fieldName) {
+                        if (isset($feedGameValue->$fieldName)) {
+                            $feedGameValue = $feedGameValue->$fieldName;
+                        }
+                        else {
+                            unset($feedGameValue);
+                            break;
+                        }
+                    }
+                }
+                else {
+                    if (isset($feedGame->$feedField)) {
+                        $feedGameValue = $feedGame->$feedField;
+                    }
+                }
+
+                if (isset($feedGameValue)) {
+                    $game->{"set" . str_replace('_', '', $field)}($feedGameValue);
                 }
 			}
 
             $game->setProvider($feed->getId());
 
-            $feed->filterGame($game, $response);
+            $feed->filterGame($game, $feedGame);
 
             if (!$this->model->feedGameExists($feed->getId(), $game->getProviderId()) && $game->getProviderId()) {
                 $games[] = $game;
@@ -102,6 +121,6 @@ class GameFeedDownloader
 
     protected function getFields()
     {
-        return ['name', 'description', 'file', 'thumbnail', 'category', 'width', 'height', 'filetype', 'instructions', 'tags', 'provider_id'];
+        return ['name', 'description', 'file', 'thumbnail', 'category', 'width', 'height', 'instructions', 'tags', 'provider_id', 'downloadable'];
     }
 }

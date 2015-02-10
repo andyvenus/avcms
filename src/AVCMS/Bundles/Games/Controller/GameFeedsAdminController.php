@@ -87,7 +87,7 @@ class GameFeedsAdminController extends AdminBaseController
         $game->setCategoryId($category);
         $game->setId(null);
 
-        if ($this->setting('download_feed_games')) {
+        if ($this->setting('download_feed_games') && $feedGame->getDownloadable()) {
             $curl = new Curl();
 
             try {
