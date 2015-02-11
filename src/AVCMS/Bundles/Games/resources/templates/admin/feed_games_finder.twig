@@ -6,10 +6,10 @@
             {% trans %}Feed{% endtrans %}
         </div>
         <div class="col-sm-3 hidden-xs">
-            {% trans %}Categories{% endtrans %}
+            {% trans %}File Type{% endtrans %}
         </div>
         <div class="col-sm-6 hidden-xs hidden-sm">
-            {% trans %}File Type{% endtrans %}
+            {% trans %}Categories{% endtrans %}
         </div>
     </div>
 {% endblock %}
@@ -49,9 +49,9 @@
         {{ feeds[item.provider].info.name }}
     </div>
     <div class="col-sm-3 hidden-xs">
-        {{ item.category }}
+        {{ item.fileType|default('html') }}
     </div>
     <div class="col-sm-6 hidden-xs hidden-sm">
-        {{ item.fileType|default('html') }}
+        {{ item.category }}
     </div>
 {% endblock %}
