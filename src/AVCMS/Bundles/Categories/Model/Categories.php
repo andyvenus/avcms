@@ -54,4 +54,24 @@ abstract class Categories extends Model
     {
         return $this->query()->where('parent', $parentId)->get();
     }
+
+    public function getFullCategory($id)
+    {
+        $category = $this->findOne($id)->first();
+
+        if (!$category) {
+            return null;
+        }
+
+        $categoryId = $category->getId();
+
+        if ($category->getParent()) {
+            $category->parent = $this->getOne($category->getParent());
+        }
+        else {
+            $category->subcategories = $this->query()->where('parent', $categoryId)->get();
+        }
+        
+        return $category;
+    }
 }

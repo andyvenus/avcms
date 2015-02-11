@@ -29,7 +29,9 @@
         <div class="box browse-wallpapers-filter-box">
             <div class="box-top">
                 <h2>
-                    {% if category.parent %}<a href="{{ path('wallpaper_category', {'category': category.parent.slug}) }}">{{ category.parent.name }}</a> / {% endif %}
+                    {% if category.parent %}
+                        <a href="{{ path('wallpaper_category', {'category': category.parent.slug}) }}">{{ category.parent.name }}</a> /
+                    {% endif %}
                     {{ block('title') }}
                 </h2>
             </div>

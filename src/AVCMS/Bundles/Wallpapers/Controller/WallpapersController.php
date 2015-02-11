@@ -53,23 +53,11 @@ class WallpapersController extends Controller
         $category = null;
         if ($request->get('category') !== null) {
             $categories = $this->model('WallpaperCategories');
-            $category = $categories->findOne($request->get('category'))->first();
+            $category = $categories->getFullCategory($request->get('category'));
 
-            if (!$category) {
-                throw $this->createNotFoundException();
-            }
-
-            $categoryId = $category->getId();
-
-            if ($category->getParent()) {
-                $category->parent = $categories->getOne($category->getParent());
-            }
-            else {
-                $category->subcategories = $categories->query()->where('parent', $categoryId)->get();
-            }
-
-            $query->category($categoryId);
+            $query->category($category->getId());
         }
+
         if ($pageType === 'featured') {
             $query->featured();
         }
