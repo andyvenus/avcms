@@ -8,6 +8,12 @@ browse_games:
   requirements:
     page:  \d+
 
+game_tag:
+  path: /games/tag/{tags}
+  defaults: { _controller: Games::GamesController::browseGamesAction, category: null, page: 1 }
+  requirements:
+    page:  \d+
+
 featured_games:
   path: /games/featured
   defaults: { _controller: Games::GamesController::browseGamesAction, pageType: featured }
