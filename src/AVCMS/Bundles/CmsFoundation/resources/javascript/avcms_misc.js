@@ -6,6 +6,8 @@ $(document).ready(function() {
         avcms.general.loadFormModal(url);
     });
 
+    $('[data-toggle="tooltip"]').tooltip();
+
     avcms.event.addEvent('submit-form-success', avcms.general.modalFormSuccess);
 });
 
