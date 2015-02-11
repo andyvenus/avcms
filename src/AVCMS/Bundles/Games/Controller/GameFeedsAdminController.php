@@ -87,6 +87,14 @@ class GameFeedsAdminController extends AdminBaseController
         $game->setCategoryId($category);
         $game->setId(null);
 
+        $slug = $this->container->get('slug.generator')->slugify($game->getName());
+        if ($this->games->query()->where('slug', $slug)->count() > 0) {
+            $slug .= '-'.time();
+        }
+        $game->setSlug($slug);
+        $game->setPublished(1);
+        $game->setPublishDate(time());
+
         if ($this->setting('download_feed_games') && $feedGame->getDownloadable()) {
             $curl = new Curl();
 
@@ -96,7 +104,9 @@ class GameFeedsAdminController extends AdminBaseController
 
                 $handler = new CurlFileHandler(null, ['php' => '*']);
 
-                $filePath = $handler->moveFile($game->getFile(), $file, $this->getParam('games_dir').'/'.basename($game->getFile())[0]);
+                $gameExtension = strtok(pathinfo($game->getFile(), PATHINFO_EXTENSION), '?');
+
+                $filePath = $handler->moveFile($game->getFile(), $file, $this->getParam('games_dir').'/'.basename($game->getSlug())[0], $game->getSlug().'.'.$gameExtension);
 
                 if ($filePath === false) {
                     return new JsonResponse(['success' => false, 'error' => $handler->getTranslatedError($this->translator)]);
@@ -105,9 +115,11 @@ class GameFeedsAdminController extends AdminBaseController
                 // Thumbnail
                 $file = $curl->get($game->getThumbnail());
 
+                $thumbnailExtension = strtok(pathinfo($game->getThumbnail(), PATHINFO_EXTENSION), '?');
+
                 $handler = new CurlFileHandler(null, ['php' => '*']);
 
-                $thumbnailPath = $handler->moveFile(strtok($game->getThumbnail(), '?'), $file, $this->getParam('game_thumbnails_dir').'/'.basename($game->getFile())[0]);
+                $thumbnailPath = $handler->moveFile(strtok($game->getThumbnail(), '?'), $file, $this->getParam('game_thumbnails_dir').'/'.basename($game->getSlug())[0], $game->getSlug().'.'.$thumbnailExtension);
 
                 if ($thumbnailPath === false) {
                     return new JsonResponse(['success' => false, 'error' => $handler->getTranslatedError($this->translator)]);
@@ -120,14 +132,6 @@ class GameFeedsAdminController extends AdminBaseController
             $game->setFile(str_replace($this->getParam('games_dir').'/', '', $filePath));
             $game->setThumbnail(str_replace($this->getParam('game_thumbnails_dir').'/', '', $thumbnailPath));
         }
-
-        $slug = $this->container->get('slug.generator')->slugify($game->getName());
-        if ($this->games->query()->where('slug', $slug)->count() > 0) {
-            $slug .= '-'.time();
-        }
-        $game->setSlug($slug);
-        $game->setPublished(1);
-        $game->setPublishDate(time());
 
         if ($this->setting('get_feed_game_tags') && $feedGame->getTags()) {
             $game->tags = $feedGame->getTags();
