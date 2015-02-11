@@ -30,7 +30,13 @@ class UserActivitySubscriber implements EventSubscriberInterface
 
     public function updateUserActivity(PostResponseEvent $event)
     {
-        $user = $this->tokenStorage->getToken()->getUser();
+        $token = $this->tokenStorage->getToken();
+
+        if ($token === null) {
+            return;
+        }
+
+        $user = $token->getUser();
 
         if ($user->getId() > 0) {
             $this->users->updateUserActivity($user->getId(), $event->getRequest()->getClientIp());

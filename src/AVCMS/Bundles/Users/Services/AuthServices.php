@@ -58,7 +58,7 @@ class AuthServices implements ServicesInterface
             ->addMethodCall('setTokenProvider', array(new Reference('users.sessions_model')))
         ;
 
-        $container->register('auth.listener.remember_me', 'Symfony\Component\Security\Http\Firewall\RememberMeListener')
+        $container->register('auth.listener.remember_me', 'AVCMS\Core\Security\Subscriber\RememberMeListener')
             ->setArguments(array(new Reference('security.context'), new Reference('auth.remember_me_services'), new Reference('auth.manager')))
             ->addTag('event.listener', array('event' => KernelEvents::REQUEST, 'method' => 'handle'))
         ;

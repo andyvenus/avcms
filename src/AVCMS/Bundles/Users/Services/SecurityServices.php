@@ -58,6 +58,9 @@ class SecurityServices implements ServicesInterface
             ->setArguments(array('Symfony\Component\Security\Core\Authentication\Token\AnonymousToken', 'Symfony\Component\Security\Core\Authentication\Token\RememberMeToken'))
         ;
 
+        $container->register('stream.handler', 'Monolog\Handler\StreamHandler')
+            ->setArguments(['cache/log.txt']);
+
         // SECURITY EXCEPTION LISTENER
         $container->register('auth.exception_listener', 'AVCMS\Core\Security\Firewall\ExceptionListener')
             ->setArguments([new Reference('security.context'), new Reference('auth.trust_resolver'), new Reference('http.utils'), 'username.password', new Reference('auth.form_entry_point'), 'home', new Reference('auth.access_denied_handler')])
