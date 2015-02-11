@@ -56,7 +56,7 @@ class EmbedGameTwigExtension extends \Twig_Extension
             $fileExtension = 'html_embed';
         }
         else {
-            $fileExtension = pathinfo($game->getFile(), PATHINFO_EXTENSION);
+            $fileExtension = pathinfo(strtok($game->getFile(),  '?'), PATHINFO_EXTENSION);
         }
 
         $gameEmbedTemplate = $this->gameEmbeds->getEmbedTemplate($fileExtension);
@@ -73,7 +73,7 @@ class EmbedGameTwigExtension extends \Twig_Extension
         $url = $game->getFile();
 
         if (strpos($url, '://') === false) {
-            $game->setFile($this->rootUrl.'/'.$this->gamesPath.'/'.$url);
+            $game->setFile($this->rootUrl.$this->gamesPath.'/'.$url);
         }
     }
 
