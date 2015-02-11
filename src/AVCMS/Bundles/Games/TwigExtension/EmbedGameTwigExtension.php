@@ -42,7 +42,7 @@ class EmbedGameTwigExtension extends \Twig_Extension
         $thumbnail = $game->getThumbnail();
 
         if (strpos($thumbnail, '://') === false) {
-            return $this->rootUrl.'/'.$this->thumbnailsPath.'/'.$thumbnail;
+            return $this->rootUrl.$this->thumbnailsPath.'/'.$thumbnail;
         }
 
         return $thumbnail;
