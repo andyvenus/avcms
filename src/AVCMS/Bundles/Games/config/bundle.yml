@@ -174,9 +174,9 @@ ratings:
     model: AVCMS\Bundles\Games\Model\Games
 
 module_positions:
-  beside_game_comments:
-      name: Beside Game Comments
-      description: Next to the game comments
+  play_game_sidebar:
+      name: Play Game Sidebar
+      description: Sidebar on the play game page
       environment: frontend
       global_modules: 1
       type: content
