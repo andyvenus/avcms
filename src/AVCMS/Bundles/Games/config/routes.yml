@@ -1,3 +1,17 @@
 play_game:
   path: /game/{slug}
   defaults: { _controller: Games::GamesController::playGameAction }
+
+browse_games:
+  path: /games/browse/{page}
+  defaults: { _controller: Games::GamesController::browseGamesAction, category: null, page: 1 }
+  requirements:
+    page:  \d+
+
+featured_games:
+  path: /games/featured
+  defaults: { _controller: Games::GamesController::browseGamesAction, pageType: featured }
+
+game_category:
+  path: /games/{category}/{page}
+  defaults: { _controller: Games::GamesController::browseGamesAction, page: 1 }

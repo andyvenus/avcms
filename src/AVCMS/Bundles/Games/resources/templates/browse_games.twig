@@ -1,0 +1,88 @@
+{% extends 'index.twig' %}
+
+{% block title %}
+    {% if category %}
+        {{ category.name }}
+    {% elseif finder_request.tags %}
+        {% trans with {tags: finder_request.tags|replace({'|': ', '})} %}Games tagged with: {tags}{% endtrans %}
+    {% elseif page_type == 'featured' %}
+        {% trans %}Featured Games{% endtrans %}
+    {% else %}
+        {% trans %}Browse Games{% endtrans %}
+    {% endif %}
+
+    {% if current_page > 1 %}
+        - {% trans with {page: current_page} %}Page {page}{% endtrans %}
+    {% endif %}
+{% endblock %}
+
+{% block meta_description -%}
+    {%- if category and current_page == 1 -%}
+        {{ category.description }}
+    {%- endif -%}
+{%- endblock %}
+
+{% block content %}
+    <div class="browse-games">
+        <div class="box browse-games-filter-box">
+            <div class="box-top">
+                <h2>
+                    {% if category.parent %}
+                        <a href="{{ path('game_category', {'category': category.parent.slug}) }}">{{ category.parent.name }}</a> /
+                    {% endif %}
+                    {{ block('title') }}
+                </h2>
+            </div>
+            <div class="box-main">
+                {% block subcategories -%}
+                    {% if category.subcategories %}
+                        <p>
+                            {% trans %}Subcategories{% endtrans %}:<br/>
+                            {% for subcategory in category.subcategories %}
+                                <a href="{{ path('game_category', {'category': subcategory.slug}) }}" class="btn btn-default btn-sm">{{ subcategory.name }}</a>
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+                {%- endblock %}
+
+                {% block browse_filters -%}
+                    {{ form(filters_form, {}, '@Form/bootstrap_inline_form.twig') }}
+                {%- endblock %}
+            </div>
+        </div>
+
+        {% block games %}
+            {% set column_size = 12 / settings.browse_games_columns|default(2) %}
+
+            <div class="box browse-games-main-box">
+                <div class="box-main">
+                    <div class="row">
+                        {% for game in games %}
+                        <div class="col-sm-{{ column_size }}">
+                            {% block game_info -%}
+                                {% if settings.browse_games_layout == 'thumbnail' %}
+                                    {% include '@Games/game_info_thumbnail.twig' %}
+                                {% else %}
+                                    {% include '@Games/game_info_details.twig' %}
+                                {% endif %}
+                            {%- endblock %}
+
+                            {% if loop.index % settings.browse_games_columns|default(2) == 0 %}
+                                </div><div class="row">
+                            {% endif %}
+                            </div>
+                        {% else %}
+                            <div class="col-md-12">
+                                <div class="well well-lg">{% trans %}No Games Found{% endtrans %}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    {% block games_pagination %}
+                        {{ pagination(total_pages, current_page) }}
+                    {% endblock %}
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}

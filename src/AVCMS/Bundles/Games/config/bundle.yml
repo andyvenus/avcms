@@ -49,6 +49,7 @@ menu_items:
         route: game_feeds_admin_home
 
 user_settings_sections:
+  browse_games: Browse Games
   game_ads: Adverts Before Games
   game_feeds: Game Feeds
 
@@ -101,6 +102,55 @@ user_settings:
     help: If a feed has tags, apply them to games when downloading. Can result in a lot of tags building up.
     default: 0
     section: game_feeds
+  browse_games_layout:
+    type: select
+    label: Browse Games Layout
+    choices:
+      details: Details
+      thumbnail: Thumbnail
+    default: details
+    section: browse_games
+  browse_games_columns:
+    type: select
+    label: Browse Games Columns
+    choices:
+      1: 1
+      2: 2
+      3: 3
+      4: 4
+    default: 2
+    section: browse_games
+  browse_games_per_page:
+    type: text
+    label: Games Per Page
+    help: Number of games to show per page (browse, categories etc)
+    default: 20
+    section: browse_games
+  show_game_description:
+    type: checkbox
+    label: Show Description
+    default: 1
+    section: browse_games
+  show_game_ratings:
+    type: checkbox
+    label: Show Game Ratings
+    default: 1
+    section: browse_games
+  show_game_hits:
+    type: checkbox
+    label: Show Game Hits
+    default: 1
+    section: browse_games
+  show_game_date:
+    type: checkbox
+    label: Show Publish Date
+    default: 0
+    section: browse_games
+  show_game_category:
+    type: checkbox
+    label: Show Category
+    default: 0
+    section: browse_games
 
 comments:
   game:

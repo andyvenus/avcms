@@ -1,0 +1,18 @@
+<div class="media">
+    <div class="media-left">
+        <a href="{{ url('play_game', {slug: game.slug}) }}">
+            <img src="{{ game_thumbnail(game) }}" width="80" height="80"/>
+        </a>
+    </div>
+    <div class="media-body">
+        <strong><a href="{{ url('play_game', {slug: game.slug}) }}">{{ game.name }}</a></strong>
+
+        {% if user_settings.show_game_description %}
+            <span class="small" title="{{ game.description|striptags }}">{{ game.description|truncate(100)|striptags }}</span><br/>
+        {% endif %}
+
+        <span class="small">
+            {% include '@Games/game_stats.twig' %}
+        </span>
+    </div>
+</div>
