@@ -48,7 +48,7 @@ class CurlFileHandler extends FileHandlerBase
         }
 
         if ($filename === null) {
-            $filename = basename($remoteUrl);
+            $filename = strtok(basename($remoteUrl),'?');
         }
 
         $fullPath = $newPath = $destinationPath . '/' . $filename;
