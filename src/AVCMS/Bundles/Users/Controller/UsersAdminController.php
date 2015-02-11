@@ -52,6 +52,10 @@ class UsersAdminController extends AdminBaseController
             throw $this->createNotFoundException('User not found');
         }
 
+        if ($user->getRoleList() === 'ROLE_SUPER_ADMIN' && $this->activeUser()->getRoleList() !== 'ROLE_SUPER_ADMIN') {
+            throw new AccessDeniedException;
+        }
+
         $formBlueprint = new FormBlueprint();
         $formBlueprint->add('password1', 'password', ['label' => 'New Password']);
         $formBlueprint->add('password2', 'password', ['label' => 'Confirm Password']);
