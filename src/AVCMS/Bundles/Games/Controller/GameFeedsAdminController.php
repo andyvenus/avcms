@@ -158,7 +158,16 @@ class GameFeedsAdminController extends AdminBaseController
         $finder = $this->feedGames->find()
             ->setSearchFields(array('name'))
             ->setResultsPerPage(15)
-            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null, 'feed' => null, 'status' => 'pending', 'category' => null));
+            ->handleRequest($request, array(
+                'page' => 1,
+                'order' => 'newest',
+                'id' => null,
+                'search' => null,
+                'feed' => null,
+                'status' => 'pending',
+                'category' => null,
+                'filetype' => null
+            ));
 
         /* @var $items \AVCMS\Bundles\Games\Model\FeedGame[] */
         $items = $finder->get();

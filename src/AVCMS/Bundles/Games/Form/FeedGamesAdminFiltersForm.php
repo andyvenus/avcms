@@ -15,6 +15,16 @@ class FeedGamesAdminFiltersForm extends AdminFiltersForm
             'translate_choices' => false,
         ]);
 
+        $this->add('filetype', 'select', [
+            'choices' => [
+                'All' => 'All File Types',
+                'Flash' => 'Flash',
+                'HTML5' => 'HTML5',
+                'Unity' => 'Unity',
+                'Shockwave' => 'Shockwave'
+            ]
+        ]);
+
         $this->add('search', 'text', [
             'field_template' => '@admin/form_fields/search_field.twig'
         ]);

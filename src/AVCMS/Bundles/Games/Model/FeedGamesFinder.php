@@ -31,6 +31,15 @@ class FeedGamesFinder extends Finder
         return $this;
     }
 
+    public function fileType($filetype = null)
+    {
+        if ($filetype) {
+            $this->currentQuery->where('file_type', $filetype);
+        }
+
+        return $this;
+    }
+
     public function category($term)
     {
         if (!$term) {
