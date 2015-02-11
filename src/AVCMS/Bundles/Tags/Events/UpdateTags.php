@@ -75,6 +75,8 @@ class UpdateTags implements EventSubscriberInterface
         }
 
         if (isset($tags)) {
+            $tags = explode(',', $tags);
+
             $trimmedTags = [];
             foreach ($tags as $tag) {
                 $trimmedTags[] = trim($tag);
