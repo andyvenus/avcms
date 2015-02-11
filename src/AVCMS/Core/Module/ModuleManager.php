@@ -8,6 +8,7 @@
 namespace AVCMS\Core\Module;
 
 use AVCMS\Core\Module\Exception\ModuleNotFoundException;
+use AVCMS\Core\Module\Exception\SkipModuleException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
 use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
@@ -180,6 +181,9 @@ class ModuleManager
                         $content = $this->getModuleContent($moduleConfig, $positionId, $vars);
                     } catch (ModuleNotFoundException $e) {
                         $content = $e->getMessage();
+                    } catch (SkipModuleException $e) {
+                        unset($configs[$configId]);
+                        continue;
                     }
 
                     $moduleConfig->setContent($content);
