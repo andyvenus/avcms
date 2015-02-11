@@ -231,12 +231,11 @@ modules:
           featured: Featured
   liked_wallpapers:
     name: Liked Wallpapers
-    description: A list of a user's liked wallpapers
+    description: A list of a user's liked wallpapers. If a user is passed to the module position, it will show that user's likes. If shown elsewhere, it will show the current user's likes if they are logged in.
     controller: Wallpapers::WallpaperModulesController::likedWallpapersModule
-    cachable: true
+    cachable: false
     default_cache_time: 0
     accepted_template_types: [panel, list_panel, none]
-    type: user
     user_settings:
       limit:
         type: text

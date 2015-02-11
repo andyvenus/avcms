@@ -10,6 +10,7 @@ namespace AVCMS\Bundles\Wallpapers\Controller;
 use AVCMS\Bundles\Tags\Module\TagsModuleTrait;
 use AVCMS\Bundles\Users\Model\User;
 use AVCMS\Core\Controller\Controller;
+use AVCMS\Core\Module\Exception\SkipModuleException;
 use Symfony\Component\HttpFoundation\Response;
 
 class WallpaperModulesController extends Controller
@@ -60,8 +61,16 @@ class WallpaperModulesController extends Controller
         )));
     }
 
-    public function likedWallpapersModule($userSettings, User $user)
+    public function likedWallpapersModule($userSettings, User $user = null)
     {
+        if (!isset($user)) {
+            $user = $this->activeUser();
+
+            if (!$user->getId()) {
+                throw new SkipModuleException;
+            }
+        }
+
         $ratings = $this->model('LikeDislike:Ratings');
 
         $liked = $ratings->query()
