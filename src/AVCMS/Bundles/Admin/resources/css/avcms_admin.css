@@ -318,13 +318,16 @@ a {
 
   .fluid-browser .browser-finder-filters {
     max-width: 3000px;
-    overflow: auto; }
+    overflow: auto;
+    display: inherit; }
     .fluid-browser .browser-finder-filters .form-group {
       float: left;
       width: 300px;
       margin-right: 10px; }
       .fluid-browser .browser-finder-filters .form-group .select2-container {
-        margin-top: 3px; } }
+        margin-top: 3px; }
+  .fluid-browser .browser-finder-show-filters {
+    display: none; } }
 @media (max-width: 992px) {
   .nano {
     overflow: auto;

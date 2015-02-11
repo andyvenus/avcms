@@ -485,6 +485,7 @@ a {
     .browser-finder-filters {
       max-width: 3000px;
       overflow: auto;
+      display: inherit;
 
       .form-group {
         float: left;
@@ -495,6 +496,10 @@ a {
           margin-top: 3px;
         }
       }
+    }
+
+    .browser-finder-show-filters {
+      display: none;
     }
   }
 }
