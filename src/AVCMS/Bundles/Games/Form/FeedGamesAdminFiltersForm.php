@@ -17,7 +17,7 @@ class FeedGamesAdminFiltersForm extends AdminFiltersForm
 
         $this->add('filetype', 'select', [
             'choices' => [
-                'All' => 'All File Types',
+                '0' => 'All File Types',
                 'Flash' => 'Flash',
                 'HTML5' => 'HTML5',
                 'Unity' => 'Unity',
