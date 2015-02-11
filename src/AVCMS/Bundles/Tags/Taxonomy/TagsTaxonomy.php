@@ -78,28 +78,28 @@ class TagsTaxonomy implements TaxonomyInterface
         $onlyNewTags = $tags;
 
         /**
-         * @var $existing_tag \AVCMS\Bundles\Tags\Model\Tag
+         * @var $existingTag \AVCMS\Bundles\Tags\Model\Tag
          */
-        foreach ($existingTags as $existing_tag) {
-            if(($key = array_search($existing_tag->getName(), $onlyNewTags)) !== false) {
+        foreach ($existingTags as $existingTag) {
+            if(($key = array_search($existingTag->getName(), $onlyNewTags)) !== false) {
                 unset($onlyNewTags[$key]);
             }
         }
 
         $newTags = array();
 
-        foreach ($onlyNewTags as $new_tag) {
-            if (!in_array($new_tag, $existingTags)) {
+        foreach ($onlyNewTags as $newTag) {
+            if (!in_array($newTag, $existingTags)) {
                 $tagEntity = $this->tags->newEntity();
-                $tagEntity->setName($new_tag);
+                $tagEntity->setName($newTag);
 
                 $newTags[] = $tagEntity;
             }
         }
 
         $existingTagIds = array();
-        foreach($existingTags as $existing_tag) {
-            $existingTagIds[] = $existing_tag->getId();
+        foreach($existingTags as $existingTag) {
+            $existingTagIds[] = $existingTag->getId();
         }
 
         if ($newTags) {

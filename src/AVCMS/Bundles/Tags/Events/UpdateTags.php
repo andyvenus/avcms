@@ -75,8 +75,12 @@ class UpdateTags implements EventSubscriberInterface
         }
 
         if (isset($tags)) {
-            $tags = explode(',', $tags);
-            $this->taxonomy->update('tags', $event->getEntity()->getId(), $event->getModel()->getSingular(), $tags);
+            $trimmedTags = [];
+            foreach ($tags as $tag) {
+                $trimmedTags[] = trim($tag);
+            }
+
+            $this->taxonomy->update('tags', $event->getEntity()->getId(), $event->getModel()->getSingular(), $trimmedTags);
         }
 
     }
