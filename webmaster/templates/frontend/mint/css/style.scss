@@ -169,6 +169,9 @@ select[name=author] {
   margin-bottom: 8px;
 }
 
+
+// GAMES
+
 .box {
   margin-bottom: 15px;
 }
@@ -205,4 +208,8 @@ select[name=author] {
       color: darken($panel-header-color, 50);
     }
   }
+}
+
+.browse-games-details:first-child {
+  margin-top: 15px;
 }
