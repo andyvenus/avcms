@@ -22,21 +22,27 @@
         </div>
 
         {% for section_id, section in form.sections %}
-            <h4><a name="{{ section_id }}-section"></a>{{ section.label }}</h4>
-            {% for field in form.sectionFields(section_id) %}
-                {% if loop.index is odd %}
-                    <div class="row">
-                {% endif %}
-
-                <div class="col-sm-6 {% if field.type == 'checkbox' %}checkbox-row{% endif %}">
-                    {% if field.type == 'checkbox' %}<label>{{ field.options.label }}</label>{% endif %}
-                    {{ form_row(field) }}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><a name="{{ section_id }}-section"></a>{{ section.label }}</h4>
                 </div>
+                <div class="panel-body">
+                    {% for field in form.sectionFields(section_id) %}
+                        {% if loop.index is odd %}
+                            <div class="row">
+                        {% endif %}
 
-                {% if loop.index is even or loop.last %}
-                    </div>
-                {% endif %}
-            {% endfor %}
+                        <div class="col-sm-6 {% if field.type == 'checkbox' %}checkbox-row{% endif %}">
+                            {% if field.type == 'checkbox' %}<label>{{ field.options.label }}</label>{% endif %}
+                            {{ form_row(field) }}
+                        </div>
+
+                        {% if loop.index is even or loop.last %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
         {% endfor %}
 
 
