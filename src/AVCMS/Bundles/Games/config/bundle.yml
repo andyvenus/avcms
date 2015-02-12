@@ -185,12 +185,21 @@ modules:
   games:
     name: Games
     description: A customisable list of games
-    controller: Games::GameModulesController::gamesListModule
+    controller: Games::GameModulesController::gamesModule
     cachable: true
     cache_bust_model: Games
     default_cache_time: 3600
     accepted_template_types: [content, panel, list_panel, none]
     user_settings:
+      filter:
+        type: select
+        label: Filter
+        help: If "User's Likes" is selected, the module will show the likes of a user if one is passed to the module position (like on a users profile). Otherwise it will show the active user's likes.
+        default: none
+        choices:
+          none: None
+          featured: Featured
+          likes: User's Likes
       order:
         type: select
         label: Order
@@ -235,61 +244,6 @@ modules:
         type: select
         label: Number of columns (thumbnail/details layout)
         default: 3
-        choices:
-          1: 1
-          2: 2
-          3: 3
-          4: 4
-      filter:
-        type: select
-        label: Filter
-        default: none
-        choices:
-          none: None
-          featured: Featured
-  liked_games:
-    name: Liked Games
-    description: A list of a user's liked games. If a user is passed to the module position, it will show that user's likes. If shown elsewhere, it will show the current user's likes if they are logged in.
-    controller: Games::GameModulesController::likedGamesModule
-    cachable: false
-    default_cache_time: 0
-    accepted_template_types: [panel, list_panel, none]
-    user_settings:
-      limit:
-        type: text
-        label: Number of games to display
-        default: 5
-      show_game_description:
-        type: checkbox
-        label: Show Description
-        default: 1
-      show_game_date:
-        type: checkbox
-        label: Show Date
-        default: 0
-      show_game_hits:
-        type: checkbox
-        label: Show Hits
-        default: 1
-      show_game_ratings:
-        type: checkbox
-        label: Show Ratings
-        default: 1
-      show_game_category:
-        type: checkbox
-        label: Show Category
-        default: 1
-      layout:
-        type: select
-        label: Layout
-        choices:
-          list: List
-          thumbnails: Thumbnails
-        default: list
-      columns:
-        type: select
-        label: Number of columns (thumbnail layout)
-        default: 1
         choices:
           1: 1
           2: 2

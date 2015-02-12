@@ -27,7 +27,7 @@ class GameModulesController extends Controller
         $this->games = $this->model('Games');
     }
 
-    public function gamesListModule($userSettings)
+    public function gamesModule($userSettings, User $user = null)
     {
         $moreButton = null;
 
@@ -36,13 +36,26 @@ class GameModulesController extends Controller
             ->order($userSettings['order'])
             ->published();
 
-        if ($userSettings['show_game_category']) {
-            $query->join($this->model('GameCategories'), ['id', 'name', 'slug']);
-        }
-
         if ($userSettings['filter'] === 'featured') {
             $query->featured();
             $moreButton = ['url' => $this->generateUrl('featured_games'), 'label' => 'All Featured Games'];
+        }
+        elseif ($userSettings['filter'] === 'likes') {
+            if (!isset($user)) {
+                $user = $this->activeUser();
+
+                if (!$user->getId()) {
+                    throw new SkipModuleException;
+                }
+            }
+
+            $ratings = $this->model('LikeDislike:Ratings');
+            $ids = $ratings->getLikedIds($user->getId(), 'game', $userSettings['limit']);
+            $query = $this->games->find()->ids($ids, 'games.id');
+        }
+
+        if ($userSettings['show_game_category']) {
+            $query->join($this->model('GameCategories'), ['name', 'slug']);
         }
 
         $games = $query->get();
@@ -67,31 +80,15 @@ class GameModulesController extends Controller
 
         $ratings = $this->model('LikeDislike:Ratings');
 
-        $liked = $ratings->query()
-            ->where('user_id', $user->getId())
-            ->where('content_type', 'game')
-            ->where('rating', 1)
-            ->select(['content_id'])
-            ->limit($userSettings['limit'])
-            ->get();
+        $ids = $ratings->getLikedIds($user->getId(), 'game', $userSettings['limit']);
 
-        $ids = [];
-        foreach ($liked as $like) {
-            $ids[] = $like->getContentId();
+        $query = $this->games->find()->ids($ids, 'games.id');
+
+        if ($userSettings['show_game_category']) {
+            $query->join($this->model('GameCategories'), ['name', 'slug']);
         }
 
-        if (!empty($ids)) {
-            $query = $this->games->query()->whereIn('games.id', $ids);
-
-            if ($userSettings['show_game_category']) {
-                $query->modelJoin($this->model('GameCategories'), ['name', 'slug']);
-            }
-
-            $games = $query->get();
-        }
-        else {
-            $games = [];
-        }
+        $games = $query->get();
 
         return new Response($this->render($this->getModuleTemplate($userSettings['layout']), array(
             'games' => $games,
