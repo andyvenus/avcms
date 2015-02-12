@@ -27,85 +27,51 @@ class WallpaperModulesController extends Controller
         $this->wallpapers = $this->model('Wallpapers');
     }
 
-    public function wallpapersListModule($module, $userSettings)
+    public function wallpapersModule($userSettings, User $user = null)
     {
         $moreButton = null;
 
         $query = $this->wallpapers->find()
             ->limit($userSettings['limit'])
             ->order($userSettings['order'])
-            ->published()
-            ->join($this->model('WallpaperCategories'), ['id', 'name', 'slug']);
+            ->published();
 
         if ($userSettings['filter'] === 'featured') {
             $query->featured();
             $moreButton = ['url' => $this->generateUrl('featured_wallpapers'), 'label' => 'All Featured Wallpapers'];
         }
+        elseif ($userSettings['filter'] === 'likes') {
+            if (!isset($user)) {
+                $user = $this->activeUser();
+
+                if (!$user->getId()) {
+                    throw new SkipModuleException;
+                }
+            }
+
+            $ratings = $this->model('LikeDislike:Ratings');
+            $ids = $ratings->getLikedIds($user->getId(), 'wallpaper', $userSettings['limit']);
+            $query = $this->wallpapers->find()->ids($ids, 'wallpapers.id');
+        }
+
+        if ($userSettings['show_category']) {
+            $query->join($this->model('WallpaperCategories'), ['name', 'slug']);
+        }
 
         $wallpapers = $query->get();
 
-        $columns = ($userSettings['columns'] ? $userSettings['columns'] : 1);
-
-        if ($userSettings['layout'] === 'thumbnails') {
-            $template = 'wallpapers_thumbnail_module.twig';
+        if ($userSettings['layout'] === 'list') {
+            $template = 'wallpapers_list_module.twig';
         }
         else {
-            $template = 'wallpapers_list_module.twig';
+            $template = 'wallpapers_thumbnail_module.twig';
         }
 
         return new Response($this->render('@Wallpapers/module/'.$template, array(
             'wallpapers' => $wallpapers,
             'user_settings' => $userSettings,
-            'columns' => $columns,
+            'columns' => $userSettings['columns'],
             'more_button' => $moreButton
-        )));
-    }
-
-    public function likedWallpapersModule($userSettings, User $user = null)
-    {
-        if (!isset($user)) {
-            $user = $this->activeUser();
-
-            if (!$user->getId()) {
-                throw new SkipModuleException;
-            }
-        }
-
-        $ratings = $this->model('LikeDislike:Ratings');
-
-        $liked = $ratings->query()
-            ->where('user_id', $user->getId())
-            ->where('content_type', 'wallpaper')
-            ->where('rating', 1)
-            ->select(['content_id'])
-            ->limit($userSettings['limit'])
-        ->get();
-
-        $ids = [];
-        foreach ($liked as $like) {
-            $ids[] = $like->getContentId();
-        }
-
-        if (!empty($ids)) {
-            $wallpapers = $this->wallpapers->query()->whereIn('id', $ids)->get();
-        }
-        else {
-            $wallpapers = [];
-        }
-
-        $columns = ($userSettings['columns'] ? $userSettings['columns'] : 1);
-
-        if ($userSettings['layout'] === 'thumbnails') {
-            $template = 'wallpapers_thumbnail_module.twig';
-        }
-        else {
-            $template = 'wallpapers_list_module.twig';
-        }
-
-        return new Response($this->render('@Wallpapers/module/'.$template, array(
-            'wallpapers' => $wallpapers,
-            'user_settings' => $userSettings,
-            'columns' => $columns,
         )));
     }
 

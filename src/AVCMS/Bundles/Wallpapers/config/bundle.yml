@@ -171,12 +171,36 @@ modules:
   wallpapers:
     name: Wallpapers
     description: A sortable list of wallpapers
-    controller: Wallpapers::WallpaperModulesController::wallpapersListModule
+    controller: Wallpapers::WallpaperModulesController::wallpapersModule
     cachable: true
     cache_bust_model: Wallpapers
     default_cache_time: 3600
     accepted_template_types: [content, panel, list_panel, none]
     user_settings:
+      filter:
+        type: select
+        label: Filter
+        default: none
+        choices:
+          none: None
+          featured: Featured
+          likes: User's Liked Wallpapers
+      layout:
+        type: select
+        label: Layout
+        choices:
+          list: List
+          thumbnails: Thumbnails
+        default: list
+      columns:
+        type: select
+        label: Number of columns (thumbnail layout)
+        default: 3
+        choices:
+          1: 1
+          2: 2
+          3: 3
+          4: 4
       order:
         type: select
         label: Order
@@ -206,69 +230,6 @@ modules:
         type: checkbox
         label: Show Category
         default: 1
-      layout:
-        type: select
-        label: Layout
-        choices:
-          list: List
-          thumbnails: Thumbnails
-        default: list
-      columns:
-        type: select
-        label: Number of columns (thumbnail layout)
-        default: 3
-        choices:
-          1: 1
-          2: 2
-          3: 3
-          4: 4
-      filter:
-        type: select
-        label: Filter
-        default: none
-        choices:
-          none: None
-          featured: Featured
-  liked_wallpapers:
-    name: Liked Wallpapers
-    description: A list of a user's liked wallpapers. If a user is passed to the module position, it will show that user's likes. If shown elsewhere, it will show the current user's likes if they are logged in.
-    controller: Wallpapers::WallpaperModulesController::likedWallpapersModule
-    cachable: false
-    default_cache_time: 0
-    accepted_template_types: [panel, list_panel, none]
-    user_settings:
-      limit:
-        type: text
-        label: Number of wallpapers to display
-        default: 5
-      show_date:
-        type: checkbox
-        label: Show Date
-        default: 0
-      show_hits:
-        type: checkbox
-        label: Show Hits
-        default: 1
-      show_downloads:
-        type: checkbox
-        label: Show Downloads
-        default: 1
-      layout:
-        type: select
-        label: Layout
-        choices:
-          list: List
-          thumbnails: Thumbnails
-        default: list
-      columns:
-        type: select
-        label: Number of columns (thumbnail layout)
-        default: 1
-        choices:
-          1: 1
-          2: 2
-          3: 3
-          4: 4
   wallpaper_tags:
       name: Wallpaper Tag Cloud
       description: A tag cloud for wallpapers
