@@ -155,7 +155,7 @@ a {
   text-align: center; }
   .browser-finder-show-filters a {
     display: block;
-    padding: 4px;
+    padding: 8px 0px 9px;
     border: 1px solid #e3e3e3;
     text-decoration: none; }
   .browser-finder-show-filters a:hover {
@@ -316,18 +316,21 @@ a {
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch; }
 
-  .fluid-browser .browser-finder-filters {
+  .browser .finder-has-focus .browser-finder-filters {
     max-width: 3000px;
-    overflow: auto;
-    display: inherit; }
-    .fluid-browser .browser-finder-filters .form-group {
+    overflow: auto; }
+    .browser .finder-has-focus .browser-finder-filters .form-group {
       float: left;
-      width: 300px;
-      margin-right: 10px; }
-      .fluid-browser .browser-finder-filters .form-group .select2-container {
+      margin-right: 10px;
+      width: 100%; }
+      .browser .finder-has-focus .browser-finder-filters .form-group .select2-container {
         margin-top: 3px; }
-  .fluid-browser .browser-finder-show-filters {
-    display: none; } }
+  .browser .finder-has-focus .browser-finder-filters {
+    display: inherit; }
+  .browser .finder-has-focus .browser-finder-show-filters {
+    display: none; }
+  .browser .finder-has-focus .browser-finder-filters .form-group {
+    width: 200px; } }
 @media (max-width: 992px) {
   .nano {
     overflow: auto;

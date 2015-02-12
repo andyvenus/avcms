@@ -108,7 +108,6 @@ avcms.browser = {
             }
         }
         else {
-
             if (!editor.hasClass('editor-has-focus')) {
                 finder.removeClass('finder-has-focus');
                 editor.addClass('editor-has-focus');

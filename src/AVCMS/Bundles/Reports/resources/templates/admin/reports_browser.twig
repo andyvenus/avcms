@@ -4,8 +4,6 @@
     {% trans %}Reports{% endtrans %}
 {% endblock %}
 
-{% block browser_class %}browser fluid-browser{% endblock %}
-
 {% block finder %}
     <div data-url="{{ url('reports_finder') }}">
         {{ render(path('reports_finder')) }}

@@ -237,7 +237,7 @@ a {
 
   a {
     display: block;
-    padding: 4px;
+    padding: 8px 0px 9px;
     border: 1px solid #e3e3e3;
     text-decoration: none;
   }
@@ -481,16 +481,15 @@ a {
     -webkit-overflow-scrolling: touch;
   }
 
-  .fluid-browser {
-    .browser-finder-filters {
+  .browser {
+    .finder-has-focus .browser-finder-filters {
       max-width: 3000px;
       overflow: auto;
-      display: inherit;
 
       .form-group {
         float: left;
-        width: 300px;
         margin-right: 10px;
+        width: 100%;
 
         .select2-container {
           margin-top: 3px;
@@ -498,8 +497,16 @@ a {
       }
     }
 
-    .browser-finder-show-filters {
+    .finder-has-focus .browser-finder-filters {
+      display: inherit;
+    }
+
+    .finder-has-focus .browser-finder-show-filters {
       display: none;
+    }
+
+    .finder-has-focus .browser-finder-filters .form-group {
+      width: 200px;
     }
   }
 }
