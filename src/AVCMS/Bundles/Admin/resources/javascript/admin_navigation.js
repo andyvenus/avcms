@@ -107,6 +107,8 @@ avcms.nav = {
                 avcms.admin.mainLoaderOff();
                 History.back();
             });
+        } else {
+            avcms.nav.onPageModified();
         }
     },
 
