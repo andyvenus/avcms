@@ -208,6 +208,21 @@ class Finder
         return $this;
     }
 
+    public function ids($ids, $column = 'id')
+    {
+        if ($ids !== null) {
+            // If there's no ids, we don't want to get anything so random value
+            if (empty($ids)) {
+                $this->currentQuery->where($column, null);
+            }
+            else {
+                $this->currentQuery->where($column, 'IN', $ids);
+            }
+        }
+
+        return $this;
+    }
+
     public function setSearchFields(array $fields)
     {
         $this->searchFields = $fields;
