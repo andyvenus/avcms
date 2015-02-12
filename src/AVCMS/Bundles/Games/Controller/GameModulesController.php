@@ -68,35 +68,6 @@ class GameModulesController extends Controller
         )));
     }
 
-    public function likedGamesModule($userSettings, User $user = null)
-    {
-        if (!isset($user)) {
-            $user = $this->activeUser();
-
-            if (!$user->getId()) {
-                throw new SkipModuleException;
-            }
-        }
-
-        $ratings = $this->model('LikeDislike:Ratings');
-
-        $ids = $ratings->getLikedIds($user->getId(), 'game', $userSettings['limit']);
-
-        $query = $this->games->find()->ids($ids, 'games.id');
-
-        if ($userSettings['show_game_category']) {
-            $query->join($this->model('GameCategories'), ['name', 'slug']);
-        }
-
-        $games = $query->get();
-
-        return new Response($this->render($this->getModuleTemplate($userSettings['layout']), array(
-            'games' => $games,
-            'user_settings' => $userSettings,
-            'columns' => $userSettings['columns'],
-        )));
-    }
-
     protected function getModuleTemplate($layout)
     {
         if ($layout === 'list') {
