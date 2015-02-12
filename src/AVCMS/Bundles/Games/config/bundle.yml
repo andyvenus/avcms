@@ -200,6 +200,23 @@ modules:
           none: None
           featured: Featured
           likes: User's Likes
+      layout:
+        type: select
+        label: Layout
+        choices:
+          list: List
+          thumbnails: Thumbnails
+          details: Details
+        default: list
+      columns:
+        type: select
+        label: Number of columns (thumbnail/details layout)
+        default: 3
+        choices:
+          1: 1
+          2: 2
+          3: 3
+          4: 4
       order:
         type: select
         label: Order
@@ -232,23 +249,6 @@ modules:
         type: checkbox
         label: Show Category
         default: 1
-      layout:
-        type: select
-        label: Layout
-        choices:
-          list: List
-          thumbnails: Thumbnails
-          details: Details
-        default: list
-      columns:
-        type: select
-        label: Number of columns (thumbnail/details layout)
-        default: 3
-        choices:
-          1: 1
-          2: 2
-          3: 3
-          4: 4
   game_tags:
       name: Game Tag Cloud
       description: A tag cloud for games
