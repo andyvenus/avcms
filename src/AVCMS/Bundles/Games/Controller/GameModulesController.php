@@ -112,13 +112,6 @@ class GameModulesController extends Controller
         return '@Games/module/'.$template;
     }
 
-    public function resolutionsModule()
-    {
-        $resCategories = $this->container->get('game.resolutions_manager')->getAllResolutions();
-
-        return new Response($this->render('@Games/module/resolutions_module.twig', ['resolution_categories' => $resCategories]));
-    }
-
     public function tagsModule($userSettings)
     {
         return $this->getTagsModule($userSettings, 'game', 'browse_games', 'ids');
