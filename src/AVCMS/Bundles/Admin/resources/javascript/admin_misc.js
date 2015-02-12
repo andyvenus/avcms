@@ -34,7 +34,7 @@ $(document).ready(function() {
             defaultDate: new Date()
         });
 
-
+        $('[data-toggle="tooltip"]').tooltip();
 
         if (avcms.general.isMobile() === false) {
             $("select:not(.no_select2)").select2({
