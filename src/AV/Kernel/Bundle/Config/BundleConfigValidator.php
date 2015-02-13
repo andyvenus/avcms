@@ -10,24 +10,27 @@ namespace AV\Kernel\Bundle\Config;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\Yaml\Yaml;
 
 class BundleConfigValidator implements ConfigurationInterface
 {
     protected $bundleDirs;
 
-    public function getConfigTreeBuilder(TreeBuilder $treeBuilder = null, $rootNode = null)
+    protected $treeBuilder;
+
+    public function getConfigTreeBuilder()
     {
-        if ($rootNode === null) {
-            $treeBuilder = new TreeBuilder();
-            $rootNode = $treeBuilder->root('bundle_config');
+        if (isset($this->treeBuilder)) {
+            return $this->treeBuilder;
         }
+
+        $treeBuilder = new TreeBuilder();
+        $rootNode = $treeBuilder->root('bundle_config');
 
         $this->getDefaultConfigValidation($rootNode);
 
         $this->getExtendedConfigValidation($rootNode);
 
-        return $treeBuilder;
+        return $this->treeBuilder = $treeBuilder;
     }
 
     public function setBundleDirs(array $dirs)
@@ -41,25 +44,20 @@ class BundleConfigValidator implements ConfigurationInterface
             return;
         }
 
-        foreach ($this->bundleDirs as $bundlesDir) {
+        foreach ($this->bundleDirs as $bundlesNameSpace => $bundlesDir) {
             $dirItr = new \DirectoryIterator($bundlesDir);
             foreach ($dirItr as $dir) {
                 if ($dir->isDot()) {
                     continue;
                 }
-                if (file_exists($dir->getRealPath().'/config/bundle.yml')) {
-                    $bundleConfig = Yaml::parse(file_get_contents($dir->getRealPath().'/config/bundle.yml'));
 
-                    if (!isset($bundleConfig['namespace'])) {
-                        throw new \Exception(sprintf('No "namespace" value found in config for bundle %s', $dir->getFilename()));
-                    }
+                $namespace = $bundlesNameSpace . '\\' . $dir->getBasename();
 
-                    $class = $bundleConfig['namespace'].'\ConfigValidation\BundleConfigValidation';
+                $class = $namespace.'\ConfigValidation\BundleConfigValidation';
 
-                    if (class_exists($class)) {
-                        $validation = new $class();
-                        $validation->getValidation($rootNode);
-                    }
+                if (class_exists($class)) {
+                    $validation = new $class();
+                    $validation->getValidation($rootNode);
                 }
             }
         }

@@ -5,8 +5,8 @@ info:
   url: http://www.avscripts.net
 
 bundle_dirs:
-  - src/AV/Bundles
-  - src/AVCMS/Bundles
-  - src/AVCMS/BundlesDev
+  AV\Bundles: src/AV/Bundles
+  AVCMS\Bundles: src/AVCMS/Bundles
+  AVCMS\BundlesDev: src/AVCMS/BundlesDev
 
 default_content_installer: WallpaperDefaultContentInstaller
