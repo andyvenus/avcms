@@ -29,6 +29,7 @@ class GamesController extends Controller
     public function playGameAction($slug)
     {
         $game = $this->games->find()
+            ->published()
             ->slug($slug)
             ->join($this->gameCategories, ['name', 'slug'])
             ->joinTaxonomy('tags')
