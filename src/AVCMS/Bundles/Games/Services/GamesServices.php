@@ -28,9 +28,19 @@ class GamesServices implements ServicesInterface
             ->addTag('model')
         ;
 
+        $container->register('games.categories_model', 'AVCMS\Bundles\Games\Model\GameCategories')
+            ->addTag('model')
+        ;
+
         $container->register('sitemap.games', 'AVCMS\Core\Sitemaps\ContentSitemap')
             ->setArguments([new Reference('games.model'), new Reference('router'), 'play_game'])
             ->addTag('sitemap')
+        ;
+
+        $container->register('menu_types.game_categories', 'AVCMS\Bundles\Categories\MenuItemType\CategoriesMenuItemType')
+            ->setArguments([new Reference('games.categories_model'), new Reference('router'), 'game_category'])
+            ->addMethodCall('setName', ['Game Categories'])
+            ->addTag('menu.item_type', ['id' => 'game_categories'])
         ;
     }
 }
