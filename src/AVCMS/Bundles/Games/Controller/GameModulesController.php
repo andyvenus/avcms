@@ -83,6 +83,6 @@ class GameModulesController extends Controller
 
     public function tagsModule($userSettings)
     {
-        return $this->getTagsModule($userSettings, 'game', 'browse_games', 'ids');
+        return $this->getTagsModule($userSettings, 'game', 'browse_games', 'tags');
     }
 }
