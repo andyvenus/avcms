@@ -9,8 +9,11 @@ namespace AVCMS\Bundles\Games\Controller;
 
 use AVCMS\Bundles\Games\Form\GameFrontendFiltersForm;
 use AVCMS\Core\Controller\Controller;
+use AVCMS\Core\Rss\RssFeed;
+use AVCMS\Core\Rss\RssItem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class GamesController extends Controller
 {
@@ -63,7 +66,12 @@ class GamesController extends Controller
         if ($request->get('category') !== null) {
             $category = $this->gameCategories->getFullCategory($request->get('category'));
 
-            $query->category($category->getId());
+            if ($category) {
+                $query->category($category->getId());
+            }
+            else {
+                throw $this->createNotFoundException('Category Not Found');
+            }
         }
 
         if ($pageType === 'featured') {
@@ -89,5 +97,29 @@ class GamesController extends Controller
             'finder_request' => $finder->getRequestFilters(),
             'user_settings' => $this->get('settings_manager')
         )));
+    }
+
+    public function gamesRssFeedAction()
+    {
+        /**
+         * @var \AVCMS\Bundles\Games\Model\Game[] $games
+         */
+        $games = $this->games->find()->published()->limit(30)->order('publish-date-newest')->get();
+
+        $feed = new RssFeed(
+            $this->trans('Games'),
+            $this->generateUrl('browse_games', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            $this->trans('The latest games')
+        );
+
+        foreach ($games as $game) {
+            $url = $this->generateUrl('play_game', ['slug' => $game->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL);
+            $date = new \DateTime();
+            $date->setTimestamp($game->getPublishDate());
+
+            $feed->addItem(new RssItem($game->getName(), $url, $date, $game->getDescription()));
+        }
+
+        return new Response($feed->build(), 200, ['Content-Type' => 'application/xml']);
     }
 }
