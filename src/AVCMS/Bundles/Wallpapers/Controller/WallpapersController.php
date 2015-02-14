@@ -112,7 +112,7 @@ class WallpapersController extends Controller
 
     public function wallpaperPreviewAction(Request $request, $slug)
     {
-        $wallpaper = $this->wallpapers->findOne($slug)->first();
+        $wallpaper = $this->wallpapers->find()->slug($slug)->published()->first();
 
         list($width, $height) = explode('x', $request->get('resolution'));
 
