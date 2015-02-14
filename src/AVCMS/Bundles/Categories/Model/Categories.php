@@ -11,6 +11,8 @@ use AV\Model\Model;
 
 abstract class Categories extends Model
 {
+    protected $textIdentifierColumn = 'slug';
+
     public function getEntity()
     {
         return 'AVCMS\Bundles\Categories\Model\Category';
