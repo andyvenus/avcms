@@ -23,5 +23,14 @@ class GamesServices implements ServicesInterface
             ->setArguments([new Reference('game_embeds.model'), new Reference('site_url'), '%games_dir%', '%game_thumbnails_dir%'])
             ->addTag('twig.extension')
         ;
+
+        $container->register('games.model', 'AVCMS\Bundles\Games\Model\Games')
+            ->addTag('model')
+        ;
+
+        $container->register('sitemap.games', 'AVCMS\Core\Sitemaps\ContentSitemap')
+            ->setArguments([new Reference('games.model'), new Reference('router'), 'play_game'])
+            ->addTag('sitemap')
+        ;
     }
 }

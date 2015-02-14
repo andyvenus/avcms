@@ -2,10 +2,10 @@
 
 namespace AVCMS\Bundles\Wallpapers\Model;
 
-use AV\Model\Entity;
 use AVCMS\Bundles\LikeDislike\RatingsManager\RateInterface;
+use AVCMS\Core\Model\ContentEntity;
 
-class Wallpaper extends Entity implements RateInterface
+class Wallpaper extends ContentEntity implements RateInterface
 {
     public function setCategoryId($value)
     {
@@ -37,16 +37,6 @@ class Wallpaper extends Entity implements RateInterface
         return $this->get('comments');
     }
 
-    public function setCreatorId($value)
-    {
-        $this->set("creator_id", $value);
-    }
-
-    public function getCreatorId()
-    {
-        return $this->get("creator_id");
-    }
-
     public function getCropPosition()
     {
         return $this->get("crop_position");
@@ -67,26 +57,6 @@ class Wallpaper extends Entity implements RateInterface
         return $this->get("resize_type");
     }
 
-    public function setDateAdded($value)
-    {
-        $this->set("date_added", $value);
-    }
-
-    public function getDateAdded()
-    {
-        return $this->get("date_added");
-    }
-
-    public function getDateEdited()
-    {
-        return $this->get("date_edited");
-    }
-
-    public function setDateEdited($value)
-    {
-        $this->set("date_edited", $value);
-    }
-
     public function setDescription($value)
     {
         $this->set("description", $value);
@@ -95,16 +65,6 @@ class Wallpaper extends Entity implements RateInterface
     public function getDescription()
     {
         return $this->get("description");
-    }
-
-    public function getEditorId()
-    {
-        return $this->get("editor_id");
-    }
-
-    public function setEditorId($value)
-    {
-        $this->set("editor_id", $value);
     }
 
     public function setFeatured($value)
@@ -137,16 +97,6 @@ class Wallpaper extends Entity implements RateInterface
         $this->set("hits", $value);
     }
 
-    public function getId()
-    {
-        return $this->get("id");
-    }
-
-    public function setId($value)
-    {
-        $this->set("id", $value);
-    }
-
     public function getName()
     {
         return $this->get("name");
@@ -175,36 +125,6 @@ class Wallpaper extends Entity implements RateInterface
     public function setOriginalHeight($height)
     {
         $this->set('original_height', $height);
-    }
-
-    public function setPublishDate($value)
-    {
-        $this->set("publish_date", $value);
-    }
-
-    public function getPublishDate()
-    {
-        return $this->get("publish_date");
-    }
-
-    public function getPublished()
-    {
-        return $this->get("published");
-    }
-
-    public function setPublished($value)
-    {
-        $this->set("published", $value);
-    }
-
-    public function getSlug()
-    {
-        return $this->get("slug");
-    }
-
-    public function setSlug($value)
-    {
-        $this->set("slug", $value);
     }
 
     public function getSubmitterId()

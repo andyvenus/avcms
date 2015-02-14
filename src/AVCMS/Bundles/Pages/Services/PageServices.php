@@ -24,8 +24,8 @@ class PageServices implements ServicesInterface
             ->addTag('menu.item_type', ['id' => 'page'])
         ;
 
-        $container->register('sitemap.pages', 'AVCMS\Bundles\Pages\Sitemap\PagesSitemap')
-            ->setArguments([new Reference('pages.model'), new Reference('router')])
+        $container->register('sitemap.pages', 'AVCMS\Core\Sitemaps\ContentSitemap')
+            ->setArguments([new Reference('pages.model'), new Reference('router'), 'page'])
             ->addTag('sitemap')
         ;
     }

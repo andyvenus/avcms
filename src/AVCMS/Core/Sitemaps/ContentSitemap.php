@@ -1,37 +1,38 @@
 <?php
 /**
  * User: Andy
- * Date: 23/01/15
- * Time: 15:58
+ * Date: 14/02/15
+ * Time: 11:47
  */
 
-namespace AVCMS\Bundles\Blog\Sitemap;
+namespace AVCMS\Core\Sitemaps;
 
-use AVCMS\Bundles\Blog\Model\BlogPosts;
-use AVCMS\Core\Sitemaps\SitemapInterface;
-use AVCMS\Core\Sitemaps\SitemapLink;
+use AVCMS\Core\Model\ContentModel;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class BlogSitemap implements SitemapInterface
+class ContentSitemap implements SitemapInterface
 {
-    private $blogPosts;
+    protected $model;
 
-    private $urlGenerator;
+    protected $urlGenerator;
 
-    public function __construct(BlogPosts $blogPosts, UrlGeneratorInterface $urlGenerator)
+    protected $routeName;
+
+    public function __construct(ContentModel $model, UrlGeneratorInterface $urlGenerator, $routeName)
     {
-        $this->blogPosts = $blogPosts;
+        $this->model = $model;
         $this->urlGenerator = $urlGenerator;
+        $this->routeName = $routeName;
     }
 
     public function getId()
     {
-        return 'blog-posts';
+        return $this->model->getTable();
     }
 
     public function requiresUpdate($lastRunTime)
     {
-        $changed = $this->blogPosts->query()
+        $changed = $this->model->query()
             ->where('date_added', '>', $lastRunTime)
             ->orWhere('date_edited', '>', $lastRunTime)
             ->orWhere(function($q) use ($lastRunTime) {
@@ -47,9 +48,9 @@ class BlogSitemap implements SitemapInterface
     public function getSitemapLinks($page)
     {
         /**
-         * @var \AVCMS\Bundles\Blog\Model\BlogPost[] $blogPosts
+         * @var \AVCMS\Core\Model\ContentEntity[] $items
          */
-        $finder = $this->blogPosts->find()
+        $finder = $this->model->find()
             ->setResultsPerPage(self::LINKS_PER_PAGE)
             ->page($page)
             ->published()
@@ -57,15 +58,15 @@ class BlogSitemap implements SitemapInterface
 
         $finder->getQuery()->select(['date_added', 'date_edited', 'slug']);
 
-        $blogPosts = $finder->get();
+        $items = $finder->get();
 
         $links = [];
 
-        foreach ($blogPosts as $post) {
+        foreach ($items as $item) {
             try {
-                $url = $this->urlGenerator->generate('blog_post', ['slug' => $post->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL);
+                $url = $this->urlGenerator->generate($this->routeName, ['slug' => $item->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL);
 
-                $timestamp = ($post->getDateEdited() ? $post->getDateEdited() : $post->getDateAdded());
+                $timestamp = ($item->getDateEdited() ? $item->getDateEdited() : $item->getDateAdded());
                 $dateModified = new \DateTime();
                 $dateModified->setTimestamp($timestamp);
             }
@@ -75,8 +76,6 @@ class BlogSitemap implements SitemapInterface
 
             $links[] = new SitemapLink($url, $dateModified);
         }
-
-        unset($blogPosts);
 
         return $links;
     }

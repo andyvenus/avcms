@@ -2,9 +2,9 @@
 
 namespace AVCMS\Bundles\Pages\Model;
 
-use AV\Model\Model;
+use AVCMS\Core\Model\ContentModel;
 
-class Pages extends Model
+class Pages extends ContentModel
 {
     protected $textIdentifierColumn = 'slug';
 

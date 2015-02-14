@@ -19,8 +19,8 @@ class BlogServices implements ServicesInterface
             ->addTag('model')
         ;
 
-        $container->register('sitemap.blog_posts', 'AVCMS\Bundles\Blog\Sitemap\BlogSitemap')
-            ->setArguments([new Reference('blog.posts_model'), new Reference('router')])
+        $container->register('sitemap.blog_posts', 'AVCMS\Core\Sitemaps\ContentSitemap')
+            ->setArguments([new Reference('blog.posts_model'), new Reference('router'), 'blog_post'])
             ->addTag('sitemap')
         ;
     }
