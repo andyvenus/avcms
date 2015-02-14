@@ -7,6 +7,8 @@
         {% trans with {tags: finder_request.tags|replace({'|': ', '})} %}Games tagged with: {tags}{% endtrans %}
     {% elseif page_type == 'featured' %}
         {% trans %}Featured Games{% endtrans %}
+    {% elseif page_type == 'likes' %}
+        {% trans with {username: likes_user.username} %}Games liked by {username}{% endtrans %}
     {% else %}
         {% trans %}Browse Games{% endtrans %}
     {% endif %}

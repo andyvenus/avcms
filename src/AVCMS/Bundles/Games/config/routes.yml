@@ -18,6 +18,10 @@ featured_games:
   path: /games/featured
   defaults: { _controller: Games::GamesController::browseGamesAction, pageType: featured }
 
+liked_games:
+  path: /games/likes/{likes_user}
+  defaults: { _controller: Games::GamesController::browseGamesAction, pageType: likes, likes_user: null }
+
 games_rss_feed:
   path: /games/rss.xml
   defaults: { _controller: Games::GamesController::gamesRssFeedAction }

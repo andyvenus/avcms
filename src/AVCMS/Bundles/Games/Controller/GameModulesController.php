@@ -52,6 +52,7 @@ class GameModulesController extends Controller
             $ratings = $this->model('LikeDislike:Ratings');
             $ids = $ratings->getLikedIds($user->getId(), 'game', $userSettings['limit']);
             $query = $this->games->find()->ids($ids, 'games.id');
+            $moreButton = ['url' => $this->generateUrl('liked_games', ['likes_user' => $user->getSlug()]), 'label' => 'All Liked Games'];
         }
 
         if ($userSettings['show_game_category']) {

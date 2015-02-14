@@ -14,6 +14,7 @@ use AVCMS\Core\Rss\RssItem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class GamesController extends Controller
 {
@@ -74,6 +75,27 @@ class GamesController extends Controller
             }
         }
 
+        if ($pageType == 'likes') {
+            if ($request->get('likes_user') === null) {
+                $user = $this->activeUser();
+
+                if (!$user->getId()) {
+                    throw new AccessDeniedException('You must be logged in to view your liked games');
+                }
+            }
+            else {
+                $user = $this->model('Users')->findOne($request->get('likes_user'))->first();
+
+                if (!$user) {
+                    throw $this->createNotFoundException();
+                }
+            }
+
+            $ratings = $this->model('LikeDislike:Ratings');
+            $ids = $ratings->getLikedIds($user->getId(), 'game', $this->setting('browse_games_per_page'));
+            $query = $query->ids($ids, 'games.id');
+        }
+
         if ($pageType === 'featured') {
             $query->featured();
         }
@@ -95,7 +117,8 @@ class GamesController extends Controller
             'category' => $category,
             'filters_form' => $filtersForm->createView(),
             'finder_request' => $finder->getRequestFilters(),
-            'user_settings' => $this->get('settings_manager')
+            'user_settings' => $this->get('settings_manager'),
+            'likes_user' => isset($user) ? $user : null,
         )));
     }
 
