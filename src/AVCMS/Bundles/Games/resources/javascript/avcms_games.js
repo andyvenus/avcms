@@ -1,20 +1,25 @@
 avcms = avcms || {};
 
 $(document).ready(function() {
-    if ($('#avcms-game-container').length > 0) {
-        window.onresize = avcms.games.resizeGame;
-        avcms.games.resizeGame();
-
-        avcms.games.showAd();
-
-        $('#avcms-game-advert-skip').find('button').click(avcms.games.showGame);
-        $('#avcms-game-fullscreen').click(avcms.games.goFullscreen);
-    }
+    avcms.games.onPageLoad();
+    avcms.event.addEvent('page-modified', avcms.games.onPageLoad);
 });
 
 avcms.games = {
     countdown: null,
     countdown_time: 30,
+
+    onPageLoad: function() {
+        if ($('#avcms-game-container').length > 0) {
+            window.onresize = avcms.games.resizeGame;
+            avcms.games.resizeGame();
+
+            avcms.games.showAd();
+
+            $('#avcms-game-advert-skip').find('button').click(avcms.games.showGame);
+            $('#avcms-game-fullscreen').click(avcms.games.goFullscreen);
+        }
+    },
 
     resizeGame: function() {
         var game_container = $('#avcms-game-container');
@@ -36,6 +41,10 @@ avcms.games = {
     },
 
     showAd: function() {
+        if (avcms.gamesAdmin !== undefined) {
+            return;
+        }
+
         var ad_container = $('#avcms-game-advert');
         if (ad_container.length == 0) {
             return;
