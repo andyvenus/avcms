@@ -155,7 +155,8 @@ a {
   text-align: center; }
   .browser-finder-show-filters a {
     display: block;
-    padding: 8px 0px 9px;
+    padding: 4px 0px 5px;
+    margin: 4px 0px;
     border: 1px solid #e3e3e3;
     text-decoration: none; }
   .browser-finder-show-filters a:hover {
