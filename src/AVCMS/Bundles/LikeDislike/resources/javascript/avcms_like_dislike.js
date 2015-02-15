@@ -9,7 +9,12 @@ $(document).ready(function() {
 
 avcms.likeDislike = {
     registerVote: function() {
-        console.log('test');
+        if ($(this).parents('.like-dislike-buttons').data('toggle')) {
+            window.location = avcms.config.site_url + 'login';
+            return;
+        }
+
+
         var vote_val = $(this).data('vote-value');
         var group = $(this).parent('.like-dislike-buttons');
 

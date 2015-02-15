@@ -1,5 +1,8 @@
-{% if is_granted(['IS_AUTHENTICATED_REMEMBERED', 'IS_AUTHENTICATED_FULLY']) %}
-<span class="btn-group like-dislike-buttons" data-content-type="{{ content_type }}" data-content-id="{{ content_id }}">
+{% if is_granted(['IS_AUTHENTICATED_REMEMBERED', 'IS_AUTHENTICATED_FULLY']) == false %}
+    {% set no_login = true %}
+{% endif %}
+
+<span class="btn-group like-dislike-buttons" data-content-type="{{ content_type }}" data-content-id="{{ content_id }}" {% if no_login %}data-toggle="tooltip" data-placement="bottom" title="{% trans %}Login to vote{% endtrans %}"{% endif %}>
     <button class="btn {% if rating_value is same as('1') %}btn-success{% else %}btn-default{% endif %}" data-vote-value="1">
         <span class="glyphicon glyphicon-thumbs-up"></span>
         <span class="badge like-count">{{ content.likes }}</span>
@@ -9,4 +12,3 @@
         <span class="badge dislike-count">{{ content.dislikes }}</span>
     </button>
 </span>
-{% endif %}
