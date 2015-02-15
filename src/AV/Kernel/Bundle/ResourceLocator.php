@@ -54,7 +54,6 @@ class ResourceLocator
 
         foreach ($fileLocations as $type => $dir) {
             $dir = $dir.'/'.$file;
-
             if (!file_exists($dir)) {
                 unset($fileLocations[$type]);
             }

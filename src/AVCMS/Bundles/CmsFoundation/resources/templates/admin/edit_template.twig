@@ -10,9 +10,15 @@
     <span class="light">{% trans %}Editing Template{% endtrans %}</span> @{{ item.bundle }}/{{ item.file }}
 {% endblock %}
 
-{% block editor_title_new %}
+{% block before_form %}
+    {% if item.current_location == 'webmaster' %}
+        <div class="alert alert-info">
+            {% trans %}You have edited this template{% endtrans %}:
+            <a href="#" class="alert-link">{% trans %}Reset to default{% endtrans %}</a>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block form_start %}
-    {{ form_start(form, {"data-item-id": item.id|default(0), "data-update-browser": 'none'}) }}
+    {{ form_start(form, {"data-item-id": item.id|default(0)}) }}
 {% endblock %}

@@ -58,6 +58,7 @@ class EditTemplatesAdminController extends AdminBaseController
                             $currentTemplateLocation = key($hierarchy);
 
                             $templates[] = [
+                                'id' => $id,
                                 'file' => $id,
                                 'name' => basename($filePath),
                                 'dir' => $file,
@@ -81,9 +82,13 @@ class EditTemplatesAdminController extends AdminBaseController
 
         $filePath = $this->get('bundle.resource_locator')->findFileDirectory($request->get('bundle'), $filename, $fileType);
 
+        $hierarchy = $this->get('bundle.resource_locator')->findFileHierarchy($request->get('bundle'), str_replace('/'.$fileType, '', $filename), $fileType);
+        reset($hierarchy);
+        $currentTemplateLocation = key($hierarchy);
         $fileContents = file_get_contents($filePath);
 
         $formBlueprint = new FormBlueprint();
+        $formBlueprint->setSuccessMessage('Template Saved');
         $formBlueprint->add('template', 'textarea', [
             'label' => 'Template',
             'default' => $fileContents,
@@ -108,7 +113,15 @@ class EditTemplatesAdminController extends AdminBaseController
             }
         }
 
-        return new Response($this->renderAdminSection('@CmsFoundation/admin/edit_template.twig', ['item' => ['bundle' => $request->get('bundle'), 'file' => $filename], 'form' => $form->createView()]));
+        return new Response($this->renderAdminSection('@CmsFoundation/admin/edit_template.twig', [
+            'item' => [
+                'id' => $request->get('file'),
+                'bundle' => $request->get('bundle'),
+                'file' => $filename,
+                'current_location' => $currentTemplateLocation
+            ],
+            'form' => $form->createView(),
+        ]));
     }
 
     protected function getFileType($filename)
