@@ -46,18 +46,35 @@ class ResourceLocator
         throw new NotFoundException(sprintf('File %s not found in bundle %s', $file, $bundleConfig->name));
     }
 
-    protected function getResourceDirs(BundleConfig $bundleConfig, $resourceType, $originalOnly)
+    public function findFileHierarchy($bundleName, $file, $type)
+    {
+        $bundleConfig = $this->bundleManager->getBundleConfig($bundleName);
+
+        $fileLocations = $this->getResourceDirs($bundleConfig, $type, false);
+
+        foreach ($fileLocations as $type => $dir) {
+            $dir = $dir.'/'.$file;
+
+            if (!file_exists($dir)) {
+                unset($fileLocations[$type]);
+            }
+        }
+
+        return $fileLocations;
+    }
+
+    public function getResourceDirs(BundleConfig $bundleConfig, $resourceType, $originalOnly)
     {
         $dirs = [];
 
         if ($originalOnly === false) {
-            $dirs[] = $this->appDir . '/resources/' . $bundleConfig->name;
+            $dirs['app'] = $this->appDir . '/resources/' . $bundleConfig->name;
         }
 
-        $dirs[] = $this->rootDir.'/'.$bundleConfig->directory.'/resources/'.$resourceType;
+        $dirs['bundle'] = $this->rootDir.'/'.$bundleConfig->directory.'/resources/'.$resourceType;
 
         if (isset($bundleConfig->parent_config)) {
-            $dirs[] = $this->rootDir.'/'.$bundleConfig->parent_config->directory.'/resources/'.$resourceType;
+            $dirs['bundle_parent'] = $this->rootDir.'/'.$bundleConfig->parent_config->directory.'/resources/'.$resourceType;
         }
 
         return $dirs;

@@ -1,0 +1,18 @@
+{% extends '@admin/edit_item.twig' %}
+
+{% block title -%}
+    {% spaceless %}
+        {% trans %}Editing Template{% endtrans %} - @{{ item.bundle }}/{{ item.file }}
+    {% endspaceless  %}
+{% endblock %}
+
+{% block editor_title %}
+    <span class="light">{% trans %}Editing Template{% endtrans %}</span> @{{ item.bundle }}/{{ item.file }}
+{% endblock %}
+
+{% block editor_title_new %}
+{% endblock %}
+
+{% block form_start %}
+    {{ form_start(form, {"data-item-id": item.id|default(0), "data-update-browser": 'none'}) }}
+{% endblock %}

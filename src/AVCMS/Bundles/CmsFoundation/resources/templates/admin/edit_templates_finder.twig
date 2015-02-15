@@ -1,0 +1,25 @@
+{% extends '@admin/finder.twig' %}
+
+{% block finder_header_titles %}
+
+{% endblock %}
+
+{% block item_title %}
+    <div class="finder-item-title" data-field="label">
+        {{ item.name }}
+    </div>
+{% endblock %}
+
+{% block item_options %}
+    <div class="btn-group">
+        <a href="{{ path('manage_templates_admin_edit', {'file': item.file, 'bundle': item.bundle}) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-edit"></span> {% trans %}Edit{% endtrans %}</a>
+    </div>
+{% endblock %}
+
+{% block item_extended_inner %}
+{{ item.current_template_location|title }} - {{ item.file }}
+{% endblock %}
+
+{% block no_results %}
+    {% trans %}Select a bundle above{% endtrans %}
+{% endblock %}

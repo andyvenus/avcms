@@ -150,6 +150,11 @@ assets:
     env: shared
   avcms_frontend.js:
     env: frontend
+  avcms_codemirror.js:
+    env: admin
+    priority: -15
+  codemirror.css:
+      env: admin
 
 menus:
   frontend:

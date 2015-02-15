@@ -21,13 +21,12 @@ class ResourceLocator extends BaseResourceLocator
         parent::__construct($bundleManager, $rootDir, $appDir);
     }
 
-    protected function getResourceDirs(BundleConfig $bundleConfig, $resourceType, $originalOnly)
+    public function getResourceDirs(BundleConfig $bundleConfig, $resourceType, $originalOnly)
     {
         $avcmsDirs = [];
         if ($originalOnly === false) {
-            $avcmsDirs[] = $this->rootDir . '/webmaster/resources/' . $bundleConfig->name . '/' . $resourceType;
-            $avcmsDirs[] = $this->templateDir . '/' . $resourceType . '/' . $bundleConfig->name;
-            $avcmsDirs[] = $this->templateDir . '/' . $bundleConfig->name;
+            $avcmsDirs['webmaster'] = $this->rootDir . '/webmaster/resources/' . $bundleConfig->name . '/' . $resourceType;
+            $avcmsDirs['template'] = $this->templateDir . '/' . $resourceType . '/' . $bundleConfig->name;
         }
 
         $dirs = parent::getResourceDirs($bundleConfig, $resourceType, $originalOnly);

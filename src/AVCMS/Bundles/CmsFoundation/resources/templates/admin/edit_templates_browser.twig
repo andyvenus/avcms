@@ -1,0 +1,23 @@
+{% extends '@admin/browser.twig' %}
+
+{% block finder_title %}
+    {% trans %}Templates{% endtrans %}
+{% endblock %}
+
+{% block expand_finder_button %}
+    {{ buttons.expand_finder('manage_templates_admin_home') }}
+{% endblock %}
+
+{% block finder %}
+    <div data-url="{{ url('manage_templates_admin_finder') }}">
+        {{ render(path('manage_templates_admin_finder')) }}
+    </div>
+{% endblock %}
+
+{% block mobile_back_link %}
+    {{ url('menus_admin_home') }}
+{% endblock %}
+
+{% block checked_options_buttons %}
+    {{ buttons.bulk_delete('menus_admin_delete') }}
+{% endblock %}
