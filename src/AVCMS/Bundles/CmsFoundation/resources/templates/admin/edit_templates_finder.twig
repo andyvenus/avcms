@@ -13,6 +13,12 @@
 {% block item_options %}
     <div class="btn-group">
         <a href="{{ path('manage_templates_admin_edit', {'file': item.file, 'bundle': item.bundle}) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-edit"></span> {% trans %}Edit{% endtrans %}</a>
+
+        {% if item.current_template_location == 'webmaster' %}
+            <button class="btn btn-xs btn-default"><span class="glyphicon glyphicon-refresh"></span>
+                {% trans %}Reset{% endtrans %}
+            </button>
+        {% endif %}
     </div>
 {% endblock %}
 

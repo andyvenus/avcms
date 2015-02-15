@@ -11,12 +11,10 @@
 {% endblock %}
 
 {% block before_form %}
-    {% if item.current_location == 'webmaster' %}
-        <div class="alert alert-info">
+        <div class="alert alert-info" {% if item.current_location != 'webmaster' %}style="display:none;"{% endif %}>
             {% trans %}You have edited this template{% endtrans %}:
             <a href="#" class="alert-link">{% trans %}Reset to default{% endtrans %}</a>
         </div>
-    {% endif %}
 {% endblock %}
 
 {% block form_start %}
