@@ -325,6 +325,9 @@ a {
       width: 100%; }
       .browser .finder-has-focus .browser-finder-filters .form-group .select2-container {
         margin-top: 3px; }
+    .browser .finder-has-focus .browser-finder-filters .checkbox {
+      float: left;
+      margin-top: 5px; }
   .browser .finder-has-focus .browser-finder-filters {
     display: inherit; }
   .browser .finder-has-focus .browser-finder-show-filters {
