@@ -55,6 +55,7 @@ class EditTemplatesAdminController extends AdminBaseController
                             $id = str_replace('/', '::', str_replace('/'.$type.'/', '', $filePath));
 
                             $hierarchy = $this->get('bundle.resource_locator')->findFileHierarchy($bundleConfig->name, str_replace('/'.$type, '', $filePath), $type);
+                            reset($hierarchy);
                             $currentTemplateLocation = key($hierarchy);
 
                             $templates[] = [
