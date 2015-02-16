@@ -19,13 +19,19 @@ class HitCounter
         $this->session = $session;
     }
 
-    public function registerHit(Model $model, $id, $column = 'hits', $idColumn = 'id')
+    public function registerHit(Model $model, $id, $column = 'hits', $idColumn = 'id', $lastHitColumn = null)
     {
         $recentHits = $this->session->get('hits', []);
 
         if (!isset($recentHits[$model->getSingular()]) || !isset($recentHits[$model->getSingular()][$id]) || !isset($recentHits[$model->getSingular()][$id][$column])) {
 
-            $model->query()->where($idColumn, $id)->update([$column => $model->query()->raw("$column + 1")]);
+            $updateData = [$column => $model->query()->raw("$column + 1")];
+
+            if ($lastHitColumn) {
+                $updateData[$lastHitColumn] = time();
+            }
+
+            $model->query()->where($idColumn, $id)->update($updateData);
 
             if (!isset($recentHits[$model->getSingular()][$id])) {
                 $recentHits[$model->getSingular()][$id] = [];
