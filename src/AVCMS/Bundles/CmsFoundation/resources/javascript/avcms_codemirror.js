@@ -35,6 +35,9 @@ avcms.codemirror = {
             else if (ext == 'css') {
                 mode = {name: "css"};
             }
+            else if (ext == 'yml') {
+                mode = {name: "yaml"};
+            }
 
             var editor = CodeMirror.fromTextArea(document.getElementById(id), {
                 lineNumbers: true,
