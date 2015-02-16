@@ -29,7 +29,7 @@ class EditTemplatesAdminController extends AdminBaseController
     {
         $templates = [];
 
-        if ($request->query->has('bundle')) {
+        if ($request->query->get('bundle')) {
             $bundleConfig = $this->get('bundle_manager')->getBundleConfig($request->get('bundle', 'CmsFoundation'));
 
             $dirs = new RecursiveIteratorIterator(
@@ -145,7 +145,7 @@ class EditTemplatesAdminController extends AdminBaseController
 
         $bundles = $this->get('bundle_manager')->getBundleConfigs();
 
-        $bundleChoices = [];
+        $bundleChoices = [0 => 'Select a bundle...'];
 
         foreach ($bundles as $bundle) {
             if (file_exists($bundle->directory . '/resources/templates')) {
