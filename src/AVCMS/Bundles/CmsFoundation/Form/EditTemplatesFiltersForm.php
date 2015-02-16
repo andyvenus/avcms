@@ -14,7 +14,8 @@ class EditTemplatesFiltersForm extends AdminFiltersForm
     public function __construct($bundleChoices)
     {
         $this->add('bundle', 'select', [
-            'choices' => $bundleChoices
+            'choices' => $bundleChoices,
+            'translate_choices' => false
         ]);
 
         parent::__construct();

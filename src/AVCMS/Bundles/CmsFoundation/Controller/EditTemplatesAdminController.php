@@ -8,6 +8,7 @@
 namespace AVCMS\Bundles\CmsFoundation\Controller;
 
 use AV\Form\FormBlueprint;
+use AV\Kernel\Bundle\Exception\NotFoundException;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use AVCMS\Bundles\CmsFoundation\Form\EditTemplatesFiltersForm;
 use RecursiveDirectoryIterator;
@@ -29,11 +30,11 @@ class EditTemplatesAdminController extends AdminBaseController
     {
         $templates = [];
 
-        if ($request->query->get('bundle', 'CmsFoundation')) {
-            $bundleConfig = $this->get('bundle_manager')->getBundleConfig($request->get('bundle', 'CmsFoundation'));
+        if ($request->query->get('bundle')) {
+            $info = $this->getFilesInfo($request->get('bundle'));
 
             $dirs = new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($bundleConfig->directory.'/resources'),
+                new RecursiveDirectoryIterator($info['resources_dir']),
                 RecursiveIteratorIterator::CHILD_FIRST
             );
 
@@ -42,32 +43,36 @@ class EditTemplatesAdminController extends AdminBaseController
                     if ($file->isDir()) {
                         continue;
                     } elseif (in_array($file->getExtension(), ['twig', 'css'])) {
-                        $filePath = str_replace($bundleConfig->directory.'/resources', '', $file->getPath().'/'.$file->getFilename());
-                        if ((!$request->get('search') || strpos($filePath, $request->get('search')) !== false) && ($request->get('admin_templates', false) || strpos($filePath, 'admin') === false)) {
+                        $filePath = str_replace($info['resources_dir'], '', $file->getPath().'/'.$file->getFilename());
 
-                            if ($file->getExtension() == 'twig') {
-                                $type = 'templates';
-                            }
-                            else {
-                                $type = 'css';
-                            }
-
-                            $id = str_replace('/', '::', str_replace('/'.$type.'/', '', $filePath));
-
-                            $hierarchy = $this->get('bundle.resource_locator')->findFileHierarchy($bundleConfig->name, str_replace('/'.$type, '', $filePath), $type);
-                            reset($hierarchy);
-                            $currentTemplateLocation = key($hierarchy);
-
-                            $templates[] = [
-                                'id' => $id,
-                                'file' => $id,
-                                'name' => basename($filePath),
-                                'dir' => $file,
-                                'hierarchy' => $hierarchy,
-                                'current_template_location' => $currentTemplateLocation,
-                                'bundle' => $bundleConfig->name
-                            ];
+                        if ($request->get('search') && strpos($filePath, $request->get('search')) === false) {
+                            continue;
                         }
+
+                        if (!$request->get('admin_templates', false) && strpos($filePath, 'admin') !== false) {
+                            continue;
+                        }
+
+                        $fileType = $this->getFileType($file->getFilename());
+
+                        $id = str_replace('/', '::', str_replace('/'.$fileType.'/', '', $filePath));
+                        if ($id[0] == ':') {
+                            $id = ltrim($id, '::');
+                        }
+
+                        $hierarchy = $this->getFileHierarchy($info['type'], $request->get('bundle'), $fileType, $filePath);
+                        reset($hierarchy);
+                        $currentTemplateLocation = key($hierarchy);
+
+                        $templates[] = [
+                            'id' => $id,
+                            'file' => $id,
+                            'name' => basename($filePath),
+                            'dir' => $file,
+                            'hierarchy' => $hierarchy,
+                            'current_template_location' => $currentTemplateLocation,
+                            'bundle' => $request->get('bundle')
+                        ];
                     }
                 }
             }
@@ -81,19 +86,21 @@ class EditTemplatesAdminController extends AdminBaseController
         $fileType = $this->getFileType($request->get('file'));
         $filename = str_replace('::', '/', $request->get('file'));
 
-        $filePath = $this->get('bundle.resource_locator')->findFileDirectory($request->get('bundle'), $filename, $fileType);
+        $filesInfo = $this->getFilesInfo($request->get('bundle'));
 
-        $hierarchy = $this->get('bundle.resource_locator')->findFileHierarchy($request->get('bundle'), str_replace('/'.$fileType, '', $filename), $fileType);
+        $hierarchy = $this->getFileHierarchy($filesInfo['type'], $request->get('bundle'), $fileType, $filename);
+
         reset($hierarchy);
         $currentTemplateLocation = key($hierarchy);
-        $fileContents = file_get_contents($filePath);
+
+        $fileContents = file_get_contents($hierarchy[$currentTemplateLocation].'/'.$filename);
 
         $formBlueprint = new FormBlueprint();
         $formBlueprint->setSuccessMessage('Template Saved');
         $formBlueprint->add('template', 'textarea', [
             'label' => 'Template',
             'default' => $fileContents,
-            'attr' => ['class' => 'codemirror', 'id' => 'codemirror-'.$request->get('file')]
+            'attr' => ['class' => 'codemirror', 'id' => 'codemirror-'.$request->get('bundle').'-'.$request->get('file')]
         ]);
 
         $form = $this->buildForm($formBlueprint, $request);
@@ -102,7 +109,16 @@ class EditTemplatesAdminController extends AdminBaseController
             if ($form->isValid()) {
                 $basename = basename($filename);
                 $resourceDir = str_replace($basename, '', $filename);
-                $dir = $this->getParam('root_dir').'/webmaster/resources/'.$request->get('bundle').'/'.$fileType.$resourceDir;
+                $dir = $this->getParam('root_dir').'/webmaster/resources/';
+
+                if ($filesInfo['type'] == 'bundle') {
+                    $dir .= $request->get('bundle');
+                }
+                else {
+                    $dir .= 'templates/'.$request->get('bundle');
+                }
+
+                $dir .= '/' . $fileType . $resourceDir;
 
                 if (!file_exists($dir)) {
                     mkdir($dir, 0777, true);
@@ -132,12 +148,78 @@ class EditTemplatesAdminController extends AdminBaseController
         }
 
         $file = str_replace('::', '/', $request->get('file'));
-        $bundle = $request->get('bundle');
-        $type = $this->getFileType($file);
+        $filesInfo = $this->getFilesInfo($request->get('bundle'));
+        $fileType = $this->getFileType($file);
 
-        unlink($this->getParam('root_dir').'/webmaster/resources/'.$bundle.'/'.$type.'/'.$file);
+        $dir = $this->getParam('root_dir').'/webmaster/resources/';
+
+        if ($filesInfo['type'] == 'bundle') {
+            $dir .= $request->get('bundle');
+        }
+        else {
+            $dir .= 'templates/'.$request->get('bundle');
+        }
+
+        $dir .= '/' . $fileType .'/'.$file;
+
+        unlink($dir);
 
         return new JsonResponse(['success' => true]);
+    }
+
+
+    protected function getFilesInfo($name)
+    {
+        try {
+            $bundleConfig = $this->get('bundle_manager')->getBundleConfig($name);
+            return ['type' => 'bundle', 'resources_dir' => $bundleConfig->directory.'/resources'];
+        } catch (NotFoundException $e) {
+
+        }
+
+        // Template
+        if (!isset($resourcesDir)) {
+            $resourcesDir = $this->getParam('root_dir').'/webmaster/templates/frontend/'.$name;
+
+            if (!file_exists($resourcesDir)) {
+                throw $this->createNotFoundException();
+            }
+
+            return ['type' => 'template', 'resources_dir' => $resourcesDir];
+        }
+    }
+
+    protected function getFileHierarchy($type, $bundle, $fileType, $filePath)
+    {
+        if ($type === 'bundle') {
+            $hierarchy = $this->get('bundle.resource_locator')->findFileHierarchy($bundle, str_replace('/' . $fileType, '', $filePath), $fileType);
+        }
+        else {
+            $hierarchy = [];
+
+            $templateDir = $this->getParam('root_dir').'/webmaster/templates/frontend/'.$bundle;
+
+            $dirs = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($templateDir),
+                RecursiveIteratorIterator::CHILD_FIRST
+            );
+
+            $fileDir = 'null';
+            foreach ($dirs as $file) {
+                if ($file->getFilename() == basename($filePath)) {
+                    $fileDir = str_replace($templateDir, '', $file->getPath());
+                    break;
+                }
+            }
+
+            $webmasterLocation = $this->getParam('root_dir').'/webmaster/resources/templates/'.$bundle.$fileDir;
+            if (file_exists($webmasterLocation.'/'.basename($filePath))) {
+                $hierarchy['webmaster'] = $webmasterLocation;
+            }
+            $hierarchy['template'] = $this->getParam('root_dir').'/webmaster/templates/frontend/'.$bundle.$fileDir;
+        }
+
+        return $hierarchy;
     }
 
     protected function getFileType($filename)
@@ -160,11 +242,20 @@ class EditTemplatesAdminController extends AdminBaseController
 
         $bundles = $this->get('bundle_manager')->getBundleConfigs();
 
-        $bundleChoices = [0 => 'Select a bundle...'];
+        $template = basename($this->get('template_manager')->getCurrentTemplate());
+
+        $bundleChoices = [0 => $this->trans('Bundle or template...'), $template => $this->trans('Current Template').': '.$template];
 
         foreach ($bundles as $bundle) {
             if (file_exists($bundle->directory . '/resources/templates')) {
-                $bundleChoices[$bundle->name] = $bundle->name;
+                $bundleChoices[$bundle->name] = 'Bundle: '.$bundle->name;
+            }
+        }
+
+        $templateDirs = new \DirectoryIterator($this->getParam('root_dir').'/webmaster/templates/frontend');
+        foreach ($templateDirs as $dir) {
+            if (!$dir->isDot() && file_exists($dir->getPathname().'/template.yml') && !isset($bundleChoices[$dir->getFilename()])) {
+                $bundleChoices[$dir->getFilename()] = 'Template: '.$dir->getFilename();
             }
         }
 
