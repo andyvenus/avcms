@@ -147,12 +147,12 @@ class EditTemplatesAdminController extends AdminBaseController
 
         $file = str_replace('::', '/', $request->get('file'));
         $filesInfo = $this->getFilesInfo($request->get('bundle'));
-        $fileType = $this->getFileType($file);
 
         $dir = $this->getParam('root_dir').'/webmaster/resources/';
 
         if ($filesInfo['type'] == 'bundle') {
-            $dir .= $request->get('bundle') . '/' . $fileType . $fileType;
+            $fileType = $this->getFileType($file);
+            $dir .= $request->get('bundle') . '/' . $fileType;
         }
         else {
             $dir .= 'templates/'.$request->get('bundle').'/'.$this->getTemplateFileDir($request->get('bundle'), $file);
