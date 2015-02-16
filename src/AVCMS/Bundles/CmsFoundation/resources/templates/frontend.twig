@@ -23,7 +23,11 @@
         <meta name="description" content="{{ meta_description }}">
     {% endif %}
 
+    <meta property="og:site_name" content="{{ settings.site_name }}" />
+
     {% include '@CmsFoundation/google_analytics.twig' %}
+
+    {% block header_extra %}{% endblock %}
 {% endblock %}
 </head>
 

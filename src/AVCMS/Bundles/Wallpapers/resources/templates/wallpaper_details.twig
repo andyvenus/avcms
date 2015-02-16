@@ -4,6 +4,14 @@
 
 {% block meta_description %}{{ wallpaper.description }}{% endblock %}
 
+{% block header_extra %}
+    <meta property="og:title" content="{{ wallpaper.name }}" />
+    <meta property="og:image" content="{{ wp_thumbnail_url(wallpaper, 'lg') }}" />
+    {% if wallpaper.description %}
+        <meta property="og:description" content="{{ wallpaper.description|striptags }}" />
+    {% endif %}
+{% endblock %}
+
 {% block content %}
     <div class="wallpaper-details">
         {% block wallpaper_thumbnail %}

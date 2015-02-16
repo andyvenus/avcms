@@ -4,6 +4,12 @@
 
 {% block meta_description %}{{ game.description }}{% endblock %}
 
+{% block header_extra %}
+    <meta property="og:title" content="{{ game.name }}" />
+    <meta property="og:image" content="{{ game_thumbnail(game) }}" />
+    <meta property="og:description" content="{{ game.description|striptags }}" />
+{% endblock %}
+
 {% block wide_content %}
     {% block game_box %}
         <div class="box box-primary game-box">
