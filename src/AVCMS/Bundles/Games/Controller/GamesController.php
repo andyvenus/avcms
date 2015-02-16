@@ -43,6 +43,8 @@ class GamesController extends Controller
             throw $this->createNotFoundException('Game Not Found');
         }
 
+        $this->container->get('hitcounter')->registerHit($this->games, $game->getId(), 'hits', 'id', 'last_hit');
+
         return $this->render('@Games/play_game.twig', ['game' => $game], true);
     }
 
