@@ -10,10 +10,12 @@ $(document).ready(function () {
 
 avcms.templates = {
     resetTemplate: function(bundle, file) {
-        $.post(avcms.config.site_url + 'admin/templates/reset', {bundle: bundle, file: file}, function() {
-            $('[data-id="'+file+'"]').find('.avcms-reset-template').remove();
+        if (confirm(avcms.general.trans('Are you sure you want to reset this template?'))) {
+            $.post(avcms.config.site_url + 'admin/templates/reset', {bundle: bundle, file: file}, function () {
+                $('[data-id="' + file + '"]').find('.avcms-reset-template').remove();
 
-            avcms.nav.refreshSection('.ajax-editor-inner', 'editor');
-        });
+                avcms.nav.refreshSection('.ajax-editor-inner', 'editor');
+            });
+        }
     }
 };
