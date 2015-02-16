@@ -29,7 +29,7 @@ class EditTemplatesAdminController extends AdminBaseController
     {
         $templates = [];
 
-        if ($request->query->get('bundle')) {
+        if ($request->query->get('bundle', 'CmsFoundation')) {
             $bundleConfig = $this->get('bundle_manager')->getBundleConfig($request->get('bundle', 'CmsFoundation'));
 
             $dirs = new RecursiveIteratorIterator(
@@ -123,6 +123,21 @@ class EditTemplatesAdminController extends AdminBaseController
             ],
             'form' => $form->createView(),
         ]));
+    }
+
+    public function resetTemplateAction(Request $request)
+    {
+        if (!$this->checkCsrfToken($request)) {
+            return $this->invalidCsrfTokenJsonResponse();
+        }
+
+        $file = str_replace('::', '/', $request->get('file'));
+        $bundle = $request->get('bundle');
+        $type = $this->getFileType($file);
+
+        unlink($this->getParam('root_dir').'/webmaster/resources/'.$bundle.'/'.$type.'/'.$file);
+
+        return new JsonResponse(['success' => true]);
     }
 
     protected function getFileType($filename)

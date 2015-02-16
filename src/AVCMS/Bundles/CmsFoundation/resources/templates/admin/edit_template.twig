@@ -11,9 +11,9 @@
 {% endblock %}
 
 {% block before_form %}
-        <div class="alert alert-info" {% if item.current_location != 'webmaster' %}style="display:none;"{% endif %}>
+        <div class="alert alert-info" {% if item.current_location != 'webmaster' %}style="display:none;"{% endif %} data-id="{{ item.id }}" data-bundle="{{ item.bundle }}">
             {% trans %}You have edited this template{% endtrans %}:
-            <a href="#" class="alert-link">{% trans %}Reset to default{% endtrans %}</a>
+            <a href="#" class="alert-link avcms-reset-template">{% trans %}Reset to default{% endtrans %}</a>
         </div>
 {% endblock %}
 

@@ -109,3 +109,7 @@ manage_templates_admin_finder:
 manage_templates_admin_edit:
   path: /templates/edit/{bundle}/{file}
   defaults: { page: 1, _controller: 'CmsFoundation::EditTemplatesAdminController::editAction' }
+
+manage_templates_admin_reset:
+  path: /templates/reset
+  defaults: { page: 1, _controller: 'CmsFoundation::EditTemplatesAdminController::resetTemplateAction' }
