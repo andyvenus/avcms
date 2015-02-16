@@ -112,13 +112,11 @@ class EditTemplatesAdminController extends AdminBaseController
                 $dir = $this->getParam('root_dir').'/webmaster/resources/';
 
                 if ($filesInfo['type'] == 'bundle') {
-                    $dir .= $request->get('bundle');
+                    $dir .= $request->get('bundle') . '/' . $fileType . $resourceDir;
                 }
                 else {
-                    $dir .= 'templates/'.$request->get('bundle');
+                    $dir .= 'templates/'.$request->get('bundle').'/'.$this->getTemplateFileDir($request->get('bundle'), $filename);
                 }
-
-                $dir .= '/' . $fileType . $resourceDir;
 
                 if (!file_exists($dir)) {
                     mkdir($dir, 0777, true);
@@ -154,15 +152,13 @@ class EditTemplatesAdminController extends AdminBaseController
         $dir = $this->getParam('root_dir').'/webmaster/resources/';
 
         if ($filesInfo['type'] == 'bundle') {
-            $dir .= $request->get('bundle');
+            $dir .= $request->get('bundle') . '/' . $fileType . $fileType;
         }
         else {
-            $dir .= 'templates/'.$request->get('bundle');
+            $dir .= 'templates/'.$request->get('bundle').'/'.$this->getTemplateFileDir($request->get('bundle'), $file);
         }
 
-        $dir .= '/' . $fileType .'/'.$file;
-
-        unlink($dir);
+        unlink($dir.'/'.$file);
 
         return new JsonResponse(['success' => true]);
     }
@@ -197,20 +193,7 @@ class EditTemplatesAdminController extends AdminBaseController
         else {
             $hierarchy = [];
 
-            $templateDir = $this->getParam('root_dir').'/webmaster/templates/frontend/'.$bundle;
-
-            $dirs = new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($templateDir),
-                RecursiveIteratorIterator::CHILD_FIRST
-            );
-
-            $fileDir = 'null';
-            foreach ($dirs as $file) {
-                if ($file->getFilename() == basename($filePath)) {
-                    $fileDir = str_replace($templateDir, '', $file->getPath());
-                    break;
-                }
-            }
+            $fileDir = $this->getTemplateFileDir($bundle, $filePath);
 
             $webmasterLocation = $this->getParam('root_dir').'/webmaster/resources/templates/'.$bundle.$fileDir;
             if (file_exists($webmasterLocation.'/'.basename($filePath))) {
@@ -220,6 +203,26 @@ class EditTemplatesAdminController extends AdminBaseController
         }
 
         return $hierarchy;
+    }
+
+    protected function getTemplateFileDir($template, $filePath)
+    {
+        $templateDir = $this->getParam('root_dir').'/webmaster/templates/frontend/'.$template;
+
+        $dirs = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($templateDir),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        $fileDir = '';
+        foreach ($dirs as $file) {
+            if ($file->getFilename() == basename($filePath)) {
+                $fileDir = str_replace($templateDir, '', $file->getPath());
+                break;
+            }
+        }
+
+        return $fileDir;
     }
 
     protected function getFileType($filename)
