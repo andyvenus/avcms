@@ -6,14 +6,14 @@ use AV\Model\Entity;
 
 class Comment extends Entity
 {
-    public function setComment($value)
-    {
-        $this->set("comment", $value);
-    }
-
     public function getComment()
     {
         return $this->get("comment");
+    }
+
+    public function setComment($value)
+    {
+        $this->set("comment", $value);
     }
 
     public function setContentId($value)
@@ -36,14 +36,14 @@ class Comment extends Entity
         $this->set("content_title", $value);
     }
 
-    public function setContentType($value)
-    {
-        $this->set("content_type", $value);
-    }
-
     public function getContentType()
     {
         return $this->get("content_type");
+    }
+
+    public function setContentType($value)
+    {
+        $this->set("content_type", $value);
     }
 
     public function setDate($value)
@@ -76,13 +76,33 @@ class Comment extends Entity
         $this->set("ip", $value);
     }
 
-    public function getUserId()
+    public function setReplies($value)
     {
-        return $this->get("user_id");
+        $this->set("replies", $value);
+    }
+
+    public function getReplies()
+    {
+        return $this->get("replies");
+    }
+
+    public function setThread($value)
+    {
+        $this->set("thread", $value);
+    }
+
+    public function getThread()
+    {
+        return $this->get("thread");
     }
 
     public function setUserId($value)
     {
         $this->set("user_id", $value);
+    }
+
+    public function getUserId()
+    {
+        return $this->get("user_id");
     }
 }

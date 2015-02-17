@@ -1,8 +1,19 @@
-.load-comments-button {
+.avcms-load-comments {
   width: 100%;
   text-align: center;
 }
 
 .new-comment {
   margin-bottom: 15px;
+}
+
+.comment {
+  .panel-body {
+    word-break: break-all;
+  }
+}
+
+.comment-replies {
+  width: 90%;
+  float: right;
 }

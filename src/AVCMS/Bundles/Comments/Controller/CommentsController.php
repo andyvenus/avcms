@@ -18,7 +18,7 @@ class CommentsController extends Controller
 {
     public function getCommentsAction(Request $request)
     {
-        $commentsPerLoad = 20;
+        $commentsPerLoad = 10;
 
         $contentType = $request->get('content_type');
         $contentId = $request->get('content_id');
@@ -32,10 +32,15 @@ class CommentsController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $comments = $this->model('Comments')->getComments($contentType, $contentId, $this->model('@users'), $commentsPerLoad, $request->get('page', 1));
+        if (!$request->get('thread')) {
+            $comments = $this->model('Comments')->getComments($contentType, $contentId, $this->model('@users'), $commentsPerLoad, $request->get('page', 1));
+        }
+        else {
+            $comments = $this->model('Comments')->getReplies($request->get('thread'), $this->model('Users'));
+        }
 
         $lastPage = false;
-        if (count($comments) < $commentsPerLoad) {
+        if (count($comments) < $commentsPerLoad || $request->get('thread')) {
             $lastPage = true;
         }
 
@@ -103,6 +108,7 @@ class CommentsController extends Controller
         $comment->setUserId($user->getId());
         $comment->setDate(time());
         $comment->setIp($request->getClientIp());
+        $comment->setThread($request->get('thread', 0));
 
         $titleField = $typeConfig['title_field'];
         if (is_callable([$content, 'get'.$titleField])) {
@@ -112,6 +118,10 @@ class CommentsController extends Controller
         $comments->save($comment);
         $floodControl->setLastCommentTime($user->getId(), time());
 
+        if ($comment->getThread()) {
+            $comments->updateReplies($comment->getThread());
+        }
+
         if (is_callable([$content, 'getComments']) && is_callable([$content, 'setComments'])) {
             $content->setComments(intval($content->getComments()) + 1);
             $contentModel->save($content);
@@ -119,6 +129,10 @@ class CommentsController extends Controller
 
         $comment->user = $user;
 
-        return new JsonResponse(['html' => $this->render('@Comments/comments.twig', ['comments' => [$comment]]), 'success' => true]);
+        return new JsonResponse(['html' => $this->render('@Comments/comments.twig', [
+            'comments' => [$comment],
+            'content_type' => $contentType,
+            'content_id' => $contentId,
+        ]), 'success' => true]);
     }
 } 

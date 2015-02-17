@@ -14,12 +14,12 @@
             <p><a href="{{ url('login') }}">{% trans %}Login to add your own comment{% endtrans %}</a></p>
         {% endif %}
 
-        <div class="comments-area" data-ajax-url="{{ url('comments', {content_type: content_type, content_id: content_id}) }}">
+        <div class="avcms-comments-area" data-ajax-url="{{ url('comments', {content_type: content_type, content_id: content_id}) }}">
         </div>
 
         {% if total_comments != 0 %}
             <div class="load-comments">
-                <button class="btn btn-primary load-comments-button">{% trans %}Load Comments{% endtrans %}</button>
+                <button class="btn btn-primary avcms-load-comments">{% trans %}Load Comments{% endtrans %}</button>
             </div>
         {% endif %}
         </div>

@@ -59,6 +59,10 @@ class CommentsModerationController extends AdminBaseController
                 $content->setComments(intval($content->getComments()) - 1);
                 $model->save($content);
             }
+
+            if ($comment->getThread()) {
+                $this->comments->updateReplies($comment->getThread());
+            }
         }
 
         $this->comments->deleteById($ids);

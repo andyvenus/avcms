@@ -1,17 +1,22 @@
 avcms = avcms || {};
 
 $(document).ready(function() {
-    if ($('.comments-area').length > 0) {
+    if ($('.avcms-comments-area').length > 0) {
         $(document).scroll(avcms.comments.scrollCheck);
-        $('.load-comments-button').click(avcms.comments.loadComments);
+        $('.avcms-load-comments').click(avcms.comments.loadComments);
 
-        $('[name=new_comment_form]').submit(avcms.comments.submitComment);
-        $('body').on('click', '.delete-comment', avcms.comments.deleteComment);
+        var body = $('body');
+
+        body.on('click', '.avcms-load-replies-button', avcms.comments.loadComments);
+        body.on('click', '.avcms-reply-button', avcms.comments.showReplyTextarea);
+
+        body.on('submit', '[name=new_comment_form]', avcms.comments.submitComment);
+        body.on('click', '.avcms-delete-comment', avcms.comments.deleteComment);
     }
 });
 
 avcms.comments = {
-    page: 0,
+    page: [],
     prev_button_html: null,
     loading: false,
     scroll_load_done: false,
@@ -22,22 +27,39 @@ avcms.comments = {
         }
 
         avcms.comments.loading = true;
-        var comments_area = $('.comments-area[data-ajax-url]');
 
-        var button = $('.load-comments-button');
+        var reply_id = $(this).parents('[data-id]').data('id');
+        if (!reply_id) {
+            reply_id = 0;
+        }
+
+        var comments_area;
+        var button;
+        if (reply_id == 0) {
+            comments_area = $('.avcms-comments-area[data-ajax-url]');
+            button = comments_area.parent().find('.avcms-load-comments');
+        }
+        else {
+            comments_area = $('.avcms-comment-replies-container[data-reply-id="'+reply_id+'"]').find('.avcms-comment-replies');
+            button = $('.avcms-comment[data-id="'+reply_id+'"]').find('.avcms-load-replies-button');
+        }
+
         avcms.comments.prev_button_html = button.html();
         button.html('<img src="'+avcms.config.site_url+'/web/resources/Comments/images/loading.gif" />');
 
-        avcms.comments.page++;
+        if (avcms.comments.page[reply_id] === undefined) {
+            avcms.comments.page[reply_id] = 0;
+        }
 
-        $.get(comments_area.data('ajax-url')+'?page='+avcms.comments.page, function(data) {
+        avcms.comments.page[reply_id]++;
+
+        $.get(comments_area.data('ajax-url')+'?page='+avcms.comments.page[reply_id], function(data) {
             button.html(avcms.comments.prev_button_html);
 
             if (data) {
-                var comments_area = $('.comments-area');
                 comments_area.html(comments_area.html() + data);
 
-                if ($('#comments-last-page').length === 1) {
+                if ($('#avcms-comments-last-page').length === 1) {
                     button.hide();
                 }
 
@@ -45,12 +67,13 @@ avcms.comments = {
             }
             else {
                 button.hide();
+                avcms.comments.loading = false;
             }
         })
     },
 
     scrollCheck: function() {
-        if (avcms.comments.scroll_load_done == false && avcms.comments.isScrolledIntoView('.comments-area[data-ajax-url]')) {
+        if (avcms.comments.scroll_load_done == false && avcms.comments.isScrolledIntoView('.avcms-comments-area[data-ajax-url]')) {
             avcms.comments.scroll_load_done = true;
             avcms.comments.loadComments();
         }
@@ -67,15 +90,31 @@ avcms.comments = {
     },
 
     submitComment: function() {
-        var form = $('[name=new_comment_form]');
+        var form = $(this);
 
-        $.post(form.attr('action'), form.serialize(), function(data) {
+        var reply_id = form.parents('[data-reply-id]').data('reply-id');
+
+        if (!reply_id) {
+            reply_id = 0;
+        }
+
+        var data = form.serialize();
+        data += '&thread='+reply_id;
+
+        $.post(form.attr('action'), data, function(data) {
             if (data.success == false) {
                 alert(data.form.errors[0].message);
                 return;
             }
 
-            var comments_area = $('.comments-area');
+            var comments_area;
+            if (reply_id === 0) {
+                comments_area = $('.avcms-comments-area');
+            }
+            else {
+                comments_area = $('.avcms-comment-replies-container[data-reply-id="'+reply_id+'"]').find('.avcms-comment-replies');
+            }
+
             comments_area.html(data.html + comments_area.html());
             form[0].reset();
 
@@ -87,7 +126,7 @@ avcms.comments = {
     deleteComment: function() {
         if (confirm('Are you sure you want to delete this comment?')) {
             var button = $(this);
-            var id = button.parents('.comment').data('id');
+            var id = button.parents('.avcms-comment').data('id');
 
             $.ajax({
                 type: "POST",
@@ -99,10 +138,24 @@ avcms.comments = {
                         alert('Error: '+data.error);
                     }
                     else {
-                        button.parents('.comment').remove();
+                        button.parents('.avcms-comment').remove();
                     }
                 }
             })
         }
+    },
+
+    showReplyTextarea: function() {
+        var comment = $(this).parents('[data-id]').first();
+        var container = $('.avcms-comment-replies-container[data-reply-id="' + comment.data('id') + '"').first().find('.avcms-reply-container').first();
+
+        if (!$(this).data('clicked')) {
+            container.html($('.new-comment').first().clone());
+            $(this).data('clicked', '1');
+        }
+        else {
+            container.html('');
+            $(this).removeData('clicked');
+        }
     }
-}
+};
