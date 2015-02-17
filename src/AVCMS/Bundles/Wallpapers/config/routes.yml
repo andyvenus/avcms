@@ -28,6 +28,10 @@ browse_wallpapers:
   requirements:
     page:  \d+
 
+liked_wallpapers:
+  path: /wallpapers/likes/{likes_user}
+  defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction, pageType: likes, likes_user: null }
+
 wallpaper_submit:
   path: /wallpapers/submit
   defaults: { _controller: Wallpapers::WallpapersController::submitWallpaperAction }

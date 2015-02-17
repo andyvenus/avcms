@@ -58,6 +58,27 @@ class WallpapersController extends Controller
             $query->category($category->getId());
         }
 
+        if ($pageType == 'likes') {
+            if ($request->get('likes_user') === null) {
+                $user = $this->activeUser();
+
+                if (!$user->getId()) {
+                    throw new AccessDeniedException('You must be logged in to view your liked games');
+                }
+            }
+            else {
+                $user = $this->model('Users')->findOne($request->get('likes_user'))->first();
+
+                if (!$user) {
+                    throw $this->createNotFoundException();
+                }
+            }
+
+            $ratings = $this->model('LikeDislike:Ratings');
+            $ids = $ratings->getLikedIds($user->getId(), 'wallpaper', $this->setting('browse_wallpapers_per_page'));
+            $query = $query->ids($ids, 'wallpapers.id');
+        }
+
         if ($pageType === 'featured') {
             $query->featured();
         }
