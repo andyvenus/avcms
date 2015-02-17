@@ -142,6 +142,14 @@ comments:
     frontend_route: wallpaper_details
     frontend_route_params: [slug]
 
+reports:
+  wallpapers:
+    name: Wallpaper
+    model: AVCMS\Bundles\Wallpapers\Model\Wallpapers
+    route: wallpapers_admin_edit
+    title_field: name
+    route_params: [id]
+
 ratings:
   wallpaper:
     name: Wallpaper

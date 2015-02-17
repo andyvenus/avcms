@@ -28,6 +28,10 @@
                     <div class="col-md-12 text-center">
                         {{ like_dislike_buttons('wallpaper', wallpaper.id, wallpaper) }}
 
+                        {% if is_granted('PERM_SEND_REPORTS') %}
+                            <button class="btn btn-default" data-report-button data-content-type="wallpapers" data-content-id="{{ wallpaper.id }}"><span class="glyphicon glyphicon-bullhorn"></span> {% trans %}Report Issue{% endtrans %}</button>
+                        {% endif %}
+
                         {% if is_granted('ADMIN_WALLPAPERS') %}
                             <a class="btn btn-default" href="{{ path('wallpapers_admin_edit', {'id': wallpaper.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit Wallpaper{% endtrans %}</a>
                         {% endif %}
