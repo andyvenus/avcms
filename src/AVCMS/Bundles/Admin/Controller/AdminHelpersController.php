@@ -28,8 +28,11 @@ class AdminHelpersController extends Controller
 
         $paired_users = array();
         foreach ($matchedUsers as $user) {
-            $paired_users[] = array('id' => $user->getId(), 'text' => $user->getUsername());
+            if (is_object($user)) {
+                $paired_users[] = array('id' => $user->getId(), 'text' => $user->getUsername());
+            }
         }
+        $paired_users[] = ['id' => '0', 'text' => 'None'];
 
         return new JsonResponse($paired_users);
     }
