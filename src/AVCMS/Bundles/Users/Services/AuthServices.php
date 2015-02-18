@@ -16,7 +16,7 @@ class AuthServices implements ServicesInterface
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
-        $container->register('auth.context_listener', 'Symfony\Component\Security\Http\Firewall\ContextListener')
+        $container->register('auth.context_listener', 'AVCMS\Core\Security\Subscriber\ContextListener')
             ->setArguments(array(new Reference('security.context'), array(new Reference('users.model')), 'user.context'))
             ->addTag('event.listener', array('event' => KernelEvents::REQUEST, 'method' => 'handle'))
             ->addTag('event.listener', array('event' => KernelEvents::RESPONSE, 'method' => 'onKernelResponse'))
