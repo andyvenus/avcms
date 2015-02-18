@@ -26,6 +26,8 @@ a {
   .header a:hover {
     text-decoration: none;
     color: #6ca072; }
+  .header a.label, .header a.label:hover {
+    color: white; }
   .header h1 {
     margin-top: 0px; }
   .header .user-area .user-area-inner {
