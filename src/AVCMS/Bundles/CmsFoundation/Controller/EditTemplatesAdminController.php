@@ -7,6 +7,7 @@
 
 namespace AVCMS\Bundles\CmsFoundation\Controller;
 
+use AV\Cache\CacheClearer;
 use AV\Form\FormBlueprint;
 use AV\Kernel\Bundle\Exception\NotFoundException;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
@@ -123,6 +124,11 @@ class EditTemplatesAdminController extends AdminBaseController
                 }
 
                 file_put_contents($dir.'/'.$filename, $form->getData('template'));
+
+                if ($fileType === 'templates') {
+                    $cacheBuster = new CacheClearer($this->getParam('cache_dir').'/twig');
+                    $cacheBuster->clearCaches();
+                }
 
                 return new JsonResponse(['success' => true, 'form' => $form->createView()->getJsonResponseData()]);
             }

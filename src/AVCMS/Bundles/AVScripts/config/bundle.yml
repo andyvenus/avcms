@@ -16,8 +16,7 @@ modules:
     description: Shows if a new version is available
     type: admin
     controller: AVScripts::UpdaterModuleController::updaterModule
-    cachable: true
-    default_cache_time: 86400
+    cachable: false
     accepted_template_types: [panel, content, none]
   avcms_news:
     name: AV Scripts News
