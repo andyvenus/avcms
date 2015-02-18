@@ -1,8 +1,8 @@
 var template_form_field_changed = false;
 
 $(document).ready(function() {
-    avcms.event.addEvent('submit-form-success', function() {
-        if (template_form_field_changed) {
+    avcms.event.addEvent('submit-form-success', function(form) {
+        if (template_form_field_changed && form.attr('name') == 'avcms_settings') {
             template_form_field_changed = false;
             regenerateAssets()
         }
