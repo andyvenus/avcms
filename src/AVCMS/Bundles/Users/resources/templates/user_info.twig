@@ -10,6 +10,10 @@
             {% endif %}
         </span>
 
+        <span class="options">
+            {{ outlet('user_details', {user: info_user}) }}
+        </span>
+
     {% else %}
         <span class="username">{% trans %}Anonymous{% endtrans %}</span>
     {% endif %}
