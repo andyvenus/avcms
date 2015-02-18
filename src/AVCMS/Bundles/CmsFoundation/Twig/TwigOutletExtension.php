@@ -22,9 +22,9 @@ class TwigOutletExtension extends \Twig_Extension
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function outlet($outletName)
+    public function outlet($outletName, array $vars = [])
     {
-        $event = new OutletEvent($outletName);
+        $event = new OutletEvent($outletName, $vars);
 
         $this->eventDispatcher->dispatch('twig.outlet', $event);
 

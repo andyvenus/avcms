@@ -15,14 +15,22 @@ class OutletEvent extends Event
 
     private $content = '';
 
-    public function __construct($outletName)
+    private $vars;
+
+    public function __construct($outletName, $vars)
     {
         $this->outletName = $outletName;
+        $this->vars = $vars;
     }
 
     public function getOutletName()
     {
         return $this->outletName;
+    }
+
+    public function getVars()
+    {
+        return $this->vars;
     }
 
     public function addContent($content)
