@@ -34,7 +34,14 @@ class TwigLoaderFilesystem extends \Twig_Loader_Filesystem
             return;
         }
 
-        $this->setPaths([$rootDir.'/webmaster/resources/templates/'.basename($templateDir), $templateDir]);
+        $frontendPaths = [];
+        $webmasterDir = $rootDir.'/webmaster/resources/templates/'.basename($templateDir);
+        if (file_exists($webmasterDir)) {
+            $frontendPaths[] = $webmasterDir;
+        }
+        $frontendPaths[] = $templateDir;
+
+        $this->setPaths($frontendPaths);
         $this->setPaths([$emailTemplateDir], 'email');
     }
 
