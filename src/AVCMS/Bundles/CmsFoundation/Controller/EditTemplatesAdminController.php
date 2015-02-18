@@ -98,6 +98,7 @@ class EditTemplatesAdminController extends AdminBaseController
 
         $formBlueprint = new FormBlueprint();
         $formBlueprint->setSuccessMessage('Template Saved');
+        $formBlueprint->setName('edit-template-form');
         $formBlueprint->add('template', 'textarea', [
             'label' => 'Template',
             'default' => $fileContents,
