@@ -6,16 +6,31 @@ require:
 services:
     - ReferralServices
 
+assets:
+  rrssb.css:
+    env: frontend
+  rrssb.min.js:
+    env: frontend
+
 menu_items:
-    admin:
-        admin_referrals:
-            label: Referrals
-            icon: glyphicon glyphicon-bullhorn
-            type: route
-            permission: ADMIN_REFERRALS
-            default_order: 80
-            settings:
-                route: referrals_admin_home
+  admin:
+    admin_referrals:
+      label: Referrals
+      icon: glyphicon glyphicon-bullhorn
+      type: route
+      permission: ADMIN_REFERRALS
+      default_order: 80
+      settings:
+        route: referrals_admin_home
+
+modules:
+  share_module:
+    name: Share Module
+    description: Buttons for users to share the current page to popular social networks
+    controller: Referrals::ShareModuleController::shareModule
+    accepted_template_types: [panel, content]
+    cachable: true
+    default_cache_time: 9999999
 
 permissions:
   ADMIN_REFERRALS:
