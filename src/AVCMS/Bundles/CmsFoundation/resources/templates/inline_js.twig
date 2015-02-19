@@ -2,7 +2,8 @@
     var avcms = avcms || {};
 
     avcms.config = {
-        site_url: '{{ site_url }}'
+        site_url: '{{ site_url }}',
+        user_id: '{{ user.id|default(0) }}'
     }
 </script>
 
