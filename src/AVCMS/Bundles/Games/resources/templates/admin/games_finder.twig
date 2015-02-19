@@ -23,9 +23,35 @@
 {% endblock %}
 
 {% block finder_header_titles %}
-
+    <div style="margin-left: 55px">
+        <div class="col-xs-3 hidden-xs">
+            {% trans %}Category{% endtrans %}
+        </div>
+        <div class="col-xs-3 hidden-xs">
+            {% trans %}Added{% endtrans %}
+        </div>
+        <div class="col-xs-2 hidden-xs">
+            {% trans %}Plays{% endtrans %}
+        </div>
+        <div class="col-xs-3 hidden-xs">
+            {% trans %}Last Played{% endtrans %}
+        </div>
+    </div>
 {% endblock %}
 
 {% block item_extended_inner %}
-
+    <div class="col-xs-3 hidden-xs">
+        {{ item.category.name }}
+    </div>
+    <div class="col-xs-3 hidden-xs" style="word-break: break-all">
+        {{ item.dateAdded|date(settings.date_format) }}
+    </div>
+    <div class="col-xs-2 hidden-xs">
+        {{ item.hits }}
+    </div>
+    <div class="col-xs-3 hidden-xs">
+        {% if item.lastHit %}
+            {{ item.lastHit|date(settings.date_format) }}
+        {% endif %}
+    </div>
 {% endblock %}
