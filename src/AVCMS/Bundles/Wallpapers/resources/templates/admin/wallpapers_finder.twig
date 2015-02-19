@@ -1,25 +1,5 @@
 {% extends '@admin/finder.twig' %}
 
-{% block finder_header_titles %}
-    <div style="margin-left: 85px">
-        <div class="col-md-2 hidden-xs">
-            {% trans %}Resolution{% endtrans %}
-        </div>
-        <div class="col-md-3 hidden-sm hidden-xs">
-            {% trans %}File{% endtrans %}
-        </div>
-        <div class="col-md-3 hidden-sm hidden-xs">
-            {% trans %}Slug{% endtrans %}
-        </div>
-        <div class="col-md-1 hidden-sm hidden-xs">
-            {% trans %}Hits{% endtrans %}
-        </div>
-        <div class="col-md-2 hidden-sm hidden-xs">
-            {% trans %}Downloads{% endtrans %}
-        </div>
-    </div>
-{% endblock %}
-
 {% block item_main %}
     <div class="finder-thumbnail">
         <img src="{{ wp_thumbnail_url(item, 'xs') }}" width="80" height="45"/>
@@ -46,20 +26,48 @@
     {% endblock %}
 {% endblock %}
 
+{% block finder_header_titles %}
+    <div style="margin-left: 85px">
+        <div class="col-xs-2 hidden-xs hidden-sm hidden-md">
+            {% trans %}Resolution{% endtrans %}
+        </div>
+        <div class="col-xs-3 col-lg-2 hidden-xs">
+            {% trans %}Hits{% endtrans %}
+        </div>
+        <div class="col-xs-3 hidden-xs">
+            {% trans %}Last Hit{% endtrans %}
+        </div>
+        <div class="col-xs-3 col-lg-2 hidden-xs">
+            {% trans %}Downloads{% endtrans %}
+        </div>
+        <div class="col-xs-3 hidden-xs">
+            {% trans %}Last Download{% endtrans %}
+        </div>
+    </div>
+{% endblock %}
+
 {% block item_extended_inner %}
-    <div class="col-md-2 hidden-xs">
+    <div class="col-xs-2 hidden-xs hidden-sm hidden-md">
         {{ item.originalWidth }}x{{ item.originalHeight }}
     </div>
-    <div class="col-md-3 hidden-sm hidden-xs" style="word-break: break-all">
-        {{ item.file }}
-    </div>
-    <div class="col-md-3 hidden-sm hidden-xs">
-        <a href="{{ url('wallpaper_details', {slug: item.slug}) }}">{{ item.slug }}</a>
-    </div>
-    <div class="col-md-1 hidden-sm hidden-xs">
+    <div class="col-xs-3 col-lg-2 hidden-xs">
         {{ item.hits }}
     </div>
-    <div class="col-md-2 hidden-sm hidden-xs">
+    <div class="col-xs-3 hidden-xs">
+        {% if item.lastHit %}
+            {{ item.lastHit|date(settings.date_format) }}
+        {% else %}
+            {% trans %}Never{% endtrans %}
+        {% endif %}
+    </div>
+    <div class="col-xs-3 col-lg-2 hidden-xs">
         {{ item.totalDownloads }}
+    </div>
+    <div class="col-xs-3 hidden-xs">
+        {% if item.lastDownload %}
+            {{ item.lastDownload|date(settings.date_format) }}
+        {% else %}
+            {% trans %}Never{% endtrans %}
+        {% endif %}
     </div>
 {% endblock %}
