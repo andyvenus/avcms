@@ -174,6 +174,13 @@ menu_items:
       permission: ADMIN_SETTINGS
       settings:
         route: avcms_settings
+    admin_templates:
+      icon: glyphicon glyphicon-file
+      type: route
+      label: Edit Templates
+      parent: settings
+      settings:
+        route: manage_templates_admin_home
     modules:
       icon: glyphicon glyphicon-list-alt
       type: route
