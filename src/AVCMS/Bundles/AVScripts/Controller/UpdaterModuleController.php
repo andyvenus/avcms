@@ -18,6 +18,15 @@ class UpdaterModuleController extends Controller
 
         $downloadUrl = $this->getParam('avs_api_url').'/download-latest?app_id='.$appConfigInfo['id'];
 
-        return new Response($this->render('@AVScripts/admin/update_info.twig', ['download_url' => $downloadUrl]));
+        $cacheFile = $this->getParam('cache_dir').'/update_info.json';
+        $json = null;
+        if (file_exists($cacheFile) && filemtime($cacheFile) > time() - 86400) {
+            $json = file_get_contents($cacheFile);
+        }
+
+        return new Response($this->render('@AVScripts/admin/update_info.twig', [
+            'download_url' => $downloadUrl,
+            'json' => $json
+        ]));
     }
 }

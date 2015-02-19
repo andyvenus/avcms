@@ -8,7 +8,6 @@
 namespace AVCMS\Bundles\AVScripts\Controller;
 
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -30,9 +29,14 @@ class UpdaterAdminController extends AdminBaseController
         $upToDate = $updateManager->isUpToDate();
 
         if ($updateManager->isUpToDate() === true || $upToDate  === null) {
-            return new JsonResponse(['update_available' => ($upToDate === null ? null : !$upToDate), 'status_message' => $updateManager->getStatusMessage()]);
+            $jsonResponse = json_encode(['update_available' => ($upToDate === null ? null : !$upToDate), 'status_message' => $updateManager->getStatusMessage()]);
+        }
+        else {
+            $jsonResponse = json_encode((array)$updateManager->getUpdateInfo() + ['update_available' => true]);
         }
 
-        return new JsonResponse((array) $updateManager->getUpdateInfo() + ['update_available' => true]);
+        file_put_contents($this->getParam('cache_dir').'/update_info.json', $jsonResponse);
+
+        return new Response($jsonResponse, 200, ['Content-Type' => 'application/json']);
     }
 }

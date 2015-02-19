@@ -22,3 +22,9 @@
 </div>
 
 <a class="btn btn-sm btn-default" href="https://www.avscripts.net/store/customers" target="_blank"><span class="glyphicon glyphicon-new-window"></span> {% trans %}AV Scripts Customer Area{% endtrans %}</a>
+
+{% if json %}
+    <script type="text/javascript">
+        var update_info = {{ json|raw }};
+    </script>
+{% endif %}
