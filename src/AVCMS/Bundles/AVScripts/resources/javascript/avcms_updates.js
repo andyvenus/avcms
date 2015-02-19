@@ -10,7 +10,7 @@ avcms.updates = {
             return;
         }
 
-        if (typeof(update_info) === 'undefined') {
+        if (typeof(update_info) === 'undefined' || $('.avcms-update-no-cache').length) {
             $.get(avcms.config.site_url + 'admin/update-checker', avcms.updates.displayUpdateInfo, 'json');
         }
         else {

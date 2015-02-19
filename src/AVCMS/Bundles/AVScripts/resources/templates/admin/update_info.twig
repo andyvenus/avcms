@@ -27,4 +27,6 @@
     <script type="text/javascript">
         var update_info = {{ json|raw }};
     </script>
+{% else %}
+    <span class="avcms-update-no-cache"></span>
 {% endif %}
