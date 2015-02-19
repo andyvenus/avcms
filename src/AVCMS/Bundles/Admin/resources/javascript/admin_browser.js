@@ -101,6 +101,11 @@ avcms.browser = {
     setBrowserFocus: function() {
         var finder = $('.browser-finder');
         var editor = $('.browser-editor');
+
+        if (finder.length == 0) {
+            return;
+        }
+
         if ($('.ajax-editor-inner').children().filter(':visible').length < 1) {
             if (!finder.hasClass('finder-has-focus')) {
                 finder.addClass('finder-has-focus');
