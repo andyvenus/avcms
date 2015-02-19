@@ -105,6 +105,8 @@ avcms.browser = {
             if (!finder.hasClass('finder-has-focus')) {
                 finder.addClass('finder-has-focus');
                 editor.removeClass('editor-has-focus');
+
+                document.title = $('.browser-finder-title h3').text();
             }
         }
         else {
