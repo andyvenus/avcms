@@ -173,6 +173,11 @@ ratings:
     name: Game
     model: AVCMS\Bundles\Games\Model\Games
 
+frontend_search:
+  games:
+    name: Games
+    route: browse_games
+
 module_positions:
   play_game_sidebar:
       name: Play Game Sidebar

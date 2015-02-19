@@ -24,7 +24,8 @@ class GameFrontendFiltersForm extends FormBlueprint
                 'top-hits' => 'Most Viewed',
                 'a-z' => 'A-Z',
                 'z-a' => 'Z-A',
-            ]
+            ],
+            'allow_unset' => true
         ]);
 
         $this->add('search', 'text', [
