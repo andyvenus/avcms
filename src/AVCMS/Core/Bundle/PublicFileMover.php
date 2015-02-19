@@ -48,6 +48,12 @@ class PublicFileMover
             }
         }
 
+        foreach (new \DirectoryIterator($this->rootDir.'/webmaster/templates/frontend') as $templateDir) {
+            if ($templateDir->isDir() && $templateDir->isDot() === false) {
+                $this->copyDirectory($templateDir->getRealPath(), 'web/resources/templates/frontend/'.$templateDir, $lastTime, ['resources', 'template.yml', 'twig', 'scss', 'modules']);
+            }
+        }
+
         $templateConfig = $this->templateManager->getTemplateConfig();
         if (isset($templateConfig['parent_dir']) && file_exists($templateConfig['parent_template_dir'])) {
             foreach (new \DirectoryIterator($templateConfig['parent_template_dir']) as $templateResourceDir) {
@@ -88,7 +94,7 @@ class PublicFileMover
         }
 
         while(false !== ( $file = readdir($dir)) ) {
-            if (( $file != '.' ) && ( $file != '..' ) && ($ignore === null || !in_array($file, $ignore))) {
+            if (( $file != '.' ) && ( $file != '..' ) && ($ignore === null || (!in_array($file, $ignore) && !in_array(pathinfo($file, PATHINFO_EXTENSION), $ignore)))) {
                 if ( is_dir($src . '/' . $file) ) {
                     $this->copyDirectory($src . '/' . $file, $dst . '/' . $file, $lastTime, $ignore);
                 }

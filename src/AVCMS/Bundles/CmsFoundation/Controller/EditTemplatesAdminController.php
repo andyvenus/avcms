@@ -64,7 +64,12 @@ class EditTemplatesAdminController extends AdminBaseController
 
                         $fileType = $this->getFileType($file->getFilename());
 
-                        $id = str_replace('/', '::', str_replace('/'.$fileType.'/', '', $filePath));
+                        $id = $filePath;
+                        if ($info['type'] != 'template') {
+                            $id = str_replace('/'.$fileType.'/', '', $filePath);
+                        }
+
+                        $id = str_replace('/', '::', $id);
                         if ($id[0] == ':') {
                             $id = ltrim($id, '::');
                         }
@@ -122,24 +127,24 @@ class EditTemplatesAdminController extends AdminBaseController
                 $dir = $this->getParam('root_dir').'/webmaster/resources/';
 
                 if ($filesInfo['type'] == 'bundle') {
-                    $dir .= $request->get('bundle') . '/' . $fileType . $resourceDir;
+                    $dir .= $request->get('bundle') . '/' . $fileType . '/' . $resourceDir;
                 }
                 else {
-                    $dir .= 'templates/'.$request->get('bundle').'/'.$this->getTemplateFileDir($request->get('bundle'), $filename);
+                    $dir .= 'templates/frontend/'.$request->get('bundle');
                 }
 
                 if (!file_exists($dir)) {
                     mkdir($dir, 0777, true);
                 }
 
-                file_put_contents($dir.'/'.$filename, $form->getData('template'));
+                file_put_contents($dir.'/'.$basename, $form->getData('template'));
 
                 if ($fileType === 'templates') {
                     $cacheBuster = new CacheClearer($this->getParam('cache_dir').'/twig');
                     $cacheBuster->clearCaches();
                 }
 
-                return new JsonResponse(['success' => true, 'form' => $form->createView()->getJsonResponseData()]);
+                return new JsonResponse(['success' => true, 'id' => $request->get('file'), 'form' => $form->createView()->getJsonResponseData()]);
             }
         }
 
@@ -170,7 +175,7 @@ class EditTemplatesAdminController extends AdminBaseController
             $dir .= $request->get('bundle') . '/' . $fileType;
         }
         else {
-            $dir .= 'templates/'.$request->get('bundle').'/'.$this->getTemplateFileDir($request->get('bundle'), $file);
+            $dir .= 'templates/frontend/'.$request->get('bundle');
         }
 
         unlink($dir.'/'.$file);
@@ -208,36 +213,14 @@ class EditTemplatesAdminController extends AdminBaseController
         else {
             $hierarchy = [];
 
-            $fileDir = $this->getTemplateFileDir($bundle, $filePath);
-
-            $webmasterLocation = $this->getParam('root_dir').'/webmaster/resources/templates/'.$bundle.$fileDir;
-            if (file_exists($webmasterLocation.'/'.basename($filePath))) {
+            $webmasterLocation = $this->getParam('root_dir').'/webmaster/resources/templates/frontend/'.$bundle;
+            if (file_exists($webmasterLocation.'/'.$filePath)) {
                 $hierarchy['webmaster'] = $webmasterLocation;
             }
-            $hierarchy['template'] = $this->getParam('root_dir').'/webmaster/templates/frontend/'.$bundle.$fileDir;
+            $hierarchy['template'] = $this->getParam('root_dir').'/webmaster/templates/frontend/'.$bundle;
         }
 
         return $hierarchy;
-    }
-
-    protected function getTemplateFileDir($template, $filePath)
-    {
-        $templateDir = $this->getParam('root_dir').'/webmaster/templates/frontend/'.$template;
-
-        $dirs = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($templateDir),
-            RecursiveIteratorIterator::CHILD_FIRST
-        );
-
-        $fileDir = '';
-        foreach ($dirs as $file) {
-            if ($file->getFilename() == basename($filePath)) {
-                $fileDir = str_replace($templateDir, '', $file->getPath());
-                break;
-            }
-        }
-
-        return $fileDir;
     }
 
     protected function getFileType($filename)

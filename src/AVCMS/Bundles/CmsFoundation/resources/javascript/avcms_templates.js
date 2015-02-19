@@ -17,13 +17,22 @@ avcms.templates = {
                 $('[data-id="' + file + '"]').find('.avcms-reset-template').remove();
 
                 avcms.nav.refreshSection('.ajax-editor-inner', 'editor');
+
+                if (file.indexOf('.css') !== -1 || file.indexOf('.js') !== -1) {
+                    setTimeout(regenerateAssets, 300);
+                }
             });
         }
     },
 
     triggerAssetRegen: function(form) {
-        if (form.attr('name') == 'edit-template-form' && (form.data('item-id').indexOf('.css') !== -1 || form.data('item-id').indexOf('.js') !== -1)) {
-            console.log(form.data('item-id').indexOf('css'));
+        if (form.attr('name') != 'edit-template-form') {
+            return;
+        }
+
+        $('.editor-content').filter(':visible').find('.alert[data-bundle]').show();
+
+        if (form.data('item-id').indexOf('.css') !== -1 || form.data('item-id').indexOf('.js') !== -1) {
             regenerateAssets();
         }
     }

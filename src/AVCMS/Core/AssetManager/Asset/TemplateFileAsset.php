@@ -26,7 +26,7 @@ class TemplateFileAsset extends FileAsset implements TemplateAssetInterface
         $this->type = $type;
         $this->file = $file;
 
-        $this->source = $template.'/'.$type.'/'.$file;
+        $this->source = 'web/resources/templates/frontend/'.basename($template).'/'.$type.'/'.$file;
 
         parent::__construct($this->source, $filters, $sourceRoot, $sourcePath, $vars);
     }

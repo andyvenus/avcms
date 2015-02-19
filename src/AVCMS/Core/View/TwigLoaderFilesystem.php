@@ -35,7 +35,7 @@ class TwigLoaderFilesystem extends \Twig_Loader_Filesystem
         }
 
         $frontendPaths = [];
-        $webmasterDir = $rootDir.'/webmaster/resources/templates/'.basename($templateDir);
+        $webmasterDir = $rootDir.'/webmaster/resources/templates/frontend/'.basename($templateDir);
         if (file_exists($webmasterDir)) {
             $frontendPaths[] = $webmasterDir;
         }
