@@ -25,14 +25,16 @@ class WallpaperFrontendFiltersForm extends FormBlueprint
                 'top-downloads' => 'Most Downloaded',
                 'a-z' => 'A-Z',
                 'z-a' => 'Z-A',
-            ]
+            ],
+            'allow_unset' => true
         ]);
 
         $this->add('resolution', 'select', [
             'label' => 'Resolution',
             'choices' => array_merge(['all' => 'All Resolutions'], $resolutionChoices),
             'choices_translate' => false,
-            'default' => 'all'
+            'default' => 'all',
+            'allow_unset' => true
         ]);
 
         $this->add('search', 'text', [
