@@ -59,7 +59,7 @@ class WallpapersImageController extends Controller
         $headers = [];
         if ($download === true) {
             $headers['Content-Disposition'] = 'attachment; filename="'.$wallpaper->getSlug().'-'.$filename.'"';
-            $this->container->get('hitcounter')->registerHit($wallpapers, $wallpaper->getId(), 'total_downloads');
+            $this->container->get('hitcounter')->registerHit($wallpapers, $wallpaper->getId(), 'total_downloads', 'id', 'last_download');
         }
 
         if (file_exists($imagePath)) {

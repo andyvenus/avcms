@@ -147,6 +147,26 @@ class Wallpaper extends ContentEntity implements RateInterface
         $this->set("total_downloads", $value);
     }
 
+    public function getLastHit()
+    {
+        return $this->get("last_hit");
+    }
+
+    public function setLastHit($value)
+    {
+        $this->set("last_hit", $value);
+    }
+
+    public function getLastDownload()
+    {
+        return $this->get("last_download");
+    }
+
+    public function setLastDownload($value)
+    {
+        $this->set("last_download", $value);
+    }
+
     public function setLikes($value)
     {
         $this->set("likes", $value);

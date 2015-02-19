@@ -126,7 +126,7 @@ class WallpapersController extends Controller
 
         $resolutions = $this->container->get('wallpaper.resolutions_manager')->getWallpaperResolutions($wallpaper);
 
-        $this->container->get('hitcounter')->registerHit($this->wallpapers, $wallpaper->getId());
+        $this->container->get('hitcounter')->registerHit($this->wallpapers, $wallpaper->getId(), 'hits', 'id', 'last_hit');
 
         return new Response($this->render('@Wallpapers/wallpaper_details.twig', ['wallpaper' => $wallpaper, 'resolutions' => $resolutions]));
     }
