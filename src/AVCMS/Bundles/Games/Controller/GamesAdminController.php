@@ -12,6 +12,7 @@ use AVCMS\Bundles\Games\Form\GamesCategoryAdminForm;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class GamesAdminController extends AdminBaseController
 {
@@ -27,6 +28,10 @@ class GamesAdminController extends AdminBaseController
     public function setUp()
     {
         $this->games = $this->model('Games');
+
+        if (!$this->isGranted('ADMIN_GAMES')) {
+            throw new AccessDeniedException;
+        }
     }
 
     public function homeAction(Request $request)

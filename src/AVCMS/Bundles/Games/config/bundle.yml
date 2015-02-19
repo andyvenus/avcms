@@ -31,6 +31,7 @@ menu_items:
       icon: glyphicon glyphicon-tower
       type: route
       default_order: 2
+      permission: ADMIN_GAMES
       settings:
         route: games_admin_home
     games_categories_admin:
@@ -45,6 +46,7 @@ menu_items:
       icon: glyphicon glyphicon-cloud-download
       type: route
       default_order: 3
+      permission: ADMIN_GAMES
       settings:
         route: game_feeds_admin_home
 
@@ -271,6 +273,9 @@ permissions:
   ELEVATED_NO_GAME_ADS:
     name: No Game Adverts
     description: If allowed, users in this group will not see ads before games
+  ADMIN_GAMES:
+    name: Games Administration
+    description: Manage games in the admin panel (including categories & game feeds)
 
 container_params:
   games_dir: web/games

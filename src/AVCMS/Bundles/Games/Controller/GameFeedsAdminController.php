@@ -3,7 +3,6 @@
 namespace AVCMS\Bundles\Games\Controller;
 
 use AV\FileHandler\CurlFileHandler;
-use AV\FileHandler\FileHandlerBase;
 use AV\Form\FormBlueprint;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Games\Form\FeedGamesAdminFiltersForm;
@@ -32,6 +31,10 @@ class GameFeedsAdminController extends AdminBaseController
     {
         $this->feedGames = $this->model('FeedGames');
         $this->games = $this->model('Games');
+
+        if (!$this->isGranted('ADMIN_GAMES')) {
+            throw new AccessDeniedException;
+        }
     }
 
     public function homeAction(Request $request)
