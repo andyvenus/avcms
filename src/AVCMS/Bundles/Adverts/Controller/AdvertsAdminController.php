@@ -7,6 +7,7 @@ use AVCMS\Bundles\Adverts\Form\AdvertAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class AdvertsAdminController extends AdminBaseController
 {
@@ -20,6 +21,10 @@ class AdvertsAdminController extends AdminBaseController
     public function setUp()
     {
         $this->adverts = $this->model('Adverts');
+
+        if (!$this->isGranted('ADMIN_ADVERTS')) {
+            throw new AccessDeniedException;
+        }
     }
 
     public function homeAction(Request $request)

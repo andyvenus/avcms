@@ -12,6 +12,7 @@ menu_items:
       type: route
       label: Adverts
       icon: glyphicon glyphicon-certificate
+      permission: ADMIN_ADVERTS
       settings:
         route: adverts_admin_home
 
@@ -29,3 +30,8 @@ modules:
             type: select
             label: Advert
             choices_provider_service: adverts.choices_provider
+
+permissions:
+  ADMIN_ADVERTS:
+    name: Adverts Administration
+    description: Manage adverts in the admin panel
