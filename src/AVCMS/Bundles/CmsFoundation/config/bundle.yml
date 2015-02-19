@@ -262,3 +262,6 @@ permissions:
   ADMIN_SETTINGS:
     name: Admin Settings
     description: Manage the site settings in the admin panel
+  ADMIN_EDIT_TEMPLATES:
+    name: Edit Templates
+    description: Edit template files in the admin panel

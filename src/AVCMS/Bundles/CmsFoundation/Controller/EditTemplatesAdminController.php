@@ -17,10 +17,18 @@ use RecursiveIteratorIterator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class EditTemplatesAdminController extends AdminBaseController
 {
     protected $browserTemplate = '@CmsFoundation/admin/edit_templates_browser.twig';
+
+    public function setUp()
+    {
+        if (!$this->isGranted('ADMIN_EDIT_TEMPLATES')) {
+            throw new AccessDeniedException;
+        }
+    }
 
     public function homeAction(Request $request)
     {
