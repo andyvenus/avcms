@@ -36,7 +36,7 @@ class CategoryChoicesProvider implements ChoicesProviderInterface
         $choices = [];
 
         if ($this->allowNone) {
-            $choices[0] = 'All';
+            $choices[0] = 'All Categories';
         }
 
         if ($this->subCategories === true) {

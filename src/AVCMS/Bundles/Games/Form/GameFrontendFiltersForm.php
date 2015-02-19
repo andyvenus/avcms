@@ -21,7 +21,7 @@ class GameFrontendFiltersForm extends FormBlueprint
                 'publish-date-newest' => 'Newest',
                 'publish-date-oldest' => 'Oldest',
                 'liked' => 'Most Liked',
-                'top-hits' => 'Most Viewed',
+                'top-hits' => 'Most Played',
                 'a-z' => 'A-Z',
                 'z-a' => 'Z-A',
             ],

@@ -80,7 +80,8 @@ class GamesAdminController extends AdminBaseController
         $finder = $this->games->find()
             ->setSearchFields(array('name'))
             ->setResultsPerPage(15)
-            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
+            ->join($this->model('GameCategories'), ['id', 'name', 'slug'])
+            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null, 'category' => 0));
         $items = $finder->get();
 
         return new Response($this->render('@Games/admin/games_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));
@@ -133,7 +134,7 @@ class GamesAdminController extends AdminBaseController
     {
         $templateVars = parent::getSharedTemplateVars();
 
-        $templateVars['finder_filters_form'] = $this->buildForm(new GamesAdminFiltersForm())->createView();
+        $templateVars['finder_filters_form'] = $this->buildForm(new GamesAdminFiltersForm(new CategoryChoicesProvider($this->model('GameCategories'), true, true)))->createView();
 
         return $templateVars;
     }
