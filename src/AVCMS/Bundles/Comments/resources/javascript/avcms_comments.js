@@ -118,6 +118,7 @@ avcms.comments = {
             comments_area.html(data.html + comments_area.html());
             form[0].reset();
 
+            avcms.event.fireEvent('comment-submit-success', [form, data, reply_id]);
         }, 'json');
 
         return false;
