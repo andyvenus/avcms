@@ -19,6 +19,10 @@ class PointsServices implements ServicesInterface
             ->setArguments([new Reference('session'), new Reference('security.token_storage'), new Reference('users.model'), new Reference('settings_manager')])
         ;
 
+        $container->register('display_points.subscriber', 'AVCMS\Bundles\Points\EventSubscriber\DisplayPointsSubscriber')
+            ->addTag('event.subscriber')
+        ;
+
         $container->register('points_model.subscriber', 'AVCMS\Bundles\Points\EventSubscriber\PointsModelSubscriber')
             ->addTag('event.subscriber')
         ;
