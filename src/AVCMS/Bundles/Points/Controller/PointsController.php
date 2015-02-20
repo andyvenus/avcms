@@ -17,7 +17,7 @@ class PointsController extends Controller
         $notification = $this->get('session')->get('points_notification', []);
 
         if (isset($notification['message'])) {
-            $notification['message'] = $this->trans($notification['message'], $notification);
+            $notification['message'] = $this->trans($notification['message'], $notification + ['points_name' => 'points']);
             $notification['success'] = true;
         }
         else {
