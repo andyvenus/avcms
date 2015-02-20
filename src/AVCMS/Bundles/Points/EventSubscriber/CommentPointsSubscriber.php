@@ -32,7 +32,7 @@ class CommentPointsSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $this->pointsManager->addPoints('comments_points', 'You earned {points} {points_name} for submitting a comment');
+        $this->pointsManager->addPoints('comment_points', 'You earned {points} {points_name} for submitting a comment');
     }
 
     public static function getSubscribedEvents()

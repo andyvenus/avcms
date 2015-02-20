@@ -32,6 +32,10 @@ class PointsManager
 
     public function addPoints($settingName, $notification)
     {
+        if (!$this->settingsManager->getSetting('enable_points')) {
+            return;
+        }
+
         $lastPoints = $this->session->get('last_points/'.$settingName, 0);
 
         if ($lastPoints > time() - 60) {

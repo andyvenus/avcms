@@ -9,3 +9,23 @@ services:
 assets:
   avcms_points.js:
     env: frontend
+
+user_settings_sections:
+  points: Points
+
+user_settings:
+  enable_points:
+      type: checkbox
+      label: Enable Points
+      help: Enable the points system
+      section: points
+      default: 1
+  comment_points:
+    type: text
+    label: Comment Points
+    help: The number of points a user gets when making a comment
+    section: points
+    default: 10
+    validation:
+      numeric:
+        rule: Numeric
