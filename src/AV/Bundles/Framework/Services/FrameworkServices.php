@@ -75,7 +75,11 @@ class FrameworkServices implements ServicesInterface
 
         // Sessions
 
-        $container->register('session', 'Symfony\Component\HttpFoundation\Session\Session');
+        $container->register('session', 'Symfony\Component\HttpFoundation\Session\Session')
+            ->setArguments([null, new Reference('session.namespaced_attribute_bag')])
+        ;
+
+        $container->register('session.namespaced_attribute_bag', 'Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag');
 
         $container->register('listener.session', 'AVCMS\Core\Security\Subscriber\SessionSubscriber')
             ->setArguments([new Reference('service_container')])
