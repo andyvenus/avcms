@@ -62,3 +62,5 @@ AVScripts:
     enabled: true
 Games:
     enabled: true
+Points:
+    enabled: true

@@ -1,0 +1,11 @@
+name: Points
+namespace: AVCMS\Bundles\Points
+require:
+    - Framework
+
+services:
+  - PointsServices
+
+assets:
+  avcms_points.js:
+    env: frontend
