@@ -5,7 +5,7 @@ namespace AVCMS\Bundles\Games\Model;
 use AV\Model\Entity;
 use AVCMS\Bundles\LikeDislike\RatingsManager\RateInterface;
 
-class Game extends Entity
+class Game extends Entity implements RateInterface
 {
     public function setAdvertId($value)
     {
