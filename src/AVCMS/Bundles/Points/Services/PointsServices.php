@@ -20,6 +20,7 @@ class PointsServices implements ServicesInterface
         ;
 
         $container->register('display_points.subscriber', 'AVCMS\Bundles\Points\EventSubscriber\DisplayPointsSubscriber')
+            ->setArguments([new Reference('settings_manager')])
             ->addTag('event.subscriber')
         ;
 

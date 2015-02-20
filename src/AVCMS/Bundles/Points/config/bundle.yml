@@ -20,6 +20,12 @@ user_settings:
       help: Enable the points system
       section: points
       default: 1
+  points_name:
+    type: text
+    label: Points Name
+    help: Rename "points" to something else
+    section: points
+    default: Points
   comment_points:
     type: text
     label: Comment Points
