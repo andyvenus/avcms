@@ -181,6 +181,12 @@ frontend_search:
     route: browse_games
 
 module_positions:
+  games_home:
+    name: Games Homepage
+    description: The games homepage
+    environment: frontend
+    global_modules: 1
+    type: content
   play_game_sidebar:
       name: Play Game Sidebar
       description: Sidebar on the play game page

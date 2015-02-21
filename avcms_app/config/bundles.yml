@@ -8,6 +8,14 @@ Model:
     enabled: true
 CmsFoundation:
     enabled: true
+    config:
+      module_positions:
+        homepage:
+            name: Homepage
+            description: The main homepage
+            environment: frontend
+            global_modules: 1
+            type: content
 Users:
     enabled: true
 Admin:

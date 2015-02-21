@@ -166,7 +166,7 @@ permissions:
 module_positions:
   wallpapers_home:
     name: Wallpapers Homepage
-    description: The content area of the homepage
+    description: The wallpapers homepage
     environment: frontend
     global_modules: 1
     type: content

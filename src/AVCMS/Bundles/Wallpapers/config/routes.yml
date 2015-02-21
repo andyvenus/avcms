@@ -1,6 +1,6 @@
 wallpapers_home:
   path: /wallpapers
-  defaults: { _controller: Wallpapers::WallpapersController::wallpapersHomeAction }
+  defaults: { _controller: CmsFoundation::HomepageController::homepageAction, modulePosition: wallpapers_home, title: Wallpapers }
 
 featured_wallpapers:
   path: /wallpapers/featured

@@ -1,3 +1,7 @@
+games_home:
+  path: /games
+  defaults: { _controller: CmsFoundation::HomepageController::homepageAction, modulePosition: games_home, title: Games }
+
 play_game:
   path: /game/{slug}
   defaults: { _controller: Games::GamesController::playGameAction }

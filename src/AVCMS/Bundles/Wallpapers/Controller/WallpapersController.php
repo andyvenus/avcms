@@ -31,11 +31,6 @@ class WallpapersController extends Controller
         $this->wallpapers = $this->model('Wallpapers');
     }
 
-    public function wallpapersHomeAction(Request $request)
-    {
-        return new Response($this->render('@Wallpapers/wallpapers_home.twig'));
-    }
-
     public function browseWallpapersAction(Request $request, $pageType = 'archive')
     {
         $finder = $this->wallpapers->find();

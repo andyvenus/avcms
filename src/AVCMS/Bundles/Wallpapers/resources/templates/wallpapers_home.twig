@@ -1,9 +1,0 @@
-{% extends 'index.twig' %}
-
-{% block content %}
-    {% for module in modules('wallpapers_home') %}
-        {% include module.template %}
-    {% else %}
-        {% trans %}No Modules Assigned To Wallpapers Homepage{% endtrans %}
-    {% endfor %}
-{% endblock %}
