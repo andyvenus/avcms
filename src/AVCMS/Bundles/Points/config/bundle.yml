@@ -26,12 +26,30 @@ user_settings:
     help: Rename "points" to something else
     section: points
     default: Points
+  game_points:
+    type: text
+    label: Game Points
+    help: The number of points a user gets when playing a game for 2 minutes
+    section: points
+    default: 10
+    validation:
+      numeric:
+        rule: Numeric
   comment_points:
     type: text
     label: Comment Points
     help: The number of points a user gets when making a comment
     section: points
     default: 10
+    validation:
+      numeric:
+        rule: Numeric
+  report_points:
+    type: text
+    label: Report Points
+    help: The number of points a user gets when making sending a report
+    section: points
+    default: 15
     validation:
       numeric:
         rule: Numeric

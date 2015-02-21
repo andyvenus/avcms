@@ -38,7 +38,7 @@ class PointsManager
 
         $lastPoints = $this->session->get('last_points/'.$settingName, 0);
 
-        if ($lastPoints > time() - 60) {
+        if ($lastPoints > time() - 120) {
             $this->session->set('points_notification', ['message' => 'No points earned this time, you\'re earning too fast']);
             return;
         }
@@ -53,6 +53,10 @@ class PointsManager
 
         if (!is_numeric($points)) {
             $points = 1;
+        }
+
+        if ($points == 0) {
+            return;
         }
 
         $this->users->query()

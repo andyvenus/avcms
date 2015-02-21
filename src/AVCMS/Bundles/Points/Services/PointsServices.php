@@ -19,6 +19,10 @@ class PointsServices implements ServicesInterface
             ->setArguments([new Reference('session'), new Reference('security.token_storage'), new Reference('users.model'), new Reference('settings_manager')])
         ;
 
+        $container->register('points_user_form.subscriber', 'AVCMS\Bundles\Points\EventSubscriber\PointsExtendUserFormSubscriber')
+            ->addTag('event.subscriber')
+        ;
+
         $container->register('display_points.subscriber', 'AVCMS\Bundles\Points\EventSubscriber\DisplayPointsSubscriber')
             ->setArguments([new Reference('settings_manager')])
             ->addTag('event.subscriber')
@@ -29,6 +33,11 @@ class PointsServices implements ServicesInterface
         ;
 
         $container->register('comment_points.subscriber', 'AVCMS\Bundles\Points\EventSubscriber\CommentPointsSubscriber')
+            ->setArguments([new Reference('points_manager')])
+            ->addTag('event.subscriber')
+        ;
+
+        $container->register('report_points.subscriber', 'AVCMS\Bundles\Points\EventSubscriber\ReportPointsSubscriber')
             ->setArguments([new Reference('points_manager')])
             ->addTag('event.subscriber')
         ;

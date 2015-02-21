@@ -9,6 +9,7 @@ namespace AVCMS\Bundles\Points\Controller;
 
 use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class PointsController extends Controller
 {
@@ -25,5 +26,20 @@ class PointsController extends Controller
         }
 
         return new JsonResponse($notification);
+    }
+
+    public function addPointsAction(Request $request)
+    {
+        $type = $request->get('type');
+
+        if ($type == 'game_points') {
+            $message = 'You earned {points} {points_name} for playing a game';
+        }
+
+        if (isset($message)) {
+            $this->get('points_manager')->addPoints($type, $message);
+        }
+
+        return $this->getNotificationAction();
     }
 }

@@ -13,6 +13,8 @@ class ReportForm extends FormBlueprint
 {
     public function __construct($contentType = null, $contentId = null)
     {
+        $this->setName('report-form');
+
         $this->add('message', 'textarea', [
             'label' => 'Info',
             'required' => true

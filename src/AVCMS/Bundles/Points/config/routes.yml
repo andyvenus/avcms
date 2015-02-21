@@ -1,3 +1,7 @@
 points_notification:
   path: /points-notification
   defaults: { _controller: Points::PointsController::getNotificationAction }
+
+add_points:
+  path: /add-points
+  defaults: { _controller: Points::PointsController::addPointsAction }
