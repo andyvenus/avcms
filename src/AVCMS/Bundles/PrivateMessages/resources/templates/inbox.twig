@@ -1,0 +1,40 @@
+{% extends 'index.twig' %}
+
+{% block title %}{% trans %}Private Messages{% endtrans %}{% endblock %}
+
+{% block content %}
+    <div class="box messages-box">
+        <div class="box-top">
+            <h2>{{ block('title') }}</h2>
+        </div>
+
+        <div class="box-main">
+            <div class="list-group">
+                {% for message in messages %}
+                    <div class="list-group-item">
+                        <div class="media">
+                            <div class="media-left">
+                                <a href="{{ path('user_profile', {'slug': message.sender.slug}) }}">
+                                    <img class="media-object" src="{{ avatar_url(message.sender) }}" width="45" height="45" alt="{{ message.sender.username }}">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="{{ path('read_private_message', {'id': message.id}) }}">{{ message.subject }}</a></h4>
+
+                                {% if not message.read %}
+                                    <strong class="text-primary">{% trans %}Unread{% endtrans %}</strong>&nbsp;
+                                {% endif %}
+
+                                {% trans %}From{% endtrans %}: <a href="{{ path('user_profile', {'slug': message.sender.slug}) }}">{{ message.sender.username }}</a>
+
+                                &nbsp;{% trans %}Sent{% endtrans %}: {{ message.date|date(settings.time_format) }}
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="well well-sm">{% trans %}No New Messages{% endtrans %}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

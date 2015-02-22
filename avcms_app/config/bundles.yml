@@ -9,13 +9,13 @@ Model:
 CmsFoundation:
     enabled: true
     config:
-      module_positions:
-        homepage:
-            name: Homepage
-            description: The main homepage
-            environment: frontend
-            global_modules: 1
-            type: content
+        module_positions:
+            homepage:
+                name: Homepage
+                description: 'The main homepage'
+                environment: frontend
+                global_modules: 1
+                type: content
 Users:
     enabled: true
 Admin:
@@ -71,4 +71,6 @@ AVScripts:
 Games:
     enabled: true
 Points:
+    enabled: true
+PrivateMessages:
     enabled: true

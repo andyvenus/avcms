@@ -1,0 +1,25 @@
+{% extends 'index.twig' %}
+
+{% block title %}{% trans with {username: recipient.username} %}Sending a message to {username}{% endtrans %}{% endblock %}
+
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('private_messages_inbox') }}">{% trans %}Private Messages{% endtrans %}</a></li>
+        <li><a href="{{ path('user_profile', {'slug': recipient.slug}) }}">{{ recipient.username }}</a></li>
+    </ol>
+
+    <div class="box send-message-box">
+        <div class="box-top">
+            <h2>{{ block('title') }}</h2>
+        </div>
+
+        <div class="box-main">
+            {{ form(form) }}
+
+            {% if reply_message %}
+                <h4>{% trans %}Replying to{% endtrans %}:</h4>
+                {{ reply_message.body|nl2br }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

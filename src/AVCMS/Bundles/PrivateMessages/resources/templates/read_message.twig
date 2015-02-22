@@ -1,0 +1,39 @@
+{% extends 'index.twig' %}
+
+{% block title %}{% trans %}Private Message{% endtrans %}: {{ message.subject }}{% endblock %}
+
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('private_messages_inbox') }}">{% trans %}Private Messages{% endtrans %}</a></li>
+        <li class="active">{% trans %}Read Message{% endtrans %}</li>
+    </ol>
+
+    <div class="box box-primary message-box">
+        <div class="box-top">
+            <div class="media">
+                <div class="media-left">
+                    <a href="{{ path('user_profile', {'slug': message.sender.slug}) }}">
+                        <img class="media-object" src="{{ avatar_url(message.sender) }}" width="55" height="55" alt="{{ message.sender.username }}">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h2>{{ message.subject }}</h2>
+                    {% trans %}From{% endtrans %}:
+                    <a href="{{ path('user_profile', {'slug': message.sender.slug}) }}">
+                        {{ message.sender.username }}
+                    </a>
+
+                    &nbsp;{% trans %}Sent{% endtrans %}: {{ message.date|date(settings.time_format) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="box-main">
+            {{ message.body|nl2br }}
+        </div>
+
+        <div class="box-footer text-right">
+            <a class="btn btn-default btn-sm" href="{{ path('send_private_message', {'reply': message.id, 'recipient': message.senderId}) }}"><span class="glyphicon glyphicon-share-alt"></span> {% trans %}Reply{% endtrans %}</a>
+        </div>
+    </div>
+{% endblock %}

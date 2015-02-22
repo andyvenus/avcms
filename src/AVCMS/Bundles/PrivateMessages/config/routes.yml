@@ -1,0 +1,11 @@
+private_messages_inbox:
+  path: /messages
+  defaults: { _controller: PrivateMessages::PrivateMessagesController::inboxAction }
+
+read_private_message:
+  path: /messages/read/{id}
+  defaults: { _controller: PrivateMessages::PrivateMessagesController::readAction }
+
+send_private_message:
+  path: /messages/send/{recipient}/{reply}
+  defaults: { _controller: PrivateMessages::PrivateMessagesController::sendAction, reply: null }
