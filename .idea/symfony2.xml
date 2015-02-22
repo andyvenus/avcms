@@ -30,6 +30,7 @@
         <twig_namespace custom="true" namespace="FileUpload" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/FileUpload/resources/templates" />
         <twig_namespace custom="true" namespace="Form" namespaceType="ADD_PATH" path="src/AV/Bundles/Form/resources/templates" />
         <twig_namespace custom="true" namespace="Framework" namespaceType="ADD_PATH" path="src/AV/Bundles/Framework/resources/templates" />
+        <twig_namespace custom="true" namespace="Games" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Games/resources/templates" />
         <twig_namespace custom="true" namespace="LikeDislike" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/LikeDislike/resources/templates" />
         <twig_namespace custom="true" namespace="Links" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Links/resources/templates" />
         <twig_namespace custom="true" namespace="Model" namespaceType="ADD_PATH" path="src/AV/Bundles/Model/resources/templates" />
@@ -46,7 +47,7 @@
         <twig_namespace custom="true" namespace="Users" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Users/resources/templates" />
         <twig_namespace custom="true" namespace="Wallpapers" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Wallpapers/resources/templates" />
         <twig_namespace custom="true" namespace="WssImporter" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/WssImporter/resources/templates" />
-        <twig_namespace custom="true" namespace="Games" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Games/resources/templates" />
+        <twig_namespace custom="true" namespace="PrivateMessages" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/PrivateMessages/resources/templates" />
       </list>
     </option>
     <option name="containerFiles">

@@ -65,7 +65,7 @@ abstract class Controller extends ContainerAware
     /**
      * Returns a RedirectResponse to the given route.
      *
-     * @param $route
+     * @param $route string #Route
      * @param $parameters
      * @param int $status The status code to use for the Response
      *
