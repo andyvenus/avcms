@@ -43,11 +43,11 @@ class Mailer
     /**
      * @param null $subject
      * @param null $body
-     * @param null $contentType
-     * @param null $charset
+     * @param null|string $contentType
+     * @param null|string $charset
      * @return \Swift_Message
      */
-    public function newEmail($subject = null, $body = null, $contentType = null, $charset = null)
+    public function newEmail($subject = null, $body = null, $contentType = 'text/html', $charset = 'UTF-8')
     {
         if ($charset === null) {
             $charset = 'UTF-8';
