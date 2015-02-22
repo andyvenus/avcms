@@ -7,6 +7,7 @@
 
 namespace AVCMS\Bundles\PrivateMessages\Controller;
 
+use AV\Form\FormError;
 use AVCMS\Bundles\PrivateMessages\Form\PrivateMessageForm;
 use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -77,6 +78,11 @@ class PrivateMessagesController extends Controller
         /** @noinspection PhpUndefinedVariableInspection */
         $form = $this->buildForm(new PrivateMessageForm($subject), $request, $message);
 
+        $floodControlTime = $this->activeUser()->group->getFloodControlTime();
+        if ($form->isSubmitted() && $this->get('session')->get('avcms_last_pm', 0) > time() - $floodControlTime) {
+            $form->addCustomErrors([new FormError(null, 'Please wait at least {seconds} seconds between sending messages', true, ['seconds' => $floodControlTime])]);
+        }
+
         if ($form->isValid()) {
             $form->saveToEntities();
 
@@ -86,6 +92,8 @@ class PrivateMessagesController extends Controller
             $message->setDate(time());
 
             $this->messages->save($message);
+
+            $this->get('session')->set('avcms_last_pm', time());
 
             return $this->redirect('private_messages_inbox', [], 302, 'info', $this->trans('Message Sent'));
         }
