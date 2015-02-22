@@ -1,0 +1,11 @@
+{% extends '@email/main.twig' %}
+
+{% block content %}
+    <p><b>{% trans with {username: sender.username} %}You have received a new private message from {username}{% endtrans %}</b></p>
+
+    <p>{{ message.body|nl2br }}</p>
+
+    <p><a href="{{ url('read_private_message', {'id': message.id}) }}">{% trans %}Read This Message and Reply{% endtrans %}</a></p>
+
+    <p><a href="{{ url('private_messages_inbox') }}">{% trans %}Your Inbox{% endtrans %}</a></p>
+{% endblock %}

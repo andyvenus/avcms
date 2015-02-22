@@ -95,6 +95,17 @@ class PrivateMessagesController extends Controller
 
             $this->get('session')->set('avcms_last_pm', time());
 
+            $mailer = $this->container->get('mailer');
+            $email = $mailer->newEmail(
+                $this->trans('You received a new private message'),
+                $this->render(
+                    "@PrivateMessages/email/email.new_pm.twig",
+                    ['message' => $message, 'sender' => $this->activeUser(), 'recipient' => $recipient]
+                )
+            );
+            $email->setTo($recipient->getEmail());
+            $mailer->send($email);
+
             return $this->redirect('private_messages_inbox', [], 302, 'info', $this->trans('Message Sent'));
         }
 
