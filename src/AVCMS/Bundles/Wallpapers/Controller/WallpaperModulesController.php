@@ -55,7 +55,7 @@ class WallpaperModulesController extends Controller
             $moreButton = ['url' => $this->generateUrl('liked_games', ['likes_user' => $user->getSlug()]), 'label' => 'All Liked Wallpapers'];
         }
 
-        if ($userSettings['show_category']) {
+        if ($userSettings['show_wallpaper_category']) {
             $query->join($this->model('WallpaperCategories'), ['name', 'slug']);
         }
 

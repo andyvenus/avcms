@@ -69,9 +69,7 @@
                                     </div>
                                     <div class="pull-left">
                                         <span class="small">
-                                            <span class="glyphicon glyphicon-eye-open"></span> {{ wallpaper.hits }}
-                                            &nbsp;<span class="glyphicon glyphicon-download"></span> {{ wallpaper.totalDownloads }}
-                                            &nbsp;<span class="glyphicon glyphicon-calendar"></span> {{ wallpaper.publishDate|date(settings.date_format) }}
+                                            {% include '@Wallpapers/wallpaper_stats.twig' %}
                                         </span>
                                     </div>
                                 </a>

@@ -45,6 +45,10 @@ class WallpapersController extends Controller
                 'resolution' => null
             ));
 
+        if ($this->setting('show_wallpaper_category')) {
+            $query->join($this->model('WallpaperCategories'), ['name', 'slug']);
+        }
+
         $category = null;
         if ($request->get('category') !== null) {
             $categories = $this->model('WallpaperCategories');
@@ -98,14 +102,15 @@ class WallpapersController extends Controller
             'page_type' => $pageType,
             'category' => $category,
             'filters_form' => $filtersForm->createView(),
-            'finder_request' => $finder->getRequestFilters()
+            'finder_request' => $finder->getRequestFilters(),
+            'user_settings' => $this->get('settings_manager')
         )));
     }
 
-    public function wallpaperDetailsAction(Request $request, $slug)
+    public function wallpaperDetailsAction($slug)
     {
         $wallpaper = $this->wallpapers->find()
-            ->slug($request->get('slug'))
+            ->slug($slug)
             ->published()
             ->join($this->model('WallpaperCategories'), ['id', 'slug', 'name'])
             ->joinTaxonomy('tags')

@@ -15,6 +15,7 @@ assets:
 
 user_settings_sections:
   wallpapers: Wallpapers
+  browse_wallpapers: Browse Wallpapers
 
 user_settings:
   show_higher_resolutions:
@@ -84,6 +85,33 @@ user_settings:
     validation:
       numeric:
         rule: Numeric
+
+
+  show_wallpaper_ratings:
+    type: checkbox
+    label: Show Wallpaper Ratings
+    default: 1
+    section: browse_wallpapers
+  show_wallpaper_hits:
+    type: checkbox
+    label: Show Wallpaper Hits
+    default: 1
+    section: browse_wallpapers
+  show_wallpaper_date:
+    type: checkbox
+    label: Show Publish Date
+    default: 0
+    section: browse_wallpapers
+  show_wallpaper_category:
+    type: checkbox
+    label: Show Category
+    default: 0
+    section: browse_wallpapers
+  show_wallpaper_comments:
+    type: checkbox
+    label: Show Comments
+    default: 1
+    section: browse_wallpapers
 
 menu_items:
     admin:
@@ -222,19 +250,19 @@ modules:
         type: text
         label: Number of wallpapers to display
         default: 5
-      show_date:
+      show_wallpaper_date:
         type: checkbox
         label: Show Date
         default: 0
-      show_hits:
+      show_wallpaper_hits:
         type: checkbox
         label: Show Hits
         default: 1
-      show_downloads:
+      show_wallpaper_downloads:
         type: checkbox
         label: Show Downloads
         default: 1
-      show_category:
+      show_wallpaper_category:
         type: checkbox
         label: Show Category
         default: 1
