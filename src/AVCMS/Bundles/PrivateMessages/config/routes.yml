@@ -9,3 +9,11 @@ read_private_message:
 send_private_message:
   path: /messages/send/{recipient}/{reply}
   defaults: { _controller: PrivateMessages::PrivateMessagesController::sendAction, reply: null }
+
+delete_private_messages:
+  path: /messages/delete
+  defaults: { _controller: PrivateMessages::PrivateMessagesController::deleteAction }
+
+toggle_read_private_messages:
+  path: /messages/toggle-read
+  defaults: { _controller: PrivateMessages::PrivateMessagesController::toggleReadAction }

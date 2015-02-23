@@ -10,9 +10,11 @@ namespace AVCMS\Bundles\PrivateMessages\Controller;
 use AV\Form\FormError;
 use AVCMS\Bundles\PrivateMessages\Form\PrivateMessageForm;
 use AVCMS\Core\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 class PrivateMessagesController extends Controller
 {
@@ -35,6 +37,39 @@ class PrivateMessagesController extends Controller
         $messages = $this->messages->getUserMessages($this->activeUser()->getId(), $this->model('Users'));
 
         return new Response($this->render('@PrivateMessages/inbox.twig', ['messages' => $messages]));
+    }
+
+    public function deleteAction(Request $request)
+    {
+        if (!$this->checkCsrfToken($request)) {
+            throw new InvalidCsrfTokenException;
+        }
+
+        $this->messages->query()
+            ->where('recipient_id', $this->activeUser()->getId())
+            ->whereIn('id', $request->get('ids'))
+            ->delete();
+
+        return new JsonResponse(['success' => true]);
+    }
+
+    public function toggleReadAction(Request $request)
+    {
+        if (!$this->checkCsrfToken($request)) {
+            throw new InvalidCsrfTokenException;
+        }
+
+        $readStatus = 0;
+        if ($request->get('read') == 1) {
+            $readStatus = 1;
+        }
+
+        $this->messages->query()
+            ->where('recipient_id', $this->activeUser()->getId())
+            ->whereIn('id', $request->get('ids'))
+            ->update(['read' => $readStatus]);
+
+        return new JsonResponse(['success' => true]);
     }
 
     public function readAction(Request $request)

@@ -11,7 +11,7 @@
         <div class="box-main">
             <div class="list-group">
                 {% for message in messages %}
-                    <div class="list-group-item">
+                    <div class="list-group-item avcms-message" data-id="{{ message.id }}">
                         <div class="media">
                             <div class="media-left">
                                 <a href="{{ path('user_profile', {'slug': message.sender.slug}) }}">
@@ -20,10 +20,9 @@
                             </div>
                             <div class="media-body">
                                 <h4 class="media-heading"><a href="{{ path('read_private_message', {'id': message.id}) }}">{{ message.subject }}</a></h4>
+                                <input type="checkbox" />
 
-                                {% if not message.read %}
-                                    <strong class="text-primary">{% trans %}Unread{% endtrans %}</strong>&nbsp;
-                                {% endif %}
+                                <strong class="text-primary avcms-message-read" {% if message.read %}style="display: none;"{% endif %}>{% trans %}Unread{% endtrans %}&nbsp;</strong>
 
                                 {% trans %}From{% endtrans %}: <a href="{{ path('user_profile', {'slug': message.sender.slug}) }}">{{ message.sender.username }}</a>
 
@@ -34,6 +33,13 @@
                 {% else %}
                     <div class="well well-sm">{% trans %}No New Messages{% endtrans %}</div>
                 {% endfor %}
+            </div>
+
+            <div class="avcms-inbox-buttons" style="display: none;">
+                {% trans %}With Selected{% endtrans %}:
+                <button class="btn btn-xs btn-danger avcms-delete-messages"><span class="glyphicon glyphicon-remove"></span> {% trans %}Delete{% endtrans %}</button>
+                <button class="btn btn-xs btn-default avcms-mark-read"><span class="glyphicon glyphicon-eye-open"></span> {% trans %}Mark Read{% endtrans %}</button>
+                <button class="btn btn-xs btn-default avcms-mark-unread"><span class="glyphicon glyphicon-eye-close"></span> {% trans %}Mark Unread{% endtrans %}</button>
             </div>
         </div>
     </div>

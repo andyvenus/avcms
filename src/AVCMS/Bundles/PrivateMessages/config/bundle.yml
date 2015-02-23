@@ -2,3 +2,7 @@ name: PrivateMessages
 namespace: AVCMS\Bundles\PrivateMessages
 require:
     - Framework
+
+assets:
+  avcms_messages.js:
+    env: frontend
