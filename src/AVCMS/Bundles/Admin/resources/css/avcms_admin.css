@@ -412,6 +412,12 @@ a {
   /* The Fallback */
   background: rgba(255, 255, 255, 0.76); }
 
+.settings-sections {
+  font-size: 14px;
+  margin-top: 5px; }
+  .settings-sections a {
+    color: #a6a6a6; }
+
 .lightbar {
   height: 5px;
   top: 0px;

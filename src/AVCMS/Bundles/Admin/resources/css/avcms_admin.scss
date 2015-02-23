@@ -627,6 +627,17 @@ a {
   background: rgba(255, 255, 255, 0.76);
 }
 
+// SETTINGS
+
+.settings-sections {
+  font-size: 14px;
+  margin-top: 5px;
+
+  a {
+    color: #a6a6a6;
+  }
+}
+
 // ANIMATION
 
 $lightbar-offset: 2000px;

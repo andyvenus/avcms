@@ -6,7 +6,7 @@
 
 {% block content_header %}
     {{ block('title') }}
-    <div class="pull-right light small" style="margin-top: 3px;">
+    <div class="settings-sections">
         {% for section_id, section in form.sections %}
             {% if loop.first == false %}&nbsp;{% endif %} <a href="#{{ section_id }}-section">{{ section.label }}</a>
         {% endfor %}
