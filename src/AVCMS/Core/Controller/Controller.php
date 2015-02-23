@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -288,5 +289,16 @@ abstract class Controller extends ContainerAware
     protected function userLoggedIn()
     {
         return $this->isGranted([AuthenticatedVoter::IS_AUTHENTICATED_FULLY, AuthenticatedVoter::IS_AUTHENTICATED_REMEMBERED]);
+    }
+
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    protected function checkCsrfToken(Request $request)
+    {
+        $tokenManager = $this->container->get('csrf.token');
+
+        return $tokenManager->checkToken($request->get('_csrf_token'));
     }
 }
