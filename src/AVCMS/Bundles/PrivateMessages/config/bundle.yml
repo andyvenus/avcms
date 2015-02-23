@@ -3,6 +3,9 @@ namespace: AVCMS\Bundles\PrivateMessages
 require:
     - Framework
 
+services:
+  - PrivateMessageServices
+
 assets:
   avcms_messages.js:
     env: frontend

@@ -26,6 +26,7 @@ class PrivateMessagesController extends Controller
     public function setUp()
     {
         $this->messages = $this->model('PrivateMessages');
+        $this->messages->setUsers($this->model('Users'));
 
         if (!$this->userLoggedIn()) {
             throw new AccessDeniedException;
@@ -45,12 +46,12 @@ class PrivateMessagesController extends Controller
             throw new InvalidCsrfTokenException;
         }
 
-        $this->messages->query()
+        $unread = $this->messages->query()
             ->where('recipient_id', $this->activeUser()->getId())
             ->whereIn('id', $request->get('ids'))
             ->delete();
 
-        return new JsonResponse(['success' => true]);
+        return new JsonResponse(['success' => true, 'unread' => $unread]);
     }
 
     public function toggleReadAction(Request $request)
@@ -64,23 +65,20 @@ class PrivateMessagesController extends Controller
             $readStatus = 1;
         }
 
-        $this->messages->query()
-            ->where('recipient_id', $this->activeUser()->getId())
-            ->whereIn('id', $request->get('ids'))
-            ->update(['read' => $readStatus]);
+        $unread = $this->messages->toggleRead($request->get('ids'), $this->activeUser()->getId(), $readStatus);
 
-        return new JsonResponse(['success' => true]);
+        return new JsonResponse(['success' => true, 'unread' => $unread]);
     }
 
     public function readAction(Request $request)
     {
-        $message = $this->messages->getMessage($this->activeUser()->getId(), $request->get('id'), $this->model('Users'));
+        $message = $this->messages->getMessage($this->activeUser()->getId(), $request->get('id'));
 
         if (!$message) {
             throw $this->createNotFoundException();
         }
 
-        $this->messages->markMessageRead($message);
+        $this->messages->markMessageRead($message, $this->activeUser());
 
         return new Response($this->render('@PrivateMessages/read_message.twig', ['message' => $message]));
     }
@@ -89,7 +87,7 @@ class PrivateMessagesController extends Controller
     {
         $replyMessage = null;
         if ($request->get('reply')) {
-            $replyMessage = $this->messages->getMessage($this->activeUser()->getId(), $request->get('reply'), $this->model('Users'));
+            $replyMessage = $this->messages->getMessage($this->activeUser()->getId(), $request->get('reply'));
 
             if (!$replyMessage) {
                 throw $this->createNotFoundException();

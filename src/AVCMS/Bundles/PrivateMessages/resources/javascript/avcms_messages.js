@@ -22,7 +22,7 @@ avcms.messages = {
 
         avcms.messages.clearSelectedMessages();
 
-        $.post(avcms.config.site_url + 'messages/delete', {ids: selected_ids});
+        $.post(avcms.config.site_url + 'messages/delete', {ids: selected_ids}, avcms.messages.updateUnreadCount);
     },
 
     markMessagesReadUnread: function() {
@@ -46,7 +46,13 @@ avcms.messages = {
 
         avcms.messages.clearSelectedMessages();
 
-        $.post(avcms.config.site_url + 'messages/toggle-read', {ids: selected_ids, read: set_status});
+        $.post(avcms.config.site_url + 'messages/toggle-read', {ids: selected_ids, read: set_status}, avcms.messages.updateUnreadCount);
+    },
+
+    updateUnreadCount: function(data) {
+        if (typeof data.unread !== 'undefined') {
+            $('.avcms-unread-message-count').text(data.unread);
+        }
     },
 
     getSelectedMessages: function() {
