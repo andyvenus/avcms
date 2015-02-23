@@ -161,6 +161,16 @@ class User extends Entity implements UserInterface
         $this->set('last_activity', $value);
     }
 
+    public function setReceiveEmails($value)
+    {
+        $this->set('receive_emails', $value);
+    }
+
+    public function getReceiveEmails()
+    {
+        return $this->get('receive_emails');
+    }
+
     public function setRoleList($roleList)
     {
         $this->set('role_list', $roleList);

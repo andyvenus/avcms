@@ -41,6 +41,11 @@ class EditProfileForm extends FormBlueprint
             ]
         ]);
 
+        $this->add('receive_emails', 'checkbox', [
+            'label' => 'Enable Emails',
+            'help' => 'If off you will not receive any notification or newsletter emails'
+        ]);
+
         $this->add('avatar_file', 'file', [
             'label' => 'Avatar',
             'validation' => [
