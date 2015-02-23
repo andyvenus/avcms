@@ -26,6 +26,8 @@
 
     <div class="container">
         <p class="text-right">
+            {{ outlet('user_profile_buttons', {user: profile_user}) }}
+
             {% if is_granted('ADMIN_USERS') %}
                 <a class="btn btn-default" href="{{ url('users_admin_edit', {id: profile_user.id}) }}"><span class="glyphicon glyphicon-user"></span> {% trans %}Edit User{% endtrans %}</a>
             {% endif %}
