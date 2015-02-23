@@ -7,8 +7,14 @@ use Symfony\Component\EventDispatcher\Event;
 
 class CreateModelEvent extends Event
 {
+    /**
+     * @var Model
+     */
     protected $model;
 
+    /**
+     * @var string
+     */
     protected $modelClass;
 
     public function __construct(Model $model, $modelClass)
@@ -17,13 +23,19 @@ class CreateModelEvent extends Event
         $this->modelClass = $modelClass;
     }
 
+    /**
+     * @return Model
+     */
     public function getModel()
     {
         return $this->model;
     }
 
+    /**
+     * @return string
+     */
     public function getModelClass()
     {
-        return $this->model;
+        return $this->modelClass;
     }
 }
