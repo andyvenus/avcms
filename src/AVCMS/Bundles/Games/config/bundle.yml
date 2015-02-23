@@ -153,6 +153,11 @@ user_settings:
     label: Show Category
     default: 0
     section: browse_games
+  show_game_comments:
+    type: checkbox
+    label: Show Total Comments
+    default: 0
+    section: browse_games
 
 comments:
   game:
@@ -262,6 +267,10 @@ modules:
         type: checkbox
         label: Show Category
         default: 1
+      show_game_comments:
+        type: checkbox
+        label: Show Total Comments
+        default: 0
   game_tags:
       name: Game Tag Cloud
       description: A tag cloud for games
