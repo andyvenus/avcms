@@ -1,12 +1,25 @@
-<table style="width:100%;font-family:Arial;border-collapse: collapse; ">
-<tr style="border-bottom: 1px solid #cbcbcb">
-    <td><h1 style="font-family: HelveticaNeue-Light, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;font-weight: 300;margin-bottom:3px;">{{ settings.site_name }}</h1></td>
-</tr>
+<html>
+    <head></head>
 
-<tr>
-    <td style="padding-top: 10px">
-        {% block content %}{% endblock %}
-    </td>
-</tr>
+    <body>
+        <div style="background: #f0f0f0">
+            <table style="width:100%;font-family:Arial;border-collapse: collapse;width: 700px;" align="center" width="700">
+                <tr style="padding-top:20px;padding-bottom:15px;text-align: center;">
+                    <td><h1 style="font-family: HelveticaNeue-Light, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;font-weight: 300;margin-bottom:3px;">{{ settings.site_name }}</h1></td>
+                </tr>
 
-</table>
+                <tr style="background-color:#fff;">
+                    <td style="padding: 15px;border: 1px solid #cbcbcb;">
+                        {% block content %}{% endblock %}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="font-size: 12px;padding-top:15px;padding-bottom:15px;text-align: center;">
+                        {% include '@CmsFoundation/email/email_footer.twig' %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
