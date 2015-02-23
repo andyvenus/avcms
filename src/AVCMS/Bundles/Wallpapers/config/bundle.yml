@@ -266,6 +266,10 @@ modules:
         type: checkbox
         label: Show Category
         default: 1
+      show_wallpaper_comments:
+        type: checkbox
+        label: Show Comments
+        default: 0
   wallpaper_tags:
       name: Wallpaper Tag Cloud
       description: A tag cloud for wallpapers
