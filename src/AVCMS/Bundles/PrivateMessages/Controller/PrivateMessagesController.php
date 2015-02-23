@@ -125,6 +125,7 @@ class PrivateMessagesController extends Controller
             $message->setDate(time());
 
             $this->messages->save($message);
+            $this->messages->updateMessageCount($recipientId);
 
             $this->get('session')->set('avcms_last_pm', time());
 

@@ -96,7 +96,7 @@ class PrivateMessages extends Model
         }
     }
 
-    private function updateMessageCount($recipientId)
+    public function updateMessageCount($recipientId)
     {
         if (!isset($this->users)) {
             throw new \Exception('The PrivateMessages model requires the Users model (set with setUsers)');
