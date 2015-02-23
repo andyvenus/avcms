@@ -25,7 +25,7 @@ modules:
         cache_bust_model: Adverts
         default_cache_time: 3600
         accepted_template_types: [panel, content, none]
-        user_settings:
+        admin_settings:
           advert_id:
             type: select
             label: Advert

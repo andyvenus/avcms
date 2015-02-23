@@ -6,10 +6,10 @@ require:
 services:
     - DisqusServices
 
-user_settings_sections:
+admin_settings_sections:
     disqus: Disqus
 
-user_settings:
+admin_settings:
     use_disqus:
         type: checkbox
         default: 0

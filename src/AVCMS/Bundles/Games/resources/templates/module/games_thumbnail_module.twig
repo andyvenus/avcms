@@ -3,7 +3,7 @@
 <div class="row">
     {% for game in games %}
         <div class="col-sm-{{ column_size }}">
-            {% if user_settings.layout == 'thumbnails' %}
+            {% if admin_settings.layout == 'thumbnails' %}
                 {% include '@Games/game_info_thumbnail.twig' %}
             {% else %}
                 {% include '@Games/game_info_details.twig' %}

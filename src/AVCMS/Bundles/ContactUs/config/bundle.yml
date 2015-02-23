@@ -3,7 +3,7 @@ namespace: AVCMS\Bundles\ContactUs
 require:
     - Framework
 
-user_settings:
+admin_settings:
     enable_contact_us:
         type: checkbox
         label: Enable Contact Us Form

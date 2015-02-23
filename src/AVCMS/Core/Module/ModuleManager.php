@@ -102,14 +102,14 @@ class ModuleManager
 
         $userSettingDefaults = array();
 
-        foreach ($module->getUserSettings() as $settingName => $userSetting) {
+        foreach ($module->getAdminSettings() as $settingName => $userSetting) {
             $userSettingDefaults[$settingName] = (isset($userSetting['default']) ? $userSetting['default'] : null);
         }
 
-        $userSettings = array_replace($userSettingDefaults, $moduleConfig->getSettingsArray());
-        $moduleConfig->setSettingsArray($userSettings);
+        $adminSettings = array_replace($userSettingDefaults, $moduleConfig->getSettingsArray());
+        $moduleConfig->setSettingsArray($adminSettings);
 
-        $vars = array_merge($vars, array('module' => $moduleConfig, 'userSettings' => $userSettings));
+        $vars = array_merge($vars, array('module' => $moduleConfig, 'adminSettings' => $adminSettings));
 
         $controller = new ControllerReference($module->getController(), $vars);
 

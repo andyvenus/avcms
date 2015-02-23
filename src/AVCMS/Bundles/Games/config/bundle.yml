@@ -50,12 +50,12 @@ menu_items:
       settings:
         route: game_feeds_admin_home
 
-user_settings_sections:
+admin_settings_sections:
   browse_games: Browse Games
   game_ads: Adverts Before Games
   game_feeds: Game Feeds
 
-user_settings:
+admin_settings:
   game_ad_default:
     label: Default Game Ad
     help: The ad shown before games without a specific ad selected
@@ -208,7 +208,7 @@ modules:
     cache_bust_model: Games
     default_cache_time: 3600
     accepted_template_types: [content, panel, list_panel, none]
-    user_settings:
+    admin_settings:
       filter:
         type: select
         label: Filter
@@ -278,7 +278,7 @@ modules:
       cachable: true
       default_cache_time: 43200
       accepted_template_types: [content, panel, none]
-      user_settings:
+      admin_settings:
         limit:
           type: text
           label: Number of tags to display

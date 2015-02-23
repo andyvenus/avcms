@@ -52,7 +52,7 @@ class Module
     /**
      * @var array
      */
-    protected $userSettings = [];
+    protected $adminSettings = [];
 
     /**
      * @var array
@@ -206,17 +206,17 @@ class Module
     /**
      * @return array
      */
-    public function getUserSettings()
+    public function getAdminSettings()
     {
-        return $this->userSettings;
+        return $this->adminSettings;
     }
 
     /**
-     * @param array $userSettings
+     * @param array $adminSettings
      */
-    public function setUserSettings($userSettings)
+    public function setAdminSettings($adminSettings)
     {
-        $this->userSettings = $userSettings;
+        $this->adminSettings = $adminSettings;
     }
 
     public function getType()

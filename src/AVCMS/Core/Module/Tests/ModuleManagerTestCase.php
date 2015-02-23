@@ -61,7 +61,7 @@ class ModuleManagerTestCase extends \PHPUnit_Framework_TestCase
             'id' => 'test_module',
             'controller' => 'TestController',
             'cachable' => 1,
-            'user_settings' => array(
+            'admin_settings' => array(
                 'user_setting' => array(
                     'default' => 'default_user_setting'
                 )
@@ -111,4 +111,3 @@ class ModuleManagerTestCase extends \PHPUnit_Framework_TestCase
         \Mockery::close();
     }
 }
- 

@@ -27,20 +27,20 @@ class GameModulesController extends Controller
         $this->games = $this->model('Games');
     }
 
-    public function gamesModule($userSettings, User $user = null)
+    public function gamesModule($adminSettings, User $user = null)
     {
         $moreButton = null;
 
         $query = $this->games->find()
-            ->limit($userSettings['limit'])
-            ->order($userSettings['order'])
+            ->limit($adminSettings['limit'])
+            ->order($adminSettings['order'])
             ->published();
 
-        if ($userSettings['filter'] === 'featured') {
+        if ($adminSettings['filter'] === 'featured') {
             $query->featured();
             $moreButton = ['url' => $this->generateUrl('featured_games'), 'label' => 'All Featured Games'];
         }
-        elseif ($userSettings['filter'] === 'likes') {
+        elseif ($adminSettings['filter'] === 'likes') {
             if (!isset($user)) {
                 $user = $this->activeUser();
 
@@ -50,21 +50,21 @@ class GameModulesController extends Controller
             }
 
             $ratings = $this->model('LikeDislike:Ratings');
-            $ids = $ratings->getLikedIds($user->getId(), 'game', $userSettings['limit']);
+            $ids = $ratings->getLikedIds($user->getId(), 'game', $adminSettings['limit']);
             $query = $this->games->find()->ids($ids, 'games.id');
             $moreButton = ['url' => $this->generateUrl('liked_games', ['likes_user' => $user->getSlug()]), 'label' => 'All Liked Games'];
         }
 
-        if ($userSettings['show_game_category']) {
+        if ($adminSettings['show_game_category']) {
             $query->join($this->model('GameCategories'), ['name', 'slug']);
         }
 
         $games = $query->get();
 
-        return new Response($this->render($this->getModuleTemplate($userSettings['layout']), array(
+        return new Response($this->render($this->getModuleTemplate($adminSettings['layout']), array(
             'games' => $games,
-            'user_settings' => $userSettings,
-            'columns' => $userSettings['columns'],
+            'admin_settings' => $adminSettings,
+            'columns' => $adminSettings['columns'],
             'more_button' => $moreButton
         )));
     }
@@ -81,8 +81,8 @@ class GameModulesController extends Controller
         return '@Games/module/'.$template;
     }
 
-    public function tagsModule($userSettings)
+    public function tagsModule($adminSettings)
     {
-        return $this->getTagsModule($userSettings, 'game', 'browse_games', 'tags');
+        return $this->getTagsModule($adminSettings, 'game', 'browse_games', 'tags');
     }
 }

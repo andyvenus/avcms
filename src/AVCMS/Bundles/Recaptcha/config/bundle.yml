@@ -6,10 +6,10 @@ require:
 services:
     - RecaptchaServices
 
-user_settings_sections:
+admin_settings_sections:
   recaptcha: reCaptcha
 
-user_settings:
+admin_settings:
     recaptcha_enabled:
         type: checkbox
         label: Enable reCaptcha

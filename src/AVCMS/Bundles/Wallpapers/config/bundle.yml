@@ -13,11 +13,11 @@ assets:
   avcms_wallpapers_frontend.js:
     env: frontend
 
-user_settings_sections:
+admin_settings_sections:
   wallpapers: Wallpapers
   browse_wallpapers: Browse Wallpapers
 
-user_settings:
+admin_settings:
   show_higher_resolutions:
     type: checkbox
     label: Show resolutions higher than the source image
@@ -212,7 +212,7 @@ modules:
     cache_bust_model: Wallpapers
     default_cache_time: 3600
     accepted_template_types: [content, panel, list_panel, none]
-    user_settings:
+    admin_settings:
       filter:
         type: select
         label: Filter
@@ -277,7 +277,7 @@ modules:
       cachable: true
       default_cache_time: 43200
       accepted_template_types: [content, panel, none]
-      user_settings:
+      admin_settings:
         limit:
           type: text
           label: Number of tags to display

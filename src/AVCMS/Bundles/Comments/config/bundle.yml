@@ -46,7 +46,7 @@ menu_items:
       settings:
         route: manage_comments
 
-user_settings:
+admin_settings:
   comments_enabled:
     label: Enable Comments
     help: Enable/Disable comments of all types

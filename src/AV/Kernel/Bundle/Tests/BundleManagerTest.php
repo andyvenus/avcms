@@ -35,7 +35,7 @@ class BundleManagerTest extends \PHPUnit_Framework_TestCase
                                 'services' => array(
                                     'BundleServices'
                                 ),
-                                'user_settings' => array(
+                                'admin_settings' => array(
                                     'my_setting' => array(
                                         'name' => 'my_name'
                                     )

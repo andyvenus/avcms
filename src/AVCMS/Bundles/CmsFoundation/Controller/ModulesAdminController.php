@@ -111,7 +111,7 @@ class ModulesAdminController extends AdminBaseController
             $form->add('cache_time', 'text', array('label' => "Seconds until cache expires (0 for no cache)", 'default' => $module->getDefaultCacheTime()));
         }
 
-        $form->createFieldsFromArray($module->getUserSettings(), 'settings_array');
+        $form->createFieldsFromArray($module->getAdminSettings(), 'settings_array');
 
         $formHandler = $this->buildForm($form, $request, $moduleConfig);
 

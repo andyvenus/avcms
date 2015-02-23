@@ -30,6 +30,6 @@ modules:
 container_params:
   avs_api_url: http://localhost:8888/avcms-updates/public
 
-user_settings:
+admin_settings:
   copyright_message:
     type: hidden

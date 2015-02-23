@@ -42,8 +42,8 @@ class TemplateSettingsLoader implements SettingsLoaderInterface
         $config = $this->templateManager->getTemplateConfig();
 
         $settings = array();
-        if (isset($config['user_settings']) && !empty($config['user_settings'])) {
-            foreach ($config['user_settings'] as $setting_name => $setting) {
+        if (isset($config['admin_settings']) && !empty($config['admin_settings'])) {
+            foreach ($config['admin_settings'] as $setting_name => $setting) {
                 $settings[$setting_name] = array(
                     'value' => (isset($setting['default']) ? $setting['default'] : ''),
                     'loader' => self::getId(),
@@ -52,8 +52,8 @@ class TemplateSettingsLoader implements SettingsLoaderInterface
                 $this->fields[$setting_name] = $setting;
             }
 
-            if (isset($config['user_settings_sections']) && !empty($config['user_settings_sections'])) {
-                foreach ($config['user_settings_sections'] as $id => $label) {
+            if (isset($config['admin_settings_sections']) && !empty($config['admin_settings_sections'])) {
+                foreach ($config['admin_settings_sections'] as $id => $label) {
                     $this->fieldSections[$id] = array('label' => $label);
                 }
             }

@@ -31,16 +31,16 @@ modules:
     cache_bust_model: Links
     default_cache_time: 3600
     accepted_template_types: [list_panel, none]
-    user_settings:
+    admin_settings:
       total_links:
         type: text
         label: Links to show
         default: 10
 
-user_settings_sections:
+admin_settings_sections:
   links: Links
 
-user_settings:
+admin_settings:
   link_exchange:
     label: Enable Link Exchange
     type: checkbox

@@ -29,10 +29,10 @@ frontend_search:
     name: Blog Posts
     route: blog_archive
 
-user_settings_sections:
+admin_settings_sections:
   blog: Blog
 
-user_settings:
+admin_settings:
   blog_posts_per_page:
       type: text
       label: Blog Posts Per Page
@@ -58,7 +58,7 @@ modules:
     cache_bust_model: BlogPosts
     default_cache_time: 3600
     accepted_template_types: [list_panel, none]
-    user_settings:
+    admin_settings:
       order:
         type: select
         label: Order

@@ -6,10 +6,10 @@ require:
 services:
     - FacebookConnectServices
 
-user_settings_sections:
+admin_settings_sections:
   facebook: Facebook Connect
 
-user_settings:
+admin_settings:
     facebook_connect:
         type: checkbox
         default: 0

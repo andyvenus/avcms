@@ -10,10 +10,10 @@ assets:
   avcms_points.js:
     env: frontend
 
-user_settings_sections:
+admin_settings_sections:
   points: Points
 
-user_settings:
+admin_settings:
   enable_points:
       type: checkbox
       label: Enable Points

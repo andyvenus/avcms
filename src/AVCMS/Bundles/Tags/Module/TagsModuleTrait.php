@@ -17,9 +17,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 trait TagsModuleTrait
 {
-    public function getTagsModule($userSettings, $contentType, $routeName, $routeParam = 'tags')
+    public function getTagsModule($adminSettings, $contentType, $routeName, $routeParam = 'tags')
     {
-        $commonTags = $this->model('Tags:TagsTaxonomyModel')->getPopularTags($contentType, $userSettings['limit']);
+        $commonTags = $this->model('Tags:TagsTaxonomyModel')->getPopularTags($contentType, $adminSettings['limit']);
 
         if (!$commonTags) {
             return new Response($this->render('@Tags/module/tags_module.twig'));

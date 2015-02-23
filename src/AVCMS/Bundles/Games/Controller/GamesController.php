@@ -119,7 +119,7 @@ class GamesController extends Controller
             'category' => $category,
             'filters_form' => $filtersForm->createView(),
             'finder_request' => $finder->getRequestFilters(),
-            'user_settings' => $this->get('settings_manager'),
+            'admin_settings' => $this->get('settings_manager'),
             'likes_user' => isset($user) ? $user : null,
         )));
     }

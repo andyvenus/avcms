@@ -12,17 +12,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MenuModulesController extends Controller
 {
-    public function menuModule($module, $userSettings)
+    public function menuModule($module, $adminSettings)
     {
-        $menu = $userSettings['menu'];
+        $menu = $adminSettings['menu'];
 
-        if ($userSettings['type'] === 'buttons') {
+        if ($adminSettings['type'] === 'buttons') {
             $template = '@CmsFoundation/module/button_menu_module.twig';
         }
         else {
             $template = '@CmsFoundation/module/list_menu_module.twig';
         }
 
-        return new Response($this->render($template, ['menu' => $menu, 'user_settings' => $userSettings]));
+        return new Response($this->render($template, ['menu' => $menu, 'admin_settings' => $adminSettings]));
     }
 }

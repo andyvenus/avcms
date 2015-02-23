@@ -42,14 +42,14 @@ class BundleSettingsLoader implements SettingsLoaderInterface
         $bundleSettings = array();
         $bundleConfigs = $this->bundleManager->getBundleConfigs();
         foreach ($bundleConfigs as $bundleConfig) {
-            if (isset($bundleConfig['user_settings']) && !empty($bundleConfig['user_settings'])) {
-                foreach ($bundleConfig['user_settings'] as $settingName => $setting) {
+            if (isset($bundleConfig['admin_settings']) && !empty($bundleConfig['admin_settings'])) {
+                foreach ($bundleConfig['admin_settings'] as $settingName => $setting) {
                     $bundleSettings[$settingName] = array('value' => (isset($setting['default']) ? $setting['default'] : ''), 'loader' => self::getId(), 'owner' => $bundleConfig->name);
                     $this->bundleFields[$settingName] = $setting;
                 }
 
-                if ($bundleConfig['user_settings_sections']) {
-                    foreach ($bundleConfig['user_settings_sections'] as $id => $label) {
+                if ($bundleConfig['admin_settings_sections']) {
+                    foreach ($bundleConfig['admin_settings_sections'] as $id => $label) {
                         $this->fieldSections[$id] = array('label' => $label);
                     }
                 }

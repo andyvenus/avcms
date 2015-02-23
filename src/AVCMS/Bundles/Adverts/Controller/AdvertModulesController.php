@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdvertModulesController extends Controller
 {
-    public function advertModule($userSettings)
+    public function advertModule($adminSettings)
     {
-        $advert = $this->model('Adverts')->getOne($userSettings['advert_id']);
+        $advert = $this->model('Adverts')->getOne($adminSettings['advert_id']);
 
         if (!$advert) {
             return new Response('Ad not found');

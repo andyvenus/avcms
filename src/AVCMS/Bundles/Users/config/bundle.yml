@@ -23,10 +23,10 @@ model:
 route:
   login: login
 
-user_settings_sections:
+admin_settings_sections:
   users: Users
 
-user_settings:
+admin_settings:
   users_enabled:
     label: Enable Users
     type: checkbox

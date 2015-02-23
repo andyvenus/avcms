@@ -7,7 +7,7 @@
                 </span>
                 <div class="media-body" style="vertical-align: middle;">
                     <h5 class="media-heading">{{ game.name }} </h5>
-                    {% if user_settings.show_game_description %}
+                    {% if admin_settings.show_game_description %}
                         <span class="small" title="{{ game.description|striptags }}">{{ game.description|striptags|truncate(100) }}</span>
                     {% endif %}<br/>
                     <span class="small">

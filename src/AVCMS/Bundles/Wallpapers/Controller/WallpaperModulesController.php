@@ -27,20 +27,20 @@ class WallpaperModulesController extends Controller
         $this->wallpapers = $this->model('Wallpapers');
     }
 
-    public function wallpapersModule($userSettings, User $user = null)
+    public function wallpapersModule($adminSettings, User $user = null)
     {
         $moreButton = null;
 
         $query = $this->wallpapers->find()
-            ->limit($userSettings['limit'])
-            ->order($userSettings['order'])
+            ->limit($adminSettings['limit'])
+            ->order($adminSettings['order'])
             ->published();
 
-        if ($userSettings['filter'] === 'featured') {
+        if ($adminSettings['filter'] === 'featured') {
             $query->featured();
             $moreButton = ['url' => $this->generateUrl('featured_wallpapers'), 'label' => 'All Featured Wallpapers'];
         }
-        elseif ($userSettings['filter'] === 'likes') {
+        elseif ($adminSettings['filter'] === 'likes') {
             if (!isset($user)) {
                 $user = $this->activeUser();
 
@@ -50,18 +50,18 @@ class WallpaperModulesController extends Controller
             }
 
             $ratings = $this->model('LikeDislike:Ratings');
-            $ids = $ratings->getLikedIds($user->getId(), 'wallpaper', $userSettings['limit']);
+            $ids = $ratings->getLikedIds($user->getId(), 'wallpaper', $adminSettings['limit']);
             $query = $this->wallpapers->find()->ids($ids, 'wallpapers.id');
             $moreButton = ['url' => $this->generateUrl('liked_games', ['likes_user' => $user->getSlug()]), 'label' => 'All Liked Wallpapers'];
         }
 
-        if ($userSettings['show_wallpaper_category']) {
+        if ($adminSettings['show_wallpaper_category']) {
             $query->join($this->model('WallpaperCategories'), ['name', 'slug']);
         }
 
         $wallpapers = $query->get();
 
-        if ($userSettings['layout'] === 'list') {
+        if ($adminSettings['layout'] === 'list') {
             $template = 'wallpapers_list_module.twig';
         }
         else {
@@ -70,8 +70,8 @@ class WallpaperModulesController extends Controller
 
         return new Response($this->render('@Wallpapers/module/'.$template, array(
             'wallpapers' => $wallpapers,
-            'user_settings' => $userSettings,
-            'columns' => $userSettings['columns'],
+            'admin_settings' => $adminSettings,
+            'columns' => $adminSettings['columns'],
             'more_button' => $moreButton
         )));
     }
@@ -83,8 +83,8 @@ class WallpaperModulesController extends Controller
         return new Response($this->render('@Wallpapers/module/resolutions_module.twig', ['resolution_categories' => $resCategories]));
     }
 
-    public function tagsModule($userSettings)
+    public function tagsModule($adminSettings)
     {
-        return $this->getTagsModule($userSettings, 'wallpaper', 'browse_wallpapers', 'ids');
+        return $this->getTagsModule($adminSettings, 'wallpaper', 'browse_wallpapers', 'ids');
     }
 }

@@ -12,10 +12,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class LinksModuleController extends Controller
 {
-    public function linksModule($userSettings)
+    public function linksModule($adminSettings)
     {
         $links = $this->model('Links')
-            ->getTopLinksFinder($this->model('Referrals'), 1, $userSettings['total_links'])
+            ->getTopLinksFinder($this->model('Referrals'), 1, $adminSettings['total_links'])
         ->get();
 
         return new Response($this->render('@Links/module/links_module.twig', ['links' => $links]));

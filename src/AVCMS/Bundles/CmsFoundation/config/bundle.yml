@@ -16,11 +16,11 @@ services:
   - HitCounterServices
   - MiscServices
 
-user_settings_sections:
+admin_settings_sections:
   main: Main
   email: Email
 
-user_settings:
+admin_settings:
   site_name:
     type: text
     label: Site Name
@@ -205,7 +205,7 @@ modules:
     description: Add a HTML block to this position
     cachable: true
     default_cache_time: 1000000
-    user_settings:
+    admin_settings:
             html:
               type: textarea
               label: HTML
@@ -218,7 +218,7 @@ modules:
     default_cache_time: 3600
     cache_bust_model: MenuItems
     accepted_template_types: [list_panel, none]
-    user_settings:
+    admin_settings:
       menu:
         type: select
         label: Menu

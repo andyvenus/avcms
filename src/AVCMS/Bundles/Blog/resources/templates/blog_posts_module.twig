@@ -2,7 +2,7 @@
     {% for post in posts %}
         <a href="{{ url('blog_post', {slug: post.slug}) }}" class="list-group-item">
             {{ post.title }} <br/>
-            {% if user_settings.show_date %}
+            {% if admin_settings.show_date %}
                 <span class="small"><span class="glyphicon glyphicon-calendar"></span> {{ post.publishDate|date(settings.date_format) }}</span>
             {% endif %}
         </a>

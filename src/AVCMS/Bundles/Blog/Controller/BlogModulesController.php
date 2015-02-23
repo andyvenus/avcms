@@ -22,14 +22,14 @@ class BlogModulesController extends Controller
         $this->blogPosts = $this->model('BlogPosts');
     }
 
-    public function blogPostsModule($module, $userSettings)
+    public function blogPostsModule($module, $adminSettings)
     {
         $posts = $this->blogPosts->find()
-            ->limit($userSettings['limit'])
-            ->order($userSettings['order'])
+            ->limit($adminSettings['limit'])
+            ->order($adminSettings['order'])
             ->published()
             ->get();
 
-        return new Response($this->render('@Blog/blog_posts_module.twig', array('posts' => $posts, 'user_settings' => $userSettings)));
+        return new Response($this->render('@Blog/blog_posts_module.twig', array('posts' => $posts, 'admin_settings' => $adminSettings)));
     }
 }
