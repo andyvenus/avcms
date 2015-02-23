@@ -58,7 +58,7 @@ abstract class Model {
      * @param QueryBuilderHandler $queryBuilder
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
-    public  function __construct(QueryBuilderHandler $queryBuilder, EventDispatcherInterface $eventDispatcher)
+    public function __construct(QueryBuilderHandler $queryBuilder, EventDispatcherInterface $eventDispatcher)
     {
         $this->queryBuilder = $queryBuilder;
         $this->eventDispatcher = $eventDispatcher;
