@@ -9,3 +9,8 @@ services:
 assets:
   avcms_messages.js:
     env: frontend
+
+permissions:
+  PERM_PRIVATE_MESSAGES:
+    name: Private Messages
+    description: Ability to send and receive private messages

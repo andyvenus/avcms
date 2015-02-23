@@ -28,7 +28,7 @@ class PrivateMessagesController extends Controller
         $this->messages = $this->model('PrivateMessages');
         $this->messages->setUsers($this->model('Users'));
 
-        if (!$this->userLoggedIn()) {
+        if (!$this->userLoggedIn() || !$this->isGranted('PERM_PRIVATE_MESSAGES')) {
             throw new AccessDeniedException;
         }
     }
