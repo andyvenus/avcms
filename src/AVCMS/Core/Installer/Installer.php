@@ -33,6 +33,8 @@ class Installer
 
     protected $defaultContentInstaller;
 
+    protected $installerHooks = [];
+
     public function __construct(ContainerInterface $container, InstallerBundleFinder $bundleFinder, Versions $installedVersions, $appDir = 'app')
     {
         $this->installedVersions = $installedVersions;
@@ -40,6 +42,25 @@ class Installer
         $this->appConfig = Yaml::parse(file_get_contents($appDir.'/config/app.yml'));
         $this->bundleDirs = $bundleFinder->findBundles($this->appConfig['bundle_dirs']);
         $this->appDir = $appDir;
+
+        $this->initBundleInstallers();
+    }
+
+    protected function initBundleInstallers()
+    {
+        foreach ($this->bundleDirs as $bundleName => $bundleDir) {
+            $installer = $this->getBundleInstaller($bundleName);
+
+            $this->bundleInstallers[$bundleName] = $installer;
+
+            if ($bundleHooks = $installer->getHooks()) {
+                foreach ($bundleHooks as $hookedBundle => $hooks) {
+                    foreach ($hooks as $version => $method) {
+                        $this->installerHooks[$hookedBundle][$version][] = ['installer' => $installer, 'method' => $method];
+                    }
+                }
+            }
+        }
     }
 
     public function getBundlesRequiringUpdate()
@@ -134,6 +155,12 @@ class Installer
             }
 
             try {
+                if (isset($this->installerHooks[$bundleName][$version])) {
+                    foreach ($this->installerHooks[$bundleName][$version] as $hook) {
+                        $hook['installer']->{$hook['method']}();
+                    }
+                }
+
                 $this->getDefaultContentInstaller()->handleContent($bundleName, $version);
             }
             catch (\Exception $e) {

@@ -10,4 +10,9 @@ namespace AVCMS\Core\Installer;
 abstract class BundleInstaller extends InstallerBase
 {
     abstract public function getVersions();
+
+    public function getHooks()
+    {
+        return [];
+    }
 }
