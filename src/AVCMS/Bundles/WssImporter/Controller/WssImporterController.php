@@ -15,6 +15,7 @@ use AVCMS\Bundles\Comments\Model\Comment;
 use AVCMS\Bundles\LikeDislike\Model\Rating;
 use AVCMS\Bundles\Links\Model\Link;
 use AVCMS\Bundles\Pages\Model\Page;
+use AVCMS\Bundles\PrivateMessages\Model\PrivateMessage;
 use AVCMS\Bundles\Tags\Model\Tag;
 use AVCMS\Bundles\Users\Model\User;
 use AVCMS\Bundles\Wallpapers\Model\Wallpaper;
@@ -87,6 +88,7 @@ class WssImporterController extends Controller
                 $qb->table('links')->delete();
                 $qb->table('adverts')->delete();
                 $qb->table('ratings')->delete();
+                $qb->table('messages')->delete();
 
                 return new RedirectResponse($this->generateUrl('wss_importer_run'));
             }
@@ -104,7 +106,7 @@ class WssImporterController extends Controller
             $this->redirect('wss_importer_home');
         }
 
-        $stages = ['wallpapers', 'wallpaper_categories', 'tags', 'tag_relations', 'users', 'wallpaper_comments', 'news', 'news_comments', 'pages', 'links', 'adverts', 'ratings'];
+        $stages = ['wallpapers', 'wallpaper_categories', 'tags', 'tag_relations', 'users', 'wallpaper_comments', 'news', 'news_comments', 'pages', 'links', 'adverts', 'ratings', 'messages'];
 
         $importPerRun = 1000;
         $stage = $request->get('stage', $stages[0]);
@@ -472,6 +474,32 @@ class WssImporterController extends Controller
             if ($totalImported)
                 $this->model('LikeDislike:Ratings')->insert($ratingsProcessed);
         }
+        elseif ($stage == 'messages') {
+            $messagesProcessed = [];
+            $messages = $this->getQB('messages')->limit($importPerRun)->offset($offset)->get();
+
+            foreach ($messages as $m) {
+                $this->renameFields($m, [
+                    'title' => 'subject',
+                    'message' => 'body',
+                    'user_id' => 'recipient_id'
+                ]);
+
+                $m['date'] = (new \DateTime($m['date']))->getTimestamp();
+
+                $message = new PrivateMessage();
+                $message->fromArray($m, true);
+
+                $messagesProcessed[] = $message;
+
+                $totalImported++;
+            }
+
+            $message = ($offset + $totalImported).' Private Messages Imported (Run '.$run.')';
+
+            if ($totalImported)
+                $this->model('PrivateMessages')->insert($messagesProcessed);
+        }
 
         if ($totalImported == $importPerRun) {
             $run = $run + 1;
@@ -485,7 +513,7 @@ class WssImporterController extends Controller
                 $url = $this->generateUrl('wss_importer_run', ['stage' => $newStage, 'run' => 1]);
             }
             else {
-                return $this->redirect('home', [], 302, 'Import Finished');
+                return $this->redirect('home', [], 302, 'info', 'Import Complete');
             }
         }
 
