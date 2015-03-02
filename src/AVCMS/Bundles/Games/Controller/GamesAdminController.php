@@ -83,7 +83,7 @@ class GamesAdminController extends AdminBaseController
     public function finderAction(Request $request)
     {
         $finder = $this->games->find()
-            ->setSearchFields(array('name'))
+            ->setSearchFields(array('games.name'))
             ->setResultsPerPage(15)
             ->join($this->model('GameCategories'), ['id', 'name', 'slug'])
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null, 'category' => 0));
