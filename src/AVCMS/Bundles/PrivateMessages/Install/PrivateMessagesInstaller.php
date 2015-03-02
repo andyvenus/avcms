@@ -13,7 +13,9 @@ class PrivateMessagesInstaller extends BundleInstaller
 {
     public function getVersions()
     {
-        return [];
+        return [
+            '1.0' => 'install_1_0_0'
+        ];
     }
 
     public function getHooks()
@@ -21,6 +23,25 @@ class PrivateMessagesInstaller extends BundleInstaller
         return [
             'Users' => ['1.0' => 'alterUserTable']
         ];
+    }
+
+    public function install_1_0_0()
+    {
+        $this->PDO->exec("
+             CREATE TABLE `{$this->prefix}messages` (
+                  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                  `subject` varchar(80) DEFAULT NULL,
+                  `body` text,
+                  `recipient_id` int(11) unsigned DEFAULT NULL,
+                  `sender_id` int(11) unsigned DEFAULT NULL,
+                  `date` int(11) unsigned DEFAULT NULL,
+                  `read` tinyint(1) NOT NULL DEFAULT '0',
+                  `ip` varchar(15) DEFAULT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `read` (`read`),
+                  KEY `recipient_id` (`recipient_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        ");
     }
 
     public function alterUserTable()
