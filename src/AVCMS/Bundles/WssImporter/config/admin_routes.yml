@@ -1,7 +1,7 @@
 wss_importer_home:
-  path: /import
+  path: /wss-import
   defaults: { _controller: WssImporter::WssImporterController::importerHomeAction }
 
 wss_importer_run:
-  path: /import/run/{stage}/{run}
+  path: /wss-import/run/{stage}/{run}
   defaults: { _controller: WssImporter::WssImporterController::doImportAction, stage: wallpapers, run: 1 }
