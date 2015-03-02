@@ -1,0 +1,7 @@
+ava_importer_home:
+  path: /ava-import
+  defaults: { _controller: AvaImporter::AvaImporterController::importerHomeAction }
+
+ava_importer_run:
+  path: /ava-import/run/{stage}/{run}
+  defaults: { _controller: AvaImporter::AvaImporterController::doImportAction, stage: games, run: 1 }

@@ -64,6 +64,8 @@ Disqus:
     enabled: true
 WssImporter:
     enabled: true
+AvaImporter:
+    enabled: true
 TranslationHelper:
     enabled: true
 AVScripts:
