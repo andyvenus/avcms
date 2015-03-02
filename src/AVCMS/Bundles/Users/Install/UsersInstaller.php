@@ -108,6 +108,7 @@ class UsersInstaller extends BundleInstaller
                   `last_ip` varchar(20) NOT NULL DEFAULT '',
                   `last_activity` int(11) NOT NULL,
                   `timezone` varchar(80) NOT NULL DEFAULT '',
+                  `receive_emails` tinyint(1) NOT NULL DEFAULT '1',
                   `slug` varchar(200) NOT NULL,
                   PRIMARY KEY (`id`),
                   KEY `username` (`username`),
