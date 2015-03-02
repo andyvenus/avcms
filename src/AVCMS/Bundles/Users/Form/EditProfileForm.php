@@ -54,7 +54,8 @@ class EditProfileForm extends FormBlueprint
                     [
                         'png' => 'image/png',
                         'gif' => 'image/gif',
-                        'jpeg' => 'image/jpeg'
+                        'jpeg' => 'image/jpeg',
+                        'jpg' => 'image/jpeg'
                     ],
                     'KB'
                 ]],
@@ -70,7 +71,8 @@ class EditProfileForm extends FormBlueprint
                     [
                         'png' => 'image/png',
                         'gif' => 'image/gif',
-                        'jpeg' => 'image/jpeg'
+                        'jpeg' => 'image/jpeg',
+                        'jpg' => 'image/jpeg'
                     ],
                     'MB'
                 ]],
