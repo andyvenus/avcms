@@ -96,6 +96,15 @@ class GamesInstaller extends BundleInstaller
         ");
 
         $this->PDO->exec("
+             CREATE TABLE `{$this->prefix}game_feed_categories` (
+                  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                  `keyword` varchar(40) DEFAULT NULL,
+                  `category_id` int(11) DEFAULT NULL,
+                  PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        ");
+
+        $this->PDO->exec("
              INSERT INTO `{$this->prefix}game_embeds` (`extension`, `template`)
                 VALUES
                     ('dcr','@Games/embeds/shockwave.twig'),
