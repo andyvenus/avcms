@@ -25,7 +25,7 @@ class FrameworkServices implements ServicesInterface
         $container->register('context', 'Symfony\Component\Routing\RequestContext');
 
         $container->register('router', 'AV\Kernel\Router')
-            ->setArguments(array(new Reference('router.loader.yaml'), 'routes.yml', '%app_dir%', array('cache_dir' => '%cache_dir%', 'debug' => '%dev_mode%'), new Reference('bundle_manager')))
+            ->setArguments(array(new Reference('router.loader.yaml'), 'routes.yml', '%app_dir%', array('cache_dir' => '%cache_dir%', 'debug' => '%dev_mode%', 'strict_requirements' => false), new Reference('bundle_manager')))
         ;
 
         $container->register('app_config.file_locator', 'Symfony\Component\Config\FileLocator')

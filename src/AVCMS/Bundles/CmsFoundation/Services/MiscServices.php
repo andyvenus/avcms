@@ -17,7 +17,7 @@ class MiscServices implements ServicesInterface
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('router', 'AVCMS\Core\Kernel\Router')
-            ->setArguments(array(new Reference('router.loader.yaml'), 'routes.yml', '%app_dir%', '%root_dir%', array('cache_dir' => '%cache_dir%', 'debug' => '%dev_mode%'), new Reference('bundle_manager')))
+            ->setArguments(array(new Reference('router.loader.yaml'), 'routes.yml', '%app_dir%', '%root_dir%', array('cache_dir' => '%cache_dir%', 'debug' => '%dev_mode%', 'strict_requirements' => false), new Reference('bundle_manager')))
         ;
 
         $container->register('site_offline_handler', 'AVCMS\Core\Security\SiteOfflineHandler')
