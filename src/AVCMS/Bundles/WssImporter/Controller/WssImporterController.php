@@ -168,6 +168,10 @@ class WssImporterController extends Controller
 
                 $this->unencodeFields($cat, ['name', 'description']);
 
+                if ($cat['parent'] == 0) {
+                    $cat['parent'] = null;
+                }
+
                 $nuCat = new WallpaperCategory();
                 $nuCat->fromArray($cat, true);
 
