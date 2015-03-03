@@ -96,7 +96,7 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
         $featuredWallpapersHome = $modules->newEntity();
         $featuredWallpapersHome->setModule('wallpapers');
         $featuredWallpapersHome->setActive(1);
-        $featuredWallpapersHome->setPosition('wallpapers_home');
+        $featuredWallpapersHome->setPosition('homepage');
         $featuredWallpapersHome->setTitle('Featured Wallpapers');
         $featuredWallpapersHome->setShowHeader(1);
         $featuredWallpapersHome->setTemplateType('content');
@@ -107,7 +107,7 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
         $newestWallpapersHome = $modules->newEntity();
         $newestWallpapersHome->setModule('wallpapers');
         $newestWallpapersHome->setActive(1);
-        $newestWallpapersHome->setPosition('wallpapers_home');
+        $newestWallpapersHome->setPosition('homepage');
         $newestWallpapersHome->setTitle('Newest Wallpapers');
         $newestWallpapersHome->setShowHeader(1);
         $newestWallpapersHome->setTemplateType('content');
@@ -131,7 +131,7 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
         $wallpaperTags->setPosition('sidebar');
         $wallpaperTags->setTitle('Tags');
         $wallpaperTags->setShowHeader(1);
-        $wallpaperTags->setTemplateType('list_panel');
+        $wallpaperTags->setTemplateType('panel');
         $wallpaperTags->setCacheTime(43200);
 
         $modules->insert([$newestWallpapersSidebar, $featuredWallpapersHome, $newestWallpapersHome, $wallpaperTags, $newestPostsModule]);

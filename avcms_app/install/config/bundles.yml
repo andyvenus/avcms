@@ -13,4 +13,4 @@ Installer:
   enabled: true
   config:
     container_params:
-      main_app_dir: wallpapersitescript
+      main_app_dir: avcms_app
