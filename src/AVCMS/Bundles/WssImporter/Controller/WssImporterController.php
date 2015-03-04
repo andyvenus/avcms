@@ -7,6 +7,7 @@
 
 namespace AVCMS\Bundles\WssImporter\Controller;
 
+use AV\Cache\CacheClearer;
 use AV\Form\FormBlueprint;
 use AV\Form\FormError;
 use AVCMS\Bundles\Adverts\Model\Advert;
@@ -515,6 +516,9 @@ class WssImporterController extends Controller
                 $url = $this->generateUrl('wss_importer_run', ['stage' => $newStage, 'run' => 1]);
             }
             else {
+                $cacheClearer = new CacheClearer($this->getParam('cache_dir'));
+                $cacheClearer->clearCaches();
+
                 return $this->redirect('home', [], 302, 'info', 'Import Complete');
             }
         }
