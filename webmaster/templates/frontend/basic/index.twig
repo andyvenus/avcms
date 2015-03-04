@@ -15,13 +15,18 @@
                     <div class="user-area-inner">{{ helper.simple_user_area }}</div>
                 </div>
                 <div class="col-md-8 col-md-pull-4 logo">
-                    <a href="{{ url('home') }}">
+
                         {% if settings.logo_image_url %}
-                            <img class="logo-image" src="{{ settings.logo_image_url }}" />
+                            <a href="{{ url('home') }}"><img class="logo-image" src="{{ settings.logo_image_url }}" /></a>
                         {% else %}
-                            <div class="logo-text"><h1>{{ settings.site_name }}</h1></div>
+                            <div class="logo-text">
+                                <h1>
+                                    <a href="{{ url('home') }}">
+                                        {{ settings.site_name }}
+                                    </a>
+                                </h1>
+                            </div>
                         {% endif %}
-                    </a>
                 </div>
             </div>
         </div>
