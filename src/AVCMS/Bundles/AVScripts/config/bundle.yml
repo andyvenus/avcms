@@ -28,7 +28,7 @@ modules:
     accepted_template_types: [panel, none]
 
 container_params:
-  avs_api_url: http://localhost:8888/avcms-updates/public
+  avs_api_url: http://www.updates.avscripts.net
 
 admin_settings:
   copyright_message:
