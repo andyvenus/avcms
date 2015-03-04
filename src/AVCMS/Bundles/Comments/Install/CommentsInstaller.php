@@ -30,6 +30,8 @@ class CommentsInstaller extends BundleInstaller
                   `comment` text NOT NULL,
                   `date` int(11) NOT NULL DEFAULT '0',
                   `ip` varchar(15) NOT NULL DEFAULT '',
+                  `thread` int(11) unsigned NOT NULL DEFAULT '0',
+                  `replies` int(10) unsigned NOT NULL,
                   PRIMARY KEY (`id`),
                   KEY `content_id` (`content_id`),
                   KEY `content_type` (`content_type`),
