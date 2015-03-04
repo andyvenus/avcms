@@ -489,8 +489,6 @@ class WssImporterController extends Controller
                     'user_id' => 'recipient_id'
                 ]);
 
-                $m['date'] = (new \DateTime($m['date']))->getTimestamp();
-
                 $message = new PrivateMessage();
                 $message->fromArray($m, true);
 
