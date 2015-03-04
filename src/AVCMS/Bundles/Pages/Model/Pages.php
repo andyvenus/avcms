@@ -22,4 +22,16 @@ class Pages extends ContentModel
     {
         return 'AVCMS\Bundles\Pages\Model\Page';
     }
+
+    public function getFinderSortOptions()
+    {
+        return array(
+            'publish-date-newest' => 'publish_date desc',
+            'publish-date-oldest' => 'publish_date asc',
+            'a-z' => 'title asc',
+            'z-a' => 'title desc',
+            'top-hits' => 'hits desc',
+            'low-hits' => 'hits asc',
+        );
+    }
 }
