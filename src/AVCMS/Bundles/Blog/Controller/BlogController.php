@@ -46,7 +46,7 @@ class BlogController extends Controller
             ->first();
 
         if (!$post) {
-            throw $this->createNotFoundException(ucfirst($this->posts->getSingular()).' not found');
+            throw $this->createNotFoundException('Blog Post Not Found');
         }
 
         $this->container->get('hitcounter')->registerHit($this->posts, $post->getId());
