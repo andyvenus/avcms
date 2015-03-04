@@ -71,7 +71,7 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $linksItem->setSettings(['route' => 'links']);
         $linksItem->setIcon('glyphicon glyphicon-link');
 
-        $menuItems->insert([$homeItem, $categoriesItem, $submitItem, $contactItem, $linksItem, $gameCategoriesItem]);
+        $menuItems->insert([$homeItem, $categoriesItem, $submitItem, $contactItem, $linksItem, $gameCategoriesItem, $blogItem]);
 
         // Modules
         $modules = $this->modelFactory->create('AVCMS\Bundles\CmsFoundation\Model\Modules');
