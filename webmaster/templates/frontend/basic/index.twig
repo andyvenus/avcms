@@ -1,9 +1,15 @@
 {% extends '@CmsFoundation/frontend.twig' %}
 
+{% if settings.template_container_style == 'fluid' %}
+    {% set container_style = 'container-fluid' %}
+{% else %}
+    {% set container_style = 'container' %}
+{% endif %}
+
 {% block body %}
     {# HEADER #}
     <header class="header">
-        <div class="container">
+        <div class="{{ container_style }}">
             <div class="row">
                 <div class="col-md-4 col-md-push-8 user-area">
                     <div class="user-area-inner">{{ helper.simple_user_area }}</div>
@@ -23,7 +29,7 @@
 
     {# MAIN MENU #}
     <nav class="navbar navbar-default navbar-static-top main-menu" role="navigation">
-        <div class="container">
+        <div class="{{ container_style }}">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -72,14 +78,14 @@
 
     {# SECONDARY MENU #}
     <div class="header-extra">
-        <div class="container">
+        <div class="{{ container_style }}">
             {{ render_modules('header_bottom') }}
         </div>
     </div>
 
     {# MAIN CONTENT #}
     {% block full_width_content %}
-        <section class="container avcms-main">
+        <section class="{{ container_style }} avcms-main">
             {% for message in get_messages() %}
                 <div class="alert alert-info">{{ message.message }}</div>
             {% endfor %}
@@ -111,7 +117,7 @@
     {% endblock %}
 
     {# FOOTER #}
-    <section class="container footer">
+    <section class="{{ container_style }} footer">
         <div class="col-md-12">
             {{ render_modules('page_footer') }}
         </div>
