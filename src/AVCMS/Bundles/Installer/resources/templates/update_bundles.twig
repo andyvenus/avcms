@@ -5,7 +5,7 @@
 {% block content %}
 
     {% for bundle_name, bundle_dir in update_bundles %}
-        <div class="well well-sm pending" data-bundle-ajax-updater="{{ url('update_bundle', {bundle: bundle_name}) }}">
+        <div class="well well-sm pending" style="display: none;" data-bundle-ajax-updater="{{ url('update_bundle', {bundle: bundle_name}) }}">
             <div class="row">
                 <div class="col-md-6">
                     <strong>{{ bundle_name }}</strong>
@@ -33,6 +33,7 @@
         function doBundleUpdates() {
 
             var container = $('.pending[data-bundle-ajax-updater]').first();
+            container.show();
 
             if (container.length == 0) {
                 upgradesComplete();
@@ -50,8 +51,7 @@
                 dataType: "json"
             }).done(function (data) {
                 if (data.success == true) {
-                    container.css('background-color', '#EBFFEB');
-                    container.find('.status-text').text('Updated');
+                    container.hide();
 
                     doBundleUpdates();
                 }
