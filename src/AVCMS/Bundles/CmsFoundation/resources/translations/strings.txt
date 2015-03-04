@@ -120,3 +120,30 @@ Clear app caches
 Manage menus in the admin panel
 Manage modules in the admin panel
 Manage the site settings in the admin panel
+Date Added
+Default
+All
+A-Z
+Z-A
+Page {page}
+Editing Modules Position
+Admin
+Frontend
+List
+Link
+No modules currently assigned to this position
+Editing {menu} Menu Item: {item}
+Templates
+Admin Templates
+Editing Template
+Select a bundle above
+You have edited this template
+Reset to default
+Reset
+Select a bundle...
+Current Template
+Bundle or template...
+Edit Templates
+No Modules Assigned To This Page
+Details
+Module type "{module}" missing

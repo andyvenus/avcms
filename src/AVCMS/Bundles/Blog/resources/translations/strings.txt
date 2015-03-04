@@ -37,3 +37,5 @@ Blog Archive
 The number of blog posts displayed on each page
 Show the number of page hits each blog post has on the frontend
 Ability to manage blog posts
+Top Blog Posts
+Latest Posts

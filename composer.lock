@@ -68,16 +68,16 @@
         },
         {
             "name": "facebook/php-sdk-v4",
-            "version": "4.0.16",
+            "version": "4.0.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/facebook-php-sdk-v4.git",
-                "reference": "66da9e0e123b6440974bfe22210a8a053e9b5599"
+                "reference": "0c8ea23d81e09cc7e2c38b1d7f663fd5006dce84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/facebook-php-sdk-v4/zipball/66da9e0e123b6440974bfe22210a8a053e9b5599",
-                "reference": "66da9e0e123b6440974bfe22210a8a053e9b5599",
+                "url": "https://api.github.com/repos/facebook/facebook-php-sdk-v4/zipball/0c8ea23d81e09cc7e2c38b1d7f663fd5006dce84",
+                "reference": "0c8ea23d81e09cc7e2c38b1d7f663fd5006dce84",
                 "shasum": ""
             },
             "require": {
@@ -113,7 +113,7 @@
                 "facebook",
                 "sdk"
             ],
-            "time": "2015-02-03 19:20:31"
+            "time": "2015-03-03 00:03:54"
         },
         {
             "name": "filp/whoops",
@@ -457,12 +457,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-curl-class/php-curl-class.git",
-                "reference": "dc4e45fd12bc316f18e82a637fd7ed8781a2d7c2"
+                "reference": "987c23fcce2b98341f81a38f0f43aac39d1cdae0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-curl-class/php-curl-class/zipball/dc4e45fd12bc316f18e82a637fd7ed8781a2d7c2",
-                "reference": "dc4e45fd12bc316f18e82a637fd7ed8781a2d7c2",
+                "url": "https://api.github.com/repos/php-curl-class/php-curl-class/zipball/987c23fcce2b98341f81a38f0f43aac39d1cdae0",
+                "reference": "987c23fcce2b98341f81a38f0f43aac39d1cdae0",
                 "shasum": ""
             },
             "require": {
@@ -494,7 +494,7 @@
                 "curl",
                 "php"
             ],
-            "time": "2015-01-27 07:30:12"
+            "time": "2015-03-03 20:01:18"
         },
         {
             "name": "psr/log",
@@ -1754,12 +1754,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "c9fbdd9fb044cf1dd7c2abecfc9cce6ca714d1fe"
+                "reference": "d141c5b1b302d4d746e38ccc95ffe215129a8557"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/c9fbdd9fb044cf1dd7c2abecfc9cce6ca714d1fe",
-                "reference": "c9fbdd9fb044cf1dd7c2abecfc9cce6ca714d1fe",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/d141c5b1b302d4d746e38ccc95ffe215129a8557",
+                "reference": "d141c5b1b302d4d746e38ccc95ffe215129a8557",
                 "shasum": ""
             },
             "require": {
@@ -1768,8 +1768,7 @@
             },
             "require-dev": {
                 "hamcrest/hamcrest-php": "~1.1",
-                "phpunit/phpunit": "~4.0",
-                "satooshi/php-coveralls": "~0.7@dev"
+                "phpunit/phpunit": "~4.0"
             },
             "type": "library",
             "extra": {
@@ -1812,20 +1811,20 @@
                 "test double",
                 "testing"
             ],
-            "time": "2015-02-09 15:10:41"
+            "time": "2015-03-03 20:10:54"
         },
         {
             "name": "pdepend/pdepend",
-            "version": "2.0.4",
+            "version": "2.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "1b0acf162da4f30237987e61e177a57f78e3d87e"
+                "reference": "a15ffcbfbcc4570d4a733ca7b76e9cac0a56c3f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/1b0acf162da4f30237987e61e177a57f78e3d87e",
-                "reference": "1b0acf162da4f30237987e61e177a57f78e3d87e",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/a15ffcbfbcc4570d4a733ca7b76e9cac0a56c3f4",
+                "reference": "a15ffcbfbcc4570d4a733ca7b76e9cac0a56c3f4",
                 "shasum": ""
             },
             "require": {
@@ -1851,7 +1850,7 @@
                 "BSD-3-Clause"
             ],
             "description": "Official version of pdepend to be handled with Composer",
-            "time": "2014-12-04 12:38:39"
+            "time": "2015-03-02 08:06:43"
         },
         {
             "name": "phpmd/phpmd",

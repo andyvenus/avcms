@@ -118,3 +118,12 @@ Unregistered
 Member
 Manage users in the admin panel
 Manage user groups in the admin panel
+User Info
+Length of time before users can post another comment and other similar activities
+Safe permissions like commenting or sending reports
+Default Elevated Permission
+Special permissions like not having to see adverts
+Moderator-level permissions like deleting comments
+Elevated Permissions
+Enable Emails
+If off you will not receive any notification or newsletter emails

@@ -20,3 +20,5 @@ Enable/Disable comments of all types
 Ability to comment throughout the site
 Delete comments from the frontend, no admin access
 Ability to view & delete comments in the admin and frontend
+Reply
+Replies

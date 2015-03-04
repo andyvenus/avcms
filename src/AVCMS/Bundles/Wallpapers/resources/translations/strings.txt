@@ -152,3 +152,24 @@ The maximum amount of wallpapers a user can submit for review. They can submit m
 Ability for users to submit wallpapers for review by an admin
 Wallpapers Administration
 Manage wallpapers in the admin panel
+Review Wallpaper Submission
+{0}There are no images in this folder, so nothing will be imported.|{1}There is one image in the folder folder_name.|]1,Inf]The folder folder_name has %total_files% images inside.
+The new folder directory, use forward slashes to create a sub-directory
+{1}One image has already been imported from this folder and will not be imported again.|]1,Inf]%imported_files% images have already been imported from this folder and will not be imported again.
+Liked Wallpapers
+Report Issue
+All Liked Wallpapers
+Review Wallpaper Submission
+Last Hit
+Last Download
+Never
+Top Wallpapers
+Wallpaper Tags
+Number of columns (thumbnail layout)
+Latest Wallpapers
+Newest Wallpapers
+The wallpapers homepage
+Show Wallpaper Ratings
+Show Wallpaper Hits
+Show Comments
+Show Total Comments
