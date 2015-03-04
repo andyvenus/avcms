@@ -127,3 +127,5 @@ Moderator-level permissions like deleting comments
 Elevated Permissions
 Enable Emails
 If off you will not receive any notification or newsletter emails
+Display User Website
+If on, the user can set a website URL to be displayed in their profile

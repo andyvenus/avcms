@@ -39,6 +39,12 @@ admin_settings:
     type: checkbox
     default: 0
     section: users
+  allow_user_website:
+    label: Display User Website
+    help: If on, the user can set a website URL to be displayed in their profile
+    type: checkbox
+    default: 1
+    section: users
 
 assets:
   profile.css:

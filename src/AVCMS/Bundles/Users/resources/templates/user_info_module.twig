@@ -12,6 +12,11 @@
     {{ profile_user.interests }}</p>
 {% endif %}
 
-{% if profile_user.location == null and profile_user.about == null and profile_user.interests == null %}
+{% if profile_user.website and settings.allow_user_website %}
+    <p><strong>{% trans %}Website{% endtrans %}:</strong><br />
+        <a href="{{ profile_user.website }}" rel="nofollow">{{ profile_user.website }}</a></p>
+{% endif %}
+
+{% if profile_user.location == null and profile_user.about == null and profile_user.interests == null and profile_user.website == null %}
     {% trans %}This user has not filled in their profile{% endtrans %}
 {% endif %}
