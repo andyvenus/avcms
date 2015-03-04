@@ -10,14 +10,18 @@ namespace AVCMS\Bundles\Points\EventSubscriber;
 use AVCMS\Bundles\CmsFoundation\Event\OutletEvent;
 use AVCMS\Core\SettingsManager\SettingsManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class DisplayPointsSubscriber implements EventSubscriberInterface
 {
     protected $settingsManager;
 
-    public function __construct(SettingsManager $settingsManager)
+    protected $tokenStorage;
+
+    public function __construct(SettingsManager $settingsManager, TokenStorageInterface $tokenStorage)
     {
         $this->settingsManager = $settingsManager;
+        $this->tokenStorage = $tokenStorage;
     }
 
     public function displayPoints(OutletEvent $outletEvent)
@@ -28,7 +32,14 @@ class DisplayPointsSubscriber implements EventSubscriberInterface
 
         $user = $outletEvent->getVars()['user'];
 
-        $outletEvent->addContent('<span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="'.$this->settingsManager->getSetting('points_name').'">'.$user->points.'</span>');
+        $currentUser = $this->tokenStorage->getToken()->getUser();
+
+        $class = '';
+        if ($user->getId() == $currentUser->getId()) {
+            $class = 'avcms-active-user-points';
+        }
+
+        $outletEvent->addContent('<span class="label label-default '.$class.'" data-toggle="tooltip" data-placement="bottom" title="'.$this->settingsManager->getSetting('points_name').'">'.$user->points.'</span>');
     }
 
     public static function getSubscribedEvents()

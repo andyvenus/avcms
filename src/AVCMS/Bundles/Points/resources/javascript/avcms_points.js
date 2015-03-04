@@ -25,6 +25,13 @@ avcms.points = {
     showNotification: function(data) {
         if (data.success) {
             $.notify(data.message, {position: "right top", className: 'info'});
+
+            if (typeof(data.points) !== 'undefined') {
+                var span = $('.avcms-active-user-points');
+                var current_points = parseInt(span.text(), 10) + parseInt(data.points, 10);
+
+                span.text(current_points);
+            }
         }
     }
 };
