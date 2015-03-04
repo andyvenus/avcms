@@ -23,6 +23,14 @@ class Links extends Model
         return 'AVCMS\Bundles\Links\Model\Link';
     }
 
+    public function getFinderSortOptions()
+    {
+        return array(
+            'a-z' => 'anchor asc',
+            'z-a' => 'anchor desc',
+        );
+    }
+
     /**
      * @param Referrals $referrals
      * @param $page
