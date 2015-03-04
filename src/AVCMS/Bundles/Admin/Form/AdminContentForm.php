@@ -31,7 +31,8 @@ abstract class AdminContentForm extends FormBlueprint
         $this->add('publish_date', 'text', array(
             'label' => 'Publish Time',
             'transform' => 'unixtimestamp',
-            'default' => $date->format('Y-m-d H:i')
+            'default' => $date->format('Y-m-d H:i'),
+            'required' => true
         ));
 
         $this->add('slug', 'text', array(
