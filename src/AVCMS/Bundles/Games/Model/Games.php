@@ -34,7 +34,9 @@ class Games extends ContentModel
             'z-a' => 'name desc',
             'top-hits' => 'hits desc',
             'low-hits' => 'hits asc',
-            'liked' => 'likes desc'
+            'liked' => 'likes desc',
+            'last-hit-desc' => 'last_hit desc',
+            'last-hit-asc' => 'last_hit asc'
         );
     }
 }

@@ -21,7 +21,9 @@ class GamesAdminFiltersForm extends AdminFiltersForm
                 'z-a' => 'Z-A',
                 'top-hits' => 'Most Played',
                 'low-hits' => 'Least Played',
-                'liked' => 'Most Liked'
+                'liked' => 'Most Liked',
+                'last-hit-desc' => 'Recent Last Play',
+                'last-hit-asc' => 'Oldest Last Play'
             )
         ));
 
