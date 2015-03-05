@@ -197,6 +197,10 @@ a {
     font-weight: bold;
     color: #545455; }
 
+.finder-loading {
+  text-align: center;
+  padding: 10px; }
+
 .browser-finder-item {
   overflow: hidden; }
 

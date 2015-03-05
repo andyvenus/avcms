@@ -158,7 +158,8 @@ avcms.browser = {
 
             var finder = finder_div.find('[data-url]');
 
-            avcms.admin.mainLoaderOn();
+            finder.append('<div class="finder-loading"><img src="'+avcms.config.site_url+'web/resources/CmsFoundation/images/loader.gif" /></div>');
+
             $.get(finder.data('url') + '?' + form_serial, function(data) {
                 if (data) {
                     if(data.indexOf("NORESULTS") <= 0) {
@@ -171,7 +172,7 @@ avcms.browser = {
                         $('.nano-pane').show();
                     }
                 }
-                avcms.admin.mainLoaderOff();
+                $('.finder-loading').remove();
             })
         }
     },
