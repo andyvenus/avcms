@@ -83,7 +83,7 @@ avcms.browser = {
 
                         var finder_item = finder_inner.find('[data-id="'+id+'"]').html(item_html);
                         finder_item.find('img').each(function() {
-                            $(this).attr('src', $(this).attr('src') + new Date().getTime());
+                            $(this).attr('src', $(this).attr('src') + '?' + new Date().getTime());
                         })
                     }
                     else {
