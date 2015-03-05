@@ -48,7 +48,7 @@
                 addParamChar;
             return {
                 send: function (_, completeCallback) {
-                    form = $('<form style="display:none;"></form>');
+                    form = $('<form style="display:none;" class="no-ajax"></form>');
                     form.attr('accept-charset', options.formAcceptCharset);
                     addParamChar = /\?/.test(options.url) ? '&' : '?';
                     // XDomainRequest only supports GET and POST:

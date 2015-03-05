@@ -13,6 +13,7 @@ use Curl\Curl;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class FileSelectHelper
@@ -69,6 +70,14 @@ class FileSelectHelper
 
     public function uploadFilesAction(Request $request)
     {
+        $httpAccept = $request->server->get('HTTP_ACCEPT', '');
+        if (strpos($httpAccept, 'application/json') !== false) {
+            $type = 'application/json';
+        }
+        else {
+            $type = 'text/plain';
+        }
+
         /**
          * @var $file UploadedFile
          */
@@ -80,7 +89,7 @@ class FileSelectHelper
         }
 
         if ($file === null) {
-            return new JsonResponse(['success' => false, 'error' => 'No file uploaded']);
+            return new Response(json_encode(['success' => false, 'error' => 'No file uploaded']), 200, ['Content-Type' => $type]);
         }
 
         if ($request->request->has('folder')) {
@@ -99,7 +108,7 @@ class FileSelectHelper
             $fileJson = ['success' => true, 'file' => $file->getClientOriginalName()[0].'/'.basename($fullPath)];
         }
 
-        return new JsonResponse($fileJson);
+        return new Response(json_encode($fileJson), 200, ['Content-Type' => $type]);
     }
 
     public function grabFileAction(Request $request)

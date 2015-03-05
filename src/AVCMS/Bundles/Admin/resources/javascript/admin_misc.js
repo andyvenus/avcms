@@ -68,7 +68,7 @@ $(document).ready(function() {
 
     body.on('click', '.slug_refresh_button', avcms.admin.generateSlugButton);
 
-    body.on('submit', 'form', avcms.form.submitForm);
+    body.on('submit', 'form:not(.no-ajax)', avcms.form.submitForm);
     body.on('click', '.reset-button', avcms.form.resetForm);
 
     $(document).ajaxSuccess(function(event, data) {
