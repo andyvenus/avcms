@@ -349,7 +349,15 @@ a {
     position: inherit !important; }
 
   .nano-pane {
-    display: none !important; } }
+    display: none !important; }
+
+  .admin-header .nav.navbar-nav {
+    margin: 0px -15px; }
+    .admin-header .nav.navbar-nav a {
+      height: 48px;
+      padding-top: 14px; }
+    .admin-header .nav.navbar-nav a.view-site {
+      text-align: right; } }
 .editor-container {
   overflow-x: hidden; }
 

@@ -528,14 +528,29 @@ a {
   .nano > .nano-content {
     overflow: auto;
     overflow-y: hidden;
-    right: 0px!important;
+    right: 0px !important;
     outline: none;
     height: auto;
-    position: inherit!important;
+    position: inherit !important;
   }
 
   .nano-pane {
-    display: none!important;
+    display: none !important;
+  }
+
+  .admin-header {
+    .nav.navbar-nav {
+      margin: 0px -15px;
+
+      a {
+        height: 48px;
+        padding-top: 14px;
+      }
+
+      a.view-site {
+        text-align: right;
+      }
+    }
   }
 }
 
