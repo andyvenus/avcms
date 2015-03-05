@@ -50,6 +50,14 @@ $(document).ready(function() {
             formatSelection: avcms.admin.iconSelectFormat,
             escapeMarkup: function(m) { return m; }
         });
+
+        // fix forms in IE9 & other browsers that don't support the history API
+        if (!window.history || !window.history.pushState) {
+            $('form:not([action]), form.form-fix').each(function () {
+                $(this).attr('action', avcms.nav.getCurrentUrl());
+                $(this).addClass('form-fix');
+            });
+        }
     });
 
     var body = $('body');
