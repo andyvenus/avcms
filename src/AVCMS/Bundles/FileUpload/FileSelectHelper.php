@@ -79,6 +79,10 @@ class FileSelectHelper
             $file = $request->files->get($request->query->get('type'), null)['upload'];
         }
 
+        if (!$file) {
+            return new JsonResponse(['success' => false, 'error' => 'No file uploaded']);
+        }
+
         if ($request->request->has('folder')) {
             $path = $this->filePath(str_replace('.', '', $request->request->get('folder')));
         }
