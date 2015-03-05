@@ -105,11 +105,14 @@ avcms.admin = {
     },
 
     mainLoaderOn: function() {
-        $('.lightbar').show();
+        $('.admin-header-logo').hide();
+        $('.admin-header-logo-loader').show();
     },
 
     mainLoaderOff: function() {
-        $('.lightbar').fadeOut(1000);
+        $('.admin-header-logo-loader').fadeOut(400, function() {
+            $('.admin-header-logo').fadeIn();
+        });
     },
 
     generateSlugDelay: function() {
