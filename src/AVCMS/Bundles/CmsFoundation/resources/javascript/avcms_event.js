@@ -8,7 +8,6 @@ avcms.event = new function () {
     this.events = [];
 
     this.fireEvent = function (event, args) {
-        //console.log('Event ' + event + ' fired')
         if (!args) {
             args = [];
         }

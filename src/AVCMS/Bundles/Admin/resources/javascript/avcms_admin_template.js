@@ -53,11 +53,7 @@ avcms.adminTemplate = {
                 finder_results.height(target_height - finder_top_height - 3);
             }
 
-                $(".nano").nanoScroller({ iOSNativeScrolling: false });
-
-            if (finder_results.find('.nano-content').offsetHeight < finder_results.scrollHeight) {
-                console.log('something');
-            }
+            $(".nano").nanoScroller({ iOSNativeScrolling: false });
         }
 
         var editor = $('.editor-content, .simple-content');

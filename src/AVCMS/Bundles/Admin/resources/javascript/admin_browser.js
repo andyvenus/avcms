@@ -130,7 +130,6 @@ avcms.browser = {
         var finder_div;
         var scroll_height;
         if (!$(this).hasClass('nano-content')) {
-            //console.log('loading more');
             finder_div = $('.browser-finder-results').find('.nano-content');
             scroll_height = $(document).height();
         }
