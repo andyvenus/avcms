@@ -453,5 +453,7 @@ avcms.browser = {
             avcms.nav.onPageModified();
         });
         $('.browser-finder-show-filters').slideUp(300);
+
+        return false;
     }
 }
