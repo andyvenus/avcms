@@ -213,8 +213,9 @@ class WallpapersAdminController extends AdminBaseController
         return new WallpaperCategoryAdminForm($itemId, $this->model('WallpaperCategories'));
     }
 
-    protected function clearWallpaperCaches(array $dirs)
+    protected function clearWallpaperCaches($dirs)
     {
+        $dirs = (array) $dirs;
         $cacheClearer = new CacheClearer($this->getParam('root_dir').'/'.$this->getParam('web_path').'/'.$this->bundle->config->web_dir);
         $cacheClearer->clearCaches($dirs);
     }
