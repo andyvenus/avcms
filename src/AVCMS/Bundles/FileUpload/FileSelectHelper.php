@@ -79,7 +79,7 @@ class FileSelectHelper
             $file = $request->files->get($request->query->get('type'), null)['upload'];
         }
 
-        if (!$file) {
+        if ($file === null) {
             return new JsonResponse(['success' => false, 'error' => 'No file uploaded']);
         }
 
