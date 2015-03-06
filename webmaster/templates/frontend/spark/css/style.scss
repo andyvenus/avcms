@@ -21,6 +21,11 @@ body {
 
   a {
     color: white;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #dbdbdb;
   }
 
   h1 {
@@ -30,6 +35,11 @@ body {
   .user-area {
     .user-area-inner {
       margin-top: 5px;
+    }
+
+    .label-default {
+      background-color: lighten($base-color, 20);
+      color: white;
     }
   }
 }
@@ -53,12 +63,22 @@ body {
 }
 
 footer {
-    margin-top: 10px;
+  padding-top: 10px;
+  background-color: #222222;
 }
 
 .footer-menu {
   text-align: center;
   margin-bottom: 10px;
+}
+
+.copyright {
+  margin-top: 10px;
+  margin-bottom: 5px;
+
+  a {
+    color: white;
+  }
 }
 
 select[name=author] {
@@ -67,15 +87,20 @@ select[name=author] {
 
 .avcms-main {
   background-color: white;
-
+  padding-top: 10px;
 }
 
 .main-menu {
   margin-bottom: 0px;
   color: white;
   border-bottom: 0px;
-  background-color: white;
-  padding-top: 10px;
+  background-color: #222222;
+  padding: 5px 0;
+
+  .navbar {
+    margin-bottom: 0px;
+    background: none;
+  }
 
   .navbar-collapse, .navbar-form {
     border-color: darken($header-base-color, 5);

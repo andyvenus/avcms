@@ -19,11 +19,17 @@ body {
 .header {
   margin-top: 10px; }
   .header a {
-    color: white; }
+    color: white;
+    text-decoration: none; }
+  .header a:hover {
+    color: #dbdbdb; }
   .header h1 {
     margin-top: 0px; }
   .header .user-area .user-area-inner {
     margin-top: 5px; }
+  .header .user-area .label-default {
+    background-color: #5b9ec0;
+    color: white; }
 
 .header-extra {
   background-color: #f7faf8; }
@@ -40,24 +46,35 @@ body {
   padding-bottom: 5px; }
 
 footer {
-  margin-top: 10px; }
+  padding-top: 10px;
+  background-color: #222222; }
 
 .footer-menu {
   text-align: center;
   margin-bottom: 10px; }
 
+.copyright {
+  margin-top: 10px;
+  margin-bottom: 5px; }
+  .copyright a {
+    color: white; }
+
 select[name=author] {
   width: 500px; }
 
 .avcms-main {
-  background-color: white; }
+  background-color: white;
+  padding-top: 10px; }
 
 .main-menu {
   margin-bottom: 0px;
   color: white;
   border-bottom: 0px;
-  background-color: white;
-  padding-top: 10px; }
+  background-color: #222222;
+  padding: 5px 0; }
+  .main-menu .navbar {
+    margin-bottom: 0px;
+    background: none; }
   .main-menu .navbar-collapse, .main-menu .navbar-form {
     border-color: #bad2bc; }
   .main-menu .navbar-toggle {
