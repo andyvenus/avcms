@@ -28,7 +28,7 @@ avcms.points = {
 
             if (typeof(data.points) !== 'undefined') {
                 var span = $('.avcms-active-user-points');
-                var current_points = parseInt(span.text(), 10) + parseInt(data.points, 10);
+                var current_points = parseInt(span.first().text(), 10) + parseInt(data.points, 10);
 
                 span.text(current_points);
             }
