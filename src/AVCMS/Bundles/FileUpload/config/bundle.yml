@@ -9,7 +9,7 @@ assets:
     priority: 20
   jquery.fileupload.js:
     env: admin
-    compile: false
+    compress: false
     priority: -100
   jquery.iframe-transport.js:
     env: admin

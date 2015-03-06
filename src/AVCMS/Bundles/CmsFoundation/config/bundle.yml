@@ -131,8 +131,10 @@ assets:
   jquery.js:
     env: shared
     priority: 90
+    compress: false
   bootstrap.min.js:
     env: frontend
+    compress: false
   bootstrap.min.css:
     env: frontend
   avcms_form.js:
@@ -146,6 +148,7 @@ assets:
       env: admin
   notify.min.js:
     env: shared
+    compress: false
   avcms_misc.js:
     env: shared
   avcms_frontend.js:

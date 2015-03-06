@@ -10,6 +10,7 @@ require:
 assets:
   select2.min.js:
     env: admin
+    compress: false
   select2.css:
     env: admin
     priority: 10
@@ -20,14 +21,16 @@ assets:
     env: admin
   jquery.nanoscroller.min.js:
     env: admin
+    compress: false
   nanoscroller.css:
     env: admin
   jquery.mjs.nestedSortable.js:
-      env: admin
-      compress: false
+    env: admin
+    compress: false
   jquery.datetimepicker.js:
     env: admin
     compress: false
+    priority: -10
   jquery.datetimepicker.css:
     env: admin
   jquery-ui.min.js:
@@ -43,14 +46,14 @@ assets:
     env: admin
 
   admin_navigation.js:
-      env: admin
-      priority: -100
+    env: admin
+    priority: -100
   admin_browser.js:
-      env: admin
-      priority: 15
+    env: admin
+    priority: 15
   admin_misc.js:
-      env: admin
-      priority: 15
+    env: admin
+    priority: 15
   admin_sortable.js:
     env: admin
     priority: 15
