@@ -24,10 +24,10 @@ assets:
     env: admin
   jquery.mjs.nestedSortable.js:
       env: admin
-      compile: false
+      compress: false
   jquery.datetimepicker.js:
     env: admin
-    compile: false
+    compress: false
   jquery.datetimepicker.css:
     env: admin
   jquery-ui.min.js:
