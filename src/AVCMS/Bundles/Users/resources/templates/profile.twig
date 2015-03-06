@@ -4,9 +4,8 @@
 
 {% block meta_description %}{% trans with {username: profile_user.username} %}{username}'s profile{% endtrans %}{% endblock %}
 
-{% block full_width_content %}
+{% block wide_content %}
     <div class="user-profile-header" style="background-image: url('{{ cover_url(profile_user) }}')">
-        <div class="container">
             <div class="user-profile-username">
                 {{ profile_user.username }}
             </div>
@@ -14,39 +13,34 @@
             <div class="user-profile-avatar">
                 <img src="{{ avatar_url(profile_user) }}" width="100px" height="100px" />
             </div>
-        </div>
         <div class="user-profile-info">
-            <div class="container">
                 <div class="pull-left">
                     {% trans %}Joined{% endtrans %}: {{ profile_user.joined|date(settings.date_format) }} &nbsp;&nbsp;{% trans %}Last Activity{% endtrans %}: {{ profile_user.lastActivity|date(settings.date_format) }}
                 </div>
-            </div>
         </div>
     </div>
 
-    <div class="container">
-        <p class="text-right">
-            {{ outlet('user_profile_buttons', {user: profile_user}) }}
+    <p class="text-right">
+        {{ outlet('user_profile_buttons', {user: profile_user}) }}
 
-            {% if is_granted('ADMIN_USERS') %}
-                <a class="btn btn-default" href="{{ url('users_admin_edit', {id: profile_user.id}) }}"><span class="glyphicon glyphicon-user"></span> {% trans %}Edit User{% endtrans %}</a>
-            {% endif %}
+        {% if is_granted('ADMIN_USERS') %}
+            <a class="btn btn-default" href="{{ url('users_admin_edit', {id: profile_user.id}) }}"><span class="glyphicon glyphicon-user"></span> {% trans %}Edit User{% endtrans %}</a>
+        {% endif %}
 
-            {% if users_own_profile %}
-                <a class="btn btn-default" href="{{ url('edit_user_profile') }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit Profile{% endtrans %}</a>
-            {% endif %}
-        </p>
-        <div class="row">
-            <div class="col-md-8">
-                {% for module in modules('user_profile_main', {user: profile_user}) %}
-                    {% include module.template %}
-                {% endfor %}
-            </div>
-            <div class="col-md-4">
-                {% for module in modules('user_profile_sidebar', {user: profile_user}) %}
-                    {% include module.template %}
-                {% endfor %}
-            </div>
+        {% if users_own_profile %}
+            <a class="btn btn-default" href="{{ url('edit_user_profile') }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit Profile{% endtrans %}</a>
+        {% endif %}
+    </p>
+    <div class="row">
+        <div class="col-md-8">
+            {% for module in modules('user_profile_main', {user: profile_user}) %}
+                {% include module.template %}
+            {% endfor %}
+        </div>
+        <div class="col-md-4">
+            {% for module in modules('user_profile_sidebar', {user: profile_user}) %}
+                {% include module.template %}
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

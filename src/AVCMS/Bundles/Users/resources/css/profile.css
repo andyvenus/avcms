@@ -12,7 +12,7 @@
   margin-bottom: 40px;
   font-size: 40px;
   text-shadow: 2px 2px 4px #000000;
-  margin-left: 120px; }
+  margin-left: 130px; }
 
 .user-profile-avatar {
   background-color: white;
@@ -21,6 +21,7 @@
   position: absolute;
   bottom: 0px;
   margin-bottom: 10px;
+  margin-left: 10px;
   z-index: 10; }
 
 .user-profile-info {
@@ -31,4 +32,4 @@
   width: 100%;
   padding: 10px 0px; }
   .user-profile-info .pull-left {
-    margin-left: 120px; }
+    margin-left: 130px; }
