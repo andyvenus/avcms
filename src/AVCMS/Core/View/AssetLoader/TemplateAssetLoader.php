@@ -7,6 +7,7 @@
 
 namespace AVCMS\Core\View\AssetLoader;
 
+use Assetic\Filter\JSqueezeFilter;
 use AVCMS\Core\AssetManager\Asset\TemplateFileAsset;
 use AVCMS\Core\AssetManager\AssetLoader\AssetLoader;
 use AVCMS\Core\AssetManager\AssetManager;
@@ -41,7 +42,12 @@ class TemplateAssetLoader extends AssetLoader
                     $template = $templateConfig['parent_template_dir'];
                 }
 
-                $asset = new TemplateFileAsset($template, $assetType, $file);
+                $filters = [];
+                if ((!isset($assetConfig['compress']) || $assetConfig['compress'] !== false) && $assetType == 'javascript') {
+                    $filters = [new JSqueezeFilter()];
+                }
+
+                $asset = new TemplateFileAsset($template, $assetType, $file, $filters);
 
                 $assetManager->add($asset, 'frontend', $assetConfig['priority']);
             }

@@ -128,7 +128,7 @@ class AssetManager
     {
         $assetic = new AsseticAssetManager();
 
-        $this->createAsseticCollections($assetic, 'javascript', 'js', array(new JSqueezeFilter()));
+        $this->createAsseticCollections($assetic, 'javascript', 'js');
         $this->createAsseticCollections($assetic, 'css', 'css', array(new BundleUrlRewriteFilter()));
 
         $writer->writeManagerAssets($assetic);

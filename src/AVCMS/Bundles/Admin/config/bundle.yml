@@ -33,6 +33,7 @@ assets:
   jquery-ui.min.js:
     env: admin
     priority: 20
+    compress: false
 
   bootstrap.min.js:
     env: admin

@@ -7,6 +7,7 @@
 
 namespace AVCMS\Core\Bundle\AssetLoader;
 
+use Assetic\Filter\JSqueezeFilter;
 use AV\Kernel\Bundle\BundleManagerInterface;
 use AVCMS\Core\AssetManager\Asset\BundleFileAsset;
 use AVCMS\Core\AssetManager\AssetLoader\AssetLoader;
@@ -50,7 +51,12 @@ class BundleAssetLoader extends AssetLoader
                         $asset['type'] = $this->getFiletype($assetFile);
                     }
 
-                    $assetClass = new BundleFileAsset($config->name, $asset['type'], $assetFile);
+                    $filters = [];
+                    if ((!isset($asset['compress']) || $asset['compress'] !== false) && $asset['type'] == 'javascript') {
+                        $filters = [new JSqueezeFilter()];
+                    }
+
+                    $assetClass = new BundleFileAsset($config->name, $asset['type'], $assetFile, $filters);
 
                     if (!isset($asset['compile']) || $asset['compile'] === true) {
                         $assetManager->add($assetClass, $asset['env'], $asset['priority']);

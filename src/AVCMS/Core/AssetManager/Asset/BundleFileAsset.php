@@ -28,7 +28,6 @@ class BundleFileAsset extends FileAsset implements BundleAssetInterface
      * @param null $sourceRoot
      * @param null $sourcePath
      * @param array $vars
-     * @internal param string $file
      */
     public function __construct($bundle, $type, $filename, $filters = array(), $sourceRoot = null, $sourcePath = null, array $vars = array())
     {
