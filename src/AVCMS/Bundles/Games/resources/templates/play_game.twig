@@ -21,7 +21,6 @@
                     </div>
                     <div class="media-body">
                         <h2>{{ game.name }}</h2>
-                        <p class="game-description">{{ game.description|striptags }}</p>
                     </div>
                 </div>
             </div>
@@ -82,8 +81,13 @@
                     </div>
                     <div class="box-main">
                         <div class="row">
+                            <div class="col-md-12">
+                                <p class="game-description">{{ game.description|striptags }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-4">
-                                <p>{% trans %}Date Added{% endtrans %}: {{ game.dateAdded|date(settings.date_format) }}</p>
+                                <p>{% trans %}Date Added{% endtrans %}: {{ game.datePublished|date(settings.date_format) }}</p>
                             </div>
                             <div class="col-md-4">
                                 <p>{% trans %}Category{% endtrans %}: {{ game.category.name }}</p>

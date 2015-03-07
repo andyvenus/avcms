@@ -134,7 +134,6 @@ select[name=author] {
 .box-primary .box-top {
   padding: 10px; }
   .box-primary .box-top h1, .box-primary .box-top h2, .box-primary .box-top h3, .box-primary .box-top h4, .box-primary .box-top h5, .box-primary .box-top h6 {
-    margin: 0px;
     font-weight: normal; }
 .box-primary .box-main {
   padding: 15px; }
