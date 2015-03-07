@@ -86,7 +86,11 @@ admin_settings:
       numeric:
         rule: Numeric
 
-
+  show_wallpaper_name:
+    type: checkbox
+    label: Show Wallpaper Name
+    default: 1
+    section: browse_wallpapers
   show_wallpaper_ratings:
     type: checkbox
     label: Show Wallpaper Ratings
@@ -250,6 +254,10 @@ modules:
         type: text
         label: Number of wallpapers to display
         default: 5
+      show_wallpaper_name:
+        type: checkbox
+        label: Show Date
+        default: 1
       show_wallpaper_date:
         type: checkbox
         label: Show Date
