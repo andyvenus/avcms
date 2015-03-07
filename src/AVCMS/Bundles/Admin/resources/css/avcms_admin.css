@@ -41,6 +41,7 @@ a {
   float: left;
   background-color: #232a34;
   width: 100%;
+  max-width: 300px;
   color: #d7dde5;
   padding-top: 1px;
   position: relative;

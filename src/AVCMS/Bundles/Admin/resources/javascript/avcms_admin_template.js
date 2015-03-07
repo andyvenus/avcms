@@ -21,6 +21,21 @@ $(document).ready(function() {
     $('body').on('click', '.dropdown-menu a', function() {
         $(this).parents('.dropdown').find('.dropdown-toggle').dropdown('toggle');
     });
+
+
+    $(document).mouseup(function (e)
+    {
+        var container = $(".admin-menu, #menu_toggle");
+
+        if (!container.hasClass('admin-menu-focused')) {
+            return;
+        }
+
+        if (!container.is(e.target) && container.has(e.target).length === 0) {
+            $(".admin-menu").toggleClass('admin-menu-focused');
+            return false;
+        }
+    });
 });
 
 avcms.adminTemplate = {

@@ -73,6 +73,7 @@ a {
   float: left;
   background-color: darken($main_menu_color, 10);
   width: 100%;
+  max-width: 300px;
   color: lighten($main_menu_color, 60);
   padding-top: 1px;
   position: relative;
