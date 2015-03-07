@@ -1,0 +1,138 @@
+{% extends '@CmsFoundation/frontend.twig' %}
+
+{% if settings.template_container_style == 'fluid' %}
+    {% set container_style = 'container-fluid' %}
+{% else %}
+    {% set container_style = 'container' %}
+{% endif %}
+
+{% block body %}
+    {# MAIN MENU #}
+    <div class="main-menu">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        {% trans %}Menu{% endtrans %}
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu-collapse">
+                    <ul class="nav navbar-nav">
+                        {% for menu_item in menu('frontend') %}
+                            {% if menu_item.children|length == 0 %}
+                                <li><a href="{{ menu_item.url }}"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}</a></li>
+                            {% else %}
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }} <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        {% if menu_item.url != '#' %}
+                                            <li><a href="{{ menu_item.url }}"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}</a></li>
+                                            <li role="presentation" class="divider"></li>
+                                        {% endif %}
+                                        {% for sub_menu_item in menu_item.children %}
+                                            <li class="sub-menu-item"><a href="{{ sub_menu_item.url }}"><span class="{{ sub_menu_item.icon }}"></span> {{ sub_menu_item.label }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+
+                            {% endif %}
+
+                        {% endfor %}
+                    </ul>
+
+                    <form class="navbar-form navbar-right" role="search" id="search_form">
+                        <div class="form-group">
+                            <div class="input-group">
+                                {{ form_field(search_form.search) }}
+                                <div class="input-group-btn">
+                                    {{ form_field(search_form.content_type, {class: 'search-select'}) }}
+
+                                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    {# HEADER #}
+    <header class="header">
+        <div class="{{ container_style }}">
+            <div class="row">
+                <div class="col-md-6 col-md-push-6 user-area">
+                    <div class="user-area-inner">{{ helper.simple_user_area }}</div>
+                </div>
+                <div class="col-md-6 col-md-pull-6 logo">
+
+                    {% if settings.logo_image_url %}
+                        <a href="{{ url('home') }}"><img class="logo-image" src="{{ settings.logo_image_url }}" /></a>
+                    {% else %}
+                        <div class="logo-text">
+                            <h1>
+                                <a href="{{ url('home') }}">
+                                    {{ settings.site_name }}
+                                </a>
+                            </h1>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+
+    {# SECONDARY MENU #}
+    <div class="header-extra">
+        <div class="{{ container_style }}">
+            {{ render_modules('header_bottom') }}
+        </div>
+    </div>
+
+    {# MAIN CONTENT #}
+
+        <section class="{{ container_style }} avcms-main">
+            {% for message in get_messages() %}
+                <div class="alert alert-info">{{ message.message }}</div>
+            {% endfor %}
+
+    {% block full_width_content %}{% block wide_content %}
+                <div class="row">
+                    {% if settings.template_no_sidebar != 0 %}
+                        {% set content_w = 12 %}
+                    {% else %}
+                        {% set content_w = 8 %}
+                    {% endif %}
+
+                    <div class="col-md-{{ content_w }}  {% if settings.template_sidebar_position == 'left' %}col-md-push-{{ 12 - content_w }}{% endif %}">
+                        {{ render_modules('content_top') }}
+
+                        {% block content %}{% endblock %}
+
+                        {{ render_modules('content_bottom') }}
+                    </div>
+
+                    {% if settings.template_no_sidebar == 0 %}
+                        <div class="col-md-4 {% if settings.template_sidebar_position == 'left' %}col-md-pull-8{% endif %}">
+                            {{ render_modules('sidebar') }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endblock %}
+    {% endblock %}
+        </section>
+
+
+    {# FOOTER #}
+    <footer class="{{ container_style }} footer">
+        <div class="col-md-12">
+            {{ render_modules('page_footer') }}
+        </div>
+
+        <div class="col-md-12 footer-menu">
+            {{ helper.button_menu('frontend_footer', 'sm', null, 'dropup') }}
+        </div>
+    </footer>
+
+{% endblock %}
