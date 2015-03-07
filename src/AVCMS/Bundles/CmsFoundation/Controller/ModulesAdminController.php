@@ -103,6 +103,8 @@ class ModulesAdminController extends AdminBaseController
             }
         }
 
+        $moduleConfig->setTemplateType($acceptedTemplates[0]);
+
         $permsProvider = $this->container->get('permissions.choices_provider');
 
         $form = new AdminModuleForm(new RouteChoicesProvider($this->get('router'), 'frontend'), $templateList, $this->getTemplatesList($position, $moduleConfig->getTemplateType()), $permsProvider, $module->getDefaultPermissions());

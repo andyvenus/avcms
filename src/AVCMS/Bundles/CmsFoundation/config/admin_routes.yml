@@ -87,7 +87,7 @@ modules_delete_position:
   defaults: { _controller: 'CmsFoundation::ModulesAdminController::deletePositionAction' }
 
 modules_get_template_styles:
-  path: /modules/template-styles/{postiionId}/{templateType}
+  path: /modules/template-styles/{positionId}/{templateType}
   defaults: { _controller: 'CmsFoundation::ModulesAdminController::getTemplatesListAction' }
 
 modules_admin_toggle_published:
