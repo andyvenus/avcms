@@ -27,7 +27,7 @@ class TagsServices implements ServicesInterface
             ->addTag('model')
         ;
 
-        $container->register('listener.update_tags', 'AVCMS\Bundles\Tags\Events\UpdateTags')
+        $container->register('listener.update_tags', 'AVCMS\Bundles\Tags\Events\UpdateTagsSubscriber')
             ->setArguments(array(new Reference('taxonomy_manager')))
             ->addTag('event.subscriber')
         ;

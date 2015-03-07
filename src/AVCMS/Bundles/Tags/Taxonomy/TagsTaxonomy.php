@@ -73,6 +73,11 @@ class TagsTaxonomy implements TaxonomyInterface
      */
     public function update($contentId, $contentType, array $tags)
     {
+        if (empty($tags)) {
+            $this->relationsModel->deleteContentTaxonomy($contentId, $contentType);
+            return;
+        }
+
         $existingTags = $this->tags->query()->whereIn($this->relationColumn, $tags)->get();
 
         $onlyNewTags = $tags;

@@ -14,13 +14,13 @@ use AVCMS\Core\Taxonomy\TaxonomyManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Class UpdateTags
+ * Class UpdateTagsSubscriber
  * @package AVCMS\Bundles\Tags\Events
  *
  * Responds to events in the save content controller to retrieve, display &
  * save tags taxonomy to/from the form
  */
-class UpdateTags implements EventSubscriberInterface
+class UpdateTagsSubscriber implements EventSubscriberInterface
 {
     /**
      * @var \AVCMS\Core\Taxonomy\TaxonomyManager
@@ -79,7 +79,9 @@ class UpdateTags implements EventSubscriberInterface
 
             $trimmedTags = [];
             foreach ($tags as $tag) {
-                $trimmedTags[] = trim($tag);
+                if ($trimmed = trim($tag)) {
+                    $trimmedTags[] = $trimmed;
+                }
             }
 
             $this->taxonomy->update('tags', $event->getEntity()->getId(), $event->getModel()->getSingular(), $trimmedTags);
