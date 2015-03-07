@@ -94,7 +94,7 @@ admin_settings:
     label: Template
     help: The frontend template
     section: main
-    default: webmaster/templates/frontend/mint
+    default: webmaster/templates/frontend/spark
   email_template:
     type: select
     choices_provider_service: email_template_choices_provider
