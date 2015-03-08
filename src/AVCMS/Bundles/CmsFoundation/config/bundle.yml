@@ -137,6 +137,7 @@ assets:
     compress: false
   bootstrap.min.css:
     env: frontend
+    priority: 90
   avcms_form.js:
     env: shared
   avcms_event.js:
