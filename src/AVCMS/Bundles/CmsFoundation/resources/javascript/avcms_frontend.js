@@ -1,7 +1,7 @@
 avcms = avcms || {};
 
 $(document).ready(function() {
-    $('#search_form').submit(avcms.frontend.search);
+    $('#search_form, .avcms-search-form').submit(avcms.frontend.search);
 
     $('body').on('submit', '[data-ajax-form]', avcms.form.submitForm);
 
