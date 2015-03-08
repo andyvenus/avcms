@@ -75,7 +75,7 @@
 
     {# MAIN CONTENT #}
         <section class="{{ container_style }} avcms-main">
-            <div class="hidden-md hidden-lg">
+            <div class="{% if settings.template_no_sidebar == 0 %}hidden-md hidden-lg{% endif %}">
                 {% block search_form %}
                     <form role="search" id="search_form">
                         <div class="form-group">
