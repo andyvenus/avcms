@@ -17,7 +17,7 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    <h2>{{ message.subject }}</h2>
+                    <h2 class="media-heading">{{ message.subject }}</h2>
                     {% trans %}From{% endtrans %}:
                     <a href="{{ path('user_profile', {'slug': message.sender.slug}) }}">
                         {{ message.sender.username }}
