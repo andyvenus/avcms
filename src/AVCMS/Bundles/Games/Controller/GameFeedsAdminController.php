@@ -105,6 +105,10 @@ class GameFeedsAdminController extends AdminBaseController
                 // Game File
                 $file = $curl->get($game->getFile());
 
+                if (!$file) {
+                    return new JsonResponse(['success' => false, 'error' => 'Could not download game file from server']);
+                }
+
                 $handler = new CurlFileHandler(null, ['php' => '*']);
 
                 $gameExtension = strtok(pathinfo($game->getFile(), PATHINFO_EXTENSION), '?');
@@ -117,6 +121,10 @@ class GameFeedsAdminController extends AdminBaseController
 
                 // Thumbnail
                 $file = $curl->get($game->getThumbnail());
+
+                if (!$file) {
+                    return new JsonResponse(['success' => false, 'error' => 'Could not download image file from server']);
+                }
 
                 $thumbnailExtension = strtok(pathinfo($game->getThumbnail(), PATHINFO_EXTENSION), '?');
 
