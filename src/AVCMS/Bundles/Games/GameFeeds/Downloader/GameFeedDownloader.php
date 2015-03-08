@@ -60,6 +60,7 @@ class GameFeedDownloader
         $url = $feed->getFeedUrl($this->settings);
 
         $curl = new Curl();
+        $curl->setOpt(CURLOPT_FOLLOWLOCATION, true);
 
         $response = $curl->get($url);
 

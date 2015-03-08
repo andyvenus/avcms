@@ -42,6 +42,8 @@ class KongregateFeed implements GameFeedInterface
      */
     public function filterGame(FeedGame $game, $feedData)
     {
+        $game->setFile(str_replace('external.kongregate-games.com', 'chat.kongregate.com', $game->getFile()));
+
         $game->setDescription(trim($this->convertSmartQuotes($game->getDescription())));
         $game->setInstructions(trim($this->convertSmartQuotes($game->getInstructions())));
 
