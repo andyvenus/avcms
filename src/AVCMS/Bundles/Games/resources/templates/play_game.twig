@@ -17,10 +17,13 @@
 
                 <div class="media">
                     <div class="media-left">
-                        <img class="media-object" src="{{ game_thumbnail(game) }}" alt="{{ game.name }}" width="80" height="80">
+                        <img class="media-object" src="{{ game_thumbnail(game) }}" alt="{{ game.name }}" height="65">
                     </div>
                     <div class="media-body">
-                        <h2>{{ game.name }}</h2>
+                        <h2 class="media-heading">{{ game.name }}</h2>
+                        <a href="{{ path('game_category', {'category': game.category.slug}) }}">
+                           <span class="glyphicon glyphicon-folder-open"></span> &nbsp;{{ game.category.name }}
+                        </a>
                     </div>
                 </div>
             </div>
@@ -90,7 +93,7 @@
                                 <p>{% trans %}Date Added{% endtrans %}: {{ game.datePublished|date(settings.date_format) }}</p>
                             </div>
                             <div class="col-md-4">
-                                <p>{% trans %}Category{% endtrans %}: {{ game.category.name }}</p>
+                                <p>{% trans %}Category{% endtrans %}: <a href="{{ path('game_category', {'category': game.category.slug}) }}"> {{ game.category.name }}</a></p>
                             </div>
                             <div class="col-md-4">
                                 <p>{% trans with {plays: game.hits} %}Played {plays} times{% endtrans %}</p>
