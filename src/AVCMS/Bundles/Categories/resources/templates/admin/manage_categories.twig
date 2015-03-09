@@ -7,6 +7,8 @@
 {% block editor_content %}
     <span class="always-refresh"></span>
 
+    <div class="alert alert-info"><span class="glyphicon glyphicon-info-sign"></span> {% trans %}Drag and drop categories by clicking and dragging over the handle icons on the left. Create sub-categories by dragging and dropping the sub-category over another category.{% endtrans %}</div>
+
     <p><a href="{{ url(route_prefix ~ 'admin_add_category') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> {% trans %}Add Category{% endtrans %}</a></p>
 
     <div class="sortable-container">
