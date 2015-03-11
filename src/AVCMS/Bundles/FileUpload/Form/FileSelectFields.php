@@ -10,14 +10,14 @@ namespace AVCMS\Bundles\FileUpload\Form;
 use AV\Form\FormBlueprintInterface;
 
 class FileSelectFields {
-    public function __construct(FormBlueprintInterface $formBlueprint, $fileSelectUrl, $uploadUrl, $grabUrl, $fieldName = 'file', $groupName = 'file', $additionalChoices = [], $defaultSelected = null)
+    public function __construct(FormBlueprintInterface $formBlueprint, $fileSelectUrl, $uploadUrl, $grabUrl, $fieldName = 'file', $groupName = 'file', $additionalChoices = [], $defaultSelected = null, $pathLabel = 'Path')
     {
         $defaultSelected = ($defaultSelected ? $defaultSelected : $fieldName);
 
         $fieldNameUc = ucfirst($fieldName);
 
         $choices = [
-            $fieldName => 'Path',
+            $fieldName => $pathLabel,
             $groupName.'[find]' => 'Find',
             $groupName.'[upload]' => 'Upload',
             $groupName.'[grab]' => 'Grab'

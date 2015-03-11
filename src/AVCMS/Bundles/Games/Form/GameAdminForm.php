@@ -16,13 +16,13 @@ class GameAdminForm extends AdminContentForm
             $selectedField = 'embed_code';
         }
 
-        new FileSelectFields($this, 'admin/games/find-files', 'admin/games/upload', 'admin/games/grab-file', 'file', 'game_file', ['embed_code' => 'HTML'], $selectedField);
+        new FileSelectFields($this, 'admin/games/find-files', 'admin/games/upload', 'admin/games/grab-file', 'file', 'game_file', ['embed_code' => 'HTML'], $selectedField, 'URL');
 
         $this->add('embed_code', 'textarea', array(
             'label' => 'Embed Code',
         ));
 
-        new FileSelectFields($this, 'admin/games/find-files', 'admin/games/upload', 'admin/games/grab-file', 'thumbnail', 'game_thumbnail');
+        new FileSelectFields($this, 'admin/games/find-files', 'admin/games/upload', 'admin/games/grab-file', 'thumbnail', 'game_thumbnail', [], null, 'URL');
 
         $this->add('name', 'text', array(
             'label' => 'Name',
