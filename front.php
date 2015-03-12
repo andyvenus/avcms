@@ -4,6 +4,8 @@ use AV\Model\Exception\DatabaseConfigMissingException;
 use AVCMS\Core\Kernel\AvcmsKernel;
 use Symfony\Component\HttpFoundation\Request;
 
+ini_set("memory_limit","250M");
+
 define('DEBUG_MODE', true);
 define('ROOT_DIR', __DIR__);
 
