@@ -56,7 +56,7 @@ class CsrfFormPlugin implements EventSubscriberInterface
 
         if ($this->token->checkToken($token) === false) {
             $formHandler = $event->getFormHandler();
-            $formHandler->addCustomErrors(array(new FormError('_csrf_token', 'Invalid CSRF token')));
+            $formHandler->addCustomErrors(array(new FormError('_csrf_token', 'Invalid CSRF token. Got: "'.$token.'"" Expected: "'.$this->token->getToken().'""')));
         }
     }
 
