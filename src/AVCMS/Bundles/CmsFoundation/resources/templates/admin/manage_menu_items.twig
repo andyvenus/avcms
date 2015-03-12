@@ -42,7 +42,11 @@
                         <div class="pull-right">
                             {% if menu_item.owner is null %}
                                 <a class="btn btn-xs btn-default" href="{{ url('menu_items_edit', {menu: item.id, id: menu_item.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit{% endtrans %}</a>
-                                {{ buttons.publish(menu_item.enabled, 'toggle_menu_item_enabled') }}
+                            {% endif %}
+
+                            {{ buttons.publish(menu_item.enabled, 'toggle_menu_item_enabled') }}
+
+                            {% if menu_item.owner is null %}
                                 <button class="btn btn-danger btn-xs delete-item"><span class="glyphicon glyphicon-remove"></span></button>
                             {% endif %}
                         </div>
