@@ -37,6 +37,6 @@ class PageAdminForm extends AdminContentForm
 
     public function getValidationRules(Validator $validator)
     {
-        $validator->addRule('slug', new MustNotExist('AVCMS\Bundles\Pages\Model\Pages', 'slug', $this->item_id), 'The URL Slug must be unique, slug already in use');
+        $validator->addRule('slug', new MustNotExist('AVCMS\Bundles\Pages\Model\Pages', 'slug', $this->itemId), 'The URL Slug must be unique, slug already in use');
     }
 }

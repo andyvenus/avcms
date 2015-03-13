@@ -11,11 +11,11 @@ use AV\Form\FormBlueprint;
 
 abstract class AdminContentForm extends FormBlueprint
 {
-    protected $item_id;
+    protected $itemId;
 
     public function __construct($itemId)
     {
-        $this->item_id = $itemId;
+        $this->itemId = $itemId;
 
         $this->add('published', 'radio', array(
             'label' => 'Publish',

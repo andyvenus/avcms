@@ -50,6 +50,6 @@ class BlogPostAdminForm extends AdminContentForm
 
     public function getValidationRules(Validator $validator)
     {
-        $validator->addRule('slug', new MustNotExist('AVCMS\Bundles\Blog\Model\BlogPosts', 'slug', $this->item_id), 'The URL Slug must be unique, slug already in use');
+        $validator->addRule('slug', new MustNotExist('AVCMS\Bundles\Blog\Model\BlogPosts', 'slug', $this->itemId), 'The URL Slug must be unique, slug already in use');
     }
 }

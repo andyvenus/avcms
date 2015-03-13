@@ -2,6 +2,8 @@
 
 namespace AVCMS\Bundles\Games\Form;
 
+use AV\Validation\Rules\MustNotExist;
+use AV\Validation\Validator;
 use AVCMS\Bundles\Admin\Form\AdminContentForm;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\FileUpload\Form\FileSelectFields;
@@ -73,5 +75,10 @@ class GameAdminForm extends AdminContentForm
         ));
 
         parent::__construct($game->getId() ?: 0);
+    }
+
+    public function getValidationRules(Validator $validator)
+    {
+        $validator->addRule('slug', new MustNotExist('AVCMS\Bundles\Games\Model\Games', 'slug', $this->itemId), 'The URL Slug must be unique, slug already in use');
     }
 }
