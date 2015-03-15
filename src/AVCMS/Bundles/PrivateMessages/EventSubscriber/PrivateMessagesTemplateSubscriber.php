@@ -63,7 +63,7 @@ class PrivateMessagesTemplateSubscriber implements EventSubscriberInterface
             }
 
             $event->addContent('
-                <a class="btn btn-default" href="'.$this->urlGenerator->generate('send_private_message', ['recipient' => $user->getId()]).'">
+                <a class="btn btn-default btn-sm" href="'.$this->urlGenerator->generate('send_private_message', ['recipient' => $user->getId()]).'">
                     <span class="glyphicon glyphicon-envelope"></span>
                     '.$this->translator->trans('Send Message').'
                 </a>

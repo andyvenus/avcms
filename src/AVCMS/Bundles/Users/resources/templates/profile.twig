@@ -24,11 +24,11 @@
         {{ outlet('user_profile_buttons', {user: profile_user}) }}
 
         {% if is_granted('ADMIN_USERS') %}
-            <a class="btn btn-default" href="{{ url('users_admin_edit', {id: profile_user.id}) }}"><span class="glyphicon glyphicon-user"></span> {% trans %}Edit User{% endtrans %}</a>
+            <a class="btn btn-default btn-sm" href="{{ url('users_admin_edit', {id: profile_user.id}) }}"><span class="glyphicon glyphicon-user"></span> {% trans %}Edit User{% endtrans %}</a>
         {% endif %}
 
         {% if users_own_profile %}
-            <a class="btn btn-default" href="{{ url('edit_user_profile') }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit Profile{% endtrans %}</a>
+            <a class="btn btn-default btn-sm" href="{{ url('edit_user_profile') }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit Profile{% endtrans %}</a>
         {% endif %}
     </p>
     <div class="row">

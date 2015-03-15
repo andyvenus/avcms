@@ -79,7 +79,7 @@ class FriendsTemplateSubscriber implements EventSubscriberInterface
             }
 
             $event->addContent('
-                <button type="button" class="btn btn-default avcms-friend-request-button" data-action="'.$btnAction.'" data-id="'.$user->getId().'">
+                <button type="button" class="btn btn-default btn-sm avcms-friend-request-button" data-action="'.$btnAction.'" data-id="'.$user->getId().'">
                     <span class="glyphicon glyphicon-'.$icon.'"></span>
                     '.$this->translator->trans($btnText).'
                 </button>
