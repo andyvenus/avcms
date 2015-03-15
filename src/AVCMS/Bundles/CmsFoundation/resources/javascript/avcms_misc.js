@@ -25,6 +25,8 @@ $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
 });
 
 avcms.general = {
+    loaderImg: '<img src="'+avcms.config.site_url+'web/resources/CmsFoundation/images/loader.gif" />',
+
     getCookie: function(name) {
         var nameEQ = name + "=";
         var ca = document.cookie.split(';');

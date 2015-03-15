@@ -35,6 +35,7 @@
         <twig_namespace custom="true" namespace="Links" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Links/resources/templates" />
         <twig_namespace custom="true" namespace="Model" namespaceType="ADD_PATH" path="src/AV/Bundles/Model/resources/templates" />
         <twig_namespace custom="true" namespace="Pages" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Pages/resources/templates" />
+        <twig_namespace custom="true" namespace="PrivateMessages" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/PrivateMessages/resources/templates" />
         <twig_namespace custom="true" namespace="Profiler" namespaceType="ADD_PATH" path="src/AVCMS/BundlesDev/Profiler/resources/templates" />
         <twig_namespace custom="true" namespace="Recaptcha" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Recaptcha/resources/templates" />
         <twig_namespace custom="true" namespace="Referrals" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Referrals/resources/templates" />
@@ -47,7 +48,7 @@
         <twig_namespace custom="true" namespace="Users" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Users/resources/templates" />
         <twig_namespace custom="true" namespace="Wallpapers" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Wallpapers/resources/templates" />
         <twig_namespace custom="true" namespace="WssImporter" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/WssImporter/resources/templates" />
-        <twig_namespace custom="true" namespace="PrivateMessages" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/PrivateMessages/resources/templates" />
+        <twig_namespace custom="true" namespace="Friends" namespaceType="ADD_PATH" path="src/AVCMS/Bundles/Friends/resources/templates" />
       </list>
     </option>
     <option name="containerFiles">

@@ -2,3 +2,18 @@ name: Friends
 namespace: AVCMS\Bundles\Friends
 require:
     - Framework
+
+services:
+  - FriendsServices
+
+assets:
+  avcms_friends.js:
+    env: frontend
+
+admin_settings:
+  enable_friends:
+    label: Enable Friends
+    help: Enable the friends system
+    default: 1
+    type: checkbox
+    section: main

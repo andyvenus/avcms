@@ -1,0 +1,7 @@
+{% extends '@email/main.twig' %}
+
+{% block content %}
+    <p><b>{% trans with {username: sender.username} %}You have received a friend request from {username}{% endtrans %}</b></p>
+
+    <p><a href="{{ url('friends') }}">{% trans %}Accept or decline{% endtrans %}</a></p>
+{% endblock %}

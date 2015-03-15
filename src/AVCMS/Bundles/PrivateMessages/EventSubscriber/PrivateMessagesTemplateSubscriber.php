@@ -48,7 +48,7 @@ class PrivateMessagesTemplateSubscriber implements EventSubscriberInterface
             $totalUnread = $user->messages->getTotalUnread();
 
             $event->addContent('
-                &nbsp;<a href="'.$this->urlGenerator->generate('private_messages_inbox').'">
+                &nbsp;<a href="'.$this->urlGenerator->generate('private_messages_inbox').'" data-toggle="tooltip" data-placement="bottom" title="'.$this->translator->trans('Private Messages').'">
                     <span class="glyphicon glyphicon-inbox"></span>
                     <span class="avcms-unread-message-count">'.$totalUnread.'</span>
                 </a>

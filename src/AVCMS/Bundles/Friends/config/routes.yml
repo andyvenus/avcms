@@ -1,0 +1,23 @@
+friends:
+  path: /friends
+  defaults: { _controller: Friends::FriendsController::friendsAction }
+
+send_friend_request:
+  path: /friends/send-request
+  defaults: { _controller: Friends::FriendsController::sendFriendRequestAction }
+
+cancel_friend_request:
+  path: /friends/cancel-request
+  defaults: { _controller: Friends::FriendsController::cancelFriendRequestAction }
+
+accept_friend_request:
+  path: /friends/accept-request
+  defaults: { _controller: Friends::FriendsController::acceptFriendRequestAction }
+
+decline_friend_request:
+  path: /friends/decline-request
+  defaults: { _controller: Friends::FriendsController::declineFriendRequestAction }
+
+remove_friend:
+  path: /friends/remove
+  defaults: { _controller: Friends::FriendsController::removeFriendAction }
