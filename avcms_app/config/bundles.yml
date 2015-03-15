@@ -76,3 +76,5 @@ Points:
     enabled: true
 PrivateMessages:
     enabled: true
+Friends:
+    enabled: true

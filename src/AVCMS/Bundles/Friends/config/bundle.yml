@@ -1,0 +1,4 @@
+name: Friends
+namespace: AVCMS\Bundles\Friends
+require:
+    - Framework
