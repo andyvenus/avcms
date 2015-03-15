@@ -32,7 +32,7 @@
                             <div class="row">
                         {% endif %}
 
-                        <div class="col-sm-6 {% if field.type == 'checkbox' %}checkbox-row{% endif %}">
+                        <div class="{% if field.type != 'hidden' %}col-sm-6{% endif %} {% if field.type == 'checkbox' %}checkbox-row{% endif %}">
                             {% if field.type == 'checkbox' %}<label>{{ field.options.label }}</label>{% endif %}
                             {{ form_row(field) }}
                         </div>
