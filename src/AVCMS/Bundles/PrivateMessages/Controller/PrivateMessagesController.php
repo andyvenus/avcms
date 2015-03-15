@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 class PrivateMessagesController extends Controller
@@ -28,7 +29,11 @@ class PrivateMessagesController extends Controller
         $this->messages = $this->model('PrivateMessages');
         $this->messages->setUsers($this->model('Users'));
 
-        if (!$this->userLoggedIn() || !$this->isGranted('PERM_PRIVATE_MESSAGES')) {
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw new InsufficientAuthenticationException;
+        }
+
+        if (!$this->isGranted('PERM_PRIVATE_MESSAGES')) {
             throw new AccessDeniedException;
         }
     }
