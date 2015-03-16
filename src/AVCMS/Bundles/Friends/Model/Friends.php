@@ -58,4 +58,18 @@ class Friends extends Model
         })
         ->delete();
     }
+
+    public function friendshipExists($user1, $user2)
+    {
+        $exists = $this->query()->where(function($q) use ($user1, $user2) {
+            $q->where('user1', $user1);
+            $q->where('user2', $user2);
+        })->orWhere(function($q) use ($user1, $user2) {
+            $q->where('user1', $user2);
+            $q->where('user2', $user1);
+        })
+        ->count();
+
+        return $exists ? true : false;
+    }
 }

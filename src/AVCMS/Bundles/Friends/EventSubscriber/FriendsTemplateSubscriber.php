@@ -9,6 +9,8 @@ namespace AVCMS\Bundles\Friends\EventSubscriber;
 
 use AVCMS\Bundles\CmsFoundation\Event\OutletEvent;
 use AVCMS\Bundles\Friends\Model\FriendRequests;
+use AVCMS\Bundles\Friends\Model\Friends;
+use AVCMS\Core\SettingsManager\SettingsManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -27,18 +29,28 @@ class FriendsTemplateSubscriber implements EventSubscriberInterface
 
     private $friendRequests;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator, TranslatorInterface $translator, TokenStorageInterface $tokenStorage, AuthorizationCheckerInterface $authChecker, FriendRequests $friendRequests)
+    private $settingsManager;
+
+    private $friends;
+
+    public function __construct(UrlGeneratorInterface $urlGenerator, TranslatorInterface $translator, TokenStorageInterface $tokenStorage, AuthorizationCheckerInterface $authChecker, SettingsManager $settingsManager, FriendRequests $friendRequests, Friends $friends)
     {
         $this->urlGenerator = $urlGenerator;
         $this->translator = $translator;
         $this->tokenStorage = $tokenStorage;
         $this->authChecker = $authChecker;
         $this->friendRequests = $friendRequests;
+        $this->friends = $friends;
+        $this->settingsManager = $settingsManager;
     }
 
     public function getOutlets(OutletEvent $event)
     {
         if ($event->getOutletName() !== 'user_options' && $event->getOutletName() !== 'user_profile_buttons') {
+            return;
+        }
+
+        if (!$this->settingsManager->getSetting('enable_friends')) {
             return;
         }
 
@@ -70,6 +82,11 @@ class FriendsTemplateSubscriber implements EventSubscriberInterface
             if ($this->friendRequests->requestExists($currentUser->getId(), $user->getId())) {
                 $btnAction = 'cancel-request';
                 $btnText = 'Cancel Friend Request';
+                $icon = 'remove-circle';
+            }
+            elseif ($this->friends->friendshipExists($currentUser->getId(), $user->getId())) {
+                $btnAction = 'remove';
+                $btnText = 'Unfriend';
                 $icon = 'remove-circle';
             }
             else {

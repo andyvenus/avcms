@@ -14,6 +14,10 @@ avcms.friends = {
 
         var action = button.data('action');
 
+        if (action == 'remove' && confirm(avcms.general.trans('Are you sure you want to remove this friend?')) == false) {
+            return;
+        }
+
         button.html(avcms.general.loaderImg);
         button.attr('disabled', 'disabled');
 

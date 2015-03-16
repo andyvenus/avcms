@@ -15,12 +15,16 @@ class FriendsServices implements ServicesInterface
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
+        $container->register('model.friends', 'AVCMS\Bundles\Friends\Model\Friends')
+            ->addTag('model')
+        ;
+
         $container->register('model.friend_requests', 'AVCMS\Bundles\Friends\Model\FriendRequests')
             ->addTag('model')
         ;
 
         $container->register('friends.template.subscriber', 'AVCMS\Bundles\Friends\EventSubscriber\FriendsTemplateSubscriber')
-            ->setArguments([new Reference('router'), new Reference('translator'), new Reference('security.token_storage'), new Reference('security.auth_checker'), new Reference('model.friend_requests')])
+            ->setArguments([new Reference('router'), new Reference('translator'), new Reference('security.token_storage'), new Reference('security.auth_checker'), new Reference('settings_manager'), new Reference('model.friend_requests'), new Reference('model.friends')])
             ->addTag('event.subscriber')
         ;
     }
