@@ -66,10 +66,12 @@ class FriendsController extends Controller
 
         $this->friendRequests->save($friendRequest);
 
-        $mailer = $this->get('mailer');
-        $email = $mailer->newEmail($this->trans('New Friend Request'), $this->render('@Friends/email/email.friend_request.twig', ['sender' => $this->activeUser()]));
-        $email->setTo($receiver->getEmail());
-        $mailer->send($email);
+        if ($receiver->getReceiveEmails()) {
+            $mailer = $this->get('mailer');
+            $email = $mailer->newEmail($this->trans('New Friend Request'), $this->render('@Friends/email/email.friend_request.twig', ['sender' => $this->activeUser()]));
+            $email->setTo($receiver->getEmail());
+            $mailer->send($email);
+        }
 
         return new JsonResponse(['success' => true, 'message' => $this->trans('Friend request sent')]);
     }
