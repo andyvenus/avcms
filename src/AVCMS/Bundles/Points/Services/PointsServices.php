@@ -37,6 +37,11 @@ class PointsServices implements ServicesInterface
             ->addTag('event.subscriber')
         ;
 
+        $container->register('rating_points.subscriber', 'AVCMS\Bundles\Points\EventSubscriber\RatePointsSubscriber')
+            ->setArguments([new Reference('points_manager')])
+            ->addTag('event.subscriber')
+        ;
+
         $container->register('report_points.subscriber', 'AVCMS\Bundles\Points\EventSubscriber\ReportPointsSubscriber')
             ->setArguments([new Reference('points_manager')])
             ->addTag('event.subscriber')

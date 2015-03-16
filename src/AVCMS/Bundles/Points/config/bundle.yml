@@ -35,6 +35,15 @@ admin_settings:
     validation:
       numeric:
         rule: Numeric
+  rating_points:
+    type: text
+    label: Rating Points
+    help: The number of points a user gets when rating content (like or dislike)
+    section: points
+    default: 10
+    validation:
+      numeric:
+        rule: Numeric
   comment_points:
     type: text
     label: Comment Points

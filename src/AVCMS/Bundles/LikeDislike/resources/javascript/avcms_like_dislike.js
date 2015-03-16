@@ -37,6 +37,8 @@ avcms.likeDislike = {
         $.post(avcms.config.site_url+'vote', 'content_id='+content_id+'&content_type='+content_type+'&rating='+vote_val, function(data) {
             group.find('.like-count').text(data.likes);
             group.find('.dislike-count').text(data.dislikes);
+
+            avcms.event.fireEvent('content-rated', [vote_val, data]);
         });
     }
 };

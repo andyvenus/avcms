@@ -2,6 +2,11 @@ avcms = avcms || {};
 
 $(document).ready(function() {
     avcms.event.addEvent('comment-submit-success', avcms.points.getNotification);
+    avcms.event.addEvent('content-rated', function(vote_val) {
+        if (vote_val != 'unvote') {
+            avcms.points.getNotification();
+        }
+    });
     avcms.event.addEvent('submit-form-success', function(form) {
         if (form.attr('name') == 'report-form') {
             avcms.points.getNotification();
