@@ -70,6 +70,11 @@ modules:
     type: user
     cachable: false
 
+frontend_search:
+  users:
+    name: Users
+    route: member_list
+
 menu_items:
   admin:
     users_admin:

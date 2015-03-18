@@ -40,6 +40,8 @@ class SearchTwigExtension extends \Twig_Extension
                     }
                     $searchContentTypes[$route] = $translator->trans($searchConfig['name']);
 
+                    asort($searchContentTypes);
+
                     if ($currentBundle === $bundleConfig['name'] && $selectedContent === null) {
                         $selectedContent = $route;
                     }
