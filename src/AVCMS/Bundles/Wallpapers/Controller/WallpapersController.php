@@ -54,6 +54,10 @@ class WallpapersController extends Controller
             $categories = $this->model('WallpaperCategories');
             $category = $categories->getFullCategory($request->get('category'));
 
+            if (!$category) {
+                throw $this->createNotFoundException('Category Not Found');
+            }
+
             $query->category($category->getId());
         }
 
