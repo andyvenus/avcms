@@ -21,7 +21,7 @@
     <div class="btn-group">
         {{ buttons.edit('blog_edit_post', item.id) }}
 
-        {{ buttons.publish(item.published, 'blog_toggle_posts_published') }}
+        {{ buttons.publish(item.published, 'blog_toggle_posts_published', item.publishDate) }}
 
         {{ buttons.delete('blog_delete_posts') }}
     </div>

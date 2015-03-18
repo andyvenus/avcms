@@ -12,7 +12,7 @@
     <div class="btn-group">
         {{ buttons.edit('games_admin_edit', item.id) }}
 
-        {{ buttons.publish(item.published, 'games_admin_toggle_published') }}
+        {{ buttons.publish(item.published, 'games_admin_toggle_published', item.publishDate) }}
 
         {{ buttons.featured(item.featured, 'games_admin_toggle_featured') }}
 

@@ -15,7 +15,7 @@
         <div class="btn-group">
             {{ buttons.edit('wallpapers_admin_edit', item.id) }}
 
-            {{ buttons.publish(item.published, 'wallpapers_admin_toggle_published') }}
+            {{ buttons.publish(item.published, 'wallpapers_admin_toggle_published', item.publishDate) }}
 
             {{ buttons.featured(item.featured, 'wallpapers_admin_toggle_featured') }}
 

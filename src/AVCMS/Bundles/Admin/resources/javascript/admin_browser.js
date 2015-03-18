@@ -315,14 +315,25 @@ avcms.browser = {
         }
 
         $(this).children('.glyphicon').toggleClass("glyphicon-eye-open glyphicon-eye-close");
-        $(this).toggleClass("btn-default btn-danger");
 
         var published;
-        if ($(this).hasClass('btn-danger')) {
+        if (!$(this).hasClass('btn-danger')) {
             published = 0;
         }
         else {
             published = 1;
+        }
+
+        $(this).removeClass("btn-default btn-danger btn-warning");
+
+        if (published == 1 && $(this).data('toggle') !== 'tooltip') {
+            $(this).addClass('btn-default');
+        }
+        else if (published == 1) {
+            $(this).addClass('btn-warning');
+        }
+        else {
+            $(this).addClass('btn-danger');
         }
 
         var form = $('form[data-item-id="'+id+'"');

@@ -13,16 +13,19 @@
     </a>
 {% endmacro %}
 
-{% macro publish(published, ajax_route) %}
-    {% if published == 1 %}
+{% macro publish(published, ajax_route, publish_date) %}
+    {% if published == 1 and publish_date <= date().timestamp %}
         {% set published_btn_class = 'btn-default' %}
         {% set published_btn_icon = 'glyphicon-eye-open' %}
+    {% elseif published == 1 %}
+        {% set published_btn_class = 'btn-warning' %}
+        {% set published_btn_icon = 'glyphicon-eye-close' %}
     {% else %}
         {% set published_btn_class = 'btn-danger' %}
         {% set published_btn_icon = 'glyphicon-eye-close' %}
     {% endif %}
 
-    <button class="btn btn-xs {{ published_btn_class }} avcms-toggle-published" data-toggle-publish-url="{{ url(ajax_route) }}">
+    <button class="btn btn-xs {{ published_btn_class }} avcms-toggle-published" data-toggle-publish-url="{{ url(ajax_route) }}" {% if publish_date > date().timestamp %} title="{{ publish_date|date(settings.time_format) }}" data-toggle="tooltip" data-placement="bottom" data-container="body"{% endif %}">
         <span class="glyphicon {{ published_btn_icon }}"></span>
     </button>
 {% endmacro %}

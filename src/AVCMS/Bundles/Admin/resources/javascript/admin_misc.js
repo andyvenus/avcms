@@ -34,8 +34,6 @@ $(document).ready(function() {
             defaultDate: new Date()
         });
 
-        $('[data-toggle="tooltip"]').tooltip();
-
         if (avcms.general.isMobile() === false) {
             $("select:not(.no_select2)").select2({
                 minimumResultsForSearch: 10
@@ -70,6 +68,10 @@ $(document).ready(function() {
 
     body.on('submit', 'form:not(.no-ajax)', avcms.form.submitForm);
     body.on('click', '.reset-button', avcms.form.resetForm);
+
+    body.tooltip({
+        selector: '[data-toggle="tooltip"]'
+    });
 
     $(document).ajaxSuccess(function(event, data) {
         if (data.responseJSON !== undefined) {
