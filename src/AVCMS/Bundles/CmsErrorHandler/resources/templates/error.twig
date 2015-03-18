@@ -55,7 +55,7 @@
 
             <div class="error-message">
                 {% block error_message %}
-                    {% if dev_mode or show_error %}
+                    {% if dev_mode or show_error or user.group.adminPanelAccess %}
                         {{ error.message }}
                     {% endif %}
                 {% endblock %}
