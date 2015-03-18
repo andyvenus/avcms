@@ -25,7 +25,7 @@ class GamesInstaller extends BundleInstaller
                   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
                   `name` varchar(255) NOT NULL DEFAULT '',
                   `description` text NOT NULL,
-                  `file` text NOT NULL,
+                  `file` text,
                   `category_id` int(11) unsigned NOT NULL,
                   `category_parent_id` int(11) unsigned DEFAULT '0',
                   `hits` int(11) unsigned NOT NULL DEFAULT '0',
@@ -109,7 +109,8 @@ class GamesInstaller extends BundleInstaller
                 VALUES
                     ('dcr','@Games/embeds/shockwave.twig'),
                     ('swf','@Games/embeds/flash.twig'),
-                    ('unity3d','@Games/embeds/unity.twig');
+                    ('unity3d','@Games/embeds/unity.twig'),
+                    ('html_embed','@Games/embeds/html.twig');
         ");
     }
 }
