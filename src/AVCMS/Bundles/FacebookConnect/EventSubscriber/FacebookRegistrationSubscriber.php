@@ -34,8 +34,9 @@ class FacebookRegistrationSubscriber implements EventSubscriberInterface
     public function onRequest(GetResponseEvent $event)
     {
         $token = $this->tokenStorage->getToken();
-        $route = $this->requestStack->getMasterRequest()->attributes->get('_route');
-        if ($token instanceof FacebookUserToken && $token->getUser()->getId() === null && !in_array($route, ['facebook_register', 'login', 'register', 'logout'])) {
+        $request = $this->requestStack->getMasterRequest();
+        $route = $request->attributes->get('_route');
+        if ($token instanceof FacebookUserToken && $token->getUser()->getId() === null && !in_array($route, ['facebook_register', 'login', 'register', 'logout']) && $request->isXmlHttpRequest() === false) {
             $event->setResponse(new RedirectResponse($this->urlGenerator->generate('facebook_register')));
         }
     }
