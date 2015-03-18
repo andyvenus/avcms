@@ -7,6 +7,7 @@
 
 namespace AVCMS\Bundles\Friends\Controller;
 
+use AVCMS\Bundles\Users\Form\MemberListSearchForm;
 use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,12 +40,16 @@ class FriendsController extends Controller
         }
     }
 
-    public function friendsAction()
+    public function friendsAction(Request $request)
     {
         $friendRequests = $this->friendRequests->getFriendRequests($this->activeUser()->getId(), $this->model('Users'));
         $friends = $this->friends->getUsersFriends($this->activeUser()->getId(), $this->model('Users'));
 
-        return new Response($this->render('@Friends/friends.twig', ['requests' => $friendRequests, 'friends' => $friends]));
+        $formBlueprint = new MemberListSearchForm();
+        $formBlueprint->setAction($this->generateUrl('member_list'));
+        $form = $this->buildForm($formBlueprint, $request);
+
+        return new Response($this->render('@Friends/friends.twig', ['requests' => $friendRequests, 'friends' => $friends, 'form' => $form->createView()]));
     }
 
     public function sendFriendRequestAction(Request $request)

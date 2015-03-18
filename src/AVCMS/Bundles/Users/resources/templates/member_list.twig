@@ -1,0 +1,35 @@
+{% extends 'index.twig' %}
+
+{% block content %}
+    <div class="box">
+        <div class="box-top">
+            <h1>{% trans %}Member List{% endtrans %}</h1>
+        </div>
+        <div class="box-main">
+            {{ form(form, {}, '@Form/bootstrap_inline_form.twig') }}
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="box-main">
+            <div class="row">
+                {% for user in users %}
+                    <div class="col-xs-6 col-sm-3">
+                        <a class="thumbnail" href="{{ path('user_profile', {'slug': user.slug}) }}">
+                            <img src="{{ avatar_url(user) }}" width="100%" alt="{{ user.username }}">
+                            <div class="caption">
+                                {{ user.username }}
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-12">
+                {% block members_pagination %}
+                    {{ pagination(total_pages, current_page) }}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

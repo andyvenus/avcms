@@ -35,3 +35,7 @@ user_forgot_password:
 user_forgot_password_process:
   path: /forgot-password-process/{userId}/{code}
   defaults: { _controller: Users::UserForgotPasswordController::forgotPasswordProcessAction }
+
+member_list:
+  path: /member-list
+  defaults: { _controller: Users::MemberListController::memberListAction }
