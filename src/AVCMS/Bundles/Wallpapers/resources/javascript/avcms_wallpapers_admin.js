@@ -73,8 +73,9 @@ avcms.wallpaper_bulk = {
 
                     progresser.html('<div class="label label-info">' + progress + '%</div>');
                 },
-                fail: function () {
-                    alert('f');
+                fail: function (e, data) {
+                    alert('Something went wrong. Check your browsers console for more details');
+                    console.log(data);
                 }
             }).prop('disabled', !$.support.fileInput)
                 .parent().addClass($.support.fileInput ? undefined : 'disabled');
