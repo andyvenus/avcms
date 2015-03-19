@@ -13,6 +13,7 @@ use AV\Form\FormError;
 use AVCMS\Bundles\Adverts\Model\Advert;
 use AVCMS\Bundles\Blog\Model\BlogPost;
 use AVCMS\Bundles\Comments\Model\Comment;
+use AVCMS\Bundles\Friends\Model\Friend;
 use AVCMS\Bundles\LikeDislike\Model\Rating;
 use AVCMS\Bundles\Links\Model\Link;
 use AVCMS\Bundles\Pages\Model\Page;
@@ -90,6 +91,7 @@ class AvaImporterController extends Controller
                 $qb->table('adverts')->delete();
                 $qb->table('ratings')->delete();
                 $qb->table('messages')->delete();
+                $qb->table('friends')->delete();
 
                 return new RedirectResponse($this->generateUrl('ava_importer_run'));
             }
@@ -107,7 +109,7 @@ class AvaImporterController extends Controller
             $this->redirect('ava_importer_home');
         }
 
-        $stages = ['games', 'game_categories', 'tags', 'tag_relations', 'users', 'game_comments', 'news', 'news_comments', 'pages', 'links', 'adverts', 'ratings', 'messages'];
+        $stages = ['games', 'game_categories', 'tags', 'tag_relations', 'users', 'game_comments', 'news', 'news_comments', 'pages', 'links', 'adverts', 'ratings', 'messages', 'friends'];
 
         $importPerRun = 1000;
         $stage = $request->get('stage', $stages[0]);
@@ -530,6 +532,24 @@ class AvaImporterController extends Controller
 
             if ($totalImported)
                 $this->model('PrivateMessages')->insert($messagesProcessed);
+        }
+        elseif ($stage == 'friends') {
+            $friendsProcessed = [];
+            $friends = $this->getQB('friends')->limit($importPerRun)->offset($offset)->get();
+
+            foreach ($friends as $m) {
+                if (!$this->model('Friends')->friendshipExists($m['user1'], $m['user2'])) {
+                    $friendship = new Friend();
+                    $friendship->fromArray($m, true);
+
+                    $friendsProcessed[] = $friendship;
+                    $this->model('Friends')->insert($friendship);
+
+                    $totalImported++;
+                }
+            }
+
+            $message = ($offset + $totalImported).' Friends Imported (Run '.$run.')';
         }
 
         if ($totalImported == $importPerRun) {
