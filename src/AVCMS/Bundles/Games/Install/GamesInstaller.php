@@ -14,7 +14,8 @@ class GamesInstaller extends BundleInstaller
     public function getVersions()
     {
         return [
-            '1.0' => 'install_1_0_0'
+            '1.0' => 'install_1_0_0',
+            '1.0.1' => 'install_1_0_1'
         ];
     }
 
@@ -109,8 +110,16 @@ class GamesInstaller extends BundleInstaller
                 VALUES
                     ('dcr','@Games/embeds/shockwave.twig'),
                     ('swf','@Games/embeds/flash.twig'),
-                    ('unity3d','@Games/embeds/unity.twig'),
-                    ('html_embed','@Games/embeds/html.twig');
+                    ('unity3d','@Games/embeds/unity.twig')
+        ");
+    }
+
+    public function install_1_0_1()
+    {
+        $this->PDO->exec("
+             INSERT INTO `{$this->prefix}game_embeds` (`extension`, `template`)
+                VALUES
+                    ('html_embed','@Games/embeds/html.twig')
         ");
     }
 }
