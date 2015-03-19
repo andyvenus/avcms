@@ -17,7 +17,7 @@ class AuthServices implements ServicesInterface
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('auth.context_listener', 'AVCMS\Core\Security\Subscriber\ContextListener')
-            ->setArguments(array(new Reference('security.context'), array(new Reference('users.model')), 'user.context'))
+            ->setArguments(array(new Reference('security.context'), array(new Reference('users.model')), 'user.context', null, new Reference('dispatcher')))
             ->addTag('event.listener', array('event' => KernelEvents::REQUEST, 'method' => 'handle'))
             ->addTag('event.listener', array('event' => KernelEvents::RESPONSE, 'method' => 'onKernelResponse'))
         ;
