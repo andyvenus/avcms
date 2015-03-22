@@ -9,5 +9,9 @@
         </div>
     </div>
 
+    {% block outer_content_top %}{% endblock %}
+
     <div class="simple-content {% block animation_style %}animated fadeInRight{% endblock %}">{% block content_body %}{% endblock %}</div>
+
+    {% block outer_content_bottom %}{% endblock %}
 {% endblock %}

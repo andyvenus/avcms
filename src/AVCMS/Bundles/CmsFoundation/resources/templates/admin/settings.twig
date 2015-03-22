@@ -13,9 +13,12 @@
     </div>
 {% endblock %}
 
+{% block outer_content_top %}
+    {{ form_start(form) }}
+{% endblock %}
+
 {% block content_body %}
     <div class="container-fluid admin-settings">
-        {{ form_start(form) }}
 
         <div class="row">
             <div class="col-sm-12">{{ form_messages(form) }}</div>
@@ -44,14 +47,13 @@
                 </div>
             </div>
         {% endfor %}
-
-
-        <div class="row">
-            <div class="col-sm-12">
-                {{ form_submit_button(form) }}
-            </div>
-        </div>
-
-        {{ form_end(form) }}
     </div>
+{% endblock %}
+
+{% block outer_content_bottom %}
+    <div style="position: fixed;bottom: 15px;right: 15px;z-index: 15;">
+        <button type="submit" class="btn btn-primary">{% trans %}Save Settings{% endtrans %}</button>
+    </div>
+
+    {{ form_end(form) }}
 {% endblock %}
