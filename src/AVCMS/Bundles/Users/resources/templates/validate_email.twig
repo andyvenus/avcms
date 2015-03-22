@@ -9,7 +9,7 @@
         {% if success %}
             <p>{% trans %}Your email address has been validated.{% endtrans %}</p>
 
-            <p><a class="btn btn-default" href="{{ url('login') }}">{% trans %}Log in now{% endtrans %}</a></p>
+            <p><a class="btn btn-default" href="{{ path('login') }}">{% trans %}Log in now{% endtrans %}</a></p>
         {% else %}
             <p>{% trans %}Invalid user and verification code combination{% endtrans %}</p>
         {% endif %}

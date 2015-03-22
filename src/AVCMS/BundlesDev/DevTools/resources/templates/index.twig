@@ -47,14 +47,14 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="{{ url('manage_bundles') }}"><span class="glyphicon glyphicon-th-list"></span> Manage Bundles</a></li>
-                <li><a href="{{ url('new_bundle') }}"><span class="glyphicon glyphicon-plus-sign"></span> New Bundle</a></li>
-                <li><a href="{{ url('profiler_search') }}"><span class="glyphicon glyphicon-flash"></span> Profiler</a></li>
+                <li><a href="{{ path('manage_bundles') }}"><span class="glyphicon glyphicon-th-list"></span> Manage Bundles</a></li>
+                <li><a href="{{ path('new_bundle') }}"><span class="glyphicon glyphicon-plus-sign"></span> New Bundle</a></li>
+                <li><a href="{{ path('profiler_search') }}"><span class="glyphicon glyphicon-flash"></span> Profiler</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="{{ site_url }}">Frontend</a></li>
-                <li><a href="{{ url('admin_dashboard') }}">Admin</a></li>
-                <li><a href="{{ url('logout') }}">Logout</a></li>
+                <li><a href="{{ path('admin_dashboard') }}">Admin</a></li>
+                <li><a href="{{ path('logout') }}">Logout</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

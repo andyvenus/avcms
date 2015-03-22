@@ -1,6 +1,6 @@
 <div class="list-group">
     {% for game in games %}
-        <a href="{{ url('play_game', {slug: game.slug}) }}" class="list-group-item">
+        <a href="{{ path('play_game', {slug: game.slug}) }}" class="list-group-item">
             <div class="media">
                 <span class="media-left" href="#">
                     <img src="{{ game_thumbnail(game) }}" width="50" height="50"/>

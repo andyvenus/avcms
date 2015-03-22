@@ -3,7 +3,7 @@
 {% block title %}{% trans %}Add Menu Item{% endtrans %} - {{ menu.label }}{% endblock %}
 
 {% block editor_title %}
-    <span class="light"><a href="{{ url('menus_admin_manage_items', {id: menu.id}) }}">{{ menu.label }}</a> /</span> {% trans %}Add Menu Item{% endtrans %}
+    <span class="light"><a href="{{ path('menus_admin_manage_items', {id: menu.id}) }}">{{ menu.label }}</a> /</span> {% trans %}Add Menu Item{% endtrans %}
 {% endblock %}
 
 {% block editor_content %}
@@ -14,7 +14,7 @@
                 {{ type.description }}
             </div>
             <div class="pull-right" style="margin-top:3px;">
-                <a href="{{ url('menu_items_add', { menu: menu.id, type: type_id}) }}" class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span> {% trans %}Add{% endtrans %}</a>
+                <a href="{{ path('menu_items_add', { menu: menu.id, type: type_id}) }}" class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span> {% trans %}Add{% endtrans %}</a>
             </div>
         </div>
     {% endfor %}

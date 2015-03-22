@@ -17,13 +17,13 @@
 {% endblock %}
 
 {% block finder %}
-    <div data-url="{{ url('games_admin_finder') }}">
+    <div data-url="{{ path('games_admin_finder') }}">
         {{ render(path('games_admin_finder')) }}
     </div>
 {% endblock %}
 
 {% block mobile_back_link %}
-    {{ url('games_admin_home') }}
+    {{ path('games_admin_home') }}
 {% endblock %}
 
 {% block checked_options_buttons %}

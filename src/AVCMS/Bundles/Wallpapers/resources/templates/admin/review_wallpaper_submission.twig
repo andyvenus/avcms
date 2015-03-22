@@ -8,8 +8,8 @@
 
 {% block before_form %}
     <div style="text-align: center">
-        <a href="{{ url('wallpapers_admin_view_original_image', {file: item.file}) }}" target="_blank">
-            <img class="img-thumbnail" src="{{ url('wallpapers_admin_view_original_image', {file: item.file}) }}" width="60%" />
+        <a href="{{ path('wallpapers_admin_view_original_image', {file: item.file}) }}" target="_blank">
+            <img class="img-thumbnail" src="{{ path('wallpapers_admin_view_original_image', {file: item.file}) }}" width="60%" />
         </a>
         <p>{% trans %}Original Resolution{% endtrans %}: {{ item.originalWidth }}x{{ item.originalHeight }}</p>
     </div>

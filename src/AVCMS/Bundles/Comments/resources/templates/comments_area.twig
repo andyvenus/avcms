@@ -11,10 +11,10 @@
                 {{ form(form) }}
             </div>
         {% elseif is_granted(['IS_AUTHENTICATED_REMEMBERED', 'IS_AUTHENTICATED_FULLY']) == false %}
-            <p><a href="{{ url('login') }}">{% trans %}Login to add your own comment{% endtrans %}</a></p>
+            <p><a href="{{ path('login') }}">{% trans %}Login to add your own comment{% endtrans %}</a></p>
         {% endif %}
 
-        <div class="avcms-comments-area" data-ajax-url="{{ url('comments', {content_type: content_type, content_id: content_id}) }}">
+        <div class="avcms-comments-area" data-ajax-url="{{ path('comments', {content_type: content_type, content_id: content_id}) }}">
         </div>
 
         {% if total_comments != 0 %}

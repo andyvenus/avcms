@@ -2,13 +2,13 @@
     {% if label == null %}
         {% set label = 'Edit' %}
     {% endif %}
-    <a class="btn btn-xs btn-default" href="{{ url(ajax_route, {'id': item_id}) }}">
+    <a class="btn btn-xs btn-default" href="{{ path(ajax_route, {'id': item_id}) }}">
         <span class="glyphicon glyphicon-edit"></span> {{ label|trans }}
     </a>
 {% endmacro %}
 
 {% macro manage(ajax_route, item_id) %}
-    <a class="btn btn-xs btn-default" href="{{ url(ajax_route, {'id': item_id}) }}">
+    <a class="btn btn-xs btn-default" href="{{ path(ajax_route, {'id': item_id}) }}">
         <span class="glyphicon glyphicon-th-list"></span> {% trans %}Manage{% endtrans %}
     </a>
 {% endmacro %}
@@ -25,7 +25,7 @@
         {% set published_btn_icon = 'glyphicon-eye-close' %}
     {% endif %}
 
-    <button class="btn btn-xs {{ published_btn_class }} avcms-toggle-published" data-toggle-publish-url="{{ url(ajax_route) }}" {% if publish_date > date().timestamp %} title="{{ publish_date|date(settings.time_format) }}" data-toggle="tooltip" data-placement="bottom" data-container="body"{% endif %}">
+    <button class="btn btn-xs {{ published_btn_class }} avcms-toggle-published" data-toggle-publish-url="{{ path(ajax_route) }}" {% if publish_date > date().timestamp %} title="{{ publish_date|date(settings.time_format) }}" data-toggle="tooltip" data-placement="bottom" data-container="body"{% endif %}">
         <span class="glyphicon {{ published_btn_icon }}"></span>
     </button>
 {% endmacro %}
@@ -39,7 +39,7 @@
         {% set featured_btn_icon = 'glyphicon-star-empty' %}
     {% endif %}
 
-    <button class="btn btn-xs {{ featured_btn_class }} avcms-toggle-featured" data-toggle-featured-url="{{ url(ajax_route) }}">
+    <button class="btn btn-xs {{ featured_btn_class }} avcms-toggle-featured" data-toggle-featured-url="{{ path(ajax_route) }}">
         <span class="glyphicon {{ featured_btn_icon }}"></span>
     </button>
 {% endmacro %}
@@ -48,13 +48,13 @@
     {% if icon == null %}
         {% set icon = 'glyphicon glyphicon-remove' %}
     {% endif %}
-    <button class="btn btn-xs btn-default avcms-delete-item" data-delete-url="{{ url(ajax_route) }}">
+    <button class="btn btn-xs btn-default avcms-delete-item" data-delete-url="{{ path(ajax_route) }}">
         <span class="{{ icon }}"></span>
     </button>
 {% endmacro %}
 
 {% macro view(route, route_vars) %}
-    <a class="btn btn-xs btn-default" href="{{ url(route, route_vars) }}" target="_blank">
+    <a class="btn btn-xs btn-default" href="{{ path(route, route_vars) }}" target="_blank">
         <span class="glyphicon glyphicon-new-window"></span>
     </a>
 {% endmacro %}
@@ -63,38 +63,38 @@
     {% if icon == null %}
         {% set icon = 'glyphicon glyphicon-remove' %}
     {% endif %}
-    <button type="button" class="btn btn-default btn-sm" data-bulk-delete-url="{{ url(ajax_route) }}">
+    <button type="button" class="btn btn-default btn-sm" data-bulk-delete-url="{{ path(ajax_route) }}">
         <span class="{{ icon }}"></span>
     </button>
 {% endmacro %}
 
 {% macro bulk_publish(ajax_route) %}
-    <button type="button" class="btn btn-default btn-sm" data-toggle-published-url="{{ url(ajax_route) }}">
+    <button type="button" class="btn btn-default btn-sm" data-toggle-published-url="{{ path(ajax_route) }}">
         <span class="glyphicon glyphicon-eye-open"></span>
     </button>
 {% endmacro %}
 
 {% macro bulk_unpublish(ajax_route) %}
-    <button type="button" class="btn btn-default btn-sm" data-toggle-unpublished-url="{{ url(ajax_route) }}">
+    <button type="button" class="btn btn-default btn-sm" data-toggle-unpublished-url="{{ path(ajax_route) }}">
         <span class="glyphicon glyphicon-eye-close"></span>
     </button>
 {% endmacro %}
 
 {% macro bulk_feature(ajax_route) %}
-    <button type="button" class="btn btn-default btn-sm" data-toggle-featured-url="{{ url(ajax_route) }}">
+    <button type="button" class="btn btn-default btn-sm" data-toggle-featured-url="{{ path(ajax_route) }}">
         <span class="glyphicon glyphicon-star"></span>
     </button>
 {% endmacro %}
 
 {% macro bulk_unfeature(ajax_route) %}
-    <button type="button" class="btn btn-default btn-sm" data-toggle-unfeatured-url="{{ url(ajax_route) }}">
+    <button type="button" class="btn btn-default btn-sm" data-toggle-unfeatured-url="{{ path(ajax_route) }}">
         <span class="glyphicon glyphicon-star-empty"></span>
     </button>
 {% endmacro %}
 
 {% macro expand_finder(ajax_route) %}
     <div class="expand-browser">
-        <a href="{{ url(ajax_route) }}"><span class="glyphicon glyphicon-arrow-right"></span></a>
+        <a href="{{ path(ajax_route) }}"><span class="glyphicon glyphicon-arrow-right"></span></a>
     </div>
 {% endmacro %}
 
@@ -103,7 +103,7 @@
         {% set icon = 'glyphicon-plus' %}
     {% endif %}
     <div class="add-item">
-        <a href="{{ url(ajax_route) }}">
+        <a href="{{ path(ajax_route) }}">
             <span class="glyphicon {{ icon }}"></span> {{ label|trans }}
         </a>
     </div>

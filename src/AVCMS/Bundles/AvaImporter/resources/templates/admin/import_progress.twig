@@ -1,9 +1,9 @@
 {% extends '@AvaImporter/admin/import_home.twig' %}
 
 {% block content_body %}
-    <meta http-equiv="refresh" content="1; url={{ url }}" />
+    <meta http-equiv="refresh" content="1; url={{ path }}" />
 
     <div class="alert alert-info">{{ message }}</div>
 
-    <p>This page will refresh automatically and may take a moment to reload. If your browser doesn't support automatic refreshing, <a href="{{ url }}">click here</a></p>
+    <p>This page will refresh automatically and may take a moment to reload. If your browser doesn't support automatic refreshing, <a href="{{ path }}">click here</a></p>
 {% endblock %}

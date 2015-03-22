@@ -13,7 +13,7 @@
     <span class="always-refresh"></span>
     {% if item.active %}
         <p>
-            <a href="{{ url('modules_admin_add', {position: item.id}) }}" class="btn btn-primary">
+            <a href="{{ path('modules_admin_add', {position: item.id}) }}" class="btn btn-primary">
                 <span class="glyphicon glyphicon-plus"></span> {% trans %}Add Module{% endtrans %}
             </a>
         </p>
@@ -22,7 +22,7 @@
     {% endif %}
 
     <div class="sortable-container">
-        <ul class="sortable" style="position: absolute;" data-sortable-levels="1" data-ajax-action="{{ url('modules_save_order', {position: item.id}) }}" data-ajax-delete-action="{{ url('modules_admin_delete') }}">
+        <ul class="sortable" style="position: absolute;" data-sortable-levels="1" data-ajax-action="{{ path('modules_save_order', {position: item.id}) }}" data-ajax-delete-action="{{ path('modules_admin_delete') }}">
             {% for module in modules %}
             <li id="modules_order_{{ module.id }}" data-item-id="{{ module.id }}">
                 <div class="sortable-item">
@@ -30,7 +30,7 @@
                     <div class="pull-right">
                         {% if module.moduleInfo %}
                             {{ module.moduleInfo.name }} &nbsp;
-                            <a class="btn btn-xs btn-default" href="{{ url('modules_admin_edit', {id: module.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit{% endtrans %}</a>
+                            <a class="btn btn-xs btn-default" href="{{ path('modules_admin_edit', {id: module.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit{% endtrans %}</a>
                         {% else %}
                             <span class="label label-danger">{% trans with {module: module.module} %}Module type "{module}" missing{% endtrans %}</span>
                         {% endif %}

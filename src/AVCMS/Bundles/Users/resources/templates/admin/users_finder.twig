@@ -20,7 +20,7 @@
     <div class="btn-group">
         {% if item.roleList != 'ROLE_SUPER_ADMIN' or user.roleList == 'ROLE_SUPER_ADMIN' %}
             {{ buttons.edit('users_admin_edit', item.id) }}
-            <a class="btn btn-default btn-xs" href="{{ url('users_admin_change_password', {id: item.id}) }}" title="{% trans %}Change Password{% endtrans %}"><span class="glyphicon glyphicon-lock"></span> </a>
+            <a class="btn btn-default btn-xs" href="{{ path('users_admin_change_password', {id: item.id}) }}" title="{% trans %}Change Password{% endtrans %}"><span class="glyphicon glyphicon-lock"></span> </a>
 
             {% if item.id != user.id %}
                 {{ buttons.delete('users_admin_delete') }}

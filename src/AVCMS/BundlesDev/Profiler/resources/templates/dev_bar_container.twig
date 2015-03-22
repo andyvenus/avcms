@@ -1,7 +1,7 @@
 <div id="devbar"></div>
 
 <script type="text/javascript">
-    $.get('{{ url('dev_bar') }}', {token: '{{ token }}'}, function(data) {
+    $.get('{{ path('dev_bar') }}', {token: '{{ token }}'}, function(data) {
         var devbar = $('#devbar');
         devbar.html(data);
         devbar.height( $(devbar).find('.dev-bar-inner').innerHeight() );

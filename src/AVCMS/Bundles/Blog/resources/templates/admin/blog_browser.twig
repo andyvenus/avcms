@@ -13,13 +13,13 @@
 {% endblock %}
 
 {% block finder %}
-    <div data-url="{{ url('blog_finder') }}">
+    <div data-url="{{ path('blog_finder') }}">
         {{ render(path('blog_finder')) }}
     </div>
 {% endblock %}
 
 {% block mobile_back_link %}
-    {{ url('blog_admin_home') }}
+    {{ path('blog_admin_home') }}
 {% endblock %}
 
 {% block checked_options_buttons %}

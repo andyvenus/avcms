@@ -17,13 +17,13 @@
 {% endblock %}
 
 {% block finder %}
-    <div data-url="{{ url('wallpapers_admin_finder') }}">
+    <div data-url="{{ path('wallpapers_admin_finder') }}">
         {{ render(path('wallpapers_admin_finder')) }}
     </div>
 {% endblock %}
 
 {% block mobile_back_link %}
-    {{ url('wallpapers_admin_home') }}
+    {{ path('wallpapers_admin_home') }}
 {% endblock %}
 
 {% block checked_options_buttons %}

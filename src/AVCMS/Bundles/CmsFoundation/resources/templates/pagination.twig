@@ -25,15 +25,15 @@
 <nav>
     <ul class="pagination">
         {% if current_page > 1  %}
-            <li><a href="{{ url(route, attributes|merge({page: current_page - 1})) }}"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+            <li><a href="{{ path(route, attributes|merge({page: current_page - 1})) }}"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
         {% endif %}
 
         {% for page in start_page..end_page %}
-            <li{% if page == current_page %} class="active"{% endif %}><a href="{{ url(route, attributes|merge({page: page})) }}">{{ page }}</a></li>
+            <li{% if page == current_page %} class="active"{% endif %}><a href="{{ path(route, attributes|merge({page: page})) }}">{{ page }}</a></li>
         {% endfor %}
 
         {% if current_page != total_pages  %}
-            <li><a href="{{ url(route, attributes|merge({page: current_page + 1})) }}"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+            <li><a href="{{ path(route, attributes|merge({page: current_page + 1})) }}"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
         {% endif %}
     </ul>
 </nav>

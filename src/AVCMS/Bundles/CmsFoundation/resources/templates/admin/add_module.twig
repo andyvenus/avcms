@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block editor_title %}
-    <span class="light"><a href="{{ url('modules_manage_position', {id: item.id}) }}">{{ item.name }}</a> /</span> {{ block('title') }}
+    <span class="light"><a href="{{ path('modules_manage_position', {id: item.id}) }}">{{ item.name }}</a> /</span> {{ block('title') }}
 {% endblock %}
 
 {% block editor_content %}
@@ -19,7 +19,7 @@
                         {{ module.description }}
                     </div>
                     <div class="col-sm-2 text-right">
-                        <a href="{{ url('modules_admin_add_selected', { position: item.id, module: module_id}) }}" class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span> {% trans %}Add{% endtrans %}</a>
+                        <a href="{{ path('modules_admin_add_selected', { position: item.id, module: module_id}) }}" class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span> {% trans %}Add{% endtrans %}</a>
                     </div>
                 </div>
             </div>

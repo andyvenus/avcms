@@ -23,7 +23,7 @@
 
 {% block item_options %}
     <div class="btn-group">
-        <a class="btn btn-xs btn-default" href="{{ url('wallpaper_submissions_admin_review', {'id': item.id}) }}">
+        <a class="btn btn-xs btn-default" href="{{ path('wallpaper_submissions_admin_review', {'id': item.id}) }}">
             <span class="glyphicon glyphicon-ok"></span> {% trans %}Review{% endtrans %}
         </a>
 

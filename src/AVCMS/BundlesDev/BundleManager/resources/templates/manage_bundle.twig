@@ -32,7 +32,7 @@
                 {% for route_name, route in routes %}
                     <strong>{{ route_name }}</strong>:
                     {% if route.link_route and bundle_enabled %}
-                        <a href="{{ url(route_name) }}">{{ route.path }}</a>
+                        <a href="{{ path(route_name) }}">{{ route.path }}</a>
                     {% else %}
                         {{ route.path }}
                     {% endif %}
@@ -47,7 +47,7 @@
                     <h4>Manage Generated Content</h4>
                     <div class="content-types">
                         {% for content_name, content in bundle_content %}
-                            <a href="{{ url('bundle_edit_content', {bundle: bundle_config.name, content_name: content_name}) }}" class="btn btn-{{ btn_color }}">
+                            <a href="{{ path('bundle_edit_content', {bundle: bundle_config.name, content_name: content_name}) }}" class="btn btn-{{ btn_color }}">
                                 {{ content.uc_plural }}
                             </a>
                         {% else %}
@@ -69,10 +69,10 @@
                 {% endif %}
 
                 {% if bundle_config.disable_content != true %}
-                <a href="{{ url('bundle_add_content', {'bundle': bundle_config.name}) }}" class="list-group-item"><span class="glyphicon glyphicon-plus-sign"></span> Add Content</a>
+                <a href="{{ path('bundle_add_content', {'bundle': bundle_config.name}) }}" class="list-group-item"><span class="glyphicon glyphicon-plus-sign"></span> Add Content</a>
                 {% endif %}
 
-                <a href="{{ url('review_bundle_translations', {bundle: bundle_config.name}) }}" class="list-group-item">
+                <a href="{{ path('review_bundle_translations', {bundle: bundle_config.name}) }}" class="list-group-item">
                     <span class="glyphicon glyphicon-flag"></span> Review Translations
                 </a>
             </div>

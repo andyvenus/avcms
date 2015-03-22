@@ -34,17 +34,17 @@
                            <li class="dropdown {{ visible_classes }}">
                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> {{ user.username }} <span class="caret"></span></a>
                                <ul class="dropdown-menu" role="menu">
-                                   <li><a href="{{ url('user_profile', {slug: user.slug}) }}"><span class="glyphicon glyphicon-user"></span> {% trans %}Profile{% endtrans %}</a></li>
+                                   <li><a href="{{ path('user_profile', {slug: user.slug}) }}"><span class="glyphicon glyphicon-user"></span> {% trans %}Profile{% endtrans %}</a></li>
                                    <li class="divider"></li>
-                                   <li><a href="{{ url('logout') }}"><span class="glyphicon glyphicon-log-out"></span> {% trans %}Logout{% endtrans %}</a></li>
+                                   <li><a href="{{ path('logout') }}"><span class="glyphicon glyphicon-log-out"></span> {% trans %}Logout{% endtrans %}</a></li>
                                </ul>
                            </li>
                            <li class="dropdown {{ visible_classes }}">
                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></a>
                                <ul class="dropdown-menu" role="menu">
                                    {% if is_granted('ADMIN_CLEAR_CACHES') %}
-                                       <li><a href="#" data-form-modal-url="{{ url('clear_caches') }}"><span class="glyphicon glyphicon-trash"></span> {% trans %}Clear Caches{% endtrans %}</a></li>
-                                       <li><a href="{{ url('generate_assets') }}"><span class="glyphicon glyphicon-refresh"></span> {% trans %}Regenerate Assets{% endtrans %}</a></li>
+                                       <li><a href="#" data-form-modal-url="{{ path('clear_caches') }}"><span class="glyphicon glyphicon-trash"></span> {% trans %}Clear Caches{% endtrans %}</a></li>
+                                       <li><a href="{{ path('generate_assets') }}"><span class="glyphicon glyphicon-refresh"></span> {% trans %}Regenerate Assets{% endtrans %}</a></li>
                                        {{ outlet('admin.options_menu_caches') }}
                                        <li class="divider"></li>
                                    {% endif %}
@@ -70,7 +70,7 @@
 
                 <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="{{ url('home') }}" class="view-site"><span class="glyphicon glyphicon-new-window"></span> {% trans %}View Site{% endtrans %}</a>
+                            <a href="{{ path('home') }}" class="view-site"><span class="glyphicon glyphicon-new-window"></span> {% trans %}View Site{% endtrans %}</a>
                         </li>
                     </ul>
             </div>

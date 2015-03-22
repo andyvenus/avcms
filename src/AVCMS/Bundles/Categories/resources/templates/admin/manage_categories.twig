@@ -9,18 +9,18 @@
 
     <div class="alert alert-info"><span class="glyphicon glyphicon-info-sign"></span> {% trans %}Drag and drop categories by clicking and dragging over the handle icons on the left. Create sub-categories by dragging and dropping the sub-category over another category.{% endtrans %}</div>
 
-    <p><a href="{{ url(route_prefix ~ 'admin_add_category') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> {% trans %}Add Category{% endtrans %}</a></p>
+    <p><a href="{{ path(route_prefix ~ 'admin_add_category') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> {% trans %}Add Category{% endtrans %}</a></p>
 
     <div class="sortable-container">
-        <ul class="sortable" style="position: absolute;" data-sortable-levels="2" data-ajax-action="{{ url(route_prefix ~ 'save_categories_order') }}" data-ajax-delete-action="{{ url('menus_admin_delete_item') }}">
+        <ul class="sortable" style="position: absolute;" data-sortable-levels="2" data-ajax-action="{{ path(route_prefix ~ 'save_categories_order') }}" data-ajax-delete-action="{{ path('menus_admin_delete_item') }}">
             {% for category in categories %}
                 <li id="category_order_{{ category.id }}" data-item-id="{{ category.id }}">
                     <div class="sortable-item">
                         <span class="glyphicon glyphicon-menu-hamburger handle"></span> {{ category.name }}
                         {% block category_buttons %}
                             <div class="pull-right">
-                                <a href="{{ url(route_prefix ~ 'admin_edit_category', {id: category.id}) }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit{% endtrans %}</a>
-                                <button data-category-delete-url="{{ url(route_prefix ~ 'admin_delete_category', {id: category.id}) }}" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                                <a href="{{ path(route_prefix ~ 'admin_edit_category', {id: category.id}) }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit{% endtrans %}</a>
+                                <button data-category-delete-url="{{ path(route_prefix ~ 'admin_delete_category', {id: category.id}) }}" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
                             </div>
                         {% endblock %}
                     </div>

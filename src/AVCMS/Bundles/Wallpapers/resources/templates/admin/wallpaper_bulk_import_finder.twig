@@ -22,7 +22,7 @@
 
 {% block item_options %}
     <div class="btn-group">
-        <a href="{{ url('wallpaper_bulk_import', {folder: item.id}) }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-download"></span> {% trans %}Import{% endtrans %}</a>
+        <a href="{{ path('wallpaper_bulk_import', {folder: item.id}) }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-download"></span> {% trans %}Import{% endtrans %}</a>
     </div>
 
     {% if item.total_files == 0 %}

@@ -37,7 +37,7 @@
         {{ item.user.username }}
     </div>
     <div class="col-md-3 hidden-sm hidden-xs">
-        <a href="{{ url('blog_post', {slug: item.slug}) }}">{{ item.slug }}</a>
+        <a href="{{ path('blog_post', {slug: item.slug}) }}">{{ item.slug }}</a>
     </div>
     <div class="col-md-1 hidden-sm hidden-xs">
         {{ item.hits }}

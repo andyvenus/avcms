@@ -65,7 +65,7 @@
                     <div class="col-md-4">
                         {% trans %}Tags{% endtrans %}:
                         {% for tag in wallpaper.tags %}
-                            <a class="btn btn-default btn-xs" href="{{ url('browse_wallpapers', {tags: tag.name}) }}">{{ tag.name }}</a>
+                            <a class="btn btn-default btn-xs" href="{{ path('browse_wallpapers', {tags: tag.name}) }}">{{ tag.name }}</a>
                         {% else %}
                             {% trans %}None{% endtrans %}
                         {% endfor %}
@@ -81,14 +81,14 @@
                     </div>
                     <div class="col-md-4">
                         <p>{% trans %}Original Resolution{% endtrans %}:
-                            <a href="{{ url('wallpaper_preview', {slug: wallpaper.slug, resolution: wallpaper.originalWidth ~ 'x' ~ wallpaper.originalHeight}) }}">{{ wallpaper.originalWidth }}x{{ wallpaper.originalHeight }}</a></p>
+                            <a href="{{ path('wallpaper_preview', {slug: wallpaper.slug, resolution: wallpaper.originalWidth ~ 'x' ~ wallpaper.originalHeight}) }}">{{ wallpaper.originalWidth }}x{{ wallpaper.originalHeight }}</a></p>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-4">
                         {% if wallpaper.submitter %}
-                            {% trans %}Submitted By{% endtrans %}: <a href="{{ url('user_profile', {slug: wallpaper.submitter.slug}) }}">{{ wallpaper.submitter.username }}</a>
+                            {% trans %}Submitted By{% endtrans %}: <a href="{{ path('user_profile', {slug: wallpaper.submitter.slug}) }}">{{ wallpaper.submitter.username }}</a>
                         {% endif %}
                     </div>
                 </div>
@@ -115,7 +115,7 @@
                                     <h4>{{ resolution_category }}</h4>
 
                                     {% for resolution, name in category_resolutions %}
-                                        <a data-resolution="{{ resolution }}" href="{{ url('wallpaper_preview', {slug: wallpaper.slug, resolution: resolution}) }}">{{ name }}</a><br/>
+                                        <a data-resolution="{{ resolution }}" href="{{ path('wallpaper_preview', {slug: wallpaper.slug, resolution: resolution}) }}">{{ name }}</a><br/>
                                     {% endfor %}
                                 </div>
 
@@ -131,7 +131,7 @@
         {% else %}
             {% block wallpaper_original_resolution %}
                 <div class="wallpaper-original-only text-center">
-                    <a href="{{ url('wallpaper_preview', {slug: wallpaper.slug, resolution: wallpaper.originalWidth ~ 'x' ~ wallpaper.originalHeight }) }}" class="btn btn-primary btn-lg">
+                    <a href="{{ path('wallpaper_preview', {slug: wallpaper.slug, resolution: wallpaper.originalWidth ~ 'x' ~ wallpaper.originalHeight }) }}" class="btn btn-primary btn-lg">
                         {% trans %}Preview & Download{% endtrans %}
                     </a>
                 </div>

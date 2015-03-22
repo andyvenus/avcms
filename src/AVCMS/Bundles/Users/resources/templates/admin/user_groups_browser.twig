@@ -13,13 +13,13 @@
 {% endblock %}
 
 {% block finder %}
-    <div data-url="{{ url('user_groups_admin_finder') }}">
+    <div data-url="{{ path('user_groups_admin_finder') }}">
         {{ render(path('user_groups_admin_finder')) }}
     </div>
 {% endblock %}
 
 {% block mobile_back_link %}
-    {{ url('user_groups_admin_home') }}
+    {{ path('user_groups_admin_home') }}
 {% endblock %}
 
 {% block checked_options_buttons %}

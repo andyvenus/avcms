@@ -27,13 +27,13 @@
     {% endif %}
 
     <p>
-        <a href="{{ url('menu_items_select', {menu: item.id}) }}" class="btn btn-primary">
+        <a href="{{ path('menu_items_select', {menu: item.id}) }}" class="btn btn-primary">
             <span class="glyphicon glyphicon-plus"></span> {% trans %}Add Menu Item{% endtrans %}
         </a>
     </p>
 
     <div class="sortable-container">
-        <ul class="sortable" style="position: absolute;" data-sortable-levels="2" data-ajax-action="{{ url('menus_save_order', {id: item.id}) }}" data-ajax-delete-action="{{ url('menus_admin_delete_item') }}">
+        <ul class="sortable" style="position: absolute;" data-sortable-levels="2" data-ajax-action="{{ path('menus_save_order', {id: item.id}) }}" data-ajax-delete-action="{{ path('menus_admin_delete_item') }}">
             {% for menu_item in menu_items %}
             <li id="menu_order_{{ menu_item.id|replace({'_': 'UNDERSCORE'}) }}" data-item-id="{{ menu_item.id }}">
                 <div class="sortable-item">
@@ -41,7 +41,7 @@
                     {% block menu_item_buttons %}
                         <div class="pull-right">
                             {% if menu_item.owner is null %}
-                                <a class="btn btn-xs btn-default" href="{{ url('menu_items_edit', {menu: item.id, id: menu_item.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit{% endtrans %}</a>
+                                <a class="btn btn-xs btn-default" href="{{ path('menu_items_edit', {menu: item.id, id: menu_item.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit{% endtrans %}</a>
                             {% endif %}
 
                             {{ buttons.publish(menu_item.enabled, 'toggle_menu_item_enabled') }}

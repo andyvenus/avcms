@@ -11,13 +11,13 @@
 {% block add_item %}{% endblock %}
 
 {% block finder %}
-    <div data-url="{{ url('modules_admin_finder') }}">
+    <div data-url="{{ path('modules_admin_finder') }}">
         {{ render(path('modules_admin_finder')) }}
     </div>
 {% endblock %}
 
 {% block mobile_back_link %}
-    {{ url('modules_admin_home') }}
+    {{ path('modules_admin_home') }}
 {% endblock %}
 
 {% block checked_options_buttons %}

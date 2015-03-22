@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block editor_title_new %}
-    <span class="light"><a href="{{ url('modules_manage_position', {id: position.id}) }}">{{ position.name }}</a> / <a href="{{ url('modules_admin_add', {position: position.id}) }}">Add Module</a> / </span>{{ module.name }}
+    <span class="light"><a href="{{ path('modules_manage_position', {id: position.id}) }}">{{ position.name }}</a> / <a href="{{ path('modules_admin_add', {position: position.id}) }}">Add Module</a> / </span>{{ module.name }}
 {% endblock %}
 
 {% block editor_title_edit %}
-    <span class="light"><a href="{{ url('modules_manage_position', {id: position.id}) }}">{{ position.name }}</a> / </span>{{ item.title }}
+    <span class="light"><a href="{{ path('modules_manage_position', {id: position.id}) }}">{{ position.name }}</a> / </span>{{ item.title }}
 {% endblock %}
 
 {% block form_start %}

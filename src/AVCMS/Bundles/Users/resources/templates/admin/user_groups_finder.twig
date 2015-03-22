@@ -15,7 +15,7 @@
         {{ buttons.edit('user_groups_admin_edit', item.id) }}
 
         {% if item.customPermissions == 1 %}
-            <a class="btn btn-xs btn-default" href="{{ url('user_groups_admin_manage_permissions', {id: item.id}) }}"><span class="glyphicon glyphicon-ok-circle"></span> {% trans %}Permissions{% endtrans %}</a>
+            <a class="btn btn-xs btn-default" href="{{ path('user_groups_admin_manage_permissions', {id: item.id}) }}"><span class="glyphicon glyphicon-ok-circle"></span> {% trans %}Permissions{% endtrans %}</a>
         {% endif %}
 
         {% if item.owner != 'app' %}

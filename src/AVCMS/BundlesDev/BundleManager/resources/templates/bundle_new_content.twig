@@ -4,7 +4,7 @@
 
 {% block content %}
     <p>
-        <a href="{{ url('manage_bundle', {bundle: bundle_config.name}) }}"><span class="glyphicon glyphicon-arrow-left"></span> {{ bundle_config.name }} bundle home</a>
+        <a href="{{ path('manage_bundle', {bundle: bundle_config.name}) }}"><span class="glyphicon glyphicon-arrow-left"></span> {{ bundle_config.name }} bundle home</a>
     </p>
 
     {% block manage_content %}

@@ -5,7 +5,7 @@
 {% block content %}
 
     {% for bundle_name, bundle_dir in update_bundles %}
-        <div class="well well-sm pending" style="display: none;" data-bundle-ajax-updater="{{ url('update_bundle', {bundle: bundle_name}) }}">
+        <div class="well well-sm pending" style="display: none;" data-bundle-ajax-updater="{{ path('update_bundle', {bundle: bundle_name}) }}">
             <div class="row">
                 <div class="col-md-6">
                     <strong>{{ bundle_name }}</strong>
@@ -26,7 +26,7 @@
 
 
     {% block finished_button %}
-        <div class="finished" style="display:none;"><a href="{{ url('create_admin') }}" class="btn btn-default">Proceed <span class="glyphicon glyphicon-arrow-right"></span> </a></div>
+        <div class="finished" style="display:none;"><a href="{{ path('create_admin') }}" class="btn btn-default">Proceed <span class="glyphicon glyphicon-arrow-right"></span> </a></div>
     {% endblock %}
 
     <script type="text/javascript">

@@ -11,7 +11,7 @@
                 {% set btn_color = 'warning' %}
             {% endif %}
 
-            <a href="{{ url('manage_bundle', {bundle: bundle_config.name}) }}" class="list-group-item">
+            <a href="{{ path('manage_bundle', {bundle: bundle_config.name}) }}" class="list-group-item">
                 <h4 class="list-group-item-heading">{{ bundle_config.name }}</h4>
                 {% if bundle_config.active %}{% set enabled_text = "Active" %}{% else %}{% set enabled_text = "Inactive" %}{% endif %}
                 <strong id="status">Status: <span class="text-{{ btn_color }}">{{ enabled_text }}</span></strong> &nbsp;&nbsp;

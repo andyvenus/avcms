@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block editor_title_edit %}
-    <span class="light"><a href="{{ url('menus_admin_manage_items', {id: menu.id}) }}">{{ menu.label }}</a> /</span> <span data-id="{{ item.id }}" data-field="label">{{ item.label }}</span>
+    <span class="light"><a href="{{ path('menus_admin_manage_items', {id: menu.id}) }}">{{ menu.label }}</a> /</span> <span data-id="{{ item.id }}" data-field="label">{{ item.label }}</span>
 {% endblock %}
 
 {% block editor_title_new %}

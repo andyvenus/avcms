@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block editor_title_edit %}
-    <span class="light"><a href="{{ url(route_prefix ~ 'manage_categories') }}">{% trans %}Categories{% endtrans %}</a> /</span> <span data-id="{{ item.id }}" data-field="label">{{ item.name }}</span>
+    <span class="light"><a href="{{ path(route_prefix ~ 'manage_categories') }}">{% trans %}Categories{% endtrans %}</a> /</span> <span data-id="{{ item.id }}" data-field="label">{{ item.name }}</span>
 {% endblock %}
 
 {% block editor_title_new %}

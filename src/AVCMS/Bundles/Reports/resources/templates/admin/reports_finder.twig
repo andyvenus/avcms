@@ -5,7 +5,7 @@
             <div class="panel panel-default" data-id="{{ report.id }}">
                 <div class="panel-heading">
                     {% if report.senderUserId != null %}
-                        <a href="{{ url('users_admin_edit', {id: report.senderUserId}) }}">{{ report.sender_user.username }}</a>
+                        <a href="{{ path('users_admin_edit', {id: report.senderUserId}) }}">{{ report.sender_user.username }}</a>
                     {% else %}
                         {% trans %}Anonymous{% endtrans %}
                     {% endif %}
@@ -15,11 +15,11 @@
                         <a href="{{ report.content.url }}">{{ report.content.title }}</a>
                     {% endif %}
                     {% if report.reportedUserId != null %}
-                        {% trans %}by{% endtrans %} <a href="{{ url('users_admin_edit', {id: report.reportedUserId}) }}">{{ report.reported_user.username }}</a>
+                        {% trans %}by{% endtrans %} <a href="{{ path('users_admin_edit', {id: report.reportedUserId}) }}">{{ report.reported_user.username }}</a>
                     {% endif %}
                     - {{ report.date|date(settings.date_format) }}
                     <div class="pull-right">
-                        <button class="btn btn-danger btn-xs avcms-delete-item" data-delete-url="{{ url('delete_reports') }}"><span class="glyphicon glyphicon-remove"></span></button>
+                        <button class="btn btn-danger btn-xs avcms-delete-item" data-delete-url="{{ path('delete_reports') }}"><span class="glyphicon glyphicon-remove"></span></button>
                     </div>
                 </div>
                 <div class="panel-body">

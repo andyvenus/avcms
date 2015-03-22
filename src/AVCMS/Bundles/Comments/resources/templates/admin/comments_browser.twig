@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block finder %}
-    <div data-url="{{ url('comments_finder') }}">
+    <div data-url="{{ path('comments_finder') }}">
         {{ render(path('comments_finder', finder)) }}
     </div>
 {% endblock %}

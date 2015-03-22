@@ -6,13 +6,13 @@
     <div class="box edit-profile-container">
         <div class="box-main">
             <ol class="breadcrumb">
-                <li><a href="{{ url('user_profile', {slug: user.slug}) }}">{{ user.username }}</a></li>
+                <li><a href="{{ path('user_profile', {slug: user.slug}) }}">{{ user.username }}</a></li>
                 <li class="active">{% trans %}Edit Profile{% endtrans %}</li>
             </ol>
 
             <ul class="nav nav-tabs" role="tablist">
-                <li {% block profile_active_tab %}class="active"{% endblock %}><a href="{{ url('edit_user_profile') }}">{% trans %}Profile{% endtrans %}</a></li>
-                <li {% block password_active_tab %}{% endblock %}><a href="{{ url('user_email_password') }}">{% trans %}Password & Email{% endtrans %}</a></li>
+                <li {% block profile_active_tab %}class="active"{% endblock %}><a href="{{ path('edit_user_profile') }}">{% trans %}Profile{% endtrans %}</a></li>
+                <li {% block password_active_tab %}{% endblock %}><a href="{{ path('user_email_password') }}">{% trans %}Password & Email{% endtrans %}</a></li>
             </ul>
 
             {% block edit_profile_form %}
