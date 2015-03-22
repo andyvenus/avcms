@@ -2,7 +2,7 @@
 
 {% block title %}{{ wallpaper.name }}{% endblock %}
 
-{% block meta_description %}{{ wallpaper.description }}{% endblock %}
+{% block meta_description %}{{ wallpaper.description|striptags }}{% endblock %}
 
 {% block header_extra %}
     <meta property="og:title" content="{{ wallpaper.name }}" />
@@ -50,7 +50,7 @@
                 {% if wallpaper.description %}
                     <div class="row">
                         <div class="col-md-12">
-                            <p>{{ wallpaper.description }}</p>
+                            <p>{{ wallpaper.description|raw }}</p>
                         </div>
                     </div>
                 {% endif %}
