@@ -308,6 +308,10 @@ a {
   .finder-wide {
     width: 330px;
     display: inherit; }
+    .finder-wide .finder-item-main {
+      min-width: 308px; }
+    .finder-wide .fields {
+      padding-left: 350px !important; }
 
   .finder-has-focus {
     width: 100%; }

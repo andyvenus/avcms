@@ -465,7 +465,11 @@ a {
     display:inherit;
 
     .finder-item-main {
+      min-width: 308px;
+    }
 
+    .fields {
+      padding-left: 350px!important;
     }
   }
 
