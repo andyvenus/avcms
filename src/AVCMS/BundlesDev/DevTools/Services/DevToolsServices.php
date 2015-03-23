@@ -22,7 +22,7 @@ class DevToolsServices implements ServicesInterface
         ;
 
         $container->register('dev.whoops_listener', 'AVCMS\BundlesDev\DevTools\Listener\WhoopsListener')
-            ->addTag('event.listener', ['event' => KernelEvents::EXCEPTION, 'method' => 'onTerminate', 'priority' => 100])
+            ->addTag('event.listener', ['event' => KernelEvents::EXCEPTION, 'method' => 'onTerminate', 'priority' => -100])
         ;
     }
 }
