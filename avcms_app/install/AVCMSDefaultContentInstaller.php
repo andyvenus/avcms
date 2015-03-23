@@ -57,6 +57,13 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $submitItem->setSettings(['route' => 'wallpaper_submit']);
         $submitItem->setIcon('glyphicon glyphicon-upload');
 
+        $submitItem = $menuItems->newEntity();
+        $submitItem->setMenu('frontend');
+        $submitItem->setType('route');
+        $submitItem->setLabel('Submit Game');
+        $submitItem->setSettings(['route' => 'submit_game']);
+        $submitItem->setIcon('glyphicon glyphicon-upload');
+
         $contactItem = $menuItems->newEntity();
         $contactItem->setMenu('frontend_footer');
         $contactItem->setType('route');

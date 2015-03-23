@@ -106,20 +106,38 @@ class GamesInstaller extends BundleInstaller
         ");
 
         $this->PDO->exec("
-             INSERT INTO `{$this->prefix}game_embeds` (`extension`, `template`)
-                VALUES
-                    ('dcr','@Games/embeds/shockwave.twig'),
-                    ('swf','@Games/embeds/flash.twig'),
-                    ('unity3d','@Games/embeds/unity.twig')
+            INSERT INTO `{$this->prefix}game_embeds` (`extension`, `template`)
+            VALUES
+                ('dcr','@Games/embeds/shockwave.twig'),
+                ('swf','@Games/embeds/flash.twig'),
+                ('unity3d','@Games/embeds/unity.twig')
         ");
     }
 
     public function install_1_0_1()
     {
         $this->PDO->exec("
-             INSERT INTO `{$this->prefix}game_embeds` (`extension`, `template`)
-                VALUES
-                    ('html_embed','@Games/embeds/html.twig')
+            INSERT INTO `{$this->prefix}game_embeds` (`extension`, `template`)
+            VALUES ('html_embed','@Games/embeds/html.twig')
+        ");
+
+        $this->PDO->exec("
+             CREATE TABLE `{$this->prefix}game_submissions` (
+                  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+                  `name` varchar(255) NOT NULL DEFAULT '',
+                  `description` text NOT NULL,
+                  `instructions` text NOT NULL,
+                  `file` text,
+                  `category_id` int(11) unsigned NOT NULL,
+                  `thumbnail` text NOT NULL,
+                  `date_added` int(11) NOT NULL DEFAULT '0',
+                  `creator_id` int(11) DEFAULT NULL,
+                  `submitter_id` int(11) NOT NULL DEFAULT '0',
+                  `width` int(11) DEFAULT NULL,
+                  `height` int(11) DEFAULT NULL,
+                  `slug` varchar(200) DEFAULT NULL,
+                  PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
     }
 }
