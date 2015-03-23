@@ -51,11 +51,27 @@ menu_items:
         route: game_feeds_admin_home
 
 admin_settings_sections:
+  games: Games
   browse_games: Browse Games
   game_ads: Adverts Before Games
   game_feeds: Game Feeds
 
 admin_settings:
+  games_allow_uploads:
+    type: checkbox
+    label: Allow Game Submissions
+    help: Allow users to submit games to your site for admins to review
+    section: games
+    default: 0
+  games_max_submissions:
+    type: text
+    label: Maximum User Submissions
+    help: The maximum amount of games a user can submit for review. They can submit more after an admin has accepted their existing submissions.
+    section: games
+    default: 5
+    validation:
+      numeric:
+        rule: Numeric
   game_ad_default:
     label: Default Game Ad
     help: The ad shown before games without a specific ad selected
@@ -291,6 +307,9 @@ permissions:
   ADMIN_GAMES:
     name: Games Administration
     description: Manage games in the admin panel (including categories & game feeds)
+  PERM_SUBMIT_GAMES:
+    name: Submit Games
+    description: Can submit games to the site for admins to review & accept
 
 container_params:
   games_dir: web/games

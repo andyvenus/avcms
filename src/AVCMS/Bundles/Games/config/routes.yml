@@ -30,6 +30,10 @@ games_rss_feed:
   path: /games/rss.xml
   defaults: { _controller: Games::GamesController::gamesRssFeedAction }
 
+submit_game:
+  path: /games/submit
+  defaults: { _controller: Games::GamesController::submitGameAction }
+
 game_category:
   path: /games/{category}/{page}
   defaults: { _controller: Games::GamesController::browseGamesAction, page: 1 }

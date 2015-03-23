@@ -7,7 +7,10 @@
 
 namespace AVCMS\Bundles\Games\Controller;
 
+use AV\FileHandler\UploadedFileHandler;
+use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Games\Form\GameFrontendFiltersForm;
+use AVCMS\Bundles\Games\Form\SubmitGameForm;
 use AVCMS\Core\Controller\Controller;
 use AVCMS\Core\Rss\RssFeed;
 use AVCMS\Core\Rss\RssItem;
@@ -122,6 +125,77 @@ class GamesController extends Controller
             'admin_settings' => $this->get('settings_manager'),
             'likes_user' => isset($user) ? $user : null,
         )));
+    }
+
+    public function submitGameAction(Request $request)
+    {
+        if (!$this->isGranted(['PERM_SUBMIT_GAMES'])) {
+            if (!$this->isGranted(['IS_AUTHENTICATED_FULLY', 'IS_AUTHENTICATED_REMEMBERED'])) {
+                return $this->redirect('login', [], 302, 'info', $this->trans('Please login to submit a game'));
+            }
+            else {
+                throw new AccessDeniedException;
+            }
+        }
+
+        if (!$this->setting('games_allow_uploads')) {
+            throw $this->createNotFoundException();
+        }
+
+        $submissions = $this->model('GameSubmissions');
+
+        $pendingCount = $submissions->query()->where('submitter_id', $this->activeUser()->getId())->count();
+        if ($pendingCount >= $this->setting('games_max_submissions')) {
+            return $this->redirect('home', [], 302, 'info', $this->trans('You have already submitted {count} games, please wait for them to be accepted first', ['count' => $this->setting('games_max_submissions')]));
+        }
+
+        $newSubmission = $submissions->newEntity();
+
+        $formBlueprint = new SubmitGameForm(new CategoryChoicesProvider($this->model('GameCategories')));
+
+        $form = $this->buildForm($formBlueprint, $request, $newSubmission);
+
+        if ($form->isValid()) {
+            $form->saveToEntities();
+
+            $fileHandler = new UploadedFileHandler();
+
+            $submissionsGamesDir = $this->getParam('games_dir').'/submissions';
+            if (!file_exists($submissionsGamesDir)) {
+                mkdir($submissionsGamesDir, 0777, true);
+            }
+
+            $submissionsThumbsDir = $this->getParam('game_thumbnails_dir').'/submissions';
+            if (!file_exists($submissionsThumbsDir)) {
+                mkdir($submissionsThumbsDir, 0777, true);
+            }
+
+            $fullFilePath = $fileHandler->moveFile($form->getData('file'), $submissionsGamesDir);
+            $fileRelPath = str_replace($this->getParam('games_dir').'/', '', $fullFilePath);
+            $newSubmission->setFile($fileRelPath);
+
+            $fullThumbPath = $fileHandler->moveFile($form->getData('thumbnail'), $submissionsThumbsDir);
+            $thumbRelPath = str_replace($this->getParam('game_thumbnails_dir').'/', '', $fullThumbPath);
+            $newSubmission->setThumbnail($thumbRelPath);
+
+            $newSubmission->setCreatorId($this->activeUser()->getId());
+            $newSubmission->setSubmitterId($this->activeUser()->getId());
+            $newSubmission->setDateAdded(time());
+
+            $dimensions = @getimagesize($fullFilePath);
+
+            if (!$dimensions) {
+                $dimensions = [0, 0];
+            }
+
+            $newSubmission->setWidth($dimensions[0]);
+            $newSubmission->setHeight($dimensions[1]);
+
+            $submissions->save($newSubmission);
+
+        }
+
+        return new Response($this->render('@Games/submit_game.twig', ['form' => $form->createView()]));
     }
 
     public function gamesRssFeedAction()
