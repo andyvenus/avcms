@@ -103,7 +103,9 @@ class ModulesAdminController extends AdminBaseController
             }
         }
 
-        $moduleConfig->setTemplateType($acceptedTemplates[0]);
+        if (!$moduleConfig->getTemplateType()) {
+            $moduleConfig->setTemplateType($acceptedTemplates[0]);
+        }
 
         $permsProvider = $this->container->get('permissions.choices_provider');
 
