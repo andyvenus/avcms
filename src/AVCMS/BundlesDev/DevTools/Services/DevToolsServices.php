@@ -20,5 +20,9 @@ class DevToolsServices implements ServicesInterface
             ->setArguments([new Reference('translator'), new Reference('bundle_manager'), '%root_dir%', true])
             ->addTag('event.listener', ['event' => KernelEvents::TERMINATE, 'method' => 'onTerminate'])
         ;
+
+        $container->register('dev.whoops_listener', 'AVCMS\BundlesDev\DevTools\Listener\WhoopsListener')
+            ->addTag('event.listener', ['event' => KernelEvents::EXCEPTION, 'method' => 'onTerminate', 'priority' => 100])
+        ;
     }
 }
