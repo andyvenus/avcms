@@ -67,6 +67,12 @@ avcms.form = {
                 avcms.event.fireEvent('submit-form-complete', [form, data]);
             },
             error: function(jqXHR, textStatus, errorThrown) {
+                var exception = $($.parseHTML(jqXHR.responseText)).find('.error-message, .exc-message');
+
+                if (exception.length > 0) {
+                    errorThrown = exception.text();
+                }
+
                 var messages = $(form).find('.form-messages');
                 messages.html('<div class="alert alert-danger animated bounce">Save Error: '+errorThrown+'</div>');
 
