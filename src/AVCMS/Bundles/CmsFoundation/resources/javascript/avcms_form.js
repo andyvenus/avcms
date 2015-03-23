@@ -78,6 +78,8 @@ avcms.form = {
 
                 submit_button.text(original_submit_text);
                 submit_button.removeAttr('disabled');
+
+                avcms.event.fireEvent('submit-form-server-error', [form]);
             }
         });
 
