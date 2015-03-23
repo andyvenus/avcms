@@ -57,7 +57,7 @@ avcms.gamesAdmin = {
             else {
                 button.parent().find('.avcms-game-dimensions-error').text(data.error);
             }
-        });
+        }).fail(avcms.admin.showServerException);
 
     },
 
@@ -92,7 +92,7 @@ avcms.gamesAdmin = {
             }
 
             avcms.gamesAdmin.bulkDownloadFeedGames();
-        });
+        }).fail(avcms.admin.showServerException);
     },
 
     startBulkDownloadFeedGames: function() {
@@ -152,6 +152,6 @@ avcms.gamesAdmin = {
             else {
                 container_status.find('.avcms-error').show().text(response.error);
             }
-        });
+        }).fail(avcms.admin.showServerException);
     }
 };

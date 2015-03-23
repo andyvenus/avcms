@@ -145,5 +145,15 @@ avcms.admin = {
     iconSelectFormat: function(state) {
         if (!state.id) return state.text; // optgroup
         return "<span class='" + state.id + "'/></span> " + state.text;
+    },
+
+    showServerException: function(jqXHR, textStatus, errorThrown) {
+        var exception = $($.parseHTML(jqXHR.responseText)).find('.error-message, .exc-message');
+
+        if (exception.length > 0) {
+            errorThrown = exception.text();
+        }
+
+        alert("Error: "+errorThrown);
     }
 };
