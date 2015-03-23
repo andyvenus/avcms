@@ -5,6 +5,15 @@
 {% block meta_description %}{{ post.body|striptags|truncate(160) }}{% endblock %}
 
 {% block content %}
+    {% block blog_breadcrumbs %}
+        <ol class="breadcrumb">
+            <li><a href="{{ path('blog_home') }}">{% trans %}Blog{% endtrans %}</a></li>
+            {% if post.category.name %}
+                <li><a href="{{ path('blog_category', {'category': post.category.slug}) }}">{{ post.category.name }}</a></li>
+            {% endif %}
+        </ol>
+    {% endblock %}
+
     {% block blog_post %}
         {% include '@Blog/blog_post.twig' %}
     {% endblock %}

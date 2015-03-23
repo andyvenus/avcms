@@ -6,6 +6,10 @@ blog_archive:
     path:     '/blog/archive/{page}'
     defaults: { _controller: 'Blog::BlogController::blogArchiveAction', page: 1 }
 
+blog_category:
+  path: /blog/category/{category}
+  defaults: { _controller: 'Blog::BlogController::blogArchiveAction', page: 1 }
+
 blog_post:
     path:     /blog/{slug}
     defaults: { _controller: 'Blog::BlogController::blogPostAction' }

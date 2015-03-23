@@ -2,26 +2,67 @@
 
 {% block title %}
 {% spaceless %}
-    {% if page_type == 'home' %}
+    {% if category %}
+        {{ category.name }}
+    {% elseif finder_request.tags %}
+        {% trans with {tags: finder_request.tags|replace({'|': ', '})} %}Posts tagged with: {tags}{% endtrans %}
+    {% elseif page_type == 'home' %}
         {% trans %}Blog{% endtrans %}
     {% elseif page_type != 'site_home' %}
         {% trans %}Blog Archive{% endtrans %}
     {% endif %}
+
+    {% if current_page > 1 %}
+        - {% trans with {page: current_page} %}Page {page}{% endtrans %}
+    {% endif %}
 {% endspaceless %}
 {% endblock %}
 
+{% block meta_description -%}
+    {%- if category and current_page == 1 -%}
+        {{ category.description }}
+    {%- endif -%}
+{%- endblock %}
+
 {% block content %}
     <div class="blog-home-container">
-    {% block blog_posts %}
-        {% for post in posts %}
-            {% include '@Blog/blog_post.twig' %}
-        {% else %}
-            <div class="well well-lg">{% trans %}No Results{% endtrans %}</div>
-        {% endfor %}
-    {% endblock %}
+        {% block blog_archive_header %}
+            {% block blog_breadcrumbs %}
+                {% if page_type != 'home' %}
+                <ol class="breadcrumb">
+                    <li><a href="{{ path('blog_home') }}">{% trans %}Blog{% endtrans %}</a></li>
+                    {% if category.parent %}
+                        <li><a href="{{ path('blog_category', {'category': category.parent.slug}) }}">{{ category.parent.name }}</a></li>
+                    {% endif %}
+                </ol>
+                {% endif %}
+            {% endblock %}
 
-    {% block blog_posts_pagination %}
-        {{ pagination(total_pages, current_page, 'blog_archive') }}
-    {% endblock %}
+            <h1>{{ block('title') }}</h1>
+            <p>{{ category.description }}</p>
+
+            {% block subcategories -%}
+                {% if category.subcategories %}
+                    <p>
+                        {% trans %}Subcategories{% endtrans %}:
+                        {% for subcategory in category.subcategories %}
+                            <a href="{{ path('blog_category', {'category': subcategory.slug}) }}" class="btn btn-default btn-xs">{{ subcategory.name }}</a>
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            {%- endblock %}
+        {% endblock %}
+
+        {% block blog_posts %}
+            {% for post in posts %}
+                {% include '@Blog/blog_post.twig' %}
+            {% else %}
+                <div class="well well-lg">{% trans %}No Results{% endtrans %}</div>
+            {% endfor %}
+        {% endblock %}
+
+        {% block blog_posts_pagination %}
+            {{ pagination(total_pages, current_page, 'blog_archive') }}
+        {% endblock %}
     </div>
 {% endblock %}

@@ -18,22 +18,46 @@ class BlogController extends Controller
      */
     private $posts;
 
+    private $blogCategories;
+
     public function setUp()
     {
         $this->posts = $this->model('BlogPosts');
+        $this->blogCategories = $this->model('BlogCategories');
     }
 
     public function blogArchiveAction(Request $request, $pageType = 'archive')
     {
         $finder = $this->posts->find();
-        $allPosts = $finder->published()
+        $finder->published()
             ->setResultsPerPage(10)
             ->setSearchFields(['title'])
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'tags' => null, 'search' => null))
-            ->join($this->model($this->bundle->model->users), ['id', 'username', 'slug', 'avatar'])
-            ->get();
+            ->join($this->model('Users'), ['id', 'username', 'slug', 'avatar'])
+            ->join($this->model('BlogCategories'), ['name', 'slug']);
 
-        return new Response($this->render('@Blog/blog_archive.twig', array('posts' => $allPosts, 'total_pages' => $finder->getTotalPages(), 'current_page' => $finder->getCurrentPage(), 'page_type' => $pageType)));
+        $category = null;
+        if ($request->get('category') !== null) {
+            $category = $this->blogCategories->getFullCategory($request->get('category'));
+
+            if ($category) {
+                $finder->category($category->getId());
+            }
+            else {
+                throw $this->createNotFoundException('Category Not Found');
+            }
+        }
+
+        $allPosts = $finder->get();
+
+        return new Response($this->render('@Blog/blog_archive.twig', array(
+            'posts' => $allPosts,
+            'total_pages' => $finder->getTotalPages(),
+            'current_page' => $finder->getCurrentPage(),
+            'page_type' => $pageType,
+            'category' => $category,
+            'finder_request' => $finder->getRequestFilters(),
+        )));
     }
 
     public function blogPostAction(Request $request)
@@ -41,7 +65,8 @@ class BlogController extends Controller
         $post = $this->posts->find()
             ->slug($request->get('slug'))
             ->published()
-            ->join($this->model($this->bundle->model->users), ['id', 'username', 'slug', 'avatar'])
+            ->join($this->model('Users'), ['id', 'username', 'slug', 'avatar'])
+            ->join($this->model('BlogCategories'), ['name', 'slug'])
             ->joinTaxonomy('tags')
             ->first();
 

@@ -3,7 +3,7 @@
         {% if posts %}
             <h2><a href="{{ path('blog_post', {slug: post.slug}) }}">{{ post.title }}</a></h2>
         {% else %}
-            <h2>{{ post.title }}</h2>
+            <h1>{{ post.title }}</h1>
         {% endif %}
         <p>{% trans %}By{% endtrans %} {{ user_info(post.user) }} &nbsp;&nbsp;{{ post.publishDate|date(settings.date_format) }}</p>
     </div>
@@ -23,6 +23,10 @@
 
         {% if is_granted('ADMIN_BLOG')  %}
             <a class="btn btn-link btn-sm" href="{{ path('blog_edit_post', { id: post.id}) }}"><span class="glyphicon glyphicon-edit"></span> {% trans %}Edit Post{% endtrans %}</a>
+        {% endif %}
+
+        {% if post.category.name %}
+            <a class="btn btn-link btn-xs" href="{{ path('blog_category', {'category': post.category.slug}) }}"><span class="glyphicon glyphicon-folder-close"></span> {{ post.category.name }}</a>
         {% endif %}
 
         {% for tag in post.tags %}

@@ -175,6 +175,10 @@ trait CategoryActionsTrait
 
     private function getCategoryConfig($contentType)
     {
+        if (!isset($this->bundle['categories'][$contentType])) {
+            throw new \Exception('Category config not found for content type '.$contentType);
+        }
+
         return $this->bundle['categories'][$contentType];
     }
 }

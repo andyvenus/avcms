@@ -14,7 +14,8 @@ class BlogInstaller extends BundleInstaller
     public function getVersions()
     {
         return [
-            '1.0' => 'install_1_0_0'
+            '1.0' => 'install_1_0_0',
+            '1.0.1' => 'install_1_0_1'
         ];
     }
 
@@ -41,5 +42,24 @@ class BlogInstaller extends BundleInstaller
                   KEY `publish_date` (`publish_date`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
+    }
+
+    public function install_1_0_1()
+    {
+        $this->PDO->exec("
+             CREATE TABLE `{$this->prefix}blog_categories` (
+                  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                  `name` varchar(120) DEFAULT NULL,
+                  `order` int(11) DEFAULT NULL,
+                  `parent` int(11) DEFAULT NULL,
+                  `slug` varchar(120) DEFAULT NULL,
+                  `description` text,
+                  PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        ");
+
+        $this->PDO->exec("ALTER TABLE {$this->prefix}blog_posts ADD category_parent_id int(11) DEFAULT NULL AFTER body");
+
+        $this->PDO->exec("ALTER TABLE {$this->prefix}blog_posts ADD `category_id` int(11) NOT NULL DEFAULT '0' AFTER body");
     }
 }

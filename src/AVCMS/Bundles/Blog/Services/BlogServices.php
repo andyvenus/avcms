@@ -19,9 +19,19 @@ class BlogServices implements ServicesInterface
             ->addTag('model')
         ;
 
+        $container->register('blog.categories_model', 'AVCMS\Bundles\Blog\Model\BlogCategories')
+            ->addTag('model')
+        ;
+
         $container->register('sitemap.blog_posts', 'AVCMS\Core\Sitemaps\ContentSitemap')
             ->setArguments([new Reference('blog.posts_model'), new Reference('router'), 'blog_post'])
             ->addTag('sitemap')
+        ;
+
+        $container->register('menu_types.blog_categories', 'AVCMS\Bundles\Categories\MenuItemType\CategoriesMenuItemType')
+            ->setArguments([new Reference('blog.categories_model'), new Reference('router'), 'blog_category'])
+            ->addMethodCall('setName', ['Blog Categories'])
+            ->addTag('menu.item_type', ['id' => 'blog_categories'])
         ;
     }
 }

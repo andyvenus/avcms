@@ -21,3 +21,24 @@ blog_admin_home:
 blog_finder:
   path: /blog/finder/{page}
   defaults: { page: 1, _controller: 'Blog::BlogAdminController::finderAction' }
+
+# Categories #
+blog_manage_categories:
+  path: /blog/categories
+  defaults: { _controller: 'Blog::BlogAdminController::manageCategoriesAction', contentType: blog_post }
+
+blog_save_categories_order:
+  path: /blog/categories/save-order
+  defaults: { _controller: Blog::BlogAdminController::saveOrderAction, contentType: blog_post }
+
+blog_admin_add_category:
+  path: /blog/categories/new
+  defaults: { _controller: Blog::BlogAdminController::editCategoryAction, contentType: blog_post }
+
+blog_admin_delete_category:
+  path: /blog/categories/delete/{id}
+  defaults: { _controller: Blog::BlogAdminController::deleteCategoryAction, contentType: blog_post }
+
+blog_admin_edit_category:
+  path: /blog/categories/edit/{id}
+  defaults: { _controller: Blog::BlogAdminController::editCategoryAction, contentType: blog_post }

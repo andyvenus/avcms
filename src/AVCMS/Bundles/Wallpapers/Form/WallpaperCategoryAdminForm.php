@@ -12,12 +12,5 @@ use AVCMS\Bundles\Categories\Model\Categories;
 
 class WallpaperCategoryAdminForm extends CategoryAdminForm
 {
-    public function __construct($itemId, Categories $categories)
-    {
-        parent::__construct($itemId, $categories);
 
-        $this->add('description', 'textarea', [
-            'label' => 'Description'
-        ]);
-    }
 }

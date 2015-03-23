@@ -11,6 +11,8 @@ use AVCMS\Core\Model\ContentModel;
 
 class BlogPosts extends ContentModel
 {
+    protected $finder = 'AVCMS\Bundles\Blog\Model\BlogPostsFinder';
+
     public function getTable()
     {
         return 'blog_posts';

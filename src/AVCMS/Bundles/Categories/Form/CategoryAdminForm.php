@@ -30,6 +30,10 @@ class CategoryAdminForm extends FormBlueprint
             )
         ]);
 
+        $this->add('description', 'textarea', [
+            'label' => 'Description'
+        ]);
+
         $this->add('slug', 'text', array(
             'label' => 'URL Slug',
             'required' => true,

@@ -10,10 +10,11 @@ namespace AVCMS\Bundles\Blog\Form;
 use AV\Validation\Rules\MustNotExist;
 use AV\Validation\Validator;
 use AVCMS\Bundles\Admin\Form\AdminContentForm;
+use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 
 class BlogPostAdminForm extends AdminContentForm
 {
-    public function __construct($itemId, $userId)
+    public function __construct($itemId, $userId, CategoryChoicesProvider $categoryChoicesProvider)
     {
         $this->add('title', 'text', array(
             'label' => 'Title',
@@ -29,6 +30,13 @@ class BlogPostAdminForm extends AdminContentForm
                 'rows' => 10,
                 'data-html-editor' => 1
             )
+        ));
+
+        $this->add('category_id', 'select', array(
+            'label' => 'Category',
+            'choices' => [0 => 'None'],
+            'choices_provider' => $categoryChoicesProvider,
+            'choices_translate' => false
         ));
 
         $this->add('tags', 'text', array(

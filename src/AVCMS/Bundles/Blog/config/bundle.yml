@@ -12,9 +12,11 @@ require:
 services:
   - BlogServices
 
-model:
-  posts: Posts
-  users: AVCMS\Bundles\Users\Model\Users
+categories:
+  blog_post:
+    model: AVCMS\Bundles\Blog\Model\BlogCategories
+    content_model: AVCMS\Bundles\Blog\Model\BlogPosts
+    route_prefix: blog_
 
 comments:
   blog_post:
@@ -97,6 +99,14 @@ menu_items:
       default_order: 20
       settings:
         route: blog_admin_home
+    admin_blog_categories:
+      icon: glyphicon glyphicon-th-list
+      type: route
+      label: Categories
+      permission: ADMIN_BLOG
+      parent: admin_blog_posts
+      settings:
+        route: blog_manage_categories
 
 permissions:
   ADMIN_BLOG:
