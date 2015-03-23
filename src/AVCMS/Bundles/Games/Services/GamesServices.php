@@ -42,5 +42,14 @@ class GamesServices implements ServicesInterface
             ->addMethodCall('setName', ['Game Categories'])
             ->addTag('menu.item_type', ['id' => 'game_categories'])
         ;
+
+        $container->register('games.submissions_model', 'AVCMS\Bundles\Games\Model\GameSubmissions')
+            ->addTag('model')
+        ;
+
+        $container->register('subscriber.game_submissions_menu_item', 'AVCMS\Bundles\Games\EventSubscriber\GameSubmissionsMenuItemSubscriber')
+            ->setArguments([new Reference('games.submissions_model')])
+            ->addTag('event.subscriber')
+        ;
     }
 }
