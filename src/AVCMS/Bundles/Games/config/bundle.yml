@@ -41,6 +41,14 @@ menu_items:
       parent: games_admin
       settings:
         route: games_manage_categories
+    games_submissions_admin:
+      label: Submissions
+      icon: glyphicon glyphicon-inbox
+      type: route
+      permission: ADMIN_GAMES
+      parent: games_admin
+      settings:
+        route: game_submissions_admin_home
     games_feeds_admin:
       label: Game Feeds
       icon: glyphicon glyphicon-cloud-download

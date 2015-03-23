@@ -97,3 +97,24 @@ game_feeds_admin_home:
 game_feeds_admin_finder:
   path: /game-feeds/finder/{page}
   defaults: { page: 1, _controller: 'Games::GameFeedsAdminController::finderAction' }
+
+# Manage Submissions #
+game_submissions_admin_review:
+    path:     /game-submissions/review/{id}
+    defaults: { _controller: 'Games::GameSubmissionsAdminController::reviewAction' }
+
+game_submissions_admin_delete:
+    path:     /game-submissions/delete
+    defaults: { _controller: 'Games::GameSubmissionsAdminController::deleteAction' }
+
+game_submissions_admin_home:
+  path: /game-submissions
+  defaults: { _controller: 'Games::GameSubmissionsAdminController::homeAction' }
+
+game_submissions_admin_finder:
+  path: /game-submissions/finder/{page}
+  defaults: { page: 1, _controller: 'Games::GameSubmissionsAdminController::finderAction' }
+
+game_submissions_admin_play:
+  path: /game-submissions/play/{id}
+  defaults: { _controller: 'Games::GameSubmissionsAdminController::playGameAction' }

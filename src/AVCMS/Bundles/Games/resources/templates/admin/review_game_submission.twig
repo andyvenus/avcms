@@ -1,0 +1,11 @@
+{% extends '@admin/edit_item.twig' %}
+
+{% block title -%}{% trans %}Review Game Submission{% endtrans %}: {{ item.name }}{% endblock %}
+
+{% block editor_title %}
+    <span class="light">{% trans %}Review Game Submission{% endtrans %}:</span> <span data-id="{{ item.id }}" data-field="name">{{ item.name }}</span>
+{% endblock %}
+
+{% block form_start %}
+    {{ form_start(form, {"data-item-id": item.id|default(0), 'class': 'review-game-submission'}) }}
+{% endblock %}

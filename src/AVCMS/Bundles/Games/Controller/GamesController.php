@@ -191,6 +191,8 @@ class GamesController extends Controller
             $newSubmission->setWidth($dimensions[0]);
             $newSubmission->setHeight($dimensions[1]);
 
+            $newSubmission->setSlug($this->get('slug.generator')->slugify($newSubmission->getName()));
+
             $submissions->save($newSubmission);
 
         }
