@@ -74,6 +74,18 @@ modules:
         type: checkbox
         label: Show Date
         default: false
+  blog_tags:
+    name: Blog Tag Cloud
+    description: A tag cloud for blog posts
+    controller: Blog::BlogModulesController::tagsModule
+    cachable: true
+    default_cache_time: 43200
+    accepted_template_types: [content, panel, none]
+    admin_settings:
+      limit:
+        type: text
+        label: Number of tags to display
+        default: 40
 
 menu_items:
   admin:

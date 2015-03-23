@@ -7,11 +7,14 @@
 
 namespace AVCMS\Bundles\Blog\Controller;
 
+use AVCMS\Bundles\Tags\Module\TagsModuleTrait;
 use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 class BlogModulesController extends Controller
 {
+    use TagsModuleTrait;
+
     /**
      * @var \AVCMS\Bundles\Blog\Model\BlogPosts
      */
@@ -31,5 +34,10 @@ class BlogModulesController extends Controller
             ->get();
 
         return new Response($this->render('@Blog/blog_posts_module.twig', array('posts' => $posts, 'admin_settings' => $adminSettings)));
+    }
+
+    public function tagsModule($adminSettings)
+    {
+        return $this->getTagsModule($adminSettings, 'blog_post', 'blog_archive', 'tags');
     }
 }
