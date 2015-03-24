@@ -18,7 +18,7 @@ avcms.nav = {
     // Set the page URL
     goToPage: function (url, set_name) {
         if (url === undefined || typeof url != 'string') {
-            url = $(this).attr('href');
+            url = $(this).attr('href').trim();
         }
 
         if (url.indexOf('admin') <= 0 || $(this).attr('target') === '_blank') {
