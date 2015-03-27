@@ -33,14 +33,10 @@
     </p>
     <div class="row">
         <div class="col-md-8">
-            {% for module in modules('user_profile_main', {user: profile_user}) %}
-                {% include module.template %}
-            {% endfor %}
+            {{ render_modules('user_profile_main', {user: profile_user}) }}
         </div>
         <div class="col-md-4">
-            {% for module in modules('user_profile_sidebar', {user: profile_user}) %}
-                {% include module.template %}
-            {% endfor %}
+            {{ render_modules('user_profile_sidebar', {user: profile_user}) }}
         </div>
     </div>
 {% endblock %}

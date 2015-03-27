@@ -8,6 +8,9 @@
 namespace AVCMS\Core\Module\Twig;
 
 use AVCMS\Core\Module\ModuleManager;
+use AVCMS\Core\SettingsManager\SettingsManager;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class ModuleManagerTwigExtension extends \Twig_Extension
 {
@@ -26,9 +29,27 @@ class ModuleManagerTwigExtension extends \Twig_Extension
      */
     protected $templates;
 
-    public function __construct(ModuleManager $moduleManager)
+    /**
+     * @var UrlGeneratorInterface
+     */
+    protected $urlGenerator;
+
+    /**
+     * @var AuthorizationCheckerInterface
+     */
+    protected $authChecker;
+
+    /**
+     * @var SettingsManager
+     */
+    protected $settingsManager;
+
+    public function __construct(ModuleManager $moduleManager, UrlGeneratorInterface $urlGenerator, AuthorizationCheckerInterface $authChecker, SettingsManager $settingsManager)
     {
         $this->moduleManager = $moduleManager;
+        $this->urlGenerator = $urlGenerator;
+        $this->authChecker = $authChecker;
+        $this->settingsManager = $settingsManager;
 
         $this->templates = $moduleManager->getTemplateTypes();
     }
@@ -71,12 +92,25 @@ class ModuleManagerTwigExtension extends \Twig_Extension
     {
         $modules = $this->getModules($position, $vars);
 
-        $allModules = '';
+        $allModules = '<div class="avcms-module-position" style="position: relative;">';
+
+        if ($this->authChecker->isGranted('ADMIN_MODULES') && $this->settingsManager->getSetting('show_module_buttons')) {
+            $cssPosition = '';
+            if (count($modules) > 0) {
+                $cssPosition = 'position: absolute;';
+            }
+
+            $url = $this->urlGenerator->generate('modules_manage_position', ['id' => $position]);
+            $allModules .= '<div class="avcms-module-position-button" style="opacity:0.5;top:0;right:0;' . $cssPosition . '">
+                <a class="btn btn-xs btn-default" href="' . $url . '"><span class="glyphicon glyphicon-pencil"></span></a>
+            </div>';
+        }
+
         foreach ($modules as $module) {
             $allModules .= $this->environment->render($module->getTemplate(), ['module' => $module]);
         }
 
-        return $allModules;
+        return $allModules . '</div>';
     }
 
     public function getName()

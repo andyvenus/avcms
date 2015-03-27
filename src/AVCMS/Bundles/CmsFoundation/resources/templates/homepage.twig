@@ -3,9 +3,5 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-    {% for module in modules(module_position) %}
-        {% include module.template %}
-    {% else %}
-        {% trans %}No Modules Assigned To This Page{% endtrans %} - ({{ module_position }})
-    {% endfor %}
+    {{ render_modules(module_position) }}
 {% endblock %}

@@ -127,6 +127,13 @@ admin_settings:
     label: Google Analytics ID
     help: The ID of your Google Analytics campaign
 
+  show_module_buttons:
+    type: checkbox
+    label: Show Module Buttons
+    help: Show buttons on the frontend to quickly access editing module positions
+    default: 1
+    section: main
+
 assets:
   jquery.js:
     env: shared

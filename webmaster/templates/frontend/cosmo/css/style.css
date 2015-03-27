@@ -3,8 +3,7 @@ body {
 
 .header {
   background-color: #4d79e5;
-  border-bottom: 4px solid #a6bcf2;
-  margin-bottom: 15px; }
+  border-bottom: 4px solid #a6bcf2; }
   .header a {
     color: white;
     text-decoration: none; }
@@ -19,7 +18,8 @@ body {
     color: #4d79e5; }
 
 .header-extra {
-  background-color: #f7faf8; }
+  margin-top: 7px;
+  margin-bottom: 7px; }
 
 .logo-text {
   margin-top: 15px; }

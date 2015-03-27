@@ -6,6 +6,9 @@ $(document).ready(function() {
         avcms.general.loadFormModal(url);
     });
 
+    //$('body').on('mouseover', '.avcms-module-position', avcms.general.showModulePositionButton);
+    //$('body').on('mouseout', '.avcms-module-position', avcms.general.hideModulePositionButton);
+
     $('[data-toggle="tooltip"]').tooltip();
 
     avcms.event.addEvent('submit-form-success', avcms.general.modalFormSuccess);
@@ -130,6 +133,14 @@ avcms.general = {
     isMobile: function () {
         try{ document.createEvent("TouchEvent"); return true; }
         catch(e){ return false; }
+    },
+
+    showModulePositionButton: function() {
+        $(this).find('.avcms-module-position-button').css('opacity', 1);
+    },
+
+    hideModulePositionButton: function() {
+        $(this).find('.avcms-module-position-button').css('opacity', 0.5);
     }
 };
 

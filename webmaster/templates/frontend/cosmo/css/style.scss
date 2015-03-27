@@ -12,7 +12,6 @@ body {
 .header {
   background-color: $background-color;
   border-bottom: 4px solid lighten($background-color, 20);
-  margin-bottom: 15px;
 
   a {
     color: white;
@@ -40,7 +39,8 @@ body {
 }
 
 .header-extra {
-  background-color: lighten($header-base-color, 15);
+  margin-top: 7px;
+  margin-bottom: 7px;
 }
 
 .logo-text {

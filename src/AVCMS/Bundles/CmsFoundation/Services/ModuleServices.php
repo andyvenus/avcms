@@ -34,7 +34,7 @@ class ModuleServices implements ServicesInterface
         ;
 
         $container->register('modules.twig_extension', 'AVCMS\Core\Module\Twig\ModuleManagerTwigExtension')
-            ->setArguments(array(new Reference('module_manager')))
+            ->setArguments(array(new Reference('module_manager'), new Reference('router'), new Reference('security.auth_checker'), new Reference('settings_manager')))
             ->addTag('twig.extension')
         ;
 
