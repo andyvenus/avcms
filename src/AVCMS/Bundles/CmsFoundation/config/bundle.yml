@@ -32,6 +32,10 @@ admin_settings:
         class: AV\Validation\Rules\Length
         arguments:
           - 5
+  site_description:
+    type: textarea
+    label: Site Description
+    section: main
   site_offline:
     type: checkbox
     label: Site Offline

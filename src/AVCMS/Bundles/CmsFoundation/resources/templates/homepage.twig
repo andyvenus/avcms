@@ -2,6 +2,10 @@
 
 {% block title %}{{ title }}{% endblock %}
 
+{% if module_position == 'homepage' and settings.site_description %}
+    {% block meta_description %}{{ settings.site_description }}{% endblock %}
+{% endif %}
+
 {% block content %}
     {{ render_modules(module_position) }}
 {% endblock %}
