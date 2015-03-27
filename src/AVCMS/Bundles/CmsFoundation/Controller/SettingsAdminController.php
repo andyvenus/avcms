@@ -32,7 +32,14 @@ class SettingsAdminController extends AdminBaseController
 
         $settingsManager = $this->get('settings_manager');
 
-        $settingsForm->createFieldsFromArray($settingsManager->getFields());
+        $fields = [];
+        foreach ($settingsManager->getFields() as $name => $field) {
+            if (!isset($field['type']) || $field['type'] != 'hidden') {
+                $fields[$name] = $field;
+            }
+        }
+
+        $settingsForm->createFieldsFromArray($fields);
         $settingsForm->createSectionsFromArray($settingsManager->getSections());
 
         $form = $this->buildForm($settingsForm);
