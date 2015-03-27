@@ -101,7 +101,7 @@ class ModuleManagerTwigExtension extends \Twig_Extension
             }
 
             $url = $this->urlGenerator->generate('modules_manage_position', ['id' => $position]);
-            $allModules .= '<div class="avcms-module-position-button" style="opacity:0.5;top:0;right:0;' . $cssPosition . '">
+            $allModules .= '<div class="avcms-module-position-button" style="text-align:right;opacity:0.5;top:0;right:0;' . $cssPosition . '">
                 <a class="btn btn-xs btn-default" href="' . $url . '"><span class="glyphicon glyphicon-pencil"></span></a>
             </div>';
         }
