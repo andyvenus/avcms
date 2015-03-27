@@ -249,6 +249,7 @@ modules:
           top-hits: Top Hits
           top-downloads: Top Downloads
           liked: Most Liked
+          random: Random
         default: newest
       limit:
         type: text

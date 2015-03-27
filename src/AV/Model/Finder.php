@@ -84,7 +84,12 @@ class Finder
     {
         $table = $this->model->getTable();
         foreach ($sortOptions as $key => $val) {
-            $this->sortOptions[$key] = $table.'.'.$val;
+            if (strpos($val, '(') === false) {
+                $this->sortOptions[$key] = $table . '.' . $val;
+            }
+            else {
+                $this->sortOptions[$key] = $val;
+            }
         }
     }
 
@@ -123,6 +128,10 @@ class Finder
         $order = $this->getDbSort($order);
 
         $orderSplit = explode(' ', $order);
+
+        if ($orderSplit[0] == 'rand()') {
+            $orderSplit[0] = $this->model->query()->raw('rand()');
+        }
 
         $this->currentQuery->orderBy($orderSplit[0], $orderSplit[1]);
 

@@ -35,7 +35,8 @@ class Wallpapers extends ContentModel
             'top-hits' => 'hits desc',
             'low-hits' => 'hits asc',
             'top-downloads' => 'total_downloads desc',
-            'liked' => 'likes desc'
+            'liked' => 'likes desc',
+            'random' => 'rand() asc'
         );
     }
 }

@@ -266,6 +266,7 @@ modules:
           publish-date-newest: Newest
           top-hits: Most Played
           liked: Most Liked
+          random: Random
         default: newest
       limit:
         type: text
