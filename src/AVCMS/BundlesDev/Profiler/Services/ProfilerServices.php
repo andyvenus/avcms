@@ -11,7 +11,7 @@ use AV\Service\ServicesInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class Profiler implements ServicesInterface
+class ProfilerServices implements ServicesInterface
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
@@ -21,6 +21,7 @@ class Profiler implements ServicesInterface
             ->addMethodCall('add', array(new Reference('profiler.time')))
             ->addMethodCall('add', array(new Reference('profiler.translations')))
             ->addMethodCall('add', array(new Reference('profiler.request')))
+            ->addMethodCall('add', array(new Reference('profiler.templates')))
         ;
 
         $container->register('profiler.request', 'Symfony\Component\HttpKernel\DataCollector\RequestDataCollector')
@@ -29,6 +30,10 @@ class Profiler implements ServicesInterface
 
         $container->register('profiler.translations', 'AVCMS\BundlesDev\Profiler\Profiler\TranslationsDataCollector')
             ->setArguments(array(new Reference('translator')))
+        ;
+
+        $container->register('profiler.templates', 'AVCMS\BundlesDev\Profiler\Profiler\TwigDataCollector')
+            ->setArguments(array(new Reference('twig.filesystem')))
         ;
 
         $container->register('profiler.time', 'Symfony\Component\HttpKernel\DataCollector\TimeDataCollector')

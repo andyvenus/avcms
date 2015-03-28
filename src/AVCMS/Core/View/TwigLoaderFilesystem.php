@@ -21,6 +21,8 @@ class TwigLoaderFilesystem extends \Twig_Loader_Filesystem
 
     protected $settingsManager;
 
+    protected $requestedTemplates = [];
+
     public function __construct(ResourceLocator $resourceLocator, SettingsManager $settingsManager, $rootDir)
     {
         $this->resourceLocator = $resourceLocator;
@@ -46,6 +48,17 @@ class TwigLoaderFilesystem extends \Twig_Loader_Filesystem
     }
 
     protected function findTemplate($name)
+    {
+        $template = $this->doFindTemplate($name);
+
+        if (!in_array($name, $this->requestedTemplates)) {
+            $this->requestedTemplates[] = ['name' => $name, 'template' => $template];
+        }
+
+        return $template;
+    }
+
+    protected function doFindTemplate($name)
     {
         if ($name === 'index.twig' && $this->templateInvalid === true) {
             throw new TemplateConfigException(sprintf('Template %s doesn\'t exist', $this->settingsManager->getSetting('template')));
@@ -82,5 +95,10 @@ class TwigLoaderFilesystem extends \Twig_Loader_Filesystem
         }
 
         throw new Twig_Error_Loader(sprintf('Unable to find template "%s" (looked into: %s).', $name, implode(', ', $this->paths[$namespace])));
+    }
+
+    public function getRequestedTemplates()
+    {
+        return $this->requestedTemplates;
     }
 } 

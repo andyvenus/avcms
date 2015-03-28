@@ -26,13 +26,15 @@ class DevBarController extends Controller
         $time = $profile->getCollector('time');
         $translations = $profile->getCollector('translations');
         $request_profiler = $profile->getCollector('request');
+        $templates = $profile->getCollector('templates');
 
         return new Response($this->render('@Profiler/dev_bar.twig', array(
             'memory' => $memory,
             'time' => $time,
             'translations' => $translations,
             'request' => $request_profiler,
-            'token' => $request->get('token')
+            'token' => $request->get('token'),
+            'templates' => $templates,
         )));
     }
-} 
+}
