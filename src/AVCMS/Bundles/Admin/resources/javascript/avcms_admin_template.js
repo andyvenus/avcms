@@ -94,8 +94,8 @@ avcms.adminTemplate = {
     },
 
     formSubmitScroll: function(form) {
-        form.parent('.editor-content').scrollTop(0);
-        form.parents('.simple-content').scrollTop(0);
+        $('.editor-content').scrollTop(0);
+        $('.simple-content').scrollTop(0);
         window.scrollTo(0,0);
     },
 
