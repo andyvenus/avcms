@@ -26,6 +26,13 @@ categories:
 
 menu_items:
   frontend:
+    game_categories:
+      label: Games
+      icon: glyphicon glyphicon-tower
+      type: game_categories
+      default_order: 2
+      settings:
+        display: child
     game_submissions:
       label: Submit Game
       icon: glyphicon glyphicon-upload

@@ -90,6 +90,14 @@ modules:
         default: 40
 
 menu_items:
+  frontend:
+    blog_home:
+      label: Blog
+      icon: glyphicon glyphicon-pencil
+      type: route
+      default_order: 10
+      settings:
+        route: blog_home
   admin:
     admin_blog_posts:
       icon: glyphicon glyphicon-pencil

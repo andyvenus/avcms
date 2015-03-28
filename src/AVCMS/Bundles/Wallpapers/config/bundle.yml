@@ -119,6 +119,13 @@ admin_settings:
 
 menu_items:
   frontend:
+    wallpaper_categories:
+        label: Wallpapers
+        icon: glyphicon glyphicon-picture
+        type: wallpaper_categories
+        default_order: 2
+        settings:
+          display: child
     wallpaper_submissions:
       label: Submit Wallpaper
       icon: glyphicon glyphicon-upload
