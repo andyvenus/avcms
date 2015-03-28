@@ -125,6 +125,8 @@ select[name=author] {
   .panel-default .panel-heading {
     background-color: #326883;
     color: white; }
+    .panel-default .panel-heading a {
+      color: white; }
 
 .box {
   margin-bottom: 15px; }
