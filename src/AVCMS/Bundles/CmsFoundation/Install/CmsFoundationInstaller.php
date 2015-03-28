@@ -14,7 +14,8 @@ class CmsFoundationInstaller extends BundleInstaller
     public function getVersions()
     {
         return array(
-            '1.0' => 'install_1_0_0'
+            '1.0' => 'install_1_0_0',
+            '1.0.1' => 'install_1_0_1'
         );
     }
 
@@ -96,5 +97,10 @@ class CmsFoundationInstaller extends BundleInstaller
                   `owner` varchar(50) DEFAULT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
+    }
+
+    public function install_1_0_1()
+    {
+        $this->PDO->exec("ALTER TABLE {$this->prefix}menu_items ADD admin_setting varchar(255) DEFAULT NULL AFTER permission");
     }
 }

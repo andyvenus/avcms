@@ -90,4 +90,14 @@ class MenuItem extends Entity
     {
         return $this->get('url');
     }
+
+    public function setAdminSetting($value)
+    {
+        $this->set("admin_setting", $value);
+    }
+
+    public function getAdminSetting()
+    {
+        return $this->get("admin_setting");
+    }
 }

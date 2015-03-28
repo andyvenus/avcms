@@ -40,6 +40,10 @@
                     <span class="glyphicon glyphicon-menu-hamburger handle"></span> <span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}
                     {% block menu_item_buttons %}
                         <div class="pull-right">
+                            {% if menu_item.adminSetting and settings.getSetting(menu_item.adminSetting) == 0 %}
+                                <div class="label label-primary">{% trans %}Disabled In Settings{% endtrans %}</div>
+                            {% endif %}
+
                             {% if menu_item.owner is null %}
                                 <a class="btn btn-xs btn-default" href="{{ path('menu_items_edit', {menu: item.id, id: menu_item.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit{% endtrans %}</a>
                             {% endif %}

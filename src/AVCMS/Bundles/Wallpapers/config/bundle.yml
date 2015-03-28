@@ -118,42 +118,50 @@ admin_settings:
     section: browse_wallpapers
 
 menu_items:
-    admin:
-        wallpapers_admin:
-            label: Wallpapers
-            icon: glyphicon glyphicon-picture
-            type: route
-            default_order: 2
-            settings:
-              route: wallpapers_admin_home
-        wallpapers_bulk_admin:
-          label: Bulk Import
-          icon: glyphicon glyphicon-import
+  frontend:
+    wallpaper_submissions:
+      label: Submit Wallpaper
+      icon: glyphicon glyphicon-upload
+      type: route
+      admin_setting: wallpapers_allow_uploads
+      settings:
+        route: submit_wallpaper
+  admin:
+      wallpapers_admin:
+          label: Wallpapers
+          icon: glyphicon glyphicon-picture
           type: route
-          parent: wallpapers_admin
+          default_order: 2
           settings:
-            route: wallpaper_bulk_import_admin_home
-        wallpapers_categories_admin:
-          label: Categories
-          icon: glyphicon glyphicon-th-list
-          type: route
-          parent: wallpapers_admin
-          settings:
-            route: wallpapers_manage_categories
-        wallpapers_resolutions_admin:
-          label: Resolutions
-          icon: glyphicon glyphicon-fullscreen
-          type: route
-          parent: wallpapers_admin
-          settings:
-            route: wallpapers_manage_resolutions
-        wallpaper_submissions_admin:
-          label: Submissions
-          icon: glyphicon glyphicon-inbox
-          type: route
-          parent: wallpapers_admin
-          settings:
-            route: wallpaper_submissions_admin_home
+            route: wallpapers_admin_home
+      wallpapers_bulk_admin:
+        label: Bulk Import
+        icon: glyphicon glyphicon-import
+        type: route
+        parent: wallpapers_admin
+        settings:
+          route: wallpaper_bulk_import_admin_home
+      wallpapers_categories_admin:
+        label: Categories
+        icon: glyphicon glyphicon-th-list
+        type: route
+        parent: wallpapers_admin
+        settings:
+          route: wallpapers_manage_categories
+      wallpapers_resolutions_admin:
+        label: Resolutions
+        icon: glyphicon glyphicon-fullscreen
+        type: route
+        parent: wallpapers_admin
+        settings:
+          route: wallpapers_manage_resolutions
+      wallpaper_submissions_admin:
+        label: Submissions
+        icon: glyphicon glyphicon-inbox
+        type: route
+        parent: wallpapers_admin
+        settings:
+          route: wallpaper_submissions_admin_home
 
 categories:
     wallpaper:

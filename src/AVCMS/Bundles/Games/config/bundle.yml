@@ -25,6 +25,14 @@ categories:
     route_prefix: games_
 
 menu_items:
+  frontend:
+    game_submissions:
+      label: Submit Game
+      icon: glyphicon glyphicon-upload
+      type: route
+      admin_setting: games_allow_uploads
+      settings:
+        route: submit_game
   admin:
     games_admin:
       label: Games

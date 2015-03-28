@@ -12,6 +12,7 @@ use AVCMS\Bundles\CmsFoundation\Model\Menu;
 use AVCMS\Bundles\CmsFoundation\Model\MenuItemConfig;
 use AVCMS\Core\Menu\Event\FilterMenuItemEvent;
 use AVCMS\Core\Menu\MenuItemType\MenuItemTypeInterface;
+use AVCMS\Core\SettingsManager\SettingsManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
@@ -53,7 +54,12 @@ class MenuManager
      */
     protected $eventDispatcher = null;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator, Model $menusModel, Model $itemsModel, SecurityContextInterface $securityContext, TranslatorInterface $translator, EventDispatcherInterface $eventDispatcher)
+    /**
+     * @var SettingsManager
+     */
+    protected $settingsManager;
+
+    public function __construct(UrlGeneratorInterface $urlGenerator, Model $menusModel, Model $itemsModel, SecurityContextInterface $securityContext, TranslatorInterface $translator, EventDispatcherInterface $eventDispatcher, SettingsManager $settingsManager)
     {
         $this->urlGenerator = $urlGenerator;
         $this->model = $menusModel;
@@ -61,6 +67,7 @@ class MenuManager
         $this->securityContext = $securityContext;
         $this->translator = $translator;
         $this->eventDispatcher = $eventDispatcher;
+        $this->settingsManager = $settingsManager;
     }
 
     public function addMenuItemType(MenuItemTypeInterface $menuItemType, $id)
@@ -149,6 +156,10 @@ class MenuManager
                     if (!$this->securityContext->isGranted($permissions)) {
                         continue;
                     }
+                }
+
+                if ($item->getAdminSetting() && !$this->settingsManager->getSetting($item->getAdminSetting())) {
+                    continue;
                 }
 
                 $item->children = array();

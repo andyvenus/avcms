@@ -53,6 +53,8 @@ class BundleConfigValidation implements BundleConfigValidationInterface
                             ->end()
                             ->variableNode('permission')
                             ->end()
+                            ->variableNode('admin_setting')
+                            ->end()
                             ->variableNode('translatable')
                                 ->defaultValue(1)
                             ->end()

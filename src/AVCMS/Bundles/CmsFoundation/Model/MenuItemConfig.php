@@ -131,6 +131,16 @@ class MenuItemConfig extends Entity implements MenuItemConfigInterface
         $this->set("type", $value);
     }
 
+    public function setAdminSetting($value)
+    {
+        $this->set("admin_setting", $value);
+    }
+
+    public function getAdminSetting()
+    {
+        return $this->get("admin_setting");
+    }
+
     public function setUrl($url)
     {
         $this->url = $url;
