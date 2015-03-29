@@ -9,7 +9,3 @@ save_strings:
 twig_namespaces:
   path: /dev/twig-namespaces
   defaults: { _controller: DevTools::MiscToolsController::twigNamespacesForPhpStormAction }
-
-split_translations:
-  path: /dev/split-translations
-  defaults: { _controller: DevTools::TranslationExtractionController::splitterAction }

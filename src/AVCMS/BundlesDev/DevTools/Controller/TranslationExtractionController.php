@@ -11,7 +11,6 @@ use AVCMS\Core\Controller\Controller;
 use AVCMS\Core\Translation\StringFinder\StringFinder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Translation\Tests\String;
 
 class TranslationExtractionController extends Controller
 {
@@ -45,12 +44,26 @@ class TranslationExtractionController extends Controller
             }
         }
 
+        if (file_exists($bundleDir.'/resources/translations/strings-admin.txt')) {
+            $previouslyAcceptedFile = file($bundleDir . '/resources/translations/strings-admin.txt');
+            foreach ($previouslyAcceptedFile as $fileString) {
+                $previouslyAccepted[] = trim($fileString);
+            }
+        }
+
         $allStrings = [];
         $allBundles = [];
         $allBundleConfigs = $this->container->get('bundle_manager')->getBundleConfigs();
         foreach ($allBundleConfigs as $otherBundleConfig) {
             if (file_exists($otherBundleConfig->directory.'/resources/translations/strings.txt')) {
                 $previouslyAcceptedFile = file($otherBundleConfig->directory . '/resources/translations/strings.txt');
+                foreach ($previouslyAcceptedFile as $fileString) {
+                    $allStrings[trim($fileString)] = $otherBundleConfig->name;
+                }
+            }
+
+            if (file_exists($otherBundleConfig->directory.'/resources/translations/strings-admin.txt')) {
+                $previouslyAcceptedFile = file($otherBundleConfig->directory . '/resources/translations/strings-admin.txt');
                 foreach ($previouslyAcceptedFile as $fileString) {
                     $allStrings[trim($fileString)] = $otherBundleConfig->name;
                 }
@@ -103,23 +116,61 @@ class TranslationExtractionController extends Controller
         if ($request->request->has('translations')) {
             $strings = $request->request->get('translations');
 
-            $previouslyAccepted = [];
+            $stringsFrontend = [];
             if (file_exists($bundleDir.'/resources/translations/strings.txt')) {
                 $previouslyAcceptedFile = file($bundleDir . '/resources/translations/strings.txt');
                 foreach ($previouslyAcceptedFile as $fileString) {
-                    $previouslyAccepted[] = trim($fileString);
+                    $stringsFrontend[] = trim($fileString);
                 }
             }
 
+            $stringsAdmin = [];
+            if (file_exists($bundleDir.'/resources/translations/strings-admin.txt')) {
+                $previouslyAcceptedFile = file($bundleDir . '/resources/translations/strings-admin.txt');
+                foreach ($previouslyAcceptedFile as $fileString) {
+                    $stringsAdmin[] = trim($fileString);
+                }
+            }
+
+            $stringFinder = new StringFinder();
+
             foreach ($strings as $string) {
-                $previouslyAccepted[] = $string;
+                $results = $stringFinder->getResults($string, $bundleDir);
+
+                if (!$results) {
+                    $results = [];
+                }
+
+                $admin = true;
+                foreach ($results as $result) {
+                    if (stripos($result['file'], 'admin') === false && stripos($result['file'], '.yml') === false) {
+                        $admin = false;
+                        break;
+                    }
+                }
+
+                if ($admin) {
+                    if (!in_array($string, $stringsAdmin)) {
+                        $stringsAdmin[] = $string;
+                    }
+                }
+                else {
+                    if (!in_array($string, $stringsFrontend)) {
+                        $stringsFrontend[] = $string;
+                    }
+                }
             }
 
             if (!file_exists($bundleDir.'/resources/translations')) {
                 mkdir($bundleDir.'/resources/translations', 0777, true);
             }
 
-            file_put_contents($bundleDir.'/resources/translations/strings.txt', implode(PHP_EOL, $previouslyAccepted));
+            if (!empty($stringsFrontend)) {
+                file_put_contents($bundleDir . '/resources/translations/strings.txt', implode(PHP_EOL, $stringsFrontend));
+            }
+            if (!empty($stringsAdmin)) {
+                file_put_contents($bundleDir . '/resources/translations/strings-admin.txt', implode(PHP_EOL, $stringsAdmin));
+            }
         }
 
         return new Response('');
