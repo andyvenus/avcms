@@ -13,15 +13,15 @@ admin_settings_sections:
 
 admin_settings:
   logo_image_url:
-      type: text
-      section: template
-      label: Logo URL
+    type: text
+    section: template
+    label: Logo URL
   template_no_sidebar:
-      type: checkbox
-      section: template
-      label: No sidebar
-      help: Disable the right sidebar throughout the site
-      default: 0
+    type: checkbox
+    section: template
+    label: No sidebar
+    help: Disable the right sidebar throughout the site
+    default: 0
   template_sidebar_position:
     type: radio
     label: Sidebar Position
@@ -41,21 +41,20 @@ admin_settings:
 
 module_positions:
   sidebar:
-        name: Sidebar
-        description: The main sidebar on the site
+    name: Sidebar
+    description: The main sidebar on the site
   content_top:
-      name: Content Top
-      description: The top of content pages (not on pages without the sidebar)
+    name: Content Top
+    description: The top of content pages (not on pages without the sidebar)
   content_bottom:
-        name: Content Bottom
-        description: The bottom of content pages (not on pages without the sidebar)
+    name: Content Bottom
+    description: The bottom of content pages (not on pages without the sidebar)
   page_footer:
-        name: Page Footer
-        description: The bottom of all pages, full-width
+    name: Page Footer
+    description: The bottom of all pages, full-width
   header_bottom:
     name: Header Bottom
     description: Under the main navigation on all pages
-
 
 menus:
   frontend_footer:
