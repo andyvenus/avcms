@@ -8,7 +8,7 @@
 namespace AVCMS\Bundles\Reports\Controller;
 
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
-use AVCMS\Bundles\Reports\Form\ReportFiltersForm;
+use AVCMS\Bundles\Reports\Form\ReportsAdminFiltersForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -132,7 +132,7 @@ class ReportsAdminController extends AdminBaseController
             $contentTypesSelect[$contentTypeName] = $contentType['name'];
         }
 
-        $templateVars['finder_filters_form'] = $this->buildForm(new ReportFiltersForm($contentTypesSelect))->createView();
+        $templateVars['finder_filters_form'] = $this->buildForm(new ReportsAdminFiltersForm($contentTypesSelect))->createView();
 
         return $templateVars;
     }

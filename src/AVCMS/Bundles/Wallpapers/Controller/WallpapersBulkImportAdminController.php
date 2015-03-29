@@ -10,7 +10,7 @@ use AVCMS\Bundles\Wallpapers\Form\BulkUploadForm;
 use AVCMS\Bundles\Wallpapers\Form\RecursiveDirectoryChoicesProvider;
 use AVCMS\Bundles\Wallpapers\Form\WallpaperAdminForm;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
-use AVCMS\Bundles\Wallpapers\Form\WallpapersBulkImportFiltersForm;
+use AVCMS\Bundles\Wallpapers\Form\WallpapersBulkImportAdminFiltersForm;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -237,7 +237,7 @@ class WallpapersBulkImportAdminController extends AdminBaseController
     {
         $templateVars = parent::getSharedTemplateVars();
 
-        $fbp = new WallpapersBulkImportFiltersForm();
+        $fbp = new WallpapersBulkImportAdminFiltersForm();
         $fbp->remove('order');
 
         $templateVars['finder_filters_form'] = $this->buildForm($fbp)->createView();

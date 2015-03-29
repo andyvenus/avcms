@@ -8,7 +8,7 @@
 namespace AVCMS\Bundles\Blog\Controller;
 
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
-use AVCMS\Bundles\Blog\Form\BlogPostsFilterForm;
+use AVCMS\Bundles\Blog\Form\BlogPostsAdminFiltersForm;
 use AVCMS\Bundles\Blog\Form\BlogPostAdminForm;
 use AVCMS\Bundles\Categories\Controller\CategoryActionsTrait;
 use AVCMS\Bundles\Categories\Form\CategoryAdminForm;
@@ -86,7 +86,7 @@ class BlogAdminController extends AdminBaseController
     {
         $templateVars = parent::getSharedTemplateVars();
 
-        $templateVars['finder_filters_form'] = $this->buildForm(new BlogPostsFilterForm())->createView();
+        $templateVars['finder_filters_form'] = $this->buildForm(new BlogPostsAdminFiltersForm())->createView();
 
         return $templateVars;
     }

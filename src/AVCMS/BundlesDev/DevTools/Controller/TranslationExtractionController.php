@@ -11,6 +11,7 @@ use AVCMS\Core\Controller\Controller;
 use AVCMS\Core\Translation\StringFinder\StringFinder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Translation\Tests\String;
 
 class TranslationExtractionController extends Controller
 {
@@ -122,5 +123,58 @@ class TranslationExtractionController extends Controller
         }
 
         return new Response('');
+    }
+
+    public function splitterAction()
+    {
+        $config = $this->get('bundle_manager')->getBundleConfig('Games');
+        $stringFinder = new StringFinder();
+
+       // foreach ($configs as $config) {
+
+        $adminTranslations = [];
+        $frontendTranslations = [];
+
+        if (file_exists($file = $config['directory'].'/resources/translations/strings.txt')) {
+            $strings = file($file);
+
+            foreach ($strings as $string) {
+                $results = $stringFinder->getResults($string, $config['directory']);
+
+                if (!$results) {
+                    $results = [];
+                }
+
+                $admin = true;
+                foreach ($results as $result) {
+                   if (stripos($result['file'], 'admin') === false && stripos($result['file'], '.yml') === false) {
+                       $admin = false;
+                       $string .= ' >> '.$result['file'];
+                       break;
+                   }
+                }
+
+                if ($admin == true) {
+                    $adminTranslations[] = trim($string);
+                }
+                else {
+                    $frontendTranslations[] = trim($string);
+                }
+            }
+
+            if (!empty($frontendTranslations)) {
+                file_put_contents($config['directory'] . '/resources/translations/strings.txt', implode(PHP_EOL, $frontendTranslations));
+            }
+            else {
+                unlink($config['directory'] . '/resources/translations/strings.txt');
+            }
+
+            if (!empty($adminTranslations)) {
+                file_put_contents($config['directory'] . '/resources/translations/strings-admin.txt', implode(PHP_EOL, $adminTranslations));
+            }
+        }
+        //}
+
+        return new Response('k');
     }
 }

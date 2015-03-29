@@ -41,13 +41,10 @@ SSL
 TLS
 Order
 Search
-en
-Default (English)
 Site Language
 Settings
 Permissions (only one needs to match for access)
 Close
-modules
 Core Caches
 Clear Caches
 Date Format
@@ -88,7 +85,6 @@ Toggle Dropdown
 Admin Login
 Show Filters
 Name
-Logout
 Primary
 Site Offline
 Use SMTP

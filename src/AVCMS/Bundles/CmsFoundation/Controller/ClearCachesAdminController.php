@@ -8,13 +8,13 @@
 namespace AVCMS\Bundles\CmsFoundation\Controller;
 
 use AV\Form\FormBlueprint;
-use AVCMS\Core\Controller\Controller;
+use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class ClearCachesController extends Controller
+class ClearCachesAdminController extends AdminBaseController
 {
     public function clearCachesAction(Request $request)
     {

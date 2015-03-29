@@ -11,7 +11,7 @@ use AV\Cache\CacheClearer;
 use AV\Form\FormBlueprint;
 use AV\Kernel\Bundle\Exception\NotFoundException;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
-use AVCMS\Bundles\CmsFoundation\Form\EditTemplatesFiltersForm;
+use AVCMS\Bundles\CmsFoundation\Form\EditTemplatesAdminFiltersForm;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -260,7 +260,7 @@ class EditTemplatesAdminController extends AdminBaseController
             }
         }
 
-        $fbp = new EditTemplatesFiltersForm($bundleChoices);
+        $fbp = new EditTemplatesAdminFiltersForm($bundleChoices);
 
         $templateVars['finder_filters_form'] = $this->buildForm($fbp)->createView();
 

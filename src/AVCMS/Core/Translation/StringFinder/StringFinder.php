@@ -11,6 +11,8 @@ class StringFinder
 {
     public function getResults($string, $path)
     {
+        $string = trim($string);
+
         // We can't handle quotes :/
         if (false !== strpos($string, '"')) {
             return null;
@@ -38,7 +40,9 @@ class StringFinder
         foreach ($output as $match) {
             $match = explode(':', $match);
 
-            $formatted[] = ['file' => $match[0], 'line_no' => $match[1], 'line' => trim($match[2])];
+            if (count($match) !== 1) {
+                $formatted[] = ['file' => $match[0], 'line_no' => $match[1], 'line' => trim($match[2])];
+            }
         }
 
         return $formatted;
