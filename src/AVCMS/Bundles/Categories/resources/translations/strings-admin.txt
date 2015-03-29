@@ -1,0 +1,7 @@
+Categories
+Add Category
+Manage Categories
+Parent category
+Editing Category
+New Category
+Child (categories appear under this menu item)

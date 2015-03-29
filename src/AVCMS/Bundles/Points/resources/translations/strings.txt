@@ -1,0 +1,4 @@
+You earned {points} {points_name} for submitting a comment
+You earned {points} {points_name} for submitting a report
+You earned {points} {points_name} for playing a game
+Points

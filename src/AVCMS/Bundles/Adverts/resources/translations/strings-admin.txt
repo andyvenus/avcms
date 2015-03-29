@@ -1,0 +1,7 @@
+Advert
+Add Advert
+Name
+Content
+New Advert
+Editing {item}
+Editing Advert

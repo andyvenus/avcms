@@ -1,0 +1,21 @@
+Private Messages
+Subject
+Unread
+From
+Private Message
+Read Message
+Reply
+Message
+Sending a message to {username}
+Replying to
+Sent
+Message Sent
+Please wait at least {seconds} seconds between sending messages
+You received a new private message
+You have received a new private message from {username}
+Your Inbox
+With Selected
+Delete
+Mark Read
+Mark Unread
+Read This Message and Reply

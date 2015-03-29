@@ -1,0 +1,15 @@
+commented on
+Manage Comments
+All
+Delete
+Comments Loading
+Loading Comments
+New Comment
+Enable Comments
+Frontend Delete Comments
+Comment
+Login to comment
+Enable/Disable comments of all types
+Ability to comment throughout the site
+Delete comments from the frontend, no admin access
+Ability to view & delete comments in the admin and frontend

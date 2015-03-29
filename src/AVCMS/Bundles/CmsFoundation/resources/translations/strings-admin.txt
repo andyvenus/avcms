@@ -1,0 +1,139 @@
+Site Name
+Template
+Main
+Menus
+Modules
+Positions
+Description
+Inactive
+Editing Menu
+Identifier (permanent)
+Label
+Target Type
+URL
+Route Name
+Target
+Icon
+Enabled
+New Menu Item
+Category
+Editing Menu Item
+Add Module
+Heading / Title
+Show Header
+Template Style
+None
+Limit to pages (leave blank for all pages)
+Seconds until cache expires (0 for no cache)
+HTML
+Manage Module
+This section is not currently active on your site
+Template Type
+Default
+Email
+SMTP Username
+SMTP Password
+SMTP Port
+SMTP Server
+SMTP Encryption
+SSL
+TLS
+Order
+Site Language
+Settings
+Permissions (only one needs to match for access)
+Core Caches
+Clear Caches
+Date Format
+Identifier
+New Menu
+Site "From" Address
+Add Menu
+Add Menu Item
+Edit
+Please note, you will need to refresh the admin panel to see changes to the admin panel menu.
+Publish
+Publish / Scheduled Publish
+Hidden
+Publish Time
+Page
+Oldest by ID
+No results
+Main Menu
+Anonymous
+Error
+Go To Homepage
+Manage
+Template Settings
+Panel
+Loading...
+List Panel
+Language
+Site Offline Message
+Manage Modules
+Manage Menus
+Published
+Menu
+Files must be one of the following file types: {file_types}
+Config
+Pages
+Admin Login
+Show Filters
+Name
+Primary
+Site Offline
+Use SMTP
+Button Style (Button Type)
+Button Size (Button Type)
+Buttons
+Extra Small
+Small
+Medium
+Large
+Type
+Google Analytics ID
+Admin Emails
+Add a new menu that you can display in a module or by editing your template.
+Time Format
+Email Template
+Menu Name
+Route
+Provider
+Add
+Translate Label
+Make your site offline, only accessible to admins
+Email addresses to send admin emails to, separated by a comma
+The frontend template
+The template for emails sent from your site
+The default site language
+The ID of your Google Analytics campaign
+Clear app caches
+Manage menus in the admin panel
+Manage modules in the admin panel
+Manage the site settings in the admin panel
+Date Added
+Default
+All
+A-Z
+Z-A
+Page {page}
+Editing Modules Position
+Frontend
+List
+Link
+No modules currently assigned to this position
+Editing {menu} Menu Item: {item}
+Templates
+Admin Templates
+Editing Template
+Select a bundle above
+You have edited this template
+Reset to default
+Reset
+Select a bundle...
+Current Template
+Bundle or template...
+Edit Templates
+No Modules Assigned To This Page
+Details
+Module type "{module}" missing

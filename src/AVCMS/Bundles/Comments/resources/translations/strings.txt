@@ -1,24 +1,9 @@
 Please wait at least {seconds} seconds between making comments
-commented on
-Manage Comments
 Content Type
-All
 Add Comment
-Delete
 Comments
 Report
-Comments Loading
-Loading Comments
 Load Comments
-New Comment
 Login to add your own comment
-Enable Comments
-Frontend Delete Comments
-Comment
-Login to comment
-Enable/Disable comments of all types
-Ability to comment throughout the site
-Delete comments from the frontend, no admin access
-Ability to view & delete comments in the admin and frontend
 Reply
 Replies

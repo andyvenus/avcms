@@ -1,0 +1,6 @@
+Enable reCaptcha
+reCaptcha Site Key
+reCaptcha Secret Key
+Enable reCaptcha on forms that support it to prevent bot activity
+The site key, find it on https://www.google.com/recaptcha
+The secret key, find it on https://www.google.com/recaptcha

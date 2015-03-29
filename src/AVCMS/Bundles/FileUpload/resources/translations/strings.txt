@@ -1,11 +1,4 @@
-File Type
-File Path
 Upload
 Grab
 Find
-Select
 Path
-Find File
-Grab File
-Grab File From URL
-File already exists

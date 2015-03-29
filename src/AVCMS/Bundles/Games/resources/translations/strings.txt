@@ -1,0 +1,23 @@
+Games
+Name
+Instructions
+Tags
+Played {plays} times
+Skip Advert
+Game Details
+Edit Game
+Fullscreen
+Report Issue
+Most Liked
+Browse Games
+Times Game Played
+Games tagged with: {tags}
+No Games Found
+Liked Games
+The latest games
+Games liked by {username}
+All Liked Games
+Most Played
+Featured Games
+Subcategories
+All Featured Games

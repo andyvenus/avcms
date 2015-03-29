@@ -1,0 +1,8 @@
+Enable the points system
+Comment Points
+The number of points a user gets when making a comment
+Points Name
+Rename "points" to something else
+Game Points
+The number of points a user gets when playing a game for 2 minutes
+Report Points

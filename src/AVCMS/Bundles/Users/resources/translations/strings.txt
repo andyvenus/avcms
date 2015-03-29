@@ -1,25 +1,14 @@
-User Groups
-Add User Group
-Permissions
 Users
-Join Date
-Last Active
-Last IP
 Email address
-Change Password
 New Password
 Confirm Password
-Change {username}'s password
 {username}'s profile
 Admin
 Joined
 Username
 Email
-Email Validated
 About
 Interests
-Group
-User
 Not Validated
 Banned
 Super Admin
@@ -27,8 +16,6 @@ Location
 Website
 Avatar
 Cover Image
-Slug
-Editing User
 Password
 Remember me
 About Me
@@ -37,16 +24,7 @@ Profile
 Password & Email
 Re-enter password
 The entered passwords do not match
-Default
-Allow
-Deny
-Editing permissions
 Email Address
-Name
-Flood Control Time
-Default Admin Permission
-Default General Permission
-Editing User Group
 Register
 Register to our website!
 Registration Complete
@@ -60,14 +38,8 @@ An account is already registered using that email address
 Validate Email
 Log in now
 Edit User
-Groups
 This user has not filled in their profile
-Logout
 Login
-Validate Emails
-Enable User Features
-Enable Users
-Never
 Forgot Password
 Password reset request
 Reset my password
@@ -77,55 +49,11 @@ That user already has an active reset request. Please wait to try again.
 The password reset request is invalid
 Your password has been reset
 Forgotten Your Password?
-Manage Users
-Manage User Groups
-Main Permissions
-Admin Permissions
-The presented password is invalid.
-Email validated
 Last Activity
 New Account Details
-The entered username is already in use
-The entered email is already in use
-Admin Panel Access
-Flood Control Time (seconds)
-Editing User Group: {item}
-Default Moderator Permission
-Moderation Permissions
-User Options
-Remove unused accounts
-Delete accounts that have never been logged into
-Accounts Created
-1 week ago and older
-2 weeks ago and older
-1 month ago and older
-Accounts Deleted
-Users Options
-Last IP / Reg IP
-User Group
-All
-The presented password cannot be empty.
-User Profile Sidebar
-User profile sidebar
-User Profile Main
-User profile main section
-If disabled, users cannot register and any user related-features are disabled.
-If on, a user will need to validate their email address when registering
 The email address you used to register
-Editing Permissions
 Moderator
 Unregistered
 Member
-Manage users in the admin panel
-Manage user groups in the admin panel
-User Info
-Length of time before users can post another comment and other similar activities
-Safe permissions like commenting or sending reports
-Default Elevated Permission
-Special permissions like not having to see adverts
-Moderator-level permissions like deleting comments
-Elevated Permissions
 Enable Emails
 If off you will not receive any notification or newsletter emails
-Display User Website
-If on, the user can set a website URL to be displayed in their profile

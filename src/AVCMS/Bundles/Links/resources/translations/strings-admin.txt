@@ -1,0 +1,13 @@
+Add Link
+Referrer
+New Link
+Editing Link
+Referral
+Date Added
+Link
+Links Administration
+Links to show
+Enable Link Exchange
+Make Link Exchange Links 'No Follow'
+If links are set to nofollow, search engines will not follow the link
+Ability to manage links

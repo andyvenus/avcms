@@ -3,9 +3,3 @@ Username
 Sorry that username is already in use
 Hi {name}, we don't want to show your real name when using our site so please enter a username.
 Cancel Sign-up
-Enable Facebook Connect
-Facebook App Id
-Facebook App Secret
-Facebook Connect
-The app id for the app you have created on developers.facebook.com
-The secret key for the app you have created on developers.facebook.com

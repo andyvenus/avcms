@@ -1,0 +1,34 @@
+Post content
+Tags
+Title
+Credited Author
+URL Slug
+Newest (by ID)
+Oldest (by ID)
+Newest (by publish date)
+Oldest (by publish date)
+A-Z
+Z-A
+Blog Posts
+Add Blog Post
+Body
+Author
+Slug
+Editing Post
+New Post
+Hits
+Top Hits
+Lowest Hits
+The URL Slug must be unique, slug already in use
+Blog Posts Per Page
+Newest Posts
+Popular Posts
+Number of posts to display
+Show Date
+Blog Administration
+Show post hits
+The number of blog posts displayed on each page
+Show the number of page hits each blog post has on the frontend
+Ability to manage blog posts
+Top Blog Posts
+Latest Posts

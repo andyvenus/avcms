@@ -1,15 +1,3 @@
-Report
 Info
-Content Type
-All
 Reports
-reported
-Message from reporter
-Reported content
-by
 Send Report
-Manage Reports
-Send Reports
-{0} There are no new reports|{1} There is one new report|]1,Inf] There are %count% new reports
-Allows users to report site content like comments
-Ability to view & manage reports

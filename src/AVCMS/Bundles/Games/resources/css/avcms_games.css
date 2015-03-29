@@ -1,0 +1,51 @@
+#avcms-game-container {
+  margin-bottom: 15px; }
+
+#avcms-game-container:fullscreen #avcms-game-container-inner {
+  position: fixed;
+  width: 100% !important;
+  height: 100% !important;
+  top: 0;
+  left: 0;
+  background: none; }
+
+#avcms-game-container:-webkit-full-screen #avcms-game-container-inner {
+  position: fixed;
+  width: 100% !important;
+  height: 100% !important;
+  top: 0;
+  left: 0;
+  background: none; }
+
+#avcms-game-container:-moz-full-screen #avcms-game-container-inner {
+  position: fixed;
+  width: 100% !important;
+  height: 100% !important;
+  top: 0;
+  left: 0;
+  background: none; }
+
+#avcms-game-container:-ms-fullscreen #avcms-game-container-inner {
+  position: fixed;
+  width: 100% !important;
+  height: 100% !important;
+  top: 0;
+  left: 0;
+  background: none; }
+
+#avcms-game-advert {
+  text-align: center;
+  margin-bottom: 15px;
+  display: none; }
+
+#avcms-game-advert-countdown {
+  font-size: 20px; }
+
+#avcms-game-advert-countdown, #avcms-game-advert-skip {
+  display: inline-block; }
+
+#avcms-game-advert-countdown {
+  width: 40px; }
+
+.game-advert-info {
+  margin-bottom: 15px; }

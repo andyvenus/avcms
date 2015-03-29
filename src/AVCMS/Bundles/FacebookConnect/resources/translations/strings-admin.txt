@@ -1,0 +1,6 @@
+Enable Facebook Connect
+Facebook App Id
+Facebook App Secret
+Facebook Connect
+The app id for the app you have created on developers.facebook.com
+The secret key for the app you have created on developers.facebook.com

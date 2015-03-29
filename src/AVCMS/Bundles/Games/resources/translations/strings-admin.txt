@@ -1,0 +1,75 @@
+Categories
+Add Game
+Width
+Height
+Embed Code
+Editing Game
+File Type
+Credited User
+New Game
+Dimensions
+Auto
+Could not get dimensions
+Feed Games
+Download
+Import
+Feed
+Play
+Game Feeds
+Play Game
+Play Game: {name}
+Update Game Feeds
+Done
+Update
+Pending...
+{count} games added
+Update All Feeds
+Update Feeds
+All Feeds
+Feed Categories
+Your selected category will then be automatically selected for that keyword in the main feed browser.
+Downloading...
+Set-Up Categories
+All File Types
+Least Played
+Added
+Plays
+Last Play
+Last Played
+Default Game Ad
+The ad shown before games without a specific ad selected
+Game Ads Duration
+Adverts Before Games
+How long to show the advert before the game automatically loads
+Allow Skipping
+Allow users to skip the ads
+Ignore Permission
+Who sees ads before games can be set in the group permissions area. When this is on, everyone sees the ads regardless of that permission.
+Next to the game comments
+Game Feed Limit
+The number of games to fetch when updating a game feed
+Download Games
+Download game files & thumbnails to your server. If off, files will be hotlinked.
+Get Tags
+If a feed has tags, apply them to games when downloading. Can result in a lot of tags building up.
+Games Per Page
+Number of games to show per page (browse, categories etc)
+Browse Games Layout
+Thumbnail
+Browse Games Columns
+Show Game Ratings
+Show Game Hits
+Show Publish Date
+Show Description
+Play Game Sidebar
+Sidebar on the play game page
+Number of games to display
+Show Ratings
+Number of columns (thumbnail/details layout)
+Game Tags
+If "User's Likes" is selected, the module will show the likes of a user if one is passed to the module position (like on a users profile). Otherwise it will show the active user's likes.
+User's Likes
+Newest Games
+Games Homepage
+The games homepage
+No tags

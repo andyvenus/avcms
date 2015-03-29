@@ -127,53 +127,50 @@ class TranslationExtractionController extends Controller
 
     public function splitterAction()
     {
-        $config = $this->get('bundle_manager')->getBundleConfig('Games');
+        $configs = $this->get('bundle_manager')->getBundleConfigs();
         $stringFinder = new StringFinder();
 
-       // foreach ($configs as $config) {
+       foreach ($configs as $config) {
 
-        $adminTranslations = [];
-        $frontendTranslations = [];
+           $adminTranslations = [];
+           $frontendTranslations = [];
 
-        if (file_exists($file = $config['directory'].'/resources/translations/strings.txt')) {
-            $strings = file($file);
+           if (file_exists($file = $config['directory'] . '/resources/translations/strings.txt')) {
+               $strings = file($file);
 
-            foreach ($strings as $string) {
-                $results = $stringFinder->getResults($string, $config['directory']);
+               foreach ($strings as $string) {
+                   $results = $stringFinder->getResults($string, $config['directory']);
 
-                if (!$results) {
-                    $results = [];
-                }
-
-                $admin = true;
-                foreach ($results as $result) {
-                   if (stripos($result['file'], 'admin') === false && stripos($result['file'], '.yml') === false) {
-                       $admin = false;
-                       $string .= ' >> '.$result['file'];
-                       break;
+                   if (!$results) {
+                       $results = [];
                    }
-                }
 
-                if ($admin == true) {
-                    $adminTranslations[] = trim($string);
-                }
-                else {
-                    $frontendTranslations[] = trim($string);
-                }
-            }
+                   $admin = true;
+                   foreach ($results as $result) {
+                       if (stripos($result['file'], 'admin') === false && stripos($result['file'], '.yml') === false) {
+                           $admin = false;
+                           break;
+                       }
+                   }
 
-            if (!empty($frontendTranslations)) {
-                file_put_contents($config['directory'] . '/resources/translations/strings.txt', implode(PHP_EOL, $frontendTranslations));
-            }
-            else {
-                unlink($config['directory'] . '/resources/translations/strings.txt');
-            }
+                   if ($admin == true) {
+                       $adminTranslations[] = trim($string);
+                   } else {
+                       $frontendTranslations[] = trim($string);
+                   }
+               }
 
-            if (!empty($adminTranslations)) {
-                file_put_contents($config['directory'] . '/resources/translations/strings-admin.txt', implode(PHP_EOL, $adminTranslations));
-            }
-        }
-        //}
+               if (!empty($frontendTranslations)) {
+                   file_put_contents($config['directory'] . '/resources/translations/strings.txt', implode(PHP_EOL, $frontendTranslations));
+               } else {
+                   unlink($config['directory'] . '/resources/translations/strings.txt');
+               }
+
+               if (!empty($adminTranslations)) {
+                   file_put_contents($config['directory'] . '/resources/translations/strings-admin.txt', implode(PHP_EOL, $adminTranslations));
+               }
+           }
+       }
 
         return new Response('k');
     }

@@ -3,5 +3,3 @@ Message
 Contact Us
 Your email address
 Your message has been sent, we will respond to {email}
-Enable Contact Us Form
-Will only work if admin emails are set
