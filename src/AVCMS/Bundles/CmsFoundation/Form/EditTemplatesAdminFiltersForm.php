@@ -9,7 +9,7 @@ namespace AVCMS\Bundles\CmsFoundation\Form;
 
 use AVCMS\Bundles\Admin\Form\AdminFiltersForm;
 
-class EditTemplatesFiltersForm extends AdminFiltersForm
+class EditTemplatesAdminFiltersForm extends AdminFiltersForm
 {
     public function __construct($bundleChoices)
     {

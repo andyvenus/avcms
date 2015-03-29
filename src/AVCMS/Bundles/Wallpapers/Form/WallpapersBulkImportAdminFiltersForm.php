@@ -9,7 +9,7 @@ namespace AVCMS\Bundles\Wallpapers\Form;
 
 use AVCMS\Bundles\Admin\Form\AdminFiltersForm;
 
-class WallpapersBulkImportFiltersForm extends AdminFiltersForm
+class WallpapersBulkImportAdminFiltersForm extends AdminFiltersForm
 {
     function __construct()
     {

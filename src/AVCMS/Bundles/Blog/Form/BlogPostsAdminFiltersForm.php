@@ -9,7 +9,7 @@ namespace AVCMS\Bundles\Blog\Form;
 
 use AVCMS\Bundles\Admin\Form\AdminFiltersForm;
 
-class BlogPostsFilterForm extends AdminFiltersForm
+class BlogPostsAdminFiltersForm extends AdminFiltersForm
 {
     public function __construct()
     {

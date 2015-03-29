@@ -9,7 +9,7 @@ namespace AVCMS\Bundles\Reports\Form;
 
 use AVCMS\Bundles\Admin\Form\AdminFiltersForm;
 
-class ReportFiltersForm extends AdminFiltersForm
+class ReportsAdminFiltersForm extends AdminFiltersForm
 {
     public function __construct($contentTypes)
     {
