@@ -13,6 +13,7 @@ use AVCMS\Bundles\CmsFoundation\Model\MenuItemConfig;
 use AVCMS\Core\Menu\MenuManager;
 use AVCMS\Core\View\TemplateManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class UpdateMenusSubscriber implements EventSubscriberInterface
@@ -30,8 +31,12 @@ class UpdateMenusSubscriber implements EventSubscriberInterface
         $this->menuManager = $menuManager;
     }
 
-    public function updateMenus()
+    public function updateMenus(GetResponseEvent $event)
     {
+        if (!$event->isMasterRequest()) {
+            return;
+        }
+
         if (!$this->templateManager->cacheIsFresh()) {
             $config = $this->templateManager->getTemplateConfig();
 
@@ -43,6 +48,7 @@ class UpdateMenusSubscriber implements EventSubscriberInterface
 
         if (!$this->bundleManager->cacheIsFresh()) {
             $this->menuManager->setMenusInactiveByProvider('bundle');
+            $this->menuManager->getItemsModel()->query()->whereNotNull('owner')->update(['provider_enabled' => 0]);
 
             foreach ($this->bundleManager->getBundleConfigs() as $bundle) {
                 if (isset($bundle['menus'])) {
@@ -68,6 +74,7 @@ class UpdateMenusSubscriber implements EventSubscriberInterface
                             $menuItem->setMenu($menu);
                             $menuItem->setProviderId($itemId);
                             $menuItem->setOwner($bundle->name);
+                            $menuItem->setProviderEnabled(1);
 
                             if ($menuItem->getOrder() === null && isset($menuItemConfig['default_order'])) {
                                $menuItem->setOrder($menuItemConfig['default_order']);

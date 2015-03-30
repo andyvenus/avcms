@@ -21,6 +21,16 @@ class MenuItemConfig extends Entity implements MenuItemConfigInterface
         return $this->get("enabled");
     }
 
+    public function setProviderEnabled($value)
+    {
+        $this->set("provider_enabled", $value);
+    }
+
+    public function getProviderEnabled()
+    {
+        return $this->get("provider_enabled");
+    }
+
     public function setIcon($value)
     {
         $this->set("icon", $value);

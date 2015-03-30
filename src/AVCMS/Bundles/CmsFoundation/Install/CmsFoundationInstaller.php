@@ -15,7 +15,8 @@ class CmsFoundationInstaller extends BundleInstaller
     {
         return array(
             '1.0' => 'install_1_0_0',
-            '1.0.1' => 'install_1_0_1'
+            '1.0.1' => 'install_1_0_1',
+            '1.0.2' => 'install_1_0_2'
         );
     }
 
@@ -102,5 +103,12 @@ class CmsFoundationInstaller extends BundleInstaller
     public function install_1_0_1()
     {
         $this->PDO->exec("ALTER TABLE {$this->prefix}menu_items ADD admin_setting varchar(255) DEFAULT NULL AFTER permission");
+    }
+
+    public function install_1_0_2()
+    {
+        $this->PDO->exec("ALTER TABLE {$this->prefix}menu_items ADD provider_enabled tinyint(1) NOT NULL DEFAULT '1' AFTER enabled");
+
+        $this->PDO->exec("UPDATE {$this->prefix}menu_items SET provider_enabled = 1");
     }
 }

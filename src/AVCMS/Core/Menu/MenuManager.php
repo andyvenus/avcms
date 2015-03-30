@@ -119,7 +119,7 @@ class MenuManager
 
     public function getMenuItems($menuId, $showDisabled = false)
     {
-        $query = $this->menuItemConfigs->query()->where('menu', $menuId)->orderBy('order');
+        $query = $this->menuItemConfigs->query()->where('menu', $menuId)->orderBy('order')->where('provider_enabled', '1');
 
         if ($showDisabled === false) {
             $query->where('enabled', '1');
@@ -187,7 +187,7 @@ class MenuManager
 
     public function getMenuItemConfigs($menuId)
     {
-        $configs = $this->menuItemConfigs->query()->where('menu', $menuId)->orderBy('order')->get();
+        $configs = $this->menuItemConfigs->query()->where('menu', $menuId)->where('provider_enabled', 1)->orderBy('order')->get();
 
         $childItems = $sortedItems = array();
 
