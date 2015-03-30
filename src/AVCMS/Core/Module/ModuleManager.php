@@ -186,7 +186,12 @@ class ModuleManager
                         continue;
                     }
 
-                    $moduleConfig->setContent($content);
+                    if ($content !== null) {
+                        $moduleConfig->setContent($content);
+                    }
+                    else {
+                        unset($configs[$configId]);
+                    }
                 }
             }
 
