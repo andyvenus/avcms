@@ -207,15 +207,15 @@ class BundleManager implements BundleManagerInterface
 
         if ((!$this->cacheIsFresh) || $forceCacheRefresh === true) {
 
-            $appBundlesConfig = Yaml::parse($this->configDir.'/bundles.yml');
-
-            if ($this->debug) {
-                if (file_exists($this->configDir.'/bundles_dev.yml')) {
-                    $appBundlesConfig = array_replace_recursive($appBundlesConfig, Yaml::parse($this->configDir.'/bundles_dev.yml'));
+            $appBundlesConfig = [];
+            $resources = [];
+            foreach ($this->getConfigFiles() as $configLocation) {
+                if (file_exists($configLocation)) {
+                    $appBundlesConfig = array_replace_recursive($appBundlesConfig, Yaml::parse($configLocation));
                 }
-            }
 
-            $resources = array(new FileResource($this->configDir.'/bundles.yml'), new FileResource($this->configDir.'/bundles_dev.yml'));
+                $resources[] = new FileResource($configLocation);
+            }
 
             foreach ($appBundlesConfig as $bundleName => $appBundleConfig) {
                 if ($appBundleConfig['enabled'] === true) {
@@ -269,6 +269,17 @@ class BundleManager implements BundleManagerInterface
         }
 
         return $bundlesConfigArray;
+    }
+
+    protected function getConfigFiles()
+    {
+        $locations = [$this->configDir.'/bundles.yml'];
+
+        if ($this->debug) {
+            $locations[] = $this->configDir.'/bundles_dev.yml';
+        }
+
+        return $locations;
     }
 
     /**
