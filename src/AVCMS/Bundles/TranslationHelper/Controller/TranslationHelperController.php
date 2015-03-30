@@ -115,7 +115,7 @@ class TranslationHelperController extends Controller
             }
 
             $formBp->add($index, $type, [
-                'label' => $string,
+                'label' => str_replace('js:', '', $string),
                 'default' => $default
             ]);
 
@@ -134,9 +134,14 @@ class TranslationHelperController extends Controller
         if ($form->isValid()) {
             $index = 0;
             $translations = [];
+            $translationsJs = [];
             foreach ($form->getData() as $translationString) {
                 if (isset($strings[$index]) && $translationString) {
                     $translations[$strings[$index]] = $translationString;
+
+                    if (strpos($strings[$index], 'js:') === 0) {
+                        $translationsJs[str_replace('js:', '', $strings[$index])] = $translationString;
+                    }
                 }
                 $index++;
             }
@@ -146,6 +151,14 @@ class TranslationHelperController extends Controller
             }
 
             file_put_contents($file, '<?php return '.var_export($translations, true).';');
+
+            if (!empty($translationsJs)) {
+                if (!file_exists($folder.'/javascript')) {
+                    mkdir($folder.'/javascript', 0777, true);
+                }
+
+                file_put_contents($folder.'/javascript/'.$bundle.'.php', '<?php return '.var_export($translationsJs, true).';');
+            }
         }
 
         return new Response($this->render('@TranslationHelper/manage_bundle_translations.twig', [
