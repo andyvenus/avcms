@@ -21,11 +21,34 @@ class SearchTwigExtension extends \Twig_Extension
      */
     private $searchForm;
 
+    protected $bundleManager;
+
+    protected $formBuilder;
+
+    protected $urlGenerator;
+
+    protected $translator;
+
+    protected $requestStack;
+
     public function __construct(BundleManagerInterface $bundleManager, FormBuilder $formBuilder, UrlGeneratorInterface $urlGen, TranslatorInterface $translator, RequestStack $requestStack)
     {
-        $currentBundle = $requestStack->getCurrentRequest()->attributes->get('_bundle');
+        $this->bundleManager = $bundleManager;
+        $this->formBuilder = $formBuilder;
+        $this->urlGenerator = $urlGen;
+        $this->translator = $translator;
+        $this->requestStack = $requestStack;
+    }
 
-        $bundleConfigs = $bundleManager->getBundleConfigs();
+    protected function getSearchForm()
+    {
+        if (isset($this->searchForm)) {
+            return;
+        }
+
+        $currentBundle = $this->requestStack->getCurrentRequest()->attributes->get('_bundle');
+
+        $bundleConfigs = $this->bundleManager->getBundleConfigs();
         $searchContentTypes = [];
         $selectedContent = null;
 
@@ -33,12 +56,12 @@ class SearchTwigExtension extends \Twig_Extension
             if (isset($bundleConfig['frontend_search'])) {
                 foreach ($bundleConfig['frontend_search'] as $searchConfig) {
                     try {
-                        $route = $urlGen->generate($searchConfig['route'], [], UrlGeneratorInterface::ABSOLUTE_URL);
+                        $route = $this->urlGenerator->generate($searchConfig['route'], [], UrlGeneratorInterface::ABSOLUTE_URL);
                     }
                     catch (\Exception $e) {
                         $route = '#route-'.$searchConfig['route'].'-not-found';
                     }
-                    $searchContentTypes[$route] = $translator->trans($searchConfig['name']);
+                    $searchContentTypes[$route] = $this->translator->trans($searchConfig['name']);
 
                     asort($searchContentTypes);
 
@@ -49,11 +72,13 @@ class SearchTwigExtension extends \Twig_Extension
             }
         }
 
-        $this->searchForm = $formBuilder->buildForm(new FrontendSearchForm($searchContentTypes, $selectedContent))->createView();
+        $this->searchForm = $this->formBuilder->buildForm(new FrontendSearchForm($searchContentTypes, $selectedContent))->createView();
     }
 
     public function getGlobals()
     {
+        $this->getSearchForm();
+
         return [
             'search_form' => $this->searchForm,
         ];
