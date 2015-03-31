@@ -15,6 +15,8 @@ class BundleConfigValidation implements BundleConfigValidationInterface
     public function getValidation(ArrayNodeDefinition $rootNode)
     {
         $rootNode->children()
+            ->variableNode('toggle')
+            ->end()
             ->variableNode('modules')
             ->end()
             ->variableNode('module_positions')

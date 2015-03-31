@@ -1,5 +1,6 @@
 name: FacebookConnect
 namespace: AVCMS\Bundles\FacebookConnect
+toggle: true
 require:
     - Framework
 

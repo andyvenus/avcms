@@ -1,5 +1,6 @@
 name: PrivateMessages
 namespace: AVCMS\Bundles\PrivateMessages
+toggle: true
 require:
     - Framework
 

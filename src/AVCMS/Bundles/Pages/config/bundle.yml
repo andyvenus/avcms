@@ -1,5 +1,6 @@
 name: Pages
 namespace: AVCMS\Bundles\Pages
+toggle: true
 require:
     - Framework
 

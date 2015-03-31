@@ -1,5 +1,6 @@
 name: Wallpapers
 namespace: AVCMS\Bundles\Wallpapers
+toggle: true
 require:
     - Framework
 

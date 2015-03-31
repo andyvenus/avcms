@@ -1,4 +1,5 @@
 name: AvaImporter
 namespace: AVCMS\Bundles\AvaImporter
+toggle: true
 require:
     - Framework

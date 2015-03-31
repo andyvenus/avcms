@@ -158,6 +158,8 @@ assets:
     env: admin
   avcms_modules_admin.js:
       env: admin
+  avcms_bundles_admin.js:
+      env: admin
   notify.min.js:
     env: shared
     compress: false
@@ -212,6 +214,14 @@ menu_items:
       permission: ADMIN_MENUS
       settings:
         route: menus_admin_home
+    bundles:
+      icon: glyphicon glyphicon-modal-window
+      type: route
+      label: Bundles
+      parent: settings
+      permission: ADMIN_BUNDLES
+      settings:
+        route: manage_bundles_admin
 
 modules:
   html_module:
@@ -280,3 +290,6 @@ permissions:
   ADMIN_EDIT_TEMPLATES:
     name: Edit Templates
     description: Edit template files in the admin panel
+  ADMIN_BUNDLES:
+    name: Manage Bundles
+    description: Manage installed bundles, toggle features on/off

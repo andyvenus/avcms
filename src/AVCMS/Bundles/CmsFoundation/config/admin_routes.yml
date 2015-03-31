@@ -113,3 +113,11 @@ manage_templates_admin_edit:
 manage_templates_admin_reset:
   path: /templates/reset
   defaults: { page: 1, _controller: 'CmsFoundation::EditTemplatesAdminController::resetTemplateAction' }
+
+manage_bundles_admin:
+  path: /bundles
+  defaults: { _controller: 'CmsFoundation::BundlesAdminController::manageBundlesAction' }
+
+manage_bundles_toggle:
+  path: /bundles/toggle
+  defaults: { _controller: 'CmsFoundation::BundlesAdminController::toggleBundleAction' }

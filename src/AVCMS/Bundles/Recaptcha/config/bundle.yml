@@ -1,5 +1,6 @@
 name: Recaptcha
 namespace: AVCMS\Bundles\Recaptcha
+toggle: true
 require:
     - Framework
 

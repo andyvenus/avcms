@@ -1,5 +1,6 @@
 name: Blog
 namespace: AVCMS\Bundles\Blog
+toggle: true
 
 require:
   - Framework

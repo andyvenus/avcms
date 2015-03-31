@@ -1,5 +1,6 @@
 name: Points
 namespace: AVCMS\Bundles\Points
+toggle: true
 require:
     - Framework
 

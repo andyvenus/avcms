@@ -1,0 +1,37 @@
+{% extends '@Admin/simple_page.twig' %}
+
+{% block title %}{% trans %}Bundles{% endtrans %}{% endblock %}
+
+{% block content_body %}
+    <div class="alert alert-info"><span class="glyphicon glyphicon-info-sign"></span> {% trans %}Enabling/Disabling bundles may take a moment as the cache is totally cleared in the process{% endtrans %}</div>
+
+    <h4>{% trans %}Toggleable Bundles{% endtrans %}</h4>
+    {% for bundle in toggle_bundles %}
+        <div class="panel panel-default" data-bundle="{{ bundle.name }}">
+            <div class="panel-body">
+                <div class="pull-left">
+                    {{ bundle.name }}
+                </div>
+                <div class="pull-right">
+                    {% if bundle.enabled %}
+                        {% set class = 'success' %}
+                        {% set text = 'Enabled' %}
+                    {% else %}
+                        {% set class = 'danger' %}
+                        {% set text = 'Disabled' %}
+                    {% endif %}
+                    <button class="btn btn-xs btn-{{ class }} avcms-toggle-bundle">{{ text|trans }}</button>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    <h4>{% trans %}Required Bundles{% endtrans %}</h4>
+    {% for bundle in static_bundles %}
+        <div class="panel panel-default" data-bundle="{{ bundle.name }}">
+            <div class="panel-body">
+                {{ bundle.name }}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
