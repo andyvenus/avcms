@@ -9,3 +9,11 @@ services:
 assets:
     avcms_like_dislike.js:
         env: frontend
+
+admin_settings:
+  enable_ratings:
+    type: checkbox
+    default: 1
+    label: Enable Like/Dislike ratings
+    help: Enable Like/Dislike ratings for all content
+    section: main

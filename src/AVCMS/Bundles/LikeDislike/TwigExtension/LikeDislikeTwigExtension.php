@@ -9,6 +9,7 @@ namespace AVCMS\Bundles\LikeDislike\TwigExtension;
 
 use AVCMS\Bundles\LikeDislike\RatingsManager\RateInterface;
 use AVCMS\Bundles\LikeDislike\RatingsManager\RatingsManager;
+use AVCMS\Core\SettingsManager\SettingsManager;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class LikeDislikeTwigExtension extends \Twig_Extension
@@ -25,10 +26,13 @@ class LikeDislikeTwigExtension extends \Twig_Extension
 
     private $tokenStorage;
 
-    public function __construct(RatingsManager $ratingsManager, TokenStorage $tokenStorage)
+    private $settingsManager;
+
+    public function __construct(RatingsManager $ratingsManager, TokenStorage $tokenStorage, SettingsManager $settingsManager)
     {
         $this->ratingsManager = $ratingsManager;
         $this->tokenStorage = $tokenStorage;
+        $this->settingsManager = $settingsManager;
     }
 
     public function initRuntime(\Twig_Environment $environment)
@@ -45,6 +49,10 @@ class LikeDislikeTwigExtension extends \Twig_Extension
 
     public function likeDislikeButtons($contentType, $contentId, RateInterface $content = null, $buttonsTemplate = '@LikeDislike/ratings_buttons.twig')
     {
+        if (!$this->settingsManager->getSetting('enable_ratings')) {
+            return;
+        }
+
         $userId = $this->getUser()->getId();
 
         $rating = $this->ratingsManager->getUsersRating($contentType, $contentId, $userId);
