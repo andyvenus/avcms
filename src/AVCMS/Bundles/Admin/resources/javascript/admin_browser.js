@@ -274,6 +274,8 @@ avcms.browser = {
                         alert('Error: '+data.error);
                     }
                     else {
+                        avcms.event.fireEvent('browser-delete-item', [button]);
+
                         button.parents('[data-id]').remove();
                         avcms.browser.checkFinderChecked();
 
@@ -344,6 +346,8 @@ avcms.browser = {
             url: $(this).data('toggle-publish-url'),
             data: {'id': id, 'published': published},
             dataType: 'json'
+        }).success(function() {
+            avcms.event.fireEvent('browser-toggle-published', [button, published]);
         })
     },
 

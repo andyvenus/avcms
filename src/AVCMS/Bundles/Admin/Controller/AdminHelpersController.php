@@ -10,6 +10,7 @@ namespace AVCMS\Bundles\Admin\Controller;
 use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdminHelpersController extends Controller
 {
@@ -44,5 +45,10 @@ class AdminHelpersController extends Controller
         $slug = $slugGenerator->slugify($request->get('title'));
 
         return new JsonResponse(array('slug' => $slug));
+    }
+
+    public function mainMenuAction()
+    {
+        return new Response($this->render('@Admin/main_menu.twig'));
     }
 } 

@@ -5,3 +5,7 @@ username_suggest:
 generate_slug:
   path: /generate_slug/{title}
   defaults: { _controller: Admin::AdminHelpersController::slugGeneratorAction }
+
+admin_main_menu:
+  path: /main-menu
+  defaults: { _controller: Admin::AdminHelpersController::mainMenuAction }

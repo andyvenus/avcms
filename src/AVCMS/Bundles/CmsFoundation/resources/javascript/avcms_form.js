@@ -25,7 +25,7 @@ avcms.form = {
         }
 
         var submit_button = form.find('button[type=submit]');
-        console.log(submit_button);
+
         var original_submit_text = submit_button.first().text();
         submit_button.text(avcms.general.trans('Saving'));
         submit_button.attr('disabled','disabled');

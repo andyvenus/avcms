@@ -1,0 +1,20 @@
+<div id="avcms-admin-menu-items">
+    <ul>
+        {% for menu_item in menu('admin') %}
+            <li>
+                <a href="{{ menu_item.url }}">
+                    <span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}
+                    {% if menu_item.badge %}<div class="pull-right" style="margin-right: 5px"><span class="badge">{{ menu_item.badge }}</span></div>{% endif %}
+                </a>
+            </li>
+            {% for sub_menu_item in menu_item.children %}
+                <li class="sub-menu-item">
+                    <a href="{{ sub_menu_item.url }}">
+                        <span class="{{ sub_menu_item.icon }}"></span> {{ sub_menu_item.label }}
+                        {% if sub_menu_item.badge %}<div class="pull-right" style="margin-right: 5px"><span class="badge">{{ sub_menu_item.badge }}</span></div>{% endif %}
+                    </a>
+                </li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+</div>

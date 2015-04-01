@@ -155,5 +155,12 @@ avcms.admin = {
         }
 
         alert("Error: "+errorThrown);
+    },
+
+    reloadMenu: function() {
+        $.get(avcms.config.site_url + 'admin/main-menu', function(data) {
+            $('#avcms-admin-menu-items').html(data);
+            avcms.nav.onPageModified();
+        });
     }
 };
