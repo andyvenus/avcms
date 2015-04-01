@@ -32,6 +32,10 @@
                 {% block game_box_main %}
                 <div class="row">
                     <div class="col-lg-12">
+                        {% if plays_left and settings.games_limit_plays %}
+                            <div class="alert alert-info">{% trans with {total: plays_left} %}You have {total} game plays remaining before you must register{% endtrans %}</div>
+                        {% endif %}
+
                         {{ embed_game(game) }}
                     </div>
                 </div>

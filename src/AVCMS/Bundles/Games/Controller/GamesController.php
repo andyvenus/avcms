@@ -14,6 +14,7 @@ use AVCMS\Bundles\Games\Form\SubmitGameForm;
 use AVCMS\Core\Controller\Controller;
 use AVCMS\Core\Rss\RssFeed;
 use AVCMS\Core\Rss\RssItem;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -33,7 +34,7 @@ class GamesController extends Controller
         $this->gameCategories = $this->model('GameCategories');
     }
 
-    public function playGameAction($slug)
+    public function playGameAction(Request $request, $slug)
     {
         $game = $this->games->find()
             ->published()
@@ -46,9 +47,28 @@ class GamesController extends Controller
             throw $this->createNotFoundException('Game Not Found');
         }
 
-        $this->container->get('hitcounter')->registerHit($this->games, $game->getId(), 'hits', 'id', 'last_hit');
+        $hitRegistered = $this->container->get('hitcounter')->registerHit($this->games, $game->getId(), 'hits', 'id', 'last_hit');
 
-        return $this->render('@Games/play_game.twig', ['game' => $game], true);
+        $playsLeft = null;
+        if ($hitRegistered && $this->setting('games_limit_plays') && !$this->userLoggedIn()) {
+            $played = $request->cookies->get('avcms_games_played', 0);
+            $playsLeft = $this->setting('games_limit_plays') - $played;
+
+            if ($playsLeft <= 0) {
+                return $this->redirect('login', [], 302, 'info', $this->trans('Please login to continue playing games'));
+            }
+            else {
+                $playCookie = new Cookie('avcms_games_played', $played + 1, time() + 1209600);
+                $playsLeft--;
+            }
+        }
+
+        $response = new Response($this->render('@Games/play_game.twig', ['game' => $game, 'plays_left' => $playsLeft]));
+        if (isset($playCookie)) {
+            $response->headers->setCookie($playCookie);
+        }
+
+        return $response;
     }
 
     public function browseGamesAction(Request $request, $pageType = 'archive')
