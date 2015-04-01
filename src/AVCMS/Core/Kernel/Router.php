@@ -28,8 +28,8 @@ class Router extends BaseRouter
         if (null === $this->collection) {
             parent::getRouteCollection();
 
-            if (file_exists($this->rootDir.'/webmaster/routes.yml')) {
-                $webmasterRoutes = $this->loader->load($this->rootDir.'/webmaster/routes.yml', $this->options['resource_type']);
+            if (file_exists($this->rootDir.'/webmaster/config/routes.yml')) {
+                $webmasterRoutes = $this->loader->load($this->rootDir.'/webmaster/config/routes.yml', $this->options['resource_type']);
                 $this->collection->addCollection($webmasterRoutes);
             }
         }
