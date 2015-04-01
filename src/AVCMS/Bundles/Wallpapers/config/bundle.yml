@@ -133,7 +133,7 @@ menu_items:
       type: route
       admin_setting: wallpapers_allow_uploads
       settings:
-        route: submit_wallpaper
+        route: wallpaper_submit
   admin:
       wallpapers_admin:
           label: Wallpapers
