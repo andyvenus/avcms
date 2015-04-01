@@ -41,13 +41,9 @@ class UserGroupsAdminController extends AdminBaseController
 
     public function editAction(Request $request)
     {
-        $formBlueprint = new UserGroupAdminForm();
-
         $userGroup = $this->userGroups->getOne($request->get('id'));
 
-        if ($userGroup && $userGroup->getCustomPermissions() !== '1') {
-            $formBlueprint->remove('admin_panel_access');
-        }
+        $formBlueprint = new UserGroupAdminForm($userGroup->getCustomPermissions());
 
         return $this->handleEdit($request, $this->userGroups, $formBlueprint, 'user_groups_admin_edit', '@Users/admin/edit_user_group.twig', array(), $userGroup);
     }
