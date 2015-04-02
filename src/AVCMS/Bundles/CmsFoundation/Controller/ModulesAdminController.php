@@ -205,7 +205,7 @@ class ModulesAdminController extends AdminBaseController
     {
         $finder = $this->modulePositions->find()
             ->setResultsPerPage(20)
-            ->setSearchFields(array('name'))
+            ->setSearchFields(array('name', 'description'))
             ->handleRequest($request, array('page' => 1, 'order' => 'a-z', 'id' => null, 'search' => null));
         $items = $finder->get();
 
