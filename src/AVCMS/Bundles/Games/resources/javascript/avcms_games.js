@@ -19,6 +19,11 @@ avcms.games = {
             $('#avcms-game-advert-skip').find('button').click(avcms.games.showGame);
             $('#avcms-game-fullscreen').click(avcms.games.goFullscreen);
         }
+
+        if ($('[name=mobile_only]').length > 0) {
+            avcms.games.hideMobileFilter();
+            window.onresize = avcms.games.hideMobileFilter;
+        }
     },
 
     resizeGame: function() {
@@ -95,6 +100,16 @@ avcms.games = {
             game_container.mozRequestFullScreen();
         } else if (game_container.msRequestFullscreen) {
             game_container.msRequestFullscreen();
+        }
+    },
+
+    hideMobileFilter: function() {
+        var field = $('[name=mobile_only]').parents('.checkbox');
+        if ($(document).width() > 768) {
+            field.hide();
+        }
+        else {
+            field.show();
         }
     }
 };

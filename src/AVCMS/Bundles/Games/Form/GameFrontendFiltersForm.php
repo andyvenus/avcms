@@ -31,5 +31,11 @@ class GameFrontendFiltersForm extends FormBlueprint
         $this->add('search', 'text', [
             'label' => 'Search'
         ]);
+
+
+        $this->add('mobile_only', 'checkbox', [
+            'label' => 'Show only mobile games'
+        ]);
+
     }
 }

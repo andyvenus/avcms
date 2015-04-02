@@ -82,6 +82,7 @@ class GamesController extends Controller
                 'order' => 'publish-date-newest',
                 'tags' => null,
                 'search' => null,
+                'mobile_only' => false
             ]);
 
         if ($this->setting('show_game_category')) {

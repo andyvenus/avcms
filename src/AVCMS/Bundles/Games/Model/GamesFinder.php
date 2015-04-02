@@ -19,11 +19,22 @@ class GamesFinder extends Finder
     public function category($categoryId)
     {
         if (!$categoryId) {
-            return;
+            return $this;
         }
 
         $this->currentQuery->where(function($q) use ($categoryId) {
             $q->where('category_id', $categoryId)->orWhere('category_parent_id', $categoryId);
         });
+
+        return $this;
+    }
+
+    public function mobileOnly($mobileOnly)
+    {
+        if ($mobileOnly) {
+            $this->currentQuery->where('file', 'NOT LIKE', '%.swf%')->where('file', 'NOT LIKE', '%.unity3d%')->where('file', 'NOT LIKE', '%.dcr%');
+        }
+
+        return $this;
     }
 }
