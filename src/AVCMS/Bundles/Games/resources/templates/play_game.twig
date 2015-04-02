@@ -11,6 +11,12 @@
 {% endblock %}
 
 {% block wide_content %}
+    {% block game_top_modules %}
+        <div class="game-top-modules">
+            {{ render_modules('play_game_top') }}
+        </div>
+    {% endblock %}
+
     {% block game_box %}
         <div class="box box-primary game-box">
             <div class="box-top">
@@ -115,6 +121,12 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            {% endblock %}
+
+            {% block game_details_modules %}
+                <div class="game-details-modules">
+                    {{ render_modules('play_game_details') }}
                 </div>
             {% endblock %}
 

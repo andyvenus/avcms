@@ -242,11 +242,23 @@ module_positions:
     global_modules: 1
     type: content
   play_game_sidebar:
-      name: Play Game Sidebar
-      description: Sidebar on the play game page
-      environment: frontend
-      global_modules: 1
-      type: content
+    name: Play Game Sidebar
+    description: Sidebar on the play game page
+    environment: frontend
+    global_modules: 1
+    type: content
+  play_game_top:
+    name: Play Game Top
+    description: Top of the play game page
+    environment: frontend
+    global_modules: 1
+    type: content
+  play_game_details:
+    name: Play Game Details
+    description: Under the game details
+    environment: frontend
+    global_modules: 1
+    type: content
 
 modules:
   games:
