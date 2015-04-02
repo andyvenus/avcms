@@ -7,7 +7,6 @@
 
 namespace AVCMS\Bundles\Referrals\EventSubscriber;
 
-use AV\Model\Event\CreateModelEvent;
 use AVCMS\Bundles\Referrals\Model\Referral;
 use AVCMS\Bundles\Referrals\Model\Referrals;
 use AVCMS\Bundles\Users\Event\CreateUserEvent;

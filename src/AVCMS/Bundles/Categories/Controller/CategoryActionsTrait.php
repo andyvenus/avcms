@@ -9,7 +9,6 @@ namespace AVCMS\Bundles\Categories\Controller;
 
 use AV\Form\FormBlueprint;
 use AV\Form\FormError;
-use AVCMS\Bundles\Categories\Form\CategoryAdminForm;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Categories\Model\Categories;
 use Symfony\Component\HttpFoundation\JsonResponse;

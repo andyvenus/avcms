@@ -10,7 +10,6 @@ namespace AVCMS\Bundles\LikeDislike\Controller;
 use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class LikeDislikeController extends Controller
 {

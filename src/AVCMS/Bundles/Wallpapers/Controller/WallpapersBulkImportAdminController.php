@@ -2,14 +2,13 @@
 
 namespace AVCMS\Bundles\Wallpapers\Controller;
 
-use AV\FileHandler\UploadedFileHandler;
 use AV\Form\FormBlueprint;
 use AV\Form\FormError;
+use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Wallpapers\Form\BulkUploadForm;
 use AVCMS\Bundles\Wallpapers\Form\RecursiveDirectoryChoicesProvider;
 use AVCMS\Bundles\Wallpapers\Form\WallpaperAdminForm;
-use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use AVCMS\Bundles\Wallpapers\Form\WallpapersBulkImportAdminFiltersForm;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;

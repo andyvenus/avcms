@@ -9,7 +9,6 @@ namespace AVCMS\Bundles\Games\TwigExtension;
 
 use AVCMS\Bundles\Games\Model\Game;
 use AVCMS\Bundles\Games\Model\GameEmbeds;
-use AVCMS\Core\Kernel\SiteRootUrl;
 
 class EmbedGameTwigExtension extends \Twig_Extension
 {

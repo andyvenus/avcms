@@ -5,13 +5,12 @@ namespace AVCMS\Bundles\Wallpapers\Controller;
 use AV\Cache\CacheClearer;
 use AV\Form\FormBlueprint;
 use AV\Form\FormError;
+use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use AVCMS\Bundles\Categories\Controller\CategoryActionsTrait;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
+use AVCMS\Bundles\Wallpapers\Form\WallpaperAdminForm;
 use AVCMS\Bundles\Wallpapers\Form\WallpaperCategoryAdminForm;
 use AVCMS\Bundles\Wallpapers\Form\WallpapersAdminFiltersForm;
-use AVCMS\Bundles\Wallpapers\Form\WallpaperAdminForm;
-use AVCMS\Bundles\Admin\Controller\AdminBaseController;
-
 use Intervention\Image\ImageManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

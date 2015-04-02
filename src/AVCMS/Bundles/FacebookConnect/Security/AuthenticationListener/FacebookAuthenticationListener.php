@@ -9,9 +9,6 @@ namespace AVCMS\Bundles\FacebookConnect\Security\AuthenticationListener;
 
 use AVCMS\Bundles\FacebookConnect\Facebook\FacebookConnect;
 use AVCMS\Bundles\FacebookConnect\Security\Token\FacebookUserToken;
-use AVCMS\Bundles\FacebookConnect\FacebookRedirectLoginHelper;
-use Facebook\FacebookRequest;
-use Facebook\FacebookSession;
 use Facebook\GraphUser;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

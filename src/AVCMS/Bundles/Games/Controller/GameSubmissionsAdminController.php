@@ -2,9 +2,9 @@
 
 namespace AVCMS\Bundles\Games\Controller;
 
+use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Games\Form\GameAdminForm;
-use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

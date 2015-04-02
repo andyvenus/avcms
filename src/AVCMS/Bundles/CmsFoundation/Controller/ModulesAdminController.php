@@ -5,7 +5,6 @@ namespace AVCMS\Bundles\CmsFoundation\Controller;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use AVCMS\Bundles\CmsFoundation\Form\AdminModuleForm;
 use AVCMS\Bundles\CmsFoundation\Form\ChoicesProvider\RouteChoicesProvider;
-use AVCMS\Bundles\CmsFoundation\Form\ModulePositionAdminForm;
 use AVCMS\Bundles\CmsFoundation\Form\ModulePositionsAdminFiltersForm;
 use AVCMS\Core\Module\Exception\ModuleNotFoundException;
 use Symfony\Component\HttpFoundation\JsonResponse;
