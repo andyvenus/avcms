@@ -104,8 +104,9 @@ class Finder
     {
         $validRequestParameters = array();
         foreach ($filters as $filter => $default) {
-            if (method_exists($this, $filter)) {
-                $this->$filter($request->get($filter, $default));
+            $filterMethod = str_replace('_', '', $filter);
+            if (method_exists($this, $filterMethod)) {
+                $this->$filterMethod($request->get($filter, $default));
             }
             elseif ($this->taxonomyManager && $this->taxonomyManager->hasTaxonomy($filter)) {
                 $this->taxonomy($filter, $request->get($filter, $default));
