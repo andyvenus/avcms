@@ -345,6 +345,13 @@ modules:
           type: text
           label: Number of tags to display
           default: 40
+  game_stats:
+    name: Game Stats
+    description: Game stats like total game, total plays etc
+    controller: Games::GameModulesController::gameStatsModule
+    cachable: true
+    default_cache_time: 43200
+    accepted_template_types: [content, panel, none]
 
 permissions:
   ELEVATED_NO_GAME_ADS:

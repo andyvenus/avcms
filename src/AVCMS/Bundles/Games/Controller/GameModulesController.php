@@ -85,4 +85,17 @@ class GameModulesController extends Controller
     {
         return $this->getTagsModule($adminSettings, 'game', 'browse_games', 'tags');
     }
+
+    public function gameStatsModule()
+    {
+        $totalGames = $this->games->query()->count();
+        $totalPlays = $this->games->query()->select([$this->games->query()->raw('SUM(hits) as total_plays')])->first(\PDO::FETCH_ASSOC)['total_plays'];
+        $totalLikes = $this->games->query()->select([$this->games->query()->raw('SUM(likes) as total_likes')])->first(\PDO::FETCH_ASSOC)['total_likes'];
+
+        return new Response($this->render('@Games/module/game_stats_module.twig', [
+            'total_games' => $totalGames,
+            'total_plays' => $totalPlays,
+            'total_likes' => $totalLikes
+        ]));
+    }
 }
