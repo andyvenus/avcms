@@ -24,6 +24,14 @@ class GameAdminForm extends AdminContentForm
             'label' => 'Embed Code',
         ));
 
+        $this->add('width', 'text', array(
+            'label' => 'Width',
+        ));
+
+        $this->add('height', 'text', array(
+            'label' => 'Height',
+        ));
+
         new FileSelectFields($this, 'admin/games/find-files', 'admin/games/upload', 'admin/games/grab-file', 'thumbnail', 'game_thumbnail', [], null, 'URL');
 
         $this->add('name', 'text', array(
@@ -44,14 +52,6 @@ class GameAdminForm extends AdminContentForm
             'choices_translate' => false
         ));
         
-        $this->add('width', 'text', array(
-            'label' => 'Width',
-        ));
-        
-        $this->add('height', 'text', array(
-            'label' => 'Height',
-        ));
-        
         $this->add('instructions', 'textarea', array(
             'label' => 'Instructions',
         ));
@@ -62,6 +62,7 @@ class GameAdminForm extends AdminContentForm
 
         $this->add('advert_id', 'select', array(
             'label' => 'Advert',
+            'help' => 'Show an advert before the game is loaded',
             'choices' => ['0' => 'None'],
             'choices_provider_service' => 'adverts.choices_provider',
             'translate_choices' => false
