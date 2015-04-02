@@ -52,7 +52,7 @@ class WallpaperModulesController extends Controller
             $ratings = $this->model('LikeDislike:Ratings');
             $ids = $ratings->getLikedIds($user->getId(), 'wallpaper', $adminSettings['limit']);
             $query = $this->wallpapers->find()->ids($ids, 'wallpapers.id');
-            $moreButton = ['url' => $this->generateUrl('liked_games', ['likes_user' => $user->getSlug()]), 'label' => 'All Liked Wallpapers'];
+            $moreButton = ['url' => $this->generateUrl('liked_wallpapers', ['likes_user' => $user->getSlug()]), 'label' => 'All Liked Wallpapers'];
         }
 
         if ($adminSettings['show_wallpaper_category']) {
@@ -86,5 +86,20 @@ class WallpaperModulesController extends Controller
     public function tagsModule($adminSettings)
     {
         return $this->getTagsModule($adminSettings, 'wallpaper', 'browse_wallpapers', 'tags');
+    }
+
+    public function wallpaperStatsModule()
+    {
+        $totalGames = $this->wallpapers->query()->count();
+        $totalHits = $this->wallpapers->query()->select([$this->wallpapers->query()->raw('SUM(hits) as total_hits')])->first(\PDO::FETCH_ASSOC)['total_hits'];
+        $totalDownloads = $this->wallpapers->query()->select([$this->wallpapers->query()->raw('SUM(total_downloads) as total_downloads')])->first(\PDO::FETCH_ASSOC)['total_downloads'];
+        $totalLikes = $this->wallpapers->query()->select([$this->wallpapers->query()->raw('SUM(likes) as total_likes')])->first(\PDO::FETCH_ASSOC)['total_likes'];
+
+        return new Response($this->render('@Wallpapers/module/wallpaper_stats_module.twig', [
+            'total_wallpapers' => $totalGames,
+            'total_hits' => $totalHits,
+            'total_downloads' => $totalDownloads,
+            'total_likes' => $totalLikes
+        ]));
     }
 }

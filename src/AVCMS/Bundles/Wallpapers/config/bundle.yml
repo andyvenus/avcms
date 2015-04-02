@@ -296,24 +296,31 @@ modules:
         label: Show Comments
         default: 0
   wallpaper_tags:
-      name: Wallpaper Tag Cloud
-      description: A tag cloud for wallpapers
-      controller: Wallpapers::WallpaperModulesController::tagsModule
-      cachable: true
-      default_cache_time: 43200
-      accepted_template_types: [content, panel, none]
-      admin_settings:
-        limit:
-          type: text
-          label: Number of tags to display
-          default: 40
+    name: Wallpaper Tag Cloud
+    description: A tag cloud for wallpapers
+    controller: Wallpapers::WallpaperModulesController::tagsModule
+    cachable: true
+    default_cache_time: 43200
+    accepted_template_types: [content, panel, none]
+    admin_settings:
+      limit:
+        type: text
+        label: Number of tags to display
+        default: 40
   wallpaper_resolutions:
-      name: Wallpaper Resolutions
-      description: A list of all wallpaper resolutions linked to pages to browse them
-      controller: Wallpapers::WallpaperModulesController::resolutionsModule
-      cachable: true
-      default_cache_time: 43200
-      accepted_template_types: [panel, none]
+    name: Wallpaper Resolutions
+    description: A list of all wallpaper resolutions linked to pages to browse them
+    controller: Wallpapers::WallpaperModulesController::resolutionsModule
+    cachable: true
+    default_cache_time: 43200
+    accepted_template_types: [panel, none]
+  wallpaper_stats:
+    name: Wallpaper Stats
+    description: Wallpaper stats like total wallpapers, total downloads etc
+    controller: Wallpapers::WallpaperModulesController::wallpaperStatsModule
+    cachable: true
+    default_cache_time: 43200
+    accepted_template_types: [content, panel, none]
 
 config:
     wallpapers_dir: webmaster/wallpapers
