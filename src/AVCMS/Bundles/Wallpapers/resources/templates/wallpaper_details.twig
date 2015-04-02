@@ -80,8 +80,9 @@
                         <p>{% trans %}Views{% endtrans %}: {{ wallpaper.hits }} &nbsp;{% trans %}Downloads{% endtrans %}: {{ wallpaper.totalDownloads }}</p>
                     </div>
                     <div class="col-md-4">
-                        <p>{% trans %}Original Resolution{% endtrans %}:
-                            <a href="{{ path('wallpaper_preview', {slug: wallpaper.slug, resolution: wallpaper.originalWidth ~ 'x' ~ wallpaper.originalHeight}) }}">{{ wallpaper.originalWidth }}x{{ wallpaper.originalHeight }}</a></p>
+                        <p>
+                            {% trans %}Original Resolution{% endtrans %}: {{ wallpaper.originalWidth }}x{{ wallpaper.originalHeight }}
+                        </p>
                     </div>
                 </div>
 
