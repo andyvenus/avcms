@@ -135,7 +135,7 @@ admin_settings:
     type: checkbox
     label: Show Module Buttons
     help: Show buttons on the frontend to quickly access editing module positions
-    default: 1
+    default: 0
     section: main
 
 assets:
