@@ -43,4 +43,12 @@ class ModulePositions extends Model
             return $this->insert($entity);
         }
     }
+
+    public function getFinderSortOptions()
+    {
+        return array(
+            'a-z' => 'name asc',
+            'z-a' => 'name desc',
+        );
+    }
 }

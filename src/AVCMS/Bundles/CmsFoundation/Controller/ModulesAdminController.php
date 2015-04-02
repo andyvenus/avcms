@@ -206,7 +206,7 @@ class ModulesAdminController extends AdminBaseController
         $finder = $this->modulePositions->find()
             ->setResultsPerPage(20)
             ->setSearchFields(array('name'))
-            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
+            ->handleRequest($request, array('page' => 1, 'order' => 'a-z', 'id' => null, 'search' => null));
         $items = $finder->get();
 
         return new Response($this->render('@CmsFoundation/admin/module_positions_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));
