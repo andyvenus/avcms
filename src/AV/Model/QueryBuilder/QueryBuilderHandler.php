@@ -59,7 +59,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
             $class = $this->entity;
         }
 
-        if (isset($this->model) && $class != 'stdClass' && $class !== null) {
+        if (isset($this->model) && $class != 'stdClass' && $class !== null && $fetchType === \PDO::FETCH_CLASS) {
             return $this->getEntity($class);
         }
 
@@ -187,7 +187,7 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
 
         $query->limit(1);
 
-        if (isset($this->model) && isset($this->entity) && $this->entity !== null) {
+        if (isset($this->model) && isset($this->entity) && $this->entity !== null && $fetchType == \PDO::FETCH_CLASS) {
            $result = $query->getEntity($this->entity);
         }
         else {
