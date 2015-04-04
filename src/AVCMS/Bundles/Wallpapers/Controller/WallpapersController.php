@@ -141,7 +141,9 @@ class WallpapersController extends Controller
 
         list($width, $height) = explode('x', $request->get('resolution'));
 
-        if (!$width || !$height) {
+        $resolutionsManager = $this->container->get('wallpaper.resolutions_manager');
+
+        if (!$width || !$height || $resolutionsManager->checkValidResolution($width, $height) === false) {
             throw $this->createNotFoundException('Not a valid resolution');
         }
 
