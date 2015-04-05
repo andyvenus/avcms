@@ -31,12 +31,20 @@ class MiscServices implements ServicesInterface
 
         $container->register('auth.site_offline_listener', 'AVCMS\Core\Security\SiteOfflineAccessListener')
             ->setArguments([new Reference('security.token_storage'), new Reference('auth.access_decision_manager'), new Reference('auth.access_map_site_offline'), new Reference('auth.manager'), new Reference('settings_manager')])
-            ->addTag('event.listener', ['event' => KernelEvents::REQUEST, 'method' => 'handle', 'priority' => -101]);
+            ->addTag('event.listener', ['event' => KernelEvents::REQUEST, 'method' => 'handle', 'priority' => -101])
+        ;
 
         $container->register('auth.access_map_site_offline', 'Symfony\Component\Security\Http\AccessMap')
-            ->addMethodCall('add', [new Reference('auth.site_offline_request_matcher'), ['ADMIN_ACCESS']]);
+            ->addMethodCall('add', [new Reference('auth.site_offline_request_matcher'), ['ADMIN_ACCESS']])
+        ;
 
         $container->register('auth.site_offline_request_matcher', 'Symfony\Component\HttpFoundation\RequestMatcher')
-            ->setArguments(['^/(?!login)(?!facebook-register)']);
+            ->setArguments(['^/(?!login)(?!facebook-register)'])
+        ;
+
+        $container->register('subscriber.post_install', 'AVCMS\Bundles\CmsFoundation\Subscribers\PostInstallSubscriber')
+            ->setArguments([new Reference('bundle_manager'), new Reference('asset_manager')])
+            ->addTag('event.subscriber')
+        ;
     }
 }

@@ -101,7 +101,7 @@ class InstallerController extends Controller
 
             file_put_contents('webmaster/installer_lock.txt', '1');
 
-            return new RedirectResponse('../admin');
+            return new RedirectResponse('../admin?install_complete=true');
         }
 
         $newUser = $users->newEntity();
@@ -126,7 +126,7 @@ class InstallerController extends Controller
 
             file_put_contents('webmaster/installer_lock.txt', '1');
 
-            return new RedirectResponse('../');
+            return new RedirectResponse('../?install_complete=true');
         }
         elseif ($form->getData('password1') !== $form->getData('password2')) {
             $form->addCustomErrors([new FormError('password2', 'The two passwords you entered did not match')]);
