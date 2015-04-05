@@ -8,7 +8,7 @@ use AV\Kernel\Events\KernelBootEvent;
 use AV\Kernel\Exception\KernelConfigException;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Config\Resource\DirectoryResource;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use AV\Kernel\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Dumper\XmlDumper;
 use Symfony\Component\HttpFoundation\Request;
