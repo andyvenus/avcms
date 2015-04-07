@@ -230,13 +230,13 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
 
         // Liked Wallpapers - User Profile
         $likedWallpapersModule = $modules->newEntity();
-        $likedWallpapersModule->setModule('liked_wallpapers');
+        $likedWallpapersModule->setModule('wallpapers');
         $likedWallpapersModule->setActive(1);
         $likedWallpapersModule->setPosition('user_profile_main');
         $likedWallpapersModule->setTitle('Liked Wallpapers');
         $likedWallpapersModule->setShowHeader(1);
         $likedWallpapersModule->setTemplateType('panel');
-        $likedWallpapersModule->setSettingsArray(['layout' => 'thumbnails', 'columns' => 2, 'limit' => 6]);
+        $likedWallpapersModule->setSettingsArray(['layout' => 'thumbnails', 'columns' => 2, 'limit' => 6, 'filter' => 'likes']);
 
         $modules->insert([$updatesModule, $reportsModule, $avsNewsModule, $topWallpapersAdminModule, $userInfoModule, $likedWallpapersModule, $topGamesAdminModule]);
     }
