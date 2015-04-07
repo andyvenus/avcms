@@ -15,12 +15,6 @@ admin_settings_sections:
   points: Points
 
 admin_settings:
-  enable_points:
-      type: checkbox
-      label: Enable Points
-      help: Enable the points system
-      section: points
-      default: 1
   points_name:
     type: text
     label: Points Name
