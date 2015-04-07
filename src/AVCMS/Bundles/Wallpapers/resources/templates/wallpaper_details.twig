@@ -6,7 +6,7 @@
 
 {% block header_extra %}
     <meta property="og:title" content="{{ wallpaper.name }}" />
-    <meta property="og:image" content="{{ wp_thumbnail_url(wallpaper, 'lg') }}" />
+    <meta property="og:image" content="{{ wp_thumbnail_url(wallpaper, 'lg', true) }}" />
     {% if wallpaper.description %}
         <meta property="og:description" content="{{ wallpaper.description|striptags }}" />
     {% endif %}

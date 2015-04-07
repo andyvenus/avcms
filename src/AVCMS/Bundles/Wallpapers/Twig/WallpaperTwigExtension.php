@@ -33,7 +33,7 @@ class WallpaperTwigExtension extends \Twig_Extension
         );
     }
 
-    public function thumbnailUrl(Wallpaper $wallpaper, $size = 'md')
+    public function thumbnailUrl(Wallpaper $wallpaper, $size = 'md', $absoluteUrl = false)
     {
         if (strlen($size) !== 2) {
             $size = 'md';
@@ -41,7 +41,7 @@ class WallpaperTwigExtension extends \Twig_Extension
 
         $extension = pathinfo($wallpaper->getFile())['extension'];
 
-        return $this->urlGenerator->generate('wallpaper_thumbnail', ['slug' => $wallpaper->getSlug(), 'thumbnail_size' => $size, 'ext' => $extension]);
+        return $this->urlGenerator->generate('wallpaper_thumbnail', ['slug' => $wallpaper->getSlug(), 'thumbnail_size' => $size, 'ext' => $extension], $absoluteUrl);
     }
 
     public function imageUrl(Wallpaper $wallpaper, $width, $height, $route = 'wallpaper_image')
