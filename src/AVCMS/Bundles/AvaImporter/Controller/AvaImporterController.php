@@ -66,7 +66,7 @@ class AvaImporterController extends Controller
                     $s->getQueryBuilder()->table('games')->count();
                 }
                 catch (\PDOException $e) {
-                    $form->addCustomErrors([new FormError('database_database', 'Cannot find Game Site Script install in that database')]);
+                    $form->addCustomErrors([new FormError('database_database', 'Cannot find AV Arcade install in that database')]);
                     $form->addCustomErrors([new FormError('all', $e->getMessage())]);
                 }
             }
