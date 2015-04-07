@@ -36,7 +36,7 @@ class WallpapersController extends Controller
         $finder = $this->wallpapers->find();
         $query = $finder->published()
             ->setResultsPerPage($this->setting('browse_wallpapers_per_page'))
-            ->setSearchFields(['name'])
+            ->setSearchFields(['wallpapers.name'])
             ->handleRequest($request, array(
                 'page' => 1,
                 'order' => 'publish-date-newest',
