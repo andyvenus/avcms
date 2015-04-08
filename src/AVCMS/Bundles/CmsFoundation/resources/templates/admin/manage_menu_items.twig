@@ -40,9 +40,7 @@
                                 <div class="label label-primary">{% trans %}Disabled In Settings{% endtrans %}</div>
                             {% endif %}
 
-                            {% if menu_item.owner is null %}
-                                <a class="btn btn-xs btn-default" href="{{ path('menu_items_edit', {menu: item.id, id: menu_item.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit{% endtrans %}</a>
-                            {% endif %}
+                            <a class="btn btn-xs btn-default" href="{{ path('menu_items_edit', {menu: item.id, id: menu_item.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit{% endtrans %}</a>
 
                             {{ buttons.publish(menu_item.enabled, 'toggle_menu_item_enabled') }}
 

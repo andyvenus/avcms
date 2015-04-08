@@ -70,11 +70,16 @@ class UpdateMenusSubscriber implements EventSubscriberInterface
                                 unset($menuItemConfig['parent']);
                             }
 
-                            $menuItem->fromArray($menuItemConfig, true);
+                            $menuItem->fromArray($menuItemConfig, true, ['label', 'icon']);
                             $menuItem->setMenu($menu);
                             $menuItem->setProviderId($itemId);
                             $menuItem->setOwner($bundle->name);
                             $menuItem->setProviderEnabled(1);
+
+                            if (!$menuItem->getLabel()) {
+                                $menuItem->setLabel($menuItemConfig['label']);
+                                $menuItem->setIcon($menuItemConfig['icon']);
+                            }
 
                             if ($menuItem->getOrder() === null && isset($menuItemConfig['default_order'])) {
                                $menuItem->setOrder($menuItemConfig['default_order']);

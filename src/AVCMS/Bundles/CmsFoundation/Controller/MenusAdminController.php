@@ -115,7 +115,10 @@ class MenusAdminController extends AdminBaseController
         }
 
         $formBlueprint = new MenuItemAdminForm(new IconChoicesProvider);
-        $menuItemType->getFormFields($formBlueprint);
+
+        if (!$menuItem->getOwner()) {
+            $menuItemType->getFormFields($formBlueprint);
+        }
 
         $form = $this->buildForm($formBlueprint);
 
