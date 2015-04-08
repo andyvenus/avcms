@@ -1,5 +1,6 @@
 name: Disqus
 namespace: AVCMS\Bundles\Disqus
+toggle: true
 require:
     - Framework
 

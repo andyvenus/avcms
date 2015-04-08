@@ -1,6 +1,5 @@
 name: Profiler
 namespace: AVCMS\BundlesDev\Profiler
-toggle: true
 
 services:
   - ProfilerServices

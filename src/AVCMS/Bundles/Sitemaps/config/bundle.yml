@@ -1,5 +1,6 @@
 name: Sitemaps
 namespace: AVCMS\Bundles\Sitemaps
+toggle: true
 require:
   - Framework
 

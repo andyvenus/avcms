@@ -1,5 +1,6 @@
 name: ContactUs
 namespace: AVCMS\Bundles\ContactUs
+toggle: true
 require:
     - Framework
 

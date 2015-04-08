@@ -1,5 +1,6 @@
 name: CkEditor
 namespace: AVCMS\Bundles\CkEditor
+toggle: true
 
 require:
   - Framework

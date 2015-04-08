@@ -38,6 +38,8 @@ CmsErrorHandler:
     enabled: true
 Wallpapers:
     enabled: true
+Games:
+    enabled: true
 FileUpload:
     enabled: true
 Categories:
@@ -69,8 +71,6 @@ AvaImporter:
 TranslationHelper:
     enabled: true
 AVScripts:
-    enabled: true
-Games:
     enabled: true
 Points:
     enabled: true
