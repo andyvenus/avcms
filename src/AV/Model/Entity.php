@@ -77,9 +77,13 @@ abstract class Entity implements Validatable
         }
     }
 
-    public function fromArray(array $data, $ignoreUnusable = false)
+    public function fromArray(array $data, $ignoreUnusable = false, $ignoreKeys = [])
     {
         foreach ($data as $key => $value) {
+            if (in_array($key, $ignoreKeys)) {
+                continue;
+            }
+
             $key = str_replace('_', '', $key);
 
             if (!method_exists($this, 'set'.$key)) {
