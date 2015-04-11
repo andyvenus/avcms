@@ -6,5 +6,7 @@
                 <span class="small"><span class="glyphicon glyphicon-calendar"></span> {{ post.publishDate|date(settings.date_format) }}</span>
             {% endif %}
         </a>
+    {% else %}
+        <div class="list-group-item">{% trans %}No blog posts{% endtrans %}</div>
     {% endfor %}
 </div>
