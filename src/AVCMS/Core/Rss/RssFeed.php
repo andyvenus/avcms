@@ -20,7 +20,7 @@ class RssFeed
     /**
      * @var RssItem[]
      */
-    protected $items;
+    protected $items = [];
 
     public function __construct($title, $link = null, $description = null, $filePath = null)
     {
