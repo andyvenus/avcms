@@ -1,3 +1,15 @@
+redirect_news:
+  path: /news/{slug}
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, route: blog_post }
+
+redirect_submit_game:
+  path: /submit-game
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, route: submit_game }
+
+redirect_game_feed:
+  path: /rss.php
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, route: games_rss_feed }
+
 redirect_game_category:
   path: /{category}/{page}
   defaults: { _controller: CmsFoundation::RedirectController::redirectAction, page: 1, route: game_category }

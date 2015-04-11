@@ -567,6 +567,8 @@ class AvaImporterController extends Controller
                 $cacheClearer = new CacheClearer($this->getParam('cache_dir'));
                 $cacheClearer->clearCaches();
 
+                copy(__DIR__.'/../resources/ava-routes.yml', $this->getParam('root_dir').'/webmaster/config/routes.yml');
+
                 return $this->redirect('home', [], 302, 'info', 'Import Complete');
             }
         }
