@@ -28,6 +28,7 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $homeItem->setLabel('Home');
         $homeItem->setSettings(['route' => 'home']);
         $homeItem->setIcon('glyphicon glyphicon-home');
+        $homeItem->setOrder(1);
 
         $contactItem = $menuItems->newEntity();
         $contactItem->setMenu('frontend_footer');
