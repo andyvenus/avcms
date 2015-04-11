@@ -24,7 +24,7 @@ class RegistrationForm extends FormBlueprint
                 ],
                 [
                     'rule' => 'Length',
-                    'arguments' => array('3')
+                    'arguments' => array('3', '24')
                 ]
             )
         ));
