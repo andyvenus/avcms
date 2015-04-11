@@ -29,41 +29,6 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $homeItem->setSettings(['route' => 'home']);
         $homeItem->setIcon('glyphicon glyphicon-home');
 
-        $categoriesItem = $menuItems->newEntity();
-        $categoriesItem->setMenu('frontend');
-        $categoriesItem->setType('wallpaper_categories');
-        $categoriesItem->setLabel('Wallpapers');
-        $categoriesItem->setSettings(['display' => 'child']);
-        $categoriesItem->setIcon('glyphicon glyphicon-picture');
-
-        $gameCategoriesItem = $menuItems->newEntity();
-        $gameCategoriesItem->setMenu('frontend');
-        $gameCategoriesItem->setType('game_categories');
-        $gameCategoriesItem->setLabel('Games');
-        $gameCategoriesItem->setSettings(['display' => 'child']);
-        $gameCategoriesItem->setIcon('glyphicon glyphicon-tower');
-
-        $blogItem = $menuItems->newEntity();
-        $blogItem->setMenu('frontend');
-        $blogItem->setType('route');
-        $blogItem->setLabel('Blog');
-        $blogItem->setSettings(['route' => 'blog_home']);
-        $blogItem->setIcon('glyphicon glyphicon-pencil');
-
-        $submitItem = $menuItems->newEntity();
-        $submitItem->setMenu('frontend');
-        $submitItem->setType('route');
-        $submitItem->setLabel('Submit Wallpaper');
-        $submitItem->setSettings(['route' => 'wallpaper_submit']);
-        $submitItem->setIcon('glyphicon glyphicon-upload');
-
-        $submitItem = $menuItems->newEntity();
-        $submitItem->setMenu('frontend');
-        $submitItem->setType('route');
-        $submitItem->setLabel('Submit Game');
-        $submitItem->setSettings(['route' => 'submit_game']);
-        $submitItem->setIcon('glyphicon glyphicon-upload');
-
         $contactItem = $menuItems->newEntity();
         $contactItem->setMenu('frontend_footer');
         $contactItem->setType('route');
