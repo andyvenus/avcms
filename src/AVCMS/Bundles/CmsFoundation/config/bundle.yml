@@ -274,6 +274,14 @@ modules:
           primary: Primary
         default: default
 
+module_positions:
+  homepage:
+    name: Homepage
+    description: 'The main homepage'
+    environment: frontend
+    global_modules: 1
+    type: content
+
 permissions:
   ADMIN_CLEAR_CACHES:
     name: Clear Caches
