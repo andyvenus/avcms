@@ -10,7 +10,7 @@ $(document).ready(function() {
     avcms.event.addEvent('browser-toggle-published', avcms.menu.reorderMenuItemsEvent);
     avcms.event.addEvent('browser-delete-item', avcms.menu.reorderMenuItemsEvent);
     avcms.event.addEvent('submit-form-success', function(form) {
-        if (form.attr('name', 'menu_item_form')) {
+        if (form.attr('name') == 'menu_item_form') {
             avcms.admin.reloadMenu();
         }
     });
