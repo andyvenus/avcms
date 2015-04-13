@@ -15,7 +15,7 @@ class CopyrightRemovalForm extends FormBlueprint
     {
         $this->setSuccessMessage('Copyright Message Updated');
 
-        $this->add('copyright_message', 'text', [
+        $this->add('copyright_message', 'textarea', [
             'label' => 'Copyright Message (can contain HTML)',
             'default' => $currentCopyrightMessage
         ]);
