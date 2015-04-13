@@ -8,7 +8,6 @@
     <div class="updater">
         <div class="app_name">
             <h1 style="margin-top: 0px;">{{ app_config.info.name }}</h1>
-            <p style="font-size: 18px">{% trans with {version: app_config.info.version} %}You are running version {version}{% endtrans %}</p>
         </div>
 
         {% include '@AVScripts/admin/update_info.twig' %}
