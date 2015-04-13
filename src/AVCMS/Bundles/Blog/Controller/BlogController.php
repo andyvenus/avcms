@@ -30,7 +30,7 @@ class BlogController extends Controller
     {
         $finder = $this->posts->find();
         $finder->published()
-            ->setResultsPerPage(10)
+            ->setResultsPerPage($this->setting('blog_posts_per_page'))
             ->setSearchFields(['title'])
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'tags' => null, 'search' => null))
             ->join($this->model('Users'), ['id', 'username', 'slug', 'avatar'])
