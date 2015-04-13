@@ -142,14 +142,14 @@ class FeedGame extends Game
 
     /**
      * @param $name
-     * @param Entity $entity
+     * @param \AV\Model\Entity $entity
      */
     public function addSubEntity($name, \AV\Model\Entity $entity)
     {
         $this->subEntities[$name] = $entity;
     }
 
-    public function fromArray(array $data, $ignoreUnusable = false)
+    public function fromArray(array $data, $ignoreUnusable = false, $ignoreKeys = [])
     {
         foreach ($data as $key => $value) {
             $key = str_replace('_', '', $key);
