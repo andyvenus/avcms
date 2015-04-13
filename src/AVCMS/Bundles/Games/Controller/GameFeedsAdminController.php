@@ -100,6 +100,7 @@ class GameFeedsAdminController extends AdminBaseController
 
         if ($this->setting('download_feed_games') && $feedGame->getDownloadable()) {
             $curl = new Curl();
+            $curl->setOpt(CURLOPT_FOLLOWLOCATION, true);
 
             try {
                 // Game File
