@@ -1,0 +1,16 @@
+info:
+  name: AV Arcade
+  version: '6.0'
+  id: avarcade
+  url: http://www.avscripts.net/avarcade
+
+bundle_dirs:
+  AV\Bundles: src/AV/Bundles
+  AVCMS\Bundles: src/AVCMS/Bundles
+  AVCMS\BundlesDev: src/AVCMS/BundlesDev
+
+default_content_installer: AVCMSDefaultContentInstaller
+
+license:
+  length: 30
+  prefix: ava
