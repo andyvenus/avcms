@@ -60,3 +60,7 @@ TranslationHelper:
     enabled: true
 AVScripts:
     enabled: true
+Friends:
+  enabled: true
+PrivateMessages:
+  enabled: true

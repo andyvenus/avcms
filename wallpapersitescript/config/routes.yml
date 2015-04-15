@@ -1,6 +1,7 @@
 home:
   path: /
   defaults:
-    _controller: Wallpapers::WallpapersController::wallpapersHomeAction
-    _bundle: Wallpapers
+    _controller: CmsFoundation::HomepageController::homepageAction
+    modulePosition: homepage
+    _bundle: CmsFoundation
     _avcms_env: frontend
