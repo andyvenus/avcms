@@ -19,7 +19,7 @@ class UploadedFileHandler extends FileHandlerBase
             return false;
         }
 
-        return $this->checkFileType($uploadedFile->guessClientExtension(), $uploadedFile->getMimeType());
+        return $this->checkFileType($uploadedFile->getClientOriginalExtension(), $uploadedFile->getMimeType());
     }
 
     public function moveFile(UploadedFile $file, $destinationPath, $filename = null, $fileExistsStrategy = self::EXISTS_NUMBER)
