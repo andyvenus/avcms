@@ -130,7 +130,7 @@ class FileSelectHelper
         try {
             $file = $curl->get($fileUrl);
 
-            $handler = new CurlFileHandler($this->acceptedFileTypes);
+            $handler = new CurlFileHandler($this->acceptedFileTypes, $this->deniedFileTypes);
 
             $path = $this->filePath(basename($fileUrl)[0]);
 
