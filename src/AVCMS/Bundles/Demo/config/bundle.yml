@@ -1,0 +1,7 @@
+name: Demo
+namespace: AVCMS\Bundles\Demo
+require:
+    - Framework
+
+services:
+  - DemoServices
