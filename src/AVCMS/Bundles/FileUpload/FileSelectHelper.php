@@ -38,12 +38,18 @@ class FileSelectHelper
      */
     protected $acceptedFileTypes;
 
-    public function __construct($path, TranslatorInterface $translator, $fieldName = 'file', array $acceptedFileTypes = null)
+    /**
+     * @var null|array
+     */
+    protected $deniedFileTypes;
+
+    public function __construct($path, TranslatorInterface $translator, $fieldName = 'file', array $acceptedFileTypes = null, array $deniedFileTypes = null)
     {
         $this->path = $path;
         $this->translator = $translator;
         $this->fieldName = $fieldName;
         $this->acceptedFileTypes = $acceptedFileTypes;
+        $this->deniedFileTypes = $deniedFileTypes;
     }
 
     public function findFilesAction(Request $request)
@@ -99,7 +105,7 @@ class FileSelectHelper
             $path = $this->filePath($file->getClientOriginalName()[0]);
         }
 
-        $handler = new UploadedFileHandler($this->acceptedFileTypes);
+        $handler = new UploadedFileHandler($this->acceptedFileTypes, $this->deniedFileTypes);
 
         if (($fullPath = $handler->moveFile($file, $path, null, $request->request->get('existing_files', UploadedFileHandler::EXISTS_NUMBER))) === false) {
             $fileJson = ['success' => false, 'error' => $handler->getTranslatedError($this->translator)];

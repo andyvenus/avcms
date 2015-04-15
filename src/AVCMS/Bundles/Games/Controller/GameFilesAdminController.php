@@ -26,7 +26,7 @@ class GameFilesAdminController extends AdminBaseController
 
     public function setUp()
     {
-        $this->fileSelectHelper = new FileSelectHelper($this->getParam('web_path').'/games', $this->translator);
+        $this->fileSelectHelper = new FileSelectHelper($this->getParam('web_path').'/games', $this->translator, null, null, UploadedFileHandler::getPhpFiletypes());
         $this->thumbnailSelectHelper = new FileSelectHelper($this->getParam('web_path').'/game-thumbnails', $this->translator, 'thumbnail', UploadedFileHandler::getImageFiletypes());
     }
 

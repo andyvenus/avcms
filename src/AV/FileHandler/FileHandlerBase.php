@@ -137,4 +137,17 @@ abstract class FileHandlerBase
             'bmp' => ['image/bmp', 'image/x-windows-bmp']
         ];
     }
+
+    public static function getPhpFiletypes()
+    {
+        return [
+            'php' => ['*'],
+            'php2' => ['*'],
+            'php3' => ['*'],
+            'php4' => ['*'],
+            'php5' => ['*'],
+            'phtml' => ['*'],
+            'phpt' => ['*'],
+        ];
+    }
 }
