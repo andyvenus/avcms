@@ -29,7 +29,6 @@ avcms.menu = {
     },
 
     reorderMenuItemsEvent: function(element) {
-        console.log('f');
         if (element.parents('.avcms-menus-sortable').length > 0) {
             console.log('b');
             avcms.admin.reloadMenu();

@@ -73,7 +73,7 @@ $(document).ready(function() {
                     $('.file-upload-progress').filter(':visible').html('Uploading: '+progress+'%');
                 },
                 fail: function() {
-                    alert('f');
+                    alert('Something went wrong uploading the file');
                 }
             }).prop('disabled', !$.support.fileInput)
                 .parent().addClass($.support.fileInput ? undefined : 'disabled');
