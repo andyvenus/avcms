@@ -86,7 +86,7 @@ class LinksAdminController extends AdminBaseController
             $seenQuery->where('id', $request->get('id'))->update(['admin_seen' => 1]);
         }
 
-        $this->handleTogglePublished($request, $this->links);
+        return $this->handleTogglePublished($request, $this->links);
     }
 
     protected function getSharedTemplateVars()
