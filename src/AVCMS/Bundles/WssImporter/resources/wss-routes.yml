@@ -1,0 +1,41 @@
+redirect_news:
+  path: /news/{slug}
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, route: blog_post, removeExtensions: [slug] }
+
+redirect_submit_wallpaper:
+  path: /submit-wallpaper
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, route: wallpaper_submit }
+
+redirect_wallpaper_feed:
+  path: /rss.php
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, route: wallpaper_rss_feed }
+
+redirect_wallpaper_tag:
+  path: /tag/{tags}
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, page: 1, route: wallpaper_tag, removeExtensions: [tags] }
+  requirements:
+    page:  \d+
+
+redirect_wallpaper_category:
+  path: /{category}/{page}
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, page: 1, route: wallpaper_category, removeExtensions: [page] }
+  requirements:
+    page:  \d+
+
+redirect_wallpaper_category_with_sort:
+  path: /{category}/{order}/{page}
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, page: 1, route: wallpaper_category, removeExtensions: [page] }
+  requirements:
+    page:  \d+
+
+redirect_wallpaper_preview:
+  path: /preview/{id}/{resolution}/{slug}
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, route: wallpaper_preview, ignoreAttributes: [id], removeExtensions: [slug] }
+
+redirect_wallpaper_image:
+  path: /file/{id}/{width}x{height}/{croptype}/{slug}.{ext}
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, route: wallpaper_image, ignoreAttributes: [croptype, id] }
+
+redirect_wallpaper_details:
+  path: /{category_name}/{slug}
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, route: wallpaper_details, ignoreAttributes: [category_name], removeExtensions: [slug] }

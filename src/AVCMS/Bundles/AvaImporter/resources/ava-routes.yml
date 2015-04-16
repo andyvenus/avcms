@@ -1,6 +1,6 @@
 redirect_news:
   path: /news/{slug}
-  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, route: blog_post }
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, route: blog_post, removeExtensions: [slug] }
 
 redirect_submit_game:
   path: /submit-game
@@ -10,18 +10,24 @@ redirect_game_feed:
   path: /rss.php
   defaults: { _controller: CmsFoundation::RedirectController::redirectAction, route: games_rss_feed }
 
+redirect_game_tag:
+  path: /tag/{tags}
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, page: 1, route: game_tag, removeExtensions: [tags] }
+  requirements:
+    page:  \d+
+
 redirect_game_category:
   path: /{category}/{page}
-  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, page: 1, route: game_category }
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, page: 1, route: game_category, removeExtensions: [page] }
   requirements:
     page:  \d+
 
 redirect_game_category_with_sort:
   path: /{category}/{order}/{page}
-  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, page: 1, route: game_category }
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, page: 1, route: game_category, removeExtensions: [page] }
   requirements:
     page:  \d+
 
 redirect_play_game:
   path: /{category_name}/{slug}
-  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, route: play_game, ignoreAttributes: [category_name] }
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, route: play_game, ignoreAttributes: [category_name], removeExtensions: [slug] }
