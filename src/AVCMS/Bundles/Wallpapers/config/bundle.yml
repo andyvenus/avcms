@@ -302,6 +302,7 @@ modules:
     cachable: true
     default_cache_time: 43200
     accepted_template_types: [content, panel, none]
+    cache_bust_model: Wallpapers
     admin_settings:
       limit:
         type: text

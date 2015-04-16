@@ -339,6 +339,7 @@ modules:
       controller: Games::GameModulesController::tagsModule
       cachable: true
       default_cache_time: 43200
+      cache_bust_model: Games
       accepted_template_types: [content, panel, none]
       admin_settings:
         limit:
