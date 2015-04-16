@@ -12,7 +12,7 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
         return array(
             'Blog' => ['1.0' => 'blogDefaults'],
             'CmsFoundation' => ['1.0' => 'cmsDefaults'],
-            'Wallpapers' => ['1.0' => 'wallpaperDefaults']
+            'Wallpapers' => ['1.0' => 'wallpaperDefaults'],
         );
     }
 
@@ -27,41 +27,7 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
         $homeItem->setLabel('Home');
         $homeItem->setSettings(['route' => 'home']);
         $homeItem->setIcon('glyphicon glyphicon-home');
-
-        $browseItem = $menuItems->newEntity();
-        $browseItem->setMenu('frontend');
-        $browseItem->setType('route');
-        $browseItem->setLabel('Browse');
-        $browseItem->setSettings(['route' => 'browse_wallpapers']);
-        $browseItem->setIcon('glyphicon glyphicon-picture');
-
-        $featuredItem = $menuItems->newEntity();
-        $featuredItem->setMenu('frontend');
-        $featuredItem->setType('route');
-        $featuredItem->setLabel('Featured');
-        $featuredItem->setSettings(['route' => 'featured_wallpapers']);
-        $featuredItem->setIcon('glyphicon glyphicon-star');
-
-        $categoriesItem = $menuItems->newEntity();
-        $categoriesItem->setMenu('frontend');
-        $categoriesItem->setType('wallpaper_categories');
-        $categoriesItem->setLabel('Categories');
-        $categoriesItem->setSettings(['display' => 'child']);
-        $categoriesItem->setIcon('glyphicon glyphicon-tags');
-
-        $blogItem = $menuItems->newEntity();
-        $blogItem->setMenu('frontend');
-        $blogItem->setType('route');
-        $blogItem->setLabel('Blog');
-        $blogItem->setSettings(['route' => 'blog_home']);
-        $blogItem->setIcon('glyphicon glyphicon-pencil');
-
-        $submitItem = $menuItems->newEntity();
-        $submitItem->setMenu('frontend');
-        $submitItem->setType('route');
-        $submitItem->setLabel('Submit');
-        $submitItem->setSettings(['route' => 'wallpaper_submit']);
-        $submitItem->setIcon('glyphicon glyphicon-upload');
+        $homeItem->setOrder(1);
 
         $contactItem = $menuItems->newEntity();
         $contactItem->setMenu('frontend_footer');
@@ -77,7 +43,7 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
         $linksItem->setSettings(['route' => 'links']);
         $linksItem->setIcon('glyphicon glyphicon-link');
 
-        $menuItems->insert([$homeItem, $browseItem, $featuredItem, $categoriesItem, $submitItem, $contactItem, $linksItem]);
+        $menuItems->insert([$homeItem, $contactItem, $linksItem]);
 
         // Modules
         $modules = $this->modelFactory->create('AVCMS\Bundles\CmsFoundation\Model\Modules');
@@ -100,7 +66,7 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
         $featuredWallpapersHome->setTitle('Featured Wallpapers');
         $featuredWallpapersHome->setShowHeader(1);
         $featuredWallpapersHome->setTemplateType('content');
-        $featuredWallpapersHome->setSettingsArray(['filter' => 'featured', 'layout' => 'thumbnails', 'columns' => 3]);
+        $featuredWallpapersHome->setSettingsArray(['filter' => 'featured', 'layout' => 'thumbnails', 'columns' => 3, 'limit' => 6]);
         $featuredWallpapersHome->setCacheTime(3600);
 
         // Newest Wallpapers - Homepage
@@ -111,7 +77,7 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
         $newestWallpapersHome->setTitle('Newest Wallpapers');
         $newestWallpapersHome->setShowHeader(1);
         $newestWallpapersHome->setTemplateType('content');
-        $newestWallpapersHome->setSettingsArray(['layout' => 'thumbnails', 'columns' => 3]);
+        $newestWallpapersHome->setSettingsArray(['layout' => 'thumbnails', 'columns' => 3, 'limit' => 6]);
         $newestWallpapersHome->setCacheTime(3600);
 
         // Newest Blog Posts - Sidebar
@@ -129,7 +95,7 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
         $wallpaperTags->setModule('wallpaper_tags');
         $wallpaperTags->setActive(1);
         $wallpaperTags->setPosition('sidebar');
-        $wallpaperTags->setTitle('Tags');
+        $wallpaperTags->setTitle('Wallpaper Tags');
         $wallpaperTags->setShowHeader(1);
         $wallpaperTags->setTemplateType('panel');
         $wallpaperTags->setCacheTime(43200);
@@ -187,13 +153,13 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
 
         // Liked Wallpapers - User Profile
         $likedWallpapersModule = $modules->newEntity();
-        $likedWallpapersModule->setModule('liked_wallpapers');
+        $likedWallpapersModule->setModule('wallpapers');
         $likedWallpapersModule->setActive(1);
         $likedWallpapersModule->setPosition('user_profile_main');
         $likedWallpapersModule->setTitle('Liked Wallpapers');
         $likedWallpapersModule->setShowHeader(1);
         $likedWallpapersModule->setTemplateType('panel');
-        $likedWallpapersModule->setSettingsArray(['layout' => 'thumbnails', 'columns' => 2, 'limit' => 6]);
+        $likedWallpapersModule->setSettingsArray(['layout' => 'thumbnails', 'columns' => 2, 'limit' => 6, 'filter' => 'likes']);
 
         $modules->insert([$updatesModule, $reportsModule, $avsNewsModule, $topWallpapersAdminModule, $userInfoModule, $likedWallpapersModule]);
     }
@@ -204,9 +170,8 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
 
         $post = $blogPosts->newEntity();
         $post->setTitle('Welcome to AVCMS');
-        $post->setBody('<p>Welcome to AVCMS, a new modular content management system.</p>
-            <p>This first version is just a simple blog to test out the system and get it running well for the upcoming major releases from AV Scripts. Check out the custom menus and modules, or the powerful new admin panel and please send any feedback you have.</p>
-            <p>Andy</p>');
+        $post->setBody('<p>Welcome to the blog!</p>
+            <p>This is just a first blog post to show the blog system. You can edit or delete it from the admin panel.</p>');
         $post->setSlug('welcome-to-avcms');
         $post->setPublishDate(time());
 
@@ -215,8 +180,6 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
 
     public function wallpaperDefaults()
     {
-        $wallpapers = $this->modelFactory->create('AVCMS\Bundles\Wallpapers\Model\Wallpapers');
-
         $wallpaperCategories = $this->modelFactory->create('AVCMS\Bundles\Wallpapers\Model\WallpaperCategories');
 
         $firstCategory = $wallpaperCategories->newEntity();
