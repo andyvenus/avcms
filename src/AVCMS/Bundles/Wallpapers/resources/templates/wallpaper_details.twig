@@ -65,7 +65,7 @@
                     <div class="col-md-4">
                         {% trans %}Tags{% endtrans %}:
                         {% for tag in wallpaper.tags %}
-                            <a class="btn btn-default btn-xs" href="{{ path('browse_wallpapers', {tags: tag.name}) }}">{{ tag.name }}</a>
+                            <a class="btn btn-default btn-xs" href="{{ path('wallpaper_tag', {tags: tag.name}) }}">{{ tag.name }}</a>
                         {% else %}
                             {% trans %}None{% endtrans %}
                         {% endfor %}

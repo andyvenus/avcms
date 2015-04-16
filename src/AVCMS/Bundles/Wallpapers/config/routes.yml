@@ -28,6 +28,12 @@ browse_wallpapers:
   requirements:
     page:  \d+
 
+wallpaper_tag:
+  path: /wallpapers/tag/{tags}
+  defaults: { _controller: Games::GamesController::browseWallpapersAction, category: null, page: 1 }
+  requirements:
+    page:  \d+
+
 liked_wallpapers:
   path: /wallpapers/likes/{likes_user}
   defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction, pageType: likes, likes_user: null }

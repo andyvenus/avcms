@@ -85,7 +85,7 @@ class WallpaperModulesController extends Controller
 
     public function tagsModule($adminSettings)
     {
-        return $this->getTagsModule($adminSettings, 'wallpaper', 'browse_wallpapers', 'tags');
+        return $this->getTagsModule($adminSettings, 'wallpaper', 'wallpaper_tag', 'tags');
     }
 
     public function wallpaperStatsModule()
