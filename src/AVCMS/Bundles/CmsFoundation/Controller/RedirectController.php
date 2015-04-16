@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RedirectController extends Controller
 {
-    public function redirectAction(Request $request, $route, $permanent = false, $ignoreAttributes = false)
+    public function redirectAction(Request $request, $route, $permanent = false, $ignoreAttributes = false, $removeExtensions = [])
     {
         if ('' == $route) {
             throw new HttpException($permanent ? 410 : 404);
@@ -27,6 +27,15 @@ class RedirectController extends Controller
             unset($attributes['route'], $attributes['permanent'], $attributes['ignoreAttributes']);
             if ($ignoreAttributes) {
                 $attributes = array_diff_key($attributes, array_flip($ignoreAttributes));
+            }
+        }
+
+        if ($removeExtensions) {
+            unset($attributes['removeExtensions']);
+            foreach ($attributes as $id => $val) {
+                if (in_array($id, $removeExtensions) && strpos($val, '.') !== false) {
+                    $attributes[$id] = preg_replace('/.[^.]*$/', '', $val);
+                }
             }
         }
 
