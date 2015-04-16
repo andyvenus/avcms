@@ -5,14 +5,13 @@
  * Time: 19:06
  */
 
-class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentInstaller
+class AVArcadeDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentInstaller
 {
     public function getHooks()
     {
         return array(
             'Blog' => ['1.0' => 'blogDefaults'],
             'CmsFoundation' => ['1.0' => 'cmsDefaults'],
-            'Wallpapers' => ['1.0' => 'wallpaperDefaults'],
             'Games' => ['1.0' => 'gameDefaults']
         );
     }
@@ -49,37 +48,15 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         // Modules
         $modules = $this->modelFactory->create('AVCMS\Bundles\CmsFoundation\Model\Modules');
 
-        // Newest Wallpapers - Sidebar
-        $newestWallpapersSidebar = $modules->newEntity();
-        $newestWallpapersSidebar->setModule('wallpapers');
-        $newestWallpapersSidebar->setActive(1);
-        $newestWallpapersSidebar->setPosition('sidebar');
-        $newestWallpapersSidebar->setTitle('Latest Wallpapers');
-        $newestWallpapersSidebar->setShowHeader(1);
-        $newestWallpapersSidebar->setTemplateType('list_panel');
-        $newestWallpapersSidebar->setCacheTime(3600);
-
-        // Featured Wallpapers - Homepage
-        $featuredWallpapersHome = $modules->newEntity();
-        $featuredWallpapersHome->setModule('wallpapers');
-        $featuredWallpapersHome->setActive(1);
-        $featuredWallpapersHome->setPosition('homepage');
-        $featuredWallpapersHome->setTitle('Featured Wallpapers');
-        $featuredWallpapersHome->setShowHeader(1);
-        $featuredWallpapersHome->setTemplateType('content');
-        $featuredWallpapersHome->setSettingsArray(['filter' => 'featured', 'layout' => 'thumbnails', 'columns' => 3, 'limit' => 6]);
-        $featuredWallpapersHome->setCacheTime(3600);
-
-        // Newest Wallpapers - Homepage
-        $newestWallpapersHome = $modules->newEntity();
-        $newestWallpapersHome->setModule('wallpapers');
-        $newestWallpapersHome->setActive(1);
-        $newestWallpapersHome->setPosition('homepage');
-        $newestWallpapersHome->setTitle('Newest Wallpapers');
-        $newestWallpapersHome->setShowHeader(1);
-        $newestWallpapersHome->setTemplateType('content');
-        $newestWallpapersHome->setSettingsArray(['layout' => 'thumbnails', 'columns' => 3, 'limit' => 6]);
-        $newestWallpapersHome->setCacheTime(3600);
+        // Newest Games - Sidebar
+        $newestGamesSidebar = $modules->newEntity();
+        $newestGamesSidebar->setModule('games');
+        $newestGamesSidebar->setActive(1);
+        $newestGamesSidebar->setPosition('sidebar');
+        $newestGamesSidebar->setTitle('Latest Games');
+        $newestGamesSidebar->setShowHeader(1);
+        $newestGamesSidebar->setTemplateType('list_panel');
+        $newestGamesSidebar->setCacheTime(3600);
 
         // Featured Games - Homepage
         $featuredGamesHome = $modules->newEntity();
@@ -113,16 +90,6 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $newestPostsModule->setTemplateType('list_panel');
         $newestPostsModule->setCacheTime(3600);
 
-        // Wallpaper Tags - Sidebar
-        $wallpaperTags = $modules->newEntity();
-        $wallpaperTags->setModule('wallpaper_tags');
-        $wallpaperTags->setActive(1);
-        $wallpaperTags->setPosition('sidebar');
-        $wallpaperTags->setTitle('Wallpaper Tags');
-        $wallpaperTags->setShowHeader(1);
-        $wallpaperTags->setTemplateType('panel');
-        $wallpaperTags->setCacheTime(43200);
-
         // Game Tags - Sidebar
         $gameTags = $modules->newEntity();
         $gameTags->setModule('game_tags');
@@ -133,7 +100,7 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $gameTags->setTemplateType('panel');
         $gameTags->setCacheTime(43200);
 
-        $modules->insert([$newestWallpapersSidebar, $featuredWallpapersHome, $newestWallpapersHome, $featuredGamesHome, $newestGamesHome, $wallpaperTags, $newestPostsModule, $gameTags]);
+        $modules->insert([$newestGamesSidebar, $featuredGamesHome, $newestGamesHome, $newestPostsModule, $gameTags]);
 
         // Updates - Admin Dashboard
         $updatesModule = $modules->newEntity();
@@ -165,16 +132,6 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $avsNewsModule->setShowHeader(1);
         $avsNewsModule->setTemplateType('panel');
 
-        // Top Wallpapers - Admin Dashboard
-        $topWallpapersAdminModule = $modules->newEntity();
-        $topWallpapersAdminModule->setModule('wallpapers');
-        $topWallpapersAdminModule->setActive(1);
-        $topWallpapersAdminModule->setPosition('admin_dashboard');
-        $topWallpapersAdminModule->setTitle('Top Wallpapers');
-        $topWallpapersAdminModule->setShowHeader(1);
-        $topWallpapersAdminModule->setTemplateType('list_panel');
-        $topWallpapersAdminModule->setSettingsArray(['order' => 'top-hits']);
-
         // Top Games - Admin Dashboard
         $topGamesAdminModule = $modules->newEntity();
         $topGamesAdminModule->setModule('games');
@@ -194,17 +151,17 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $userInfoModule->setShowHeader(1);
         $userInfoModule->setTemplateType('panel');
 
-        // Liked Wallpapers - User Profile
+        // Liked Games - User Profile
         $likedWallpapersModule = $modules->newEntity();
-        $likedWallpapersModule->setModule('wallpapers');
+        $likedWallpapersModule->setModule('games');
         $likedWallpapersModule->setActive(1);
         $likedWallpapersModule->setPosition('user_profile_main');
-        $likedWallpapersModule->setTitle('Liked Wallpapers');
+        $likedWallpapersModule->setTitle('Liked Games');
         $likedWallpapersModule->setShowHeader(1);
         $likedWallpapersModule->setTemplateType('panel');
         $likedWallpapersModule->setSettingsArray(['layout' => 'thumbnails', 'columns' => 2, 'limit' => 6, 'filter' => 'likes']);
 
-        $modules->insert([$updatesModule, $reportsModule, $avsNewsModule, $topWallpapersAdminModule, $userInfoModule, $likedWallpapersModule, $topGamesAdminModule]);
+        $modules->insert([$updatesModule, $reportsModule, $avsNewsModule, $userInfoModule, $likedWallpapersModule, $topGamesAdminModule]);
     }
 
     public function blogDefaults()
@@ -213,7 +170,7 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
 
         $post = $blogPosts->newEntity();
         $post->setTitle('Welcome to AVCMS');
-        $post->setBody('<p>Welcome to AVCMS, a new modular content management system.</p>
+        $post->setBody('<p>Welcome to the blog!</p>
             <p>This is just a first blog post to show the blog system. You can edit or delete it from the admin panel.</p>');
         $post->setSlug('welcome-to-avcms');
         $post->setPublishDate(time());
@@ -221,24 +178,8 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $blogPosts->save($post);
     }
 
-    public function wallpaperDefaults()
-    {
-        $wallpapers = $this->modelFactory->create('AVCMS\Bundles\Wallpapers\Model\Wallpapers');
-
-        $wallpaperCategories = $this->modelFactory->create('AVCMS\Bundles\Wallpapers\Model\WallpaperCategories');
-
-        $firstCategory = $wallpaperCategories->newEntity();
-        $firstCategory->setName('First Category');
-        $firstCategory->setDescription('A first category to get going. Edit me or delete me!');
-        $firstCategory->setSlug('first-category');
-
-        $wallpaperCategories->insert($firstCategory);
-    }
-
     public function gameDefaults()
     {
-        $games = $this->modelFactory->create('AVCMS\Bundles\Games\Model\Games');
-
         $gameCategories = $this->modelFactory->create('AVCMS\Bundles\Games\Model\GameCategories');
 
         $firstCategory = $gameCategories->newEntity();

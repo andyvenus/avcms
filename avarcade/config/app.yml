@@ -9,7 +9,7 @@ bundle_dirs:
   AVCMS\Bundles: src/AVCMS/Bundles
   AVCMS\BundlesDev: src/AVCMS/BundlesDev
 
-default_content_installer: AVCMSDefaultContentInstaller
+default_content_installer: AVArcadeDefaultContentInstaller
 
 license:
   length: 30
