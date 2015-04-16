@@ -30,7 +30,7 @@
 {% endblock %}
 
 {% block item_extended_inner %}
-    <div class="col-md-6 hidden-sm">
+    <div class="col-md-6">
         {{ item.body|length > 120 ? item.body|striptags|slice(0, 120) ~ '...' : item.body|striptags  }}
     </div>
     <div class="col-md-2 hidden-sm hidden-xs">
