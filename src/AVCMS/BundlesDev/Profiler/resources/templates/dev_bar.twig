@@ -40,7 +40,7 @@
     <div class="profiler-block">
         <a href="{{ path('profiler', {token: token}) }}#translations">{{ translations.translations|length }} Translation Strings</a>
     </div>
-    <div class="profiler-block" title="{{ templates.templates[0].template }}">
-        {{ templates.templates[0].name }}
+    <div class="profiler-block">
+        <abbr title="{{ templates.templates[0].template }}">{{ templates.templates[0].name }}</abbr>
     </div>
 </div>
