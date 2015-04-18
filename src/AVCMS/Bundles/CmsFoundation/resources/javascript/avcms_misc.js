@@ -131,8 +131,7 @@ avcms.general = {
     },
 
     isMobile: function () {
-        try{ document.createEvent("TouchEvent"); return true; }
-        catch(e){ return false; }
+        return ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
     },
 
     showModulePositionButton: function() {
