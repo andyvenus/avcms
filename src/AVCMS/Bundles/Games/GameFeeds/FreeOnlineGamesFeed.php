@@ -20,7 +20,7 @@ class FreeOnlineGamesFeed implements GameFeedInterface
      */
     public function getFeedUrl(SettingsManager $settings)
     {
-        return 'http://www.freegamesforyourwebsite.com/feeds/games/?category=all&format=json&limit='.$settings->getSetting('game_feed_limit').'&language=en';
+        return 'http://www.gamesforwebsites.com/feeds/games/?category=all&format=json&limit='.$settings->getSetting('game_feed_limit').'&language=en';
     }
 
     /**
