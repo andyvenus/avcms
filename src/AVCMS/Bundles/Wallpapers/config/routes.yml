@@ -30,7 +30,7 @@ browse_wallpapers:
 
 wallpaper_tag:
   path: /wallpapers/tag/{tags}
-  defaults: { _controller: Games::WallpapersController::browseWallpapersAction, category: null, page: 1 }
+  defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction, category: null, page: 1 }
   requirements:
     page:  \d+
 
