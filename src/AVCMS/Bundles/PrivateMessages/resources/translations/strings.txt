@@ -19,3 +19,4 @@ Delete
 Mark Read
 Mark Unread
 Read This Message and Reply
+No New Messages

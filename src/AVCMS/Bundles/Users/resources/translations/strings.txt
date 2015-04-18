@@ -57,3 +57,5 @@ Unregistered
 Member
 Enable Emails
 If off you will not receive any notification or newsletter emails
+Member List
+Username or Email

@@ -4,3 +4,4 @@ Close
 Loading
 Toggle Dropdown
 Admin
+Edit Profile

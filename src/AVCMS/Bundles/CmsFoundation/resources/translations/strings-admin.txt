@@ -137,3 +137,21 @@ Edit Templates
 No Modules Assigned To This Page
 Details
 Module type "{module}" missing
+Homepage
+The main homepage
+Save Settings
+Editing {item}
+Show Module Buttons
+Show buttons on the frontend to quickly access editing module positions
+Site Description
+Disabled In Settings
+Toggleable Bundles
+Bundles
+Disabled
+Required Bundles
+Enabling/Disabling bundles may take a moment as the cache is totally cleared in the process
+This will limit this module to only being shown on certain pages.
+                The drop-down will suggest the pages that exist on your site for you to
+                select from.
+Users will require any one of these permissions to be able to see the module
+How long the module will be cached for in seconds

@@ -115,3 +115,4 @@ Show Wallpaper Ratings
 Show Wallpaper Hits
 Show Comments
 Show Total Comments
+Submit Wallpaper

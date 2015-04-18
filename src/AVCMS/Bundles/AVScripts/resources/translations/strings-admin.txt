@@ -1,1 +1,10 @@
 AV Scripts News
+Updates
+Checking for update...
+You are running the latest version: {version}
+An update is available
+Download Version
+Update instructions can be found within the zip file
+AV Scripts Customer Area
+You do not seem to have purchased copyright removal. If you think you are seeing this message in error, contact {email}
+Thanks for purchasing copyright removal. You can enter your own copyright notice below. Return to this page any time to change it.

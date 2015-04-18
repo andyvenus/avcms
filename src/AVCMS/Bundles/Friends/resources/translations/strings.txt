@@ -1,1 +1,19 @@
 js:Are you sure you want to remove this friend?
+Friend request sent
+Request Cancelled
+Friends
+Friend Requests
+Current Friends
+When you add a friend from their profile they will appear here when they accept
+Sent
+Accept
+Decline
+Friend request accepted
+Last Active
+Send Message
+Friend removed
+Friend request declined
+New Friend Request
+You have received a friend request from {username}
+Accept or decline
+Find a user

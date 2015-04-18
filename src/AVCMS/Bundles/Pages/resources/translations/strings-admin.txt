@@ -12,3 +12,5 @@ URI
 Manage Pages
 Ability to view & manage HTML pages
 The number of points a user gets when making sending a report
+Top Hits
+Least Hits
