@@ -236,11 +236,12 @@ modules:
       filter:
         type: select
         label: Filter
+        help: If "User's Likes" is selected, the module will show the likes of a user if one is passed to the module position (like on a users profile). Otherwise it will show the active user's likes.
         default: none
         choices:
           none: None
           featured: Featured
-          likes: User's Liked Wallpapers
+          likes: User's Likes
       layout:
         type: select
         label: Layout

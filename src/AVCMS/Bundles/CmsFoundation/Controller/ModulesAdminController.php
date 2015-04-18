@@ -111,7 +111,11 @@ class ModulesAdminController extends AdminBaseController
         $form = new AdminModuleForm(new RouteChoicesProvider($this->get('router'), 'frontend'), $templateList, $this->getTemplatesList($position, $moduleConfig->getTemplateType()), $permsProvider, $module->getDefaultPermissions());
 
         if ($module->isCachable()) {
-            $form->add('cache_time', 'text', array('label' => "Seconds until cache expires (0 for no cache)", 'default' => $module->getDefaultCacheTime()));
+            $form->add('cache_time', 'text', [
+                'label' => "Seconds until cache expires (0 for no cache)",
+                'help' => 'How long the module will be cached for in seconds',
+                'default' => $module->getDefaultCacheTime()
+            ]);
         }
 
         $form->createFieldsFromArray($module->getAdminSettings(), 'settings_array');
