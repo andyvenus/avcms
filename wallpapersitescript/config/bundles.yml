@@ -56,8 +56,6 @@ Disqus:
     enabled: true
 WssImporter:
     enabled: true
-TranslationHelper:
-    enabled: true
 AVScripts:
     enabled: true
 Friends:
