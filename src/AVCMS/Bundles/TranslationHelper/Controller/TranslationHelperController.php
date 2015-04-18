@@ -199,6 +199,7 @@ class TranslationHelperController extends Controller
 
         $translation->setId(null);
         $translation->setUserId($this->activeUser()->getId());
+        $translation->setPublic(0);
 
         $this->translations->save($translation);
 
