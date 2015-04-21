@@ -1,10 +1,12 @@
 {% extends '@Games/embeds/embed_base.twig' %}
 
 {% block embed_code %}
-    <div class="missing">
+    <div class="missing" style="text-align: center">
         <a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">
             <img alt="Unity Web Player. Install now!" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" />
         </a>
+
+        <div class="alert alert-info">{% trans %}Google Chrome no longer supports Unity. If you are using Chrome, please use another browser to play this game.{% endtrans %}</div>
     </div>
 
     <script type="text/javascript">
