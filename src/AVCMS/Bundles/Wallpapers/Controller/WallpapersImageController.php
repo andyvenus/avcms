@@ -24,6 +24,12 @@ class WallpapersImageController extends Controller
 
         $thumbnailSize = 'md';
 
+        $wallpapers = $this->model('Wallpapers');
+        $wallpaper = $wallpapers->findOne($request->get('slug'))->first();
+        if (!$wallpaper) {
+            throw $this->createNotFoundException();
+        }
+
         if ($width === null || $height === null && $thumbnail === true && $request->get('thumbnail_size')) {
             $resolution = $resolutionsManager->getThumbnailResolution($request->get('thumbnail_size'));
             if ($resolution !== null) {
@@ -31,17 +37,11 @@ class WallpapersImageController extends Controller
                 list($width, $height) = explode('x', $resolution);
             }
         }
-        elseif ($resolutionsManager->checkValidResolution($width, $height) === false) {
+        elseif ($resolutionsManager->checkValidResolution($width, $height, $wallpaper) === false) {
             $width = $height = null;
         }
 
         if (!$width || !$height) {
-            throw $this->createNotFoundException();
-        }
-
-        $wallpapers = $this->model('Wallpapers');
-        $wallpaper = $wallpapers->findOne($request->get('slug'))->first();
-        if (!$wallpaper) {
             throw $this->createNotFoundException();
         }
 

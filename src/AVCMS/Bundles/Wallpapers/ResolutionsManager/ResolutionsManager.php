@@ -113,8 +113,12 @@ class ResolutionsManager
         return null;
     }
 
-    public function checkValidResolution($width, $height)
+    public function checkValidResolution($width, $height, Wallpaper $wallpaper)
     {
+        if ($wallpaper->getOriginalWidth() == $width && $wallpaper->getOriginalHeight() == $height) {
+            return true;
+        }
+
         $resolution = $width.'x'.$height;
 
         $resolutions = $this->getAllResolutions();
