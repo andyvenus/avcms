@@ -81,7 +81,8 @@
                     </div>
                     <div class="col-md-4">
                         <p>
-                            {% trans %}Original Resolution{% endtrans %}: {{ wallpaper.originalWidth }}x{{ wallpaper.originalHeight }}
+                            {% trans %}Original Resolution{% endtrans %}:
+                            <a href="{{ path('wallpaper_preview', {slug: wallpaper.slug, resolution: wallpaper.originalWidth ~ 'x' ~ wallpaper.originalHeight}) }}">{{ wallpaper.originalWidth }}x{{ wallpaper.originalHeight }}</a>
                         </p>
                     </div>
                 </div>
