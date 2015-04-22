@@ -3,5 +3,5 @@
 {% block content %}
     <p>{% trans %}Thanks for registering. Please validate your email address by clicking the link below.{% endtrans %}</p>
 
-    <p style="font-weight: bold"><a href="{{ path('validate_email', {userId: emailKey.userId, code: emailKey.code}) }}">{% trans %}Validate Now{% endtrans %}</a></p>
+    <p style="font-weight: bold"><a href="{{ url('validate_email', {userId: emailKey.userId, code: emailKey.code}) }}">{% trans %}Validate Now{% endtrans %}</a></p>
 {% endblock %}

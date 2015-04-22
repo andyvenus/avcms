@@ -5,7 +5,7 @@
 
     <p>{{ message.body|nl2br }}</p>
 
-    <p><a href="{{ path('read_private_message', {'id': message.id}) }}">{% trans %}Read This Message and Reply{% endtrans %}</a></p>
+    <p><a href="{{ url('read_private_message', {'id': message.id}) }}">{% trans %}Read This Message and Reply{% endtrans %}</a></p>
 
-    <p><a href="{{ path('private_messages_inbox') }}">{% trans %}Your Inbox{% endtrans %}</a></p>
+    <p><a href="{{ url('private_messages_inbox') }}">{% trans %}Your Inbox{% endtrans %}</a></p>
 {% endblock %}
