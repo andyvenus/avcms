@@ -24,7 +24,7 @@ class PointsExtendUserFormSubscriber implements EventSubscriberInterface
         $form->add('points', 'text', [
             'label' => 'Points',
             'validation' => [
-                ['rule' => 'numeric']
+                ['rule' => 'Numeric']
             ]
         ]);
     }
