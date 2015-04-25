@@ -43,7 +43,7 @@ class MiscServices implements ServicesInterface
         ;
 
         $container->register('subscriber.post_install', 'AVCMS\Bundles\CmsFoundation\Subscribers\PostInstallSubscriber')
-            ->setArguments([new Reference('bundle_manager'), new Reference('asset_manager')])
+            ->setArguments([new Reference('bundle_manager'), new Reference('asset_manager'), new Reference('public_file_mover')])
             ->addTag('event.subscriber')
         ;
     }
