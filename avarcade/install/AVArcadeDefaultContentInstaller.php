@@ -66,7 +66,7 @@ class AVArcadeDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultConte
         $featuredGamesHome->setTitle('Featured Games');
         $featuredGamesHome->setShowHeader(1);
         $featuredGamesHome->setTemplateType('content');
-        $featuredGamesHome->setSettingsArray(['filter' => 'featured', 'layout' => 'thumbnails', 'columns' => 3, 'limit' => 6]);
+        $featuredGamesHome->setSettingsArray(['filter' => 'featured', 'layout' => 'thumbnails', 'columns' => 4, 'limit' => 8]);
         $featuredGamesHome->setCacheTime(3600);
 
         // Newest Games - Homepage
@@ -77,7 +77,7 @@ class AVArcadeDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultConte
         $newestGamesHome->setTitle('Newest Games');
         $newestGamesHome->setShowHeader(1);
         $newestGamesHome->setTemplateType('content');
-        $newestGamesHome->setSettingsArray(['layout' => 'details', 'columns' => 2, 'limit' => 6]);
+        $newestGamesHome->setSettingsArray(['layout' => 'details', 'columns' => 2, 'limit' => 18]);
         $newestGamesHome->setCacheTime(3600);
 
         // Newest Blog Posts - Sidebar
@@ -100,7 +100,27 @@ class AVArcadeDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultConte
         $gameTags->setTemplateType('panel');
         $gameTags->setCacheTime(43200);
 
-        $modules->insert([$newestGamesSidebar, $featuredGamesHome, $newestGamesHome, $newestPostsModule, $gameTags]);
+        // Links - Sidebar
+        $linksModule = $modules->newEntity();
+        $linksModule->setModule('links');
+        $linksModule->setActive(1);
+        $linksModule->setPosition('sidebar');
+        $linksModule->setTitle('Links');
+        $linksModule->setShowHeader(1);
+        $linksModule->setTemplateType('panel');
+        $linksModule->setCacheTime(43200);
+
+        // Share - Sidebar
+        $shareModule = $modules->newEntity();
+        $shareModule->setModule('share_module');
+        $shareModule->setActive(1);
+        $shareModule->setPosition('sidebar');
+        $shareModule->setTitle('Share');
+        $shareModule->setShowHeader(1);
+        $shareModule->setTemplateType('panel');
+        $shareModule->setCacheTime(43200);
+
+        $modules->insert([$newestGamesSidebar, $featuredGamesHome, $newestGamesHome, $newestPostsModule, $gameTags, $linksModule, $shareModule]);
 
         // Updates - Admin Dashboard
         $updatesModule = $modules->newEntity();
