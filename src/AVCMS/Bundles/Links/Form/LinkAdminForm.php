@@ -28,5 +28,7 @@ class LinkAdminForm extends FormBlueprint
             'label' => 'Referrer',
             'choices_provider' => $referralsChoicesProvider
         ));
+
+        $this->add('published', 'hidden', ['default' => 1]);
     }
 }
