@@ -230,11 +230,12 @@ modules:
     description: Add a HTML block to this position
     cachable: true
     default_cache_time: 1000000
+    accepted_template_types: [panel, content, none]
     admin_settings:
-            html:
-              type: textarea
-              label: HTML
-              required: true
+      html:
+        type: textarea
+        label: HTML
+        required: true
   menu_module:
     controller: CmsFoundation::MenuModulesController::menuModule
     name: Menu
