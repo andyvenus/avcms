@@ -100,7 +100,27 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
         $wallpaperTags->setTemplateType('panel');
         $wallpaperTags->setCacheTime(43200);
 
-        $modules->insert([$newestWallpapersSidebar, $featuredWallpapersHome, $newestWallpapersHome, $wallpaperTags, $newestPostsModule]);
+        // Links - Sidebar
+        $linksModule = $modules->newEntity();
+        $linksModule->setModule('links');
+        $linksModule->setActive(1);
+        $linksModule->setPosition('sidebar');
+        $linksModule->setTitle('Links');
+        $linksModule->setShowHeader(1);
+        $linksModule->setTemplateType('list_panel');
+        $linksModule->setCacheTime(43200);
+
+        // Share - Sidebar
+        $shareModule = $modules->newEntity();
+        $shareModule->setModule('share_module');
+        $shareModule->setActive(1);
+        $shareModule->setPosition('sidebar');
+        $shareModule->setTitle('Share');
+        $shareModule->setShowHeader(1);
+        $shareModule->setTemplateType('panel');
+        $shareModule->setCacheTime(43200);
+
+        $modules->insert([$newestWallpapersSidebar, $featuredWallpapersHome, $newestWallpapersHome, $wallpaperTags, $newestPostsModule, $linksModule, $shareModule]);
 
         // Updates - Admin Dashboard
         $updatesModule = $modules->newEntity();

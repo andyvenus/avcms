@@ -107,7 +107,7 @@ class AVArcadeDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultConte
         $linksModule->setPosition('sidebar');
         $linksModule->setTitle('Links');
         $linksModule->setShowHeader(1);
-        $linksModule->setTemplateType('panel');
+        $linksModule->setTemplateType('list_panel');
         $linksModule->setCacheTime(43200);
 
         // Share - Sidebar
