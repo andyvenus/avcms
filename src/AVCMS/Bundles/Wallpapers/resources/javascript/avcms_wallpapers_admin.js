@@ -27,7 +27,7 @@ avcms.wallpaper_bulk = {
                     var file = data.files[0];
 
                     $('.selected-files-area').prepend('<div class="well well-sm clearfix" data-image-name="' + file.name + '">' +
-                    '<div class="col-md-6"> <img class="new-image" src="" width="90"/> ' + file.name + '</div>' +
+                    '<div class="col-md-6"> <img data-thumbnail-id="'+file.name+'" class="new-image" src="" width="90"/> ' + file.name + '</div>' +
                     '<div class="col-md-6 text-right image-upload-progress"></div>' +
                     '</div>');
 
@@ -37,12 +37,12 @@ avcms.wallpaper_bulk = {
                     if (valid_extensions.indexOf(file_extension) !== -1 && window.FileReader !== undefined) {
                         var reader = new FileReader();
                         reader.onload = function (e) {
-                            $('.new-image[src=""]').first().attr('src', e.target.result);
+                            $('[data-thumbnail-id="'+file.name+'"]').attr('src', e.target.result);
                         };
                         reader.readAsDataURL(file);
                     }
                     else {
-                        $('.new-image[src=""]').first().remove();
+                        $('[data-thumbnail-id="'+file.name+'"]').remove();
                     }
 
                     data.context = $('.start-upload-btn').show().click(function () {
