@@ -74,8 +74,9 @@ class InstallerController extends Controller
             if ($form->isValid()) {
                 file_put_contents($databaseConfigFile, '<?php return ' . var_export($databaseConfig, true) . ';');
 
+
                 $conn->getPdoInstance()->exec("
-                    CREATE TABLE `{$databaseConfig['prefix']}versions` (
+                    CREATE TABLE IF NOT EXISTS `{$databaseConfig['prefix']}versions` (
                           `id` varchar(30) NOT NULL DEFAULT '',
                           `installed_version` varchar(30) NOT NULL DEFAULT '',
                           `type` varchar(30) NOT NULL DEFAULT '',
@@ -101,7 +102,7 @@ class InstallerController extends Controller
 
             file_put_contents('webmaster/installer_lock.txt', '1');
 
-            return new RedirectResponse('../admin?install_complete=true');
+            return new RedirectResponse('../?install_complete=true');
         }
 
         $newUser = $users->newEntity();
