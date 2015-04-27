@@ -85,7 +85,7 @@ class AVArcadeDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultConte
         $newestPostsModule->setModule('blog_posts');
         $newestPostsModule->setActive(1);
         $newestPostsModule->setPosition('sidebar');
-        $newestPostsModule->setTitle('Latest Posts');
+        $newestPostsModule->setTitle('Latest Blog Posts');
         $newestPostsModule->setShowHeader(1);
         $newestPostsModule->setTemplateType('list_panel');
         $newestPostsModule->setCacheTime(3600);

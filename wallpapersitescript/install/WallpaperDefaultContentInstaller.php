@@ -77,7 +77,7 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
         $newestWallpapersHome->setTitle('Newest Wallpapers');
         $newestWallpapersHome->setShowHeader(1);
         $newestWallpapersHome->setTemplateType('content');
-        $newestWallpapersHome->setSettingsArray(['layout' => 'thumbnails', 'columns' => 3, 'limit' => 6]);
+        $newestWallpapersHome->setSettingsArray(['layout' => 'thumbnails', 'columns' => 3, 'limit' => 18]);
         $newestWallpapersHome->setCacheTime(3600);
 
         // Newest Blog Posts - Sidebar
@@ -85,7 +85,7 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
         $newestPostsModule->setModule('blog_posts');
         $newestPostsModule->setActive(1);
         $newestPostsModule->setPosition('sidebar');
-        $newestPostsModule->setTitle('Latest Posts');
+        $newestPostsModule->setTitle('Latest Blog Posts');
         $newestPostsModule->setShowHeader(1);
         $newestPostsModule->setTemplateType('list_panel');
         $newestPostsModule->setCacheTime(3600);
