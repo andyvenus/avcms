@@ -38,7 +38,8 @@ class EditProfileForm extends FormBlueprint
             'label' => 'Website',
             'validation' => [
                 ['rule' => 'Length', 'arguments' => [null, 100]]
-            ]
+            ],
+            'transform' => 'url',
         ]);
 
         $this->add('receive_emails', 'checkbox', [
