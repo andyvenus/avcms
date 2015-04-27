@@ -26,7 +26,7 @@ avcms.wallpaper_bulk = {
                 add: function (e, data) {
                     var file = data.files[0];
 
-                    $('.selected-files-area').prepend('<div class="well well-sm clearfix" data-image-name="' + file.name + '">' +
+                    $('.selected-files-area').append('<div class="well well-sm clearfix" data-image-name="' + file.name + '">' +
                     '<div class="col-md-6"> <img data-thumbnail-id="'+file.name+'" class="new-image" src="" width="90"/> ' + file.name + '</div>' +
                     '<div class="col-md-6 text-right image-upload-progress"></div>' +
                     '</div>');
