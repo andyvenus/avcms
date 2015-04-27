@@ -172,6 +172,7 @@ select[name=author] {
   .panel-heading {
     background-color: $base-color;
     color: white;
+    border-color: $base-color;
 
     a {
       color: white;

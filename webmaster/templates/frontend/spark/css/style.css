@@ -124,7 +124,8 @@ select[name=author] {
   border-color: #326883; }
   .panel-default .panel-heading {
     background-color: #326883;
-    color: white; }
+    color: white;
+    border-color: #326883; }
     .panel-default .panel-heading a {
       color: white; }
 
