@@ -32,6 +32,10 @@
                     {% endif %}
                 </div>
             </div>
+        {% else %}
+            <div class="alert alert-info text-center">
+                {% trans %}No results{% endtrans %}
+            </div>
         {% endfor %}
     </div>
 {% endblock %}
