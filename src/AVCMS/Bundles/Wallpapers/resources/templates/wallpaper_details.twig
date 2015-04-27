@@ -59,9 +59,11 @@
                     <div class="col-md-4">
                         <p>{% trans %}Name{% endtrans %}: {{ wallpaper.name }}</p>
                     </div>
+                    {% if wallpaper.category %}
                     <div class="col-md-4">
-                        <p>{% trans %}Category{% endtrans %}: {{ wallpaper.category.name }}</p>
+                        <p>{% trans %}Category{% endtrans %}: <a href="{{ path('wallpaper_category', {'category': wallpaper.category.slug}) }}"> {{ wallpaper.category.name }}</a></p>
                     </div>
+                    {% endif %}
                     <div class="col-md-4">
                         {% trans %}Tags{% endtrans %}:
                         {% for tag in wallpaper.tags %}
