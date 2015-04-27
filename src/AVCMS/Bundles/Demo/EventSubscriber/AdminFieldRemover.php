@@ -40,7 +40,10 @@ class AdminFieldRemover implements EventSubscriberInterface
         $blueprint = $event->getFormBlueprint();
 
         $blueprint->remove('email');
+        $blueprint->remove('admin_emails');
+        $blueprint->remove('smtp_password');
     }
+
 
     public static function getSubscribedEvents()
     {
