@@ -4,16 +4,16 @@
 </p>
 
 <p>
-    <span style="font-size: 30px">{{ total_hits }}</span>
+    <span style="font-size: 30px">{{ total_hits|default(0) }}</span>
     {% trans %}Hits{% endtrans %}
 </p>
 
 <p>
-    <span style="font-size: 30px">{{ total_downloads }}</span>
+    <span style="font-size: 30px">{{ total_downloads|default(0) }}</span>
     {% trans %}Downloads{% endtrans %}
 </p>
 
 <p>
-    <span style="font-size: 30px">{{ total_likes }}</span>
+    <span style="font-size: 30px">{{ total_likes|default(0) }}</span>
     {% trans %}Likes{% endtrans %}
 </p>
