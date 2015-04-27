@@ -152,6 +152,15 @@ class AVArcadeDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultConte
         $avsNewsModule->setShowHeader(1);
         $avsNewsModule->setTemplateType('panel');
 
+        // Game Stats - Admin Dashboard
+        $gameStatsModule = $modules->newEntity();
+        $gameStatsModule->setModule('game_stats');
+        $gameStatsModule->setActive(1);
+        $gameStatsModule->setPosition('admin_dashboard');
+        $gameStatsModule->setTitle('Game Stats');
+        $gameStatsModule->setShowHeader(1);
+        $gameStatsModule->setTemplateType('panel');
+
         // Top Games - Admin Dashboard
         $topGamesAdminModule = $modules->newEntity();
         $topGamesAdminModule->setModule('games');
@@ -181,7 +190,7 @@ class AVArcadeDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultConte
         $likedWallpapersModule->setTemplateType('panel');
         $likedWallpapersModule->setSettingsArray(['layout' => 'thumbnails', 'columns' => 2, 'limit' => 6, 'filter' => 'likes']);
 
-        $modules->insert([$updatesModule, $reportsModule, $avsNewsModule, $userInfoModule, $likedWallpapersModule, $topGamesAdminModule]);
+        $modules->insert([$updatesModule, $reportsModule, $avsNewsModule, $gameStatsModule, $userInfoModule, $likedWallpapersModule, $topGamesAdminModule]);
     }
 
     public function blogDefaults()

@@ -152,6 +152,15 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
         $avsNewsModule->setShowHeader(1);
         $avsNewsModule->setTemplateType('panel');
 
+        // Game Stats - Admin Dashboard
+        $wallpaperStatsModule = $modules->newEntity();
+        $wallpaperStatsModule->setModule('wallpaper_stats');
+        $wallpaperStatsModule->setActive(1);
+        $wallpaperStatsModule->setPosition('admin_dashboard');
+        $wallpaperStatsModule->setTitle('Game Stats');
+        $wallpaperStatsModule->setShowHeader(1);
+        $wallpaperStatsModule->setTemplateType('panel');
+
         // Top Wallpapers - Admin Dashboard
         $topWallpapersAdminModule = $modules->newEntity();
         $topWallpapersAdminModule->setModule('wallpapers');
@@ -181,7 +190,7 @@ class WallpaperDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultCont
         $likedWallpapersModule->setTemplateType('panel');
         $likedWallpapersModule->setSettingsArray(['layout' => 'thumbnails', 'columns' => 2, 'limit' => 6, 'filter' => 'likes']);
 
-        $modules->insert([$updatesModule, $reportsModule, $avsNewsModule, $topWallpapersAdminModule, $userInfoModule, $likedWallpapersModule]);
+        $modules->insert([$updatesModule, $reportsModule, $avsNewsModule, $wallpaperStatsModule, $topWallpapersAdminModule, $userInfoModule, $likedWallpapersModule]);
     }
 
     public function blogDefaults()
