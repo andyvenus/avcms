@@ -9,3 +9,17 @@
 {% block form_start %}
     {{ form_start(form, {"data-item-id": item.id|default(0), 'class': 'review-game-submission'}) }}
 {% endblock %}
+
+{% block form_rows %}
+    {{ form_rows_before(form, 'width') }}
+
+    <div class="form-group">
+        <label>{% trans %}Dimensions{% endtrans %}</label><br/>
+        {{ form_field(form.width, {class: 'input-short'}) }} x {{ form_field(form.height, {class: 'input-short'}) }}
+
+        <button type="button" class="btn btn-default avcms-get-game-dimensions"><span class="glyphicon glyphicon-refresh"></span> {% trans %}Auto{% endtrans %}</button>
+        <span class="avcms-game-dimensions-error text-danger"></span>
+    </div>
+
+    {{ form_rows_after(form, 'height') }}
+{% endblock %}
