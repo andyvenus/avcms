@@ -60,6 +60,9 @@ class WallpaperAdminForm extends AdminContentForm
         
         $this->add('description', 'textarea', array(
             'label' => 'Description',
+            'attr' => [
+                'rows' => '6'
+            ]
         ));
 
         $this->add('tags', 'text', array(

@@ -18,3 +18,7 @@
 {% block form_start %}
     {{ form_start(form, {"data-item-id": item.id|default(0), 'class': 'review-wallpaper-submission'}) }}
 {% endblock %}
+
+{% block form_rows %}
+    {% include '@Wallpapers/admin/wallpaper_admin_form.twig' %}
+{% endblock %}

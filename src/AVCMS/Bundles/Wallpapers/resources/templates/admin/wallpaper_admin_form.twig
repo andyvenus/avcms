@@ -1,0 +1,26 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h1 class="panel-title">{% trans %}Image{% endtrans %}</h1>
+    </div>
+    <div class="panel-body">
+        {{ form_rows_between(form, 'wallpaper_file', 'crop_position') }}
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h1 class="panel-title">{% trans %}Details{% endtrans %}</h1>
+    </div>
+    <div class="panel-body">
+        {{ form_rows_between(form, 'name', 'slug') }}
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h1 class="panel-title">{% trans %}Publish{% endtrans %}</h1>
+    </div>
+    <div class="panel-body">
+        {{ form_rows_after(form, 'slug') }}
+    </div>
+</div>

@@ -44,16 +44,22 @@ class GameAdminForm extends AdminContentForm
         
         $this->add('description', 'textarea', array(
             'label' => 'Description',
-        ));
-        
-        $this->add('category_id', 'select', array(
-            'label' => 'Category',
-            'choices_provider' => $categoryChoicesProvider,
-            'choices_translate' => false
+            'attr' => [
+                'rows' => '6'
+            ]
         ));
         
         $this->add('instructions', 'textarea', array(
             'label' => 'Instructions',
+            'attr' => [
+                'rows' => '6'
+            ]
+        ));
+
+        $this->add('category_id', 'select', array(
+            'label' => 'Category',
+            'choices_provider' => $categoryChoicesProvider,
+            'choices_translate' => false
         ));
 
         $this->add('tags', 'text', array(

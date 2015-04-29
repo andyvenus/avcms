@@ -17,6 +17,12 @@ abstract class AdminContentForm extends FormBlueprint
     {
         $this->itemId = $itemId;
 
+        $this->add('slug', 'text', array(
+            'label' => 'URL Slug',
+            'required' => true,
+            'field_template' => '@admin/form_fields/slug_field.twig'
+        ));
+
         $this->add('published', 'radio', array(
             'label' => 'Publish',
             'default' => 1,
@@ -33,12 +39,6 @@ abstract class AdminContentForm extends FormBlueprint
             'transform' => 'unixtimestamp',
             'default' => $date->format('Y-m-d H:i'),
             'required' => true
-        ));
-
-        $this->add('slug', 'text', array(
-            'label' => 'URL Slug',
-            'required' => true,
-            'field_template' => '@admin/form_fields/slug_field.twig'
         ));
     }
 } 
