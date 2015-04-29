@@ -1,0 +1,7 @@
+details:
+  name: Marvel
+  description: A simple theme built with bootstrap
+  version: 1.0
+  author: AV Scripts
+
+parent: basic

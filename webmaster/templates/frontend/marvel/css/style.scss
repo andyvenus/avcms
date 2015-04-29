@@ -1,6 +1,6 @@
-$header-base-color: #c9dccb;
-$header-text-color: darken($header-base-color, 40);
-$panel-header-color: #f6f2eb;
+$header-base-color: #6295dc;
+$header-text-color: lighten($header-base-color, 40);
+$panel-header-color: #f17851;
 
 h1, h2, h3, h3, h5, h6 {
   font-family: HelveticaNeue-Light, HelveticaNeue, sans-serif;
@@ -8,7 +8,7 @@ h1, h2, h3, h3, h5, h6 {
 }
 
 a {
-  color: $header-text-color;
+  color: $header-base-color;
 }
 
 .panel, .panel-heading {
@@ -20,7 +20,7 @@ a {
 
   .panel-heading {
     background-color: $panel-header-color;
-    color: darken($panel-header-color, 40);
+    color: white;
   }
 }
 
@@ -195,6 +195,10 @@ select[name=author] {
       font-weight: normal;
       color: darken($panel-header-color, 50);
       font-family: "HelveticaNeue-Light", sans-serif;
+    }
+
+    a {
+      color: white;
     }
   }
 
