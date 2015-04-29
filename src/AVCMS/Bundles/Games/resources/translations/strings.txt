@@ -29,7 +29,7 @@ Game File
 Game Image
 I am the copyright owner of this image or have permission from the copyright owner
 Submit a Game
-Submit a game for us to use on our site! By submitting a wallpaper you give us full permission to use the image on our website.
+Submit a game for us to use on our site! By submitting a game you give us full permission to use the image on our website.
 Games must be Flash or Unity files and under {size} MB
 You must check the permissions field
 Thanks for your submission, it's now pending review.
