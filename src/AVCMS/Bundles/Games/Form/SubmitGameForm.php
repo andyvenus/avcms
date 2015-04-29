@@ -46,7 +46,7 @@ class SubmitGameForm extends FormBlueprint
         ]);
 
         $this->add('permission', 'checkbox', [
-            'label' => 'I am the copyright owner of this image or have permission from the copyright owner'
+            'label' => 'I am the copyright owner of this game or have permission from the copyright owner'
         ]);
     }
 
