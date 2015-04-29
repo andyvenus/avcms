@@ -32,7 +32,7 @@ Registration complete. You can now login.
 Username not found.
 Validate your new account
 Thanks for registering. Please validate your email address by clicking the link below.
-Registration complete. An link has been sent to {email} for you to confirm your email address and activate your account.
+Registration complete. A link has been sent to {email} for you to confirm your email address and activate your account.
 Sorry that username is already in use
 An account is already registered using that email address
 Validate Email
