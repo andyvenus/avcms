@@ -95,6 +95,11 @@ class FormExtension extends \Twig_Extension
                     array('is_safe' => array('html')
                     )
             ),
+            'form_rows_between' => new \Twig_SimpleFunction('form_rows_between',
+                    array($this, 'formRowsBetween'),
+                    array('is_safe' => array('html')
+                    )
+            ),
             'form_messages' => new \Twig_SimpleFunction('form_messages',
                 array($this, 'formMessages'),
                 array('is_safe' => array('html')
@@ -205,7 +210,7 @@ class FormExtension extends \Twig_Extension
         return $this->baseTemplate->renderBlock('form_rows', array('form_rows' => $limitedFields, 'attr' => $attributes));
     }
 
-    public function formRowsAfter(FormViewInterface $form, $beforeField, $attributes = array())
+    public function formRowsAfter(FormViewInterface $form, $afterField, $attributes = array())
     {
         $fields = $form->getFields();
 
@@ -217,8 +222,32 @@ class FormExtension extends \Twig_Extension
                 $limitedFields[$fieldName] = $field;
             }
 
-            if ($fieldName == $beforeField) {
+            if ($fieldName == $afterField) {
                 $beforeFieldReached = true;
+            }
+        }
+
+        return $this->baseTemplate->renderBlock('form_rows', array('form_rows' => $limitedFields, 'attr' => $attributes));
+    }
+
+    public function formRowsBetween(FormViewInterface $form, $startField, $endField, $attributes = array())
+    {
+        $fields = $form->getFields();
+
+        $collecting = false;
+        $limitedFields = array();
+
+        foreach ($fields as $fieldName => $field) {
+            if ($fieldName == $startField) {
+                $collecting = true;
+            }
+
+            if ($collecting === true) {
+                $limitedFields[$fieldName] = $field;
+            }
+
+            if ($fieldName == $endField) {
+                break;
             }
         }
 
