@@ -29,6 +29,7 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $homeItem->setSettings(['route' => 'home']);
         $homeItem->setIcon('glyphicon glyphicon-home');
         $homeItem->setOrder(1);
+        $homeItem->setTranslatable(1);
 
         $contactItem = $menuItems->newEntity();
         $contactItem->setMenu('frontend_footer');
@@ -36,6 +37,7 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $contactItem->setLabel('Contact Us');
         $contactItem->setSettings(['route' => 'contact_us']);
         $contactItem->setIcon('glyphicon glyphicon-envelope');
+        $contactItem->setTranslatable(1);
 
         $linksItem = $menuItems->newEntity();
         $linksItem->setMenu('frontend_footer');
@@ -43,8 +45,17 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $linksItem->setLabel('Link Exchange');
         $linksItem->setSettings(['route' => 'links']);
         $linksItem->setIcon('glyphicon glyphicon-link');
+        $linksItem->setTranslatable(1);
 
-        $menuItems->insert([$homeItem, $contactItem, $linksItem]);
+        $membersItem = $menuItems->newEntity();
+        $membersItem->setMenu('frontend_footer');
+        $membersItem->setType('route');
+        $membersItem->setLabel('Members');
+        $membersItem->setSettings(['route' => 'member_list']);
+        $membersItem->setIcon('glyphicon glyphicon-user');
+        $membersItem->setTranslatable(1);
+
+        $menuItems->insert([$homeItem, $contactItem, $linksItem, $membersItem]);
 
         // Modules
         $modules = $this->modelFactory->create('AVCMS\Bundles\CmsFoundation\Model\Modules');
@@ -108,7 +119,7 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $newestPostsModule->setModule('blog_posts');
         $newestPostsModule->setActive(1);
         $newestPostsModule->setPosition('sidebar');
-        $newestPostsModule->setTitle('Latest Posts');
+        $newestPostsModule->setTitle('Blog Posts');
         $newestPostsModule->setShowHeader(1);
         $newestPostsModule->setTemplateType('list_panel');
         $newestPostsModule->setCacheTime(3600);
