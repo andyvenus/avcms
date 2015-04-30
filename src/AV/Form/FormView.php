@@ -301,7 +301,13 @@ class FormView implements FormViewInterface
     {
         foreach ($errors as $error) {
             if ($error->getTranslate() === true) {
-                $error->setMessage($this->translate($error->getMessage(), $error->getTranslationParams()));
+                $params = $error->getTranslationParams();
+
+                if (isset($params['field_label'])) {
+                    $params['field_label'] = $this->translate($params['field_label']);
+                }
+
+                $error->setMessage($this->translate($error->getMessage(), $params));
             }
             $this->errors[] = $error;
         }

@@ -227,6 +227,10 @@ class Validator
     protected function processError($error_message, $error_parameters = array())
     {
         if (isset($this->translator)) {
+            if (isset($error_parameters['param_name'])) {
+                $error_parameters['param_name'] = $this->translator->trans($error_parameters['param_name']);
+            }
+
             return $this->translator->trans($error_message, $error_parameters);
         }
         else {
