@@ -11,11 +11,11 @@ use AV\Form\FormBlueprint;
 
 class FrontendSearchForm extends FormBlueprint
 {
-    public function __construct($searchContentTypes, $selectedContent = null)
+    public function __construct($searchContentTypes, $selectedContent = null, $searchPhrase = 'Search')
     {
         $this->add('search', 'text', [
             'label' => 'Search',
-            'attr' => ['placeholder' => 'Search']
+            'attr' => ['placeholder' => $searchPhrase]
         ]);
 
         if (count($searchContentTypes) < 2) {

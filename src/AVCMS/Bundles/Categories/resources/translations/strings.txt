@@ -5,3 +5,4 @@ Categories Display Type
 Inline (categories items appear in the main menu)
 Child (categories appear under this menu item, must not be nested)
 Show Sub-Categories
+Category

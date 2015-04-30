@@ -37,3 +37,4 @@ Click here to submit another game
 You have {total} game plays remaining before you must register
 Please login to continue playing games
 Show only mobile games
+Newest Games

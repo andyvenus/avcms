@@ -5,3 +5,8 @@ Loading
 Toggle Dropdown
 Admin
 Edit Profile
+Home
+Order
+Admin
+Share
+Description

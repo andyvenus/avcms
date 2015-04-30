@@ -3,3 +3,4 @@ Username
 Sorry that username is already in use
 Hi {name}, we don't want to show your real name when using our site so please enter a username.
 Cancel Sign-up
+or

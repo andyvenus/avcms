@@ -88,7 +88,7 @@ class WallpapersController extends Controller
 
         $wallpapers = $query->get();
 
-        $formBp = new WallpaperFrontendFiltersForm($this->get('wallpaper.resolutions_manager')->getAllResolutions());
+        $formBp = new WallpaperFrontendFiltersForm($this->get('wallpaper.resolutions_manager')->getAllResolutions(), $this->trans('All Resolutions'));
         $attr = $request->attributes->all();
         $attr['page'] = 1;
         $formBp->setAction($this->generateUrl($request->attributes->get('_route'), $attr));

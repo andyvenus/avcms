@@ -45,10 +45,12 @@ Submit a wallpaper for us to use on our site! By submitting a wallpaper you give
 You must check the permissions field
 Thanks for your submission, it's now pending review.
 Click here to submit another image
-Submit a Wallpaper
+Submit Wallpaper
 Submitted By
 You have already submitted {count} wallpapers, please wait for them to be accepted first
 The latest wallpapers
+Latest Wallpapers
+Wallpaper Tags
 Press the download button to save, or
 {resolution} Wallpapers
 Inline (resolutions items appear in the main menu)
@@ -56,3 +58,5 @@ Child (resolutions appear under this menu item, must not be nested)
 Liked Wallpapers
 Report Issue
 All Liked Wallpapers
+Please login to submit a wallpaper
+Newest Wallpapers

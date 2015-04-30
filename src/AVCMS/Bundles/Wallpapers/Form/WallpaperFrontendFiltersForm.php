@@ -11,7 +11,7 @@ use AV\Form\FormBlueprint;
 
 class WallpaperFrontendFiltersForm extends FormBlueprint
 {
-    public function __construct($resolutionChoices)
+    public function __construct($resolutionChoices, $allResolutionsLabel = 'All Resolutions')
     {
         $this->setMethod('GET');
 
@@ -31,7 +31,7 @@ class WallpaperFrontendFiltersForm extends FormBlueprint
 
         $this->add('resolution', 'select', [
             'label' => 'Resolution',
-            'choices' => array_merge(['all' => 'All Resolutions'], $resolutionChoices),
+            'choices' => array_merge(['all' => $allResolutionsLabel], $resolutionChoices),
             'choices_translate' => false,
             'default' => 'all',
             'allow_unset' => true

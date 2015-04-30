@@ -30,7 +30,6 @@ Manage Users
 Manage User Groups
 Main Permissions
 Admin Permissions
-The presented password is invalid.
 Email validated
 The entered username is already in use
 The entered email is already in use

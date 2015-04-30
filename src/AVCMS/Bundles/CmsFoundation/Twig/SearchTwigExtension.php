@@ -72,7 +72,9 @@ class SearchTwigExtension extends \Twig_Extension
             }
         }
 
-        $this->searchForm = $this->formBuilder->buildForm(new FrontendSearchForm($searchContentTypes, $selectedContent))->createView();
+        $searchPhrase = $this->translator->trans('Search');
+
+        $this->searchForm = $this->formBuilder->buildForm(new FrontendSearchForm($searchContentTypes, $selectedContent, $searchPhrase))->createView();
     }
 
     public function getGlobals()

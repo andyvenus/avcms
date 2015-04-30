@@ -40,6 +40,7 @@ Log in now
 Edit User
 This user has not filled in their profile
 Login
+Logout
 Forgot Password
 Password reset request
 Reset my password
@@ -59,3 +60,5 @@ Enable Emails
 If off you will not receive any notification or newsletter emails
 Member List
 Username or Email
+User Info
+The presented password is invalid.

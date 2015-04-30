@@ -69,7 +69,6 @@ Number of columns (thumbnail/details layout)
 Game Tags
 If "User's Likes" is selected, the module will show the likes of a user if one is passed to the module position (like on a users profile). Otherwise it will show the active user's likes.
 User's Likes
-Newest Games
 Games Homepage
 The games homepage
 No tags

@@ -103,6 +103,7 @@ class Validator
      * @param string $error_message
      * @param bool $ignore_unset
      * @param bool $stop_propagation
+     * @param null $readableName
      */
     public function addRule($param_names, Rules\Rule $rule, $error_message = null, $ignore_unset = false, $stop_propagation = false, $readableName = null)
     {
@@ -208,9 +209,12 @@ class Validator
 
             }
             elseif ($rule['ignore_unset'] === false) {
+
                 $rule['error_message'] = "Parameter '{param_name}' not set";
 
-                $rule['error_message'] = $this->processError($rule['error_message'], array('param_name' => $rule['param_name']));
+                $readableName = (isset($rule['readable_name']) ? $rule['readable_name'] : $rule['param_name']);
+
+                $rule['error_message'] = $this->processError($rule['error_message'], array('param_name' => $readableName));
 
                 if ($rule['stop_propagation'] === true) {
                     $sub_validation_ignore[] = $rule['param_name'];
