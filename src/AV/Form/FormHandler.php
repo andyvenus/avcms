@@ -673,7 +673,7 @@ class FormHandler
 
         foreach ($fields as $field) {
             if (isset($field['options']['required']) && $field['options']['required'] === true) {
-                if ($this->typeHandler->allowUnsetRequest($field) === false && (!isset($data[ $field['name'] ]) || !$data[ $field['name'] ] )) {
+                if (!isset($data[ $field['name'] ]) || $data[ $field['name'] ] == null) {
                     if (isset($field['options']['label'])) {
                         $label = $field['options']['label'];
                     }
