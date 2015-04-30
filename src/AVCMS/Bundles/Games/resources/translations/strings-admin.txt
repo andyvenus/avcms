@@ -71,7 +71,6 @@ If "User's Likes" is selected, the module will show the likes of a user if one i
 User's Likes
 Games Homepage
 The games homepage
-No tags
 Recent Last Play
 Oldest Last Play
 Submissions
