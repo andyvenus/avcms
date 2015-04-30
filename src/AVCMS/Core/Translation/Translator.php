@@ -8,9 +8,11 @@
 namespace AVCMS\Core\Translation;
 
 use AVCMS\Core\SettingsManager\SettingsManager;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\MessageSelector;
 use Symfony\Component\Translation\Translator as TranslatorBase;
 
+// todo: Admin translations
 class Translator extends TranslatorBase
 {
 
@@ -20,9 +22,14 @@ class Translator extends TranslatorBase
 
     private $selector;
 
-    public function __construct(SettingsManager $settings, MessageSelector $selector = null, $debug = false)
+    public function __construct(SettingsManager $settings, MessageSelector $selector = null, $debug = false, RequestStack $requestStack = null)
     {
         $locale = $settings->getSetting('language');
+
+        if ($requestStack && strpos($requestStack->getMasterRequest()->getUri(), 'admin') !== false) {
+            $locale = null;
+        }
+
         if (!$locale) {
             $locale = 'en';
         }
