@@ -5,7 +5,7 @@
     {% for translation in translations %}
         <div class="well well-sm">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <h4><a href="{{ path('translate', {'id': translation.id}) }}">{{ translation.name }}</a> <span class="small">{{ translation.langId }}</span> </h4>
                     <p>Translated Strings:
                         {% if translation.totalTranslated == total_strings %}
@@ -17,7 +17,7 @@
                         Translated by: {{ translation.user.username }}
                     </p>
                 </div>
-                <div class="col-md-8 text-right">
+                <div class="col-md-6 text-right">
                     <a class="btn btn-success" href="{{ path('download_translation', {'id': translation.id}) }}"><span class="glyphicon glyphicon-download-alt"></span> Download</a>
                     <a class="btn btn-info" href="{{ path('translate', {'id': translation.id}) }}"><span class="glyphicon glyphicon-info-sign"></span> Details</a>
                     <a class="btn btn-primary" href="{{ path('clone_translation', {'id': translation.id}) }}"><span class="glyphicon glyphicon-copy"></span> Clone & Edit</a>

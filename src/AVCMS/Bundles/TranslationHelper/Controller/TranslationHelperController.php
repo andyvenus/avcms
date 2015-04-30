@@ -54,7 +54,7 @@ class TranslationHelperController extends Controller
         $allTranslationsTotal = 0;
 
         foreach ($allStrings as $bundle => $strings) {
-            $translations = $this->getBundleTranslations($bundle, $this->activeUser()->getId(), $translation);
+            $translations = $this->getBundleTranslations($bundle, $translation->getUserId(), $translation);
 
             $allStringsTotal = $allStringsTotal + count($strings);
             $allTranslationsTotal = $allTranslationsTotal + count($translations);
