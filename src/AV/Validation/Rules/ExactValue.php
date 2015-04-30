@@ -16,6 +16,8 @@ class ExactValue extends Rule
     public function __construct($value)
     {
         $this->value = $value;
+
+        $this->ruleData['required_value'] = $value;
     }
 
     function assert($param)
