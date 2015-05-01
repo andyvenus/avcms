@@ -71,6 +71,11 @@ class ModuleManagerTwigExtension extends \Twig_Extension
                 'render_modules',
                 array($this, 'renderModules'),
                 array('is_safe' => array('html'))
+            ),
+            'has_modules' => new \Twig_SimpleFunction(
+                'has_modules',
+                array($this, 'hasModules'),
+                array('is_safe' => array('html'))
             )
         );
     }
@@ -111,6 +116,11 @@ class ModuleManagerTwigExtension extends \Twig_Extension
         }
 
         return $allModules . '</div>';
+    }
+
+    public function hasModules($modulePosition)
+    {
+        return $this->moduleManager->getPositionModuleCount($modulePosition, false);
     }
 
     public function getName()

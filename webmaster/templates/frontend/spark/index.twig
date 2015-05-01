@@ -67,9 +67,12 @@
     </div>
 
     {# SECONDARY MENU #}
-    <div class="header-extra {{ container_style }}">
-        {{ render_modules('header_bottom') }}
-    </div>
+    {% if has_modules('header_bottom') %}
+        <div class="header-extra {{ container_style }}">
+            {{ render_modules('header_bottom') }}
+        </div>
+    {% endif %}
+
 
     {# MAIN CONTENT #}
         <section class="{{ container_style }} avcms-main">

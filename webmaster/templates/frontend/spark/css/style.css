@@ -32,7 +32,8 @@ body {
     color: white; }
 
 .header-extra {
-  background-color: #f7faf8; }
+  background-color: #f7faf8;
+  padding-top: 15px; }
 
 .logo-text {
   margin-top: 15px; }
