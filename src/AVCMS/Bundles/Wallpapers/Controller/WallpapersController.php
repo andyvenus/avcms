@@ -66,7 +66,7 @@ class WallpapersController extends Controller
                 $user = $this->activeUser();
 
                 if (!$user->getId()) {
-                    throw new AccessDeniedException('You must be logged in to view your liked games');
+                    throw new AccessDeniedException('You must be logged in to view your liked wallpapers');
                 }
             }
             else {

@@ -90,13 +90,13 @@ class WallpaperModulesController extends Controller
 
     public function wallpaperStatsModule()
     {
-        $totalGames = $this->wallpapers->query()->count();
+        $totalWallpapers = $this->wallpapers->query()->count();
         $totalHits = $this->wallpapers->query()->select([$this->wallpapers->query()->raw('SUM(hits) as total_hits')])->first(\PDO::FETCH_ASSOC)['total_hits'];
         $totalDownloads = $this->wallpapers->query()->select([$this->wallpapers->query()->raw('SUM(total_downloads) as total_downloads')])->first(\PDO::FETCH_ASSOC)['total_downloads'];
         $totalLikes = $this->wallpapers->query()->select([$this->wallpapers->query()->raw('SUM(likes) as total_likes')])->first(\PDO::FETCH_ASSOC)['total_likes'];
 
         return new Response($this->render('@Wallpapers/module/wallpaper_stats_module.twig', [
-            'total_wallpapers' => $totalGames,
+            'total_wallpapers' => $totalWallpapers,
             'total_hits' => $totalHits,
             'total_downloads' => $totalDownloads,
             'total_likes' => $totalLikes
