@@ -1,5 +1,6 @@
 name: Demo
 namespace: AVCMS\Bundles\Demo
+toggle: true
 require:
     - Framework
 
