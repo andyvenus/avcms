@@ -24,7 +24,7 @@ redirect_game_category:
 
 redirect_game_category_with_sort:
   path: /{category}/{order}/{page}
-  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, page: 1, route: game_category, removeExtensions: [page] }
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, route: game_category, removeExtensions: [page] }
   requirements:
     page:  \d+
 
