@@ -76,7 +76,7 @@ class GamesController extends Controller
         $finder = $this->games->find();
         $query = $finder->published()
             ->setResultsPerPage($this->setting('browse_games_per_page'))
-            ->setSearchFields(['name'])
+            ->setSearchFields(['games.name'])
             ->handleRequest($request, [
                 'page' => 1,
                 'order' => 'publish-date-newest',
