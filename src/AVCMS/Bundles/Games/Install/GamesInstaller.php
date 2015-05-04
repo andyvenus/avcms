@@ -15,7 +15,8 @@ class GamesInstaller extends BundleInstaller
     {
         return [
             '1.0' => 'install_1_0_0',
-            '1.0.1' => 'install_1_0_1'
+            '1.0.1' => 'install_1_0_1',
+            '1.0.2' => 'install_1_0_2'
         ];
     }
 
@@ -139,5 +140,10 @@ class GamesInstaller extends BundleInstaller
                   PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
+    }
+
+    public function install_1_0_2()
+    {
+        $this->PDO->exec("ALTER TABLE {$this->prefix}games CHANGE `advert_id` `advert_id` int(11) NOT NULL DEFAULT '0'");
     }
 }

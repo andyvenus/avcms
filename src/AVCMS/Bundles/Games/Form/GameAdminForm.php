@@ -69,7 +69,7 @@ class GameAdminForm extends AdminContentForm
         $this->add('advert_id', 'select', array(
             'label' => 'Advert',
             'help' => 'Show an advert before the game is loaded',
-            'choices' => ['0' => 'None'],
+            'choices' => ['0' => 'Default'],
             'choices_provider_service' => 'adverts.choices_provider',
             'translate_choices' => false
         ));
