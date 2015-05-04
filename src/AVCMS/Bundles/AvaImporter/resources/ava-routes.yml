@@ -18,7 +18,7 @@ redirect_game_tag:
 
 redirect_game_category:
   path: /{category}/{page}
-  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, page: 1, route: game_category, removeExtensions: [page] }
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, page: 1, route: game_category, removeExtensions: [category, page] }
   requirements:
     page:  \d+
 

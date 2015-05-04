@@ -18,7 +18,7 @@ redirect_wallpaper_tag:
 
 redirect_wallpaper_category:
   path: /{category}/{page}
-  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, page: 1, route: wallpaper_category, removeExtensions: [page] }
+  defaults: { _controller: CmsFoundation::RedirectController::redirectAction, page: 1, route: wallpaper_category, removeExtensions: [category, page] }
   requirements:
     page:  \d+
 
