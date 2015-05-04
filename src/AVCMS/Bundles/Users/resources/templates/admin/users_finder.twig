@@ -29,7 +29,7 @@
     </div>
 
     <div class="btn-group">
-        <a href="mailto:{{ user.email }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-envelope"></span> </a>
+        <a href="mailto:{{ item.email }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-envelope"></span> </a>
         {{ buttons.view('user_profile', {slug: item.slug}) }}
     </div>
 {% endblock %}
