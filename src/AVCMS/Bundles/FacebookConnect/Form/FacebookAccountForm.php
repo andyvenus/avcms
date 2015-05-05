@@ -11,7 +11,7 @@ use AV\Form\FormBlueprint;
 
 class FacebookAccountForm extends FormBlueprint
 {
-    public function __construct()
+    public function __construct($emailRequired = false)
     {
         $this->add('username', 'text', [
             'label' => 'Username',
@@ -28,5 +28,22 @@ class FacebookAccountForm extends FormBlueprint
                 ]
             )
         ]);
+
+        if ($emailRequired) {
+            $this->add('email', 'text', array(
+                'label' => 'Email Address',
+                'required' => true,
+                'validation' => array(
+                    [
+                        'rule' => 'MustNotExist',
+                        'arguments' => array('AVCMS\Bundles\Users\Model\Users', 'email'),
+                        'error_message' => 'An account is already registered using that email address',
+                    ],
+                    [
+                        'rule' => 'EmailAddress'
+                    ]
+                )
+            ));
+        }
     }
 }

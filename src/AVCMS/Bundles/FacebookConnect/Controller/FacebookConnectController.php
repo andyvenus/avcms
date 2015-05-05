@@ -41,14 +41,16 @@ class FacebookConnectController extends Controller
 
         $users = $this->container->get('users.model');
 
-        $form = $this->buildForm(new FacebookAccountForm(), $request);
+        $formBlueprint = new FacebookAccountForm(!isset($facebookUser['email']));
+
+        $form = $this->buildForm($formBlueprint, $request);
 
         $facebookUser = $facebookConnect->createRequest($session, 'GET', '/me?fields=first_name,id,email')->execute()->getGraphObject(GraphObject::className())->asArray();
 
         if ($form->isValid()) {
             $form->saveToEntities();
 
-            $email = isset($facebookUser['email']) ? $facebookUser['email'] : null;
+            $email = isset($facebookUser['email']) ? $facebookUser['email'] : $form->getData('email');
 
             $newUser = $this->container->get('users.new_user_builder')->createNewUser($form->getData('username'), $email);
 
