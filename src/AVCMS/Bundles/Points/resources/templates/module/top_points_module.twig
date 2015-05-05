@@ -1,0 +1,7 @@
+<div class="list-group">
+    {% for player in players %}
+        <div class="list-group-item">
+                    {{ user_info(player, {avatar_width: 40, avatar_height: 40}) }}
+        </div>
+    {% endfor %}
+</div>

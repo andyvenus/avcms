@@ -57,3 +57,20 @@ admin_settings:
     validation:
       numeric:
         rule: Numeric
+
+modules:
+  top_points:
+    name: Top Points
+    description: Shows the users with the most points
+    controller: Points::PointsModulesController::topPointsModule
+    cachable: true
+    default_cache_time: 0
+    accepted_template_types: [list_panel, none]
+    admin_settings:
+      limit:
+        type: text
+        label: Number of users to display
+        default: 10
+        validation:
+          numeric:
+            rule: Numeric
