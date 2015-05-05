@@ -1,6 +1,5 @@
 name: Adverts
 namespace: AVCMS\Bundles\Adverts
-toggle: true
 require:
   - Framework
 
