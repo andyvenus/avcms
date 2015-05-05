@@ -47,12 +47,13 @@ avcms.gamesAdmin = {
 
         var form = $(this).closest('form');
 
-        $.post(avcms.config.site_url+'admin/games/get-dimensions', {file: $('[name="'+selected+'"]').val()}, function(data) {
+        $.post(avcms.config.site_url+'admin/games/get-dimensions', {file: $('[name="'+selected+'"]').filter(':visible').val()}, function(data) {
             button.attr('disabled', false);
 
             if (data.success) {
                 form.find('input[name=width]').val(data.width);
                 form.find('input[name=height]').val(data.height);
+                button.parent().find('.avcms-game-dimensions-error').text('');
             }
             else {
                 button.parent().find('.avcms-game-dimensions-error').text(data.error);
