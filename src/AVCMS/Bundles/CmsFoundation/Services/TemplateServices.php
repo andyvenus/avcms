@@ -60,5 +60,9 @@ class TemplateServices implements ServicesInterface
             ->setArguments([new Reference('dispatcher')])
             ->addTag('twig.extension')
         ;
+
+        $container->register('twig.extension.php_include', 'AVCMS\Bundles\CmsFoundation\Twig\PhpIncludeTwigExtension')
+            ->addTag('twig.extension')
+        ;
     }
 }
