@@ -148,13 +148,17 @@ avcms.admin = {
     },
 
     showServerException: function(jqXHR, textStatus, errorThrown) {
+        alert("Error: " + avcms.admin.getServerException(jqXHR, textStatus, errorThrown));
+    },
+
+    getServerException: function(jqXHR, textStatus, errorThrown) {
         var exception = $($.parseHTML(jqXHR.responseText)).find('.error-message, .exc-message');
 
         if (exception.length > 0) {
             errorThrown = exception.text();
         }
 
-        alert("Error: "+errorThrown);
+        return errorThrown;
     },
 
     reloadMenu: function() {

@@ -142,16 +142,24 @@ avcms.gamesAdmin = {
 
             if (response.success) {
                 container_status.find('.avcms-done').show().text(response.message);
-                if (all_feeds) {
-                    avcms.gamesAdmin.updateAllFeeds();
-                }
-                else {
-                    avcms.browser.changeFinderFilters();
-                }
             }
             else {
                 container_status.find('.avcms-error').show().text(response.error);
             }
-        }).fail(avcms.admin.showServerException);
+
+            if (all_feeds) {
+                avcms.gamesAdmin.updateAllFeeds();
+            }
+            else {
+                avcms.browser.changeFinderFilters();
+            }
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            container_status.find('.avcms-loading').hide();
+            container_status.find('.avcms-error').show().text(avcms.admin.getServerException(jqXHR, textStatus, errorThrown));
+
+            if (all_feeds) {
+                avcms.gamesAdmin.updateAllFeeds();
+            }
+        });
     }
 };
