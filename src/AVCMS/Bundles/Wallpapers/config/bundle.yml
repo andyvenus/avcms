@@ -181,6 +181,7 @@ frontend_search:
   wallpapers:
     name: Wallpapers
     route: browse_wallpapers
+    priority: 10
 
 comments:
   wallpaper:

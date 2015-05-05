@@ -55,15 +55,19 @@ class SearchTwigExtension extends \Twig_Extension
         foreach ($bundleConfigs as $bundleConfig) {
             if (isset($bundleConfig['frontend_search'])) {
                 foreach ($bundleConfig['frontend_search'] as $searchConfig) {
+                    if (isset($searchConfig['hide']) && $searchConfig['hide']) {
+                        continue;
+                    }
+
                     try {
                         $route = $this->urlGenerator->generate($searchConfig['route'], [], UrlGeneratorInterface::ABSOLUTE_URL);
                     }
                     catch (\Exception $e) {
                         $route = '#route-'.$searchConfig['route'].'-not-found';
                     }
-                    $searchContentTypes[$route] = $this->translator->trans($searchConfig['name']);
+                    $searchContentTypes[$route] = ['name' => $this->translator->trans($searchConfig['name'])];
 
-                    asort($searchContentTypes);
+                    $searchContentTypes[$route]['priority'] = isset($searchConfig['priority']) ? $searchConfig['priority'] : 0;
 
                     if ($currentBundle === $bundleConfig['name'] && $selectedContent === null) {
                         $selectedContent = $route;
@@ -72,9 +76,18 @@ class SearchTwigExtension extends \Twig_Extension
             }
         }
 
+        usort($searchContentTypes, function($a, $b) {
+            return $b["priority"] - $a["priority"];
+        });
+
+        $selectOptions = [];
+        foreach ($searchContentTypes as $route => $contentType) {
+            $selectOptions[$route] = $contentType['name'];
+        }
+
         $searchPhrase = $this->translator->trans('Search');
 
-        $this->searchForm = $this->formBuilder->buildForm(new FrontendSearchForm($searchContentTypes, $selectedContent, $searchPhrase))->createView();
+        $this->searchForm = $this->formBuilder->buildForm(new FrontendSearchForm($selectOptions, $selectedContent, $searchPhrase))->createView();
     }
 
     public function getGlobals()

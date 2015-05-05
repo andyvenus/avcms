@@ -74,6 +74,7 @@ frontend_search:
   users:
     name: Users
     route: member_list
+    priority: -5
 
 menu_items:
   admin:

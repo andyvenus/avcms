@@ -233,6 +233,7 @@ frontend_search:
   games:
     name: Games
     route: browse_games
+    priority: 10
 
 module_positions:
   games_home:

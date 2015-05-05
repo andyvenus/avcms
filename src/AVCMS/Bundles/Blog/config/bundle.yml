@@ -31,6 +31,7 @@ frontend_search:
   blog_posts:
     name: Blog Posts
     route: blog_archive
+    priority: 0
 
 admin_settings_sections:
   blog: Blog
