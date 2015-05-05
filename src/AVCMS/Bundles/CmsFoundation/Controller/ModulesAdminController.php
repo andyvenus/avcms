@@ -53,6 +53,8 @@ class ModulesAdminController extends AdminBaseController
         $moduleManager = $this->container->get('module_manager');
         $allModules = $moduleManager->getAllModules();
 
+        ksort($allModules);
+
         $modulePositions = [$position->getType() => array()];
         foreach ($allModules as $moduleId => $module) {
             if ($module->getType() == $position->getType() || ($position->getGlobalModules() == 1 && $module->getType() == 'standard')) {
