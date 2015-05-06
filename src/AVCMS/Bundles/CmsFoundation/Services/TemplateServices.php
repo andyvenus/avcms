@@ -53,7 +53,12 @@ class TemplateServices implements ServicesInterface
 
         $container->register('twig.extension.flash_messages', 'AVCMS\Bundles\CmsFoundation\Twig\FlashMessagesTwigExtension')
             ->setArguments([new Reference('session')])
+            ->addMethodCall('addMessagesProvider', [new Reference('user_validation_messages')])
             ->addTag('twig.extension')
+        ;
+
+        $container->register('user_validation_messages', 'AVCMS\Bundles\CmsFoundation\Twig\Messages\UserValidationMessages')
+            ->setArguments([new Reference('security.token_storage'), new Reference('translator'), new Reference('router')])
         ;
 
         $container->register('twig.extension.outlet', 'AVCMS\Bundles\CmsFoundation\Twig\TwigOutletExtension')

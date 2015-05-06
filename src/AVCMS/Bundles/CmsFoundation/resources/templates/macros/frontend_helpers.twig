@@ -31,3 +31,10 @@
         </div>
     {% endfor %}
 {% endmacro %}
+
+{% macro print_messages() %}
+    {% for message in get_messages() %}
+        <div class="alert alert-{{ message.type }}">{{ message.message }} &nbsp;
+        {% if message.link %}<a class="alert-link" href="{{ message.link.url }}">{{ message.link.anchor }}</a>{% endif %}</div>
+    {% endfor %}
+{% endmacro %}

@@ -99,9 +99,7 @@
     {# MAIN CONTENT #}
 
         <section class="{{ container_style }} avcms-main">
-            {% for message in get_messages() %}
-                <div class="alert alert-info">{{ message.message }}</div>
-            {% endfor %}
+            {{ helper.print_messages() }}
 
     {% block full_width_content %}{% block wide_content %}
                 <div class="row">

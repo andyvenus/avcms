@@ -16,6 +16,11 @@ class FlashMessagesTwigExtension extends \Twig_Extension
      */
     private $session;
 
+    /**
+     * @var MessagesProviderInterface[]
+     */
+    private $providers = [];
+
     public function __construct(Session $session)
     {
         $this->session = $session;
@@ -32,7 +37,18 @@ class FlashMessagesTwigExtension extends \Twig_Extension
             }
         }
 
+        foreach ($this->providers as $provider) {
+            if ($providerMessages = $provider->getMessages()) {
+                $messages = array_merge($messages, $providerMessages);
+            }
+        }
+
         return $messages;
+    }
+
+    public function addMessagesProvider(MessagesProviderInterface $provider)
+    {
+        $this->providers[] = $provider;
     }
 
     public function getFunctions()

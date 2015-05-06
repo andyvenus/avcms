@@ -92,9 +92,7 @@
                     </form>
                 {% endblock %}
             </div>
-            {% for message in get_messages() %}
-                <div class="alert alert-info">{{ message.message }}</div>
-            {% endfor %}
+            {{ helper.print_messages() }}
 
             {% block wide_content %}
                 <div class="row">
