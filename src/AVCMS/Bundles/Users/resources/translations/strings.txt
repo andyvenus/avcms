@@ -62,3 +62,9 @@ Member List
 Username or Email
 User Info
 The presented password is invalid.
+Invalid user and verification code combination
+Validate Now
+Email sent
+Your email address has been validated.
+You still need to validate your email address ({email}) to get full access
+Resend
