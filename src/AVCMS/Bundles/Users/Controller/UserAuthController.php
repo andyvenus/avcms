@@ -39,7 +39,7 @@ class UserAuthController extends Controller
             $errorMessage = $request->getSession()->get(Security::AUTHENTICATION_ERROR)->getMessage();
         }
         if ($request->get('reauth')) {
-            $loginForm->addCustomErrors([new FormError(null, 'Please re-authenticate to access this area')]);
+            $loginForm->addCustomErrors([new FormError(null, 'Please re-authenticate to access this area', true)]);
         }
 
         if (isset($errorMessage)) {
