@@ -20,7 +20,12 @@ class FlashGameDistributionFeed implements GameFeedInterface
      */
     public function getFeedUrl(SettingsManager $settings)
     {
-        return 'http://flashgamedistribution.com/feed.php?&feed=json&gpp=1000';
+        $gpp = $settings->getSetting('game_feed_limit');
+        if ($gpp > 5000) {
+            $gpp = 5000;
+        }
+
+        return 'http://flashgamedistribution.com/feed.php?&feed=json&gpp='.$gpp;
     }
 
     /**
