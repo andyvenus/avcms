@@ -16,7 +16,12 @@ class UpdaterModuleController extends Controller
     {
         $appConfigInfo = $this->getParam('app_config')['info'];
 
-        $downloadUrl = $this->getParam('avs_api_url').'/download-latest?app_id='.$appConfigInfo['id'];
+        $key = null;
+        if (file_exists($this->getParam('root_dir').'/webmaster/license.php')) {
+            $key = include $this->getParam('root_dir').'/webmaster/license.php';
+        }
+
+        $downloadUrl = $this->getParam('avs_api_url').'/download-latest?app_id='.$appConfigInfo['id'].'&license_key='.$key;
 
         $cacheFile = $this->getParam('cache_dir').'/update_info.json';
         $json = null;

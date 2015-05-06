@@ -17,7 +17,12 @@ class UpdaterAdminController extends AdminBaseController
     {
         $appConfigInfo = $this->getParam('app_config')['info'];
 
-        $downloadUrl = $this->getParam('avs_api_url').'/download-latest?app_id='.$appConfigInfo['id'];
+        $key = null;
+        if (file_exists($this->getParam('root_dir').'/webmaster/license.php')) {
+            $key = include $this->getParam('root_dir').'/webmaster/license.php';
+        }
+
+        $downloadUrl = $this->getParam('avs_api_url').'/download-latest?app_id='.$appConfigInfo['id'].'&license_key='.$key;
 
         return new Response($this->renderAdminSection('@AVScripts/admin/check_for_update.twig', ['download_url' => $downloadUrl]));
     }
