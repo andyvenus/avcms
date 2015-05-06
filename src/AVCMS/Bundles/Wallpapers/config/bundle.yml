@@ -275,7 +275,7 @@ modules:
         default: 5
       show_wallpaper_name:
         type: checkbox
-        label: Show Date
+        label: Show Name
         default: 1
       show_wallpaper_date:
         type: checkbox
