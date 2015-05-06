@@ -11,9 +11,11 @@ use AV\Form\FormError;
 use AVCMS\Bundles\Users\Form\LoginForm;
 use AVCMS\Bundles\Users\Form\RegistrationForm;
 use AVCMS\Bundles\Users\Model\EmailValidationKey;
+use AVCMS\Bundles\Users\Model\User;
 use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\Util\SecureRandom;
 
@@ -77,22 +79,7 @@ class UserAuthController extends Controller
 
             $users->insert($user);
 
-            if ($this->setting('validate_email_addresses')) {
-                $randomGen = new SecureRandom();
-
-                $emailKey = new EmailValidationKey();
-                $emailKey->setCode(bin2hex($randomGen->nextBytes(20)));
-                $emailKey->setGenerated(time());
-                $emailKey->setUserId($user->getId());
-                $this->model('EmailValidationKeys')->insert($emailKey);
-
-                $mailer = $this->container->get('mailer');
-
-                $email = $mailer->newEmail($this->trans('Validate your new account'), $this->render("@Users/email/email.validate_address.twig", ['emailKey' => $emailKey]), 'text/html', 'UTF-8');
-                $email->setTo($user->getEmail());
-
-                $mailer->send($email);
-            }
+            $this->sendValidationEmail($user);
 
             return new Response($this->render('@Users/register_complete.twig', ['emailValidation' => $this->setting('validate_email_addresses'), 'user' => $user]));
         }
@@ -126,5 +113,40 @@ class UserAuthController extends Controller
         }
 
         return new Response($this->render('@Users/validate_email.twig', ['success' => $success]));
+    }
+
+    public function resendValidationEmailAction()
+    {
+        if (!$this->userLoggedIn() || $this->activeUser()->getRoleList() !== 'ROLE_NOT_VALIDATED') {
+            throw new AccessDeniedException;
+        }
+
+        $this->sendValidationEmail($this->activeUser());
+
+        return $this->redirect('home', [], 302, 'success', $this->trans('Email sent'));
+    }
+
+    private function sendValidationEmail(User $user)
+    {
+        if ($this->setting('validate_email_addresses')) {
+            $randomGen = new SecureRandom();
+
+            $emailKey = $this->model('EmailValidationKeys')->query()->where('user_id', $user->getId())->first();
+
+            if (!$emailKey) {
+                $emailKey = new EmailValidationKey();
+                $emailKey->setCode(bin2hex($randomGen->nextBytes(20)));
+                $emailKey->setGenerated(time());
+                $emailKey->setUserId($user->getId());
+                $this->model('EmailValidationKeys')->insert($emailKey);
+            }
+
+            $mailer = $this->container->get('mailer');
+
+            $email = $mailer->newEmail($this->trans('Validate your new account'), $this->render("@Users/email/email.validate_address.twig", ['emailKey' => $emailKey]), 'text/html', 'UTF-8');
+            $email->setTo($user->getEmail());
+
+            $mailer->send($email);
+        }
     }
 }

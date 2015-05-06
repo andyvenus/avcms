@@ -16,6 +16,10 @@ validate_email:
   path:     /validate-email/{userId}/{code}
   defaults: { _controller: 'Users::UserAuthController::validateEmailAction' }
 
+resend_validate_email:
+  path:     /validate-email
+  defaults: { _controller: 'Users::UserAuthController::resendValidationEmailAction' }
+
 user_profile:
   path: /profile/{slug}.{ext}
   defaults: { _controller: Users::UserProfileController::userProfileAction, ext: null }
