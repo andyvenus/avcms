@@ -24,7 +24,6 @@ class AdminModuleForm extends FormBlueprint
 
         $this->add('show_header', 'checkbox', [
             'label' => 'Show Header',
-            'required' => true,
             'default' => 1
         ]);
 
