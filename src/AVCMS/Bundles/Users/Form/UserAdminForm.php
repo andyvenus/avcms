@@ -26,10 +26,6 @@ class UserAdminForm extends FormBlueprint
             'label' => 'Email',
         ));
         
-        $this->add('email_validated', 'checkbox', array(
-            'label' => 'Email Validated',
-        ));
-        
         $this->add('about', 'textarea', array(
             'label' => 'About',
         ));
