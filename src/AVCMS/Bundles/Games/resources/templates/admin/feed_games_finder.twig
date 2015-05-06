@@ -25,7 +25,7 @@
     </div>
 
     <div class="avcms-feed-game-buttons">
-        {{ form_field(categories.fields()['category-' ~ item.id], {'class': 'no_select2 input-sm', style: 'width: 120px;display: inline;height: 22px;'}) }}
+        {{ form_field(categories.fields()['category-' ~ item.id], {'class': 'no_select2 select-sm-inline'}) }}
 
         <button class="btn btn-xs btn-success avcms-download-feed-game"><span class="glyphicon glyphicon-download-alt"></span> {% trans %}Import{% endtrans %}</button>
 
