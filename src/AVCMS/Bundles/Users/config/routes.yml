@@ -17,8 +17,8 @@ validate_email:
   defaults: { _controller: 'Users::UserAuthController::validateEmailAction' }
 
 user_profile:
-  path: /profile/{slug}
-  defaults: { _controller: Users::UserProfileController::userProfileAction }
+  path: /profile/{slug}.{ext}
+  defaults: { _controller: Users::UserProfileController::userProfileAction, ext: null }
 
 edit_user_profile:
   path: /edit-profile
