@@ -131,6 +131,10 @@ class EditTemplatesAdminController extends AdminBaseController
                 }
                 else {
                     $dir .= 'templates/frontend/'.$request->get('bundle');
+
+                    if ($fileType !== 'templates') {
+                        $dir .= '/'.$fileType;
+                    }
                 }
 
                 if (!file_exists($dir)) {
