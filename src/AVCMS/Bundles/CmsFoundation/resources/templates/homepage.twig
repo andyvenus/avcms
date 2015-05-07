@@ -1,6 +1,6 @@
 {% extends 'index.twig' %}
 
-{% block title %}{{ title }}{% endblock %}
+{% block title %}{{ title|trans }}{% endblock %}
 
 {% if module_position == 'homepage' and settings.site_description %}
     {% block meta_description %}{{ settings.site_description }}{% endblock %}
