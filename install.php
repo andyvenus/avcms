@@ -10,7 +10,7 @@ define('ROOT_DIR', __DIR__);
 
 require_once __DIR__.'/vendor/autoload.php';
 
-$avcms = new BundleKernel(ROOT_DIR, DEBUG_MODE, ['app_dir' => 'avcms_app/install', 'cache_dir' => 'cache/installer']);
+$avcms = new BundleKernel(ROOT_DIR, DEBUG_MODE, ['app_dir' => 'avcms_dev/install', 'cache_dir' => 'cache/installer']);
 
 $request = Request::createFromGlobals();
 $response = $avcms->handle($request);
