@@ -134,7 +134,7 @@ class PrivateMessagesController extends Controller
 
             $this->get('session')->set('avcms_last_pm', time());
 
-            if ($recipient->getReceiveEmails()) {
+            if ($recipient->getReceiveEmails() && $recipient->getEmail()) {
                 $mailer = $this->container->get('mailer');
                 $email = $mailer->newEmail(
                     $this->trans('You received a new private message'),
