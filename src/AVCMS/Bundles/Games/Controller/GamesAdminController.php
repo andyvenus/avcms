@@ -43,6 +43,10 @@ class GamesAdminController extends AdminBaseController
     {
         $game = $this->games->getOneOrNew($request->get('id', 0));
 
+        if (!$game) {
+            throw $this->createNotFoundException();
+        }
+
         $formBlueprint = new GameAdminForm($game, new CategoryChoicesProvider($this->model('GameCategories'), true));
 
         $form = $this->buildForm($formBlueprint);
