@@ -16,15 +16,10 @@ class PointsInstaller extends BundleInstaller
         return [];
     }
 
-    public function getHooks()
+    public function bundleCleanup()
     {
-        return [
-            'Users' => ['1.0' => 'alterUserTable']
-        ];
-    }
-
-    public function alterUserTable()
-    {
-        $this->PDO->exec("ALTER TABLE `{$this->prefix}users` ADD `points__points` int(11) NOT NULL DEFAULT '0'");
+        if (!$this->columnExists('users', 'points__points')) {
+            $this->PDO->exec("ALTER TABLE `{$this->prefix}users` ADD `points__points` int(11) NOT NULL DEFAULT '0'");
+        }
     }
 }

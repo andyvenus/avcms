@@ -18,13 +18,6 @@ class PrivateMessagesInstaller extends BundleInstaller
         ];
     }
 
-    public function getHooks()
-    {
-        return [
-            'Users' => ['1.0' => 'alterUserTable']
-        ];
-    }
-
     public function install_1_0_0()
     {
         $this->PDO->exec("
@@ -44,8 +37,10 @@ class PrivateMessagesInstaller extends BundleInstaller
         ");
     }
 
-    public function alterUserTable()
+    public function bundleCleanup()
     {
-        $this->PDO->exec("ALTER TABLE `{$this->prefix}users` ADD `messages__total_unread` int(11) NOT NULL DEFAULT '0'");
+        if (!$this->columnExists('users', 'messages__total_unread')) {
+            $this->PDO->exec("ALTER TABLE `{$this->prefix}users` ADD `messages__total_unread` int(11) NOT NULL DEFAULT '0'");
+        }
     }
 }

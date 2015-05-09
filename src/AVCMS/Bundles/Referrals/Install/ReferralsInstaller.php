@@ -35,4 +35,11 @@ class ReferralsInstaller extends BundleInstaller
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
     }
+
+    public function bundleCleanup()
+    {
+        if (!$this->columnExists('users', 'referral__referral')) {
+            $this->PDO->exec("ALTER TABLE `{$this->prefix}users` ADD `referral__referral` int(11) NOT NULL DEFAULT '0'");
+        }
+    }
 }

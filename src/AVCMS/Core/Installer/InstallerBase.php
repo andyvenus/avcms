@@ -47,6 +47,23 @@ class InstallerBase
 
     protected function sql($sql)
     {
-        $this->PDO->exec($sql);
+        return $this->PDO->exec($sql);
     }
+
+    protected function columnExists($table, $columnName)
+    {
+        $sth = $this->PDO->prepare("SHOW COLUMNS FROM `{$this->prefix}{$table}` LIKE :column");
+        $sth->bindParam(':column', $columnName);
+        $sth->execute();
+
+        $result = $sth->fetch(\PDO::FETCH_ASSOC);
+
+        return !empty($result);
+    }
+
+    /**
+     *  Function always run when the installer is run, regardless of whether the bundle was updated or not
+     */
+    public function bundleCleanup() {}
+
 } 

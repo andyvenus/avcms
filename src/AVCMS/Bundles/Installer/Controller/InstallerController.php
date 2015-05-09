@@ -12,6 +12,7 @@ use AV\Form\FormError;
 use AVCMS\Bundles\Installer\Form\CreateAdminForm;
 use AVCMS\Bundles\Installer\Form\NewInstallForm;
 use AVCMS\Core\Controller\Controller;
+use AVCMS\Core\Installer\Installer;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,8 +28,14 @@ class InstallerController extends Controller
      */
     protected $container;
 
+    /**
+     * @var Installer
+     */
     protected $installer;
 
+    /**
+     * @return Installer
+     */
     protected function getInstaller()
     {
         return $this->container->get('installer');
@@ -97,10 +104,7 @@ class InstallerController extends Controller
 
         // Secure, admin can't be created here unless there are 0 users in the database
         if ($users->query()->count() !== 0) {
-            $cacheClearer = new CacheClearer('cache');
-            $cacheClearer->clearCaches(null, true);
-
-            file_put_contents('webmaster/installer_lock.txt', '1');
+            $this->finishUp();
 
             return new RedirectResponse('../?install_complete=true');
         }
@@ -125,7 +129,7 @@ class InstallerController extends Controller
             $settings = $this->model('CmsFoundation:Settings');
             $settings->addSetting('admin_emails', $newUser->getEmail(), 'bundle', 'CmsFoundation');
 
-            file_put_contents('webmaster/installer_lock.txt', '1');
+            $this->finishUp();
 
             return new RedirectResponse('../?install_complete=true');
         }
@@ -162,5 +166,15 @@ class InstallerController extends Controller
         $cacheClearer->clearCaches();
 
         return new JsonResponse(['success' => $success, 'error' => $this->getInstaller()->getFailureError()]);
+    }
+
+    protected function finishUp()
+    {
+        $this->getInstaller()->runBundleInstallersCleanup();
+
+        $cacheClearer = new CacheClearer('cache');
+        $cacheClearer->clearCaches(null, true);
+
+        file_put_contents('webmaster/installer_lock.txt', '1');
     }
 }

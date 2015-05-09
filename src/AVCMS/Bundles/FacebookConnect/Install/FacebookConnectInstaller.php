@@ -16,15 +16,11 @@ class FacebookConnectInstaller extends BundleInstaller
         return [];
     }
 
-    public function getHooks()
-    {
-        return [
-            'Users' => ['1.0' => 'alterUserTable']
-        ];
-    }
 
-    public function alterUserTable()
+    public function bundleCleanup()
     {
-        $this->PDO->exec("ALTER TABLE `{$this->prefix}users` ADD `facebook__id` bigint(11) unsigned DEFAULT NULL");
+        if (!$this->columnExists('users', 'facebook__id')) {
+            $this->PDO->exec("ALTER TABLE `{$this->prefix}users` ADD `facebook__id` bigint(11) unsigned DEFAULT NULL");
+        }
     }
 }

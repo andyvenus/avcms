@@ -21,6 +21,9 @@ class Installer
 
     protected $appConfig;
 
+    /**
+     * @var InstallerBase[]
+     */
     protected $bundleInstallers = [];
 
     protected $bundleConfigs = [];
@@ -199,5 +202,12 @@ class Installer
         }
 
         return $this->defaultContentInstaller;
+    }
+
+    public function runBundleInstallersCleanup()
+    {
+        foreach ($this->bundleInstallers as $installer) {
+            $installer->bundleCleanup();
+        }
     }
 }
