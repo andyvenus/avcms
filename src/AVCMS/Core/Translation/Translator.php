@@ -25,7 +25,7 @@ class Translator extends TranslatorBase
     {
         $locale = $settings->getSetting('language');
 
-        if ($requestStack && strpos($requestStack->getMasterRequest()->getPathInfo(), '/admin') === 1) {
+        if ($requestStack && strpos($requestStack->getMasterRequest()->getPathInfo(), '/admin') === 0) {
             $locale = null;
         }
 
