@@ -34,7 +34,7 @@ admin_settings:
           - 5
   site_tagline:
     type: text
-    label: Site Tag Line
+    label: Site Tagline
     section: main
     help: This will be displayed in the page title of the homepage
   site_description:
