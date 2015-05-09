@@ -214,7 +214,7 @@ admin_settings:
   games_square_thumbnails:
     type: checkbox
     label: Square thumbnails
-    help: Make all game thumbnails square even if their aspect ratio is slightly different
+    help: Make all game thumbnails square even if their aspect ratio is slightly different (browse games & modules)
     section: games
 
 comments:
