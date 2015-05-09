@@ -6,9 +6,7 @@
     {% block title %}{{ homepage_title|trans }}{% endblock %}
 {% endif %}
 
-{% if module_position == 'homepage' and settings.site_description %}
-    {% block meta_description %}{{ settings.site_description }}{% endblock %}
-{% endif %}
+{% block meta_description %}{{ homepage_description|trans }}{% endblock %}
 
 {% block content %}
     {{ render_modules(module_position) }}

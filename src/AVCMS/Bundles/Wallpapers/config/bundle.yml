@@ -117,6 +117,10 @@ admin_settings:
     label: Show Comments
     default: 1
     section: browse_wallpapers
+  wallpapers_home_meta_description:
+      type: textarea
+      label: Wallpapers homepage meta description
+      section: wallpapers
 
 menu_items:
   frontend:

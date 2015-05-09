@@ -207,6 +207,10 @@ admin_settings:
     label: Show Total Comments
     default: 0
     section: browse_games
+  games_home_meta_description:
+    type: textarea
+    label: Games homepage meta description
+    section: games
 
 comments:
   game:

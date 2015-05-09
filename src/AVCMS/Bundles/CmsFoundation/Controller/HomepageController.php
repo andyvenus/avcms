@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class HomepageController extends Controller
 {
-    public function homepageAction($modulePosition, $title = null, $fullTitle = false)
+    public function homepageAction($modulePosition, $title = null, $fullTitle = false, $description = null)
     {
         if ($modulePosition === 'homepage') {
             $fullTitle = true;
@@ -21,8 +21,13 @@ class HomepageController extends Controller
             if ($tagLine = $this->setting('site_tagline')) {
                 $title .= ' - '.$tagLine;
             }
+
+            $description = $this->setting('site_description');
+        }
+        else {
+            $description = $this->setting($modulePosition.'_meta_description');
         }
 
-        return new Response($this->render('@CmsFoundation/homepage.twig', ['module_position' => $modulePosition, 'homepage_title' => $title, 'full_title' => $fullTitle]));
+        return new Response($this->render('@CmsFoundation/homepage.twig', ['module_position' => $modulePosition, 'homepage_title' => $title, 'full_title' => $fullTitle, 'homepage_description' => $description]));
     }
 }
