@@ -15,7 +15,6 @@ use Symfony\Component\Translation\Translator as TranslatorBase;
 // todo: Admin translations
 class Translator extends TranslatorBase
 {
-
     protected $translatedStrings = array();
 
     protected $debug;
@@ -26,7 +25,7 @@ class Translator extends TranslatorBase
     {
         $locale = $settings->getSetting('language');
 
-        if ($requestStack && strpos($requestStack->getMasterRequest()->getUri(), 'admin') !== false) {
+        if ($requestStack && strpos($requestStack->getMasterRequest()->getPathInfo(), '/admin') === 1) {
             $locale = null;
         }
 
