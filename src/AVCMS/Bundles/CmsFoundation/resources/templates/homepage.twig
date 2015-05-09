@@ -1,6 +1,10 @@
 {% extends 'index.twig' %}
 
-{% block title %}{{ title|trans }}{% endblock %}
+{% if full_title %}
+    {% block full_title %}{{ homepage_title|trans }}{% endblock %}
+{% else %}
+    {% block title %}{{ homepage_title|trans }}{% endblock %}
+{% endif %}
 
 {% if module_position == 'homepage' and settings.site_description %}
     {% block meta_description %}{{ settings.site_description }}{% endblock %}
