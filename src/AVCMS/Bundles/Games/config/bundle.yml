@@ -211,6 +211,11 @@ admin_settings:
     type: textarea
     label: Games homepage meta description
     section: games
+  games_square_thumbnails:
+    type: checkbox
+    label: Square thumbnails
+    help: Make all game thumbnails square even if their aspect ratio is slightly different
+    section: games
 
 comments:
   game:

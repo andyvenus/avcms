@@ -24,6 +24,17 @@ avcms.games = {
             avcms.games.hideMobileFilter();
             window.onresize = avcms.games.hideMobileFilter;
         }
+
+        window.onresize = avcms.games.squareThumbnails;
+        avcms.games.squareThumbnails();
+    },
+
+    squareThumbnails: function() {
+        var imgs = $('.layout-games-thumbnail.square');
+
+        imgs.each(function() {
+            $(this).find('img').height($(this).width());
+        });
     },
 
     resizeGame: function() {
