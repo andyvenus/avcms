@@ -65,6 +65,7 @@ class SearchTwigExtension extends \Twig_Extension
                     catch (\Exception $e) {
                         $route = '#route-'.$searchConfig['route'].'-not-found';
                     }
+
                     $searchContentTypes[$route] = ['name' => $this->translator->trans($searchConfig['name'])];
 
                     $searchContentTypes[$route]['priority'] = isset($searchConfig['priority']) ? $searchConfig['priority'] : 0;
@@ -76,7 +77,7 @@ class SearchTwigExtension extends \Twig_Extension
             }
         }
 
-        usort($searchContentTypes, function($a, $b) {
+        uasort($searchContentTypes, function($a, $b) {
             return $b["priority"] - $a["priority"];
         });
 
