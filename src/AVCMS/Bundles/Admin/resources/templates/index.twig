@@ -49,6 +49,8 @@
                                        <li class="divider"></li>
                                    {% endif %}
                                    <li><a href="{{ path('updates') }}"><span class="glyphicon glyphicon-download-alt"></span> {% trans %}Check for update{% endtrans %}</a></li>
+                                   <li class="divider"></li>
+                                   <li><a href="{{ path('copyright_removal') }}"><span class="glyphicon glyphicon-copyright-mark"></span> {% trans %}Copyright Removal{% endtrans %}</a></li>
                                    {{ outlet('admin.options_menu') }}
                                </ul>
                            </li>
