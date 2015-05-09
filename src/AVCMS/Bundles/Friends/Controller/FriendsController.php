@@ -71,7 +71,7 @@ class FriendsController extends Controller
 
         $this->friendRequests->save($friendRequest);
 
-        if ($receiver->getReceiveEmails()) {
+        if ($receiver->getReceiveEmails() && $receiver->getEmail()) {
             $mailer = $this->get('mailer');
             $email = $mailer->newEmail($this->trans('New Friend Request'), $this->render('@Friends/email/email.friend_request.twig', ['sender' => $this->activeUser()]));
             $email->setTo($receiver->getEmail());
