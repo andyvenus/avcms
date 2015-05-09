@@ -29,9 +29,15 @@ class FacebookConnectButtonSubscriber implements EventSubscriberInterface
      */
     private $translator;
 
-    public function __construct(FacebookConnect $facebookConnect, $webDir, TranslatorInterface $translator)
+    /**
+     * @var
+     */
+    private $siteUrl;
+
+    public function __construct(FacebookConnect $facebookConnect, $siteUrl, $webDir, TranslatorInterface $translator)
     {
         $this->facebookConnect = $facebookConnect;
+        $this->siteUrl = $siteUrl;
         $this->webDir = $webDir;
         $this->translator = $translator;
     }
@@ -50,7 +56,7 @@ class FacebookConnectButtonSubscriber implements EventSubscriberInterface
 
         $url = $this->facebookConnect->getHelper()->getLoginUrl(['email']);
 
-        $content = '<a href="'.$url.'" class="btn btn-primary"><img src="'.$this->webDir.'/resources/FacebookConnect/images/fb_icon.png" width="18" height="18" /> '.$this->translator->trans('Login With Facebook').'</a>';
+        $content = '<a href="'.$url.'" class="btn btn-primary"><img src="'.$this->siteUrl.$this->webDir.'/resources/FacebookConnect/images/fb_icon.png" width="18" height="18" /> '.$this->translator->trans('Login With Facebook').'</a>';
 
         if ($outlet === 'register.top') {
             $content .= ' - or -';
