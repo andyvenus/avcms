@@ -76,7 +76,7 @@ avcms.gamesAdmin = {
         status.show();
 
         var thumbnail_loader = finder_item.find('.avcms-thumbnail-loader')
-        thumbnail_loader.show().html('<img src="'+avcms.config.site_url+'/web/resources/CmsFoundation/images/loader-round.gif">');
+        thumbnail_loader.show().html('<img src="'+avcms.config.site_url+'web/resources/CmsFoundation/images/loader-round.gif">');
 
         $.post(avcms.config.site_url+'admin/game-feeds/import', {id: id, category: category_id}, function(response) {
             thumbnail_loader.hide();
