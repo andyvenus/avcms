@@ -78,6 +78,10 @@ class FacebookConnect
 
     public function isEnabled()
     {
-        return ($this->settings->getSetting('facebook_connect') === '1');
+        return (
+            $this->settings->getSetting('facebook_connect') === '1'
+            && $this->settings->getSetting('facebook_app_id')
+            && $this->settings->getSetting('facebook_secret')
+        );
     }
 }
