@@ -33,7 +33,7 @@ class FileSelectFields {
         ]);
 
         $formBlueprint->add($fieldName, 'text', array(
-            'label' => $fieldNameUc.' Path',
+            'label' => $fieldNameUc.' '.$pathLabel,
         ));
 
         $formBlueprint->add($groupName.'[find]', 'text', array(
