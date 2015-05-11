@@ -14,7 +14,7 @@ $(document).ready(function() {
         var file_selector = $("input.file-selector-dropdown");
 
         file_selector.each(function() {
-            var field_group = $(this).attr('name').substr(0, $(this).attr('name').indexOf('['));
+            var field_group = $(this).attr('name').substr(0, $(this).attr('name').lastIndexOf('['));
 
             $(this).select2({
                 placeholder: "Find file",
@@ -87,7 +87,7 @@ $(document).ready(function() {
 
         if (field.length > 0) {
             field.each(function() {
-                var field_group = $(this).attr('name').substr(0, $(this).attr('name').indexOf('['));
+                var field_group = $(this).attr('name').substr(0, $(this).attr('name').lastIndexOf('['));
 
                 var field_val = $('[data-file-selector-group="'+field_group+'"]').filter(':checked').val();
 
