@@ -138,7 +138,7 @@ avcms.file_select = {
         var origBtn = $(this).html();
         $(this).html(avcms.general.trans('Downloading...'));
 
-        var field_group = urlField.attr('name').substr(0, urlField.attr('name').indexOf('['));
+        var field_group = urlField.attr('name').substr(0, urlField.attr('name').lastIndexOf('['));
 
         $.post(avcms.config.site_url + urlField.data('grab-file-url')+'?type='+field_group, 'file_url='+urlField.val(), function(data) {
             if (data.success === true) {
