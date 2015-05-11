@@ -10,7 +10,7 @@ namespace AVCMS\Bundles\FileUpload\Form;
 use AV\Form\FormBlueprintInterface;
 
 class FileSelectFields {
-    public function __construct(FormBlueprintInterface $formBlueprint, $fileSelectUrl, $uploadUrl, $grabUrl, $fieldName = 'file', $groupName = 'file', $additionalChoices = [], $defaultSelected = null, $pathLabel = 'Path', $fieldNameUc = null, $allowUnset = false)
+    public function __construct(FormBlueprintInterface $formBlueprint, $fileSelectUrl, $uploadUrl, $grabUrl, $fieldName = 'file', $groupName = 'file', $additionalChoices = [], $defaultSelected = null, $pathLabel = 'Path', $fieldNameUc = null)
     {
         $defaultSelected = ($defaultSelected ? $defaultSelected : $fieldName);
 
@@ -32,12 +32,10 @@ class FileSelectFields {
             'choices' => $choices,
             'attr' => ['data-file-selector-group' => $groupName, 'data-file-selector-target' => $fieldName],
             'default' => $defaultSelected,
-            'allow_unset' => $allowUnset
         ]);
 
         $formBlueprint->add($fieldName, 'text', [
             'label' => $fieldNameUc.' '.$pathLabel,
-            'allow_unset' => $allowUnset
         ]);
 
         $formBlueprint->add($groupName.'[find]', 'text', [
@@ -46,7 +44,6 @@ class FileSelectFields {
                 'class' => 'file-selector-dropdown no_select2',
                 'data-file-select-url' => $fileSelectUrl
             ],
-            'allow_unset' => $allowUnset
         ]);
 
         $formBlueprint->add($groupName.'[upload]', 'file', [
@@ -55,7 +52,6 @@ class FileSelectFields {
             'attr' => [
                 'data-upload-url' => $uploadUrl
             ],
-            'allow_unset' => $allowUnset
         ]);
 
         $formBlueprint->add($groupName.'[grab]', 'text', [
@@ -64,7 +60,6 @@ class FileSelectFields {
             'attr' => [
                 'data-grab-file-url' => $grabUrl
             ],
-            'allow_unset' => $allowUnset
         ]);
     }
 }
