@@ -185,16 +185,16 @@ class FormExtension extends \Twig_Extension
         return $this->baseTemplate->renderBlock($block, array('form_row' => $field, 'attr' => $attributes));
     }
 
-    public function formRows(FormViewInterface $form, $attributes = array())
+    public function formRows($form, $attributes = array())
     {
-        $fields = $form->getFields();
+        $fields = $this->getFields($form);
 
         return $this->baseTemplate->renderBlock('form_rows', array('form_rows' => $fields, 'attr' => $attributes));
     }
 
-    public function formRowsBefore(FormViewInterface $form, $beforeField, $attributes = array())
+    public function formRowsBefore($form, $beforeField, $attributes = array())
     {
-        $fields = $form->getFields();
+        $fields = $this->getFields($form);
 
         $limitedFields = array();
 
@@ -210,9 +210,9 @@ class FormExtension extends \Twig_Extension
         return $this->baseTemplate->renderBlock('form_rows', array('form_rows' => $limitedFields, 'attr' => $attributes));
     }
 
-    public function formRowsAfter(FormViewInterface $form, $afterField, $attributes = array())
+    public function formRowsAfter($form, $afterField, $attributes = array())
     {
-        $fields = $form->getFields();
+        $fields = $this->getFields($form);
 
         $beforeFieldReached = false;
         $limitedFields = array();
@@ -230,9 +230,9 @@ class FormExtension extends \Twig_Extension
         return $this->baseTemplate->renderBlock('form_rows', array('form_rows' => $limitedFields, 'attr' => $attributes));
     }
 
-    public function formRowsBetween(FormViewInterface $form, $startField, $endField, $attributes = array())
+    public function formRowsBetween($form, $startField, $endField, $attributes = array())
     {
-        $fields = $form->getFields();
+        $fields = $this->getFields($form);
 
         $collecting = false;
         $limitedFields = array();
@@ -262,5 +262,18 @@ class FormExtension extends \Twig_Extension
     public function formMessages(FormViewInterface $form)
     {
         return $this->baseTemplate->renderBlock('messages', array('form' => $form));
+    }
+
+    private function getFields($form)
+    {
+        if ($form instanceof FormViewInterface) {
+            return $form->getFields();
+        }
+        elseif (is_array($form)) {
+            return $form;
+        }
+        else {
+            throw new \Exception('Something that is not a form or an array was passed to a form function');
+        }
     }
 }
