@@ -51,7 +51,7 @@ $(document).ready(function() {
         var file_upload = $('form').filter(':visible').find('.file-upload');
 
         file_upload.each(function() {
-            var field_group = $(this).attr('name').substr(0, $(this).attr('name').indexOf('['));
+            var field_group = $(this).attr('name').substr(0, $(this).attr('name').lastIndexOf('['));
             var file_field = $('[data-file-selector-group="'+field_group+'"]').filter(':visible').data('file-selector-target');
 
             $(this).fileupload({
