@@ -91,7 +91,7 @@ class FileSelectHelper
             $file = $request->files->get($this->fieldName);
         }
         else {
-            $file = $request->files->get($request->query->get('type'), null)['upload'];
+            $file = $request->files->get($request->query->get('type'), null, true)['upload'];
         }
 
         if ($file === null) {
