@@ -11,7 +11,7 @@ avcms.games = {
 
     onPageLoad: function() {
         if ($('#avcms-game-container').length > 0) {
-            window.onresize = avcms.games.resizeGame;
+            avcms.event.addEvent('window-resize', avcms.games.resizeGame);
             avcms.games.resizeGame();
 
             avcms.games.showAd();
@@ -22,10 +22,10 @@ avcms.games = {
 
         if ($('[name=mobile_only]').length > 0) {
             avcms.games.hideMobileFilter();
-            window.onresize = avcms.games.hideMobileFilter;
+            avcms.event.addEvent('window-resize', avcms.games.hideMobileFilter);
         }
 
-        window.onresize = avcms.games.squareThumbnails;
+        avcms.event.addEvent('window-resize', avcms.games.squareThumbnails);
         avcms.games.squareThumbnails();
     },
 

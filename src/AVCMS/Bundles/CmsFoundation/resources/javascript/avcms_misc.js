@@ -12,6 +12,8 @@ $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
 
     avcms.event.addEvent('submit-form-success', avcms.general.modalFormSuccess);
+
+    window.onresize = avcms.general.onWindowResize;
 });
 
 
@@ -39,6 +41,10 @@ avcms.general = {
             if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
         }
         return null;
+    },
+
+    onWindowResize: function() {
+        avcms.event.fireEvent('window-resize');
     },
 
     loadFormModal: function(url, data) {

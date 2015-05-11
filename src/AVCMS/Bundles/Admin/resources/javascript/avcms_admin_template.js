@@ -7,10 +7,7 @@ var avcms = avcms || {};
 $(document).ready(function() {
     avcms.adminTemplate.verticalDesign();
 
-    window.onresize = function(event) {
-        avcms.adminTemplate.verticalDesign();
-    };
-
+    avcms.event.addEvent('window-resize', avcms.adminTemplate.verticalDesign);
     avcms.event.addEvent('page-modified', avcms.adminTemplate.verticalDesign);
     avcms.event.addEvent('submit-form-complete', avcms.adminTemplate.formSubmitScroll);
     avcms.event.addEvent('submit-form-server-error', avcms.adminTemplate.formSubmitScroll);
