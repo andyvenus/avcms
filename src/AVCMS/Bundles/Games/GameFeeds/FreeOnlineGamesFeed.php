@@ -32,7 +32,7 @@ class FreeOnlineGamesFeed implements GameFeedInterface
             'instructions' => 'controls',
             'file' => 'swf_file',
             'provider_id' => 'id',
-            'thumbnail' => 'med_thumbnail_url',
+            'thumbnail' => 'large_thumbnail_url',
             'name' => 'title'
         ];
     }

@@ -41,7 +41,7 @@ class UnityFeedsFeed implements GameFeedInterface
     public function filterGame(FeedGame $game, $feedData)
     {
         $game->setTags(implode(', ', get_object_vars($feedData->tags)));
-        $game->setThumbnail($feedData->thumbnails->{'160x160'});
+        $game->setThumbnail($feedData->thumbnails->{'300x300'});
     }
 
     /**
