@@ -528,6 +528,22 @@ class WssImporterController extends Controller
         return new Response($this->render('@WssImporter/admin/import_progress.twig', ['url' => $url, 'message' => $message]));
     }
 
+    public function fixLikesAction()
+    {
+        $wallpapers = $this->model('Wallpapers');
+        $ratings = $this->model('LikeDislike:Ratings');
+
+        foreach ($wallpapers->query()->select(['id'])->get() as $wallpaper) {
+            $likes = $ratings->query()->where('content_id', $wallpaper->getId())->where('content_type', 'wallpaper')->where('rating', '1')->count();
+
+            $wallpaper->setLikes($likes);
+
+            $wallpapers->update($wallpaper);
+        }
+
+        return $this->redirect('home', [], 302, 'info', 'Likes updated');
+    }
+
     protected function renameFields(&$row, $renames)
     {
         foreach ($row as $fieldName => $fieldVal) {

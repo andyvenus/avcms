@@ -13,3 +13,7 @@ ava_importer_fix_points:
 ava_importer_fix_points_run:
   path: /ava-import/fix-points/run
   defaults: { _controller: AvaImporter::AvaImporterController::fixPointsAction }
+
+ava_importer_fix_likes:
+  path: /ava-import/fix-likes
+  defaults: { _controller: AvaImporter::AvaImporterController::fixLikesAction }

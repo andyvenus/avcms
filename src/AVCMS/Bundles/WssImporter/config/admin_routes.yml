@@ -5,3 +5,7 @@ wss_importer_home:
 wss_importer_run:
   path: /wss-import/run/{stage}/{run}
   defaults: { _controller: WssImporter::WssImporterController::doImportAction, stage: wallpapers, run: 1 }
+
+wss_importer_fix_likes:
+  path: /wss-import/fix-likes
+  defaults: { _controller: WssImporter::WssImporterController::fixLikesAction }

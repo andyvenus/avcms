@@ -598,6 +598,22 @@ class AvaImporterController extends Controller
         return $this->redirect('home', [], 302, 'info', 'Points imported');
     }
 
+    public function fixLikesAction()
+    {
+        $games = $this->model('Games');
+        $ratings = $this->model('LikeDislike:Ratings');
+
+        foreach ($games->query()->select(['id'])->get() as $game) {
+            $likes = $ratings->query()->where('content_id', $game->getId())->where('content_type', 'game')->where('rating', '1')->count();
+
+            $game->setLikes($likes);
+
+            $games->update($game);
+        }
+
+        return $this->redirect('home', [], 302, 'info', 'Likes updated');
+    }
+
     protected function renameFields(&$row, $renames)
     {
         foreach ($row as $fieldName => $fieldVal) {
