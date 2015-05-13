@@ -14,9 +14,8 @@
                 <div class="user-area-inner">{{ helper.simple_user_area }}</div>
             </div>
             <div class="col-md-6 col-md-pull-6 logo">
-
                 {% if settings.logo_image_url %}
-                    <a href="{{ path('home') }}"><img class="logo-image" src="{{ settings.logo_image_url }}" /></a>
+                    <a href="{{ path('home') }}"><img class="logo-image" src="{{ settings.logo_image_url }}" style="max-width: 100%" /></a>
                 {% else %}
                     <div class="logo-text">
                         <h1>
