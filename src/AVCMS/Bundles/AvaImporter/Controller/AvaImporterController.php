@@ -154,7 +154,7 @@ class AvaImporterController extends Controller
                     $gm['date_added'] = $gm['publish_date'] = (new \DateTime($gm['date_added']))->getTimestamp();
                 }
                 else {
-                    $gm['date_added'] = $oldSiteInstallDate;
+                    $gm['date_added'] = $gm['publish_date'] = $oldSiteInstallDate;
                 }
 
                 if (!$gm['slug']) {
