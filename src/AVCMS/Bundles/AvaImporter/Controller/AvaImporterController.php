@@ -261,7 +261,7 @@ class AvaImporterController extends Controller
                 }
 
                 $this->renameFields($u, [
-                    'seo_url' => 'slug',
+                    'seo_url' => 'slug'
                 ]);
 
                 if ($u['password_bcrypt']) {
@@ -275,8 +275,9 @@ class AvaImporterController extends Controller
                 $u['joined'] = (new \DateTime($u['joined']))->getTimestamp();
                 $u['last_activity'] = (new \DateTime($u['last_activity']))->getTimestamp();
 
-                $newUser = new User();
+                $newUser = $this->model('Users')->newEntity();
                 $newUser->fromArray($u, true);
+                $newUser->points->setPoints($u['points']);
 
                 $usersProcessed[] = $newUser;
 
