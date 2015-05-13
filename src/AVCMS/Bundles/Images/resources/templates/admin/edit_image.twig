@@ -1,0 +1,72 @@
+{% extends '@admin/edit_item.twig' %}
+
+{% block title -%}
+    {% spaceless %}
+        {% if item.id %}
+            {% trans with {'item': item.name} %}Editing {item}{% endtrans %}
+        {% else %}
+            {% trans %}New Image{% endtrans %}
+        {% endif %}
+    {% endspaceless  %}
+{% endblock %}
+
+{% block editor_title_edit %}
+    <span class="light">{% trans %}Editing Image{% endtrans %}:</span> <span data-id="{{ item.id }}" data-field="name">{{ item.name }}</span>
+{% endblock %}
+
+{% block editor_title_new %}
+    {% trans %}New Image{% endtrans %}
+{% endblock %}
+
+{% block form_rows %}
+
+    <div class="avcms-new-image" style="display: none">
+        {% block file %}
+            <div class="panel panel-default avcms-image-file-panel">
+                <div class="panel-heading">
+                    <h1 class="panel-title">{% trans %}Image{% endtrans %} <span class="no">{{ loop.index }}</span> </h1>
+                </div>
+                <div class="panel-body">
+                    {{ form_rows(files_form.getFields().images.fields[file_id|default('new')].fields) }}
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+
+    <div class="avcms-image-files">
+        {% for file in files %}
+            {% set file_id = file.id %}
+            {{ block('file') }}
+        {% endfor %}
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col-md-6">
+                <p><button type="button" class="btn btn-primary btn-block avcms-add-image-file"><span class="glyphicon glyphicon-plus-sign"></span> {% trans %}Add File{% endtrans %}</button></p>
+            </div>
+            <div class="col-md-6">
+                <p><a href="#" class="btn btn-success btn-block"><span class="glyphicon glyphicon-upload"></span> {% trans %}Bulk Upload{% endtrans %}</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">{% trans %}Details{% endtrans %}</h1>
+        </div>
+        <div class="panel-body">
+            {{ form_rows_between(form, 'name', 'slug') }}
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">{% trans %}Publish{% endtrans %}</h1>
+        </div>
+        <div class="panel-body">
+            {{ form_rows_after(form, 'slug') }}
+        </div>
+    </div>
+
+{% endblock %}

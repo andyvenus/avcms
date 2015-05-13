@@ -1,0 +1,30 @@
+<div class="list-group">
+    {% for image in images %}
+        <a href="{{ path('watch_image', {slug: image.slug}) }}" class="list-group-item">
+            <div class="media">
+                <span class="media-left" href="#">
+                    <img src="{{ image_thumbnail(image) }}" width="50" height="50"/>
+                </span>
+                <div class="media-body" style="vertical-align: middle;">
+                    <h5 class="media-heading">{{ image.name }} </h5>
+                    {% if admin_settings.show_image_description %}
+                        <span class="small" title="{{ image.description|striptags }}">{{ image.description|striptags|truncate(100) }}</span><br/>
+                    {% endif %}
+                    <span class="small">
+                        {% include '@Images/image_stats.twig' %}
+                    </span>
+                </div>
+            </div>
+        </a>
+    {% else %}
+        <div class="list-group-item">
+            {% trans %}None{% endtrans %}
+        </div>
+    {% endfor %}
+
+    {% if more_button %}
+        <a href="{{ more_button.url }}" class="list-group-item text-center">
+            {{ more_button.label|trans }} <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+    {% endif %}
+</div>

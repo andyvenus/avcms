@@ -1,0 +1,39 @@
+images_home:
+  path: /images
+  defaults: { _controller: CmsFoundation::HomepageController::homepageAction, modulePosition: images_home, title: Images }
+
+watch_image:
+  path: /image/{slug}
+  defaults: { _controller: Images::ImagesController::playImageAction }
+
+browse_images:
+  path: /images/browse/{page}
+  defaults: { _controller: Images::ImagesController::browseImagesAction, category: null, page: 1 }
+  requirements:
+    page:  \d+
+
+image_tag:
+  path: /images/tag/{tags}
+  defaults: { _controller: Images::ImagesController::browseImagesAction, category: null, page: 1 }
+  requirements:
+    page:  \d+
+
+featured_images:
+  path: /images/featured
+  defaults: { _controller: Images::ImagesController::browseImagesAction, pageType: featured }
+
+liked_images:
+  path: /images/likes/{likes_user}
+  defaults: { _controller: Images::ImagesController::browseImagesAction, pageType: likes, likes_user: null }
+
+images_rss_feed:
+  path: /images/rss.xml
+  defaults: { _controller: Images::ImagesController::imagesRssFeedAction }
+
+submit_image:
+  path: /images/submit
+  defaults: { _controller: Images::ImagesController::submitImageAction }
+
+image_category:
+  path: /images/{category}/{page}
+  defaults: { _controller: Images::ImagesController::browseImagesAction, page: 1 }

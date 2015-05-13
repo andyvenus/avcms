@@ -1,0 +1,27 @@
+{% extends 'index.twig' %}
+
+{% block title %}
+    {% trans %}Submit a Image{% endtrans %}
+{% endblock %}
+
+{% block content %}
+    <h2>{% trans %}Submit a Image{% endtrans %}</h2>
+
+    {% if form.isSubmitted() == false %}
+        <div class="alert alert-info">
+            <span class="glyphicon glyphicon-info-sign"></span> {% trans %}Submit a image for us to use on our site! By submitting a image you give us full permission to use the image on our website.{% endtrans %}
+        </div>
+
+        <div class="alert alert-info">
+            <span class="glyphicon glyphicon-info-sign"></span> {% trans with {size: 50} %}Images must be Flash or Unity files and under {size} MB{% endtrans %}
+        </div>
+    {% endif %}
+
+    {% if form.isValid() == false %}
+        {{ form(form) }}
+    {% else %}
+        <div class="alert alert-success">
+            {% trans %}Thanks for your submission, it's now pending review.{% endtrans %} <a href="{{ path('submit_image') }}">{% trans %}Click here to submit another image{% endtrans %}</a>
+        </div>
+    {% endif %}
+{% endblock %}

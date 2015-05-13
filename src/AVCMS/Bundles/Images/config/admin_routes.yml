@@ -1,0 +1,124 @@
+images_admin_edit:
+    path:     /images/edit/{id}
+    defaults: { _controller: 'Images::ImagesAdminController::editAction' }
+
+vidoes_admin_import:
+  path: /images/import
+  defaults: { _controller: 'Images::ImagesAdminController::importAction' }
+
+images_admin_add:
+    path:     /images/new
+    defaults: { _controller: 'Images::ImagesAdminController::editAction' }
+
+images_admin_delete:
+    path:     /images/delete
+    defaults: { _controller: 'Images::ImagesAdminController::deleteAction' }
+
+images_admin_home:
+  path: /images
+  defaults: { _controller: 'Images::ImagesAdminController::homeAction' }
+
+images_admin_finder:
+  path: /images/finder/{page}
+  defaults: { page: 1, _controller: 'Images::ImagesAdminController::finderAction' }
+
+images_admin_toggle_published:
+  path: /images/publish
+  defaults: { _controller: Images::ImagesAdminController::togglePublishedAction }
+
+images_admin_toggle_featured:
+  path: /images/toggle-featured
+  defaults: { _controller: Images::ImagesAdminController::toggleFeaturedAction }
+
+# Get Dimensions #
+images_admin_dimensions:
+  path: /images/get-dimensions
+  defaults: { _controller: 'Images::ImagesAdminController::getDimensionsAction' }
+
+# File Select #
+images_admin_find_files:
+  path: /images/find-files
+  defaults: { _controller: 'Images::ImageFilesAdminController::findFilesAction' }
+
+images_admin_upload_file:
+  path: /images/upload
+  defaults: { _controller: 'Images::ImageFilesAdminController::uploadFilesAction' }
+
+images_grab_file:
+  path: /images/grab-file
+  defaults: { _controller: Images::ImageFilesAdminController::grabFileAction }
+
+# Categories #
+images_manage_categories:
+  path: /images/categories
+  defaults: { _controller: 'Images::ImagesAdminController::manageCategoriesAction', contentType: image }
+
+images_save_categories_order:
+  path: /images/categories/save-order
+  defaults: { _controller: Images::ImagesAdminController::saveOrderAction, contentType: image }
+
+images_admin_add_category:
+  path: /images/categories/new
+  defaults: { _controller: Images::ImagesAdminController::editCategoryAction, contentType: image }
+
+images_admin_delete_category:
+  path: /images/categories/delete/{id}
+  defaults: { _controller: Images::ImagesAdminController::deleteCategoryAction, contentType: image }
+
+images_admin_edit_category:
+  path: /images/categories/edit/{id}
+  defaults: { _controller: Images::ImagesAdminController::editCategoryAction, contentType: image }
+
+# Image Feeds #
+update_image_feeds:
+  path:     /image-feeds/update
+  defaults: { _controller: 'Images::ImageFeedsAdminController::updateFeedsAction' }
+
+download_images_feed:
+  path:     /image-feeds/download
+  defaults: { _controller: 'Images::ImageFeedsAdminController::downloadFeedAction' }
+
+import_feed_image:
+  path:     /image-feeds/import
+  defaults: { _controller: 'Images::ImageFeedsAdminController::importImageAction' }
+
+play_feed_image:
+  path:     /image-feeds/play/{id}
+  defaults: { _controller: 'Images::ImageFeedsAdminController::playImageAction' }
+
+image_feeds_admin_reject:
+  path:     /image-feeds/delete
+  defaults: { _controller: 'Images::ImageFeedsAdminController::rejectAction' }
+
+image_feed_categories:
+  path:     /image-feeds/categories
+  defaults: { _controller: 'Images::ImageFeedsAdminController::categoriesSetupAction' }
+
+image_feeds_admin_home:
+  path: /image-feeds
+  defaults: { _controller: 'Images::ImageFeedsAdminController::homeAction' }
+
+image_feeds_admin_finder:
+  path: /image-feeds/finder/{page}
+  defaults: { page: 1, _controller: 'Images::ImageFeedsAdminController::finderAction' }
+
+# Manage Submissions #
+image_submissions_admin_review:
+    path:     /image-submissions/review/{id}
+    defaults: { _controller: 'Images::ImageSubmissionsAdminController::reviewAction' }
+
+image_submissions_admin_delete:
+    path:     /image-submissions/delete
+    defaults: { _controller: 'Images::ImageSubmissionsAdminController::deleteAction' }
+
+image_submissions_admin_home:
+  path: /image-submissions
+  defaults: { _controller: 'Images::ImageSubmissionsAdminController::homeAction' }
+
+image_submissions_admin_finder:
+  path: /image-submissions/finder/{page}
+  defaults: { page: 1, _controller: 'Images::ImageSubmissionsAdminController::finderAction' }
+
+image_submissions_admin_play:
+  path: /image-submissions/play/{id}
+  defaults: { _controller: 'Images::ImageSubmissionsAdminController::playImageAction' }

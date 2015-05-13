@@ -1,0 +1,55 @@
+{% extends '@admin/finder.twig' %}
+
+{% block item_main %}
+    <div class="finder-thumbnail">
+        <img src="{{ image_thumbnail(item) }}" width="50" height="50"/>
+    </div>
+
+    <div class="finder-item-title" data-field="name">
+        {{ item.name }}
+    </div>
+
+    <div class="btn-group">
+        {{ buttons.edit('images_admin_edit', item.id) }}
+
+        {{ buttons.publish(item.published, 'images_admin_toggle_published', item.publishDate) }}
+
+        {{ buttons.featured(item.featured, 'images_admin_toggle_featured') }}
+
+        {{ buttons.delete('images_admin_delete') }}
+    </div>
+
+    {{ buttons.view('watch_image', {slug: item.slug}) }}
+{% endblock %}
+
+{% block finder_header_titles %}
+    <div class="col-xs-3 hidden-xs">
+        {% trans %}Category{% endtrans %}
+    </div>
+    <div class="col-xs-3 hidden-xs">
+        {% trans %}Added{% endtrans %}
+    </div>
+    <div class="col-xs-2 hidden-xs">
+        {% trans %}Plays{% endtrans %}
+    </div>
+    <div class="col-xs-3 hidden-xs">
+        {% trans %}Last Played{% endtrans %}
+    </div>
+{% endblock %}
+
+{% block item_extended_inner %}
+    <div class="col-xs-3 hidden-xs">
+        {{ item.category.name }}
+    </div>
+    <div class="col-xs-3 hidden-xs" style="word-break: break-all">
+        {{ item.dateAdded|date(settings.date_format) }}
+    </div>
+    <div class="col-xs-2 hidden-xs">
+        {{ item.hits }}
+    </div>
+    <div class="col-xs-3 hidden-xs">
+        {% if item.lastHit %}
+            {{ item.lastHit|date(settings.date_format) }}
+        {% endif %}
+    </div>
+{% endblock %}

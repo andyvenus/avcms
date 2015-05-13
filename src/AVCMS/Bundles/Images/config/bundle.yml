@@ -1,0 +1,336 @@
+name: Images
+namespace: AVCMS\Bundles\Images
+toggle: true
+require:
+  - Framework
+
+assets:
+  avcms_images_admin.js:
+    env: admin
+
+services:
+  - ImageServices
+
+categories:
+  image:
+    model: AVCMS\Bundles\Images\Model\ImageCategories
+    content_model: AVCMS\Bundles\Images\Model\Images
+    route_prefix: images_
+
+menu_items:
+  frontend:
+    image_categories:
+      label: Images
+      icon: glyphicon glyphicon-tower
+      type: image_categories
+      default_order: 2
+      settings:
+        display: child
+    image_submissions:
+      label: Submit Image
+      icon: glyphicon glyphicon-upload
+      type: route
+      admin_setting: images_allow_uploads
+      settings:
+        route: submit_image
+  admin:
+    images_admin:
+      label: Images
+      icon: glyphicon glyphicon-picture
+      type: route
+      default_order: 2
+      permission: ADMIN_IMAGES
+      settings:
+        route: images_admin_home
+    images_categories_admin:
+      label: Categories
+      icon: glyphicon glyphicon-th-list
+      type: route
+      parent: images_admin
+      settings:
+        route: images_manage_categories
+    images_submissions_admin:
+      label: Submissions
+      icon: glyphicon glyphicon-inbox
+      type: route
+      permission: ADMIN_IMAGES
+      parent: images_admin
+      settings:
+        route: image_submissions_admin_home
+
+admin_settings_sections:
+  images: Images
+  browse_images: Browse Images
+  image_ads: Adverts Before Images
+
+admin_settings:
+  images_allow_uploads:
+    type: checkbox
+    label: Allow Image Submissions
+    help: Allow users to submit images to your site for admins to review
+    section: images
+    default: 0
+  images_max_submissions:
+    type: text
+    label: Maximum User Submissions
+    help: The maximum amount of images a user can submit for review. They can submit more after an admin has accepted their existing submissions.
+    section: images
+    default: 5
+    validation:
+      numeric:
+        rule: Numeric
+  image_ad_default:
+    label: Default Image Ad
+    help: The ad shown before images without a specific ad selected
+    type: select
+    default: 0
+    choices:
+      0: None
+    choices_provider_service: adverts.choices_provider
+    section: image_ads
+  image_ad_countdown:
+    label: Image Ads Duration
+    help: How long to show the advert before the image automatically loads
+    type: text
+    default: 15
+    section: image_ads
+    validation:
+      numeric:
+        rule: Numeric
+  image_ad_allow_skip:
+    label: Allow Skipping
+    help: Allow users to skip the ads
+    type: checkbox
+    default: 1
+    section: image_ads
+  image_ad_show_to_everyone:
+    label: Ignore Permission
+    help: Who sees ads before images can be set in the group permissions area. When this is on, everyone sees the ads regardless of that permission.
+    type: checkbox
+    default: 0
+    section: image_ads
+  images_limit_plays:
+    label: Limit Image Plays
+    help: The number of images that can be played before a user must register an account. Set to 0 to disable.
+    type: text
+    default: 0
+    section: images
+    validation:
+      numeric:
+        rule: Numeric
+  browse_images_layout:
+    type: select
+    label: Browse Images Layout
+    choices:
+      details: Details
+      thumbnail: Thumbnail
+    default: details
+    section: browse_images
+  browse_images_columns:
+    type: select
+    label: Browse Images Columns
+    choices:
+      1: 1
+      2: 2
+      3: 3
+      4: 4
+    default: 2
+    section: browse_images
+  browse_images_per_page:
+    type: text
+    label: Images Per Page
+    help: Number of images to show per page (browse, categories etc)
+    default: 20
+    section: browse_images
+  show_image_description:
+    type: checkbox
+    label: Show Description
+    default: 1
+    section: browse_images
+  show_image_ratings:
+    type: checkbox
+    label: Show Image Ratings
+    default: 1
+    section: browse_images
+  show_image_hits:
+    type: checkbox
+    label: Show Image Hits
+    default: 1
+    section: browse_images
+  show_image_date:
+    type: checkbox
+    label: Show Publish Date
+    default: 0
+    section: browse_images
+  show_image_category:
+    type: checkbox
+    label: Show Category
+    default: 0
+    section: browse_images
+  show_image_comments:
+    type: checkbox
+    label: Show Total Comments
+    default: 0
+    section: browse_images
+
+comments:
+  image:
+    name: Image
+    model: AVCMS\Bundles\Images\Model\Images
+    title_field: name
+    frontend_route: watch_image
+    frontend_route_params: [slug]
+
+reports:
+  images:
+    name: Image
+    model: AVCMS\Bundles\Images\Model\Images
+    route: images_admin_edit
+    title_field: name
+    route_params: [id]
+
+ratings:
+  image:
+    name: Image
+    model: AVCMS\Bundles\Images\Model\Images
+
+frontend_search:
+  images:
+    name: Images
+    route: browse_images
+    priority: 10
+
+module_positions:
+  images_home:
+    name: Images Homepage
+    description: The images homepage
+    environment: frontend
+    global_modules: 1
+    type: content
+  watch_image_sidebar:
+    name: Play Image Sidebar
+    description: Sidebar on the play image page
+    environment: frontend
+    global_modules: 1
+    type: content
+  watch_image_top:
+    name: Play Image Top
+    description: Top of the play image page
+    environment: frontend
+    global_modules: 1
+    type: content
+  watch_image_details:
+    name: Play Image Details
+    description: Under the image details
+    environment: frontend
+    global_modules: 1
+    type: content
+
+modules:
+  images:
+    name: Images
+    description: A customisable list of images
+    controller: Images::ImageModulesController::imagesModule
+    cachable: true
+    cache_bust_model: Images
+    default_cache_time: 3600
+    accepted_template_types: [content, panel, list_panel, none]
+    admin_settings:
+      filter:
+        type: select
+        label: Filter
+        help: If "User's Likes" is selected, the module will show the likes of a user if one is passed to the module position (like on a users profile). Otherwise it will show the active user's likes.
+        default: none
+        choices:
+          none: None
+          featured: Featured
+          likes: User's Likes
+      layout:
+        type: select
+        label: Layout
+        choices:
+          list: List
+          thumbnails: Thumbnails
+          details: Details
+        default: list
+      columns:
+        type: select
+        label: Number of columns (thumbnail/details layout)
+        default: 3
+        choices:
+          1: 1
+          2: 2
+          3: 3
+          4: 4
+      order:
+        type: select
+        label: Order
+        choices:
+          publish-date-newest: Newest
+          top-hits: Most Played
+          liked: Most Liked
+          random: Random
+        default: newest
+      limit:
+        type: text
+        label: Number of images to display
+        default: 5
+      show_image_description:
+        type: checkbox
+        label: Show Description
+        default: 1
+      show_image_date:
+        type: checkbox
+        label: Show Date
+        default: 0
+      show_image_hits:
+        type: checkbox
+        label: Show Hits
+        default: 1
+      show_image_ratings:
+        type: checkbox
+        label: Show Ratings
+        default: 1
+      show_image_category:
+        type: checkbox
+        label: Show Category
+        default: 1
+      show_image_comments:
+        type: checkbox
+        label: Show Total Comments
+        default: 0
+  image_tags:
+      name: Image Tag Cloud
+      description: A tag cloud for images
+      controller: Images::ImageModulesController::tagsModule
+      cachable: true
+      default_cache_time: 43200
+      cache_bust_model: Images
+      accepted_template_types: [content, panel, none]
+      admin_settings:
+        limit:
+          type: text
+          label: Number of tags to display
+          default: 40
+  image_stats:
+    name: Image Stats
+    description: Image stats like total image, total plays etc
+    controller: Images::ImageModulesController::imageStatsModule
+    cachable: true
+    default_cache_time: 43200
+    accepted_template_types: [content, panel, none]
+
+permissions:
+  ELEVATED_NO_IMAGE_ADS:
+    name: No Image Adverts
+    description: If allowed, users in this group will not see ads before images
+  ADMIN_IMAGES:
+    name: Images Administration
+    description: Manage images in the admin panel (including categories)
+  PERM_SUBMIT_IMAGES:
+    name: Submit Images
+    description: Can submit images to the site for admins to review & accept
+
+container_params:
+  images_dir: web/images
+  image_thumbnails_dir: web/image-thumbnails

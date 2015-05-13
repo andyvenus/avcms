@@ -1,0 +1,29 @@
+{% set column_size = 12 / columns %}
+
+<div class="row">
+    {% for image in images %}
+        <div class="col-sm-{{ column_size }}">
+            {% if admin_settings.layout == 'thumbnails' %}
+                {% include '@Images/image_info_thumbnail.twig' %}
+            {% else %}
+                {% include '@Images/image_info_details.twig' %}
+            {% endif %}
+        </div>
+
+        {% if loop.index % columns == 0 %}
+            </div><div class="row">
+        {% endif %}
+    {% else %}
+        <div class="col-md-12">
+            {% trans %}None{% endtrans %}
+        </div>
+    {% endfor %}
+</div>
+
+{% if more_button %}
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <a class="btn btn-default" href="{{ more_button.url }}">{{ more_button.label|trans }} <span class="glyphicon glyphicon-chevron-right"></span></a>
+        </div>
+    </div>
+{% endif %}
