@@ -263,6 +263,12 @@ module_positions:
     environment: frontend
     global_modules: 1
     type: content
+  play_game_below:
+    name: Play Game Below
+    description: Below the game on the play game page
+    environment: frontend
+    global_modules: 1
+    type: content
   play_game_details:
     name: Play Game Details
     description: Under the game details

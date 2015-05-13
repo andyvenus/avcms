@@ -70,6 +70,9 @@
             {{ render_modules('play_game_sidebar', {game: game}) }}
         </div>
         <div class="col-md-8 col-md-pull-4">
+
+            {{ render_modules('play_game_below') }}
+
             {% block game_instructions_box %}
                 {% if game.instructions %}
                     <div class="box">
