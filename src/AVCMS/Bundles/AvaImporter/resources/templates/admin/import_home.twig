@@ -8,26 +8,27 @@
     <body>
         <div class="container" style="margin-top: 40px;"><div class="col-xs-12">
             {% block content_body %}
-                <div class="alert alert-danger">
-                    <strong>Warning:</strong> The importer will remove all existing content from your AV Arcade 6 site. Only run if you want to replace your current site content with content from AV Arcade 5.8.
-                </div>
+                {% if not fix_points %}
+                    <div class="alert alert-danger">
+                        <strong>Warning:</strong> The importer will remove all existing content from your AV Arcade 6 site. Only run if you want to replace your current site content with content from AV Arcade 5.8.
+                    </div>
 
-                <div class="alert alert-warning">
-                    <strong>Note:</strong> Some data will not be imported such as Pending Submissions, Pending Reports & Settings
-                </div>
+                    <div class="alert alert-warning">
+                        <strong>Note:</strong> Some data will not be imported such as Pending Submissions, Pending Reports & Settings
+                    </div>
 
-                <div class="alert alert-warning">
-                    <strong>Note:</strong> The first account from version 5.8 (the first ever admin account) will not be imported. This account you are currently using will replace that user. The old user account's comments and other data will be imported, but will be attributed to this new account.
-                </div>
+                    <div class="alert alert-warning">
+                        <strong>Note:</strong> The first account from version 5.8 (the first ever admin account) will not be imported. This account you are currently using will replace that user. The old user account's comments and other data will be imported, but will be attributed to this new account.
+                    </div>
 
-                <div class="alert alert-info">
-                    <p><strong>Important:</strong> Some files need to be moved or copied to make the import functional.</p>
+                    <div class="alert alert-info">
+                        <p><strong>Important:</strong> Some files need to be moved or copied to make the import functional.</p>
 
-                    <p><strong>1.</strong> Move or copy the contents of the AV Arcade 5.8 <strong>/games/images</strong> folder to <strong>/web/game-thumbnails</strong></p>
-                    <p><strong>2.</strong> Move or copy the contents of the AV Arcade 5.8 <strong>/games</strong> folder to <strong>/web/games</strong></p>
-                    <p><strong>3.</strong> Move or copy the contents of the AV Arcade 5.8 <strong>/uploads/avatars</strong> folder to <strong>/web/avatars</strong></p>
-                </div>
-
+                        <p><strong>1.</strong> Move or copy the contents of the AV Arcade 5.8 <strong>/games/images</strong> folder to <strong>/web/game-thumbnails</strong></p>
+                        <p><strong>2.</strong> Move or copy the contents of the AV Arcade 5.8 <strong>/games</strong> folder to <strong>/web/games</strong></p>
+                        <p><strong>3.</strong> Move or copy the contents of the AV Arcade 5.8 <strong>/uploads/avatars</strong> folder to <strong>/web/avatars</strong></p>
+                    </div>
+                {% endif %}
                 <h4>AV Arcade 5.8 Database Details</h4>
                 {{ form(form) }}
             {% endblock %}

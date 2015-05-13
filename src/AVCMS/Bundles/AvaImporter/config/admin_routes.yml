@@ -5,3 +5,11 @@ ava_importer_home:
 ava_importer_run:
   path: /ava-import/run/{stage}/{run}
   defaults: { _controller: AvaImporter::AvaImporterController::doImportAction, stage: games, run: 1 }
+
+ava_importer_fix_points:
+  path: /ava-import/fix-points
+  defaults: { _controller: AvaImporter::AvaImporterController::importerHomeAction, fix_points: 1 }
+
+ava_importer_fix_points_run:
+  path: /ava-import/fix-points/run
+  defaults: { _controller: AvaImporter::AvaImporterController::fixPointsAction }

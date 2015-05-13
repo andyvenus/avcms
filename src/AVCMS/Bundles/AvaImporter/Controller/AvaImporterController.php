@@ -21,7 +21,6 @@ use AVCMS\Bundles\Links\Model\Link;
 use AVCMS\Bundles\Pages\Model\Page;
 use AVCMS\Bundles\PrivateMessages\Model\PrivateMessage;
 use AVCMS\Bundles\Tags\Model\Tag;
-use AVCMS\Bundles\Users\Model\User;
 use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,27 +77,33 @@ class AvaImporterController extends Controller
                 $session->set('database_username', $databaseConfig['username']);
                 $session->set('database_password', $databaseConfig['password']);
 
-                $qb = $this->container->get('query_builder');
-                $qb->table('games')->delete();
-                $qb->table('game_categories')->delete();
-                $qb->table('tags')->delete();
-                $qb->table('tag_taxonomy')->delete();
-                $qb->table('users')->whereNot('id', 1)->delete();
-                $qb->table('comments')->delete();
-                $qb->table('blog_posts')->delete();
-                $qb->table('pages')->delete();
-                $qb->table('links')->delete();
-                $qb->table('adverts')->delete();
-                $qb->table('ratings')->delete();
-                $qb->table('messages')->delete();
-                $qb->table('friends')->delete();
+                if (!$request->get('fix_points')) {
 
-                return new RedirectResponse($this->generateUrl('ava_importer_run'));
+                    $qb = $this->container->get('query_builder');
+                    $qb->table('games')->delete();
+                    $qb->table('game_categories')->delete();
+                    $qb->table('tags')->delete();
+                    $qb->table('tag_taxonomy')->delete();
+                    $qb->table('users')->whereNot('id', 1)->delete();
+                    $qb->table('comments')->delete();
+                    $qb->table('blog_posts')->delete();
+                    $qb->table('pages')->delete();
+                    $qb->table('links')->delete();
+                    $qb->table('adverts')->delete();
+                    $qb->table('ratings')->delete();
+                    $qb->table('messages')->delete();
+                    $qb->table('friends')->delete();
+
+                    return new RedirectResponse($this->generateUrl('ava_importer_run'));
+                }
+                else {
+                    return new RedirectResponse($this->generateUrl('ava_importer_fix_points_run'));
+                }
             }
         }
 
 
-        return new Response($this->render('@AvaImporter/admin/import_home.twig', ['form' => $form->createView()]));
+        return new Response($this->render('@AvaImporter/admin/import_home.twig', ['form' => $form->createView(), 'fix_points' => $request->get('fix_points')]));
     }
 
     public function doImportAction(Request $request)
@@ -575,6 +580,22 @@ class AvaImporterController extends Controller
         }
 
         return new Response($this->render('@AvaImporter/admin/import_progress.twig', ['url' => $url, 'message' => $message]));
+    }
+
+    public function fixPointsAction()
+    {
+        $users = $this->getQB('users')->where('points', '>', 0)->get();
+
+        foreach ($users as $u) {
+            $user = $this->model('Users')->getOne($u['id']);
+            $user->setId($u['id']);
+
+            $curPoints = $user->points->getPoints();
+            $user->points->setPoints($curPoints + $u['points']);
+            $this->model('Users')->update($user);
+        }
+
+        return $this->redirect('home', [], 302, 'info', 'Points imported');
     }
 
     protected function renameFields(&$row, $renames)
