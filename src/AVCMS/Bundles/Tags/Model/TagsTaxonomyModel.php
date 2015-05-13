@@ -33,7 +33,9 @@ class TagsTaxonomyModel extends TaxonomyModel
 
         $popularTags = [];
         foreach ($tagInfo as $tag) {
-            $popularTags[$tag->taxonomy_id] = $tag->tag_occurrence;
+            if ($tag->tag_occurrence > 0) {
+                $popularTags[$tag->taxonomy_id] = $tag->tag_occurrence;
+            }
         }
 
         return $popularTags;
