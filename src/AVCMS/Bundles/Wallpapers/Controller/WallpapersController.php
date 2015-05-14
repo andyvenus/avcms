@@ -139,6 +139,10 @@ class WallpapersController extends Controller
     {
         $wallpaper = $this->wallpapers->find()->slug($slug)->published()->first();
 
+        if (!$wallpaper) {
+            throw $this->createNotFoundException('Wallpaper Not Found');
+        }
+
         list($width, $height) = explode('x', $request->get('resolution'));
 
         $resolutionsManager = $this->container->get('wallpaper.resolutions_manager');
