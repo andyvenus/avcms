@@ -62,7 +62,12 @@ class WallpapersBulkImportAdminController extends AdminBaseController
                 $wallpapersImported = 0;
 
                 foreach ($itr as $file) {
-                    if (!$file->isFile() || exif_imagetype($file->getPathname()) === false) {
+                    if (!$file->isFile()) {
+                        continue;
+                    }
+
+                    $dimensions = @getimagesize($file->getPath().'/'.$file->getFilename());
+                    if (!is_array($dimensions)) {
                         continue;
                     }
 
@@ -73,11 +78,6 @@ class WallpapersBulkImportAdminController extends AdminBaseController
                     $newWallpaper = clone $entity;
                     $contentHelper->setEntity($newWallpaper);
                     $newWallpaper->setFile($folder.'/'.$file->getFilename());
-
-                    $dimensions = @getimagesize($file->getPath().'/'.$file->getFilename());
-                    if (!is_array($dimensions)) {
-                        $dimensions = [0, 0];
-                    }
 
                     $replaceValues = [];
                     $replaceValues['{filename}'] = str_replace('.'.$file->getExtension(), '', $file->getBasename());
