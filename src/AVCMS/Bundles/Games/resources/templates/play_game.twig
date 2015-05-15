@@ -1,6 +1,6 @@
 {% extends 'index.twig' %}
 
-{% block title %}{{ game.name }}{% endblock %}
+{% block title %}{{ game.name }} - {% trans %}Game{% endtrans %}{% endblock %}
 
 {% block meta_description %}{{ game.description|striptags }}{% endblock %}
 

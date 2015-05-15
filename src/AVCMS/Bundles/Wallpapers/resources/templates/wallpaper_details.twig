@@ -1,6 +1,6 @@
 {% extends 'index.twig' %}
 
-{% block title %}{{ wallpaper.name }}{% endblock %}
+{% block title %}{{ wallpaper.name }} - {% trans %}Wallpaper{% endtrans %}{% endblock %}
 
 {% block meta_description %}{{ wallpaper.description|striptags }}{% endblock %}
 
