@@ -21,7 +21,8 @@ class TypeHandler implements TypeInterface
             'default' => new DefaultType(),
             'select' => new SelectType(),
             'file' => new FileType(),
-            'radio' => new RadioType()
+            'radio' => new RadioType(),
+            'text' => new TextType()
         ), $types);
     }
 
