@@ -7,7 +7,7 @@ $(document).ready(function() {
 
     avcms.event.addEvent('page-modified', function () {
 
-        $('[data-file-selector-target]').filter(':visible:checked').each(function() {
+        $('[data-file-selector-target]').filter(':checked').each(function() {
             avcms.file_select.doChange($(this));
         });
 
