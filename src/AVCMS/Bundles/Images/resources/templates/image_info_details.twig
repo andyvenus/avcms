@@ -1,11 +1,11 @@
 <div style="margin-top: 15px;" class="browse-images-details media">
     <div class="media-left">
-        <a class="img-thumbnail" href="{{ path('watch_image', {slug: image.slug}) }}">
+        <a class="img-thumbnail" href="{{ path('image_collection', {slug: image.slug}) }}">
             <img src="{{ image_thumbnail(image) }}" width="80"/>
         </a>
     </div>
     <div class="media-body">
-        <strong><a href="{{ path('watch_image', {slug: image.slug}) }}">{{ image.name }}</a></strong>
+        <strong><a href="{{ path('image_collection', {slug: image.slug}) }}">{{ image.name }}</a></strong>
 
         {% if admin_settings.show_image_description %}
             <span class="small" title="{{ image.description|striptags }}">{{ image.description|truncate(100)|striptags }}</span><br/>

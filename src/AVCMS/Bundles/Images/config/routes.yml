@@ -2,15 +2,21 @@ images_home:
   path: /images
   defaults: { _controller: CmsFoundation::HomepageController::homepageAction, modulePosition: images_home, title: Images }
 
-watch_image:
-  path: /image/{slug}
-  defaults: { _controller: Images::ImagesController::playImageAction }
+image_collection:
+  path: /{type}/{slug}
+  defaults: { _controller: Images::ImagesController::imageCollectionAction, type: image }
+  requirements:
+    type: (image|gallery|list)
 
 browse_images:
   path: /images/browse/{page}
   defaults: { _controller: Images::ImagesController::browseImagesAction, category: null, page: 1 }
   requirements:
     page:  \d+
+
+image_thumbnail:
+  path: /web/image-thumbnails/{collection}/{id}-{size}.{ext}
+  defaults: { _controller: Images::ImageThumbnailsController::thumbnailAction }
 
 image_tag:
   path: /images/tag/{tags}

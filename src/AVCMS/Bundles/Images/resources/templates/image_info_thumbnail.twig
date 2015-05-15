@@ -1,4 +1,4 @@
-<a class="thumbnail browse-images-thumbnail clearfix" href="{{ path('watch_image', {slug: image.slug}) }}">
+<a class="thumbnail browse-images-thumbnail clearfix" href="{{ path('image_collection', {slug: image.slug}) }}">
     <img src="{{ image_thumbnail(image) }}" width="100%"/>
     <div class="pull-left" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;width:100%">
         {{ image.name }}

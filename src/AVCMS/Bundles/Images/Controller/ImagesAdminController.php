@@ -22,7 +22,7 @@ class ImagesAdminController extends AdminBaseController
     use CategoryActionsTrait;
 
     /**
-     * @var \AVCMS\Bundles\Images\Model\Images
+     * @var \AVCMS\Bundles\Images\Model\ImageCollections
      */
     protected $images;
 
@@ -35,7 +35,7 @@ class ImagesAdminController extends AdminBaseController
 
     public function setUp()
     {
-        $this->images = $this->model('Images');
+        $this->images = $this->model('ImageCollections');
         $this->imageFiles = $this->model('ImageFiles');
 
         if (!$this->isGranted('ADMIN_IMAGES')) {
@@ -76,26 +76,35 @@ class ImagesAdminController extends AdminBaseController
         $filesForm = $this->buildForm(new ImageFilesAdminForm($files));
 
         foreach ($files as $file) {
-            $filesForm->mergeData(['images' => [$file->getId() => ['file' => $file->getFile()]]]);
+            $filesForm->mergeData(['images' => [$file->getId() => ['file' => $file->getUrl(), 'caption' => $file->getCaption()]]]);
         }
 
         if ($helper->formValid()) {
             $helper->saveToEntities();
 
-            $helper->save(false);
-
-            foreach ($request->get('images') as $id => $file) {
-                if (is_numeric($id) && isset($files[$id])) {
-                    $files[$id]->setFile($file['file']);
-                    $this->imageFiles->save($files[$id]);
-                }
-                elseif ($id !== 'new') {
-                    $imageFile = $this->imageFiles->newEntity();
-                    $imageFile->setFile($file['file']);
-                    $imageFile->setImageId($image->getId());
-                    $this->imageFiles->save($imageFile);
-                }
+            if ($image->getId() === null) {
+                $helper->save(false);
             }
+
+            $this->imageFiles->query()->where('image_id', $image->getId())->delete();
+
+            $imageFiles = [];
+            foreach ($request->get('images') as $id => $file) {
+                if ($id == 'new-files') {
+                    continue;
+                }
+
+                $imageFile = $this->imageFiles->newEntity();
+                $imageFile->setUrl($file['file']);
+                $imageFile->setImageId($image->getId());
+                $imageFile->setCaption($file['caption']);
+                $imageFiles[] = $imageFile;
+                $this->imageFiles->save($imageFile);
+            }
+
+            $extension = pathinfo($imageFiles[0]->getUrl())['extension'];
+            $image->setThumbnail($imageFiles[0]->getId().'.'.$extension);
+            $helper->save(false);
         }
 
         if (!$helper->contentExists()) {

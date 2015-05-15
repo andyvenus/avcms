@@ -1,19 +1,41 @@
 avcms = avcms || {};
 
 $(document).ready(function() {
-    $('body').on('click', '.avcms-add-image-file', avcms.images.addImageFile);
+    var body = $('body');
+    body.on('click', '.avcms-add-image-file', function() {
+        avcms.images.addImageFile($(this).parents('form'));
+    });
+    body.on('click', '.avcms-remove-image-file', avcms.images.removeImageFile);
+
+    avcms.event.addEvent('page-modified', function() {
+        var container = $('.avcms-image-files').filter(':visible');
+        if (container.length != 0 && container.find('.panel').length == 0) {
+            var form = $('form[data-item-id]').filter(':visible');
+
+            avcms.images.addImageFile(form);
+        }
+    });
 });
 
 avcms.images = {
     newFileCount: 0,
 
-    addImageFile: function() {
-        var file_fields = $(this).parents('form').find('.avcms-new-image').first().html();
+    addImageFile: function(form) {
+        var file_fields = form.find('.avcms-new-image').first().html();
 
         avcms.images.newFileCount++;
 
-        $('.avcms-image-files').append(file_fields.split('[new]').join('[new-'+avcms.images.newFileCount+']'));
+        $('.avcms-image-files').filter(':visible').append(file_fields.split('new-files').join('new-'+avcms.images.newFileCount+''));
 
         avcms.nav.onPageModified();
+    },
+
+    removeImageFile: function() {
+        if ($('.avcms-image-files').filter(':visible').find('.panel').length == 1) {
+            alert('There must be at least one image file');
+            return;
+        }
+
+        $(this).parents('.panel').remove();
     }
 };

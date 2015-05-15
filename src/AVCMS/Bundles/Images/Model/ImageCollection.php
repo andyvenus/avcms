@@ -5,7 +5,7 @@ namespace AVCMS\Bundles\Images\Model;
 use AV\Model\Entity;
 use AVCMS\Bundles\LikeDislike\RatingsManager\RateInterface;
 
-class Image extends Entity implements RateInterface
+class ImageCollection extends Entity implements RateInterface
 {
     public function setAdvertId($value)
     {

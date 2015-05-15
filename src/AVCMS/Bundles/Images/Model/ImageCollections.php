@@ -4,11 +4,11 @@ namespace AVCMS\Bundles\Images\Model;
 
 use AVCMS\Core\Model\ContentModel;
 
-class Images extends ContentModel
+class ImageCollections extends ContentModel
 {
     protected $textIdentifierColumn = 'slug';
 
-    protected $finder = 'AVCMS\Bundles\Images\Model\ImagesFinder';
+    protected $finder = 'AVCMS\Bundles\Images\Model\ImageCollectionsFinder';
 
     public function getTable()
     {
@@ -22,7 +22,7 @@ class Images extends ContentModel
 
     public function getEntity()
     {
-        return 'AVCMS\Bundles\Images\Model\Image';
+        return 'AVCMS\Bundles\Images\Model\ImageCollection';
     }
 
     public function getFinderSortOptions()

@@ -9,7 +9,7 @@ namespace AVCMS\Bundles\Images\Model;
 
 use AV\Model\Finder;
 
-class ImagesFinder extends Finder
+class ImageCollectionsFinder extends Finder
 {
     public function featured()
     {

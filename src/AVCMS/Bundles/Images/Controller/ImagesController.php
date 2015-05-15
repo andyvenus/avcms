@@ -23,31 +23,39 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class ImagesController extends Controller
 {
     /**
-     * @var \AVCMS\Bundles\Images\Model\Images
+     * @var \AVCMS\Bundles\Images\Model\ImageCollections
      */
     private $images;
 
     private $imageCategories;
 
+    /**
+     * @var \AVCMS\Bundles\Images\Model\ImageFiles
+     */
+    private $imageFiles;
+
     public function setUp() {
-        $this->images = $this->model('Images');
+        $this->images = $this->model('ImageCollections');
+        $this->imageFiles = $this->model('ImageFiles');
         $this->imageCategories = $this->model('ImageCategories');
     }
 
-    public function playImageAction(Request $request, $slug)
+    public function imageCollectionAction(Request $request, $slug)
     {
-        $image = $this->images->find()
+        $imageCollection = $this->images->find()
             ->published()
             ->slug($slug)
             ->join($this->imageCategories, ['name', 'slug'])
             ->joinTaxonomy('tags')
             ->first();
 
-        if (!$image) {
+        $imageCollection->files = $this->imageFiles->getImageFiles($imageCollection->getId());
+
+        if (!$imageCollection) {
             throw $this->createNotFoundException('Image Not Found');
         }
 
-        $hitRegistered = $this->container->get('hitcounter')->registerHit($this->images, $image->getId(), 'hits', 'id', 'last_hit');
+        $hitRegistered = $this->container->get('hitcounter')->registerHit($this->images, $imageCollection->getId(), 'hits', 'id', 'last_hit');
 
         $playsLeft = null;
         if ($hitRegistered && $this->setting('images_limit_plays') && !$this->userLoggedIn()) {
@@ -63,7 +71,7 @@ class ImagesController extends Controller
             }
         }
 
-        $response = new Response($this->render('@Images/watch_image.twig', ['image' => $image, 'plays_left' => $playsLeft]));
+        $response = new Response($this->render('@Images/image_list.twig', ['image_collection' => $imageCollection, 'plays_left' => $playsLeft]));
         if (isset($playCookie)) {
             $response->headers->setCookie($playCookie);
         }
@@ -224,7 +232,7 @@ class ImagesController extends Controller
     public function imagesRssFeedAction()
     {
         /**
-         * @var \AVCMS\Bundles\Images\Model\Image[] $images
+         * @var \AVCMS\Bundles\Images\Model\ImageCollection[] $images
          */
         $images = $this->images->find()->published()->limit(30)->order('publish-date-newest')->get();
 
@@ -235,7 +243,7 @@ class ImagesController extends Controller
         );
 
         foreach ($images as $image) {
-            $url = $this->generateUrl('watch_image', ['slug' => $image->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL);
+            $url = $this->generateUrl('image_collection', ['slug' => $image->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL);
             $date = new \DateTime();
             $date->setTimestamp($image->getPublishDate());
 

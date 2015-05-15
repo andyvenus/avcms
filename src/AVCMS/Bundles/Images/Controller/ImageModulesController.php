@@ -18,13 +18,13 @@ class ImageModulesController extends Controller
     use TagsModuleTrait;
 
     /**
-     * @var \AVCMS\Bundles\Images\Model\Images
+     * @var \AVCMS\Bundles\Images\Model\ImageCollections
      */
     private $images;
 
     public function setUp()
     {
-        $this->images = $this->model('Images');
+        $this->images = $this->model('ImageCollections');
     }
 
     public function imagesModule($adminSettings, User $user = null)

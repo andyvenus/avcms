@@ -90,7 +90,7 @@ class ImageSubmissionsAdminController extends AdminBaseController
             throw $this->createNotFoundException();
         }
 
-        return new Response($this->renderAdminSection('@Images/admin/watch_image_admin.twig', ['image' => $image]));
+        return new Response($this->renderAdminSection('@Images/admin/image_collection_admin.twig', ['image' => $image]));
     }
 
     protected function getSharedTemplateVars()

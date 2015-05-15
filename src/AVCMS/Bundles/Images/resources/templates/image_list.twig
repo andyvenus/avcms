@@ -1,37 +1,28 @@
 {% extends 'index.twig' %}
 
-{% block title %}{{ image.name }}{% endblock %}
+{% block title %}{{ image_collection.name }}{% endblock %}
 
-{% block meta_description %}{{ image.description|striptags }}{% endblock %}
+{% block meta_description %}{{ image_collection.description|striptags }}{% endblock %}
 
 {% block header_extra %}
-    <meta property="og:title" content="{{ image.name }}" />
-    <meta property="og:image" content="{{ image_thumbnail(image) }}" />
-    <meta property="og:description" content="{{ image.description|striptags }}" />
+    <meta property="og:title" content="{{ image_collection.name }}" />
+    <meta property="og:image" content="{{ image_thumbnail(image_collection) }}" />
+    <meta property="og:description" content="{{ image_collection.description|striptags }}" />
 {% endblock %}
 
 {% block content %}
     {% block image_top_modules %}
         <div class="image-top-modules">
-            {{ render_modules('watch_image_top') }}
+            {{ render_modules('image_collection_top') }}
         </div>
     {% endblock %}
 
     {% block image_box %}
         <div class="box box-primary image-box">
             <div class="box-top">
+                <h2>{{ image_collection.name }}</h2>
 
-                <div class="media">
-                    <div class="media-left">
-                        <img class="media-object" src="{{ image_thumbnail(image) }}" alt="{{ image.name }}" height="65">
-                    </div>
-                    <div class="media-body">
-                        <h2 class="media-heading">{{ image.name }}</h2>
-                        <a href="{{ path('image_category', {'category': image.category.slug}) }}">
-                           <span class="glyphicon glyphicon-folder-open"></span> &nbsp;{{ image.category.name }}
-                        </a>
-                    </div>
-                </div>
+                <p>{{ image_collection.description|raw }}</p>
             </div>
 
             <div class="box-main">
@@ -42,22 +33,29 @@
                             <div class="alert alert-info">{% trans with {total: plays_left} %}You have {total} image plays remaining before you must register{% endtrans %}</div>
                         {% endif %}
 
-                        {{ embed_image(image) }}
+                        {% for file in image_collection.files %}
+                            <div class="thumbnail">
+                                <img src="{{ image_file_url(file) }}" style="max-width: 100%" />
+                                {{ file.caption|raw }}
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
                 {% endblock %}
             </div>
             <div class="box-footer">
                 <div class="text-center">
-                    {{ like_dislike_buttons('image', image.id, image) }}
+                    {{ like_dislike_buttons('image', image_collection.id, image_collection) }}
 
                     {% if is_granted('ADMIN_IMAGES') %}
-                        <a class="btn btn-default" href="{{ path('images_admin_edit', {'id': image.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit Image{% endtrans %}</a>
+                        <a class="btn btn-default" href="{{ path('images_admin_edit', {'id': image_collection.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit Collection{% endtrans %}</a>
                     {% endif %}
 
                     {% if is_granted('PERM_SEND_REPORTS') %}
-                        <button class="btn btn-default" data-report-button data-content-type="images" data-content-id="{{ image.id }}"><span class="glyphicon glyphicon-bullhorn"></span> {% trans %}Report Issue{% endtrans %}</button>
+                        <button class="btn btn-default" data-report-button data-content-type="images" data-content-id="{{ image_collection.id }}"><span class="glyphicon glyphicon-bullhorn"></span> {% trans %}Report Issue{% endtrans %}</button>
                     {% endif %}
+
+                    <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> {% trans %}Download{% endtrans %}</a>
                 </div>
             </div>
         </div>
@@ -66,7 +64,7 @@
     <div class="row">
         <div class="col-md-12">
             {% block image_instructions_box %}
-                {% if image.instructions %}
+                {% if image_collection.instructions %}
                     <div class="box">
                         <div class="box-top">
                             <h4>{% trans %}Instructions{% endtrans %}</h4>
@@ -74,7 +72,7 @@
                         <div class="box-main">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <p>{{ image.instructions|raw }}</p>
+                                    <p>{{ image_collection.instructions|raw }}</p>
                                 </div>
                             </div>
                         </div>
@@ -89,26 +87,21 @@
                     </div>
                     <div class="box-main">
                         <div class="row">
-                            <div class="col-md-12">
-                                <p class="image-description">{{ image.description|raw }}</p>
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col-md-4">
-                                <p>{% trans %}Date Added{% endtrans %}: {{ image.datePublished|date(settings.date_format) }}</p>
+                                <p>{% trans %}Date Added{% endtrans %}: {{ image_collection.datePublished|date(settings.date_format) }}</p>
                             </div>
                             <div class="col-md-4">
-                                <p>{% trans %}Category{% endtrans %}: <a href="{{ path('image_category', {'category': image.category.slug}) }}"> {{ image.category.name }}</a></p>
+                                <p>{% trans %}Category{% endtrans %}: <a href="{{ path('image_category', {'category': image_collection.category.slug}) }}"> {{ image_collection.category.name }}</a></p>
                             </div>
                             <div class="col-md-4">
-                                <p>{% trans with {plays: image.hits} %}Played {plays} times{% endtrans %}</p>
+                                <p>{% trans with {plays: image_collection.hits} %}Played {plays} times{% endtrans %}</p>
                             </div>
 
                          </div>
                         <div class="row">
                             <div class="col-md-12">
                                 {% trans %}Tags{% endtrans %}:
-                                {% for tag in image.tags %}
+                                {% for tag in image_collection.tags %}
                                     <a class="btn btn-default btn-xs" href="{{ path('image_tag', {'tags': tag.name}) }}">{{ tag.name }}</a>
                                 {% else %}
                                     {% trans %}None{% endtrans %}
@@ -121,12 +114,12 @@
 
             {% block image_details_modules %}
                 <div class="image-details-modules">
-                    {{ render_modules('watch_image_details') }}
+                    {{ render_modules('image_collection_details') }}
                 </div>
             {% endblock %}
 
             {% block image_comments %}
-                {{ comments('image', image, image.comments) }}
+                {{ comments('image', image_collection, image_collection.comments) }}
             {% endblock %}
         </div>
     </div>

@@ -26,4 +26,9 @@ class ImageFiles extends Model
         $files = $this->query()->where('image_id', $imageId)->get();
         return ($files ? $files : []);
     }
+
+    public function getImageFile($collectionId, $fileId)
+    {
+        return $this->query()->where('image_id', $collectionId)->where('id', $fileId)->first();
+    }
 }

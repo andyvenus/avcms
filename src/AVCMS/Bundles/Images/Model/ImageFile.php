@@ -16,14 +16,14 @@ class ImageFile extends Entity
         return $this->get("caption");
     }
 
-    public function setFile($value)
+    public function setUrl($value)
     {
-        $this->set("file", $value);
+        $this->set("url", $value);
     }
 
-    public function getFile()
+    public function getUrl()
     {
-        return $this->get("file");
+        return $this->get("url");
     }
 
     public function getId()

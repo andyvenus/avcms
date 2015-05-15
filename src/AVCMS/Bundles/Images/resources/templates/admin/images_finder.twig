@@ -2,7 +2,7 @@
 
 {% block item_main %}
     <div class="finder-thumbnail">
-        <img src="{{ image_thumbnail(item) }}" width="50" height="50"/>
+        <img src="{{ image_thumbnail(item) }}" width="50" style="max-height: 50px;"/>
     </div>
 
     <div class="finder-item-title" data-field="name">
@@ -19,7 +19,7 @@
         {{ buttons.delete('images_admin_delete') }}
     </div>
 
-    {{ buttons.view('watch_image', {slug: item.slug}) }}
+    {{ buttons.view('image_collection', {slug: item.slug}) }}
 {% endblock %}
 
 {% block finder_header_titles %}

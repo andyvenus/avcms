@@ -1,6 +1,6 @@
 <div class="list-group">
     {% for image in images %}
-        <a href="{{ path('watch_image', {slug: image.slug}) }}" class="list-group-item">
+        <a href="{{ path('image_collection', {slug: image.slug}) }}" class="list-group-item">
             <div class="media">
                 <span class="media-left" href="#">
                     <img src="{{ image_thumbnail(image) }}" width="50" height="50"/>

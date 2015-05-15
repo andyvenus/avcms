@@ -6,16 +6,16 @@ use AV\Validation\Rules\MustNotExist;
 use AV\Validation\Validator;
 use AVCMS\Bundles\Admin\Form\AdminContentForm;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
-use AVCMS\Bundles\Images\Model\Image;
+use AVCMS\Bundles\Images\Model\ImageCollection;
 
 class ImageAdminForm extends AdminContentForm
 {
     /**
-     * @param Image $image
+     * @param ImageCollection $image
      * @param CategoryChoicesProvider $categoryChoicesProvider
      * @throws \Exception
      */
-    public function __construct(Image $image, CategoryChoicesProvider $categoryChoicesProvider)
+    public function __construct(ImageCollection $image, CategoryChoicesProvider $categoryChoicesProvider)
     {
         $this->add('name', 'text', array(
             'label' => 'Name',
@@ -62,6 +62,6 @@ class ImageAdminForm extends AdminContentForm
 
     public function getValidationRules(Validator $validator)
     {
-        $validator->addRule('slug', new MustNotExist('AVCMS\Bundles\Images\Model\Images', 'slug', $this->itemId), 'The URL Slug must be unique, slug already in use');
+        $validator->addRule('slug', new MustNotExist('AVCMS\Bundles\Images\Model\ImageCollections', 'slug', $this->itemId), 'The URL Slug must be unique, slug already in use');
     }
 }

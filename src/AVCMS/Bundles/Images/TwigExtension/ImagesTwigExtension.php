@@ -7,7 +7,9 @@
 
 namespace AVCMS\Bundles\Images\TwigExtension;
 
-use AVCMS\Bundles\Images\Model\Image;
+use AVCMS\Bundles\Images\Model\ImageCollection;
+use AVCMS\Bundles\Images\Model\ImageFile;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ImagesTwigExtension extends \Twig_Extension
 {
@@ -16,46 +18,50 @@ class ImagesTwigExtension extends \Twig_Extension
      */
     private $environment;
 
-    private $imagesPath;
+    private $urlGenerator;
 
-    private $rootUrl;
+    private $siteUrl;
 
-    private $thumbnailsPath;
+    private $imagesDir;
 
-    public function __construct($rootUrl, $imagesPath, $thumbnailsPath)
+    public function __construct(UrlGeneratorInterface $urlGenerator, $siteUrl, $imagesDir)
     {
-        $this->rootUrl = $rootUrl;
-        $this->imagesPath = $imagesPath;
-        $this->thumbnailsPath = $thumbnailsPath;
+        $this->urlGenerator = $urlGenerator;
+        $this->siteUrl = $siteUrl;
+        $this->imagesDir = $imagesDir;
     }
 
-    public function imageThumbnailUrl(Image $image)
+    public function imageThumbnailUrl(ImageCollection $image, $size = 'md')
     {
-        $thumbnail = $image->getThumbnail();
+        $extension = pathinfo($image->getThumbnail())['extension'];
+        $id = str_replace('.'.$extension, '', $image->getThumbnail());
 
-        if (strpos($thumbnail, '://') === false) {
-            return $this->rootUrl.$this->thumbnailsPath.'/'.$thumbnail;
+        return $this->urlGenerator->generate('image_thumbnail', ['collection' => $image->getId(), 'id' => $id, 'ext' => $extension, 'size' => $size]);
+    }
+
+    public function imageFileUrl(ImageFile $file)
+    {
+        $url = $file->getUrl();
+
+        if (strpos($url, 'http') === 0) {
+            return $url;
         }
-
-        return $thumbnail;
-    }
-
-    public function embedImage(Image $image)
-    {
-        return $this->environment->render('@Images/player.twig');
+        else {
+            return $this->siteUrl.'/'.$this->imagesDir.'/'.$file->getUrl();
+        }
     }
 
     public function getName()
     {
-        return 'avcms_embed_image';
+        return 'avcms_images';
     }
 
     public function getFunctions()
     {
         return [
-            'embed_image' => new \Twig_SimpleFunction(
-                'embed_image',
-                array($this, 'embedImage'),
+            'image_file_url' => new \Twig_SimpleFunction(
+                'image_file_url',
+                array($this, 'imageFileUrl'),
                 array('is_safe' => array('html'))
             ),
             'image_thumbnail' => new \Twig_SimpleFunction(

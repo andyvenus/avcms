@@ -14,7 +14,7 @@ services:
 categories:
   image:
     model: AVCMS\Bundles\Images\Model\ImageCategories
-    content_model: AVCMS\Bundles\Images\Model\Images
+    content_model: AVCMS\Bundles\Images\Model\ImageCollections
     route_prefix: images_
 
 menu_items:
@@ -118,6 +118,15 @@ admin_settings:
     validation:
       numeric:
         rule: Numeric
+  images_thumbnail_crop:
+    label: Thumbnail resize
+    help: What should happen when images are resized for thumbnails?
+    section: images
+    type: radio
+    default: crop
+    choices:
+      crop: Crop
+      maintain_ratio: Keep aspect ratio
   browse_images_layout:
     type: select
     label: Browse Images Layout
@@ -176,15 +185,15 @@ admin_settings:
 comments:
   image:
     name: Image
-    model: AVCMS\Bundles\Images\Model\Images
+    model: AVCMS\Bundles\Images\Model\ImageCollections
     title_field: name
-    frontend_route: watch_image
+    frontend_route: image_collection
     frontend_route_params: [slug]
 
 reports:
   images:
     name: Image
-    model: AVCMS\Bundles\Images\Model\Images
+    model: AVCMS\Bundles\Images\Model\ImageCollections
     route: images_admin_edit
     title_field: name
     route_params: [id]
@@ -192,7 +201,7 @@ reports:
 ratings:
   image:
     name: Image
-    model: AVCMS\Bundles\Images\Model\Images
+    model: AVCMS\Bundles\Images\Model\ImageCollections
 
 frontend_search:
   images:
@@ -207,19 +216,19 @@ module_positions:
     environment: frontend
     global_modules: 1
     type: content
-  watch_image_sidebar:
+  image_collection_sidebar:
     name: Play Image Sidebar
     description: Sidebar on the play image page
     environment: frontend
     global_modules: 1
     type: content
-  watch_image_top:
+  image_collection_top:
     name: Play Image Top
     description: Top of the play image page
     environment: frontend
     global_modules: 1
     type: content
-  watch_image_details:
+  image_collection_details:
     name: Play Image Details
     description: Under the image details
     environment: frontend
@@ -232,7 +241,7 @@ modules:
     description: A customisable list of images
     controller: Images::ImageModulesController::imagesModule
     cachable: true
-    cache_bust_model: Images
+    cache_bust_model: ImageCollections
     default_cache_time: 3600
     accepted_template_types: [content, panel, list_panel, none]
     admin_settings:
@@ -305,7 +314,7 @@ modules:
       controller: Images::ImageModulesController::tagsModule
       cachable: true
       default_cache_time: 43200
-      cache_bust_model: Images
+      cache_bust_model: ImageCollections
       accepted_template_types: [content, panel, none]
       admin_settings:
         limit:

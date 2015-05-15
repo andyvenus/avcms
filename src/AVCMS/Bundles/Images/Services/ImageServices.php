@@ -16,7 +16,7 @@ class ImageServices implements ServicesInterface
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('twig_extension.images', 'AVCMS\Bundles\Images\TwigExtension\ImagesTwigExtension')
-            ->setArguments([new Reference('site_url'), '%images_dir%', '%image_thumbnails_dir%'])
+            ->setArguments([new Reference('router'), new Reference('site_url'), '%images_dir%'])
             ->addTag('twig.extension')
         ;
 
@@ -29,7 +29,7 @@ class ImageServices implements ServicesInterface
         ;
 
         $container->register('sitemap.images', 'AVCMS\Core\Sitemaps\ContentSitemap')
-            ->setArguments([new Reference('images.model'), new Reference('router'), 'watch_image'])
+            ->setArguments([new Reference('images.model'), new Reference('router'), 'image_collection'])
             ->addTag('sitemap')
         ;
 
