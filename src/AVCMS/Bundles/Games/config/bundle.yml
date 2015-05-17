@@ -144,7 +144,7 @@ admin_settings:
   download_feed_games:
     type: checkbox
     label: Download Games
-    help: Download game files & thumbnails to your server. If off, files will be hotlinked.
+    help: Download game files & thumbnails to your server. If off, files will be hotlinked. HTML5 games cannot be downloaded.
     default: 1
     section: game_feeds
   get_feed_game_tags:
