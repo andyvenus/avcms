@@ -3,8 +3,13 @@
 
         <span class="username">
             {% if settings.users_enabled %}
-            <a href="{{ path('user_profile', {slug: info_user.slug}) }}"><img class="avatar" src="{{ avatar_url(info_user) }}" width="{{ options.avatar_width }}" height="{{ options.avatar_height }}" alt="{% trans %}avatar{% endtrans %}"/></a>
-                <a href="{{ path('user_profile', {slug: info_user.slug}) }}">{{ info_user.username }}</a>
+                {% if options.show_avatar %}
+                    <a href="{{ path('user_profile', {slug: info_user.slug}) }}"><img class="avatar" src="{{ avatar_url(info_user) }}" width="{{ options.avatar_width }}" height="{{ options.avatar_height }}" alt="{% trans %}avatar{% endtrans %}"/></a>
+                {% endif %}
+
+                {% if options.show_username %}
+                    <a href="{{ path('user_profile', {slug: info_user.slug}) }}">{{ info_user.username }}</a>
+                {% endif %}
             {% else %}
                 <strong>{{ info_user.username }}</strong>
             {% endif %}
