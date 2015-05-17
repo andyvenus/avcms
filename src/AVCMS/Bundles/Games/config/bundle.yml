@@ -69,7 +69,8 @@ menu_items:
       label: Game Feeds
       icon: glyphicon glyphicon-cloud-download
       type: route
-      default_order: 3
+      default_order: 1
+      parent: games_admin
       permission: ADMIN_GAMES
       settings:
         route: game_feeds_admin_home
