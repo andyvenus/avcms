@@ -13,11 +13,13 @@ class FeedGamesFinder extends Finder
 {
     public function status($status = null)
     {
-        if ($status !== 'pending' || $status !== 'rejected' || $status !== 'imported') {
+        if ($status !== 'pending' && $status !== 'rejected' && $status !== 'imported' && $status !== 'all') {
             $status = 'pending';
         }
 
-        $this->currentQuery->where('status', $status);
+        if ($status !== 'all') {
+            $this->currentQuery->where('status', $status);
+        }
 
         return $this;
     }

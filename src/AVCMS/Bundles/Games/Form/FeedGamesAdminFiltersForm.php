@@ -25,6 +25,16 @@ class FeedGamesAdminFiltersForm extends AdminFiltersForm
             ]
         ]);
 
+        $this->add('status', 'select', [
+            'choices' => [
+                'all' => 'All',
+                'pending' => 'Pending',
+                'imported' => 'Imported',
+                'rejected' => 'Rejected',
+            ],
+            'default' => 'pending'
+        ]);
+
         $this->add('search', 'text', [
             'field_template' => '@admin/form_fields/search_field.twig'
         ]);

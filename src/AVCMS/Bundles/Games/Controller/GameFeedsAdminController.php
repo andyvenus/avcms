@@ -183,7 +183,7 @@ class GameFeedsAdminController extends AdminBaseController
                 'status' => 'pending',
                 'category' => null,
                 'filetype' => null
-            ));
+        ));
 
         /* @var $items \AVCMS\Bundles\Games\Model\FeedGame[] */
         $items = $finder->get();

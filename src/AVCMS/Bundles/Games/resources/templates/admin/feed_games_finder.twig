@@ -22,6 +22,8 @@
 
     <div class="finder-item-title" data-field="name">
         <a href="{{ path('play_feed_game', {'id': item.id}) }}"> {{ item.name }}</a>
+        {% if item.status == 'rejected' %}<span class="label label-danger">{% trans %}Rejected{% endtrans %}</span>{% endif %}
+        {% if item.status == 'imported' %}<span class="label label-success">{% trans %}Imported{% endtrans %}</span>{% endif %}
     </div>
 
     <div class="avcms-feed-game-buttons">
