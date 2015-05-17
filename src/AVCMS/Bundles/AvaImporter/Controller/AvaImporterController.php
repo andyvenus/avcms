@@ -262,6 +262,7 @@ class AvaImporterController extends Controller
 
             foreach ($users as $u) {
                 if ($u['id'] == 1) {
+                    $totalImported++;
                     continue;
                 }
 
@@ -291,7 +292,7 @@ class AvaImporterController extends Controller
 
             $message = ($offset + $totalImported).' Users Imported (Run '.$run.')';
 
-            if ($totalImported)
+            if ($totalImported && $usersProcessed)
                 $this->model('Users')->insert($usersProcessed);
         }
         elseif ($stage == 'game_comments') {

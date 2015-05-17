@@ -236,6 +236,7 @@ class WssImporterController extends Controller
 
             foreach ($users as $u) {
                 if ($u['id'] == 1) {
+                    $totalImported++;
                     continue;
                 }
 
@@ -261,7 +262,7 @@ class WssImporterController extends Controller
 
             $message = ($offset + $totalImported).' Users Imported (Run '.$run.')';
 
-            if ($totalImported)
+            if ($totalImported && $usersProcessed)
                 $this->model('Users')->insert($usersProcessed);
         }
         elseif ($stage == 'wallpaper_comments') {
