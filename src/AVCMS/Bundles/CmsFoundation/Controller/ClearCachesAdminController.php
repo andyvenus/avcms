@@ -28,7 +28,10 @@ class ClearCachesAdminController extends AdminBaseController
 
         foreach (new \DirectoryIterator($this->getParam('cache_dir')) as $dir) {
             if ($dir->isDir() && !$dir->isDot()) {
-                $formBlueprint->add("cache_dirs[]", 'checkbox', ['label' => ucfirst($dir->getFilename()), 'checked_value' => $dir->getFilename()]);
+                $formBlueprint->add("cache_dirs[]", 'checkbox', [
+                    'label' => ucfirst($dir->getFilename()),
+                    'checked_value' => $dir->getFilename(),
+                ]);
             }
         }
 
