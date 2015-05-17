@@ -45,7 +45,7 @@ trait CategoryActionsTrait
     public function saveOrderAction(Request $request, $contentType)
     {
         if (!$request->get('category_order')) {
-            throw $this->createNotFoundException("No category ordering data found in request");
+            return $this->alphabeticallyReorderCategories($contentType);
         }
 
         $categoryConfig = $this->getCategoryConfig($contentType);
@@ -84,6 +84,25 @@ trait CategoryActionsTrait
         }
 
         return new JsonResponse(array('success' => true));
+    }
+
+
+    protected function alphabeticallyReorderCategories($contentType)
+    {
+        $categoryConfig = $this->getCategoryConfig($contentType);
+        $model = $this->model($categoryConfig['model']);
+
+        $categories = $model->query()->orderBy('name')->get();
+
+        $i = 1;
+        foreach ($categories as $category) {
+            $category->setOrder($i);
+            $i++;
+
+            $model->update($category);
+        }
+
+        return new JsonResponse(['success' => true]);
     }
 
     public function editCategoryAction(Request $request, $contentType)

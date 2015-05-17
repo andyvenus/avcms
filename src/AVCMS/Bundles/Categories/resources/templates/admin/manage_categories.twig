@@ -9,7 +9,10 @@
 
     <div class="alert alert-info"><span class="glyphicon glyphicon-info-sign"></span> {% trans %}Drag and drop categories by clicking and dragging over the handle icons on the left. Create sub-categories by dragging and dropping the sub-category over another category.{% endtrans %}</div>
 
-    <p><a href="{{ path(route_prefix ~ 'admin_add_category') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> {% trans %}Add Category{% endtrans %}</a></p>
+    <p>
+        <a href="{{ path(route_prefix ~ 'admin_add_category') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> {% trans %}Add Category{% endtrans %}</a>
+        <button data-reorder-categories-url="{{ path(route_prefix ~ 'save_categories_order') }}" class="btn btn-default"><span class="glyphicon glyphicon-sort-by-alphabet"></span> {% trans %}Order Alphabetically{% endtrans %}</button>
+    </p>
 
     <div class="sortable-container">
         <ul class="sortable" style="position: absolute;" data-sortable-levels="2" data-ajax-action="{{ path(route_prefix ~ 'save_categories_order') }}" data-ajax-delete-action="{{ path('menus_admin_delete_item') }}">
