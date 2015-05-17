@@ -24,10 +24,10 @@
 
 {% block finder_header_titles %}
     <div class="col-xs-3 hidden-xs">
-        {% trans %}Category{% endtrans %}
+        {% trans %}Publish Date{% endtrans %}
     </div>
     <div class="col-xs-3 hidden-xs">
-        {% trans %}Added{% endtrans %}
+        {% trans %}Category{% endtrans %}
     </div>
     <div class="col-xs-2 hidden-xs">
         {% trans %}Plays{% endtrans %}
@@ -38,11 +38,11 @@
 {% endblock %}
 
 {% block item_extended_inner %}
+    <div class="col-xs-3 hidden-xs" style="word-break: break-all">
+        {{ item.publishDate|date(settings.time_format) }}
+    </div>
     <div class="col-xs-3 hidden-xs">
         {{ item.category.name }}
-    </div>
-    <div class="col-xs-3 hidden-xs" style="word-break: break-all">
-        {{ item.dateAdded|date(settings.date_format) }}
     </div>
     <div class="col-xs-2 hidden-xs">
         {{ item.hits }}

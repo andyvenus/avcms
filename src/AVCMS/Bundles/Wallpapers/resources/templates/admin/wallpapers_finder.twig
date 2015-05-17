@@ -28,7 +28,7 @@
 
 {% block finder_header_titles %}
     <div class="col-xs-2 hidden-xs hidden-sm hidden-md">
-        {% trans %}Resolution{% endtrans %}
+        {% trans %}Publish Date{% endtrans %}
     </div>
     <div class="col-xs-3 col-lg-2 hidden-xs">
         {% trans %}Hits{% endtrans %}
@@ -46,7 +46,7 @@
 
 {% block item_extended_inner %}
     <div class="col-xs-2 hidden-xs hidden-sm hidden-md">
-        {{ item.originalWidth }}x{{ item.originalHeight }}
+        {{ item.publishDate|date(settings.time_format) }}
     </div>
     <div class="col-xs-3 col-lg-2 hidden-xs">
         {{ item.hits }}
