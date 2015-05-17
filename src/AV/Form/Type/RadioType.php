@@ -22,4 +22,17 @@ class RadioType extends DefaultType
 
         return $field;
     }
+
+    public function isValidRequestData($field, $data)
+    {
+        if ((!isset($field['options']['strict']) || $field['options']['strict'] === false && !is_array($data)) && !isset($field['options']['choices'][$data])) {
+            return false;
+        }
+        elseif ($data !== null) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
