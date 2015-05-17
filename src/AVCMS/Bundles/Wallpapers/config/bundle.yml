@@ -247,6 +247,16 @@ modules:
           none: None
           featured: Featured
           likes: User's Likes
+      order:
+        type: select
+        label: Order
+        choices:
+          publish-date-newest: Newest
+          top-hits: Top Hits
+          top-downloads: Top Downloads
+          liked: Most Liked
+          random: Random
+        default: newest
       layout:
         type: select
         label: Layout
@@ -263,16 +273,19 @@ modules:
           2: 2
           3: 3
           4: 4
-      order:
+      show_more_button:
+        label: Show more button
+        type: checkbox
+        default: 1
+        help: Display a button that links to the browse wallpapers section with the same order and filter as this module
+      more_button_start_page:
+        label: More button start page
         type: select
-        label: Order
+        default: 1
+        help: Should the user be directed to the first or second page of results when clicking the more button? Linking to the first page means they will see some of the same results from the module, but linking to the second page might mean they miss a few wallpapers. For best results when linking to page 2, make this module show the same number of wallpapers as is shown per page when browsing.
         choices:
-          publish-date-newest: Newest
-          top-hits: Top Hits
-          top-downloads: Top Downloads
-          liked: Most Liked
-          random: Random
-        default: newest
+          1: Page One
+          2: Page Two
       limit:
         type: text
         label: Number of wallpapers to display

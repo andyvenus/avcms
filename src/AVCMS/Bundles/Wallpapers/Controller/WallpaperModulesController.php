@@ -54,6 +54,21 @@ class WallpaperModulesController extends Controller
             $query = $this->wallpapers->find()->ids($ids, 'wallpapers.id');
             $moreButton = ['url' => $this->generateUrl('liked_wallpapers', ['likes_user' => $user->getSlug()]), 'label' => 'All Liked Wallpapers'];
         }
+        else {
+            if ($adminSettings['more_button_start_page'] == 2) {
+                $pageTwoExists = ($query->getQuery()->count() > $this->setting('browse_wallpapers_per_page'));
+                if (!$pageTwoExists) {
+                    $adminSettings['more_button_start_page'] = 1;
+                }
+            }
+
+            $label = 'Next Page';
+            if ($adminSettings['more_button_start_page'] == 1) {
+                $label = 'More';
+            }
+
+            $moreButton = ['url' => $this->generateUrl('browse_wallpapers', ['page' => $adminSettings['more_button_start_page'], 'order' => $adminSettings['order']]), 'label' => $label];
+        }
 
         if ($adminSettings['show_wallpaper_category']) {
             $query->join($this->model('WallpaperCategories'), ['name', 'slug']);

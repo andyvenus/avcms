@@ -21,9 +21,9 @@
         </div>
     {% endfor %}
 
-    {% if more_button %}
-    <a href="{{ more_button.url }}" class="list-group-item text-center">
-        {{ more_button.label|trans }} <span class="glyphicon glyphicon-chevron-right"></span>
-    </a>
+    {% if more_button and admin_settings.show_more_button %}
+        <a href="{{ more_button.url }}" class="list-group-item text-center">
+            {{ more_button.label|trans }} <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
     {% endif %}
 </div>
