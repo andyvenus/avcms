@@ -8,6 +8,8 @@
     <div class="user-profile-header" style="background-image: url('{{ cover_url(profile_user) }}')">
             <div class="user-profile-username">
                 {{ profile_user.username }}
+
+                <span class="small">{{ user_info(user, {show_avatar: false, show_username: false}) }}</span>
             </div>
 
             <div class="user-profile-avatar">
@@ -16,7 +18,6 @@
         <div class="user-profile-info">
                 <div class="pull-left">
                     {% trans %}Joined{% endtrans %}: {{ profile_user.joined|date(settings.date_format) }} &nbsp;&nbsp;{% trans %}Last Activity{% endtrans %}: {{ profile_user.lastActivity|date(settings.date_format) }}
-                    &nbsp;&nbsp;{{ user_info(user, {show_avatar: false, show_username: false}) }}
                 </div>
         </div>
     </div>
