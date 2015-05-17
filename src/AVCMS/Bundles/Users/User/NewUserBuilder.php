@@ -50,7 +50,14 @@ class NewUserBuilder
 
         $user->setUsername($username);
         $user->setEmail($email);
-        $user->setSlug($this->slugify->slugify($username));
+
+        $slug = $this->slugify->slugify($username);
+
+        if ($this->users->query()->where('slug', $slug)->count()) {
+            $slug .= time();
+        }
+
+        $user->setSlug($slug);
 
         if ($password !== null) {
             $encodedPassword = $this->passwordEncoder->encodePassword($password, null);
