@@ -24,6 +24,7 @@ class GameFeedServices implements ServicesInterface
             ->addMethodCall('addFeed', [new Reference('feed.arcade_game_feed')])
             ->addMethodCall('addFeed', [new Reference('feed.2_player_games')])
             ->addMethodCall('addFeed', [new Reference('feed.unity_feeds')])
+            ->addMethodCall('addFeed', [new Reference('feed.famobi')])
         ;
 
         $container->register('feed_games.model', 'AVCMS\Bundles\Games\Model\FeedGames')
@@ -43,5 +44,7 @@ class GameFeedServices implements ServicesInterface
         $container->register('feed.2_player_games', 'AVCMS\Bundles\Games\GameFeeds\TwoPlayerGamesFeed');
 
         $container->register('feed.unity_feeds', 'AVCMS\Bundles\Games\GameFeeds\UnityFeedsFeed');
+
+        $container->register('feed.famobi', 'AVCMS\Bundles\Games\GameFeeds\FamobiFeed');
     }
 }
