@@ -220,7 +220,9 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
      */
     public function select($fields, $join = false, $prefix = true)
     {
-        if ($join === false) {
+        $isCount = (strpos($fields[0], '(*) as field') !== false);
+
+        if ($join === false && $isCount === false) {
             $this->selectMade = true;
         }
 
@@ -471,6 +473,34 @@ class QueryBuilderHandler extends PixieQueryBuilderHandler {
         }
 
         return $id;
+    }
+
+    /**
+     * Get count of rows
+     *
+     * @return int
+     */
+    public function count()
+    {
+        $selectMade = false;
+        if (isset($this->selectMade)) {
+            $selectMade = true;
+        }
+
+        // Get the current statements
+        $originalStatements = $this->statements;
+
+        unset($this->statements['limit']);
+        unset($this->statements['offset']);
+
+        $count = $this->aggregate('count');
+        $this->statements = $originalStatements;
+
+        if ($selectMade == false) {
+            unset($this->selectMade);
+        }
+
+        return $count;
     }
 
     /**
