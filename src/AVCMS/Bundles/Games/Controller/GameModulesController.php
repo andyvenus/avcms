@@ -54,6 +54,21 @@ class GameModulesController extends Controller
             $query = $this->games->find()->ids($ids, 'games.id');
             $moreButton = ['url' => $this->generateUrl('liked_games', ['likes_user' => $user->getSlug()]), 'label' => 'All Liked Games'];
         }
+        else {
+            if ($adminSettings['more_button_start_page'] == 2) {
+                $pageTwoExists = ($query->getQuery()->count() > $this->setting('browse_games_per_page'));
+                if (!$pageTwoExists) {
+                    $adminSettings['more_button_start_page'] = 1;
+                }
+            }
+
+            $label = 'Next Page';
+            if ($adminSettings['more_button_start_page'] == 1) {
+                $label = 'More';
+            }
+
+            $moreButton = ['url' => $this->generateUrl('browse_games', ['page' => $adminSettings['more_button_start_page'], 'order' => $adminSettings['order']]), 'label' => $label];
+        }
 
         if ($adminSettings['show_game_category']) {
             $query->join($this->model('GameCategories'), ['name', 'slug']);
