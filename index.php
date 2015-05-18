@@ -1,6 +1,6 @@
 <?php
 if (version_compare(PHP_VERSION, '5.4.0') === -1) {
-    exit('PHP 5.4 or above is required, you are running version '.PHP_VERSION.' Older versions of PHP are no longer supported by the PHP developers and could become insecure.');
+    exit('PHP 5.4 or above is required, you are running version '.PHP_VERSION.'. Older versions of PHP are no longer supported by the PHP developers and could become insecure.');
 }
 
 use AV\Model\Exception\DatabaseConfigMissingException;
