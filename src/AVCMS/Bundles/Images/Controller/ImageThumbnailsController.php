@@ -9,6 +9,7 @@ namespace AVCMS\Bundles\Images\Controller;
 
 use AVCMS\Core\Controller\Controller;
 use Curl\Curl;
+use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\ImageManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -67,24 +68,47 @@ class ImageThumbnailsController extends Controller
 
         $filename = $file->getId().'-'.$size.'.'.pathinfo($file->getUrl(), PATHINFO_EXTENSION);
 
+        $baseWidth = $this->setting('images_thumbnail_width');
+        $baseHeight = $this->setting('images_thumbnail_height');
+
         if ($size == 'sm') {
-            $dimensions = [100, 100];
+            $dimensions = [($baseWidth * 0.5), ($baseHeight * 0.5)];
         }
         elseif ($size == 'lg') {
-            $dimensions = [400, 400];
+            $dimensions = [($baseWidth * 1.5), ($baseHeight * 1.5)];
         }
         else {
-            $dimensions = [200, 200];
+            $dimensions = [$baseWidth, $baseHeight];
         }
 
         $settings = $this->get('settings_manager');
 
-        $thumbnail->resize($dimensions[0], $dimensions[1], function($c) use ($settings) {
-            if ($settings->getSetting('images_thumbnail_crop') == 'maintain_ratio') {
-                $c->aspectRatio();
+        $maintainAspectRatio = $settings->getSetting('images_thumbnail_crop') == 'maintain_ratio';
+
+        if ($maintainAspectRatio) {
+            $thumbnail->resize($dimensions[0], $dimensions[1], function($c) use ($maintainAspectRatio, $thumbnail, $dimensions) {
+                if ($maintainAspectRatio) {
+                    $c->aspectRatio();
+                }
+                $c->upsize();
+            });
+
+            try {
+                $thumbnail->resizeCanvas($dimensions[0], $dimensions[1], 'center', false, $this->setting('images_thumbnail_crop_color'));
+            } catch(NotReadableException $e) {
+                $thumbnail->resizeCanvas($dimensions[0], $dimensions[1], 'center', false, '#ffffff');
             }
-            $c->upsize();
-        });
+        }
+        else {
+            if ($dimensions[0] > $thumbnail->getWidth()) {
+                $thumbnail->widen($dimensions[0]);
+            }
+            if ($dimensions[1] > $thumbnail->getHeight()) {
+                $thumbnail->heighten($dimensions[1]);
+            }
+
+            $thumbnail->crop($dimensions[0], $dimensions[1]);
+        }
 
         $thumbnail->save($thumbnailPath.'/'.$filename);
 

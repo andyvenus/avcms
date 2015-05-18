@@ -1,8 +1,8 @@
 {% extends '@admin/finder.twig' %}
 
 {% block item_main %}
-    <div class="finder-thumbnail">
-        <img src="{{ image_thumbnail(item) }}" width="50" style="max-height: 50px;"/>
+    <div class="finder-thumbnail" style="width: 50px;text-align: center;">
+        <img src="{{ image_thumbnail(item) }}" style="max-height: 50px;max-width: 50px;"/>
     </div>
 
     <div class="finder-item-title" data-field="name">

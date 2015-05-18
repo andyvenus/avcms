@@ -127,6 +127,30 @@ admin_settings:
     choices:
       crop: Crop
       maintain_ratio: Keep aspect ratio
+  images_thumbnail_crop_color:
+    label: Crop colour
+    help: When keeping the aspect ratio, what colour should any extra space be?
+    section: images
+    type: text
+    default: '#ffffff'
+  images_thumbnail_width:
+    label: Base thumbnail width
+    help: The width of generated thumbnail images
+    section: images
+    type: text
+    default: 400
+    validation:
+      numeric:
+        rule: Numeric
+  images_thumbnail_height:
+    label: Base thumbnail height
+    help: The height of generated thumbnail images
+    section: images
+    type: text
+    default: 400
+    validation:
+      numeric:
+        rule: Numeric
   browse_images_layout:
     type: select
     label: Browse Images Layout
