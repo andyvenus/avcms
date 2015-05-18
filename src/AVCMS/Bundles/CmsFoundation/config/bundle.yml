@@ -177,6 +177,8 @@ assets:
   avcms_codemirror.js:
     env: admin
     priority: -15
+  sortable.min.js:
+    env: admin
   codemirror.css:
       env: admin
 

@@ -14,6 +14,8 @@ $(document).ready(function() {
 
             avcms.images.addImageFile(form);
         }
+
+        $('.avcms-image-files').sortable();
     });
 });
 
