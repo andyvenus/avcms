@@ -94,6 +94,10 @@ class ImagesAdminController extends AdminBaseController
                     continue;
                 }
 
+                if (!$file['file']) {
+                    continue;
+                }
+
                 $imageFile = $this->imageFiles->newEntity();
                 $imageFile->setUrl($file['file']);
                 $imageFile->setImageId($image->getId());
