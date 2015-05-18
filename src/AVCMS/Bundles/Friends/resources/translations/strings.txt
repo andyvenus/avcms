@@ -17,3 +17,4 @@ New Friend Request
 You have received a friend request from {username}
 Accept or decline
 Find a user
+Add Friend
