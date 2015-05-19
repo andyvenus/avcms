@@ -71,6 +71,15 @@ admin_settings:
       5: 5
       8: 8
       10: 10
+  wallpaper_thumbnail_quality:
+    type: text
+    label: Thumbnail image quality
+    help: Between 50 & 100, 100 being better quality
+    section: wallpapers
+    default: 80
+    validation:
+      numeric:
+        rule: Numeric
   wallpapers_allow_uploads:
     type: checkbox
     label: Allow Wallpaper Submissions

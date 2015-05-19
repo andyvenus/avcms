@@ -49,9 +49,14 @@ class WallpapersImageController extends Controller
         if ($thumbnail === true) {
             $cacheDir .= '/thumbnail';
             $filename = $thumbnailSize.'.'.pathinfo($wallpaper->getFile(), PATHINFO_EXTENSION);
+            $quality = $this->setting('wallpaper_thumbnail_quality');
+            if (!is_numeric($quality) && ($quality < 50 || $quality > 100)) {
+                $quality = 90;
+            }
         }
         else {
             $filename = $width.'x'.$height.'.'.pathinfo($wallpaper->getFile(), PATHINFO_EXTENSION);
+            $quality = 90;
         }
 
         $imagePath = $cacheDir.'/'.$filename;
@@ -101,7 +106,7 @@ class WallpapersImageController extends Controller
         if (!file_exists($cacheDir)) {
             mkdir($cacheDir, 0777, true);
         }
-        $img->save($imagePath);
+        $img->save($imagePath, $quality);
 
         $headers['Content-Type'] = $img->mime;
         return new Response($img->encode(), 200, $headers);
