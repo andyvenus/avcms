@@ -21,7 +21,7 @@ avcms.nav = {
             url = $(this).attr('href').trim();
         }
 
-        if (url.indexOf('admin') <= 0 || $(this).attr('target') === '_blank') {
+        if (url.indexOf('admin') <= 0 || $(this).attr('target') === '_blank' || $(this).hasClass('avcms-no-nav')) {
             return true;
         }
 
