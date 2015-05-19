@@ -71,7 +71,7 @@ abstract class Categories extends Model
             $category->parent = $this->getOne($category->getParent());
         }
         else {
-            $category->subcategories = $this->query()->where('parent', $categoryId)->get();
+            $category->subcategories = $this->query()->where('parent', $categoryId)->orderBy('order')->get();
         }
         
         return $category;
