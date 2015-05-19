@@ -78,7 +78,7 @@ class WallpapersController extends Controller
             }
 
             $ratings = $this->model('LikeDislike:Ratings');
-            $ids = $ratings->getLikedIds($user->getId(), 'wallpaper', $this->setting('browse_wallpapers_per_page'));
+            $ids = $ratings->getLikedIds($user->getId(), 'wallpaper');
             $query = $query->ids($ids, 'wallpapers.id');
         }
 

@@ -118,7 +118,7 @@ class GamesController extends Controller
             }
 
             $ratings = $this->model('LikeDislike:Ratings');
-            $ids = $ratings->getLikedIds($user->getId(), 'game', $this->setting('browse_games_per_page'));
+            $ids = $ratings->getLikedIds($user->getId(), 'game');
             $query = $query->ids($ids, 'games.id');
         }
 

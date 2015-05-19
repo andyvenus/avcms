@@ -28,8 +28,11 @@ class Ratings extends Model
             ->where('content_type', $contentType)
             ->where('rating', 1)
             ->select(['content_id'])
-            ->limit($limit)
         ;
+
+        if ($limit !== null) {
+            $query->limit($limit);
+        }
 
         /** @var $results Rating[] */
         $results = $query->get();

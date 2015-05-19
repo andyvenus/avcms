@@ -126,7 +126,7 @@ class ImagesController extends Controller
             }
 
             $ratings = $this->model('LikeDislike:Ratings');
-            $ids = $ratings->getLikedIds($user->getId(), 'image', $this->setting('browse_images_per_page'));
+            $ids = $ratings->getLikedIds($user->getId(), 'image');
             $query = $query->ids($ids, 'images.id');
         }
 
