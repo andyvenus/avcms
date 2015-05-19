@@ -8,15 +8,19 @@
 namespace AVCMS\Bundles\Wallpapers\Twig;
 
 use AVCMS\Bundles\Wallpapers\Model\Wallpaper;
+use AVCMS\Core\SettingsManager\SettingsManager;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class WallpaperTwigExtension extends \Twig_Extension
 {
     protected $urlGenerator;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator)
+    protected $settingsManager;
+
+    public function __construct(UrlGeneratorInterface $urlGenerator, SettingsManager $settingsManager)
     {
         $this->urlGenerator = $urlGenerator;
+        $this->settingsManager = $settingsManager;
     }
 
     public function getName()
@@ -33,9 +37,13 @@ class WallpaperTwigExtension extends \Twig_Extension
         );
     }
 
-    public function thumbnailUrl(Wallpaper $wallpaper, $size = 'md', $absoluteUrl = false)
+    public function thumbnailUrl(Wallpaper $wallpaper, $size = null, $absoluteUrl = false)
     {
-        if (strlen($size) !== 2) {
+        if ($size === null) {
+            $size = $this->settingsManager->getSetting('wallpaper_default_thumbnail_resolution');
+        }
+
+        if (!is_string($size) || strlen($size) !== 2) {
             $size = 'md';
         }
 

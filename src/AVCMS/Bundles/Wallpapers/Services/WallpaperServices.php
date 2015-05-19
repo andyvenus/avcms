@@ -20,7 +20,7 @@ class WallpaperServices implements ServicesInterface
         ;
 
         $container->register('wallpaper.twig.extension', 'AVCMS\Bundles\Wallpapers\Twig\WallpaperTwigExtension')
-            ->setArguments([new Reference('router')])
+            ->setArguments([new Reference('router'), new Reference('settings_manager')])
             ->addTag('twig.extension')
         ;
 
