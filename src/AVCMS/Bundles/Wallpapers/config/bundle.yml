@@ -29,7 +29,7 @@ admin_settings:
     type: select
     label: Browse Wallpaper Columns
     help: How many columns of wallpapers to show when in the main browse wallpapers pages
-    section: wallpapers
+    section: browse_wallpapers
     choices:
       1: 1
       2: 2
