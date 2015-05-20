@@ -338,7 +338,7 @@ avcms.browser = {
             $(this).addClass('btn-danger');
         }
 
-        var form = $('form[data-item-id="'+id+'"');
+        var form = $('form[data-item-id="'+id+'"]');
         form.find('[name="published"][value="'+published+'"]').prop("checked", true);
 
         $.ajax({
