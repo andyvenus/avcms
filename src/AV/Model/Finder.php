@@ -134,6 +134,10 @@ class Finder
             $orderSplit[0] = $this->model->query()->raw('rand()');
         }
 
+        if (strpos($orderSplit[0], '.') === false) {
+            $orderSplit[0] = $this->model->getTable().'.'.$orderSplit[0];
+        }
+
         $this->currentQuery->orderBy($orderSplit[0], $orderSplit[1]);
 
         return $this;
