@@ -18,7 +18,7 @@
         <div class="user-profile-info">
                 <div class="pull-left">
                     {% trans %}Joined{% endtrans %}: {{ profile_user.joined|date(settings.date_format) }}
-                    {% if profile_user.lastActivity %}
+                    {% if profile_user.lastActivity > 0 %}
                         &nbsp;&nbsp;{% trans %}Last Activity{% endtrans %}: {{ profile_user.lastActivity|date(settings.date_format) }}
                     {% endif %}
                 </div>
