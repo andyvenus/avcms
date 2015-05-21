@@ -135,6 +135,11 @@ admin_settings:
     label: Show Comments
     default: 1
     section: browse_wallpapers
+  show_wallpaper_downloads:
+    type: checkbox
+    label: Show Total Downloads
+    default: 1
+    section: browse_wallpapers
   wallpapers_home_meta_description:
       type: textarea
       label: Wallpapers homepage meta description

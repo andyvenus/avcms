@@ -21,7 +21,7 @@ class ImageFilesAdminController extends AdminBaseController
 
     public function setUp()
     {
-        $this->fileSelectHelper = new FileSelectHelper($this->getParam('web_path').'/images', $this->translator, null, null, UploadedFileHandler::getPhpFiletypes());
+        $this->fileSelectHelper = new FileSelectHelper($this->getParam('web_path').'/images', $this->translator, 'file', null, UploadedFileHandler::getPhpFiletypes());
     }
 
     public function findFilesAction(Request $request)

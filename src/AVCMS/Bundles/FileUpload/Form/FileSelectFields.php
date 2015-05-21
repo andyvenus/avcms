@@ -36,6 +36,7 @@ class FileSelectFields {
 
         $formBlueprint->add($fieldName, 'text', [
             'label' => $fieldNameUc.' '.$pathLabel,
+            'attr' => ['class' => 'avcms-file-path-field']
         ]);
 
         $formBlueprint->add($groupName.'[find]', 'text', [

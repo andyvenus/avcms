@@ -28,11 +28,13 @@
                         <h1 class="panel-title">
                             <span class="glyphicon glyphicon-menu-hamburger" style="cursor: move;"></span>
                             <a data-toggle="collapse" href="#file-collapse-{{ file_id|default('new-files') }}" aria-expanded="true" aria-controls="file-collapse-{{ file_id|default('new-files') }}">
-                                {% if file_id %}
-                                    {% trans %}File{% endtrans %}: <span class="avcms-file-name">{{ file.url }}</span>
-                                {% else %}
-                                    {% trans %}New File{% endtrans %}
-                                {% endif %}
+                                <span class="avcms-image-filename">
+                                    {% if file_id %}
+                                        {% trans %}File{% endtrans %}: <span class="avcms-file-name">{{ file.url }}</span>
+                                    {% else %}
+                                        {% trans %}New File{% endtrans %}
+                                    {% endif %}
+                                </span>
                             </a>
                         </h1>
                     </div>
@@ -63,7 +65,13 @@
                 <p><button type="button" class="btn btn-primary btn-block avcms-add-image-file"><span class="glyphicon glyphicon-plus-sign"></span> {% trans %}Add File{% endtrans %}</button></p>
             </div>
             <div class="col-md-6">
-                <p><a href="#" class="btn btn-success btn-block"><span class="glyphicon glyphicon-upload"></span> {% trans %}Bulk Upload{% endtrans %}</a></p>
+                <p>
+                    <span class="btn btn-success btn-block fileinput-button">
+                        <span class="glyphicon glyphicon-upload"></span>
+                        {% trans %}Bulk Upload{% endtrans %}
+                        <input type="file" name="file" multiple class="avcms-images-bulk-upload">
+                    </span>
+                </p>
             </div>
         </div>
     </div>
