@@ -20,7 +20,7 @@ class ImageServices implements ServicesInterface
             ->addTag('twig.extension')
         ;
 
-        $container->register('images.model', 'AVCMS\Bundles\Images\Model\Images')
+        $container->register('images.model', 'AVCMS\Bundles\Images\Model\ImageCollections')
             ->addTag('model')
         ;
 
