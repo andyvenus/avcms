@@ -45,7 +45,16 @@
                 </div>
                 <div id="file-collapse-{{ file_id|default('new-files') }}" class="panel-collapse collapse {% if not file_id %}in{% endif %}" role="tabpanel" aria-labelledby="headingOne">
                     <div class="panel-body">
-                        {{ form_rows(files_form.getFields().images.fields[file_id|default('new-files')].fields) }}
+                        <div class="row">
+                            <div class="col-md-8">
+                                {{ form_rows(files_form.getFields().images.fields[file_id|default('new-files')].fields) }}
+                            </div>
+                            <div class="col-md-4">
+                                <div class="avcms-image-preview" style="text-align: center;">
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

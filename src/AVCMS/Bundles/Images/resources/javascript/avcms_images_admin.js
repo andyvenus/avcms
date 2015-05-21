@@ -15,13 +15,14 @@ $(document).ready(function() {
             avcms.images.addImageFile(form);
         }
 
-        $('body').on('change', '.avcms-file-path-field, .file-selector-dropdown', function() {
-            $(this).parents('.panel').find('.avcms-image-filename').html($(this).val());
+        $('body').on('change', '.avcms-file-path-field, .file-selector-dropdown, [data-file-selector-group]', avcms.images.updateFiles);
+
+        $('.avcms-image-files').sortable({
+            handle: ".panel-heading"
         });
 
-        $('.avcms-image-files').sortable();
-
         avcms.images.loadBulkUpload();
+        avcms.images.updateFiles();
     });
 });
 
@@ -83,5 +84,35 @@ avcms.images = {
             }
         }).prop('disabled', !$.support.fileInput)
             .parent().addClass($.support.fileInput ? undefined : 'disabled');
+    },
+
+    updateFiles: function() {
+        $('.avcms-image-files').find('.panel').each(function() {
+            if (!$(this).find('.panel-body').length) {
+                return;
+            }
+
+            var selected = $(this).find('[data-file-selector-target]').filter(':checked').val();
+
+            var field = $(this).find('.avcms-file-path-field[name="'+selected+'"], .file-selector-dropdown[name="'+selected+'"]');
+
+            if (!field.length) {
+                return;
+            }
+
+            var url = field.val();
+
+            if (!url) {
+                return;
+            }
+
+            $(this).find('.avcms-image-filename').html(url);
+
+            if (!url.startsWith("http")) {
+                url = avcms.config.site_url + 'web/images/' + url;
+            }
+
+            $(this).find('.avcms-image-preview').html('<img src="' + url + '" style="max-width: 100%;max-height:200px;" />');
+        });
     }
 };
