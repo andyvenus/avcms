@@ -9,6 +9,7 @@ namespace AV\Model;
 
 use AVCMS\Core\Taxonomy\TaxonomyManager;
 use Pixie\QueryBuilder\QueryBuilderHandler;
+use Pixie\QueryBuilder\Raw;
 use Symfony\Component\HttpFoundation\Request;
 
 class Finder
@@ -134,7 +135,7 @@ class Finder
             $orderSplit[0] = $this->model->query()->raw('rand()');
         }
 
-        if (strpos($orderSplit[0], '.') === false) {
+        if (strpos($orderSplit[0], '.') === false && !$orderSplit[0] instanceof Raw) {
             $orderSplit[0] = $this->model->getTable().'.'.$orderSplit[0];
         }
 
