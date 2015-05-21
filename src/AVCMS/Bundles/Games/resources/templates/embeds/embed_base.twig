@@ -4,7 +4,7 @@
     </div>
 </div>
 
-{% if (game.advertId or settings.game_ad_default) and (is_granted('ELEVATED_NO_GAME_ADS') == false or settings.game_ad_show_to_everyone) %}
+{% if (game.advertId or settings.game_ad_default) and (is_granted('ELEVATED_NO_GAME_ADS') == false or settings.game_ad_show_to_everyone) and show_advert == true %}
     <div id="avcms-game-advert">
         <div class="game-advert-info">
             <div id="avcms-game-advert-countdown" data-countdown-time="{{ settings.game_ad_countdown }}">{{ settings.game_ad_countdown }}</div>

@@ -47,7 +47,7 @@ class EmbedGameTwigExtension extends \Twig_Extension
         return $thumbnail;
     }
 
-    public function embedGame(Game $game)
+    public function embedGame(Game $game, $showAdvert = true)
     {
         if (!$game->getFile()) {
             $fileExtension = 'html_embed';
@@ -63,7 +63,7 @@ class EmbedGameTwigExtension extends \Twig_Extension
             $gameEmbedTemplate = '@Games/embeds/iframe.twig';
         }
 
-        return $this->environment->render($gameEmbedTemplate, ['game' => $game]);
+        return $this->environment->render($gameEmbedTemplate, ['game' => $game, 'show_advert' => $showAdvert]);
     }
 
     private function setRealGameUrl(Game $game)
