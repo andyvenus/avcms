@@ -115,6 +115,9 @@ avcms.gamesAdmin = {
         if (finder_item.length === 1) {
             avcms.gamesAdmin.downloadFeedGame(finder_item.data('id'));
         }
+        else {
+            avcms.browser.checkFinderChecked();
+        }
     },
 
     updateAllFeeds: function()
