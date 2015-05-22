@@ -112,7 +112,7 @@ avcms.images = {
                 url = avcms.config.site_url + 'web/images/' + url;
             }
 
-            $(this).find('.avcms-image-preview').html('<img src="' + url + '" style="max-width: 100%;max-height:200px;" />');
+            $(this).find('.avcms-image-preview').html('<a href="'+url+'" target="_blank"><img src="' + url + '" style="max-width: 100%;max-height:200px;" /></a>');
         });
     }
 };
