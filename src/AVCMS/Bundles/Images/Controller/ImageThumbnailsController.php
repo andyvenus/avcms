@@ -66,7 +66,7 @@ class ImageThumbnailsController extends Controller
             mkdir($thumbnailPath, 0777, true);
         }
 
-        $filename = $file->getId().'-'.$size.'.'.pathinfo($file->getUrl(), PATHINFO_EXTENSION);
+        $filename = $file->getId().'-'.$size.'.'.preg_replace('/\?.*/', '', pathinfo($file->getUrl(), PATHINFO_EXTENSION));
 
         $baseWidth = $this->setting('images_thumbnail_width');
         $baseHeight = $this->setting('images_thumbnail_height');
@@ -100,10 +100,12 @@ class ImageThumbnailsController extends Controller
             }
         }
         else {
-            if ($dimensions[0] > $thumbnail->getWidth()) {
+            $reqRatio = $dimensions[0] / $dimensions[1];
+            $origRatio = $thumbnail->width() / $thumbnail->height();
+
+            if ($reqRatio > $origRatio) {
                 $thumbnail->widen($dimensions[0]);
-            }
-            if ($dimensions[1] > $thumbnail->getHeight()) {
+            } else {
                 $thumbnail->heighten($dimensions[1]);
             }
 
