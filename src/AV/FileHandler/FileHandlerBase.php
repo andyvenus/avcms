@@ -98,7 +98,7 @@ abstract class FileHandlerBase
             foreach ($this->acceptedFileTypes as $extension => $mimeTypes) {
                 $mimeTypes = (array) $mimeTypes;
 
-                if ($extension === $fileExtension && (in_array($fileMimeType, $mimeTypes) || $mimeTypes[0] === '*')) {
+                if (strtolower($extension) === strtolower($fileExtension) && (in_array($fileMimeType, $mimeTypes) || $mimeTypes[0] === '*')) {
                     $mimeTypeValid = true;
                 }
             }
