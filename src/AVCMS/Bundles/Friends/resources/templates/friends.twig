@@ -1,68 +1,79 @@
 {% extends 'index.twig' %}
 
 {% block content %}
-    <h1>{% trans %}Friends{% endtrans %}</h1>
+    <div class="box">
+        <div class="box-top">
+            <h1>{% trans %}Friends{% endtrans %}</h1>
+        </div>
 
+        <div class="box-main">
+            {% if requests %}
+                <h3>{% trans %}Friend Requests{% endtrans %}</h3>
 
-        {% if requests %}
-            <h3>{% trans %}Friend Requests{% endtrans %}</h3>
+                <ul class="list-group">
+                    {% for request in requests %}
+                        <li class="list-group-item avcms-friend-request" data-user-id="{{ request.senderId }}">
+                            <div class="media">
+                                <div class="media-left">
+                                    <img src="{{ avatar_url(request.sender) }}" width="45" height="45">
+                                </div>
+                                <div class="media-body">
+                                    <div class="pull-left">
+                                        <h4 class="media-heading"><a href="{{ path('user_profile', {'slug': request.sender.slug}) }}">{{ request.sender.username }}</a></h4>
+                                        {% trans %}Sent{% endtrans %}: {{ request.sent|date(settings.time_format) }}
+                                    </div>
+
+                                    <div class="pull-right avcms-friend-request-buttons">
+                                        <button class="btn btn-xs btn-success avcms-accept"><span class="glyphicon glyphicon-ok"></span> {% trans %}Accept{% endtrans %}</button>
+                                        <button class="btn btn-xs btn-danger avcms-decline"><span class="glyphicon glyphicon-remove"></span> {% trans %}Decline{% endtrans %}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            {% endif %}
+
+            {% if requests %}
+                <h3>{% trans %}Current Friends{% endtrans %}</h3>
+            {% endif %}
 
             <ul class="list-group">
-                {% for request in requests %}
-                    <li class="list-group-item avcms-friend-request" data-user-id="{{ request.senderId }}">
-                        <div class="media">
-                            <div class="media-left">
-                                <img src="{{ avatar_url(request.sender) }}" width="45" height="45">
+            {% for friend in friends %}
+                <li class="list-group-item avcms-friend" data-user-id="{{ friend.id }}">
+                    <div class="media">
+                        <div class="media-left">
+                            <img src="{{ avatar_url(friend) }}" width="45" height="45">
+                        </div>
+                        <div class="media-body">
+                            <div class="pull-left">
+                                <h4 class="media-heading"><a href="{{ path('user_profile', {'slug': friend.slug}) }}">{{ friend.username }}</a></h4>
+                                {% trans %}Last Active{% endtrans %}: {{ friend.lastActive|date(settings.time_format) }}
                             </div>
-                            <div class="media-body">
-                                <div class="pull-left">
-                                    <h4 class="media-heading"><a href="{{ path('user_profile', {'slug': request.sender.slug}) }}">{{ request.sender.username }}</a></h4>
-                                    {% trans %}Sent{% endtrans %}: {{ request.sent|date(settings.time_format) }}
-                                </div>
 
-                                <div class="pull-right avcms-friend-request-buttons">
-                                    <button class="btn btn-xs btn-success avcms-accept"><span class="glyphicon glyphicon-ok"></span> {% trans %}Accept{% endtrans %}</button>
-                                    <button class="btn btn-xs btn-danger avcms-decline"><span class="glyphicon glyphicon-remove"></span> {% trans %}Decline{% endtrans %}</button>
-                                </div>
+                            <div class="pull-right">
+                                {% if is_granted('PERM_PRIVATE_MESSAGES') %}
+                                    <a class="btn btn-sm btn-default" href="{{ path('send_private_message', {'recipient': friend.id}) }}"><span class="glyphicon glyphicon-envelope"></span> {% trans %}Send Message{% endtrans %}</a>
+                                {% endif %}
+                                <button class="btn btn-danger btn-sm avcms-delete-friend"><span class="glyphicon glyphicon-remove"></span> </button>
                             </div>
                         </div>
-                    </li>
-                {% endfor %}
+                    </div>
+                </li>
+            {% else %}
+                {% trans %}When you add a friend from their profile they will appear here when they accept{% endtrans %}
+            {% endfor %}
             </ul>
+        </div>
+    </div>
 
-        {% endif %}
-
-        {% if requests %}
-            <h3>{% trans %}Current Friends{% endtrans %}</h3>
-        {% endif %}
-
-        <ul class="list-group">
-        {% for friend in friends %}
-            <li class="list-group-item avcms-friend" data-user-id="{{ friend.id }}">
-                <div class="media">
-                    <div class="media-left">
-                        <img src="{{ avatar_url(friend) }}" width="45" height="45">
-                    </div>
-                    <div class="media-body">
-                        <div class="pull-left">
-                            <h4 class="media-heading"><a href="{{ path('user_profile', {'slug': friend.slug}) }}">{{ friend.username }}</a></h4>
-                            {% trans %}Last Active{% endtrans %}: {{ friend.lastActive|date(settings.time_format) }}
-                        </div>
-
-                        <div class="pull-right">
-                            {% if is_granted('PERM_PRIVATE_MESSAGES') %}
-                                <a class="btn btn-sm btn-default" href="{{ path('send_private_message', {'recipient': friend.id}) }}"><span class="glyphicon glyphicon-envelope"></span> {% trans %}Send Message{% endtrans %}</a>
-                            {% endif %}
-                            <button class="btn btn-danger btn-sm avcms-delete-friend"><span class="glyphicon glyphicon-remove"></span> </button>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        {% else %}
-            {% trans %}When you add a friend from their profile they will appear here when they accept{% endtrans %}
-        {% endfor %}
-        </ul>
-
-    <h3>{% trans %}Find a user{% endtrans %}</h3>
-    {{ form(form) }}
+    <div class="box">
+        <div class="box-top">
+            <h3>{% trans %}Find a user{% endtrans %}</h3>
+        </div>
+        <div class="box-main">
+            {{ form(form) }}
+        </div>
+    </div>
 {% endblock %}
