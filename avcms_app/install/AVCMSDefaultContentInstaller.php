@@ -228,6 +228,7 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
             <p>This is just a first blog post to show the blog system. You can edit or delete it from the admin panel.</p>');
         $post->setSlug('welcome-to-avcms');
         $post->setPublishDate(time());
+        $post->setDateAdded(time());
 
         $blogPosts->save($post);
     }
