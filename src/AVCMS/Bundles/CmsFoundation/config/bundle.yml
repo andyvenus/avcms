@@ -144,6 +144,9 @@ admin_settings:
     section: main
 
 assets:
+  avcms_general.css:
+    env: shared
+
   jquery.js:
     env: shared
     priority: 90
