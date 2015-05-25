@@ -1,11 +1,17 @@
 {% extends "@Users/register.twig" %}
 
 {% block content %}
-    <h1>{% trans %}Registration Complete{% endtrans %}</h1>
+    <div class="box">
+        <div class="box-top">
+            <h1>{% trans %}Registration Complete{% endtrans %}</h1>
+        </div>
 
-    {% if emailValidation %}
-        <p>{% trans with {'email': user.email} %}Registration complete. A link has been sent to {email} for you to confirm your email address and activate your account.{% endtrans %}</p>
-    {% else %}
-        <p>{% trans %}Registration complete. You can now login.{% endtrans %}</p>
-    {% endif %}
+        <div class="box-main">
+            {% if emailValidation %}
+                <p>{% trans with {'email': user.email} %}Registration complete. A link has been sent to {email} for you to confirm your email address and activate your account.{% endtrans %}</p>
+            {% else %}
+                <p>{% trans %}Registration complete. You can now login.{% endtrans %}</p>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
