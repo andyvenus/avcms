@@ -1,0 +1,7 @@
+details:
+  name: Spark
+  description: A simple light green theme
+  version: 1.0
+  author: AV Scripts
+
+parent: basic

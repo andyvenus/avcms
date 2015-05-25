@@ -1,0 +1,29 @@
+$header-base-color: #c9dccb;
+$header-text-color: darken($header-base-color, 40);
+$panel-header-color: #eceffc;
+$base-color: #326883;
+
+$background-color: #2e81ec;
+
+
+$solid-base-color: #143867;
+$solid-secondary-color: #febf04;
+
+$solid-highlight-color: #13932d;
+
+
+@mixin secondary-gradient() {
+  background: #ffd65e; /* Old browsers */
+  background: -moz-linear-gradient(top,  #ffd65e 0%, #febf04 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffd65e), color-stop(100%,#febf04)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #ffd65e 0%,#febf04 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #ffd65e 0%,#febf04 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #ffd65e 0%,#febf04 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #ffd65e 0%,#febf04 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd65e', endColorstr='#febf04',GradientType=0 ); /* IE6-9 */
+}
+
+@mixin box-background() {
+  background-color: #174076;
+  background-color: rgba(0, 0, 0, 0.5);
+}

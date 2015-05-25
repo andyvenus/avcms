@@ -69,3 +69,4 @@ Your email address has been validated.
 You still need to validate your email address ({email}) to get full access
 Resend
 Please re-authenticate to access this area
+Members
