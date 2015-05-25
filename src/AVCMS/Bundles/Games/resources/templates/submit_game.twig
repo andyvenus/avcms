@@ -5,23 +5,29 @@
 {% endblock %}
 
 {% block content %}
-    <h2>{% trans %}Submit a Game{% endtrans %}</h2>
-
-    {% if form.isSubmitted() == false %}
-        <div class="alert alert-info">
-            <span class="glyphicon glyphicon-info-sign"></span> {% trans %}Submit a game for us to use on our site! By submitting a game you give us full permission to use the game on our website.{% endtrans %}
+    <div class="box">
+        <div class="box-top">
+            <h2>{% trans %}Submit a Game{% endtrans %}</h2>
         </div>
 
-        <div class="alert alert-info">
-            <span class="glyphicon glyphicon-info-sign"></span> {% trans with {size: 50} %}Games must be Flash or Unity files and under {size} MB{% endtrans %}
-        </div>
-    {% endif %}
+        <div class="box-main">
+            {% if form.isSubmitted() == false %}
+                <div class="alert alert-info">
+                    <span class="glyphicon glyphicon-info-sign"></span> {% trans %}Submit a game for us to use on our site! By submitting a game you give us full permission to use the game on our website.{% endtrans %}
+                </div>
 
-    {% if form.isValid() == false %}
-        {{ form(form) }}
-    {% else %}
-        <div class="alert alert-success">
-            {% trans %}Thanks for your submission, it's now pending review.{% endtrans %} <a href="{{ path('submit_game') }}">{% trans %}Click here to submit another game{% endtrans %}</a>
+                <div class="alert alert-info">
+                    <span class="glyphicon glyphicon-info-sign"></span> {% trans with {size: 50} %}Games must be Flash or Unity files and under {size} MB{% endtrans %}
+                </div>
+            {% endif %}
+
+            {% if form.isValid() == false %}
+                {{ form(form) }}
+            {% else %}
+                <div class="alert alert-success">
+                    {% trans %}Thanks for your submission, it's now pending review.{% endtrans %} <a href="{{ path('submit_game') }}">{% trans %}Click here to submit another game{% endtrans %}</a>
+                </div>
+            {% endif %}
         </div>
-    {% endif %}
+    </div>
 {% endblock %}

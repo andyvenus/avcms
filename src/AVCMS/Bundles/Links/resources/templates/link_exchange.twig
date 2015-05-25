@@ -3,14 +3,20 @@
 {% block title %}{% trans %}Link Exchange{% endtrans %}{% endblock %}
 
 {% block content %}
-    <h2>{{ block('title') }}</h2>
-
-    {% if form.isSubmitted() == false %}
-        <div class="alert alert-info">
-            <span class="glyphicon glyphicon-info-sign"></span>
-            {% trans %}Submit your site for a link exchange. After submission you will be given a unique referral URL to add to your site. The more traffic you send to us, the higher your link will appear on our site.{% endtrans %}
+    <div class="box">
+        <div class="box-top">
+            <h2>{{ block('title') }}</h2>
         </div>
-    {% endif %}
 
-    {{ form(form) }}
+        <div class="box-main">
+            {% if form.isSubmitted() == false %}
+                <div class="alert alert-info">
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                    {% trans %}Submit your site for a link exchange. After submission you will be given a unique referral URL to add to your site. The more traffic you send to us, the higher your link will appear on our site.{% endtrans %}
+                </div>
+            {% endif %}
+
+            {{ form(form) }}
+        </div>
+    </div>
 {% endblock %}

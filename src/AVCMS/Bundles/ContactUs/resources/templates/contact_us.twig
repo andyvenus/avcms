@@ -3,6 +3,12 @@
 {% block title %}{% trans %}Contact Us{% endtrans %}{% endblock %}
 
 {% block content %}
-    <h2>{{ block('title') }}</h2>
-    {{ form(form) }}
+    <div class="box">
+        <div class="box-top">
+            <h2>{{ block('title') }}</h2>
+        </div>
+        <div class="box-main">
+            {{ form(form) }}
+        </div>
+    </div>
 {% endblock %}

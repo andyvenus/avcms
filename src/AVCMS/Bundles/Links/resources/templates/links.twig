@@ -3,26 +3,31 @@
 {% block title %}{% trans %}Our Friends{% endtrans %}{% endblock %}
 
 {% block content %}
-    <h2>{{ block('title') }}</h2>
+    <div class="box">
+        <div class="box-top">
+            <h2>{{ block('title') }}</h2>
+        </div>
+        <div class="box-main">
+            {% if settings.link_exchange %}
+            <p>
+                <a class="btn btn-default btn-success" href="{{ path('link_exchange') }}">
+                    <span class="glyphicon glyphicon-plus"></span> {% trans %}Add Your Site Here{% endtrans %}
+                </a>
+            </p>
+            {% endif %}
 
-    {% if settings.link_exchange %}
-    <p>
-        <a class="btn btn-default btn-success" href="{{ path('link_exchange') }}">
-            <span class="glyphicon glyphicon-plus"></span> {% trans %}Add Your Site Here{% endtrans %}
-        </a>
-    </p>
-    {% endif %}
+            <table class="table">
+                {% for link in links %}
+                    <tr>
+                        <td> <strong><a href="{{ path('link_out', {'id': link.id}) }}" {% if settings.link_exchange_no_follow %}rel="nofollow"{% endif %}>{{ link.anchor }}</a></strong>
+                            {% if link.description %} - {{ link.description }}{% endif %}</td>
+                    </tr>
+                {% endfor %}
+            </table>
 
-    <table class="table">
-        {% for link in links %}
-            <tr>
-                <td> <strong><a href="{{ path('link_out', {'id': link.id}) }}" {% if settings.link_exchange_no_follow %}rel="nofollow"{% endif %}>{{ link.anchor }}</a></strong>
-                    {% if link.description %} - {{ link.description }}{% endif %}</td>
-            </tr>
-        {% endfor %}
-    </table>
-
-    {% block links_pagination %}
-        {{ pagination(total_pages, current_page) }}
-    {% endblock %}
+            {% block links_pagination %}
+                {{ pagination(total_pages, current_page) }}
+            {% endblock %}
+        </div>
+    </div>
 {% endblock %}
