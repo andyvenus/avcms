@@ -155,6 +155,10 @@ class WallpapersController extends Controller
             throw $this->createNotFoundException('Wallpaper Not Found');
         }
 
+        if ($this->setting('wallpapers_count_preview_downloads')) {
+            $this->container->get('hitcounter')->registerHit($this->wallpapers, $wallpaper->getId(), 'total_downloads', 'id', 'last_download');
+        }
+
         return new Response($this->render('@Wallpapers/wallpaper_preview.twig', ['wallpaper' => $wallpaper, 'wallpaper_width' => $width, 'wallpaper_height' => $height]));
     }
 

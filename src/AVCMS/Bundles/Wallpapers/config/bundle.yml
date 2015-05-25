@@ -105,6 +105,13 @@ admin_settings:
       numeric:
         rule: Numeric
 
+  wallpapers_count_preview_downloads:
+    type: checkbox
+    label: Count preview page views as downloads
+    help: If set to off, only downloads when clicking the "Download" button will make the downloads counter increase
+    section: wallpapers
+    default: 0
+
   show_wallpaper_name:
     type: checkbox
     label: Show Wallpaper Name
