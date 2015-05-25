@@ -103,7 +103,9 @@ select[name=author] {
     color: #5f4500; }
   .main-menu .navbar-toggle {
     float: left;
-    margin-left: 15px; }
+    margin-left: 15px;
+    border: 1px solid #5f4500;
+    color: #5f4500; }
   .main-menu .navbar-toggle:focus, .main-menu .navbar-toggle:hover {
     background: none; }
   .main-menu .btn {
@@ -133,7 +135,7 @@ select[name=author] {
 
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-    color: #55845a; } }
+    color: #5f4500; } }
 @media (min-width: 992px) {
   .header .user-area {
     text-align: right; }
@@ -162,32 +164,33 @@ select[name=author] {
   text-align: center;
   margin-bottom: 8px; }
 
-.panel-default {
+.panel {
   border-radius: 5px;
   border: 1px solid #1c4f92;
   background-color: #174076;
   background-color: rgba(0, 0, 0, 0.5); }
-  .panel-default .panel-heading {
-    background: #ffd65e;
-    /* Old browsers */
-    background: -moz-linear-gradient(top, #ffd65e 0%, #febf04 100%);
-    /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffd65e), color-stop(100%, #febf04));
-    /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #ffd65e 0%, #febf04 100%);
-    /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #ffd65e 0%, #febf04 100%);
-    /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #ffd65e 0%, #febf04 100%);
-    /* IE10+ */
-    background: linear-gradient(to bottom, #ffd65e 0%, #febf04 100%);
-    /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd65e', endColorstr='#febf04',GradientType=0 );
-    /* IE6-9 */
-    color: #5f4500;
-    border-color: #326883; }
-    .panel-default .panel-heading a {
-      color: #5f4500; }
+
+.panel-default .panel-heading {
+  background: #ffd65e;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #ffd65e 0%, #febf04 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffd65e), color-stop(100%, #febf04));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #ffd65e 0%, #febf04 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #ffd65e 0%, #febf04 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #ffd65e 0%, #febf04 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #ffd65e 0%, #febf04 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd65e', endColorstr='#febf04',GradientType=0 );
+  /* IE6-9 */
+  color: #5f4500;
+  border-color: #326883; }
+  .panel-default .panel-heading a {
+    color: #5f4500; }
 
 .list-group-item {
   background-color: #174076;

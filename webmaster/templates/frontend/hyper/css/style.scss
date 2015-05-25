@@ -125,6 +125,8 @@ select[name=author] {
   .navbar-toggle {
     float: left;
     margin-left: 15px;
+    border: 1px solid darken(#f8b500, 30);
+    color: darken(#f8b500, 30);
   }
 
   .navbar-toggle:focus, .navbar-toggle:hover {
@@ -162,7 +164,7 @@ select[name=author] {
 
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu>li>a {
-    color: $header-text-color;
+    color: darken(#f8b500, 30);
   }
 }
 
@@ -198,12 +200,14 @@ select[name=author] {
 
 // PANELS
 
-.panel-default {
+.panel {
   border-radius: 5px;
 
   border: 1px solid lighten($solid-base-color, 10);
   @include box-background();
+}
 
+.panel-default {
   .panel-heading {
     @include secondary-gradient();
 
