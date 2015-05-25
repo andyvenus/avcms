@@ -20,7 +20,7 @@
                         {% set class = 'danger' %}
                         {% set text = 'Disabled' %}
                     {% endif %}
-                    <button class="btn btn-xs btn-{{ class }} avcms-toggle-bundle">{{ text|trans }}</button>
+                    {% trans %}Current Status{% endtrans %}: <button class="btn btn-xs btn-{{ class }} avcms-toggle-bundle">{{ text|trans }}</button>
                 </div>
             </div>
         </div>
