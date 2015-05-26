@@ -55,10 +55,16 @@ class CategoriesMenuItemType implements MenuItemTypeInterface
         foreach ($categories as $category) {
             $menuItem = new MenuItem();
             $menuItem->setId('category-'.$category->getId());
-            if ($category->getParent()) {
+
+            $menuItem->setLabel($category->getName());
+
+            if ($category->getParent() && $menuItemConfig->getSetting('display') === 'inline') {
                 $menuItem->setParent('category-'.$category->getParent());
             }
-            $menuItem->setLabel($category->getName());
+            elseif ($category->getParent()) {
+                $menuItem->setLabel(' - '.$category->getName());
+            }
+
             $menuItem->setUrl($this->urlGenerator->generate($this->categoryRoute, ['category' => $category->getSlug()]));
 
             if ($menuItemConfig->getSetting('display') === 'child' && $menuItem->getParent() === null) {
