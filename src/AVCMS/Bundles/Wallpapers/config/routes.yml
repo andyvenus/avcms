@@ -29,7 +29,7 @@ browse_wallpapers:
     page:  \d+
 
 wallpaper_tag:
-  path: /wallpapers/tag/{tags}
+  path: /wallpapers/tag/{tags}/{page}
   defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction, category: null, page: 1 }
   requirements:
     page:  \d+
