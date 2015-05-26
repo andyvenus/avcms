@@ -67,9 +67,10 @@ avcms.nav = {
         var ajax_required = true;
 
         if (ajax_depth == 'editor') {
-            var existing_editor = $('div[data-ajax-url="'+full_url+'"]');
+            var existing_editor = $('.ajax-'+ajax_depth+'-inner[data-ajax-url="'+full_url+'"]');
 
             if (existing_editor.length > 0 && existing_editor.find('.always-refresh').length === 0) {
+                console.log(existing_editor.length);
                 avcms.nav.hideOrRemovePreviousPage(ajax_depth);
                 existing_editor.show();
                 avcms.nav.setPageTitle(full_url);
