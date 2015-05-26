@@ -20,7 +20,7 @@
 
 {% block meta_description -%}
     {%- if category and current_page == 1 -%}
-        {{ category.description }}
+        {{ category.description|striptags }}
     {%- endif -%}
 {%- endblock %}
 
@@ -36,6 +36,10 @@
                 </h2>
             </div>
             <div class="box-main">
+                {% if category.description %}
+                    <p>{{ category.description|raw }}</p>
+                {% endif %}
+
                 {% block subcategories -%}
                     {% if category.subcategories %}
                         <p>
