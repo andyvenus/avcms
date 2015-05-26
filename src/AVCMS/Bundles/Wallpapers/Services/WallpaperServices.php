@@ -60,6 +60,11 @@ class WallpaperServices implements ServicesInterface
             ->addTag('sitemap')
         ;
 
+        $container->register('sitemap.wallpaper_previews', 'AVCMS\Bundles\Wallpapers\Sitemaps\WallpaperPreviewsSitemap')
+            ->setArguments([new Reference('wallpapers.model'), new Reference('router'), new Reference('wallpaper.resolutions_manager'), new Reference('settings_manager')])
+            ->addTag('sitemap')
+        ;
+
         $container->register('model.wallpaper_submissions', 'AVCMS\Bundles\Wallpapers\Model\WallpaperSubmissions')
             ->addTag('model')
         ;

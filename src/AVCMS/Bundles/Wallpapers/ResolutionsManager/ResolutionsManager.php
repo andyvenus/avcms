@@ -21,6 +21,8 @@ class ResolutionsManager
 
     protected $cacheDir;
 
+    protected $uniqueResolutions;
+
     public function __construct($rootDir, SettingsManager $settingsManager, $cacheDir)
     {
         $this->rootDir = $rootDir;
@@ -95,6 +97,22 @@ class ResolutionsManager
         }
 
         return $resolution;
+    }
+
+    public function getAllUniqueResolutions()
+    {
+        if (!isset($this->uniqueResolutions)) {
+            $uniqueResolutions = [];
+
+            $resCats = $this->getAllResolutions();
+            foreach ($resCats as $resolutions) {
+                $uniqueResolutions = array_merge($uniqueResolutions, array_keys($resolutions));
+            }
+
+            $this->uniqueResolutions = array_unique($uniqueResolutions);
+        }
+
+        return $this->uniqueResolutions;
     }
 
     private function getConfigPath()
