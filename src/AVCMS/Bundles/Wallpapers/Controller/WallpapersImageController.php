@@ -83,7 +83,7 @@ class WallpapersImageController extends Controller
             throw $this->createNotFoundException('Wallpaper Source Image Not Found');
         }
 
-        if ($thumbnail === true || $wallpaper->getResizeType() === 'crop') {
+        if ($wallpaper->getResizeType() !== 'stretch') {
             $reqRatio = $width / $height;
             $origRatio = $img->width() / $img->height();
 
