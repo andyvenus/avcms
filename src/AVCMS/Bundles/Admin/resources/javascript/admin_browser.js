@@ -43,6 +43,7 @@ $(document).ready(function() {
 
 avcms.browser = {
     finder_loading: 0,
+    finder_xhr: null,
 
     browserFormSubmitted: function(form, response_data) {
         if ($('.browser').length < 1 || form.data('update-browser') === 'none') {
@@ -177,13 +178,18 @@ avcms.browser = {
     },
 
     changeFinderFilters: function() {
+        if (avcms.browser.finder_xhr !== null) {
+            avcms.browser.finder_xhr.abort();
+            avcms.browser.finder_xhr = null;
+        }
+
         var form_serial = $('form[name="filter_form"]').serialize();
 
         var finder = $('.finder-ajax').find('[data-url]');
         avcms.browser.finder_loading = 1;
 
         avcms.admin.mainLoaderOn();
-        $.get(finder.data('url') + '?' + form_serial, function(data) {
+        avcms.browser.finder_xhr = $.get(finder.data('url') + '?' + form_serial, function(data) {
             if (data) {
                 finder.html(data);
                 avcms.browser.finder_loading = 0;
