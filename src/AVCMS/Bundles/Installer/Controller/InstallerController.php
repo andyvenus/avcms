@@ -142,6 +142,18 @@ class InstallerController extends Controller
 
     public function updateBundlesAction(Request $request)
     {
+        $queryBuilder = $this->container->get('query_builder');
+        $pdo = $queryBuilder->getConnection()->getPdoInstance();
+
+        $pdo->exec("
+                    CREATE TABLE IF NOT EXISTS `{$queryBuilder->getTablePrefix()}versions` (
+                          `id` varchar(30) NOT NULL DEFAULT '',
+                          `installed_version` varchar(30) NOT NULL DEFAULT '',
+                          `type` varchar(30) NOT NULL DEFAULT '',
+                          PRIMARY KEY (`id`)
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+                ");
+
         $installType = $request->get('install_type', 'update');
 
         if ($installType == 'update') {
