@@ -48,15 +48,29 @@ class SitemapWriter
         $writer->setIndent(4);
         $writer->startElement('urlset');
         $writer->writeAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
+        $writer->writeAttribute('xmlns:image', 'http://www.google.com/schemas/sitemap-image/1.1');
 
         foreach ($links as $link) {
             $writer->startElement('url');
 
-                $writer->writeElement('loc', $link->getLink());
+            $writer->writeElement('loc', $link->getLink());
 
-                if ($link->getLastChanged() !== null) {
-                    $writer->writeElement('lastmod', $link->getLastChanged()->format('c'));
+            if ($link->getLastChanged() !== null) {
+                $writer->writeElement('lastmod', $link->getLastChanged()->format('c'));
+            }
+
+            if ($images = $link->getImages()) {
+                foreach ($images as $image) {
+                    $writer->startElement('image:image');
+                    $writer->writeElement('image:loc', $image->getUrl());
+
+                    if ($image->getTitle()) {
+                        $writer->writeElement('image:title', $image->getTitle());
+                    }
+
+                    $writer->endElement();
                 }
+            }
 
             $writer->endElement();
         }
