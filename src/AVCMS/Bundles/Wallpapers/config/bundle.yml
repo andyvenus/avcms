@@ -37,15 +37,6 @@ admin_settings:
       4: 4
     choices_translate: false
     default: 2
-  browse_wallpapers_per_page:
-    type: text
-    label: Wallpapers Per Page
-    help: How many wallpapers to show when in the main browse wallpapers pages
-    section: wallpapers
-    default: 12
-    validation:
-      numeric:
-        rule: Numeric
   wallpaper_image_manipulation_library:
     type: select
     label: Image Library
@@ -119,6 +110,15 @@ admin_settings:
     section: wallpapers
     default: 0
 
+  browse_wallpapers_per_page:
+    type: text
+    label: Wallpapers Per Page
+    help: How many wallpapers to show when in the main browse wallpapers pages
+    section: browse_wallpapers
+    default: 12
+    validation:
+      numeric:
+        rule: Numeric
   show_wallpaper_name:
     type: checkbox
     label: Show Wallpaper Name
