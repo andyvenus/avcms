@@ -85,6 +85,18 @@ class ResolutionsManager
         file_put_contents($this->rootDir.'/webmaster/config/wallpaper_resolutions.yml', $config);
     }
 
+    public function getResolutionName($resolution)
+    {
+        $resCats = $this->getAllResolutions();
+        foreach ($resCats as $resolutions) {
+            if (isset($resolutions[$resolution])) {
+                return $resolutions[$resolution];
+            }
+        }
+
+        return $resolution;
+    }
+
     private function getConfigPath()
     {
         $configPath = $this->rootDir.'/webmaster/config/wallpaper_resolutions.yml';

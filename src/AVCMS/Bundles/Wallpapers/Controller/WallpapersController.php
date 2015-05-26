@@ -159,7 +159,14 @@ class WallpapersController extends Controller
             $this->container->get('hitcounter')->registerHit($this->wallpapers, $wallpaper->getId(), 'total_downloads', 'id', 'last_download');
         }
 
-        return new Response($this->render('@Wallpapers/wallpaper_preview.twig', ['wallpaper' => $wallpaper, 'wallpaper_width' => $width, 'wallpaper_height' => $height]));
+        $resolutionName = $resolutionsManager->getResolutionName($width.'x'.$height);
+
+        return new Response($this->render('@Wallpapers/wallpaper_preview.twig', [
+            'wallpaper' => $wallpaper,
+            'wallpaper_width' => $width,
+            'wallpaper_height' => $height,
+            'resolution_name' => $resolutionName
+        ]));
     }
 
     public function submitWallpaperAction(Request $request)

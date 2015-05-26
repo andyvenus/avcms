@@ -1,6 +1,6 @@
 {% extends 'index.twig' %}
 
-{% block title %}{{ wallpaper.name }} {{ wallpaper_width }}x{{ wallpaper_height }}{% endblock %}
+{% block title %}{{ wallpaper.name }} {{ resolution_name }} - {% trans %}Wallpaper{% endtrans %}{% endblock %}
 
 {% block wide_content %}
     <div class="wallpaper-preview-page">
@@ -8,7 +8,7 @@
 
         <div class="box wallpaper-preview-box">
             <div class="box-top">
-                <h1>{{ wallpaper.name }} - {{ wallpaper_width }}x{{ wallpaper_height }}</h1>
+                <h1>{{ wallpaper.name }} - {{ resolution_name }}</h1>
             </div>
             <div class="box-main">
                 {% block wallpaper_preview_buttons %}
