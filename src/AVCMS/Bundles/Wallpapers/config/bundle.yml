@@ -257,6 +257,14 @@ module_positions:
     name: Wallpaper Details Lower
     description: The wallpaper details page, underneath the resolutions
     environment: frontend
+  wallpaper_preview_top:
+    name: Wallpaper Preview Top
+    description: Above the wallpaper preview image on the wallpaper preview page
+    environment: frontend
+  wallpaper_preview_bottom:
+    name: Wallpaper Preview Bottom
+    description: Below the wallpaper preview image on the wallpaper preview page
+    environment: frontend
 
 modules:
   wallpapers:

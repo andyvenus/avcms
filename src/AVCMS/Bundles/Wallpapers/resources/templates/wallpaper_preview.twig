@@ -4,6 +4,8 @@
 
 {% block wide_content %}
     <div class="wallpaper-preview-page">
+        {{ render_modules('wallpaper_preview_top') }}
+
         <div class="box wallpaper-preview-box">
             <div class="box-top">
                 <h1>{{ wallpaper.name }} - {{ wallpaper_width }}x{{ wallpaper_height }}</h1>
@@ -35,5 +37,7 @@
                 {% endblock %}
             </div>
         </div>
+
+        {{ render_modules('wallpaper_preview_bottom') }}
     </div>
 {% endblock %}
