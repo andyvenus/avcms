@@ -112,6 +112,13 @@ admin_settings:
     section: wallpapers
     default: 0
 
+  wallpapers_delete_files:
+    type: checkbox
+    label: Delete files when deleting wallpapers
+    help: Delete the wallpaper file from your server when removing a wallpaper from your site
+    section: wallpapers
+    default: 0
+
   show_wallpaper_name:
     type: checkbox
     label: Show Wallpaper Name

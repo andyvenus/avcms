@@ -119,6 +119,10 @@ class WallpapersAdminController extends AdminBaseController
             $wallpapers = $this->wallpapers->query()->whereIn('id', $ids)->get();
             foreach ($wallpapers as $wallpaper) {
                 $this->clearWallpaperCaches($wallpaper->getSlug());
+
+                if ($this->setting('wallpapers_delete_files')) {
+                    unlink($this->bundle->config->wallpapers_dir.'/'.$wallpaper->getFile());
+                }
             }
         }
 
