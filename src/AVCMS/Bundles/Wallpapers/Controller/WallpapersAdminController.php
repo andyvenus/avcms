@@ -188,6 +188,7 @@ class WallpapersAdminController extends AdminBaseController
     public function viewOriginalImageAction(Request $request)
     {
         $file = str_replace('..', '', $request->get('file'));
+        $file = str_replace($this->bundle->config->wallpapers_dir.'/', '', $file);
 
         $filePath = $this->wallpaperPath($file);
 

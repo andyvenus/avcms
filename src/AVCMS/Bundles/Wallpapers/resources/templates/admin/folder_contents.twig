@@ -1,0 +1,16 @@
+{% extends '@Admin/editor.twig' %}
+
+{% block editor_content %}
+    <div class="row">
+        {% for file in files %}
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <img src="{{ path('wallpapers_admin_view_original_image', {file: file.image_path}) }}">
+                    <div class="">
+                        {{ file.filename }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

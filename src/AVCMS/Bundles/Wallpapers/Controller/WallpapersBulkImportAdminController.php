@@ -35,11 +35,31 @@ class WallpapersBulkImportAdminController extends AdminBaseController
        return $this->handleManage($request, '@Wallpapers/admin/wallpaper_bulk_import_browser.twig');
     }
 
+    public function folderAction(Request $request)
+    {
+        $folder = str_replace(['.', '@'], ['', '/'], $request->get('folder'));
+        if (!$folder) {
+            throw $this->createNotFoundException("No folder specified");
+        }
+
+        $files = [];
+        $itr = new \DirectoryIterator($this->bundle->config->wallpapers_dir.'/'.$folder);
+        foreach ($itr as $file) {
+            if (!$file->isFile()) {
+                continue;
+            }
+
+            $files[] = ['filename' => $file->getFilename(), 'image_path' => $this->bundle->config->wallpapers_dir.'/'.$folder.'/'.$file->getFilename()];
+        }
+
+        return new Response($this->renderAdminSection('@Wallpapers/admin/folder_contents.twig', ['files' => $files]));
+    }
+
     public function importAction(Request $request)
     {
         $folder = str_replace(['.', '@'], ['', '/'], $request->get('folder'));
         if (!$folder) {
-            throw $this->createNotFoundException("Folder $folder not found");
+            throw $this->createNotFoundException("No folder specified");
         }
 
         $entity = $this->wallpapers->newEntity();

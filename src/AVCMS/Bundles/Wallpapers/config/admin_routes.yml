@@ -101,6 +101,10 @@ wallpapers_bulk_import_new_folder:
   path: /wallpapers-bulk-import/add-folder
   defaults: { _controller: 'Wallpapers::WallpapersBulkImportAdminController::addFolderAction' }
 
+wallpapers_bulk_import_folder:
+  path: /wallpapers-bulk-import/folder/{folder}
+  defaults: { _controller: 'Wallpapers::WallpapersBulkImportAdminController::folderAction' }
+
 # Manage Submissions #
 wallpaper_submissions_admin_review:
     path:     /wallpaper-submissions/review/{id}
