@@ -67,7 +67,7 @@
                         <div class="col-sm-{{ column_size }}">
                             {% block wallpaper_thumbnail -%}
                                 <a class="thumbnail clearfix" href="{{ path('wallpaper_details', {slug: wallpaper.slug}) }}">
-                                    <img src="{{ wp_thumbnail_url(wallpaper) }}" width="100%"/>
+                                    <img src="{{ wp_thumbnail_url(wallpaper, 'sm') }}" srcset="{{ wp_thumbnail_url(wallpaper, 'sm') }} 1x, {{ wp_thumbnail_url(wallpaper, 'md') }} 2x" width="100%"/>
                                     <div class="pull-left" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;width:100%">
                                         {% if admin_settings.show_wallpaper_name %}
                                             {{ wallpaper.name }}

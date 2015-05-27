@@ -71,15 +71,6 @@ admin_settings:
     validation:
       numeric:
         rule: Numeric
-  wallpaper_default_thumbnail_resolution:
-    type: radio
-    label: Default thumbnail resolution
-    help: Set the default resolution for thumbnail images
-    section: wallpapers
-    default: md
-    choices:
-      sm: Small
-      md: Medium
   wallpapers_allow_uploads:
     type: checkbox
     label: Allow Wallpaper Submissions

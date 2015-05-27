@@ -37,12 +37,8 @@ class WallpaperTwigExtension extends \Twig_Extension
         );
     }
 
-    public function thumbnailUrl(Wallpaper $wallpaper, $size = null, $absoluteUrl = false)
+    public function thumbnailUrl(Wallpaper $wallpaper, $size = 'md', $absoluteUrl = false)
     {
-        if ($size === null) {
-            $size = $this->settingsManager->getSetting('wallpaper_default_thumbnail_resolution');
-        }
-
         if (!is_string($size) || strlen($size) !== 2) {
             $size = 'md';
         }
