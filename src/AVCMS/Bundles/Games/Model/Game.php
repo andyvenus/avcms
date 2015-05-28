@@ -276,4 +276,9 @@ class Game extends Entity implements RateInterface
     {
         return $this->get("width");
     }
+
+    public function getFileExtension()
+    {
+        return pathinfo(strtok($this->getFile(), '?'), PATHINFO_EXTENSION);
+    }
 }
