@@ -13,11 +13,7 @@
 
 {% if admin_settings.show_game_category %}
     &nbsp;<span class="glyphicon glyphicon-folder-close"></span>
-    {% if no_links %}
-        {{ game.category.name }}
-    {% else %}
-        <a href="{{ path('game_category', {'category': game.category.slug}) }}">{{ game.category.name }}</a>
-    {% endif %}
+    {{ game.category.name }}
 {% endif %}
 
 {% if admin_settings.show_game_comments %}
