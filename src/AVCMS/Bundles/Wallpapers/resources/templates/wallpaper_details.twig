@@ -142,7 +142,7 @@
             {% endblock %}
         {% endif %}
 
-        {{ render_modules('wallpaper_details') }}
+        {{ render_modules('wallpaper_details', {wallpaper: wallpaper}) }}
 
         {% block wallpaper_comments %}
             {{ comments('wallpaper', wallpaper, wallpaper.comments) }}
