@@ -32,7 +32,7 @@ class SitemapsManager
             if (!file_exists($this->cacheFile)) {
                 return $this->lastGenerationTime = 0;
             } else {
-                return $this->lastGenerationTime = 0; //todo revert this!!!!
+                return $this->lastGenerationTime = file_get_contents($this->cacheFile);
             }
         }
 
