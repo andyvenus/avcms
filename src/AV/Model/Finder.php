@@ -75,10 +75,10 @@ class Finder
         $this->taxonomyManager = $taxonomyManager;
         $this->currentQuery = $model->query();
 
-        $this->sortOptions = array(
-            'newest' => 'id DESC',
-            'oldest' => 'id ASC'
-        );
+        $this->sortOptions = [
+            'newest' => ['id DESC'],
+            'oldest' => ['id ASC']
+        ];
     }
 
     public function setSortOptions(array $sortOptions)
