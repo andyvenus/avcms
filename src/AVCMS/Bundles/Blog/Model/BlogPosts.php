@@ -31,13 +31,13 @@ class BlogPosts extends ContentModel
     public function getFinderSortOptions()
     {
         return array_merge(parent::getFinderSortOptions(), array(
-            'user_id' => 'user_id asc',
-            'publish_date_newest' => 'publish_date desc',
-            'publish_date_oldest' => 'publish_date asc',
+            'user_id' => ['user_id asc', 'id desc'],
+            'publish_date_newest' => ['publish_date desc', 'id desc'],
+            'publish_date_oldest' => ['publish_date asc', 'id asc'],
             'a_z' => 'title asc',
             'z_a' => 'title desc',
-            'top_hits' => 'hits desc',
-            'low_hits' => 'hits asc'
+            'top_hits' => ['hits desc', 'id desc'],
+            'low_hits' => ['hits asc', 'id desc'],
         ));
     }
 }

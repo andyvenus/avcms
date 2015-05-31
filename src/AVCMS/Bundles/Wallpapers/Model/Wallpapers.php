@@ -28,14 +28,14 @@ class Wallpapers extends ContentModel
     public function getFinderSortOptions()
     {
         return array(
-            'publish-date-newest' => 'publish_date desc',
-            'publish-date-oldest' => 'publish_date asc',
+            'publish-date-newest' => ['publish_date desc', 'id desc'],
+            'publish-date-oldest' => ['publish_date asc', 'id asc'],
             'a-z' => 'name asc',
             'z-a' => 'name desc',
-            'top-hits' => 'hits desc',
-            'low-hits' => 'hits asc',
-            'top-downloads' => 'total_downloads desc',
-            'liked' => 'likes desc',
+            'top-hits' => ['hits desc', 'id desc'],
+            'low-hits' => ['hits asc', 'id desc'],
+            'top-downloads' => ['total_downloads desc', 'id desc'],
+            'liked' => ['likes desc', 'id desc'],
             'random' => 'rand() asc'
         );
     }

@@ -85,11 +85,13 @@ class Finder
     {
         $table = $this->model->getTable();
         foreach ($sortOptions as $key => $val) {
-            if (strpos($val, '(') === false) {
-                $this->sortOptions[$key] = $table . '.' . $val;
-            }
-            else {
-                $this->sortOptions[$key] = $val;
+            foreach ((array) $val as $sort) {
+                if (strpos($sort, '(') === false) {
+                    $this->sortOptions[$key][] = $table . '.' . $sort;
+                }
+                else {
+                    $this->sortOptions[$key][] = $sort;
+                }
             }
         }
     }
@@ -127,8 +129,17 @@ class Finder
 
     public function order($order)
     {
-        $order = $this->getDbSort($order);
+        $orders = (array) $this->getDbSort($order);
 
+        foreach ($orders as $order) {
+            $this->doOrder($order);
+        }
+
+        return $this;
+    }
+
+    private function doOrder($order)
+    {
         $orderSplit = explode(' ', $order);
 
         if ($orderSplit[0] == 'rand()') {
