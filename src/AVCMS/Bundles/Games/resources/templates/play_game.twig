@@ -13,7 +13,7 @@
 {% block wide_content %}
     {% block game_top_modules %}
         <div class="game-top-modules">
-            {{ render_modules('play_game_top') }}
+            {{ render_modules('play_game_top', {game: game}) }}
         </div>
     {% endblock %}
 
@@ -73,7 +73,7 @@
         </div>
         <div class="col-md-8 col-md-pull-4">
 
-            {{ render_modules('play_game_below') }}
+            {{ render_modules('play_game_below', {game: game}) }}
 
             {% block game_instructions_box %}
                 {% if game.instructions %}
@@ -131,7 +131,7 @@
 
             {% block game_details_modules %}
                 <div class="game-details-modules">
-                    {{ render_modules('play_game_details') }}
+                    {{ render_modules('play_game_details', {game: game}) }}
                 </div>
             {% endblock %}
 
