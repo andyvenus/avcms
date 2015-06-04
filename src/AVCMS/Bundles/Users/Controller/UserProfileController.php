@@ -28,7 +28,7 @@ class UserProfileController extends Controller
     {
         $users = $this->model('Users');
 
-        $user = $users->getOne($slug);
+        $user = $users->find()->slug($slug);
 
         if (!$user) {
             throw $this->createNotFoundException('User not found');
