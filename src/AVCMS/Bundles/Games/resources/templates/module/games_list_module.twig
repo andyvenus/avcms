@@ -3,7 +3,7 @@
         <a href="{{ path('play_game', {slug: game.slug}) }}" class="list-group-item">
             <div class="media">
                 <span class="media-left" href="#">
-                    <img src="{{ game_thumbnail(game) }}" width="50" height="50"/>
+                    <img src="{{ game_thumbnail(game) }}" width="50" height="50" alt="{{ game.name }}"/>
                 </span>
                 <div class="media-body" style="vertical-align: middle;">
                     <h5 class="media-heading">{{ game.name }} </h5>

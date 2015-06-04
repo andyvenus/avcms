@@ -1,7 +1,7 @@
 <div style="margin-top: 15px;" class="browse-games-details media">
     <div class="media-left">
         <a class="img-thumbnail" href="{{ path('play_game', {slug: game.slug}) }}">
-            <img src="{{ game_thumbnail(game) }}" width="80"/>
+            <img src="{{ game_thumbnail(game) }}" width="80" alt="{{ game.name }}"/>
         </a>
     </div>
     <div class="media-body">
