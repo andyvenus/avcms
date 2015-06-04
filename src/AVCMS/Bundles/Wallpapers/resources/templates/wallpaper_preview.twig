@@ -20,7 +20,7 @@
                 {% block wallpaper_preview_image %}
                 <div class="wallpaper-preview-container">
                     <a href="{{ wp_image_url(wallpaper, wallpaper_width, wallpaper_height) }}">
-                        <img src="{{ wp_image_url(wallpaper, wallpaper_width, wallpaper_height) }}" style="max-width: 100%" class="img-thumbnail"/>
+                        <img src="{{ wp_image_url(wallpaper, wallpaper_width, wallpaper_height) }}" style="max-width: 100%" class="img-thumbnail" alt="{{ wallpaper.name }}"/>
                     </a>
                 </div>
                 {% endblock %}

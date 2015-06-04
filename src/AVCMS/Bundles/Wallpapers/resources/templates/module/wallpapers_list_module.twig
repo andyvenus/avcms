@@ -3,7 +3,7 @@
         <a href="{{ path('wallpaper_details', {slug: wallpaper.slug}) }}" class="list-group-item">
             <div class="media">
                 <span class="media-left" href="#">
-                    <img src="{{ wp_thumbnail_url(wallpaper, 'xs') }}" width="84" height="50"/>
+                    <img src="{{ wp_thumbnail_url(wallpaper, 'xs') }}" width="84" height="50" alt="{{ wallpaper.name }}"/>
                 </span>
                 <div class="media-body" style="vertical-align: middle;">
                     {% if admin_settings.show_wallpaper_name %}
