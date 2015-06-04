@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PagesController extends Controller
 {
+    /**
+     * @var \AVCMS\Bundles\Pages\Model\Pages
+     */
     private $pages;
 
     public function setUp()
@@ -21,7 +24,7 @@ class PagesController extends Controller
 
     public function pageAction($slug)
     {
-        $page = $this->pages->findOne($slug)->first();
+        $page = $this->pages->find()->slug($slug)->first();
 
         if (!$page) {
             throw $this->createNotFoundException();

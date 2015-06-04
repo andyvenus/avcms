@@ -119,14 +119,7 @@ abstract class Model {
      */
     public function findOne($id = null)
     {
-        if (is_numeric($id)) {
-            $column = $this->numberIdentifierColumn;
-        }
-        else {
-            $column = $this->textIdentifierColumn;
-        }
-
-        return $this->query()->where($this->getTable().'.'.$column, $id);
+        return $this->query()->where($this->getTable().'.'.$this->numberIdentifierColumn, $id);
     }
 
     /**
@@ -137,9 +130,7 @@ abstract class Model {
      */
     public function getOne($id)
     {
-        $query = $this->findOne($id);
-
-        return $query->first();
+        return $this->findOne($id)->first();
     }
 
     /**

@@ -25,7 +25,7 @@ class WallpapersImageController extends Controller
         $thumbnailSize = 'md';
 
         $wallpapers = $this->model('Wallpapers');
-        $wallpaper = $wallpapers->findOne($request->get('slug'))->first();
+        $wallpaper = $wallpapers->find()->slug($request->get('slug'))->first();
         if (!$wallpaper) {
             throw $this->createNotFoundException();
         }
