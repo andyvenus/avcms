@@ -14,6 +14,9 @@ class AdvertAdminForm extends FormBlueprint
         
         $this->add('content', 'textarea', array(
             'label' => 'Content',
+            'attr' => [
+                'rows' => '10'
+            ]
         ));
     }
 }
