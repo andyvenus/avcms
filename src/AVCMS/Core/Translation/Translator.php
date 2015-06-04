@@ -44,7 +44,7 @@ class Translator extends TranslatorBase
      *
      * @api
      */
-    public function trans($id, array $parameters = array(), $domain = null, $locale = null)
+    public function trans($id, array $parameters = array(), $domain = null, $locale = null, $escapeParameters = true)
     {
         if (null === $locale) {
             $locale = $this->getLocale();
@@ -60,6 +60,10 @@ class Translator extends TranslatorBase
 
         $params = array();
         foreach ($parameters as $placeholder => $value) {
+            if ($escapeParameters) {
+                $value = htmlspecialchars($value, ENT_COMPAT, 'UTF-8', false); // :(
+            }
+
             $params['{'.$placeholder.'}'] = $value;
         }
 
