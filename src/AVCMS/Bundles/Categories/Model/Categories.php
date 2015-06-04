@@ -57,9 +57,9 @@ abstract class Categories extends Model
         return $this->query()->where('parent', $parentId)->get();
     }
 
-    public function getFullCategory($id)
+    public function getFullCategory($slug)
     {
-        $category = $this->findOne($id)->first();
+        $category = $this->find()->slug($slug)->first();
 
         if (!$category) {
             return null;
