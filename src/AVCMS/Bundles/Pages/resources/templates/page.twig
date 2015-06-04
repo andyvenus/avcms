@@ -3,9 +3,15 @@
 {% block title %}{{ page.title }}{% endblock %}
 
 {% block content %}
-    {% if page.showTitle %}
-        <h2>{{ page.title }}</h2>
-    {% endif %}
+    <div class="box">
+        {% if page.showTitle %}
+            <div class="box-top">
+                <h2>{{ page.title }}</h2>
+            </div>
+        {% endif %}
 
-    {{ page.content|raw }}
+        <div class="box-main">
+            {{ page.content|raw }}
+        </div>
+    </div>
 {% endblock %}
