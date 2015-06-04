@@ -13,7 +13,7 @@ browse_games:
     page:  \d+
 
 game_tag:
-  path: /games/tag/{tags}
+  path: /games/tag/{tags}/{page}
   defaults: { _controller: Games::GamesController::browseGamesAction, category: null, page: 1 }
   requirements:
     page:  \d+

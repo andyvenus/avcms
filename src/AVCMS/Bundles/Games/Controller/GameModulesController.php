@@ -98,7 +98,7 @@ class GameModulesController extends Controller
 
     public function tagsModule($adminSettings)
     {
-        return $this->getTagsModule($adminSettings, 'game', 'browse_games', 'tags');
+        return $this->getTagsModule($adminSettings, 'game', 'game_tag', 'tags');
     }
 
     public function gameStatsModule()
