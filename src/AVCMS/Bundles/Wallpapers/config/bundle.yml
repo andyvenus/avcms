@@ -35,6 +35,7 @@ admin_settings:
       2: 2
       3: 3
       4: 4
+      6: 6
     choices_translate: false
     default: 2
   wallpaper_image_manipulation_library:
@@ -309,6 +310,7 @@ modules:
           2: 2
           3: 3
           4: 4
+          6: 6
       show_more_button:
         label: Show more button
         type: checkbox
