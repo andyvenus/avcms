@@ -37,3 +37,10 @@
   padding: 10px 0px; }
   .user-profile-info .pull-left {
     margin-left: 130px; }
+
+@media (max-width: 768px) {
+  .user-profile-username {
+    font-size: 20px;
+    padding-bottom: 25px; } }
+
+/*# sourceMappingURL=profile.css.map */

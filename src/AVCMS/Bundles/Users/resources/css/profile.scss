@@ -47,3 +47,10 @@
     margin-left: 130px;
   }
 }
+
+@media (max-width: 768px) {
+  .user-profile-username {
+    font-size: 20px;
+    padding-bottom: 25px;
+  }
+}
