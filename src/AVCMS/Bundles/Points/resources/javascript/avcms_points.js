@@ -14,7 +14,7 @@ $(document).ready(function() {
     });
 
     if ($('#avcms-game-container').length > 0) {
-        setTimeout(function() {avcms.points.addPoints('game_points')}, 1200000);
+        setTimeout(function() {avcms.points.addPoints('game_points')}, 120000);
     }
 });
 
