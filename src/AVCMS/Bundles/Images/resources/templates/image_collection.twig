@@ -83,7 +83,7 @@
             {% block image_details_box %}
                 <div class="box image-details-box">
                     <div class="box-top">
-                        <h4>{% trans %}Image Details{% endtrans %}</h4>
+                        <h4>{% trans %}Details{% endtrans %}</h4>
                     </div>
                     <div class="box-main">
                         <div class="row">
@@ -94,7 +94,7 @@
                                 <p>{% trans %}Category{% endtrans %}: <a href="{{ path('image_category', {'category': image_collection.category.slug}) }}"> {{ image_collection.category.name }}</a></p>
                             </div>
                             <div class="col-md-4">
-                                <p>{% trans with {plays: image_collection.hits} %}Played {plays} times{% endtrans %}</p>
+                                <p>{% trans with {hits: image_collection.hits} %}Viewed {hits} times{% endtrans %}</p>
                             </div>
 
                          </div>
