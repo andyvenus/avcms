@@ -87,6 +87,15 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
+            <h1 class="panel-title">{% trans %}Collection Type{% endtrans %}</h1>
+        </div>
+        <div class="panel-body">
+            {{ form_rows_between(form, 'type', 'downloadable') }}
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
             <h1 class="panel-title">{% trans %}Details{% endtrans %}</h1>
         </div>
         <div class="panel-body">

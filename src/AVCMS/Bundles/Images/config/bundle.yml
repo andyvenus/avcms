@@ -5,8 +5,17 @@ require:
   - Framework
 
 assets:
+  avcms_images.js:
+    env: shared
   avcms_images_admin.js:
     env: admin
+
+  jquery.magnific-popup.min.js:
+    env: frontend
+    compress: false
+
+  magnific-popup.css:
+    env: frontend
 
 services:
   - ImageServices
@@ -61,7 +70,6 @@ menu_items:
 admin_settings_sections:
   images: Images
   browse_images: Browse Images
-  image_ads: Adverts Before Images
 
 admin_settings:
   images_allow_uploads:
@@ -79,36 +87,6 @@ admin_settings:
     validation:
       numeric:
         rule: Numeric
-  image_ad_default:
-    label: Default Image Ad
-    help: The ad shown before images without a specific ad selected
-    type: select
-    default: 0
-    choices:
-      0: None
-    choices_provider_service: adverts.choices_provider
-    section: image_ads
-  image_ad_countdown:
-    label: Image Ads Duration
-    help: How long to show the advert before the image automatically loads
-    type: text
-    default: 15
-    section: image_ads
-    validation:
-      numeric:
-        rule: Numeric
-  image_ad_allow_skip:
-    label: Allow Skipping
-    help: Allow users to skip the ads
-    type: checkbox
-    default: 1
-    section: image_ads
-  image_ad_show_to_everyone:
-    label: Ignore Permission
-    help: Who sees ads before images can be set in the group permissions area. When this is on, everyone sees the ads regardless of that permission.
-    type: checkbox
-    default: 0
-    section: image_ads
   images_limit_plays:
     label: Limit Image Plays
     help: The number of images that can be played before a user must register an account. Set to 0 to disable.
@@ -151,6 +129,24 @@ admin_settings:
     validation:
       numeric:
         rule: Numeric
+  images_default_collection_type:
+    label: Default image collection layout
+    help: When an image collection's display type is set to "Default", display this way
+    section: images
+    type: radio
+    choices:
+      list: List
+      gallery: Gallery
+    default: list
+  images_default_download:
+    label: Default 'Show Download Button' setting
+    help: Any image collections with the show download button setting set to "Default" will use this setting
+    section: images
+    type: radio
+    choices:
+      1: Allow Downloads
+      0: Disallow Downloads
+    default: false
   browse_images_layout:
     type: select
     label: Browse Images Layout

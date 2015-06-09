@@ -71,7 +71,7 @@ class ImagesController extends Controller
             }
         }
 
-        $response = new Response($this->render('@Images/image_list.twig', ['image_collection' => $imageCollection, 'plays_left' => $playsLeft]));
+        $response = new Response($this->render('@Images/image_collection.twig', ['image_collection' => $imageCollection, 'plays_left' => $playsLeft]));
         if (isset($playCookie)) {
             $response->headers->setCookie($playCookie);
         }

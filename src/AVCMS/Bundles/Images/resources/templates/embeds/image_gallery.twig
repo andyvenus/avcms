@@ -1,0 +1,20 @@
+<div class="row avcms-image-gallery">
+    {% for image in image_collection.files %}
+        <div class="col-lg-4">
+            <a class="thumbnail image-gallery-thumbnail avcms-level-thumbnails clearfix" href="{{ image_file_url(image) }}" title="{{ image.caption }}">
+                <img src="{{ image_thumbnail(image) }}" width="100%"/>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+
+<script type="text/javascript">
+    $('.avcms-image-gallery').magnificPopup({
+        delegate: 'a',
+        type: 'image',
+        gallery: {
+            enabled: true,
+            preload: [0, 2]
+        }
+    });
+</script>

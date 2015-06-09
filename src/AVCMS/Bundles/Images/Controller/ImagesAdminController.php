@@ -108,6 +108,7 @@ class ImagesAdminController extends AdminBaseController
 
             $extension = pathinfo($imageFiles[0]->getUrl())['extension'];
             $image->setThumbnail($imageFiles[0]->getId().'.'.$extension);
+            $image->setTotalImages(count($imageFiles));
             $helper->save(false);
         }
 

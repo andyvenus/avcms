@@ -7,6 +7,7 @@
 
 namespace AVCMS\Bundles\Images\TwigExtension;
 
+use AVCMS\Bundles\Images\ImagesHelper\ImagesHelper;
 use AVCMS\Bundles\Images\Model\ImageCollection;
 use AVCMS\Bundles\Images\Model\ImageFile;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -18,37 +19,44 @@ class ImagesTwigExtension extends \Twig_Extension
      */
     private $environment;
 
+    /**
+     * @var UrlGeneratorInterface
+     */
     private $urlGenerator;
 
-    private $siteUrl;
+    /**
+     * @var ImagesHelper
+     */
+    private $imagesHelper;
 
-    private $imagesDir;
-
-    public function __construct(UrlGeneratorInterface $urlGenerator, $siteUrl, $imagesDir)
+    public function __construct(UrlGeneratorInterface $urlGenerator, ImagesHelper $imagesHelper)
     {
         $this->urlGenerator = $urlGenerator;
-        $this->siteUrl = $siteUrl;
-        $this->imagesDir = $imagesDir;
+        $this->imagesHelper = $imagesHelper;
     }
 
-    public function imageThumbnailUrl(ImageCollection $image, $size = 'md')
+    public function imageThumbnailUrl($image, $size = 'md')
     {
-        $extension = pathinfo($image->getThumbnail())['extension'];
-        $id = str_replace('.'.$extension, '', $image->getThumbnail());
+        if ($image instanceof ImageCollection) {
+            $extension = pathinfo($image->getThumbnail())['extension'];
+            $id = str_replace('.' . $extension, '', $image->getThumbnail());
+            $collection = $image->getId();
+        }
+        elseif ($image instanceof ImageFile) {
+            $extension = pathinfo($image->getUrl())['extension'];
+            $id = $image->getId();
+            $collection = $image->getImageId();
+        }
+        else {
+            throw new \Exception('Image thumbnails can only be generated for ImageCollection or ImageFile classes');
+        }
 
-        return $this->urlGenerator->generate('image_thumbnail', ['collection' => $image->getId(), 'id' => $id, 'ext' => $extension, 'size' => $size]);
+        return $this->urlGenerator->generate('image_thumbnail', ['collection' => $collection, 'id' => $id, 'ext' => $extension, 'size' => $size]);
     }
 
     public function imageFileUrl(ImageFile $file)
     {
-        $url = $file->getUrl();
-
-        if (strpos($url, 'http') === 0) {
-            return $url;
-        }
-        else {
-            return $this->siteUrl.'/'.$this->imagesDir.'/'.$file->getUrl();
-        }
+        return $this->imagesHelper->imageFileUrl($file);
     }
 
     public function getName()

@@ -92,12 +92,6 @@ class ImageThumbnailsController extends Controller
                 }
                 $c->upsize();
             });
-
-            try {
-                $thumbnail->resizeCanvas($dimensions[0], $dimensions[1], 'center', false, $this->setting('images_thumbnail_crop_color'));
-            } catch(NotReadableException $e) {
-                $thumbnail->resizeCanvas($dimensions[0], $dimensions[1], 'center', false, '#ffffff');
-            }
         }
         else {
             $reqRatio = $dimensions[0] / $dimensions[1];

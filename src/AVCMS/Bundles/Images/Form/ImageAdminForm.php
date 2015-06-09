@@ -17,6 +17,26 @@ class ImageAdminForm extends AdminContentForm
      */
     public function __construct(ImageCollection $image, CategoryChoicesProvider $categoryChoicesProvider)
     {
+        $this->add('type', 'radio', [
+            'label' => 'Display',
+            'choices' => [
+                'default' => 'Default',
+                'list' => 'List',
+                'gallery' => 'Gallery'
+            ],
+            'default' => 'default'
+        ]);
+
+        $this->add('downloadable', 'radio', [
+            'label' => 'Show Download Button',
+            'choices' => [
+                'default' => 'Default',
+                '1' => 'Yes',
+                '0' => 'No'
+            ],
+            'default' => 'default'
+        ]);
+
         $this->add('name', 'text', array(
             'label' => 'Name',
             'attr' => [

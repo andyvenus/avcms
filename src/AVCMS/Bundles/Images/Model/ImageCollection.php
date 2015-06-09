@@ -236,4 +236,34 @@ class ImageCollection extends Entity implements RateInterface
     {
         $this->set("thumbnail", $value);
     }
+
+    public function getType()
+    {
+        return $this->get("type");
+    }
+
+    public function setType($value)
+    {
+        $this->set("type", $value);
+    }
+
+    public function getTotalImages()
+    {
+        return $this->get("total_images");
+    }
+
+    public function setTotalImages($value)
+    {
+        $this->set("total_images", $value);
+    }
+
+    public function getDownloadable()
+    {
+        return $this->get("downloadable");
+    }
+
+    public function setDownloadable($value)
+    {
+        $this->set("downloadable", $value);
+    }
 }

@@ -3,10 +3,8 @@ images_home:
   defaults: { _controller: CmsFoundation::HomepageController::homepageAction, modulePosition: images_home, title: Images }
 
 image_collection:
-  path: /{type}/{slug}
-  defaults: { _controller: Images::ImagesController::imageCollectionAction, type: image }
-  requirements:
-    type: (image|gallery|list)
+  path: /gallery/{slug}
+  defaults: { _controller: Images::ImagesController::imageCollectionAction }
 
 browse_images:
   path: /images/browse/{page}
