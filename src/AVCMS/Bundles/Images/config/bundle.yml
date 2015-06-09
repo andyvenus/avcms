@@ -163,6 +163,7 @@ admin_settings:
       2: 2
       3: 3
       4: 4
+      6: 6
     default: 2
     section: browse_images
   browse_images_per_page:
@@ -280,7 +281,6 @@ modules:
         choices:
           list: List
           thumbnails: Thumbnails
-          details: Details
         default: list
       columns:
         type: select
@@ -291,6 +291,20 @@ modules:
           2: 2
           3: 3
           4: 4
+          6: 6
+      show_more_button:
+        label: Show more button
+        type: checkbox
+        default: 1
+        help: Display a button that links to the browse images section with the same order and filter as this module
+      more_button_start_page:
+        label: More button start page
+        type: select
+        default: 1
+        help: Should the user be directed to the first or second page of results when clicking the more button? Linking to the first page means they will see some of the same results from the module, but linking to the second page might mean they miss a few images. For best results when linking to page 2, make this module show the same number of images as shown per-page when browsing.
+        choices:
+          1: Page One
+          2: Page Two
       order:
         type: select
         label: Order
@@ -307,7 +321,7 @@ modules:
       show_image_description:
         type: checkbox
         label: Show Description
-        default: 1
+        default: 0
       show_image_date:
         type: checkbox
         label: Show Date

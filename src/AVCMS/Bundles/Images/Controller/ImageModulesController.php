@@ -54,6 +54,21 @@ class ImageModulesController extends Controller
             $query = $this->images->find()->ids($ids, 'images.id');
             $moreButton = ['url' => $this->generateUrl('liked_images', ['likes_user' => $user->getSlug()]), 'label' => 'All Liked Images'];
         }
+        else {
+            if ($adminSettings['more_button_start_page'] == 2) {
+                $pageTwoExists = ($query->getQuery()->count() > $this->setting('browse_images_per_page'));
+                if (!$pageTwoExists) {
+                    $adminSettings['more_button_start_page'] = 1;
+                }
+            }
+
+            $label = 'Next Page';
+            if ($adminSettings['more_button_start_page'] == 1) {
+                $label = 'More';
+            }
+
+            $moreButton = ['url' => $this->generateUrl('browse_images', ['page' => $adminSettings['more_button_start_page'], 'order' => $adminSettings['order']]), 'label' => $label];
+        }
 
         if ($adminSettings['show_image_category']) {
             $query->join($this->model('ImageCategories'), ['name', 'slug']);

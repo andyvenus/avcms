@@ -2,9 +2,11 @@
     {% for image in images %}
         <a href="{{ path('image_collection', {slug: image.slug}) }}" class="list-group-item">
             <div class="media">
-                <span class="media-left" href="#">
-                    <img src="{{ image_thumbnail(image) }}" width="50" height="50"/>
-                </span>
+                <div class="media-left">
+                    <div style="height: 50px;width: 50px;text-align: center;">
+                        <img src="{{ image_thumbnail(image) }}" style="max-width: 50px;max-height: 50px;"/>
+                    </div>
+                </div>
                 <div class="media-body" style="vertical-align: middle;">
                     <h5 class="media-heading">{{ image.name }} </h5>
                     {% if admin_settings.show_image_description %}
@@ -22,7 +24,7 @@
         </div>
     {% endfor %}
 
-    {% if more_button %}
+    {% if more_button and admin_settings.show_more_button %}
         <a href="{{ more_button.url }}" class="list-group-item text-center">
             {{ more_button.label|trans }} <span class="glyphicon glyphicon-chevron-right"></span>
         </a>
