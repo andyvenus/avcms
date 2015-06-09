@@ -2,6 +2,7 @@
 
 namespace AVCMS\Bundles\Images\Controller;
 
+use AV\Cache\CacheClearer;
 use AV\Form\FormBlueprint;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use AVCMS\Bundles\Categories\Controller\CategoryActionsTrait;
@@ -112,6 +113,9 @@ class ImagesAdminController extends AdminBaseController
             $helper->save(false);
 
             $this->get('cache.clearer')->clearCaches(['image-zips/'.$image->getId()]);
+
+            $thumbnailsCacheClearer = new CacheClearer($this->getParam('images_dir'));
+            $thumbnailsCacheClearer->clearCaches([$image->getId()]);
         }
 
         if (!$helper->contentExists()) {
