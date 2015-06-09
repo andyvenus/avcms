@@ -5,11 +5,11 @@
  * Time: 12:47
  */
 
-namespace AVCMS\Bundles\Wallpapers\Form;
+namespace AVCMS\Bundles\BulkUpload\Form;
 
 use AVCMS\Bundles\Admin\Form\AdminFiltersForm;
 
-class WallpapersBulkImportAdminFiltersForm extends AdminFiltersForm
+class BulkImportAdminFiltersForm extends AdminFiltersForm
 {
     function __construct()
     {

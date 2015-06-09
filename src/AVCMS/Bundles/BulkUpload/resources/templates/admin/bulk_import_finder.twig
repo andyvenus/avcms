@@ -22,11 +22,11 @@
 
 {% block item_options %}
     <div class="btn-group">
-        <a href="{{ path('wallpaper_bulk_import', {folder: item.id}) }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-download"></span> {% trans %}Import{% endtrans %}</a>
+        <a href="{{ path(content_type ~ '_bulk_import', {folder: item.id}) }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-download"></span> {% trans %}Import{% endtrans %}</a>
     </div>
 
-    {% if item.total_files == 0 %}
-        {{ buttons.delete('wallpaper_bulk_import_admin_delete') }}
+    {% if item.total_files == 0 and item.total_folders == 0 %}
+        {{ buttons.delete(content_type ~ '_bulk_import_admin_delete') }}
     {% endif %}
 {% endblock %}
 

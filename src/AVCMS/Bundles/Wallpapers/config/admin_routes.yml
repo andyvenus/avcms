@@ -77,19 +77,19 @@ wallpapers_admin_clear_image_cache:
   defaults: { _controller: Wallpapers::WallpapersAdminController::clearWallpaperImageCacheAction }
 
 # Bulk Import #
-wallpaper_bulk_import:
+wallpapers_bulk_import:
     path:     /wallpapers-bulk-import/import/{folder}
     defaults: { _controller: 'Wallpapers::WallpapersBulkImportAdminController::importAction' }
 
-wallpaper_bulk_import_admin_delete:
+wallpapers_bulk_import_admin_delete:
     path:     /wallpapers-bulk-import/delete
     defaults: { _controller: 'Wallpapers::WallpapersBulkImportAdminController::deleteFolderAction' }
 
-wallpaper_bulk_import_admin_home:
+wallpapers_bulk_import_admin_home:
   path: /wallpapers-bulk-import
   defaults: { _controller: 'Wallpapers::WallpapersBulkImportAdminController::homeAction' }
 
-wallpaper_bulk_import_admin_finder:
+wallpapers_bulk_import_admin_finder:
   path: /wallpapers-bulk-import/finder/{page}
   defaults: { page: 1, _controller: 'Wallpapers::WallpapersBulkImportAdminController::finderAction' }
 

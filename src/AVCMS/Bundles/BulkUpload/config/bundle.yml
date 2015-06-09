@@ -1,0 +1,8 @@
+name: BulkUpload
+namespace: AVCMS\Bundles\BulkUpload
+require:
+    - Framework
+
+assets:
+  avcms_bulk_upload_admin.js:
+    env: admin

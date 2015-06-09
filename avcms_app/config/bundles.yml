@@ -76,3 +76,5 @@ PrivateMessages:
     enabled: true
 Friends:
     enabled: true
+BulkUpload:
+  enabled: true
