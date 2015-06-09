@@ -19,13 +19,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use ZipArchive;
 
 class ImagesController extends Controller
 {
     /**
      * @var \AVCMS\Bundles\Images\Model\ImageCollections
      */
-    private $images;
+    private $imageCollections;
 
     private $imageCategories;
 
@@ -35,14 +36,14 @@ class ImagesController extends Controller
     private $imageFiles;
 
     public function setUp() {
-        $this->images = $this->model('ImageCollections');
+        $this->imageCollections = $this->model('ImageCollections');
         $this->imageFiles = $this->model('ImageFiles');
         $this->imageCategories = $this->model('ImageCategories');
     }
 
     public function imageCollectionAction(Request $request, $slug)
     {
-        $imageCollection = $this->images->find()
+        $imageCollection = $this->imageCollections->find()
             ->published()
             ->slug($slug)
             ->join($this->imageCategories, ['name', 'slug'])
@@ -55,7 +56,7 @@ class ImagesController extends Controller
             throw $this->createNotFoundException('Image Not Found');
         }
 
-        $hitRegistered = $this->container->get('hitcounter')->registerHit($this->images, $imageCollection->getId(), 'hits', 'id', 'last_hit');
+        $hitRegistered = $this->container->get('hitcounter')->registerHit($this->imageCollections, $imageCollection->getId(), 'hits', 'id', 'last_hit');
 
         $playsLeft = null;
         if ($hitRegistered && $this->setting('images_limit_plays') && !$this->userLoggedIn()) {
@@ -79,9 +80,64 @@ class ImagesController extends Controller
         return $response;
     }
 
+    public function downloadCollectionAction($slug)
+    {
+        $collection = $this->imageCollections->find()->slug($slug)->first();
+
+        if (!$collection) {
+            throw $this->createNotFoundException();
+        }
+
+        $defaultDownloadableOff = $collection->getDownloadable() == 'default' && $this->setting('images_default_download') == 0;
+        if ($defaultDownloadableOff || $collection->getDownloadable() == 0) {
+            throw $this->createNotFoundException('Collection not downloadable');
+        }
+
+        $imageFiles = $this->imageFiles->getImageFiles($collection->getId());
+
+        $headers = [];
+
+        if (count($imageFiles) === 1) {
+            $imageFile = reset($imageFiles);
+
+            $pathInfo = pathinfo($imageFile->getUrl());
+            $headers['Content-Disposition'] = 'attachment; filename="'.$pathInfo['basename'].'"';
+
+            return new Response(file_get_contents($this->getParam('images_dir').'/'.$imageFile->getUrl()), 200, $headers);
+        }
+
+        $zipsDir = $this->getParam('cache_dir').'/image-zips/'.$collection->getId();
+
+        if (!is_dir($zipsDir)) {
+            mkdir($zipsDir, 0777, true);
+        }
+
+        $zipPath = $zipsDir.'/'.$collection->getSlug().'.zip';
+
+        if (!file_exists($zipPath)) {
+            $zip = new \ZipArchive();
+
+            if ($zip->open($zipPath, ZipArchive::OVERWRITE) !== true) {
+                throw new \Exception('Cannot create zip');
+            }
+
+            foreach ($imageFiles as $file) {
+                $filePath = $this->getParam('images_dir') . '/' . $file->getUrl();
+
+                $zip->addFile($filePath, pathinfo($filePath, PATHINFO_BASENAME));
+            }
+
+            $zip->close();
+        }
+
+        $headers['Content-Disposition'] = 'attachment; filename="'.$collection->getSlug().'.zip"';
+
+        return new Response(file_get_contents($zipPath), 200, $headers);
+    }
+
     public function browseImagesAction(Request $request, $pageType = 'archive')
     {
-        $finder = $this->images->find();
+        $finder = $this->imageCollections->find();
         $query = $finder->published()
             ->setResultsPerPage($this->setting('browse_images_per_page'))
             ->setSearchFields(['images.name'])
@@ -234,7 +290,7 @@ class ImagesController extends Controller
         /**
          * @var \AVCMS\Bundles\Images\Model\ImageCollection[] $images
          */
-        $images = $this->images->find()->published()->limit(30)->order('publish-date-newest')->get();
+        $images = $this->imageCollections->find()->published()->limit(30)->order('publish-date-newest')->get();
 
         $feed = new RssFeed(
             $this->trans('Images'),

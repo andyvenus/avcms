@@ -54,7 +54,7 @@
                     {% endif %}
 
                     {% if image_collection.downloadable == '1' or (image_collection.downloadable == 'default' and settings.images_default_download == '1') %}
-                        <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> {% trans %}Download{% endtrans %}</a>
+                        <a href="{{ path('download_image_collection', {slug: image_collection.slug}) }}" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> {% trans %}Download{% endtrans %}</a>
                     {% endif %}
                 </div>
             </div>

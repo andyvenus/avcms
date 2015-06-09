@@ -21,9 +21,13 @@ class ImageFiles extends Model
         return 'AVCMS\Bundles\Images\Model\ImageFile';
     }
 
-    public function getImageFiles($imageId)
+    /**
+     * @param $collectionId
+     * @return ImageFile[]
+     */
+    public function getImageFiles($collectionId)
     {
-        $files = $this->query()->where('image_id', $imageId)->get();
+        $files = $this->query()->where('image_id', $collectionId)->get();
         return ($files ? $files : []);
     }
 

@@ -110,6 +110,8 @@ class ImagesAdminController extends AdminBaseController
             $image->setThumbnail($imageFiles[0]->getId().'.'.$extension);
             $image->setTotalImages(count($imageFiles));
             $helper->save(false);
+
+            $this->get('cache.clearer')->clearCaches(['image-zips/'.$image->getId()]);
         }
 
         if (!$helper->contentExists()) {
@@ -122,7 +124,7 @@ class ImagesAdminController extends AdminBaseController
 
         return $this->createEditResponse(
             $helper,
-            '@Images/admin/edit_image.twig',
+            '@Images/admin/edit_image_collection.twig',
             ['images_admin_edit', ['id' => $id]],
             ['files' => $files, 'files_form' => $filesForm->createView()]
         );

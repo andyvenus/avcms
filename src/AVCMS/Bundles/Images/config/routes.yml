@@ -6,6 +6,10 @@ image_collection:
   path: /gallery/{slug}
   defaults: { _controller: Images::ImagesController::imageCollectionAction }
 
+download_image_collection:
+  path: /images/download/{slug}
+  defaults: { _controller: Images::ImagesController::downloadCollectionAction }
+
 browse_images:
   path: /images/browse/{page}
   defaults: { _controller: Images::ImagesController::browseImagesAction, category: null, page: 1 }
