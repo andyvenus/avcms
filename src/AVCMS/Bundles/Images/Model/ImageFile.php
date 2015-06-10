@@ -45,4 +45,14 @@ class ImageFile extends Entity
     {
         return $this->get("image_id");
     }
+
+    public function setImportFolder($value)
+    {
+        $this->set("import_folder", $value);
+    }
+
+    public function getImportFolder()
+    {
+        return $this->get("import_folder");
+    }
 }

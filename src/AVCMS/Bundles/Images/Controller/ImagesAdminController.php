@@ -158,6 +158,14 @@ class ImagesAdminController extends AdminBaseController
 
     public function deleteAction(Request $request)
     {
+        if (!$this->checkCsrfToken($request)) {
+            return $this->invalidCsrfTokenJsonResponse();
+        }
+
+        $ids = $request->request->get('ids');
+
+        $this->imageFiles->query()->whereIn('image_id', (array) $ids)->delete();
+
         return $this->handleDelete($request, $this->images);
     }
 

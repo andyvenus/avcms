@@ -51,10 +51,20 @@ menu_items:
       permission: ADMIN_IMAGES
       settings:
         route: images_admin_home
+    images_bulk_import_admin:
+      label: Bulk Import
+      icon: glyphicon glyphicon-import
+      type: route
+      parent: images_admin
+      default_order: 1
+      permission: ADMIN_IMAGES
+      settings:
+        route: images_bulk_import_admin_home
     images_categories_admin:
       label: Categories
       icon: glyphicon glyphicon-th-list
       type: route
+      permission: ADMIN_IMAGES
       parent: images_admin
       settings:
         route: images_manage_categories

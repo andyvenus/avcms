@@ -266,4 +266,14 @@ class ImageCollection extends Entity implements RateInterface
     {
         $this->set("downloadable", $value);
     }
+
+    public function getImportFolder()
+    {
+        return $this->get("import_folder");
+    }
+
+    public function setImportFolder($value)
+    {
+        $this->set("import_folder", $value);
+    }
 }

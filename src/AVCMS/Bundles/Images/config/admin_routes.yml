@@ -40,7 +40,7 @@ images_admin_find_files:
   path: /images/find-files
   defaults: { _controller: 'Images::ImageFilesAdminController::findFilesAction' }
 
-images_admin_upload_file:
+images_admin_upload:
   path: /images/upload
   defaults: { _controller: 'Images::ImageFilesAdminController::uploadFilesAction' }
 
@@ -69,38 +69,34 @@ images_admin_edit_category:
   path: /images/categories/edit/{id}
   defaults: { _controller: Images::ImagesAdminController::editCategoryAction, contentType: image }
 
-# Image Feeds #
-update_image_feeds:
-  path:     /image-feeds/update
-  defaults: { _controller: 'Images::ImageFeedsAdminController::updateFeedsAction' }
+# Bulk Import #
+images_bulk_import:
+    path:     /images-bulk-import/import/{folder}
+    defaults: { _controller: 'Images::ImagesBulkImportAdminController::importAction' }
 
-download_images_feed:
-  path:     /image-feeds/download
-  defaults: { _controller: 'Images::ImageFeedsAdminController::downloadFeedAction' }
+images_bulk_import_admin_delete:
+    path:     /images-bulk-import/delete
+    defaults: { _controller: 'Images::ImagesBulkImportAdminController::deleteFolderAction' }
 
-import_feed_image:
-  path:     /image-feeds/import
-  defaults: { _controller: 'Images::ImageFeedsAdminController::importImageAction' }
+images_bulk_import_admin_home:
+  path: /images-bulk-import
+  defaults: { _controller: 'Images::ImagesBulkImportAdminController::homeAction' }
 
-play_feed_image:
-  path:     /image-feeds/play/{id}
-  defaults: { _controller: 'Images::ImageFeedsAdminController::playImageAction' }
+images_bulk_import_admin_finder:
+  path: /images-bulk-import/finder/{page}
+  defaults: { page: 1, _controller: 'Images::ImagesBulkImportAdminController::finderAction' }
 
-image_feeds_admin_reject:
-  path:     /image-feeds/delete
-  defaults: { _controller: 'Images::ImageFeedsAdminController::rejectAction' }
+images_bulk_upload:
+  path: /images-bulk-import/upload
+  defaults: { _controller: 'Images::ImagesBulkImportAdminController::bulkUploadAction' }
 
-image_feed_categories:
-  path:     /image-feeds/categories
-  defaults: { _controller: 'Images::ImageFeedsAdminController::categoriesSetupAction' }
+images_bulk_import_new_folder:
+  path: /images-bulk-import/add-folder
+  defaults: { _controller: 'Images::ImagesBulkImportAdminController::addFolderAction' }
 
-image_feeds_admin_home:
-  path: /image-feeds
-  defaults: { _controller: 'Images::ImageFeedsAdminController::homeAction' }
-
-image_feeds_admin_finder:
-  path: /image-feeds/finder/{page}
-  defaults: { page: 1, _controller: 'Images::ImageFeedsAdminController::finderAction' }
+images_bulk_import_folder:
+  path: /images-bulk-import/folder/{folder}
+  defaults: { _controller: 'Images::ImagesBulkImportAdminController::folderAction' }
 
 # Manage Submissions #
 image_submissions_admin_review:

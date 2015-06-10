@@ -11,12 +11,20 @@ use AVCMS\Bundles\Images\Model\ImageCollection;
 class ImageAdminForm extends AdminContentForm
 {
     /**
+     * @var bool
+     */
+    protected $import;
+
+    /**
      * @param ImageCollection $image
      * @param CategoryChoicesProvider $categoryChoicesProvider
+     * @param bool $import
      * @throws \Exception
      */
-    public function __construct(ImageCollection $image, CategoryChoicesProvider $categoryChoicesProvider)
+    public function __construct(ImageCollection $image, CategoryChoicesProvider $categoryChoicesProvider, $import = false)
     {
+        $this->import = $import;
+
         $this->add('type', 'radio', [
             'label' => 'Display',
             'choices' => [
@@ -78,10 +86,20 @@ class ImageAdminForm extends AdminContentForm
         ));
 
         parent::__construct($image->getId() ?: 0);
+
+        if ($this->import === true) {
+            $this->remove('slug');
+        }
     }
 
     public function getValidationRules(Validator $validator)
     {
-        $validator->addRule('slug', new MustNotExist('AVCMS\Bundles\Images\Model\ImageCollections', 'slug', $this->itemId), 'The URL Slug must be unique, slug already in use');
+        if ($this->import !== true) {
+            $validator->addRule(
+                'slug',
+                new MustNotExist('AVCMS\Bundles\Images\Model\ImageCollections', 'slug', $this->itemId),
+                'The URL Slug must be unique, slug already in use'
+            );
+        }
     }
 }

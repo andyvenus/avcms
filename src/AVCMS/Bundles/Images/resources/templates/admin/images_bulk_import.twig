@@ -1,0 +1,79 @@
+{% extends '@admin/edit_item.twig' %}
+
+{% block title %}
+    {% trans %}Import From Folder{% endtrans %}: {{ folder }}
+{% endblock %}
+
+{% block editor_title %}
+    <span class="light">{% trans %}Import From Folder{% endtrans %}:</span> {{ folder }}
+{% endblock %}
+
+{% block before_form %}
+    <span class="always-refresh"></span>
+{% endblock %}
+
+{% block form_rows %}
+    <div class="alert alert-info">
+        <p>
+            <span class="glyphicon glyphicon-info-sign"></span>
+            {% transchoice total_files with {folder_name: folder} %}{0}There are no images in the root folder.|{1}There is one image in the folder folder_name.|]1,Inf]The folder folder_name has %total_files% images inside.
+            {% endtranschoice %}
+
+            {% if imported_files > 0 %}
+                {% transchoice imported_files %}{1}One image has already been imported from this folder and will not be imported again.|]1,Inf]%imported_files% images have already been imported from this folder and will not be imported again.{% endtranschoice %}
+            {% endif %}
+        </p>
+        <p>
+            <span class="glyphicon glyphicon-info-sign"></span>
+            {% transchoice total_subdirectories with {folder_name: folder} %}{0}There are no subdirectories containing files in the root folder.|{1}There is one subdirectory in the folder folder_name that contains files.|]1,Inf]The folder folder_name has %total_subdirectories% subdirectories inside that contain files.
+            {% endtranschoice %}
+
+            {% if imported_subdirectories > 0 %}
+                {% transchoice imported_subdirectories %}{1}One subdirectory has already been imported from this folder and will not be imported again.|]1,Inf]%imported_subdirectories% subdirectories have already been imported from this folder and will not be imported again.{% endtranschoice %}
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">{% trans %}Import Type{% endtrans %}</h4>
+        </div>
+
+        <div class="panel-body">
+            <label>
+                <input type="radio" name="import_type" value="files" checked />
+                {% trans %}Individual Files{% endtrans %}
+            </label>
+            <p>{% trans %}The importer will find all the files in the root directory and import each one as an individual collection.{% endtrans %}</p>
+
+            <label>
+                <input type="radio" name="import_type" value="folders" />
+                {% trans %}Subdirectory Collections{% endtrans %}
+            </label>
+            <p>{% trans %}The importer will find folders within this directory and import the files within each subdirectory as a collection of images.{% endtrans %}</p>
+
+        </div>
+    </div>
+
+    <div class="well well-sm">
+        <p>{% trans %}The following placeholders can be used when importing images{% endtrans %}:</p>
+
+        <h4>Folder Placeholders</h4>
+        <p><strong>{folder_name}</strong> - {% trans %}The folder name the images are contained within.{% endtrans %}</p>
+
+        <h4>File Placeholders <span class="small">{% trans %}If importing subdirectories, these values will match the first image in the folder{% endtrans %}</span> </h4>
+        <p><strong>{clean_filename}</strong> - {% trans %}The filename without an extension and made more presentable.{% endtrans %}</p>
+        <p><strong>{filename}</strong> - {% trans %}The original filename.{% endtrans %}</p>
+        <p><strong>{original_width} {original_height}</strong> - {% trans %}The dimensions of the source image.{% endtrans %}</p>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">{% trans %}Imported Collection Details{% endtrans %}</h4>
+        </div>
+
+        <div class="panel-body">
+            {{ form_rows(form) }}
+        </div>
+    </div>
+{% endblock %}

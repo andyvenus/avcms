@@ -181,7 +181,7 @@ menu_items:
         type: route
         parent: wallpapers_admin
         settings:
-          route: wallpaper_bulk_import_admin_home
+          route: wallpapers_bulk_import_admin_home
       wallpapers_categories_admin:
         label: Categories
         icon: glyphicon glyphicon-th-list
