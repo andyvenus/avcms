@@ -83,12 +83,10 @@ abstract class BulkImportAdminController extends AdminBaseController
                                 $totalFolders++;
                             }
                         }
-                        $importedFiles = 'todo';//$this->model(ucfirst($this->contentType))->query()->where('file', 'LIKE', $filename.'%')->count();
 
                         $items[] = [
                             'id' => $id,
                             'name' => $filename,
-                            'imported_files' => $importedFiles,
                             'total_files' => $totalFiles,
                             'total_folders' => $totalFolders,
                             'dir' => $file

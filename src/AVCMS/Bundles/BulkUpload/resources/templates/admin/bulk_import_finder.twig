@@ -5,9 +5,6 @@
         {% trans %}Total Files{% endtrans %}
     </div>
     <div class="col-md-2 hidden-sm hidden-xs">
-        {% trans %}Already Imported{% endtrans %}
-    </div>
-    <div class="col-md-2 hidden-sm hidden-xs">
         {% trans %}Created{% endtrans %}
     </div>
 {% endblock %}
@@ -34,10 +31,6 @@
     <div class="col-md-2 hidden-xs">
         {{ item.total_files }}
     </div>
-    <div class="col-md-2 hidden-sm hidden-xs">
-        {{ item.imported_files }}
-    </div>
-
     <div class="col-md-2 hidden-sm hidden-xs">
         {{ item.dir.mtime|date(settings.date_format) }}
     </div>
