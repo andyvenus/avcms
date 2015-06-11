@@ -35,7 +35,7 @@ class ImagesHelper
             return $url;
         }
         else {
-            return $this->siteUrl.'/'.$this->imagesDir.'/'.$file->getUrl();
+            return $this->siteUrl.$this->imagesDir.'/'.$file->getUrl();
         }
     }
 }
