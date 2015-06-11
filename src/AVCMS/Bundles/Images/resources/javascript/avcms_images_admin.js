@@ -21,11 +21,24 @@ $(document).ready(function() {
     });
 
     avcms.event.addEvent('submit-form-success', avcms.image_submissions.onReviewSuccess);
+
+    avcms.event.addEvent('submit-form-success', function(form) {
+        if (avcms.images.thumbnailSettingsChanged && form.attr('name') == 'avcms_settings') {
+            avcms.images.thumbnailSettingsChanged = false;
+
+            avcms.images.clearThumbnailsCache(true);
+        }
+    });
+
+    body.on('change', 'form[name=avcms_settings] [name=images_thumbnail_width], form[name=avcms_settings] [name=images_thumbnail_height], form[name=avcms_settings] [name=images_thumbnail_crop]', function() {
+        avcms.images.thumbnailSettingsChanged = true;
+    });
 });
 
 avcms.images = {
     newFileCount: 0,
     bulkUploadText: null,
+    thumbnailSettingsChanged: false,
 
     addImageFile: function(form) {
         var file_fields = form.find('.avcms-new-image').first().html();
@@ -108,9 +121,13 @@ avcms.images = {
         });
     },
 
-    clearThumbnailsCache: function()
+    clearThumbnailsCache: function(ask)
     {
-        if (confirm(avcms.general.trans('Are you sure you want to clear the image thumbnail cache? This may cause some temporary strain on your server when images need to be re-generated.'))) {
+        if (ask != true) {
+            ask = confirm(avcms.general.trans('Are you sure you want to clear the image thumbnail cache? This may cause some temporary strain on your server when images need to be re-generated.'));
+        }
+
+        if (ask) {
             $.post(avcms.config.site_url+ 'admin/images/clear-thumbnail-cache', '', function(data) {
                 if (data.success !== true) {
                     alert(data.error);
