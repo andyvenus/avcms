@@ -38,12 +38,12 @@ class ImagesTwigExtension extends \Twig_Extension
     public function imageThumbnailUrl($image, $size = 'md')
     {
         if ($image instanceof ImageCollection) {
-            $extension = pathinfo($image->getThumbnail())['extension'];
+            $extension = pathinfo($image->getThumbnail(), PATHINFO_EXTENSION);
             $id = str_replace('.' . $extension, '', $image->getThumbnail());
             $collection = $image->getId();
         }
         elseif ($image instanceof ImageFile) {
-            $extension = pathinfo($image->getUrl())['extension'];
+            $extension = pathinfo($image->getUrl(), PATHINFO_EXTENSION);
             $id = $image->getId();
             $collection = $image->getCollectionId();
         }
