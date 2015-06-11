@@ -49,16 +49,19 @@ class FamobiFeed implements GameFeedInterface
         }
 
         if ($feedData->orientation == 'landscape') {
-            $game->setWidth('680');
             $game->setHeight('454');
         }
         else {
-            $game->setWidth('389');
             $game->setHeight('600');
         }
 
-        $game->setDownloadable(0);
+        if (!isset($feedData->aspect_ratio)) {
+            $feedData->aspect_ratio = 1.5;
+        }
 
+        $game->setWidth($game->getHeight() * $feedData->aspect_ratio);
+
+        $game->setDownloadable(0);
     }
 
     /**
