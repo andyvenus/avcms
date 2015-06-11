@@ -205,7 +205,7 @@ admin_settings:
       3: 3
       4: 4
       6: 6
-    default: 2
+    default: 4
     section: browse_images
   browse_images_per_page:
     type: text
@@ -216,7 +216,7 @@ admin_settings:
   show_image_description:
     type: checkbox
     label: Show Description
-    default: 1
+    default: 0
     section: browse_images
   show_image_ratings:
     type: checkbox
@@ -326,7 +326,7 @@ modules:
       columns:
         type: select
         label: Number of columns (thumbnail/details layout)
-        default: 3
+        default: 4
         choices:
           1: 1
           2: 2
