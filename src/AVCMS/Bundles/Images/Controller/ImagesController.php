@@ -304,7 +304,7 @@ class ImagesController extends Controller
                 $submissions->save($newSubmission);
 
                 foreach ($imageFiles as $imageFile) {
-                    $imageFile->setImageId($newSubmission->getId());
+                    $imageFile->setCollectionId($newSubmission->getId());
 
                     $this->model('ImageSubmissionFiles')->save($imageFile);
                 }

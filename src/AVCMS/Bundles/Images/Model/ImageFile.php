@@ -36,14 +36,14 @@ class ImageFile extends Entity
         $this->set("id", $value);
     }
 
-    public function setImageId($value)
+    public function setCollectionId($value)
     {
-        $this->set("image_id", $value);
+        $this->set("collection_id", $value);
     }
 
-    public function getImageId()
+    public function getCollectionId()
     {
-        return $this->get("image_id");
+        return $this->get("collection_id");
     }
 
     public function setImportFolder($value)

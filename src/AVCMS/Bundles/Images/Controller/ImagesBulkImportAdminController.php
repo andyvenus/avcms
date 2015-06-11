@@ -158,7 +158,7 @@ class ImagesBulkImportAdminController extends BulkImportAdminController
                         $imageUrl .= $imgFile['filename'];
 
                         $imageFile->setUrl($imageUrl);
-                        $imageFile->setImageId($newImageCollection->getId());
+                        $imageFile->setCollectionId($newImageCollection->getId());
                         $imageFile->setImportFolder($folder);
 
                         $imageFiles[] = $imageFile;

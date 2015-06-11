@@ -70,7 +70,7 @@ class ImageSubmissionsAdminController extends AdminBaseController
 
             if ($json->form->has_errors === false) {
                 $this->imageSubmissions->deleteById($id);
-                $this->imageSubmissionFiles->query()->where('image_id', $id)->delete();
+                $this->imageSubmissionFiles->query()->where('collection_id', $id)->delete();
                 $json->redirect = $this->generateUrl('image_submissions_admin_home');
             }
 
@@ -104,7 +104,7 @@ class ImageSubmissionsAdminController extends AdminBaseController
 
         $ids = $request->request->get('ids');
 
-        $filesQuery = $this->imageSubmissionFiles->query()->whereIn('image_id', (array) $ids);
+        $filesQuery = $this->imageSubmissionFiles->query()->whereIn('collection_id', (array) $ids);
         $files = $filesQuery->get();
 
         foreach ($files as $file) {

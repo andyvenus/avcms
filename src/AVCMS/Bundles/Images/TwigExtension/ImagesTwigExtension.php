@@ -45,7 +45,7 @@ class ImagesTwigExtension extends \Twig_Extension
         elseif ($image instanceof ImageFile) {
             $extension = pathinfo($image->getUrl())['extension'];
             $id = $image->getId();
-            $collection = $image->getImageId();
+            $collection = $image->getCollectionId();
         }
         else {
             throw new \Exception('Image thumbnails can only be generated for ImageCollection or ImageFile classes');

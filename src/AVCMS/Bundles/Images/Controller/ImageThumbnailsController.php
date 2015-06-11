@@ -60,7 +60,7 @@ class ImageThumbnailsController extends Controller
 
         $thumbnail = $imageManager->make($image);
 
-        $thumbnailPath = $this->getParam('root_dir').'/'.$this->getParam('image_thumbnails_dir').'/'.$file->getImageId();
+        $thumbnailPath = $this->getParam('root_dir').'/'.$this->getParam('image_thumbnails_dir').'/'.$file->getCollectionId();
 
         if (!file_exists($thumbnailPath)) {
             mkdir($thumbnailPath, 0777, true);

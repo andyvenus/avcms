@@ -87,7 +87,7 @@ class ImagesAdminController extends AdminBaseController
                 $helper->save(false);
             }
 
-            $this->imageFiles->query()->where('image_id', $image->getId())->delete();
+            $this->imageFiles->query()->where('collection_id', $image->getId())->delete();
 
             $imageFiles = [];
             foreach ($request->get('images') as $id => $file) {
@@ -101,7 +101,7 @@ class ImagesAdminController extends AdminBaseController
 
                 $imageFile = $this->imageFiles->newEntity();
                 $imageFile->setUrl($file['file']);
-                $imageFile->setImageId($image->getId());
+                $imageFile->setCollectionId($image->getId());
                 $imageFile->setCaption($file['caption']);
                 $imageFiles[] = $imageFile;
                 $this->imageFiles->save($imageFile);
@@ -164,7 +164,7 @@ class ImagesAdminController extends AdminBaseController
 
         $ids = $request->request->get('ids');
 
-        $this->imageFiles->query()->whereIn('image_id', (array) $ids)->delete();
+        $this->imageFiles->query()->whereIn('collection_id', (array) $ids)->delete();
 
         return $this->handleDelete($request, $this->images);
     }
