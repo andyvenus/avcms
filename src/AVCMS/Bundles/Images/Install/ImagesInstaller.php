@@ -21,11 +21,10 @@ class ImagesInstaller extends BundleInstaller
     public function install_1_0_0()
     {
         $this->PDO->exec("
-             CREATE TABLE `{$this->prefix}images` (
+             CREATE TABLE `{$this->prefix}image_collections` (
                   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
                   `name` varchar(255) NOT NULL DEFAULT '',
                   `description` text NOT NULL,
-                  `file` text,
                   `category_id` int(11) unsigned NOT NULL,
                   `category_parent_id` int(11) unsigned DEFAULT '0',
                   `hits` int(11) unsigned NOT NULL DEFAULT '0',
@@ -38,16 +37,54 @@ class ImagesInstaller extends BundleInstaller
                   `date_edited` int(11) NOT NULL DEFAULT '0',
                   `creator_id` int(11) DEFAULT NULL,
                   `editor_id` int(11) DEFAULT NULL,
-                  `advert_id` int(11) NOT NULL DEFAULT '0',
                   `slug` varchar(255) NOT NULL DEFAULT '',
                   `submitter_id` int(11) NOT NULL DEFAULT '0',
-                  `embed_code` text,
                   `likes` int(11) NOT NULL DEFAULT '0',
                   `dislikes` int(11) NOT NULL DEFAULT '0',
                   `comments` int(11) unsigned NOT NULL DEFAULT '0',
+                  `type` varchar(30) NOT NULL DEFAULT 'default',
+                  `downloadable` varchar(30) NOT NULL DEFAULT 'default',
+                  `total_images` int(11) DEFAULT '1',
+                  `import_folder` varchar(260) DEFAULT NULL,
                   PRIMARY KEY (`id`),
                   KEY `seo_url` (`slug`),
                   KEY `category_id` (`category_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        ");
+
+        $this->PDO->exec("
+            CREATE TABLE `{$this->prefix}image_files` (
+                  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                  `url` text,
+                  `caption` text,
+                  `collection_id` int(11) DEFAULT NULL,
+                  `import_folder` text,
+                  PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+        ");
+
+        $this->PDO->exec("
+            CREATE TABLE `{$this->prefix}image_submissions` (
+                  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+                  `name` varchar(255) NOT NULL DEFAULT '',
+                  `description` text NOT NULL,
+                  `category_id` int(11) unsigned NOT NULL,
+                  `date_added` int(11) NOT NULL DEFAULT '0',
+                  `creator_id` int(11) DEFAULT NULL,
+                  `submitter_id` int(11) NOT NULL DEFAULT '0',
+                  `slug` varchar(200) DEFAULT NULL,
+                  `total_images` int(11) DEFAULT NULL,
+                  PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        ");
+
+        $this->PDO->exec("
+            CREATE TABLE `{$this->prefix}image_submission_files` (
+                  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                  `url` text,
+                  `caption` text,
+                  `collection_id` int(11) DEFAULT NULL,
+                  PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
 
@@ -59,26 +96,8 @@ class ImagesInstaller extends BundleInstaller
                   `parent` int(11) DEFAULT NULL,
                   `slug` varchar(120) DEFAULT NULL,
                   `description` text,
-                  PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-        ");
-
-        $this->PDO->exec("
-             CREATE TABLE `{$this->prefix}image_submissions` (
-                  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-                  `name` varchar(255) NOT NULL DEFAULT '',
-                  `description` text NOT NULL,
-                  `instructions` text NOT NULL,
-                  `file` text,
-                  `category_id` int(11) unsigned NOT NULL,
-                  `thumbnail` text NOT NULL,
-                  `date_added` int(11) NOT NULL DEFAULT '0',
-                  `creator_id` int(11) DEFAULT NULL,
-                  `submitter_id` int(11) NOT NULL DEFAULT '0',
-                  `width` int(11) DEFAULT NULL,
-                  `height` int(11) DEFAULT NULL,
-                  `slug` varchar(200) DEFAULT NULL,
-                  PRIMARY KEY (`id`)
+                  PRIMARY KEY (`id`),
+                  KEY `seo_url` (`slug`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
     }
