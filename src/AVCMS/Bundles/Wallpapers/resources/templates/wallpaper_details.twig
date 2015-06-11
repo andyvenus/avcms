@@ -92,7 +92,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         {% if wallpaper.submitter %}
-                            {% trans %}Submitted By{% endtrans %}: <a href="{{ path('user_profile', {slug: wallpaper.submitter.slug}) }}">{{ wallpaper.submitter.username }}</a>
+                            <p>{% trans %}Submitted By{% endtrans %}: {{ user_info(wallpaper.submitter) }}</p>
                         {% endif %}
                     </div>
                 </div>
