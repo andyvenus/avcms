@@ -80,20 +80,57 @@ menu_items:
 admin_settings_sections:
   images: Images
   browse_images: Browse Images
+  image_submissions: Image Submissions
 
 admin_settings:
   images_allow_uploads:
     type: checkbox
     label: Allow Image Submissions
     help: Allow users to submit images to your site for admins to review
-    section: images
+    section: image_submissions
     default: 0
   images_max_submissions:
     type: text
     label: Maximum User Submissions
-    help: The maximum amount of images a user can submit for review. They can submit more after an admin has accepted their existing submissions.
-    section: images
+    help: The maximum number of image collections a user can submit for review. They can submit more after an admin has accepted their existing submissions.
+    section: image_submissions
     default: 5
+    validation:
+      numeric:
+        rule: Numeric
+  images_submission_filesize:
+    type: text
+    label: Image filesize limit
+    help: The maximum filesize each image can be in megabytes
+    section: image_submissions
+    default: 2
+    validation:
+      numeric:
+        rule: Numeric
+  images_submission_file_limit:
+    type: text
+    label: Images limit
+    help: The maximum number of images a user can submit for one collection
+    section: image_submissions
+    default: 10
+    validation:
+      numeric:
+        rule: Numeric
+  images_submission_width_limit:
+    type: text
+    label: Images width limit
+    help: The maximum width submitted images can be
+    section: image_submissions
+    default: 2500
+    validation:
+      numeric:
+        rule: Numeric
+  images_submission_height_limit:
+    type: text
+    label: Images height limit
+    help: The maximum height submitted images can be
+    section: image_submissions
+    default: 2500
     validation:
       numeric:
         rule: Numeric

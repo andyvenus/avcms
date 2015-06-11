@@ -256,8 +256,10 @@ class ImagesController extends Controller
                 mkdir($submissionsImagesDir, 0777, true);
             }
 
-            $imageValidator = new SymfonyImageFile(2000, 2000);
-            $fileValidator = new SymfonyFile(10000000, UploadedFileHandler::getImageFiletypes());
+            $imageValidator = new SymfonyImageFile($this->setting('images_submission_width_limit'), $this->setting('images_submission_height_limit'));
+
+            $fileSizeLimit = $this->setting('images_submission_filesize') * 1000000;
+            $fileValidator = new SymfonyFile($fileSizeLimit, UploadedFileHandler::getImageFiletypes());
 
             $files = $request->files->get('files');
 
@@ -269,12 +271,23 @@ class ImagesController extends Controller
             $secureRandom = bin2hex((new SecureRandom())->nextBytes(5));
 
             foreach ($files as $uploadedImage) {
-                if (!$imageValidator->assert($uploadedImage) || !$fileValidator->assert($uploadedImage)) {
+                if (!$fileValidator->assert($uploadedImage)) {
                     $form->addCustomErrors([new FormError(
                         'files',
-                        'The image {filename} is not valid. Make sure it is under 10mb and is a png, gif, bmp, jpeg or other image file',
+                        'The image {filename} is not valid. Make sure it is under {filesize_limit} MB and is a png, gif, bmp, jpeg or other image file',
                         true,
-                        ['filename' => $uploadedImage->getClientOriginalName()]
+                        ['filename' => $uploadedImage->getClientOriginalName(), 'filesize_limit' => $this->setting('images_submission_filesize')]
+                    )]);
+
+                    continue;
+                }
+
+                if (!$imageValidator->assert($uploadedImage)) {
+                    $form->addCustomErrors([new FormError(
+                        'files',
+                        'The image {filename} is larger than the maximum resolution of {width}x{height}',
+                        true,
+                        array_merge($imageValidator->getRuleData(), ['filename' => $uploadedImage->getClientOriginalName()])
                     )]);
 
                     continue;
@@ -293,6 +306,11 @@ class ImagesController extends Controller
 
             if ($form->isValid() && empty($imageFiles)) {
                 $form->addCustomErrors([new FormError('files', 'You must upload a file', true)]);
+            }
+
+            $imageLimit = $this->setting('images_submission_file_limit');
+            if (count($imageFiles) > $imageLimit) {
+                $form->addCustomErrors([new FormError('files', 'You cannot upload more than {count} images to a collection', true, ['count' => $imageLimit])]);
             }
 
             if ($form->isValid()) {

@@ -13,7 +13,14 @@
         </div>
 
         <div class="alert alert-info">
-            <span class="glyphicon glyphicon-info-sign"></span> {% trans with {size: 10} %}Images must be under {size} MB each{% endtrans %}
+            <span class="glyphicon glyphicon-info-sign"></span> {% trans with {size: settings.images_submission_filesize} %}Images must be under {size} MB each{% endtrans %}
+        </div>
+
+        <div class="alert alert-info">
+            <span class="glyphicon glyphicon-info-sign"></span>
+            {% trans with {width: settings.images_submission_width_limit, height: settings.images_submission_height_limit} %}
+                Images must have a resolution no larger than {width}x{height}
+            {% endtrans %}
         </div>
     {% endif %}
 
