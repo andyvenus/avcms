@@ -1,7 +1,7 @@
 info:
-  name: AVCMS
-  version: '1.0.3'
-  id: avcms
+  name: AVCMS Dev
+  version: '1.0.4'
+  id: avcms_dev
   url: http://www.avscripts.net
 
 bundle_dirs:
