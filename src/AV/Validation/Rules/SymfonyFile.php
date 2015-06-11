@@ -21,6 +21,11 @@ class SymfonyFile extends Rule
 
     protected $unit;
 
+    /**
+     * @param null|int $maxFileSize Maximum file size in bytes
+     * @param null $mimeTypes
+     * @param string $displayUnit
+     */
     public function __construct($maxFileSize = null, $mimeTypes = null, $displayUnit = 'MB')
     {
         $this->maxFileSize = $maxFileSize;
