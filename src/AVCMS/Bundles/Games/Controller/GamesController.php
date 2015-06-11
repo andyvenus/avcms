@@ -47,6 +47,10 @@ class GamesController extends Controller
             throw $this->createNotFoundException('Game Not Found');
         }
 
+        if ($game->getSubmitterId()) {
+            $game->submitter = $this->model('@users')->getOne($game->getSubmitterId());
+        }
+
         $hitRegistered = $this->container->get('hitcounter')->registerHit($this->games, $game->getId(), 'hits', 'id', 'last_hit');
 
         $playsLeft = null;

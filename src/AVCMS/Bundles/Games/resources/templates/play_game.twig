@@ -117,12 +117,21 @@
                          </div>
                         <div class="row">
                             <div class="col-md-12">
-                                {% trans %}Tags{% endtrans %}:
-                                {% for tag in game.tags %}
-                                    <a class="btn btn-default btn-xs" href="{{ path('game_tag', {'tags': tag.name}) }}">{{ tag.name }}</a>
-                                {% else %}
-                                    {% trans %}None{% endtrans %}
-                                {% endfor %}
+                                <p>
+                                    {% trans %}Tags{% endtrans %}:
+                                    {% for tag in game.tags %}
+                                        <a class="btn btn-default btn-xs" href="{{ path('game_tag', {'tags': tag.name}) }}">{{ tag.name }}</a>
+                                    {% else %}
+                                        {% trans %}None{% endtrans %}
+                                    {% endfor %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                {% if game.submitter %}
+                                    <p>{% trans %}Submitted By{% endtrans %}: {{ user_info(game.submitter) }}</p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
