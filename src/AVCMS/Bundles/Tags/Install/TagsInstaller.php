@@ -14,7 +14,8 @@ class TagsInstaller extends BundleInstaller
     public function getVersions()
     {
         return [
-            '1.0' => 'install_1_0_0'
+            '1.0' => 'install_1_0_0',
+            '1.0.1' => 'install_1_0_1'
         ];
     }
 
@@ -38,5 +39,10 @@ class TagsInstaller extends BundleInstaller
                   KEY `game_id` (`content_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
+    }
+
+    public function install_1_0_1()
+    {
+        $this->sql("ALTER TABLE {$this->prefix}tag_taxonomy CHANGE `content_type` `content_type` varchar(80) NOT NULL DEFAULT ''");
     }
 }
