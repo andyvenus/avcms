@@ -30,11 +30,6 @@ images_admin_toggle_featured:
   path: /images/toggle-featured
   defaults: { _controller: Images::ImagesAdminController::toggleFeaturedAction }
 
-# Get Dimensions #
-images_admin_dimensions:
-  path: /images/get-dimensions
-  defaults: { _controller: 'Images::ImagesAdminController::getDimensionsAction' }
-
 # File Select #
 images_admin_find_files:
   path: /images/find-files
@@ -114,3 +109,8 @@ image_submissions_admin_home:
 image_submissions_admin_finder:
   path: /image-submissions/finder/{page}
   defaults: { page: 1, _controller: 'Images::ImageSubmissionsAdminController::finderAction' }
+
+# Clear Caches #
+images_clear_thumbnails_cache_admin:
+  path: /images/clear-thumbnail-cache
+  defaults: { _controller: Images::ImagesAdminController::clearThumbnailCacheAction }

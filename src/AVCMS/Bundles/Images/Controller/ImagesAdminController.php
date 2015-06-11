@@ -169,32 +169,17 @@ class ImagesAdminController extends AdminBaseController
         return $this->handleDelete($request, $this->images);
     }
 
-    public function getDimensionsAction(Request $request)
+    public function clearThumbnailCacheAction(Request $request)
     {
-        $file = $request->get('file');
-
-        if ($file === null) {
-            throw $this->createNotFoundException();
+        if (!$this->checkCsrfToken($request)) {
+            return $this->invalidCsrfTokenJsonResponse();
         }
 
-        $file = $this->getParam('root_dir').'/'.$this->getParam('images_dir').'/'.$file;
+        $clearer = new CacheClearer($this->getParam('root_dir').'/'.$this->getParam('image_thumbnails_dir'));
 
-        $imageSize = @getimagesize($file);
+        $clearer->clearCaches(null, true);
 
-        if (!$imageSize) {
-            $width = 0;
-            $height = 0;
-        }
-        else {
-            $width = $imageSize[0];
-            $height = $imageSize[1];
-        }
-
-        if ($width === 0 || $height === 0) {
-            return new JsonResponse(['success' => false, 'error' => $this->trans('Could not get dimensions')]);
-        }
-
-        return new JsonResponse(['success' => true, 'width' => $width, 'height' => $height]);
+        return new JsonResponse(['success' => true]);
     }
 
     protected function getSharedTemplateVars()

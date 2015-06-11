@@ -51,5 +51,10 @@ class ImageServices implements ServicesInterface
             ->setArguments([new Reference('images.submissions_model')])
             ->addTag('event.subscriber')
         ;
+
+        $container->register('subscriber.image_cache_button', 'AVCMS\Bundles\Images\EventSubscriber\ImageCacheOutletSubscriber')
+            ->setArguments([new Reference('translator')])
+            ->addTag('event.subscriber')
+        ;
     }
 }

@@ -7,6 +7,8 @@ $(document).ready(function() {
     });
     body.on('click', '.avcms-remove-image-file', avcms.images.removeImageFile);
 
+    body.on('click', '.clear-image-thumbnails-cache', avcms.images.clearThumbnailsCache);
+
     avcms.event.addEvent('page-modified', function() {
         var container = $('.avcms-image-files').filter(':visible');
         if (container.length != 0 && container.find('.panel').length == 0) {
@@ -116,6 +118,17 @@ avcms.images = {
 
             $(this).find('.avcms-image-preview').html('<a href="'+url+'" target="_blank"><img src="' + url + '" style="max-width: 100%;max-height:200px;" /></a>');
         });
+    },
+
+    clearThumbnailsCache: function()
+    {
+        if (confirm(avcms.general.trans('Are you sure you want to clear the image thumbnail cache? This may cause some temporary strain on your server when images need to be re-generated.'))) {
+            $.post(avcms.config.site_url+ 'admin/images/clear-thumbnail-cache', '', function(data) {
+                if (data.success !== true) {
+                    alert(data.error);
+                }
+            });
+        }
     }
 };
 
