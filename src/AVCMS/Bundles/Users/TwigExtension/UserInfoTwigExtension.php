@@ -59,8 +59,12 @@ class UserInfoTwigExtension extends \Twig_Extension
         $this->environment = $environment;
     }
 
-    public function userInfo(User $user, $options = array())
+    public function userInfo($user, $options = array())
     {
+        if (!$user) {
+            return null;
+        }
+
         return $this->environment->render('@Users/user_info.twig', ['info_user' => $user, 'options' => $this->mergeDefaultOptions($options)]);
     }
 
