@@ -178,7 +178,7 @@ admin_settings:
     choices:
       1: Allow Downloads
       0: Disallow Downloads
-    default: false
+    default: 0
   browse_images_layout:
     type: select
     label: Browse Images Layout
