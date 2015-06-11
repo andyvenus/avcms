@@ -12,12 +12,12 @@ class ImageCollections extends ContentModel
 
     public function getTable()
     {
-        return 'images';
+        return 'image_collections';
     }
 
     public function getSingular()
     {
-        return 'image';
+        return 'image_collection';
     }
 
     public function getEntity()

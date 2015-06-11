@@ -5,6 +5,7 @@ namespace AVCMS\Bundles\Images\Controller;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Images\Form\ImageAdminForm;
+use AVCMS\Bundles\Images\Form\ImageFilesAdminForm;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,11 +18,17 @@ class ImageSubmissionsAdminController extends AdminBaseController
      */
     protected $imageSubmissions;
 
+    /**
+     * @var \AVCMS\Bundles\Images\Model\ImageSubmissionFiles
+     */
+    protected $imageSubmissionFiles;
+
     protected $browserTemplate = '@Images/admin/image_submissions_browser.twig';
 
     public function setUp()
     {
         $this->imageSubmissions = $this->model('ImageSubmissions');
+        $this->imageSubmissionFiles = $this->model('ImageSubmissionFiles');
     }
 
     public function homeAction(Request $request)
@@ -34,9 +41,20 @@ class ImageSubmissionsAdminController extends AdminBaseController
         $imageSubmission = $this->imageSubmissions->getOne($request->get('id'));
 
         $formBlueprint = new ImageAdminForm($imageSubmission, new CategoryChoicesProvider($this->model('ImageCategories')));
+        $formBlueprint->setName('review_submitted_image_form');
 
         if (!$imageSubmission) {
             throw $this->createNotFoundException('Submission not found');
+        }
+
+        /**
+         * @var $files \AVCMS\Bundles\Images\Model\ImageFile[]
+         */
+        $files = $this->imageSubmissionFiles->getImageFiles($imageSubmission->getId());
+        $filesForm = $this->buildForm(new ImageFilesAdminForm($files));
+
+        foreach ($files as $file) {
+            $filesForm->mergeData(['images' => [$file->getId() => ['file' => $file->getUrl(), 'caption' => $file->getCaption()]]]);
         }
 
         $form = $this->buildForm($formBlueprint, $request, $imageSubmission);
@@ -52,6 +70,7 @@ class ImageSubmissionsAdminController extends AdminBaseController
 
             if ($json->form->has_errors === false) {
                 $this->imageSubmissions->deleteById($id);
+                $this->imageSubmissionFiles->query()->where('image_id', $id)->delete();
                 $json->redirect = $this->generateUrl('image_submissions_admin_home');
             }
 
@@ -60,7 +79,7 @@ class ImageSubmissionsAdminController extends AdminBaseController
         else {
             return new Response($this->renderAdminSection(
                 '@Images/admin/review_image_submission.twig',
-                ['form' => $form->createView(), 'item' => $imageSubmission]
+                ['form' => $form->createView(), 'item' => $imageSubmission, 'files_form' => $filesForm->createView(), 'files' => $files]
             ));
         }
     }
@@ -79,6 +98,29 @@ class ImageSubmissionsAdminController extends AdminBaseController
 
     public function deleteAction(Request $request)
     {
+        if (!$this->checkCsrfToken($request)) {
+            return $this->invalidCsrfTokenJsonResponse();
+        }
+
+        $ids = $request->request->get('ids');
+
+        $filesQuery = $this->imageSubmissionFiles->query()->whereIn('image_id', (array) $ids);
+        $files = $filesQuery->get();
+
+        foreach ($files as $file) {
+            $filePath = $this->getParam('images_dir').'/'.$file->getUrl();
+
+            unlink($filePath);
+
+            $filesDirectory = dirname($filePath);
+        }
+
+        if (isset($filesDirectory) && count(glob($filesDirectory."/*")) === 0 ) {
+            rmdir($filesDirectory);
+        }
+
+        $filesQuery->delete();
+
         return $this->handleDelete($request, $this->imageSubmissions);
     }
 

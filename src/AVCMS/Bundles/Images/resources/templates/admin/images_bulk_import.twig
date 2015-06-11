@@ -25,7 +25,7 @@
         </p>
         <p>
             <span class="glyphicon glyphicon-info-sign"></span>
-            {% transchoice total_subdirectories with {folder_name: folder} %}{0}There are no subdirectories containing files in the root folder.|{1}There is one subdirectory in the folder folder_name that contains files.|]1,Inf]The folder folder_name has %total_subdirectories% subdirectories inside that contain files.
+            {% transchoice total_subdirectories with {folder_name: folder} %}{0}There are no subdirectories containing files in this folder.|{1}There is one subdirectory in the folder folder_name that contains files.|]1,Inf]The folder folder_name has %total_subdirectories% subdirectories inside that contain files.
             {% endtranschoice %}
 
             {% if imported_subdirectories > 0 %}

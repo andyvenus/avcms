@@ -18,6 +18,6 @@ class ImageSubmissions extends Model
 
     public function getEntity()
     {
-        return 'AVCMS\Bundles\Images\Model\Image';
+        return 'AVCMS\Bundles\Images\Model\ImageCollection';
     }
 }

@@ -8,6 +8,9 @@
 namespace AVCMS\Bundles\Images\Controller;
 
 use AV\FileHandler\UploadedFileHandler;
+use AV\Form\FormError;
+use AV\Validation\Rules\SymfonyFile;
+use AV\Validation\Rules\SymfonyImageFile;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Images\Form\ImageFrontendFiltersForm;
 use AVCMS\Bundles\Images\Form\SubmitImageForm;
@@ -15,10 +18,13 @@ use AVCMS\Core\Controller\Controller;
 use AVCMS\Core\Rss\RssFeed;
 use AVCMS\Core\Rss\RssItem;
 use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Util\SecureRandom;
 use ZipArchive;
 
 class ImagesController extends Controller
@@ -245,41 +251,65 @@ class ImagesController extends Controller
 
             $fileHandler = new UploadedFileHandler();
 
-            $submissionsImagesDir = $this->getParam('images_dir').'/submissions';
+            $submissionsImagesDir = $this->getParam('image_submissions_dir');
             if (!file_exists($submissionsImagesDir)) {
                 mkdir($submissionsImagesDir, 0777, true);
             }
 
-            $submissionsThumbsDir = $this->getParam('image_thumbnails_dir').'/submissions';
-            if (!file_exists($submissionsThumbsDir)) {
-                mkdir($submissionsThumbsDir, 0777, true);
+            $imageValidator = new SymfonyImageFile(2000, 2000);
+            $fileValidator = new SymfonyFile(10000000, UploadedFileHandler::getImageFiletypes());
+
+            $files = $request->files->get('files');
+
+            if (!is_array($files)) {
+                $files = [$files];
             }
 
-            $fullFilePath = $fileHandler->moveFile($form->getData('file'), $submissionsImagesDir);
-            $fileRelPath = str_replace($this->getParam('images_dir').'/', '', $fullFilePath);
-            $newSubmission->setFile($fileRelPath);
+            $imageFiles = [];
+            $secureRandom = bin2hex((new SecureRandom())->nextBytes(5));
 
-            $fullThumbPath = $fileHandler->moveFile($form->getData('thumbnail'), $submissionsThumbsDir);
-            $thumbRelPath = str_replace($this->getParam('image_thumbnails_dir').'/', '', $fullThumbPath);
-            $newSubmission->setThumbnail($thumbRelPath);
+            foreach ($files as $uploadedImage) {
+                if (!$imageValidator->assert($uploadedImage) || !$fileValidator->assert($uploadedImage)) {
+                    $form->addCustomErrors([new FormError(
+                        'files',
+                        'The image {filename} is not valid. Make sure it is under 10mb and is a png, gif, bmp, jpeg or other image file',
+                        true,
+                        ['filename' => $uploadedImage->getClientOriginalName()]
+                    )]);
 
-            $newSubmission->setCreatorId($this->activeUser()->getId());
-            $newSubmission->setSubmitterId($this->activeUser()->getId());
-            $newSubmission->setDateAdded(time());
+                    continue;
+                }
 
-            $dimensions = @getimagesize($fullFilePath);
+                $imageFile = $this->imageFiles->newEntity();
 
-            if (!$dimensions) {
-                $dimensions = [0, 0];
+                $fullFilePath = $fileHandler->moveFile($uploadedImage, $submissionsImagesDir.'/'.$secureRandom);
+
+                $fileRelPath = str_replace($this->getParam('images_dir') . '/', '', $fullFilePath);
+
+                $imageFile->setUrl($fileRelPath);
+
+                $imageFiles[] = $imageFile;
             }
 
-            $newSubmission->setWidth($dimensions[0]);
-            $newSubmission->setHeight($dimensions[1]);
+            if ($form->isValid() && empty($imageFiles)) {
+                $form->addCustomErrors([new FormError('files', 'You must upload a file', true)]);
+            }
 
-            $newSubmission->setSlug($this->get('slug.generator')->slugify($newSubmission->getName()));
+            if ($form->isValid()) {
+                $newSubmission->setCreatorId($this->activeUser()->getId());
+                $newSubmission->setSubmitterId($this->activeUser()->getId());
+                $newSubmission->setDateAdded(time());
+                $newSubmission->setSlug($this->get('slug.generator')->slugify($newSubmission->getName()));
+                $newSubmission->setTotalImages(count($imageFiles));
 
-            $submissions->save($newSubmission);
+                $submissions->save($newSubmission);
 
+                foreach ($imageFiles as $imageFile) {
+                    $imageFile->setImageId($newSubmission->getId());
+
+                    $this->model('ImageSubmissionFiles')->save($imageFile);
+                }
+            }
         }
 
         return new Response($this->render('@Images/submit_image.twig', ['form' => $form->createView()]));

@@ -24,6 +24,8 @@ $(document).ready(function() {
         avcms.images.loadBulkUpload();
         avcms.images.updateFiles();
     });
+
+    avcms.event.addEvent('submit-form-success', avcms.image_submissions.onReviewSuccess);
 });
 
 avcms.images = {
@@ -114,5 +116,14 @@ avcms.images = {
 
             $(this).find('.avcms-image-preview').html('<a href="'+url+'" target="_blank"><img src="' + url + '" style="max-width: 100%;max-height:200px;" /></a>');
         });
+    }
+};
+
+avcms.image_submissions = {
+    onReviewSuccess: function(form)
+    {
+        if (form.attr('name') == 'review_submitted_image_form') {
+            $('.browser-finder-item[data-id="'+form.data('item-id')+'"]').remove();
+        }
     }
 };

@@ -1,22 +1,6 @@
 {% extends '@admin/finder.twig' %}
 
-{% block finder_header_titles %}
-    <div class="col-md-2 hidden-xs">
-        {% trans %}User{% endtrans %}
-    </div>
-    <div class="col-md-2 hidden-sm hidden-xs">
-        {% trans %}Date submitted{% endtrans %}
-    </div>
-    <div class="col-md-8 hidden-sm hidden-xs">
-        {% trans %}File{% endtrans %}
-    </div>
-{% endblock %}
-
 {% block item_main %}
-    <div class="finder-thumbnail">
-        <img src="{{ image_thumbnail(item) }}" width="50" height="50"/>
-    </div>
-
     {% block item_title %}
         <div class="finder-item-title" data-field="name">
             {{ item.name }}
@@ -31,10 +15,19 @@
 
             {{ buttons.delete('image_submissions_admin_delete') }}
         </div>
-
-        <a href="{{ path('image_submissions_admin_play', {'id': item.id}) }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-play"></span> {% trans %}Play{% endtrans %}</a>
-
     {% endblock %}
+{% endblock %}
+
+{% block finder_header_titles %}
+    <div class="col-md-2 hidden-xs">
+        {% trans %}User{% endtrans %}
+    </div>
+    <div class="col-md-2 hidden-sm hidden-xs">
+        {% trans %}Date submitted{% endtrans %}
+    </div>
+    <div class="col-md-8 hidden-sm hidden-xs">
+        {% trans %}Images{% endtrans %}
+    </div>
 {% endblock %}
 
 {% block item_extended_inner %}
@@ -45,6 +38,6 @@
         {{ item.dateAdded|date(settings.date_format) }}
     </div>
     <div class="col-md-8 hidden-sm hidden-xs">
-        {{ item.file }}
+        {{ item.totalImages }}
     </div>
 {% endblock %}

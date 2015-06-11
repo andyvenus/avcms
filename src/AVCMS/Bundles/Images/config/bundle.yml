@@ -21,7 +21,7 @@ services:
   - ImageServices
 
 categories:
-  image:
+  image_collection:
     model: AVCMS\Bundles\Images\Model\ImageCategories
     content_model: AVCMS\Bundles\Images\Model\ImageCollections
     route_prefix: images_
@@ -94,15 +94,6 @@ admin_settings:
     help: The maximum amount of images a user can submit for review. They can submit more after an admin has accepted their existing submissions.
     section: images
     default: 5
-    validation:
-      numeric:
-        rule: Numeric
-  images_limit_plays:
-    label: Limit Image Plays
-    help: The number of images that can be played before a user must register an account. Set to 0 to disable.
-    type: text
-    default: 0
-    section: images
     validation:
       numeric:
         rule: Numeric
@@ -367,7 +358,7 @@ modules:
           default: 40
   image_stats:
     name: Image Stats
-    description: Image stats like total image, total plays etc
+    description: Image stats like total images, total hits etc
     controller: Images::ImageModulesController::imageStatsModule
     cachable: true
     default_cache_time: 43200
@@ -387,3 +378,4 @@ permissions:
 container_params:
   images_dir: web/images
   image_thumbnails_dir: web/image-thumbnails
+  image_submissions_dir: web/images/submissions
