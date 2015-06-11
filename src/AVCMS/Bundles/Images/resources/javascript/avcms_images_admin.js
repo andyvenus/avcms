@@ -10,13 +10,6 @@ $(document).ready(function() {
     body.on('click', '.clear-image-thumbnails-cache', avcms.images.clearThumbnailsCache);
 
     avcms.event.addEvent('page-modified', function() {
-        var container = $('.avcms-image-files').filter(':visible');
-        if (container.length != 0 && container.find('.panel').length == 0) {
-            var form = $('form[data-item-id]').filter(':visible');
-
-            avcms.images.addImageFile(form);
-        }
-
         $('body').on('change', '.avcms-file-path-field, .file-selector-dropdown, [data-file-selector-group]', avcms.images.updateFiles);
 
         $('.avcms-image-files').sortable({

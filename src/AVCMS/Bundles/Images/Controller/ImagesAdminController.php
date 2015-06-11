@@ -4,6 +4,7 @@ namespace AVCMS\Bundles\Images\Controller;
 
 use AV\Cache\CacheClearer;
 use AV\Form\FormBlueprint;
+use AV\Form\FormError;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use AVCMS\Bundles\Categories\Controller\CategoryActionsTrait;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
@@ -78,6 +79,12 @@ class ImagesAdminController extends AdminBaseController
 
         foreach ($files as $file) {
             $filesForm->mergeData(['images' => [$file->getId() => ['file' => $file->getUrl(), 'caption' => $file->getCaption()]]]);
+        }
+
+        if ($form->isSubmitted()) {
+            if (count($request->request->get('images')) === 1) {
+                $helper->getForm()->addCustomErrors([new FormError(null, 'You must add at least one image file', true)]);
+            }
         }
 
         if ($helper->formValid()) {
