@@ -44,7 +44,7 @@
 {% block input_field %}
     {% spaceless %}
         {% set type = type|default('text') %}
-        <input type="{{ type }}" name="{{ name }}" {% if value is not empty %}value="{{ value }}"{% endif %} {{ block('attributes') }} />
+        <input type="{{ type }}" name="{{ name }}" {% if value is not empty and value is not iterable %}value="{{ value }}"{% endif %} {{ block('attributes') }} />
     {% endspaceless %}
 {% endblock %}
 
