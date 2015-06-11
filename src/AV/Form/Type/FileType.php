@@ -26,6 +26,16 @@ class FileType extends DefaultType
 
     public function isValidRequestData($field, $data)
     {
+        if (isset($field['options']['attr']['multiple']) && is_array($data)) {
+            foreach ($data as $file) {
+                if ($this->isValidRequestData($field, $file) === false) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         return (is_object($data) || is_file($data));
     }
 }
