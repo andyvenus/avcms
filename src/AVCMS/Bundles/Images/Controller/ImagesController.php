@@ -58,6 +58,10 @@ class ImagesController extends Controller
 
         $imageCollection->files = $this->imageFiles->getImageFiles($imageCollection->getId());
 
+        if ($imageCollection->getSubmitterId()) {
+            $imageCollection->submitter = $this->model('@users')->getOne($imageCollection->getSubmitterId());
+        }
+
         if (!$imageCollection) {
             throw $this->createNotFoundException('Image Not Found');
         }

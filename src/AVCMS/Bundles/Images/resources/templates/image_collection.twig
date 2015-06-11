@@ -100,12 +100,21 @@
                          </div>
                         <div class="row">
                             <div class="col-md-12">
-                                {% trans %}Tags{% endtrans %}:
-                                {% for tag in image_collection.tags %}
-                                    <a class="btn btn-default btn-xs" href="{{ path('image_tag', {'tags': tag.name}) }}">{{ tag.name }}</a>
-                                {% else %}
-                                    {% trans %}None{% endtrans %}
-                                {% endfor %}
+                                <p>
+                                    {% trans %}Tags{% endtrans %}:
+                                    {% for tag in image_collection.tags %}
+                                        <a class="btn btn-default btn-xs" href="{{ path('image_tag', {'tags': tag.name}) }}">{{ tag.name }}</a>
+                                    {% else %}
+                                        {% trans %}None{% endtrans %}
+                                    {% endfor %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                {% if image_collection.submitter %}
+                                    <p>{% trans %}Submitted By{% endtrans %}: {{ user_info(image_collection.submitter) }}</p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
