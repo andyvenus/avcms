@@ -40,11 +40,6 @@ avcms.images = {
     },
 
     removeImageFile: function() {
-        if ($('.avcms-image-files').filter(':visible').find('.panel').length == 1) {
-            alert('There must be at least one image file');
-            return;
-        }
-
         $(this).parents('.panel').remove();
     },
 
