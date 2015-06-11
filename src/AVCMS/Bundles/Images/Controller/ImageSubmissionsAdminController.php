@@ -124,17 +124,6 @@ class ImageSubmissionsAdminController extends AdminBaseController
         return $this->handleDelete($request, $this->imageSubmissions);
     }
 
-    public function playImageAction(Request $request)
-    {
-        $image = $this->imageSubmissions->getOne($request->get('id'));
-
-        if (!$image) {
-            throw $this->createNotFoundException();
-        }
-
-        return new Response($this->renderAdminSection('@Images/admin/image_collection_admin.twig', ['image' => $image]));
-    }
-
     protected function getSharedTemplateVars()
     {
         $templateVars = parent::getSharedTemplateVars();

@@ -19,11 +19,11 @@ class ImagesAdminFiltersForm extends AdminFiltersForm
                 'publish-date-oldest' => 'Oldest (by publish date)',
                 'a-z' => 'A-Z',
                 'z-a' => 'Z-A',
-                'top-hits' => 'Most Played',
-                'low-hits' => 'Least Played',
+                'top-hits' => 'Most Viewed',
+                'low-hits' => 'Least Viewed',
                 'liked' => 'Most Liked',
-                'last-hit-desc' => 'Recent Last Play',
-                'last-hit-asc' => 'Oldest Last Play'
+                'last-hit-desc' => 'Recent Last View',
+                'last-hit-asc' => 'Oldest Last View'
             )
         ));
 

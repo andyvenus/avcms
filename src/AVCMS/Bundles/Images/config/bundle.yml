@@ -276,20 +276,20 @@ module_positions:
     global_modules: 1
     type: content
   image_collection_sidebar:
-    name: Play Image Sidebar
-    description: Sidebar on the play image page
+    name: Image Collection Sidebar
+    description: Sidebar on the image collection page
     environment: frontend
     global_modules: 1
     type: content
   image_collection_top:
-    name: Play Image Top
-    description: Top of the play image page
+    name: Image Collection Top
+    description: Top of the image collection page
     environment: frontend
     global_modules: 1
     type: content
   image_collection_details:
-    name: Play Image Details
-    description: Under the image details
+    name: Image Collection Details
+    description: Under the image details section on the image collection page
     environment: frontend
     global_modules: 1
     type: content
@@ -348,7 +348,7 @@ modules:
         label: Order
         choices:
           publish-date-newest: Newest
-          top-hits: Most Played
+          top-hits: Top Hits
           liked: Most Liked
           random: Random
         default: newest

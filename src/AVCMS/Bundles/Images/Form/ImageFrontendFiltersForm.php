@@ -21,7 +21,7 @@ class ImageFrontendFiltersForm extends FormBlueprint
                 'publish-date-newest' => 'Newest',
                 'publish-date-oldest' => 'Oldest',
                 'liked' => 'Most Liked',
-                'top-hits' => 'Most Played',
+                'top-hits' => 'Most Viewed',
                 'a-z' => 'A-Z',
                 'z-a' => 'Z-A',
             ],

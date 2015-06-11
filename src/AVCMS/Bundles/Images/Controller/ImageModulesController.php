@@ -104,12 +104,12 @@ class ImageModulesController extends Controller
     public function imageStatsModule()
     {
         $totalImages = $this->images->query()->count();
-        $totalPlays = $this->images->query()->select([$this->images->query()->raw('SUM(hits) as total_plays')])->first(\PDO::FETCH_ASSOC)['total_plays'];
+        $totalHits = $this->images->query()->select([$this->images->query()->raw('SUM(hits) as total_hits')])->first(\PDO::FETCH_ASSOC)['total_hits'];
         $totalLikes = $this->images->query()->select([$this->images->query()->raw('SUM(likes) as total_likes')])->first(\PDO::FETCH_ASSOC)['total_likes'];
 
         return new Response($this->render('@Images/module/image_stats_module.twig', [
             'total_images' => $totalImages,
-            'total_plays' => $totalPlays,
+            'total_hits' => $totalHits,
             'total_likes' => $totalLikes
         ]));
     }

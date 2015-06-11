@@ -62,28 +62,9 @@ class ImagesController extends Controller
             throw $this->createNotFoundException('Image Not Found');
         }
 
-        $hitRegistered = $this->container->get('hitcounter')->registerHit($this->imageCollections, $imageCollection->getId(), 'hits', 'id', 'last_hit');
+        $this->container->get('hitcounter')->registerHit($this->imageCollections, $imageCollection->getId(), 'hits', 'id', 'last_hit');
 
-        $playsLeft = null;
-        if ($hitRegistered && $this->setting('images_limit_plays') && !$this->userLoggedIn()) {
-            $played = $request->cookies->get('avcms_images_played', 0);
-            $playsLeft = $this->setting('images_limit_plays') - $played;
-
-            if ($playsLeft <= 0) {
-                return $this->redirect('login', [], 302, 'info', $this->trans('Please login to continue playing images'));
-            }
-            else {
-                $playCookie = new Cookie('avcms_images_played', $played + 1, time() + 1209600);
-                $playsLeft--;
-            }
-        }
-
-        $response = new Response($this->render('@Images/image_collection.twig', ['image_collection' => $imageCollection, 'plays_left' => $playsLeft]));
-        if (isset($playCookie)) {
-            $response->headers->setCookie($playCookie);
-        }
-
-        return $response;
+        return new Response($this->render('@Images/image_collection.twig', ['image_collection' => $imageCollection]));
     }
 
     public function downloadCollectionAction($slug)
