@@ -46,23 +46,23 @@ images_grab_file:
 # Categories #
 images_manage_categories:
   path: /images/categories
-  defaults: { _controller: 'Images::ImagesAdminController::manageCategoriesAction', contentType: image }
+  defaults: { _controller: 'Images::ImagesAdminController::manageCategoriesAction', contentType: image_collection }
 
 images_save_categories_order:
   path: /images/categories/save-order
-  defaults: { _controller: Images::ImagesAdminController::saveOrderAction, contentType: image }
+  defaults: { _controller: Images::ImagesAdminController::saveOrderAction, contentType: image_collection }
 
 images_admin_add_category:
   path: /images/categories/new
-  defaults: { _controller: Images::ImagesAdminController::editCategoryAction, contentType: image }
+  defaults: { _controller: Images::ImagesAdminController::editCategoryAction, contentType: image_collection }
 
 images_admin_delete_category:
   path: /images/categories/delete/{id}
-  defaults: { _controller: Images::ImagesAdminController::deleteCategoryAction, contentType: image }
+  defaults: { _controller: Images::ImagesAdminController::deleteCategoryAction, contentType: image_collection }
 
 images_admin_edit_category:
   path: /images/categories/edit/{id}
-  defaults: { _controller: Images::ImagesAdminController::editCategoryAction, contentType: image }
+  defaults: { _controller: Images::ImagesAdminController::editCategoryAction, contentType: image_collection }
 
 # Bulk Import #
 images_bulk_import:
