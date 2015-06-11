@@ -7,16 +7,6 @@ use AVCMS\Bundles\LikeDislike\RatingsManager\RateInterface;
 
 class ImageCollection extends Entity implements RateInterface
 {
-    public function setAdvertId($value)
-    {
-        $this->set("advert_id", $value);
-    }
-
-    public function getAdvertId()
-    {
-        return $this->get("advert_id");
-    }
-
     public function setCategoryId($value)
     {
         $this->set("category_id", $value);
@@ -125,16 +115,6 @@ class ImageCollection extends Entity implements RateInterface
     public function setFeatured($value)
     {
         $this->set("featured", $value);
-    }
-
-    public function setFile($value)
-    {
-        $this->set("file", $value);
-    }
-
-    public function getFile()
-    {
-        return $this->get("file");
     }
 
     public function getHits()
