@@ -134,6 +134,15 @@ admin_settings:
     validation:
       numeric:
         rule: Numeric
+  images_driver:
+    type: select
+    label: Image Library
+    help: The underlying image manipulation library that should be used
+    section: images
+    default: Gd
+    choices:
+      Gd: Gd
+      Imagick: Imagick
   images_thumbnail_crop:
     label: Thumbnail resize
     help: What should happen when images are resized for thumbnails?

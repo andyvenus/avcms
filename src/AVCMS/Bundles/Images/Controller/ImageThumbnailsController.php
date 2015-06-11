@@ -56,7 +56,7 @@ class ImageThumbnailsController extends Controller
             $image = $this->getParam('root_dir').'/'.$this->getParam('images_dir').'/'.$file->getUrl();
         }
 
-        $imageManager = new ImageManager(['driver' => 'GD']);
+        $imageManager = new ImageManager(['driver' => $this->setting('images_driver')]);
 
         $thumbnail = $imageManager->make($image);
 
