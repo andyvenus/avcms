@@ -194,7 +194,7 @@ admin_settings:
     choices:
       details: Details
       thumbnail: Thumbnail
-    default: details
+    default: thumbnail
     section: browse_images
   browse_images_columns:
     type: select
