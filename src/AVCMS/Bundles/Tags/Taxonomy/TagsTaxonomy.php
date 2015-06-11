@@ -80,6 +80,13 @@ class TagsTaxonomy implements TaxonomyInterface
 
         $existingTags = $this->tags->query()->whereIn($this->relationColumn, $tags)->get();
 
+        // Make sure it's case-sensitive as the database query is be case-insensitive
+        foreach ($existingTags as $index => $existingTag) {
+            if (!in_array($existingTag->getName(), $tags)) {
+                unset($existingTags[$index]);
+            }
+        }
+
         $onlyNewTags = $tags;
 
         /**
