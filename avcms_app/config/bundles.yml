@@ -38,6 +38,8 @@ CmsErrorHandler:
     enabled: true
 Wallpapers:
     enabled: true
+Images:
+    enabled: true
 Games:
     enabled: true
 FileUpload:
