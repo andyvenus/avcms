@@ -36,7 +36,7 @@ menu_items:
       settings:
         display: child
     image_submissions:
-      label: Submit Image
+      label: Submit Images
       icon: glyphicon glyphicon-upload
       type: route
       admin_setting: images_allow_uploads
