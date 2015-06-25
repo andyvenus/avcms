@@ -1,0 +1,56 @@
+Import Image
+Add Image
+Added
+Categories
+Bulk Import
+Submissions
+URL
+Default
+Credited User
+URL Slug
+New Image
+Image
+Thumbnail
+Image URL
+Editing {item}
+Editing Image
+Add File
+Bulk Upload
+Editing Image Collection
+File
+New Image Collection
+Add Image Collection
+Caption
+New File
+Display
+Gallery
+Collection Type
+Last Viewed
+Show Download Button
+Import From Folder
+The filename without an extension and made more presentable.
+The original filename.
+The dimensions of the source image.
+Import Type
+Individual Files
+The importer will find all the files in the root directory and import each one as an individual collection.
+Subdirectory Collections
+The importer will find folders within this directory and import the files within each subdirectory as a collection of images.
+Imported Collection Details
+{0}There are no images in the root folder.|{1}There is one image in the folder folder_name.|]1,Inf]The folder folder_name has %total_files% images inside.
+{1}One subdirectory has already been imported from this folder and will not be imported again.|]1,Inf]%imported_subdirectories% subdirectories have already been imported from this folder and will not be imported again.
+If importing subdirectories, these values will match the first image in the folder
+The folder name the images are contained within.
+The following placeholders can be used when importing images
+{1}One image has already been imported from this folder and will not be imported again.|]1,Inf]%imported_files% images have already been imported from this folder and will not be imported again.
+image collections imported
+Image Submissions
+Date submitted
+{0}There are no subdirectories containing files in this folder.|{1}There is one subdirectory in the folder folder_name that contains files.|]1,Inf]The folder folder_name has %total_subdirectories% subdirectories inside that contain files.
+Review
+Review Image Submission
+The URL Slug must be unique, slug already in use
+Least Viewed
+Recent Last View
+Oldest Last View
+You must add at least one image file
