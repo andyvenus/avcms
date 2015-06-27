@@ -165,7 +165,7 @@ class ImagesController extends Controller
                 }
             }
             else {
-                $user = $this->model('Users')->findOne($request->get('likes_user'))->first();
+                $user = $this->model('Users')->find()->slug($request->get('likes_user'))->first();
 
                 if (!$user) {
                     throw $this->createNotFoundException();
