@@ -80,7 +80,7 @@ class ImagesController extends Controller
         }
 
         $defaultDownloadableOff = $collection->getDownloadable() == 'default' && $this->setting('images_default_download') == 0;
-        if ($defaultDownloadableOff || $collection->getDownloadable() == 0) {
+        if ($defaultDownloadableOff && $collection->getDownloadable() == 0) {
             throw $this->createNotFoundException('Collection not downloadable');
         }
 
