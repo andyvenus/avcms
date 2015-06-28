@@ -35,7 +35,7 @@ class ImagesTwigExtension extends \Twig_Extension
         $this->imagesHelper = $imagesHelper;
     }
 
-    public function imageThumbnailUrl($image, $size = 'md')
+    public function imageThumbnailUrl($image, $size = 'md', $urlType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         if ($image instanceof ImageCollection) {
             $extension = pathinfo($image->getThumbnail(), PATHINFO_EXTENSION);
@@ -51,7 +51,7 @@ class ImagesTwigExtension extends \Twig_Extension
             throw new \Exception('Image thumbnails can only be generated for ImageCollection or ImageFile classes');
         }
 
-        return $this->urlGenerator->generate('image_thumbnail', ['collection' => $collection, 'id' => $id, 'ext' => $extension, 'size' => $size]);
+        return $this->urlGenerator->generate('image_thumbnail', ['collection' => $collection, 'id' => $id, 'ext' => $extension, 'size' => $size], $urlType);
     }
 
     public function imageFileUrl(ImageFile $file)

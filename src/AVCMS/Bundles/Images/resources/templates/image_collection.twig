@@ -6,7 +6,7 @@
 
 {% block header_extra %}
     <meta property="og:title" content="{{ image_collection.name }}" />
-    <meta property="og:image" content="{{ image_thumbnail(image_collection) }}" />
+    <meta property="og:image" content="{{ image_thumbnail(image_collection, 'md', true) }}" />
     <meta property="og:description" content="{{ image_collection.description|striptags }}" />
 {% endblock %}
 
