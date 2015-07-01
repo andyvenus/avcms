@@ -25,7 +25,7 @@ class AssetServices implements ServicesInterface
         ;
 
         $container->register('twig.asset_manager.extension', 'AVCMS\Core\AssetManager\Twig\AssetManagerExtension')
-            ->setArguments(array('%dev_mode%', new Reference('asset_manager')))
+            ->setArguments(array('%dev_mode%', new Reference('asset_manager'), '%root_dir%/%cache_dir%/public_asset_last_move.txt'))
             ->addTag('twig.extension')
         ;
 

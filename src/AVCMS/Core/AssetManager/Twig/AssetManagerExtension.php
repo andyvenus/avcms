@@ -15,10 +15,15 @@ class AssetManagerExtension extends \Twig_Extension
 
     protected $debug;
 
-    public function __construct($debug = false, AssetManager $assetManager)
+    protected $lastGenFile;
+
+    protected $lastGen;
+
+    public function __construct($debug = false, AssetManager $assetManager, $lastGenFile)
     {
         $this->assetManager = $assetManager;
         $this->debug = $debug;
+        $this->lastGenFile = $lastGenFile;
     }
 
     public function getFunctions()
@@ -66,7 +71,7 @@ class AssetManagerExtension extends \Twig_Extension
             $ext = 'css';
         }
 
-        $urls = ["web/compiled/$environment.$ext"];
+        $urls = ["web/compiled/$environment.$ext?x={$this->getLastGen()}"];
         $urls = array_merge($urls, $this->assetManager->getRawAssetUrls($assetType, $environment));
 
         return $urls;
@@ -85,5 +90,18 @@ class AssetManagerExtension extends \Twig_Extension
     public function getName()
     {
         return 'avcms_asset_manager';
+    }
+
+    private function getLastGen()
+    {
+        if (!isset($this->lastGen)) {
+            if (!file_exists($this->lastGenFile)) {
+                $this->lastGen = 0;
+            }
+
+            $this->lastGen = (int) file_get_contents($this->lastGenFile);
+        }
+
+        return $this->lastGen;
     }
 }
