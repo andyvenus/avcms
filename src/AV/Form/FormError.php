@@ -8,58 +8,65 @@
 namespace AV\Form;
 
 
-class FormError
+class FormError implements \Serializable
 {
-    public $param;
-    public $message;
-    protected $translate;
-    protected $translationParams;
+    protected $data;
 
     public function __construct($param, $message, $translate = false, $translationParams = array())
     {
-        $this->param = $param;
-        $this->message = $message;
-        $this->translate = $translate;
-        $this->translationParams = $translationParams;
+        $this->data['param'] = $param;
+        $this->data['message'] = $message;
+        $this->data['translate'] = $translate;
+        $this->data['translationParams'] = $translationParams;
     }
 
     public function setParam($param)
     {
-        $this->param = $param;
+        $this->data['param'] = $param;
     }
 
     public function getParam()
     {
-        return $this->param;
+        return $this->data['param'];
     }
 
     public function setMessage($message)
     {
-        $this->message = $message;
+        $this->data['message'] = $message;
     }
 
     public function getMessage()
     {
-        return $this->message;
+        return $this->data['message'];
     }
 
     public function setTranslate($translate)
     {
-        $this->translate = $translate;
+        $this->data['translate'] = $translate;
     }
 
     public function getTranslate()
     {
-        return $this->translate;
+        return $this->data['translate'];
     }
 
     public function setTranslationParams($translation_params)
     {
-        $this->translationParams = $translation_params;
+        $this->data['translationParams'] = $translation_params;
     }
 
     public function getTranslationParams()
     {
-        return $this->translationParams;
+        return $this->data['translationParams'];
+    }
+
+    public function serialize()
+    {
+        return serialize($this->data);
+    }
+
+    public function unserialize($serialized)
+    {
+        $this->data = unserialize($serialized);
     }
 }

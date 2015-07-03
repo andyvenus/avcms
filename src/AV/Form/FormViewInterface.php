@@ -134,6 +134,16 @@ interface FormViewInterface
     public function getErrors();
 
     /**
+     * @param bool $shouldShow
+     */
+    public function setShouldShowSuccessMessage($shouldShow);
+
+    /**
+     * @return bool;
+     */
+    public function shouldShowSuccessMessage();
+
+    /**
      * Check if a form field is set (magic method)
      *
      * @param $name

@@ -10,6 +10,7 @@ namespace AV\Form;
 use AV\Form\EntityProcessor\EntityProcessorInterface;
 use AV\Form\Event\FilterNewFormEvent;
 use AV\Form\RequestHandler\RequestHandlerInterface;
+use AV\Form\RestoreDataHandler\RestoreDataHandlerInterface;
 use AV\Form\Transformer\TransformerManager;
 use AV\Form\Type\TypeHandler;
 use AV\Form\ValidatorExtension\ValidatorExtensionInterface;
@@ -47,13 +48,19 @@ class FormHandlerFactory
      */
     protected $typeHandler;
 
-    public function __construct(RequestHandlerInterface $requestHandler, EntityProcessorInterface $entityProcessor, TransformerManager $transformerManager, EventDispatcherInterface $eventDispatcher = null, TypeHandler $typeHandler = null)
+    /**
+     * @var RestoreDataHandlerInterface
+     */
+    protected $restoreDataHandler;
+
+    public function __construct(RequestHandlerInterface $requestHandler, EntityProcessorInterface $entityProcessor, TransformerManager $transformerManager, EventDispatcherInterface $eventDispatcher = null, TypeHandler $typeHandler = null, RestoreDataHandlerInterface $restoreDataHandler = null)
     {
         $this->requestHandler = $requestHandler;
         $this->entityProcessor = $entityProcessor;
         $this->transformerManager = $transformerManager;
         $this->eventDispatcher = $eventDispatcher;
         $this->typeHandler = $typeHandler;
+        $this->restoreDataHandler = $restoreDataHandler;
     }
 
     public function buildForm(FormBlueprintInterface $form, FormViewInterface $formView = null, ValidatorExtensionInterface $validator = null)
@@ -67,7 +74,7 @@ class FormHandlerFactory
             $validator = $event->getValidator();
         }
 
-        $formHandler = new FormHandler($form, $this->requestHandler, $this->entityProcessor, $this->typeHandler, $this->eventDispatcher);
+        $formHandler = new FormHandler($form, $this->requestHandler, $this->entityProcessor, $this->typeHandler, $this->eventDispatcher, $this->restoreDataHandler);
 
         if ($validator) {
             $formHandler->setValidator($validator);

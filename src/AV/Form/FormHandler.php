@@ -15,6 +15,7 @@ use AV\Form\Exception\BadMethodCallException;
 use AV\Form\Exception\InvalidArgumentException;
 use AV\Form\RequestHandler\RequestHandlerInterface;
 use AV\Form\RequestHandler\StandardRequestHandler;
+use AV\Form\RestoreDataHandler\RestoreDataHandlerInterface;
 use AV\Form\Transformer\TransformerManager;
 use AV\Form\Type\TypeHandler;
 use AV\Form\ValidatorExtension\ValidatorExtensionInterface;
@@ -114,18 +115,25 @@ class FormHandler
     protected $typeHandler;
 
     /**
+     * @var RestoreDataHandlerInterface
+     */
+    protected $restoreDataHandler;
+
+    /**
      * @param FormBlueprintInterface $form
      * @param \AV\Form\RequestHandler\RequestHandlerInterface|null $requestHandler
      * @param EntityProcessorInterface $entityProcessor
      * @param \AV\Form\Type\TypeHandler $typeHandler
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     * @param RestoreDataHandlerInterface $restoreDataHandler
      */
     public function __construct(
         FormBlueprintInterface $form,
         RequestHandlerInterface $requestHandler = null,
         EntityProcessorInterface $entityProcessor = null,
         TypeHandler $typeHandler = null,
-        EventDispatcherInterface $eventDispatcher = null
+        EventDispatcherInterface $eventDispatcher = null,
+        RestoreDataHandlerInterface $restoreDataHandler = null
     )
     {
         $this->form = $form;
@@ -149,6 +157,10 @@ class FormHandler
         }
         else {
             $this->typeHandler = new TypeHandler();
+        }
+
+        if ($restoreDataHandler) {
+            $this->restoreDataHandler = $restoreDataHandler;
         }
 
         if ($eventDispatcher) {
@@ -262,6 +274,19 @@ class FormHandler
         }
         else {
             $this->submitted = false;
+        }
+
+        if (isset($this->restoreDataHandler)) {
+            if ($this->isSubmitted()) {
+                $this->restoreDataHandler->setRestorableData($this, $this->data, $request);
+            }
+            else {
+                $restoredData = $this->restoreDataHandler->restoreData($this, $request);
+
+                if (is_array($restoredData) && !empty($restoredData)) {
+                    $this->data = $restoredData;
+                }
+            }
         }
 
         if (isset($this->eventDispatcher)) {
@@ -581,10 +606,24 @@ class FormHandler
         $this->formView = $view;
     }
 
+    protected function shouldShowSuccessMessage()
+    {
+        if ($this->isValid()) {
+            return true;
+        }
+
+        if (isset($this->restoreDataHandler) && $this->restoreDataHandler->wasValid($this)) {
+            return true;
+        }
+
+        return false;
+    }
+
+
     /**
      * Assign the form data to the view
      *
-     * @return FormView
+     * @return FormViewInterface
      */
     public function createView()
     {
@@ -602,6 +641,11 @@ class FormHandler
         $this->formView->setSubmitted($this->isSubmitted());
         $this->formView->setValid($this->isValid());
         $this->formView->setErrors($this->getValidationErrors());
+        $this->formView->setShouldShowSuccessMessage($this->shouldShowSuccessMessage());
+
+        if (isset($this->restoreDataHandler)) {
+            $this->restoreDataHandler->cancelRestore($this);
+        }
 
         return $this->formView;
     }
@@ -649,11 +693,32 @@ class FormHandler
 
         // Check for internal errors & validator errors
         if ((isset($this->validator) && $this->validator->isValid($scope, $options) && empty($this->errors)) || (!isset($this->validator) && empty($this->errors))) {
+            if (isset($this->restoreDataHandler)) {
+                $this->restoreDataHandler->setValid($this);
+            }
+
             return true;
         }
         else {
+            // There were errors, save them for the next request
+            if (isset($this->restoreDataHandler)) {
+                $this->restoreDataHandler->setRestorableErrors($this, $this->getValidationErrors());
+            }
+
             return false;
         }
+    }
+
+    /**
+     * Don't restore the request data in the next request
+     */
+    public function cancelRestore()
+    {
+        if (!isset($this->restoreDataHandler)) {
+            return;
+        }
+
+        $this->restoreDataHandler->cancelRestore($this);
     }
 
     /**

@@ -68,6 +68,11 @@ class FormView implements FormViewInterface
     protected $valid;
 
     /**
+     * @var bool
+     */
+    protected $shouldShowSuccessMessage = false;
+
+    /**
      * @param array $fields
      * @return mixed|void
      * @throws Exception\InvalidArgumentException
@@ -100,12 +105,23 @@ class FormView implements FormViewInterface
 
     public function getSuccessMessage()
     {
-        if ($this->submitted) {
-            return $this->formBlueprint->getSuccessMessage();
-        }
-        else {
-            return null;
-        }
+        return $this->formBlueprint->getSuccessMessage();
+    }
+
+    /**
+     * @param bool $shouldShow
+     */
+    public function setShouldShowSuccessMessage($shouldShow)
+    {
+        $this->shouldShowSuccessMessage = $shouldShow;
+    }
+
+    /**
+     * @return bool
+     */
+    public function shouldShowSuccessMessage()
+    {
+        return $this->shouldShowSuccessMessage;
     }
 
     protected function doFieldTranslations($fields) {
