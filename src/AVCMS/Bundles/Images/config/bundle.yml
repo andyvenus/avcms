@@ -148,7 +148,7 @@ admin_settings:
     help: What should happen when images are resized for thumbnails?
     section: images
     type: radio
-    default: crop
+    default: maintain_ratio
     choices:
       crop: Crop
       maintain_ratio: Keep aspect ratio
