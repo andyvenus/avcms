@@ -98,7 +98,7 @@ class ImageModulesController extends Controller
 
     public function tagsModule($adminSettings)
     {
-        return $this->getTagsModule($adminSettings, 'image', 'browse_images', 'tags');
+        return $this->getTagsModule($adminSettings, 'image_collection', 'browse_images', 'tags');
     }
 
     public function imageStatsModule()
