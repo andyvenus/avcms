@@ -1,0 +1,16 @@
+info:
+  name: Image Site Script
+  version: '1.0.4'
+  id: imagesitescript
+  url: http://www.avscripts.net/imagescript
+
+bundle_dirs:
+  AV\Bundles: src/AV/Bundles
+  AVCMS\Bundles: src/AVCMS/Bundles
+  AVCMS\BundlesDev: src/AVCMS/BundlesDev
+
+license:
+  length: 15
+  prefix: wss
+
+default_content_installer: ImageDefaultContentInstaller
