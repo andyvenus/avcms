@@ -316,6 +316,15 @@ modules:
           none: None
           featured: Featured
           likes: User's Likes
+      order:
+        type: select
+        label: Order
+        choices:
+          publish-date-newest: Newest
+          top-hits: Top Hits
+          liked: Most Liked
+          random: Random
+        default: newest
       layout:
         type: select
         label: Layout
@@ -346,15 +355,6 @@ modules:
         choices:
           1: Page One
           2: Page Two
-      order:
-        type: select
-        label: Order
-        choices:
-          publish-date-newest: Newest
-          top-hits: Top Hits
-          liked: Most Liked
-          random: Random
-        default: newest
       limit:
         type: text
         label: Number of images to display
