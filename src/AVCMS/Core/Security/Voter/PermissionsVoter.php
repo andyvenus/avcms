@@ -101,7 +101,7 @@ class PermissionsVoter implements VoterInterface
             }
         }
         else {
-            $permission = $perms[$attribute];
+            $permission = (bool) $perms[$attribute];
         }
 
         return $permission;
