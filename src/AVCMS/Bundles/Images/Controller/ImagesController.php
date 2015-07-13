@@ -131,7 +131,7 @@ class ImagesController extends Controller
         $finder = $this->imageCollections->find();
         $query = $finder->published()
             ->setResultsPerPage($this->setting('browse_images_per_page'))
-            ->setSearchFields(['images.name'])
+            ->setSearchFields(['image_collections.name'])
             ->handleRequest($request, [
                 'page' => 1,
                 'order' => 'publish-date-newest',
@@ -174,7 +174,7 @@ class ImagesController extends Controller
 
             $ratings = $this->model('LikeDislike:Ratings');
             $ids = $ratings->getLikedIds($user->getId(), 'image');
-            $query = $query->ids($ids, 'images.id');
+            $query = $query->ids($ids, 'image_collections.id');
         }
 
         if ($pageType === 'featured') {
