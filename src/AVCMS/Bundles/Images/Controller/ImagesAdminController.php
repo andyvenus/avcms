@@ -144,7 +144,7 @@ class ImagesAdminController extends AdminBaseController
     public function finderAction(Request $request)
     {
         $finder = $this->images->find()
-            ->setSearchFields(array('images.name'))
+            ->setSearchFields(array('image_collections.name'))
             ->setResultsPerPage(15)
             ->join($this->model('ImageCategories'), ['id', 'name', 'slug'])
             ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null, 'category' => 0));
