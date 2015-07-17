@@ -40,6 +40,8 @@ Wallpapers:
     enabled: true
 Games:
     enabled: true
+Images:
+    enabled: true
 FileUpload:
     enabled: true
 Categories:
@@ -75,4 +77,8 @@ Points:
 PrivateMessages:
     enabled: true
 Friends:
+    enabled: true
+NextPrevMod:
+    enabled: true
+BulkUpload:
     enabled: true
