@@ -15,8 +15,12 @@ class HitCounterServices implements ServicesInterface
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
+        $container->register('hits.model', 'AVCMS\Bundles\CmsFoundation\Model\Hits')
+            ->addTag('model')
+        ;
+
         $container->register('hitcounter', 'AVCMS\Core\HitCounter\HitCounter')
-            ->setArguments([new Reference('session')])
+            ->setArguments([new Reference('hits.model'), new Reference('request.stack')])
         ;
     }
 }
