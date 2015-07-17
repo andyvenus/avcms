@@ -41,7 +41,11 @@ avcms.images = {
     thumbnailSettingsChanged: false,
 
     addImageFile: function(form) {
-        var file_fields = form.find('.avcms-new-image').first().html();
+        var new_image_container = form.find('.avcms-new-image').first();
+
+        new_image_container.find('.select2-container').remove();
+
+        var file_fields = new_image_container.html();
 
         avcms.images.newFileCount++;
 
