@@ -23,6 +23,8 @@ class ImageAdminForm extends AdminContentForm
      */
     public function __construct(ImageCollection $image, CategoryChoicesProvider $categoryChoicesProvider, $import = false)
     {
+        $this->setName('image_admin_form');
+
         $this->import = $import;
 
         $this->add('type', 'radio', [

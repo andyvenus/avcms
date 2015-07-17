@@ -22,6 +22,8 @@ $(document).ready(function() {
 
     avcms.event.addEvent('submit-form-success', avcms.image_submissions.onReviewSuccess);
 
+    avcms.event.addEvent('submit-form-success', avcms.images.onSaveSuccess);
+
     avcms.event.addEvent('submit-form-success', function(form) {
         if (avcms.images.thumbnailSettingsChanged && form.attr('name') == 'avcms_settings') {
             avcms.images.thumbnailSettingsChanged = false;
@@ -125,8 +127,7 @@ avcms.images = {
         });
     },
 
-    clearThumbnailsCache: function(ask)
-    {
+    clearThumbnailsCache: function(ask) {
         if (ask != true) {
             ask = confirm(avcms.general.trans('Are you sure you want to clear the image thumbnail cache? This may cause some temporary strain on your server when images need to be re-generated.'));
         }
@@ -137,6 +138,12 @@ avcms.images = {
                     alert(data.error);
                 }
             });
+        }
+    },
+
+    onSaveSuccess: function(form) {
+        if (form.attr('name') == 'image_admin_form' && form.data('item-id') == '0') {
+            $('.avcms-image-file-panel').filter(':visible').remove();
         }
     }
 };
