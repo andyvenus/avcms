@@ -25,6 +25,7 @@ class ClearCachesAdminController extends AdminBaseController
         $formBlueprint = new FormBlueprint();
         $formBlueprint->setAction($this->generateUrl('clear_caches', [], UrlGeneratorInterface::ABSOLUTE_URL));
         $formBlueprint->add("cache_dirs[]", 'checkbox', ['label' => 'Core Caches', 'checked_value' => 'main']);
+        $formBlueprint->add('hidden', 'hidden');
 
         foreach (new \DirectoryIterator($this->getParam('cache_dir')) as $dir) {
             if ($dir->isDir() && !$dir->isDot()) {
