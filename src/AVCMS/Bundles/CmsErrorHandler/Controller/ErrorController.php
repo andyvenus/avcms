@@ -19,7 +19,14 @@ class ErrorController extends Controller
             return new Response($this->render('@CmsErrorHandler/error.twig', array('dev_mode' => $this->getParam('dev_mode'), 'error' => $exception, 'code' => 403)), 403);
         }
         else {
-            return new Response($this->render('@CmsErrorHandler/error.twig', array('dev_mode' => $this->getParam('dev_mode'), 'error' => $exception, 'code' => $exception->getStatusCode())), $exception->getStatusCode());
+            if ($exception->getStatusCode() == 404) {
+                $template = '404_error.twig';
+            }
+            else {
+                $template = 'error.twig';
+            }
+
+            return new Response($this->render('@CmsErrorHandler/'.$template, array('dev_mode' => $this->getParam('dev_mode'), 'error' => $exception, 'code' => $exception->getStatusCode())), $exception->getStatusCode());
         }
     }
 }
