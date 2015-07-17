@@ -4,6 +4,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
+        "andyvenus/form": "dev-master",
         "symfony/http-foundation": "2.6.*",
         "symfony/routing": "2.6.*",
         "symfony/http-kernel": "2.6.*",
