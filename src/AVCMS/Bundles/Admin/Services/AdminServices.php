@@ -25,7 +25,7 @@ class AdminServices implements ServicesInterface
         ;
 
         $container->register('listener.entity.author', 'AVCMS\Bundles\Admin\Listeners\AuthorAssigner')
-            ->setArguments(array(new Reference('security.context')))
+            ->setArguments(array(new Reference('security.token_storage')))
             ->addTag('event.subscriber')
         ;
 
@@ -36,7 +36,7 @@ class AdminServices implements ServicesInterface
         ;
 
         $container->register('admin.access_listener', 'Symfony\Component\Security\Http\Firewall\AccessListener')
-            ->setArguments([new Reference('security.context'), new Reference('auth.access_decision_manager'), new Reference('admin.access_map'), new Reference('auth.manager')])
+            ->setArguments([new Reference('security.token_storage'), new Reference('auth.access_decision_manager'), new Reference('admin.access_map'), new Reference('auth.manager')])
             ->addTag('event.listener', ['event' => KernelEvents::REQUEST, 'method' => 'handle', 'priority' => -101])
         ;
 
@@ -45,7 +45,7 @@ class AdminServices implements ServicesInterface
         ;
 
         $container->register('admin.access_listener.fully', 'Symfony\Component\Security\Http\Firewall\AccessListener')
-            ->setArguments([new Reference('security.context'), new Reference('auth.access_decision_manager'), new Reference('admin.access_map.fully'), new Reference('auth.manager')])
+            ->setArguments([new Reference('security.token_storage'), new Reference('auth.access_decision_manager'), new Reference('admin.access_map.fully'), new Reference('auth.manager')])
             ->addTag('event.listener', ['event' => KernelEvents::REQUEST, 'method' => 'handle', 'priority' => -101])
         ;
 

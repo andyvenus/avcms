@@ -89,9 +89,9 @@ class UserProfileController extends Controller
 
     public function manageEmailPasswordAction(Request $request)
     {
-        $context = $this->container->get('security.context');
+        $authChecker = $this->container->get('security.auth_checker');
 
-        if (!$context->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if (!$authChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw new InsufficientAuthenticationException;
         }
 

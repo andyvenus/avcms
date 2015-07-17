@@ -16,11 +16,6 @@ class SecurityServices implements ServicesInterface
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
-        // security.context DEPRECIATED
-        $container->register('security.context', 'Symfony\Component\Security\Core\SecurityContext')
-            ->setArguments(array(new Reference('security.token_storage'), new Reference('security.auth_checker')))
-        ;
-
         $container->register('security.token_storage', 'Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage');
 
         $container->register('security.auth_checker', 'Symfony\Component\Security\Core\Authorization\AuthorizationChecker')
@@ -63,7 +58,7 @@ class SecurityServices implements ServicesInterface
 
         // SECURITY EXCEPTION LISTENER
         $container->register('auth.exception_listener', 'AVCMS\Core\Security\Firewall\ExceptionListener')
-            ->setArguments([new Reference('security.context'), new Reference('auth.trust_resolver'), new Reference('http.utils'), 'username.password', new Reference('auth.form_entry_point'), 'home', new Reference('auth.access_denied_handler')])
+            ->setArguments([new Reference('security.token_storage'), new Reference('auth.trust_resolver'), new Reference('http.utils'), 'username.password', new Reference('auth.form_entry_point'), 'home', new Reference('auth.access_denied_handler')])
             ->addTag('event.listener', ['event' => KernelEvents::EXCEPTION, 'method' => 'onKernelException', 'priority' => -10])
         ;
 

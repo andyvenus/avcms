@@ -17,7 +17,7 @@ class AuthServices implements ServicesInterface
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('auth.context_listener', 'AVCMS\Core\Security\Subscriber\ContextListener')
-            ->setArguments(array(new Reference('security.context'), array(new Reference('users.model')), 'user.context', null, new Reference('dispatcher')))
+            ->setArguments(array(new Reference('security.token_storage'), array(new Reference('users.model')), 'user.context', null, new Reference('dispatcher')))
             ->addTag('event.listener', array('event' => KernelEvents::REQUEST, 'method' => 'handle'))
             ->addTag('event.listener', array('event' => KernelEvents::RESPONSE, 'method' => 'onKernelResponse'))
         ;
@@ -33,7 +33,7 @@ class AuthServices implements ServicesInterface
         $container->register('auth.user_checker', 'Symfony\Component\Security\Core\User\UserChecker');
 
         $container->register('auth.subscriber.login_authentication', 'AVCMS\Core\Security\Subscriber\LoginAuthenticationSubscriber')
-            ->setArguments(array(new Reference('security.context'), new Reference('auth.manager'), new Reference('auth.session_strategy'), new Reference('http.utils'), 'username.password', new Reference('auth.login_success_handler'), new Reference('auth.login_failure_handler')))
+            ->setArguments(array(new Reference('security.token_storage'), new Reference('auth.manager'), new Reference('auth.session_strategy'), new Reference('http.utils'), 'username.password', new Reference('auth.login_success_handler'), new Reference('auth.login_failure_handler')))
             ->addMethodCall('setRememberMeServices', array(new Reference('auth.remember_me_services')))
             ->addTag('event.subscriber')
         ;
@@ -59,7 +59,7 @@ class AuthServices implements ServicesInterface
         ;
 
         $container->register('auth.listener.remember_me', 'AVCMS\Core\Security\Subscriber\RememberMeListener')
-            ->setArguments(array(new Reference('security.context'), new Reference('auth.remember_me_services'), new Reference('auth.manager')))
+            ->setArguments(array(new Reference('security.token_storage'), new Reference('auth.remember_me_services'), new Reference('auth.manager')))
             ->addTag('event.listener', array('event' => KernelEvents::REQUEST, 'method' => 'handle'))
         ;
 
@@ -92,7 +92,7 @@ class AuthServices implements ServicesInterface
 
         // LOG-OUT
         $container->register('auth.listener.logout', 'Symfony\Component\Security\Http\Firewall\LogoutListener')
-            ->setArguments([new Reference('security.context'), new Reference('http.utils'), new Reference('auth.logout_success_handler')])
+            ->setArguments([new Reference('security.token_storage'), new Reference('http.utils'), new Reference('auth.logout_success_handler')])
             ->addMethodCall('addHandler', [new Reference('auth.remember_me_services')])
             ->addMethodCall('addHandler', [new Reference('auth.session_logout_handler')])
             ->addTag('event.listener', ['event' => KernelEvents::REQUEST, 'method' => 'handle'])

@@ -17,7 +17,7 @@ class MenuServices implements ServicesInterface
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('menu_manager', 'AVCMS\Core\Menu\MenuManager')
-            ->setArguments(array(new Reference('router'), new Reference('menu_manager.model'), new Reference('menu_manager.items_model'), new Reference('security.context'), new Reference('translator'), new Reference('dispatcher'), new Reference('settings_manager')))
+            ->setArguments(array(new Reference('router'), new Reference('menu_manager.model'), new Reference('menu_manager.items_model'), new Reference('security.auth_checker'), new Reference('translator'), new Reference('dispatcher'), new Reference('settings_manager')))
             ->addMethodCall('addMenuItemType', [new Reference('menu_type.route'), 'route'])
             ->addMethodCall('addMenuItemType', [new Reference('menu_type.url'), 'url'])
         ;

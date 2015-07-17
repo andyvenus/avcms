@@ -10,15 +10,15 @@ namespace AVCMS\Core\Security\Subscriber;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ContextListener extends \Symfony\Component\Security\Http\Firewall\ContextListener
 {
     private $contextKey;
 
-    public function __construct(SecurityContextInterface $context, array $userProviders, $contextKey, LoggerInterface $logger = null, EventDispatcherInterface $dispatcher = null)
+    public function __construct(TokenStorageInterface $tokenStorage, array $userProviders, $contextKey, LoggerInterface $logger = null, EventDispatcherInterface $dispatcher = null)
     {
-        parent::__construct($context, $userProviders, $contextKey, $logger, $dispatcher);
+        parent::__construct($tokenStorage, $userProviders, $contextKey, $logger, $dispatcher);
         $this->contextKey = $contextKey;
     }
 

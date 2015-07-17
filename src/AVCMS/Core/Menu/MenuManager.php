@@ -15,7 +15,7 @@ use AVCMS\Core\Menu\MenuItemType\MenuItemTypeInterface;
 use AVCMS\Core\SettingsManager\SettingsManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class MenuManager
@@ -35,9 +35,9 @@ class MenuManager
     protected $urlGenerator;
 
     /**
-     * @var SecurityContextInterface
+     * @var AuthorizationCheckerInterface
      */
-    protected $securityContext;
+    protected $authChecker;
 
     /**
      * @var TranslatorInterface
@@ -59,12 +59,12 @@ class MenuManager
      */
     protected $settingsManager;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator, Model $menusModel, Model $itemsModel, SecurityContextInterface $securityContext, TranslatorInterface $translator, EventDispatcherInterface $eventDispatcher, SettingsManager $settingsManager)
+    public function __construct(UrlGeneratorInterface $urlGenerator, Model $menusModel, Model $itemsModel, AuthorizationCheckerInterface $authChecker, TranslatorInterface $translator, EventDispatcherInterface $eventDispatcher, SettingsManager $settingsManager)
     {
         $this->urlGenerator = $urlGenerator;
         $this->model = $menusModel;
         $this->menuItemConfigs = $itemsModel;
-        $this->securityContext = $securityContext;
+        $this->authChecker = $authChecker;
         $this->translator = $translator;
         $this->eventDispatcher = $eventDispatcher;
         $this->settingsManager = $settingsManager;
@@ -153,7 +153,7 @@ class MenuManager
             foreach ($items as $item) {
                 if ($item->getPermission()) {
                     $permissions = explode(',', str_replace(' ', '', $item->getPermission()));
-                    if (!$this->securityContext->isGranted($permissions)) {
+                    if (!$this->authChecker->isGranted($permissions)) {
                         continue;
                     }
                 }

@@ -16,7 +16,7 @@ class UserTwigServices implements ServicesInterface
     public function getServices($configuration, ContainerBuilder $container)
     {
         $container->register('twig.security_extension', 'Symfony\Bridge\Twig\Extension\SecurityExtension')
-            ->setArguments(array(new Reference('security.context')))
+            ->setArguments(array(new Reference('security.auth_checker')))
             ->addTag('twig.extension')
         ;
 
