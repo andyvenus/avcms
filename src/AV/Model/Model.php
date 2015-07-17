@@ -134,6 +134,17 @@ abstract class Model {
     }
 
     /**
+     * Return an array of entities matching a given array of ids
+     *
+     * @param array $ids
+     * @return Entity|mixed
+     */
+    public function getIds(array $ids)
+    {
+        return $this->query()->whereIn($this->getTable().'.'.$this->numberIdentifierColumn, $ids)->get();
+    }
+
+    /**
      * Get one result by ID or get a new entity if $id is 0 (or null etc)
      *
      * @param $id
