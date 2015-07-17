@@ -32,10 +32,5 @@ class ImageFrontendFiltersForm extends FormBlueprint
             'label' => 'Search'
         ]);
 
-
-        $this->add('mobile_only', 'checkbox', [
-            'label' => 'Show only mobile images'
-        ]);
-
     }
 }
