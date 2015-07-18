@@ -330,7 +330,8 @@ modules:
         default: 5
       category:
         type: select
-        label: Limit to category (and it's sub-categories)
+        label: Limit to category
+        help: If a category is set, this module will only show content from that category and it's sub-categories
         choices_provider_service: wallpaper_category_choices
         choices:
           0: All Categories
