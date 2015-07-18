@@ -328,6 +328,12 @@ modules:
         type: text
         label: Number of wallpapers to display
         default: 5
+      category:
+        type: select
+        label: Limit to category (and it's sub-categories)
+        choices_provider_service: wallpaper_category_choices
+        choices:
+          0: All Categories
       show_wallpaper_name:
         type: checkbox
         label: Show Name

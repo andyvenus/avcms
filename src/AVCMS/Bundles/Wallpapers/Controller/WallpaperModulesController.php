@@ -22,9 +22,15 @@ class WallpaperModulesController extends Controller
      */
     private $wallpapers;
 
+    /**
+     * @var \AVCMS\Bundles\Wallpapers\Model\WallpaperCategories
+     */
+    private $wallpaperCategories;
+
     public function setUp()
     {
         $this->wallpapers = $this->model('Wallpapers');
+        $this->wallpaperCategories = $this->model('WallpaperCategories');
     }
 
     public function wallpapersModule($adminSettings, User $user = null)
@@ -35,6 +41,14 @@ class WallpaperModulesController extends Controller
             ->limit($adminSettings['limit'])
             ->order($adminSettings['order'])
             ->published();
+
+        if ($adminSettings['category']) {
+            $category = $this->wallpaperCategories->getOne($adminSettings['category']);
+
+            if ($category) {
+                $query->category($category);
+            }
+        }
 
         if ($adminSettings['filter'] === 'featured') {
             $query->featured();

@@ -38,13 +38,6 @@ class WallpaperServices implements ServicesInterface
             ->addTag('menu.item_type', ['id' => 'wallpaper_categories'])
         ;
 
-        /*
-        $container->register('menu_types.wallpaper_resolutions', 'AVCMS\Bundles\Wallpapers\MenuItemType\WallpaperResolutionsMenuItemType')
-            ->setArguments([new Reference('wallpaper.resolutions_manager'), new Reference('router'), 'wallpaper_browse_resolution'])
-            ->addTag('menu.item_type', ['id' => 'wallpaper_resolutions'])
-        ;
-        */
-
         $container->register('subscriber.wallpaper_cache_outlet', 'AVCMS\Bundles\Wallpapers\EventSubscriber\WallpaperCacheOutletSubscriber')
             ->setArguments([new Reference('translator')])
             ->addTag('event.subscriber')
@@ -72,6 +65,10 @@ class WallpaperServices implements ServicesInterface
         $container->register('subscriber.wallpaper_submissions_menu_item', 'AVCMS\Bundles\Wallpapers\EventSubscriber\WallpaperSubmissionsMenuItemSubscriber')
             ->setArguments([new Reference('model.wallpaper_submissions')])
             ->addTag('event.subscriber')
+        ;
+
+        $container->register('wallpaper_category_choices', 'AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider')
+            ->setArguments([new Reference('wallpaper.categories_model')])
         ;
     }
 }
