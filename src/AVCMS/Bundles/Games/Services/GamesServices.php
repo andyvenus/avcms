@@ -51,5 +51,9 @@ class GamesServices implements ServicesInterface
             ->setArguments([new Reference('games.submissions_model')])
             ->addTag('event.subscriber')
         ;
+
+        $container->register('game_category_choices', 'AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider')
+            ->setArguments([new Reference('games.categories_model')])
+        ;
     }
 }

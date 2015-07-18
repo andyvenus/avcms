@@ -22,9 +22,15 @@ class GameModulesController extends Controller
      */
     private $games;
 
+    /**
+     * @var \AVCMS\Bundles\Games\Model\GameCategories
+     */
+    private $gameCategories;
+
     public function setUp()
     {
         $this->games = $this->model('Games');
+        $this->gameCategories = $this->model('GameCategories');
     }
 
     public function gamesModule($adminSettings, User $user = null)
@@ -35,6 +41,14 @@ class GameModulesController extends Controller
             ->limit($adminSettings['limit'])
             ->order($adminSettings['order'])
             ->published();
+
+        if ($adminSettings['category']) {
+            $category = $this->gameCategories->getOne($adminSettings['category']);
+
+            if ($category) {
+                $query->category($category);
+            }
+        }
 
         if ($adminSettings['filter'] === 'featured') {
             $query->featured();
