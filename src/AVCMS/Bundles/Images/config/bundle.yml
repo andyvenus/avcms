@@ -342,6 +342,13 @@ modules:
           3: 3
           4: 4
           6: 6
+      category:
+        type: select
+        label: Limit to category
+        help: If a category is set, this module will only show content from that category and it's sub-categories
+        choices_provider_service: image_category_choices
+        choices:
+          0: All Categories
       show_more_button:
         label: Show more button
         type: checkbox

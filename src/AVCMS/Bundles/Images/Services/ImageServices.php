@@ -56,5 +56,9 @@ class ImageServices implements ServicesInterface
             ->setArguments([new Reference('translator')])
             ->addTag('event.subscriber')
         ;
+
+        $container->register('image_category_choices', 'AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider')
+            ->setArguments([new Reference('images.categories_model')])
+        ;
     }
 }

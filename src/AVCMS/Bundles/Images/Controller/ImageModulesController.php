@@ -22,9 +22,15 @@ class ImageModulesController extends Controller
      */
     private $images;
 
+    /**
+     * @var \AVCMS\Bundles\Images\Model\ImageCategories
+     */
+    private $imageCategories;
+
     public function setUp()
     {
         $this->images = $this->model('ImageCollections');
+        $this->imageCategories = $this->model('ImageCategories');
     }
 
     public function imagesModule($adminSettings, User $user = null)
@@ -35,6 +41,14 @@ class ImageModulesController extends Controller
             ->limit($adminSettings['limit'])
             ->order($adminSettings['order'])
             ->published();
+
+        if ($adminSettings['category']) {
+            $category = $this->imageCategories->getOne($adminSettings['category']);
+
+            if ($category) {
+                $query->category($category);
+            }
+        }
 
         if ($adminSettings['filter'] === 'featured') {
             $query->featured();
