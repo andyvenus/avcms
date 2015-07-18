@@ -9,17 +9,27 @@
 
     <style type="text/css">
         @media (min-width: 992px) {
-            body {
-                margin-top: 50px;
+            .background {
+                padding-top: 50px;
+
+                height:100vh;
+                /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#888dc9+0,565fa3+100 */
+                background: #888dc9; /* Old browsers */
+                background: -moz-linear-gradient(top,  #888dc9 0%, #565fa3 100%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#888dc9), color-stop(100%,#565fa3)); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(top,  #888dc9 0%,#565fa3 100%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(top,  #888dc9 0%,#565fa3 100%); /* Opera 11.10+ */
+                background: -ms-linear-gradient(top,  #888dc9 0%,#565fa3 100%); /* IE10+ */
+                background: linear-gradient(to bottom,  #888dc9 0%,#565fa3 100%); /* W3C */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#888dc9', endColorstr='#565fa3',GradientType=0 ); /* IE6-9 */
             }
 
             .installer-container {
-                border-radius: 15px;
+                border-radius: 8px;
+                -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.18);
+                -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.18);
+                box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.18);
             }
-        }
-
-        body {
-            background: #565fa3;
         }
 
         .installer-container {
@@ -30,26 +40,36 @@
 
         .title {
             font-size: 14px;
-            text-transform: uppercase;
             font-weight: bold;
             color: #6c77cc;
-            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .copyright {
+            text-align: center;
+            color: #eee8ff;
+            margin-top: 15px;;
         }
     </style>
 </head>
 
 <body>
-    <div class="container installer-container">
-        <div class="row">
-            <div class="col-md-3">
-                <div style="text-align: center;">{% include '@Installer/logo.twig' %}
-                <div class="title">{% block title %}{% endblock %}</div>
+    <div class="background">
+        <div class="container installer-container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div style="text-align: center;">
+                        {% include '@Installer/logo.twig' %}
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="title">{% block title %}{% endblock %}</div>
+                    {% block content %}{% endblock %}
                 </div>
             </div>
-            <div class="col-md-9">
-                {% block content %}{% endblock %}
-            </div>
         </div>
+        <div class="copyright">AVCMS - Copyright AV Scripts {{ 'now'|date('Y') }}</div>
     </div>
 </body>
 </html>
