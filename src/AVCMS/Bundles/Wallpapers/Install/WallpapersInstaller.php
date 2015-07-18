@@ -93,5 +93,23 @@ class WallpapersInstaller extends BundleInstaller
         $this->PDO->exec("ALTER TABLE {$this->prefix}wallpaper_categories ADD children varchar(255) DEFAULT NULL");
 
         $this->PDO->exec("ALTER TABLE {$this->prefix}wallpapers DROP COLUMN category_parent_id");
+
+        $categories = $this->modelFactory->create('AVCMS\Bundles\Wallpapers\Model\WallpaperCategories');
+        $allCategories = $categories->getAll();
+
+        foreach ($allCategories as $category) {
+            $category->setParents($category->getParent());
+
+            $categoryChildrenIds = [];
+            foreach ($allCategories as $anotherCategory) {
+                if ($anotherCategory->getParent() == $category->getId()) {
+                    $categoryChildrenIds[] = $anotherCategory->getId();
+                }
+            }
+
+            $category->setChildren($categoryChildrenIds);
+
+            $categories->save($category);
+        }
     }
 }
