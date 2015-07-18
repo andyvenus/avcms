@@ -8,6 +8,7 @@
 namespace AVCMS\Bundles\Categories\MenuItemType;
 
 use AV\Form\FormBlueprint;
+use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Categories\Model\Categories;
 use AVCMS\Core\Menu\MenuItem;
 use AVCMS\Core\Menu\MenuItemConfigInterface;
@@ -35,12 +36,12 @@ class CategoriesMenuItemType implements MenuItemTypeInterface
 
     public function getMenuItems(MenuItemConfigInterface $menuItemConfig)
     {
-        if ($menuItemConfig->getSetting('sub_categories') == 1) {
-            $categories = $this->categoriesModel->getCategories();
-        }
-        else {
-            $categories = $this->categoriesModel->getParentCategories();
-        }
+        $getSubCats = (bool) $menuItemConfig->getSetting('sub_categories');
+        $parentCatId = $menuItemConfig->getSetting('parent_category') ? $menuItemConfig->getSetting('parent_category') : null;
+        $parentCat = $parentCatId ? $this->categoriesModel->getOne($parentCatId) : null;
+
+        // Use getSubCats, reversed, to nest the categories so they don't show up
+        $categories = $this->categoriesModel->getCategories(!$getSubCats, $parentCat);
 
         $menuItems = [];
 
@@ -52,16 +53,28 @@ class CategoriesMenuItemType implements MenuItemTypeInterface
             $menuItems[] = $menuItem;
         }
 
+        $parentCategories = [];
+
+        foreach ($categories as $category) {
+            if ($category->getParent() == $parentCatId) {
+                $parentCategories[$category->getId()] = $category;
+            }
+        }
+
         foreach ($categories as $category) {
             $menuItem = new MenuItem();
             $menuItem->setId('category-'.$category->getId());
 
             $menuItem->setLabel($category->getName());
 
-            if ($category->getParent() && $menuItemConfig->getSetting('display') === 'inline') {
+            if ($category->getParent() != $parentCatId && !isset($parentCategories[$category->getParent()])) {
+                continue;
+            }
+
+            if ($category->getParent() && $category->getParent() != $parentCatId && $menuItemConfig->getSetting('display') === 'inline') {
                 $menuItem->setParent('category-'.$category->getParent());
             }
-            elseif ($category->getParent()) {
+            elseif ($category->getParent() && $category->getParent() != $parentCatId) {
                 $menuItem->setLabel(' - '.$category->getName());
             }
 
@@ -85,6 +98,13 @@ class CategoriesMenuItemType implements MenuItemTypeInterface
                 'inline' => 'Inline (categories items appear in the main menu)',
                 'child' => 'Child (categories appear under this menu item, must not be nested)'
             ]
+        ]);
+
+        $form->add('settings[parent_category]', 'select', [
+            'label' => 'Parent category',
+            'help' => 'If set, this menu item will only show the sub-categories of the selected category',
+            'choices_provider' => new CategoryChoicesProvider($this->categoriesModel, true),
+            'default' => 0
         ]);
 
         $form->add('settings[sub_categories]', 'checkbox', [
