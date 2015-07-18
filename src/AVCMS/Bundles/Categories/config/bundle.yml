@@ -3,9 +3,6 @@ namespace: AVCMS\Bundles\Categories
 require:
     - Framework
 
-services:
-    - CategoryServices
-
 assets:
     avcms_categories_admin.js:
         env: admin

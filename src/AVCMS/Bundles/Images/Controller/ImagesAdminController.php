@@ -67,7 +67,7 @@ class ImagesAdminController extends AdminBaseController
          */
         $files = $this->imageFiles->getImageFiles($image->getId());
 
-        $formBlueprint = new ImageAdminForm($image, new CategoryChoicesProvider($this->model('ImageCategories'), true));
+        $formBlueprint = new ImageAdminForm($image, new CategoryChoicesProvider($this->model('ImageCategories')));
 
         $form = $this->buildForm($formBlueprint);
 
@@ -193,7 +193,7 @@ class ImagesAdminController extends AdminBaseController
     {
         $templateVars = parent::getSharedTemplateVars();
 
-        $templateVars['finder_filters_form'] = $this->buildForm(new ImagesAdminFiltersForm(new CategoryChoicesProvider($this->model('ImageCategories'), true, true)))->createView();
+        $templateVars['finder_filters_form'] = $this->buildForm(new ImagesAdminFiltersForm(new CategoryChoicesProvider($this->model('ImageCategories'), true)))->createView();
 
         return $templateVars;
     }

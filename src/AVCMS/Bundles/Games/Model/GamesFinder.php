@@ -16,17 +16,19 @@ class GamesFinder extends Finder
         $this->currentQuery->where('featured', 1);
     }
 
-    public function category($categoryId)
+    public function category($category)
     {
-        if (!$categoryId) {
-            return $this;
+        if (!$category) {
+            return;
         }
 
-        $this->currentQuery->where(function($q) use ($categoryId) {
-            $q->where('category_id', $categoryId)->orWhere('category_parent_id', $categoryId);
-        });
+        $this->currentQuery->where(function($q) use ($category) {
+            $q->where('category_id', $category->getId());
 
-        return $this;
+            if ($category->getChildren()) {
+                $q->orWhereIn('category_id', $category->getChildren());
+            }
+        });
     }
 
     public function mobileOnly($mobileOnly)

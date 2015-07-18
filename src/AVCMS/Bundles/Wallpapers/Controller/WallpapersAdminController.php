@@ -238,7 +238,7 @@ class WallpapersAdminController extends AdminBaseController
     {
         $templateVars = parent::getSharedTemplateVars();
 
-        $templateVars['finder_filters_form'] = $this->buildForm(new WallpapersAdminFiltersForm(new CategoryChoicesProvider($this->model('WallpaperCategories'), true, true)))->createView();
+        $templateVars['finder_filters_form'] = $this->buildForm(new WallpapersAdminFiltersForm(new CategoryChoicesProvider($this->model('WallpaperCategories'), true)))->createView();
 
         return $templateVars;
     }

@@ -47,7 +47,7 @@ class GamesAdminController extends AdminBaseController
             throw $this->createNotFoundException();
         }
 
-        $formBlueprint = new GameAdminForm($game, new CategoryChoicesProvider($this->model('GameCategories'), true));
+        $formBlueprint = new GameAdminForm($game, new CategoryChoicesProvider($this->model('GameCategories')));
 
         $form = $this->buildForm($formBlueprint);
 
@@ -143,7 +143,7 @@ class GamesAdminController extends AdminBaseController
     {
         $templateVars = parent::getSharedTemplateVars();
 
-        $templateVars['finder_filters_form'] = $this->buildForm(new GamesAdminFiltersForm(new CategoryChoicesProvider($this->model('GameCategories'), true, true)))->createView();
+        $templateVars['finder_filters_form'] = $this->buildForm(new GamesAdminFiltersForm(new CategoryChoicesProvider($this->model('GameCategories'), true)))->createView();
 
         return $templateVars;
     }

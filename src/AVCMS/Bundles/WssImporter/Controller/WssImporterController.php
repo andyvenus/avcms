@@ -127,7 +127,6 @@ class WssImporterController extends Controller
             foreach ($wallpapers as $wp) {
                 $this->renameFields($wp, [
                     'category' => 'category_id',
-                    'category_parent' => 'category_parent_id',
                     'seo_url' => 'slug',
                     'downloads' => 'total_downloads',
                     'display' => 'resize_type',

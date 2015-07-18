@@ -63,14 +63,4 @@ class BlogPost extends ContentEntity {
     {
         return $this->get('category_id');
     }
-
-    public function setCategoryParentId($categoryParentId)
-    {
-        $this->set('category_parent_id', $categoryParentId);
-    }
-
-    public function getCategoryParentId()
-    {
-        return $this->get('category_parent_id');
-    }
 } 

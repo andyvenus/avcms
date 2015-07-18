@@ -36,7 +36,7 @@ class CategoriesMenuItemType implements MenuItemTypeInterface
     public function getMenuItems(MenuItemConfigInterface $menuItemConfig)
     {
         if ($menuItemConfig->getSetting('sub_categories') == 1) {
-            $categories = $this->categoriesModel->getAllCategories();
+            $categories = $this->categoriesModel->getCategories();
         }
         else {
             $categories = $this->categoriesModel->getParentCategories();

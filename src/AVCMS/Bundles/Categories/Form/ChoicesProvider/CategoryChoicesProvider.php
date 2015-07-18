@@ -9,21 +9,22 @@ namespace AVCMS\Bundles\Categories\Form\ChoicesProvider;
 
 use AV\Form\ChoicesProviderInterface;
 use AVCMS\Bundles\Categories\Model\Categories;
+use AVCMS\Bundles\Categories\Model\Category;
 
 class CategoryChoicesProvider implements ChoicesProviderInterface
 {
     protected $model;
 
-    protected $subCategories;
+    protected $parentCategory;
 
     protected $allowNone;
 
     protected $exclude;
 
-    public function __construct(Categories $model, $subCategories = true, $allowNone = false, $exclude = [])
+    public function __construct(Categories $model, $allowNone = false, $exclude = [], Category $parentCategory = null)
     {
         $this->model = $model;
-        $this->subCategories = $subCategories;
+        $this->parentCategory = $parentCategory;
         $this->allowNone = $allowNone;
         $this->exclude = (array) $exclude;
     }
@@ -39,16 +40,21 @@ class CategoryChoicesProvider implements ChoicesProviderInterface
             $choices[0] = 'All Categories';
         }
 
-        if ($this->subCategories === true) {
-            $categories = $this->model->getAllCategories();
-        }
-        else {
-            $categories = $this->model->getParentCategories();
-        }
+        $categories = $this->model->getCategories(false, $this->parentCategory);
 
         foreach ($categories as $category) {
             if (!in_array($category->getId(), $this->exclude)) {
-                $choices[$category->getId()] = $category->getParent() ? ' - ' . $category->getName() : $category->getName();
+                $dashes = '';
+
+                foreach ($category->getParents() as $parent) {
+                    $dashes .= '-';
+                }
+
+                if ($dashes) {
+                    $dashes .= ' ';
+                }
+
+                $choices[$category->getId()] = $dashes.$category->getName();
             }
         }
 

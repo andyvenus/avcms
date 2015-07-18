@@ -14,7 +14,8 @@ class WallpapersInstaller extends BundleInstaller
     public function getVersions()
     {
         return array(
-            '1.0' => 'install_1_0_0'
+            '1.0' => 'install_1_0_0',
+            '1.0.1' => 'install_1_0_1'
         );
     }
 
@@ -84,5 +85,13 @@ class WallpapersInstaller extends BundleInstaller
                   PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
+    }
+
+    public function install_1_0_1()
+    {
+        $this->PDO->exec("ALTER TABLE {$this->prefix}wallpaper_categories ADD parents varchar(255) DEFAULT NULL");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}wallpaper_categories ADD children varchar(255) DEFAULT NULL");
+
+        $this->PDO->exec("ALTER TABLE {$this->prefix}wallpapers DROP COLUMN category_parent_id");
     }
 }

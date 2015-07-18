@@ -16,7 +16,8 @@ class GamesInstaller extends BundleInstaller
         return [
             '1.0' => 'install_1_0_0',
             '1.0.1' => 'install_1_0_1',
-            '1.0.2' => 'install_1_0_2'
+            '1.0.2' => 'install_1_0_2',
+            '1.0.3' => 'install_1_0_3'
         ];
     }
 
@@ -145,5 +146,13 @@ class GamesInstaller extends BundleInstaller
     public function install_1_0_2()
     {
         $this->PDO->exec("ALTER TABLE {$this->prefix}games CHANGE `advert_id` `advert_id` int(11) NOT NULL DEFAULT '0'");
+    }
+
+    public function install_1_0_3()
+    {
+        $this->PDO->exec("ALTER TABLE {$this->prefix}game_categories ADD parents varchar(255) DEFAULT NULL");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}game_categories ADD children varchar(255) DEFAULT NULL");
+
+        $this->PDO->exec("ALTER TABLE {$this->prefix}games DROP COLUMN category_parent_id");
     }
 }

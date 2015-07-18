@@ -149,7 +149,7 @@ class ImagesController extends Controller
             $category = $this->imageCategories->getFullCategory($request->get('category'));
 
             if ($category) {
-                $query->category($category->getId());
+                $query->category($category);
             }
             else {
                 throw $this->createNotFoundException('Category Not Found');

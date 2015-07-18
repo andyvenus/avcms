@@ -41,7 +41,7 @@ class BlogController extends Controller
             $category = $this->blogCategories->getFullCategory($request->get('category'));
 
             if ($category) {
-                $finder->category($category->getId());
+                $finder->category($category);
             }
             else {
                 throw $this->createNotFoundException('Category Not Found');

@@ -27,16 +27,6 @@ class ImageCollection extends Entity implements RateInterface
         return $this->get("category_parent");
     }
 
-    public function getCategoryParentId()
-    {
-        return $this->get("category_parent_id");
-    }
-
-    public function setCategoryParentId($value)
-    {
-        $this->set("category_parent_id", $value);
-    }
-
     public function setComments($value)
     {
         $this->set("comments", $value);

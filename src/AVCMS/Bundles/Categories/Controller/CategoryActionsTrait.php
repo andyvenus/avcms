@@ -37,7 +37,7 @@ trait CategoryActionsTrait
             throw new \Exception("Model does not extend the base Categories model");
         }
 
-        $categories = $model->getAllCategories(true);
+        $categories = $model->getCategories(true);
 
         return new Response($this->renderAdminSection('@Categories/admin/manage_categories.twig', ['categories' => $categories, 'route_prefix' => $categoryConfig['route_prefix']]));
     }
@@ -53,6 +53,9 @@ trait CategoryActionsTrait
 
         $categories = $model->query()->get();
         $order = $request->get('category_order');
+
+        $parents = $this->getParents($order);
+        $children = $this->getChildren($order, $parents);
 
         $i = 0;
         foreach ($order as $id => $parent) {
@@ -72,13 +75,13 @@ trait CategoryActionsTrait
 
                 $category->setParent($parent);
                 $category->setOrder($i);
+                $category->setParents($parents[$id]);
+                $category->setChildren($children[$id]);
 
                 $model->update($category);
 
                 if ($previousParent !== $parent) {
                     $contentModel = $this->model($categoryConfig['content_model']);
-
-                    $contentModel->query()->where('category_id', $category->getId())->update(['category_parent_id' => $parent]);
                 }
             }
         }
@@ -129,7 +132,6 @@ trait CategoryActionsTrait
 
         $categoryConfig = $this->getCategoryConfig($contentType);
         $model = $this->model($categoryConfig['model']);
-        $contentModel = $this->model($categoryConfig['content_model']);
 
         $category = $model->getOne($request->get('id'));
 
@@ -142,7 +144,7 @@ trait CategoryActionsTrait
 
         $moveItemsForm->add('new_category', 'select', [
             'label' => "Move existing items to",
-            'choices_provider' => new CategoryChoicesProvider($model, true, false, $request->get('id'))
+            'choices_provider' => new CategoryChoicesProvider($model, false, $request->get('id'))
         ]);
 
         $moveItemsForm->add('delete_subcategories', 'checkbox', [
@@ -156,7 +158,7 @@ trait CategoryActionsTrait
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $deleteIds = [$category->getId()];
-                $subCategories = $model->getSubCategories($category->getId());
+                $subCategories = $model->getCategories(false, $category);
 
                 $newCategory = $model->getOne($form->getData('new_category'));
 
@@ -169,15 +171,25 @@ trait CategoryActionsTrait
 
                         $deleteIds[] = $subCategory->getId();
                     } else {
-                        $subCategory->setParent(null);
+                        $subCatParents = $subCategory->getParents();
+                        if(($key = array_search($category->getId(), $subCatParents)) !== false) {
+                            unset($subCatParents[$key]);
+                        }
+
+                        if (empty($subCatParents)) {
+                            $subCategory->setParent(null);
+                        }
+                        else {
+                            $subCategory->setParent(end($subCatParents));
+                        }
+
+                        $subCategory->setParents($subCatParents);
+
                         $model->save($subCategory);
-                        $contentModel->query()->where('category_id', $subCategory->getId())->update(['category_parent_id' => null]);
                     }
                 }
 
                 if (!isset($formErrors)) {
-                    $contentModel->query()->whereIn('category_id', $deleteIds)->update(['category_id' => $newCategory->getId(), 'category_parent_id' => $newCategory->getParent()]);
-
                     $model->query()->whereIn('id', $deleteIds)->delete();
                 }
                 else {
@@ -198,5 +210,44 @@ trait CategoryActionsTrait
         }
 
         return $this->bundle['categories'][$contentType];
+    }
+
+    private function getParents($order)
+    {
+        $parents = [];
+        foreach ($order as $id => $parent) {
+            $parents[$id] = [];
+
+            if ($parent && $parent !== 'null') {
+                $allString = [$parent];
+
+                $currentParent = $parent;
+
+                while (($val = $order[$currentParent]) !== 'null') {
+                    $allString[] = $val;
+                    $currentParent = $val;
+                }
+
+                $parents[$id] = array_reverse($allString);
+            }
+        }
+
+        return $parents;
+    }
+
+    private function getChildren($order, $parents) {
+        $children = [];
+        foreach ($order as $id => $parent) {
+            $children[$id] = [];
+            foreach ($parents as $arrId => $arrParents) {
+                if (is_array($arrParents)) {
+                    if (in_array($id, $arrParents)) {
+                        $children[$id][] = $arrId;
+                    }
+                }
+            }
+        }
+
+        return $children;
     }
 }

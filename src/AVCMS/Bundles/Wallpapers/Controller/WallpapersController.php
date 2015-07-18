@@ -58,7 +58,7 @@ class WallpapersController extends Controller
                 throw $this->createNotFoundException('Category Not Found');
             }
 
-            $query->category($category->getId());
+            $query->category($category);
         }
 
         if ($pageType == 'likes') {

@@ -11,6 +11,10 @@ use AV\Model\Model;
 
 abstract class Categories extends Model
 {
+    const PARENTS = 'parents';
+
+    const CHILDREN = 'children';
+
     protected $textIdentifierColumn = 'slug';
 
     public function getEntity()
@@ -18,31 +22,47 @@ abstract class Categories extends Model
         return 'AVCMS\Bundles\Categories\Model\Category';
     }
 
-    public function getAllCategories($nested = false)
+    public function getCategories($nested = false, Category $offsetCategory = null, $offsetGet = self::CHILDREN)
     {
-        $categories = $this->query()->orderBy('parent', 'DESC')->orderBy('order')->get();
+        $q = $this->query()->orderBy('order');
 
-        $mainCategories = [];
-        $subCategories = [];
+        if ($offsetCategory !== null) {
+            if ($offsetGet == self::PARENTS) {
+                $q->whereIn('id', $offsetCategory->getParents());
+            }
+            else {
+                $q->whereIn('id', $offsetCategory->getChildren());
+            }
+        }
+
+        $categories = $q->get();
+
+        if ($nested === false) {
+            return $categories;
+        }
 
         foreach ($categories as $category) {
             if ($parent = $category->getParent()) {
-                $subCategories[$parent][] = $category;
-            }
-            else {
-                $mainCategories[] = $category;
-                if (isset($subCategories[$category->getId()])) {
-                    if ($nested === false) {
-                        $mainCategories = array_merge($mainCategories, $subCategories[$category->getId()]);
-                    }
-                    else {
-                        $category->subCategories = $subCategories[$category->getId()];
-                    }
+                $subCategories = [];
+                if (isset($categories[$parent]->subCategories)) {
+                    $subCategories = $categories[$parent]->subCategories;
+                }
+
+                array_push($subCategories, $category);
+
+                if (isset($categories[$parent])) {
+                    $categories[$parent]->subCategories = $subCategories;
                 }
             }
         }
 
-        return $mainCategories;
+        foreach ($categories as $id => $category) {
+            if ($category->getParent() && ($offsetCategory === null || $offsetCategory->getId() !== $category->getParent())) {
+                unset($categories[$id]);
+            }
+        }
+
+        return $categories;
     }
 
     public function getParentCategories()
@@ -50,11 +70,6 @@ abstract class Categories extends Model
         $categories = $this->query()->orderBy('order')->whereNull('parent')->get();
 
         return $categories;
-    }
-
-    public function getSubCategories($parentId)
-    {
-        return $this->query()->where('parent', $parentId)->get();
     }
 
     public function getFullCategory($slug)
@@ -65,13 +80,12 @@ abstract class Categories extends Model
             return null;
         }
 
-        $categoryId = $category->getId();
-
-        if ($category->getParent()) {
-            $category->parent = $this->getOne($category->getParent());
+        if ($category->getParents()) {
+            $category->parents = $this->getCategories(false, $category, self::PARENTS);
         }
-        else {
-            $category->subcategories = $this->query()->where('parent', $categoryId)->orderBy('order')->get();
+
+        if ($category->getChildren()) {
+            $category->subcategories = $this->getCategories(true, $category, self::CHILDREN);
         }
         
         return $category;

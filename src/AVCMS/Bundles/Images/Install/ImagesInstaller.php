@@ -15,6 +15,7 @@ class ImagesInstaller extends BundleInstaller
     {
         return [
             '1.0' => 'install_1_0_0',
+            '1.0.1' => 'install_1_0_1',
         ];
     }
 
@@ -100,5 +101,13 @@ class ImagesInstaller extends BundleInstaller
                   KEY `seo_url` (`slug`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
+    }
+
+    public function install_1_0_1()
+    {
+        $this->PDO->exec("ALTER TABLE {$this->prefix}image_categories ADD parents varchar(255) DEFAULT NULL");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}image_categories ADD children varchar(255) DEFAULT NULL");
+
+        $this->PDO->exec("ALTER TABLE {$this->prefix}image_collections DROP COLUMN category_parent_id");
     }
 }

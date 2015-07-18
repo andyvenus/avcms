@@ -60,4 +60,48 @@ class Category extends Entity
     {
         return $this->get("slug");
     }
+
+    public function setParents($value)
+    {
+        if (is_array($value)) {
+            $value = implode(',', $value);
+        }
+
+        $this->set("parents", $value);
+    }
+
+    public function getParents($asArray = true)
+    {
+        if ($asArray) {
+            if (!$this->get('parents')) {
+                return [];
+            }
+
+            return explode(',', $this->get('parents'));
+        }
+
+        return $this->get("parents");
+    }
+
+    public function setChildren($value)
+    {
+        if (is_array($value)) {
+            $value = implode(',', $value);
+        }
+
+        $this->set("children", $value);
+    }
+
+    public function getChildren($asArray = true)
+    {
+        if ($asArray) {
+            if (!$this->get('children')) {
+                return [];
+            }
+
+            return explode(',', $this->get('children'));
+        }
+
+        return $this->get("children");
+    }
 }

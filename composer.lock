@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/andyvenus/form.git",
-                "reference": "d8b9804588b60d35fcc86ca5070258b8e68b97f9"
+                "reference": "dd26307c88d156ca8b38802eeefc46213543801d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/andyvenus/form/zipball/d8b9804588b60d35fcc86ca5070258b8e68b97f9",
-                "reference": "d8b9804588b60d35fcc86ca5070258b8e68b97f9",
+                "url": "https://api.github.com/repos/andyvenus/form/zipball/dd26307c88d156ca8b38802eeefc46213543801d",
+                "reference": "dd26307c88d156ca8b38802eeefc46213543801d",
                 "shasum": ""
             },
             "type": "library",
@@ -42,7 +42,7 @@
                 }
             ],
             "description": "A framework agnostic form builder",
-            "time": "2015-07-17 13:37:48"
+            "time": "2015-07-17 21:30:20"
         },
         {
             "name": "cocur/slugify",

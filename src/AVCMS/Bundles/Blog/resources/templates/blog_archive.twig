@@ -31,8 +31,10 @@
                 {% if page_type != 'home' %}
                 <ol class="breadcrumb">
                     <li><a href="{{ path('blog_home') }}">{% trans %}Blog{% endtrans %}</a></li>
-                    {% if category.parent %}
-                        <li><a href="{{ path('blog_category', {'category': category.parent.slug}) }}">{{ category.parent.name }}</a></li>
+                    {% if category.parents %}
+                        {% for parent in category.parents %}
+                            <li><a href="{{ path('blog_category', {'category': parent.slug}) }}">{{ parent.name }}</a></li>
+                        {% endfor %}
                     {% endif %}
                 </ol>
                 {% endif %}

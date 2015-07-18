@@ -137,7 +137,6 @@ class AvaImporterController extends Controller
             $gamesProcessed = [];
             foreach ($games as $gm) {
                 $this->renameFields($gm, [
-                    'category_parent' => 'category_parent_id',
                     'seo_url' => 'slug',
                     'display' => 'resize_type',
                     'submitter' => 'submitter_id',

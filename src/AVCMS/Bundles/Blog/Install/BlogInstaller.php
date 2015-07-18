@@ -15,7 +15,8 @@ class BlogInstaller extends BundleInstaller
     {
         return [
             '1.0' => 'install_1_0_0',
-            '1.0.1' => 'install_1_0_1'
+            '1.0.1' => 'install_1_0_1',
+            '1.0.2' => 'install_1_0_2'
         ];
     }
 
@@ -61,5 +62,13 @@ class BlogInstaller extends BundleInstaller
         $this->PDO->exec("ALTER TABLE {$this->prefix}blog_posts ADD category_parent_id int(11) DEFAULT NULL AFTER body");
 
         $this->PDO->exec("ALTER TABLE {$this->prefix}blog_posts ADD `category_id` int(11) NOT NULL DEFAULT '0' AFTER body");
+    }
+
+    public function install_1_0_2()
+    {
+        $this->PDO->exec("ALTER TABLE {$this->prefix}blog_categories ADD parents varchar(255) DEFAULT NULL");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}blog_categories ADD children varchar(255) DEFAULT NULL");
+
+        $this->PDO->exec("ALTER TABLE {$this->prefix}blog_posts DROP COLUMN category_parent_id");
     }
 }

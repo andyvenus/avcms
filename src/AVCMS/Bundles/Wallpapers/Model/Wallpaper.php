@@ -17,16 +17,6 @@ class Wallpaper extends ContentEntity implements RateInterface
         return $this->get("category_id");
     }
 
-    public function setCategoryParentId($value)
-    {
-        $this->set("category_parent_id", $value);
-    }
-
-    public function getCategoryParentId()
-    {
-        return $this->get("category_parent_id");
-    }
-
     public function setComments($comments)
     {
         $this->set('comments', $comments);
