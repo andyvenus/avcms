@@ -114,6 +114,28 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $newestGamesHome->setSettingsArray(['layout' => 'details', 'columns' => 2, 'limit' => 6]);
         $newestGamesHome->setCacheTime(3600);
 
+        // Featured Images - Homepage
+        $featuredImagesHome = $modules->newEntity();
+        $featuredImagesHome->setModule('images');
+        $featuredImagesHome->setActive(1);
+        $featuredImagesHome->setPosition('homepage');
+        $featuredImagesHome->setTitle('Featured Images');
+        $featuredImagesHome->setShowHeader(1);
+        $featuredImagesHome->setTemplateType('content');
+        $featuredImagesHome->setSettingsArray(['filter' => 'featured', 'layout' => 'thumbnails', 'columns' => 3, 'limit' => 6]);
+        $featuredImagesHome->setCacheTime(3600);
+
+        // Newest Images - Homepage
+        $newestImagesHome = $modules->newEntity();
+        $newestImagesHome->setModule('images');
+        $newestImagesHome->setActive(1);
+        $newestImagesHome->setPosition('homepage');
+        $newestImagesHome->setTitle('Newest Images');
+        $newestImagesHome->setShowHeader(1);
+        $newestImagesHome->setTemplateType('content');
+        $newestImagesHome->setSettingsArray(['layout' => 'thumbnails', 'columns' => 3, 'limit' => 6]);
+        $newestImagesHome->setCacheTime(3600);
+
         // Newest Blog Posts - Sidebar
         $newestPostsModule = $modules->newEntity();
         $newestPostsModule->setModule('blog_posts');
@@ -144,7 +166,17 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $gameTags->setTemplateType('panel');
         $gameTags->setCacheTime(43200);
 
-        $modules->insert([$newestWallpapersSidebar, $featuredWallpapersHome, $newestWallpapersHome, $featuredGamesHome, $newestGamesHome, $wallpaperTags, $newestPostsModule, $gameTags]);
+        // Image Tags - Sidebar
+        $imageTags = $modules->newEntity();
+        $imageTags->setModule('image_tags');
+        $imageTags->setActive(1);
+        $imageTags->setPosition('sidebar');
+        $imageTags->setTitle('Image Tags');
+        $imageTags->setShowHeader(1);
+        $imageTags->setTemplateType('panel');
+        $imageTags->setCacheTime(43200);
+
+        $modules->insert([$newestWallpapersSidebar, $featuredWallpapersHome, $newestWallpapersHome, $featuredGamesHome, $newestGamesHome, $featuredImagesHome, $newestImagesHome, $wallpaperTags, $newestPostsModule, $gameTags, $imageTags]);
 
         // Updates - Admin Dashboard
         $updatesModule = $modules->newEntity();
@@ -196,6 +228,16 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $topGamesAdminModule->setTemplateType('list_panel');
         $topGamesAdminModule->setSettingsArray(['order' => 'top-hits']);
 
+        // Top Images - Admin Dashboard
+        $topImagesAdminModule = $modules->newEntity();
+        $topImagesAdminModule->setModule('images');
+        $topImagesAdminModule->setActive(1);
+        $topImagesAdminModule->setPosition('admin_dashboard');
+        $topImagesAdminModule->setTitle('Top Images');
+        $topImagesAdminModule->setShowHeader(1);
+        $topImagesAdminModule->setTemplateType('list_panel');
+        $topImagesAdminModule->setSettingsArray(['order' => 'top-hits']);
+
         // User Info - User Profile
         $userInfoModule = $modules->newEntity();
         $userInfoModule->setModule('user_info');
@@ -215,7 +257,7 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $likedWallpapersModule->setTemplateType('panel');
         $likedWallpapersModule->setSettingsArray(['layout' => 'thumbnails', 'columns' => 2, 'limit' => 6, 'filter' => 'likes']);
 
-        $modules->insert([$updatesModule, $reportsModule, $avsNewsModule, $topWallpapersAdminModule, $userInfoModule, $likedWallpapersModule, $topGamesAdminModule]);
+        $modules->insert([$updatesModule, $reportsModule, $avsNewsModule, $topWallpapersAdminModule, $userInfoModule, $likedWallpapersModule, $topGamesAdminModule, $topImagesAdminModule]);
     }
 
     public function blogDefaults()
