@@ -412,9 +412,6 @@ modules:
     accepted_template_types: [content, panel, none]
 
 permissions:
-  ELEVATED_NO_IMAGE_ADS:
-    name: No Image Adverts
-    description: If allowed, users in this group will not see ads before images
   ADMIN_IMAGES:
     name: Images Administration
     description: Manage images in the admin panel (including categories)
