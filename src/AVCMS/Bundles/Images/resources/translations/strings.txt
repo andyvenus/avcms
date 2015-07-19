@@ -36,3 +36,5 @@ Most Viewed
 Clear Image Thumbnail Cache
 Submitted By
 Most Liked
+Images tagged with: {tags}
+Subcategories
