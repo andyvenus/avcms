@@ -68,6 +68,9 @@ class LinksController extends Controller
                 $referral->setUserId($this->activeUser()->getId());
                 $referral->setUserEmail($this->activeUser()->getEmail());
             }
+            else {
+                $referral->setUserEmail($form->getData('email'));
+            }
 
             $this->referrals->save($referral);
 
