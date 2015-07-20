@@ -26,7 +26,7 @@ class ResourceLocator extends BaseResourceLocator
         $avcmsDirs = [];
         if ($originalOnly === false) {
             $avcmsDirs['webmaster'] = $this->rootDir . '/webmaster/resources/' . $bundleConfig->name . '/' . $resourceType;
-            $avcmsDirs['template'] = $this->templateDir . '/' . $resourceType . '/' . $bundleConfig->name;
+            $avcmsDirs['template'] = $this->templateDir . '/resources/' . $bundleConfig->name . '/' . $resourceType;
         }
 
         $dirs = parent::getResourceDirs($bundleConfig, $resourceType, $originalOnly);
