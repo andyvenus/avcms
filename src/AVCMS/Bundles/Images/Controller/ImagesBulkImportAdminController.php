@@ -134,7 +134,7 @@ class ImagesBulkImportAdminController extends BulkImportAdminController
 
                     $slug = $this->container->get('slug.generator')->slugify($newImageCollection->getName());
                     if ($this->imageCollections->query()->where('slug', $slug)->count() > 0) {
-                        $slug .= '-'.rand(0, 999999);
+                        $slug .= '-'.time().$imagesImported;
                     }
 
                     $newImageCollection->setSlug($slug);

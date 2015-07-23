@@ -92,7 +92,7 @@ class WallpapersBulkImportAdminController extends BulkImportAdminController
 
                     $slug = $this->container->get('slug.generator')->slugify($newWallpaper->getName());
                     if ($this->wallpapers->query()->where('slug', $slug)->count() > 0) {
-                        $slug .= '-'.time();
+                        $slug .= '-'.time().$wallpapersImported;
                     }
 
                     $newWallpaper->setSlug($slug);
