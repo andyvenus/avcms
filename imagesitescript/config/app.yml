@@ -11,6 +11,6 @@ bundle_dirs:
 
 license:
   length: 15
-  prefix: wss
+  prefix: iss
 
 default_content_installer: ImageDefaultContentInstaller
