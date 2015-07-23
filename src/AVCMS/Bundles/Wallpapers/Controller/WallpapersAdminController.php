@@ -99,7 +99,12 @@ class WallpapersAdminController extends AdminBaseController
             ->setSearchFields(array('wallpapers.name'))
             ->setResultsPerPage(15)
             ->join($this->model('WallpaperCategories'), ['id', 'name', 'slug'])
-            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null, 'category' => 0));
+            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
+
+        if ($categoryId = $request->query->get('category')) {
+            $finder->category($this->model('WallpaperCategories')->getOne($categoryId));
+        }
+
         $items = $finder->get();
 
         return new Response($this->render('@Wallpapers/admin/wallpapers_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));

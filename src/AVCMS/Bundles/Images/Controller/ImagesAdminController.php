@@ -147,7 +147,12 @@ class ImagesAdminController extends AdminBaseController
             ->setSearchFields(array('image_collections.name'))
             ->setResultsPerPage(15)
             ->join($this->model('ImageCategories'), ['id', 'name', 'slug'])
-            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null, 'category' => 0));
+            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
+
+        if ($categoryId = $request->query->get('category')) {
+            $finder->category($this->model('ImageCategories')->getOne($categoryId));
+        }
+
         $items = $finder->get();
 
         return new Response($this->render('@Images/admin/images_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));

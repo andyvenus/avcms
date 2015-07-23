@@ -90,7 +90,12 @@ class GamesAdminController extends AdminBaseController
             ->setSearchFields(array('games.name'))
             ->setResultsPerPage(15)
             ->join($this->model('GameCategories'), ['id', 'name', 'slug'])
-            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null, 'category' => 0));
+            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
+
+        if ($categoryId = $request->query->get('category')) {
+            $finder->category($this->model('GameCategories')->getOne($categoryId));
+        }
+
         $items = $finder->get();
 
         return new Response($this->render('@Games/admin/games_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));
