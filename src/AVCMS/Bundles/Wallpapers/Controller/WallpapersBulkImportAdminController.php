@@ -34,6 +34,7 @@ class WallpapersBulkImportAdminController extends BulkImportAdminController
         $entity = $this->wallpapers->newEntity();
 
         $formBlueprint = new WallpaperAdminForm(0, new CategoryChoicesProvider($this->model('WallpaperCategories')));
+        $formBlueprint->remove('slug');
         $formBlueprint->setSuccessMessage('Wallpapers Imported');
         $form = $this->buildForm($formBlueprint);
         $form->setData('name', '{clean_filename}');

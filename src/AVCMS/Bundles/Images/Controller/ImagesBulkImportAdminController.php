@@ -47,6 +47,7 @@ class ImagesBulkImportAdminController extends BulkImportAdminController
         $entity = $this->imageCollections->newEntity();
 
         $formBlueprint = new ImageAdminForm($entity, new CategoryChoicesProvider($this->model('ImageCategories')));
+        $formBlueprint->remove('slug');
         $formBlueprint->setSuccessMessage('Images Imported');
         $form = $this->buildForm($formBlueprint);
         $form->setData('name', '{clean_filename}');
@@ -134,7 +135,7 @@ class ImagesBulkImportAdminController extends BulkImportAdminController
 
                     $slug = $this->container->get('slug.generator')->slugify($newImageCollection->getName());
                     if ($this->imageCollections->query()->where('slug', $slug)->count() > 0) {
-                        $slug .= '-'.time();
+                        $slug .= '-'.rand(0, 999999);
                     }
 
                     $newImageCollection->setSlug($slug);
