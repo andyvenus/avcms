@@ -205,7 +205,7 @@ admin_settings:
       3: 3
       4: 4
       6: 6
-    default: 4
+    default: 2
     section: browse_images
   browse_images_per_page:
     type: text
