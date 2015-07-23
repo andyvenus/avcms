@@ -46,8 +46,7 @@ class ImagesBulkImportAdminController extends BulkImportAdminController
 
         $entity = $this->imageCollections->newEntity();
 
-        $formBlueprint = new ImageAdminForm($entity, new CategoryChoicesProvider($this->model('ImageCategories')));
-        $formBlueprint->remove('slug');
+        $formBlueprint = new ImageAdminForm($entity, new CategoryChoicesProvider($this->model('ImageCategories')), true);
         $formBlueprint->setSuccessMessage('Images Imported');
         $form = $this->buildForm($formBlueprint);
         $form->setData('name', '{clean_filename}');
