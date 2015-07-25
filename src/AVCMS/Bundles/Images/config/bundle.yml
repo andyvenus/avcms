@@ -30,7 +30,7 @@ menu_items:
   frontend:
     image_categories:
       label: Images
-      icon: glyphicon glyphicon-tower
+      icon: glyphicon glyphicon-picture
       type: image_categories
       default_order: 2
       settings:
@@ -205,7 +205,7 @@ admin_settings:
       3: 3
       4: 4
       6: 6
-    default: 2
+    default: 3
     section: browse_images
   browse_images_per_page:
     type: text
