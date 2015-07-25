@@ -47,14 +47,18 @@ class ImagesController extends Controller
         $this->imageCategories = $this->model('ImageCategories');
     }
 
-    public function imageCollectionAction(Request $request, $slug)
+    public function imageCollectionAction($slug)
     {
         $imageCollection = $this->imageCollections->find()
             ->published()
             ->slug($slug)
-            ->join($this->imageCategories, ['name', 'slug'])
+            ->join($this->imageCategories, ['name', 'slug', 'id'])
             ->joinTaxonomy('tags')
             ->first();
+
+        if (!$imageCollection) {
+            throw $this->createNotFoundException('Image Not Found');
+        }
 
         $imageCollection->files = $this->imageFiles->getImageFiles($imageCollection->getId());
 
@@ -62,13 +66,26 @@ class ImagesController extends Controller
             $imageCollection->submitter = $this->model('@users')->getOne($imageCollection->getSubmitterId());
         }
 
-        if (!$imageCollection) {
-            throw $this->createNotFoundException('Image Not Found');
-        }
-
         $this->container->get('hitcounter')->registerHit($this->imageCollections, $imageCollection->getId(), 'hits', 'id', 'last_hit');
 
-        return new Response($this->render('@Images/image_collection.twig', ['image_collection' => $imageCollection]));
+        $prevImage = $this->imageCollections->find()
+            ->category($imageCollection->category)
+            ->published()
+            ->where('id', '<', $imageCollection->getId())
+            ->order('newest')
+            ->first();
+
+        $nextImage = $this->imageCollections->find()
+            ->category($imageCollection->category)
+            ->published()
+            ->where('id', '>', $imageCollection->getId())
+            ->first();
+
+        return new Response($this->render('@Images/image_collection.twig', [
+            'image_collection' => $imageCollection,
+            'prev_image' => $prevImage,
+            'next_image' => $nextImage
+        ]));
     }
 
     public function downloadCollectionAction($slug)

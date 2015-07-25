@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block content %}
+
     {% block image_top_modules %}
         <div class="image-top-modules">
             {{ render_modules('image_collection_top') }}
@@ -43,6 +44,11 @@
             </div>
             <div class="box-footer">
                 <div class="text-center">
+                    {% if prev_image %}
+                        <a href="{{ url('image_collection', {slug: prev_image.slug}) }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Previous</a>
+                    {% endif %}
+
+
                     {{ like_dislike_buttons('image', image_collection.id, image_collection) }}
 
                     {% if is_granted('ADMIN_IMAGES') %}
@@ -55,6 +61,10 @@
 
                     {% if image_collection.downloadable == '1' or (image_collection.downloadable == 'default' and settings.images_default_download == '1') %}
                         <a href="{{ path('download_image_collection', {slug: image_collection.slug}) }}" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> {% trans %}Download{% endtrans %}</a>
+                    {% endif %}
+
+                    {% if next_image %}
+                        <a href="{{ url('image_collection', {slug: next_image.slug}) }}" class="btn btn-default">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
                     {% endif %}
                 </div>
             </div>

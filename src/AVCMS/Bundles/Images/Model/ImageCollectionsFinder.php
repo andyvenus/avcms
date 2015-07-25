@@ -19,7 +19,7 @@ class ImageCollectionsFinder extends Finder
     public function category($category)
     {
         if (!$category) {
-            return;
+            return $this;
         }
 
         $this->currentQuery->where(function($q) use ($category) {
@@ -29,6 +29,8 @@ class ImageCollectionsFinder extends Finder
                 $q->orWhereIn('category_id', $category->getChildren());
             }
         });
+
+        return $this;
     }
 
     public function mobileOnly($mobileOnly)
