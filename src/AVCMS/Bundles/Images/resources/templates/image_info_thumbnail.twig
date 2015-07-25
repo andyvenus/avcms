@@ -1,5 +1,11 @@
-<a class="thumbnail browse-images-thumbnail {% if settings.images_thumbnail_crop == 'maintain_ratio' %}avcms-level-thumbnails{% endif %} clearfix" href="{{ path('image_collection', {slug: image.slug}) }}">
-    <img src="{{ image_thumbnail(image) }}" width="100%"/>
+<a class="thumbnail browse-images-thumbnail clearfix" href="{{ path('image_collection', {slug: image.slug}) }}">
+
+    {% if settings.images_thumbnail_crop == 'maintain_ratio' %}
+        <div class="avcms-image-square" style="width:100%;height:300px;background-image: url('{{ image_thumbnail(image) }}'); background-repeat:no-repeat;background-size: contain;background-position: center; "></div>
+    {% else %}
+        <img src="{{ image_thumbnail(image) }}" width="100%"/>
+    {% endif %}
+
     <div class="pull-left" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;width:100%">
         {{ image.name }}
         {% if admin_settings.show_image_description %}
