@@ -39,7 +39,7 @@ class FrameworkServices implements ServicesInterface
         $container->register('resolver', 'AV\Controller\ControllerResolver')
             ->setArguments(array(new Reference('service_container'), new Reference('bundle_manager')));
 
-        $container->register('listener.router', 'Symfony\Component\HttpKernel\EventListener\RouterListener')
+        $container->register('listener.router', 'AVCMS\Core\Kernel\RouterListener\RouterListener')
             ->setArguments(array(new Reference('router'), null, null, new Reference('request.stack')))
             ->addTag('event.subscriber')
         ;
