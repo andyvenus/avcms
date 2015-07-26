@@ -13,7 +13,8 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
             'Blog' => ['1.0' => 'blogDefaults'],
             'CmsFoundation' => ['1.0' => 'cmsDefaults'],
             'Wallpapers' => ['1.0' => 'wallpaperDefaults'],
-            'Games' => ['1.0' => 'gameDefaults']
+            'Games' => ['1.0' => 'gameDefaults'],
+            'Images' => ['1.0' => 'imageDefaults']
         );
     }
 
@@ -301,5 +302,17 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $firstCategory->setSlug('first-category');
 
         $gameCategories->insert($firstCategory);
+    }
+
+    public function imageDefaults()
+    {
+        $imageCategories = $this->modelFactory->create('AVCMS\Bundles\Images\Model\ImageCategories');
+
+        $firstCategory = $imageCategories->newEntity();
+        $firstCategory->setName('First Category');
+        $firstCategory->setDescription('A first category to get going. Edit me or delete me!');
+        $firstCategory->setSlug('first-category');
+
+        $imageCategories->insert($firstCategory);
     }
 }
