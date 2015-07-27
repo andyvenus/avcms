@@ -27,10 +27,10 @@ abstract class Categories extends Model
         $q = $this->query()->orderBy('order');
 
         if ($offsetCategory !== null) {
-            if ($offsetGet == self::PARENTS) {
+            if ($offsetGet == self::PARENTS && count($offsetCategory->getParents())) {
                 $q->whereIn('id', $offsetCategory->getParents());
             }
-            else {
+            elseif (count($offsetCategory->getChildren())) {
                 $q->whereIn('id', $offsetCategory->getChildren());
             }
         }
