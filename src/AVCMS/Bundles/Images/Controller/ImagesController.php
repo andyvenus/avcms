@@ -17,6 +17,7 @@ use AVCMS\Bundles\Images\Form\SubmitImageForm;
 use AVCMS\Core\Controller\Controller;
 use AVCMS\Core\Rss\RssFeed;
 use AVCMS\Core\Rss\RssItem;
+use Intervention\Image\ImageManager;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -47,18 +48,14 @@ class ImagesController extends Controller
         $this->imageCategories = $this->model('ImageCategories');
     }
 
-    public function imageCollectionAction($slug)
+    public function imageCollectionAction(Request $request, $slug)
     {
         $imageCollection = $this->imageCollections->find()
             ->published()
             ->slug($slug)
-            ->join($this->imageCategories, ['name', 'slug', 'id'])
+            ->join($this->imageCategories, ['name', 'slug'])
             ->joinTaxonomy('tags')
             ->first();
-
-        if (!$imageCollection) {
-            throw $this->createNotFoundException('Image Not Found');
-        }
 
         $imageCollection->files = $this->imageFiles->getImageFiles($imageCollection->getId());
 
@@ -66,26 +63,13 @@ class ImagesController extends Controller
             $imageCollection->submitter = $this->model('@users')->getOne($imageCollection->getSubmitterId());
         }
 
+        if (!$imageCollection) {
+            throw $this->createNotFoundException('Image Not Found');
+        }
+
         $this->container->get('hitcounter')->registerHit($this->imageCollections, $imageCollection->getId(), 'hits', 'id', 'last_hit');
 
-        $prevImage = $this->imageCollections->find()
-            ->category($imageCollection->category)
-            ->published()
-            ->where('id', '<', $imageCollection->getId())
-            ->order('newest')
-            ->first();
-
-        $nextImage = $this->imageCollections->find()
-            ->category($imageCollection->category)
-            ->published()
-            ->where('id', '>', $imageCollection->getId())
-            ->first();
-
-        return new Response($this->render('@Images/image_collection.twig', [
-            'image_collection' => $imageCollection,
-            'prev_image' => $prevImage,
-            'next_image' => $nextImage
-        ]));
+        return new Response($this->render('@Images/image_collection.twig', ['image_collection' => $imageCollection]));
     }
 
     public function downloadCollectionAction($slug)
@@ -111,7 +95,12 @@ class ImagesController extends Controller
             $pathInfo = pathinfo($imageFile->getUrl());
             $headers['Content-Disposition'] = 'attachment; filename="'.$pathInfo['basename'].'"';
 
-            return new Response(file_get_contents($this->getParam('images_dir').'/'.$imageFile->getUrl()), 200, $headers);
+            $image = $this->getParam('root_dir').'/'.$this->getParam('images_dir').'/'.$imageFile->getUrl();
+
+            $imageManager = new ImageManager(['driver' => $this->setting('images_driver')]);
+            $thumbnail = $imageManager->make($image);
+
+            return new Response($thumbnail->encode(), 200, $headers);
         }
 
         $zipsDir = $this->getParam('cache_dir').'/image-zips/'.$collection->getId();
