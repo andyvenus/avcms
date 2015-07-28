@@ -132,6 +132,7 @@ trait CategoryActionsTrait
 
         $categoryConfig = $this->getCategoryConfig($contentType);
         $model = $this->model($categoryConfig['model']);
+        $contentModel = $this->model($categoryConfig['content_model']);
 
         $category = $model->getOne($request->get('id'));
 
@@ -190,6 +191,8 @@ trait CategoryActionsTrait
                 }
 
                 if (!isset($formErrors)) {
+                    $contentModel->query()->whereIn('category_id', $deleteIds)->update(['category_id' => $newCategory->getId()]);
+
                     $model->query()->whereIn('id', $deleteIds)->delete();
                 }
                 else {

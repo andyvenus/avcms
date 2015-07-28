@@ -33,6 +33,9 @@ abstract class Categories extends Model
             elseif (count($offsetCategory->getChildren())) {
                 $q->whereIn('id', $offsetCategory->getChildren());
             }
+            else {
+                return [];
+            }
         }
 
         $categories = $q->get();
