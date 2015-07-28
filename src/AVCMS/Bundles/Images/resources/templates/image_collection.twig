@@ -52,11 +52,11 @@
                     {{ like_dislike_buttons('image', image_collection.id, image_collection) }}
 
                     {% if is_granted('ADMIN_IMAGES') %}
-                        <a class="btn btn-default" href="{{ path('images_admin_edit', {'id': image_collection.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit Collection{% endtrans %}</a>
+                        <a class="btn btn-default" href="{{ path('images_admin_edit', {'id': image_collection.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit{% endtrans %}</a>
                     {% endif %}
 
                     {% if is_granted('PERM_SEND_REPORTS') %}
-                        <button class="btn btn-default" data-report-button data-content-type="images" data-content-id="{{ image_collection.id }}"><span class="glyphicon glyphicon-bullhorn"></span> {% trans %}Report Issue{% endtrans %}</button>
+                        <button class="btn btn-default" data-report-button data-content-type="images" data-content-id="{{ image_collection.id }}"><span class="glyphicon glyphicon-bullhorn"></span> {% trans %}Report{% endtrans %}</button>
                     {% endif %}
 
                     {% if image_collection.downloadable == '1' or (image_collection.downloadable == 'default' and settings.images_default_download == '1') %}
