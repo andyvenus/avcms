@@ -114,8 +114,8 @@ class ImagesController extends Controller
         if (!file_exists($zipPath)) {
             $zip = new \ZipArchive();
 
-            if ($zip->open($zipPath, ZipArchive::OVERWRITE) !== true) {
-                throw new \Exception('Cannot create zip');
+            if (($err = $zip->open($zipPath, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE)) !== true) {
+                throw new \Exception('Cannot create zip: error '.$err);
             }
 
             foreach ($imageFiles as $file) {
