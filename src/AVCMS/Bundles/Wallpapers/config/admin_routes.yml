@@ -121,3 +121,9 @@ wallpaper_submissions_admin_home:
 wallpaper_submissions_admin_finder:
   path: /wallpaper-submissions/finder/{page}
   defaults: { page: 1, _controller: 'Wallpapers::WallpaperSubmissionsAdminController::finderAction' }
+
+# Misc #
+
+wallpaper_slug_regen:
+  path: /wallpapers/slug-regen
+  defaults: { _controller: 'Wallpapers::WallpapersAdminController::slugRegenAction' }
