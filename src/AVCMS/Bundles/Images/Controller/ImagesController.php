@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Util\SecureRandom;
@@ -56,6 +57,10 @@ class ImagesController extends Controller
             ->join($this->imageCategories, ['name', 'slug'])
             ->joinTaxonomy('tags')
             ->first();
+
+        if (!$imageCollection) {
+            throw $this->createNotFoundException();
+        }
 
         $imageCollection->files = $this->imageFiles->getImageFiles($imageCollection->getId());
 
