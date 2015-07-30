@@ -182,6 +182,7 @@ assets:
     priority: -15
   sortable.min.js:
     env: admin
+    compress: false
   codemirror.css:
       env: admin
 
