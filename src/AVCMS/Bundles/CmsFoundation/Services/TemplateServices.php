@@ -69,5 +69,10 @@ class TemplateServices implements ServicesInterface
         $container->register('twig.extension.php_include', 'AVCMS\Bundles\CmsFoundation\Twig\PhpIncludeTwigExtension')
             ->addTag('twig.extension')
         ;
+
+        $container->register('twig.extension.route_name', 'AVCMS\Bundles\CmsFoundation\Twig\RouteNameTwigExtension')
+            ->setArguments([new Reference('request.stack')])
+            ->addTag('twig.extension')
+        ;
     }
 }
