@@ -223,16 +223,23 @@ class WallpapersAdminController extends AdminBaseController
 
         $slugs = [];
         foreach ($wallpapers as $wallpaper) {
+            $slugs[$wallpaper->getId()] = $wallpaper->getSlug();
+        }
+
+        foreach ($wallpapers as $wallpaper) {
             $slug = $this->get('slug.generator')->slugify($wallpaper->getName());
 
-            if (in_array($slug, $slugs)) {
-                $slug .= rand(100, 99999);
+            if ($slugs[$wallpaper->getId()] != $slug) {
+                if (in_array($slug, $slugs)) {
+                    $slug .= rand(100, 99999);
+                }
+
+                $slugs[] = $slug;
+
+                $wallpaper->setSlug($slug);
+
+                $this->wallpapers->save($wallpaper);
             }
-            $slugs[] = $slug;
-
-            $wallpaper->setSlug($slug);
-
-            $this->wallpapers->save($wallpaper);
         }
 
         return new Response('Slugs regenerated');
