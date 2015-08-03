@@ -95,7 +95,7 @@ class AssetManagerExtension extends \Twig_Extension
     private function getLastGen()
     {
         if (!isset($this->lastGen)) {
-            if (!file_exists($this->lastGenFile)) {
+            if (!is_readable($this->lastGenFile)) {
                 $this->lastGen = 0;
             }
 
