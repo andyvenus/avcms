@@ -27,16 +27,6 @@ class Game extends Entity implements RateInterface
         return $this->get("category_id");
     }
 
-    public function setCategoryParent($value)
-    {
-        $this->set("category_parent", $value);
-    }
-
-    public function getCategoryParent()
-    {
-        return $this->get("category_parent");
-    }
-
     public function setComments($value)
     {
         $this->set("comments", $value);
