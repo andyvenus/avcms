@@ -97,9 +97,9 @@ class AssetManagerExtension extends \Twig_Extension
         if (!isset($this->lastGen)) {
             if (!is_readable($this->lastGenFile)) {
                 $this->lastGen = 0;
+            } else {
+                $this->lastGen = (int)file_get_contents($this->lastGenFile);
             }
-
-            $this->lastGen = (int) file_get_contents($this->lastGenFile);
         }
 
         return $this->lastGen;
