@@ -12,18 +12,11 @@ class CurlFileHandler extends FileHandlerBase
     //todo: support size
     public function validateFile($fileUrl, $file)
     {
-        /*
-        if ($this->maxSize !== null && $uploadedFile->getSize() > $this->maxSize) {
-            $this->setError("File size must not be bigger than {max_size}mb", ['max_size' => $this->maxSize]);
+        if (strpos($fileUrl, '.php') !== false) {
             return false;
-        }*/
+        }
 
-        $mimeGetter = new \finfo(FILEINFO_MIME_TYPE);
-        $mimeType = $mimeGetter->buffer($file);
-
-        $fileUrlNoQuery = strtok($fileUrl,'?');
-
-        return $this->checkFileType(pathinfo($fileUrlNoQuery, PATHINFO_EXTENSION), $mimeType);
+        return true;
     }
 
     /**
