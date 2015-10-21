@@ -44,7 +44,7 @@ class FacebookRegistrationSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::REQUEST => ['onRequest', -100]
+            KernelEvents::REQUEST => ['onRequest', -500]
         ];
     }
 }

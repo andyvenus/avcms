@@ -7,10 +7,8 @@
 
 namespace AVCMS\Bundles\FacebookConnect\Facebook;
 
-use AVCMS\Bundles\FacebookConnect\FacebookRedirectLoginHelper;
 use AVCMS\Core\SettingsManager\SettingsManager;
-use Facebook\FacebookRequest;
-use Facebook\FacebookSession;
+use Facebook\Facebook;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -36,44 +34,44 @@ class FacebookConnect
      */
     protected $helper;
 
+    /**
+     * @var Facebook
+     */
+    protected $facebook;
+
     public function __construct(SettingsManager $settings, UrlGeneratorInterface $urlGenerator, SessionInterface $session)
     {
         $this->settings = $settings;
         $this->urlGenerator = $urlGenerator;
         $this->session = $session;
 
-        FacebookSession::setDefaultApplication($settings->getSetting('facebook_app_id'), $settings->getSetting('facebook_secret'));
+        $enabled = $settings->getSetting('facebook_connect');
+        $appId = $settings->getSetting('facebook_app_id');
+        $secret = $settings->getSetting('facebook_secret');
+
+        if ($enabled && $appId && $secret) {
+            $this->facebook = new Facebook([
+                'app_id' => $settings->getSetting('facebook_app_id'),
+                'app_secret' => $settings->getSetting('facebook_secret'),
+                'default_graph_version' => 'v2.2',
+                'persistent_data_handler' => new SymfonySession($session)
+            ]);
+        }
     }
 
     public function getHelper()
     {
-        if (!isset($this->helper)) {
-            $url = $this->urlGenerator->generate('facebook_login_check', [], UrlGeneratorInterface::ABSOLUTE_URL);
-
-            $this->helper = new FacebookRedirectLoginHelper($url);
-            $this->helper->setSession($this->session);
-        }
-
-        return $this->helper;
+        return $this->facebook->getRedirectLoginHelper();
     }
 
-    public function createSession($accessToken)
+    public function api()
     {
-        return new FacebookSession($accessToken);
+        return $this->facebook;
     }
 
-    /**
-     * @param FacebookSession $session
-     * @param $method
-     * @param $path
-     * @param null $parameters
-     * @param null $version
-     * @param null $etag
-     * @return FacebookRequest
-     */
-    public function createRequest(FacebookSession $session, $method, $path, $parameters = null, $version = null, $etag = null)
+    public function setDefaultAccessToken($token)
     {
-        return new FacebookRequest($session, $method, $path, $parameters, $version, $etag);
+        $this->facebook->setDefaultAccessToken($token);
     }
 
     public function isEnabled()

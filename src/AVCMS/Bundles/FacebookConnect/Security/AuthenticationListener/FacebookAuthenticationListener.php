@@ -42,15 +42,15 @@ class FacebookAuthenticationListener extends AbstractAuthenticationListener impl
             return null;
         }
 
-        $session = $this->facebookConnect->getHelper()->getSessionFromRedirect();
+        $session = $this->facebookConnect->getHelper()->getAccessToken();
 
         if (!$session) {
             return null;
         }
 
-        $user = $this->facebookConnect->createRequest($session, 'GET', '/me?fields=id')->execute()->getGraphObject(GraphUser::className());
+        $user = $this->facebookConnect->api()->get('/me?fields=id', $session)->getGraphNode();
 
-        $token = new FacebookUserToken($this->providerKey, $user->getId(), $session->getToken());
+        $token = new FacebookUserToken($this->providerKey, $user->getField('id'), $session->getValue());
 
         return $this->authenticationManager->authenticate($token);
     }

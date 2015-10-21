@@ -10,6 +10,7 @@ namespace AVCMS\Bundles\FacebookConnect\EventSubscriber;
 use AVCMS\Bundles\CmsFoundation\Event\OutletEvent;
 use AVCMS\Bundles\FacebookConnect\Facebook\FacebookConnect;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class FacebookConnectButtonSubscriber implements EventSubscriberInterface
@@ -34,12 +35,18 @@ class FacebookConnectButtonSubscriber implements EventSubscriberInterface
      */
     private $siteUrl;
 
-    public function __construct(FacebookConnect $facebookConnect, $siteUrl, $webDir, TranslatorInterface $translator)
+    /**
+     * @var UrlGeneratorInterface
+     */
+    private $urlGenerator;
+
+    public function __construct(FacebookConnect $facebookConnect, $siteUrl, $webDir, TranslatorInterface $translator, UrlGeneratorInterface $urlGenerator)
     {
         $this->facebookConnect = $facebookConnect;
         $this->siteUrl = $siteUrl;
         $this->webDir = $webDir;
         $this->translator = $translator;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function addButton(OutletEvent $event)
@@ -54,7 +61,7 @@ class FacebookConnectButtonSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $url = $this->facebookConnect->getHelper()->getLoginUrl(['email']);
+        $url = $this->facebookConnect->getHelper()->getLoginUrl($this->urlGenerator->generate('facebook_login_check', [], UrlGeneratorInterface::ABSOLUTE_URL), ['email']);
 
         $content = '<a href="'.$url.'" class="btn btn-primary"><img src="'.$this->siteUrl.$this->webDir.'/resources/FacebookConnect/images/fb_icon.png" width="18" height="18" /> '.$this->translator->trans('Login With Facebook').'</a>';
 

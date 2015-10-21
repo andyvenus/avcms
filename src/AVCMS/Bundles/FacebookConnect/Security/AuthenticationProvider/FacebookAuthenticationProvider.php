@@ -40,9 +40,11 @@ class FacebookAuthenticationProvider implements AuthenticationProviderInterface
      */
     public function authenticate(TokenInterface $token)
     {
-        $facebookSession = $this->facebookConnect->createSession($token->getAccessToken());
+        $this->facebookConnect->setDefaultAccessToken($token->getAccessToken());
 
-        if ($facebookSession->validate()) {
+        $facebookUser = $this->facebookConnect->api()->get('/me')->getGraphNode();
+
+        if ($facebookUser->getField('id') == $token->getUser()) {
             $user = $this->users->query()->where('facebook__id', $token->getUser())->first();
             if (!$user) {
                 $user = new AnonymousUser();
@@ -51,7 +53,7 @@ class FacebookAuthenticationProvider implements AuthenticationProviderInterface
                 $user->group = $this->userGroups->getOne('ROLE_UNREGISTERED');
             }
 
-            $token = new FacebookUserToken($this->providerKey, $facebookSession->getUserId(), $facebookSession->getAccessToken(), $user);
+            $token = new FacebookUserToken($this->providerKey, $facebookUser->getField('id'), $token->getAccessToken(), $user);
             $token->setAuthenticated(true);
 
             return $token;

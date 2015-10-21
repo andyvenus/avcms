@@ -28,7 +28,7 @@
         "twig/extensions": "~1.1.0",
         "intervention/image": "~2.0",
         "php-curl-class/php-curl-class": "dev-master",
-        "facebook/php-sdk-v4" : "4.0.*",
+        "facebook/php-sdk-v4" : "5.0.*",
         "jms/cg": "1.1.*@dev"
     },
     "require-dev": {

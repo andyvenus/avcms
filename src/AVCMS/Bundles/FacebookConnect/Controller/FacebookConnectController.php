@@ -34,27 +34,24 @@ class FacebookConnectController extends Controller
             throw $this->createNotFoundException('Account already registered');
         }
 
-        $session = $facebookConnect->createSession($token->getAccessToken());
-        if (!$session->validate()) {
-            throw $this->createNotFoundException('Facebook session has expired, please re-login');
-        }
+        $facebookConnect->setDefaultAccessToken($token->getAccessToken());
+
+        $facebookUser = $facebookConnect->api()->get('/me?fields=first_name,id,email')->getGraphNode();
 
         $users = $this->container->get('users.model');
 
-        $formBlueprint = new FacebookAccountForm(!isset($facebookUser['email']));
+        $formBlueprint = new FacebookAccountForm(!$facebookUser->getField('email'));
 
         $form = $this->buildForm($formBlueprint, $request);
-
-        $facebookUser = $facebookConnect->createRequest($session, 'GET', '/me?fields=first_name,id,email')->execute()->getGraphObject(GraphObject::className())->asArray();
 
         if ($form->isValid()) {
             $form->saveToEntities();
 
-            $email = isset($facebookUser['email']) ? $facebookUser['email'] : $form->getData('email');
+            $email = $facebookUser->getField('email') ?: $form->getData('email');
 
             $newUser = $this->container->get('users.new_user_builder')->createNewUser($form->getData('username'), $email);
 
-            $newUser->facebook->setId($facebookUser['id']);
+            $newUser->facebook->setId($facebookUser->getField('id'));
 
             $users->save($newUser);
 
@@ -64,7 +61,7 @@ class FacebookConnectController extends Controller
             return $this->redirect('home');
         }
 
-        $logoutUrl = $facebookConnect->getHelper()->getLogoutUrl($session, $this->generateUrl('logout', [], UrlGeneratorInterface::ABSOLUTE_URL));
+        $logoutUrl = $facebookConnect->getHelper()->getLogoutUrl($facebookConnect->api()->getDefaultAccessToken(), $this->generateUrl('logout', [], UrlGeneratorInterface::ABSOLUTE_URL));
 
         return new Response($this->render('@FacebookConnect/new_account.twig', ['form' => $form->createView(), 'facebook_user' => $facebookUser, 'logout_url' => $logoutUrl]));
     }
