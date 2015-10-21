@@ -1,5 +1,9 @@
 {% extends '@Games/embeds/embed_base.twig' %}
 
 {% block embed_code %}
+    <div class="visible-xs" style="text-align:center;padding: 10px 0;">
+        Game not displaying correctly? <a href="{{ game.file }}" class="btn btn-primary">Open game in full window</a>
+    </div>
+
     <iframe src="{{ game.file }}" width="100%" height="100%" frameborder="0" scrolling="no" class="game-iframe"></iframe>
 {% endblock %}
