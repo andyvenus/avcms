@@ -33,7 +33,8 @@ class SiteUrlTwigExtension extends \Twig_Extension
 
         return array(
             'site_url' => $url,
-            'web_url' => $url.'web/'
+            'web_url' => $url.'web/',
+            'current_url' => "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"
         );
     }
 
