@@ -1,5 +1,6 @@
 #avcms-game-container {
   margin-bottom: 15px;
+  overflow: auto;
 }
 
 @mixin fullscreen-game-container() {

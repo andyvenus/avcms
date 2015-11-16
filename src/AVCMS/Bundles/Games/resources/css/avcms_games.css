@@ -1,5 +1,6 @@
 #avcms-game-container {
-  margin-bottom: 15px; }
+  margin-bottom: 15px;
+  overflow: auto; }
 
 #avcms-game-container:fullscreen #avcms-game-container-inner {
   position: fixed;
