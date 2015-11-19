@@ -3,6 +3,10 @@
   overflow: auto;
 }
 
+#avcms-game-container-inner {
+  overflow: hidden;
+}
+
 @mixin fullscreen-game-container() {
   position: fixed;
   width: 100% !important;

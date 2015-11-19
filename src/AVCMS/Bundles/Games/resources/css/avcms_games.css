@@ -2,6 +2,9 @@
   margin-bottom: 15px;
   overflow: auto; }
 
+#avcms-game-container-inner {
+  overflow: hidden; }
+
 #avcms-game-container:fullscreen #avcms-game-container-inner {
   position: fixed;
   width: 100% !important;
