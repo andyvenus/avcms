@@ -23,7 +23,7 @@ class GameFeedServices implements ServicesInterface
             ->addMethodCall('addFeed', [new Reference('feed.free_online_games')])
             ->addMethodCall('addFeed', [new Reference('feed.arcade_game_feed')])
             ->addMethodCall('addFeed', [new Reference('feed.2_player_games')])
-            ->addMethodCall('addFeed', [new Reference('feed.unity_feeds')])
+            //->addMethodCall('addFeed', [new Reference('feed.unity_feeds')]) Unity Feeds have shuttered
             ->addMethodCall('addFeed', [new Reference('feed.famobi')])
         ;
 
