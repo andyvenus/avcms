@@ -105,7 +105,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4">
-                                <p>{% trans %}Date Added{% endtrans %}: {{ game.datePublished|date(settings.date_format) }}</p>
+                                <p>{% trans %}Date Added{% endtrans %}: {{ game.publishDate|date(settings.date_format) }}</p>
                             </div>
                             <div class="col-md-4">
                                 <p>{% trans %}Category{% endtrans %}: <a href="{{ path('game_category', {'category': game.category.slug}) }}"> {{ game.category.name }}</a></p>

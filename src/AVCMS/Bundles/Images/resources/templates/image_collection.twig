@@ -81,7 +81,7 @@
                     <div class="box-main">
                         <div class="row">
                             <div class="col-md-4">
-                                <p>{% trans %}Date Added{% endtrans %}: {{ image_collection.datePublished|date(settings.date_format) }}</p>
+                                <p>{% trans %}Date Added{% endtrans %}: {{ image_collection.publishDate|date(settings.date_format) }}</p>
                             </div>
                             <div class="col-md-4">
                                 <p>{% trans %}Category{% endtrans %}: <a href="{{ path('image_category', {'category': image_collection.category.slug}) }}"> {{ image_collection.category.name }}</a></p>
