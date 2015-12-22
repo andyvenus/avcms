@@ -59,14 +59,14 @@ abstract class Entity implements Validatable
         }
         else {
             $data = $this->data;
-            foreach ($this->subEntities as $sub_entity) {
-                if (is_a($sub_entity, 'AV\Model\ExtensionEntity')) {
+            foreach ($this->subEntities as $subEntity) {
+                if (is_a($subEntity, 'AV\Model\ExtensionEntity')) {
 
-                    $sub_data = $sub_entity->toArray();
+                    $sub_data = $subEntity->toArray();
                     $sub_data_prefixed = array();
 
                     foreach ($sub_data as $param_name => $param_data) {
-                        $sub_data_prefixed[$sub_entity->getPrefix().'__'.$param_name] = $param_data;
+                        $sub_data_prefixed[$subEntity->getPrefix().'__'.$param_name] = $param_data;
                     }
 
                     $data = array_merge($data, $sub_data_prefixed);
