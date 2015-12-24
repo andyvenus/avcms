@@ -74,5 +74,9 @@ class TemplateServices implements ServicesInterface
             ->setArguments([new Reference('request.stack')])
             ->addTag('twig.extension')
         ;
+
+        $container->register('twig.extension.auto_link', 'AVCMS\Bundles\CmsFoundation\Twig\AutoLinkTwigExtension')
+            ->addTag('twig.extension')
+        ;
     }
 }
