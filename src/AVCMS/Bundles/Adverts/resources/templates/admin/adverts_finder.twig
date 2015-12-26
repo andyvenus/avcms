@@ -1,9 +1,5 @@
 {% extends '@admin/finder.twig' %}
 
-{% block finder_header_titles %}
-
-{% endblock %}
-
 {% block item_title %}
     <div class="finder-item-title" data-field="name">
         {{ item.name }}
@@ -18,6 +14,14 @@
     </div>
 {% endblock %}
 
-{% block item_extended_inner %}
+{% block finder_header_titles %}
+    <div class="col-xs-7 hidden-xs">
+        {% trans %}Template Code{% endtrans %} <span class="glyphicon glyphicon-info-sign" title="Add this code to a template in the Edit Templates section of the admin panel to display this ad anywhere you like. You can also add adverts as modules in the Modules section of the admin panel to avoid editing templates."></span>
+    </div>
+{% endblock %}
 
+{% block item_extended_inner %}
+    <div class="col-xs-7 hidden-xs">
+        <input type="text" value="{{ '{{ ' }}advert({{ item.id }}){{ ' }}' }}" class="form-control" onClick="this.select();" readonly />
+    </div>
 {% endblock %}
