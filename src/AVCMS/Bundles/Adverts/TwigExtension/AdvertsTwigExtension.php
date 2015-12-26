@@ -13,6 +13,8 @@ class AdvertsTwigExtension extends \Twig_Extension
 {
     private $adverts;
 
+    private $cache = [];
+
     public function __construct(Adverts $adverts)
     {
         $this->adverts = $adverts;
@@ -20,13 +22,17 @@ class AdvertsTwigExtension extends \Twig_Extension
 
     public function advert($advertId)
     {
+        if (isset($this->cache[$advertId])) {
+            return $this->cache[$advertId];
+        }
+
         $advert = $this->adverts->getOne($advertId);
 
         if (!$advert) {
             return;
         }
 
-        return $advert->getContent();
+        return $this->cache[$advertId] = $advert->getContent();
     }
 
     public function getFunctions()
