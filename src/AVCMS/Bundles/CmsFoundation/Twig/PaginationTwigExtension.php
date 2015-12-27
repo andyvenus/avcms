@@ -38,6 +38,11 @@ class PaginationTwigExtension extends \Twig_Extension
                 array($this, 'pagination'),
                 array('is_safe' => array('html')
                 )
+            ),
+            'paginationRel' => new \Twig_SimpleFunction('paginationRel',
+                array($this, 'paginationRel'),
+                array('is_safe' => array('html')
+                )
             )
         );
     }
@@ -52,7 +57,7 @@ class PaginationTwigExtension extends \Twig_Extension
         return 'avcms_pagination_extension';
     }
 
-    public function pagination($pages, $currentPage, $route = null, $routeAttr = [])
+    public function pagination($pages, $currentPage, $route = null, $routeAttr = [], $template = null)
     {
         $requestAttr = $this->requestStack->getCurrentRequest()->query->all();
 
@@ -69,11 +74,20 @@ class PaginationTwigExtension extends \Twig_Extension
             $route = $this->requestStack->getCurrentRequest()->get('_route');
         }
 
-        return $this->environment->render($this->template, [
+        if ($template === null) {
+            $template = $this->template;
+        }
+
+        return $this->environment->render($template, [
             'total_pages' => $pages,
             'current_page' => $currentPage,
             'route' => $route,
             'attributes' => $routeAttr
         ]);
+    }
+
+    public function paginationRel($pages, $currentPage, $route = null, $routeAttr = [])
+    {
+        return $this->pagination($pages, $currentPage, $route, $routeAttr, '@CmsFoundation/canonical.twig');
     }
 }

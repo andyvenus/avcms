@@ -25,6 +25,12 @@
 
     <meta property="og:site_name" content="{{ settings.site_name }}" />
 
+    {% block pagination_rel %}
+        {% if current_page and total_pages %}
+            {{ paginationRel(total_pages, current_page) }}
+        {% endif %}
+    {% endblock %}
+
     {% include '@CmsFoundation/google_analytics.twig' %}
     {% include '@CmsFoundation/custom_header_code.twig' %}
 

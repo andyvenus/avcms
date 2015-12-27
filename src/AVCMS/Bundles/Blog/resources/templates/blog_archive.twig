@@ -24,6 +24,10 @@
     {%- endif -%}
 {%- endblock %}
 
+{% block pagination_rel %}
+    {{ paginationRel(total_pages, current_page, 'blog_archive') }}
+{% endblock %}
+
 {% block content %}
     <div class="blog-home-container">
         {% block blog_archive_header %}

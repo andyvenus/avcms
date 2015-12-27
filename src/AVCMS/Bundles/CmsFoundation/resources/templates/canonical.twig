@@ -1,0 +1,9 @@
+{%- if total_pages > 1 -%}
+    {%- if current_page > 1  -%}
+        <link rel="prev" href="{{ path(route, attributes|merge({page: current_page - 1})) }}" />
+    {% endif -%}
+
+    {%- if current_page != total_pages  -%}
+        <link rel="next" href="{{ path(route, attributes|merge({page: current_page + 1})) }}" />
+    {%- endif -%}
+{%- endif -%}
