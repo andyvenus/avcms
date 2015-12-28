@@ -39,6 +39,12 @@
 </head>
 
 <body>
+{% if settings.site_offline and is_granted(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']) %}
+    <div class="site-offline">
+        AVCMS is in offline mode
+    </div>
+{% endif %}
+
 {% block body %}{% endblock %}
 
 {% block footer %}
