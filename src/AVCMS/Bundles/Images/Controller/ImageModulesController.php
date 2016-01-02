@@ -81,7 +81,19 @@ class ImageModulesController extends Controller
                 $label = 'More';
             }
 
-            $moreButton = ['url' => $this->generateUrl('browse_images', ['page' => $adminSettings['more_button_start_page'], 'order' => $adminSettings['order']]), 'label' => $label];
+            $moreButtonAttr = [
+                'page' => $adminSettings['more_button_start_page'],
+                'order' => $adminSettings['order']
+            ];
+
+            if (isset($category)) {
+                $moreButtonRoute = 'image_category';
+                $moreButtonAttr['category'] = $category->getSlug();
+            } else {
+                $moreButtonRoute = 'browse_images';
+            }
+
+            $moreButton = ['url' => $this->generateUrl($moreButtonRoute, $moreButtonAttr), 'label' => $label];
         }
 
         if ($adminSettings['show_image_category']) {

@@ -59,5 +59,9 @@ class VideosServices implements ServicesInterface
         ;
 
         $container->register('video.type.vimeo', 'AVCMS\Bundles\Videos\Type\VimeoVideo');
+
+        $container->register('video_category_choices', 'AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider')
+            ->setArguments([new Reference('videos.categories_model')])
+        ;
     }
 }

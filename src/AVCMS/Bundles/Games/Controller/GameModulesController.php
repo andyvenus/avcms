@@ -81,7 +81,19 @@ class GameModulesController extends Controller
                 $label = 'More';
             }
 
-            $moreButton = ['url' => $this->generateUrl('browse_games', ['page' => $adminSettings['more_button_start_page'], 'order' => $adminSettings['order']]), 'label' => $label];
+            $moreButtonAttr = [
+                'page' => $adminSettings['more_button_start_page'],
+                'order' => $adminSettings['order']
+            ];
+
+            if (isset($category)) {
+                $moreButtonRoute = 'game_category';
+                $moreButtonAttr['category'] = $category->getSlug();
+            } else {
+                $moreButtonRoute = 'browse_games';
+            }
+
+            $moreButton = ['url' => $this->generateUrl($moreButtonRoute, $moreButtonAttr), 'label' => $label];
         }
 
         if ($adminSettings['show_game_category']) {

@@ -81,7 +81,19 @@ class WallpaperModulesController extends Controller
                 $label = 'More';
             }
 
-            $moreButton = ['url' => $this->generateUrl('browse_wallpapers', ['page' => $adminSettings['more_button_start_page'], 'order' => $adminSettings['order']]), 'label' => $label];
+            $moreButtonAttr = [
+                'page' => $adminSettings['more_button_start_page'],
+                'order' => $adminSettings['order']
+            ];
+
+            if (isset($category)) {
+                $moreButtonRoute = 'wallpaper_category';
+                $moreButtonAttr['category'] = $category->getSlug();
+            } else {
+                $moreButtonRoute = 'browse_wallpapers';
+            }
+
+            $moreButton = ['url' => $this->generateUrl($moreButtonRoute, $moreButtonAttr), 'label' => $label];
         }
 
         if ($adminSettings['show_wallpaper_category']) {

@@ -22,9 +22,15 @@ class VideoModulesController extends Controller
      */
     private $videos;
 
+    /**
+     * @var \AVCMS\Bundles\Videos\Model\VideoCategories
+     */
+    private $videoCategories;
+
     public function setUp()
     {
         $this->videos = $this->model('Videos');
+        $this->videoCategories = $this->model('VideoCategories');
     }
 
     public function videosModule($adminSettings, User $user = null)
@@ -35,6 +41,14 @@ class VideoModulesController extends Controller
             ->limit($adminSettings['limit'])
             ->order($adminSettings['order'])
             ->published();
+
+        if ($adminSettings['category']) {
+            $category = $this->videoCategories->getOne($adminSettings['category']);
+
+            if ($category) {
+                $query->category($category);
+            }
+        }
 
         if ($adminSettings['filter'] === 'featured') {
             $query->featured();
@@ -53,6 +67,33 @@ class VideoModulesController extends Controller
             $ids = $ratings->getLikedIds($user->getId(), 'video', $adminSettings['limit']);
             $query = $this->videos->find()->ids($ids, 'videos.id');
             $moreButton = ['url' => $this->generateUrl('liked_videos', ['likes_user' => $user->getSlug()]), 'label' => 'All Liked Videos'];
+        }
+        else {
+            if ($adminSettings['more_button_start_page'] == 2) {
+                $pageTwoExists = ($query->getQuery()->count() > $this->setting('browse_videos_per_page'));
+                if (!$pageTwoExists) {
+                    $adminSettings['more_button_start_page'] = 1;
+                }
+            }
+
+            $label = 'Next Page';
+            if ($adminSettings['more_button_start_page'] == 1) {
+                $label = 'More';
+            }
+
+            $moreButtonAttr = [
+                'page' => $adminSettings['more_button_start_page'],
+                'order' => $adminSettings['order']
+            ];
+
+            if (isset($category)) {
+                $moreButtonRoute = 'video_category';
+                $moreButtonAttr['category'] = $category->getSlug();
+            } else {
+                $moreButtonRoute = 'browse_videos';
+            }
+
+            $moreButton = ['url' => $this->generateUrl($moreButtonRoute, $moreButtonAttr), 'label' => $label];
         }
 
         if ($adminSettings['show_video_category']) {
