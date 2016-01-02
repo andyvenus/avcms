@@ -54,7 +54,7 @@ class VimeoVideo extends AbstractVideoType
         $video->setName($videoInfo['title']);
         $video->setDescription(strip_tags($videoInfo['description']));
         $video->setDuration(gmdate("H:i:s", $videoInfo['duration']));
-        $video->setThumbnail($videoInfo['thumbnail_medium']);
+        $video->setThumbnail(str_replace('200x150', '480', $videoInfo['thumbnail_medium']));
         $video->setProvider($this->getId());
         $video->setProviderId($id);
 
