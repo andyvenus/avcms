@@ -72,6 +72,15 @@ admin_settings:
     validation:
       numeric:
         rule: Numeric
+  wallpaper_res_link_type:
+    type: select
+    label: Resolution Link Type
+    help: On the wallpaper details page, link to the preview or straight to the download?
+    section: wallpapers
+    default: preview
+    choices:
+      preview: Preview
+      download: Download
   wallpapers_allow_uploads:
     type: checkbox
     label: Allow Wallpaper Submissions
