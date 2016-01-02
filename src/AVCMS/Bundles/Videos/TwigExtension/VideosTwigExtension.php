@@ -8,6 +8,7 @@
 namespace AVCMS\Bundles\Videos\TwigExtension;
 
 use AVCMS\Bundles\Videos\Model\Video;
+use Twig_SimpleFilter;
 
 class VideosTwigExtension extends \Twig_Extension
 {
@@ -75,6 +76,32 @@ class VideosTwigExtension extends \Twig_Extension
                 array('is_safe' => array('html'))
             )
         ];
+    }
+
+    public function getFilters()
+    {
+        return [
+            new Twig_SimpleFilter('duration', function ($string) {
+                return $this->durationFilter($string);
+            })
+        ];
+    }
+
+    public function durationFilter($string)
+    {
+        $parts = explode(':', $string);
+
+        foreach ($parts as $part) {
+            if (is_numeric($part) && $part != '00') {
+                $validParts[] = $part;
+            }
+        }
+
+        if (!isset($validParts)) {
+            return '00:00';
+        }
+
+        return implode(':', $validParts);
     }
 
     public function initRuntime(\Twig_Environment $environment)

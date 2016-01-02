@@ -1,7 +1,10 @@
 <div style="margin-top: 15px;" class="browse-videos-details media">
     <div class="media-left">
         <a class="img-thumbnail" href="{{ path('watch_video', {slug: video.slug}) }}">
-            <img src="{{ video_thumbnail(video) }}" width="80"/>
+            <div class="video-thumb-container">
+                <img src="{{ video_thumbnail(video) }}" width="100"/>
+                <span class="video-duration">{{ video.duration|duration }}</span>
+            </div>
         </a>
     </div>
     <div class="media-body">

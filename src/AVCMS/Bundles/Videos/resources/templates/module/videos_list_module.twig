@@ -2,9 +2,12 @@
     {% for video in videos %}
         <a href="{{ path('watch_video', {slug: video.slug}) }}" class="list-group-item">
             <div class="media">
-                <span class="media-left" href="#">
-                    <img src="{{ video_thumbnail(video) }}" width="50" height="50"/>
-                </span>
+                <div class="media-left" href="#">
+                    <div class="video-thumb-container">
+                        <img src="{{ video_thumbnail(video) }}" width="89" height="50"/>
+                        <span class="video-duration">{{ video.duration|duration }}</span>
+                    </div>
+                </div>
                 <div class="media-body" style="vertical-align: middle;">
                     <h5 class="media-heading">{{ video.name }} </h5>
                     {% if admin_settings.show_video_description %}

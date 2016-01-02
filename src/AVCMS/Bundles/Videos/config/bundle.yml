@@ -10,6 +10,8 @@ assets:
   avcms_videos_admin.js:
     env: admin
 
+  avcms_videos.css:
+    env: shared
   video-js.min.css:
     env: frontend
 
@@ -140,7 +142,7 @@ admin_settings:
     choices:
       details: Details
       thumbnail: Thumbnail
-    default: details
+    default: thumbnail
     section: browse_videos
   browse_videos_columns:
     type: select
