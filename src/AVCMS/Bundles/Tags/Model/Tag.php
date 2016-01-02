@@ -28,4 +28,9 @@ class Tag extends Entity
     public function getName() {
         return $this->get('name');
     }
+
+    public function getSlug()
+    {
+        return str_replace(' ', '-', $this->get('name'));
+    }
 } 

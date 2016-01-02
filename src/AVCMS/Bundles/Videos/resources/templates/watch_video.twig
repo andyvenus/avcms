@@ -109,7 +109,7 @@
                             <div class="col-md-12">
                                 {% trans %}Tags{% endtrans %}:
                                 {% for tag in video.tags %}
-                                    <a class="btn btn-default btn-xs" href="{{ path('video_tag', {'tags': tag.name}) }}">{{ tag.name }}</a>
+                                    <a class="btn btn-default btn-xs" href="{{ path('video_tag', {'tags': tag.slug}) }}">{{ tag.name }}</a>
                                 {% else %}
                                     {% trans %}None{% endtrans %}
                                 {% endfor %}

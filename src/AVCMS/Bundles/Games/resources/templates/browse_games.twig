@@ -4,7 +4,7 @@
     {% if category %}
         {{ category.name }}
     {% elseif finder_request.tags %}
-        {% trans with {tags: finder_request.tags|replace({'|': ', '})} %}Games tagged with: {tags}{% endtrans %}
+        {% trans with {tags: finder_request.tags|replace({'|': ', ', '-': ' '})} %}Games tagged with: {tags}{% endtrans %}
     {% elseif page_type == 'featured' %}
         {% trans %}Featured Games{% endtrans %}
     {% elseif page_type == 'likes' %}

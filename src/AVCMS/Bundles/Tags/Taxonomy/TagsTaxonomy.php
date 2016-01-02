@@ -55,6 +55,11 @@ class TagsTaxonomy implements TaxonomyInterface
      */
     public function setTaxonomyJoin($model, QueryBuilderHandler $query, array $tags)
     {
+        // Add tag with dashes replaced with spaces as a valid matching tag
+        foreach ($tags as $tag) {
+            $tags[] = str_replace('-', ' ', $tag);
+        }
+
         $query->join($this->relationsModel->getTable(), 'content_id', '=', $model->getTable().'.id', 'left')
             ->join($this->tags->getTable(), $this->tags->getTable().'.id', '=', $this->relationsModel->getTable().'.taxonomy_id', 'left')
             ->where('content_type', $model->getSingular())

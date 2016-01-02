@@ -120,7 +120,7 @@
                                 <p>
                                     {% trans %}Tags{% endtrans %}:
                                     {% for tag in game.tags %}
-                                        <a class="btn btn-default btn-xs" href="{{ path('game_tag', {'tags': tag.name}) }}">{{ tag.name }}</a>
+                                        <a class="btn btn-default btn-xs" href="{{ path('game_tag', {'tags': tag.slug}) }}">{{ tag.name }}</a>
                                     {% else %}
                                         {% trans %}None{% endtrans %}
                                     {% endfor %}
