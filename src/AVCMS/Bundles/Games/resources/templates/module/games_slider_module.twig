@@ -1,0 +1,31 @@
+<div id="featured-games-slider" class="carousel slide" data-ride="carousel">
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+        {% for game in games %}
+            <div class="item {% if loop.first %}active{% endif %}">
+                <div class="row">
+                    <div class="col-md-5">
+                        <a href="{{ path('play_game', {slug: game.slug}) }}"><img src="{{ game_thumbnail(game) }}" style="width: 100%"></a>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>{{ game.name }}</h3>
+                        <p>{{ game.description|striptags }}</p>
+
+                        <a class="btn btn-primary" href="{{ path('play_game', {slug: game.slug}) }}">{% trans %}Play{% endtrans %}</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#featured-games-slider" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#featured-games-slider" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
