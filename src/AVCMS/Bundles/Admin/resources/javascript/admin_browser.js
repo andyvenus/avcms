@@ -9,6 +9,7 @@ $(document).ready(function() {
     body.on('change', 'form[name="filter_form"] input[data-no-auto-search]', avcms.browser.changeFinderFilters);
     body.on('keyup', 'form[name="filter_form"] input:not([data-no-auto-search])', avcms.browser.changeFinderFilters);
     body.on('click', 'form[name="filter_form"] :checkbox', avcms.browser.changeFinderFilters);
+    body.on('click', '.submit-search', avcms.browser.changeFinderFilters);
     body.on('click', '.clear-search', avcms.browser.clearSearch);
 
     body.on('click', '.select-all-button', avcms.browser.selectAllFinderResults);

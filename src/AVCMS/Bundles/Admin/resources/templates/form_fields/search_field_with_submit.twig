@@ -1,0 +1,9 @@
+<div class="input-group">
+    {% set type = 'text' %}
+    {{ form_field(field, {'placeholder': field.options.placeholder|default('Search')|trans}) }}
+    <span class="input-group-btn">
+        <button class="btn btn-default submit-search" type="button" title="Search">
+            <span class="glyphicon glyphicon-search"></span>
+        </button>
+    </span>
+</div>

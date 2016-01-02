@@ -47,23 +47,23 @@ menu_items:
       permission: ADMIN_VIDEOS
       settings:
         route: videos_admin_home
-    videos_categories_admin:
-      label: Categories
-      icon: glyphicon glyphicon-th-list
-      type: route
-      default_order: 1
-      parent: videos_admin
-      settings:
-        route: videos_manage_categories
     import_videos_admin:
       label: Import Videos
       icon: glyphicon glyphicon-import
       type: route
-      default_order: 2
+      default_order: 1
       permission: ADMIN_VIDEOS
       parent: videos_admin
       settings:
         route: import_videos_admin_home
+    videos_categories_admin:
+      label: Categories
+      icon: glyphicon glyphicon-th-list
+      type: route
+      default_order: 2
+      parent: videos_admin
+      settings:
+        route: videos_manage_categories
     videos_submissions_admin:
       label: Submissions
       icon: glyphicon glyphicon-inbox

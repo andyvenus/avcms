@@ -20,7 +20,8 @@ class YouTubeFiltersForm extends FormBlueprint
             'attr' => [
                 'placeholder' => 'Search',
                 'data-no-auto-search' => 1
-            ]
+            ],
+            'field_template' => '@admin/form_fields/search_field_with_submit.twig'
         ]);
 
 
