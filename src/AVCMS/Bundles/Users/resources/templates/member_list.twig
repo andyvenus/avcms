@@ -16,7 +16,7 @@
                 {% for user in users %}
                     <div class="col-xs-6 col-sm-3">
                         <a class="thumbnail" href="{{ path('user_profile', {'slug': user.slug}) }}">
-                            <img src="{{ avatar_url(user) }}" width="100%" alt="{{ user.username }}">
+                            <img src="{{ avatar_url(user) }}" style="width: 100%" alt="{{ user.username }}">
                             <div class="caption">
                                 {{ user.username }}
                             </div>

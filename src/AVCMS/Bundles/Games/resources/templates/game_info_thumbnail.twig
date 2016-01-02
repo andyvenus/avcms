@@ -1,5 +1,5 @@
 <a class="thumbnail layout-games-thumbnail clearfix {% if settings.games_square_thumbnails %}square{% endif %}" href="{{ path('play_game', {slug: game.slug}) }}">
-    <img src="{{ game_thumbnail(game) }}" width="100%" alt="{{ game.name }}"/>
+    <img src="{{ game_thumbnail(game) }}" style="width: 100%" alt="{{ game.name }}"/>
     <div class="pull-left" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;width:100%">
         {{ game.name }}
         {% if admin_settings.show_game_description %}

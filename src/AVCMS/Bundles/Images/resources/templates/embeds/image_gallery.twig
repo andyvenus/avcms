@@ -2,7 +2,7 @@
     {% for image in image_collection.files %}
         <div class="col-lg-4">
             <a class="thumbnail image-gallery-thumbnail {% if settings.images_thumbnail_crop == 'maintain_ratio' %}avcms-level-thumbnails{% endif %} clearfix" href="{{ image_file_url(image) }}" title="{{ image.caption }}">
-                <img src="{{ image_thumbnail(image) }}" width="100%"/>
+                <img src="{{ image_thumbnail(image) }}" style="width: 100%"/>
             </a>
         </div>
     {% endfor %}

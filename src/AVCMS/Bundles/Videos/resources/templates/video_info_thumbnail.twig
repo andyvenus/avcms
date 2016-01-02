@@ -1,5 +1,5 @@
 <a class="thumbnail browse-videos-thumbnail clearfix" href="{{ path('watch_video', {slug: video.slug}) }}">
-    <img src="{{ video_thumbnail(video) }}" width="100%"/>
+    <img src="{{ video_thumbnail(video) }}" style="width: 100%"/>
     <div class="pull-left" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;width:100%">
         {{ video.name }}
         {% if admin_settings.show_video_description %}
