@@ -14,7 +14,8 @@ class UsersInstaller extends BundleInstaller
     public function getVersions()
     {
         return [
-            '1.0' => 'install_1_0_0'
+            '1.0' => 'install_1_0_0',
+            '1.0.1' => 'install_1_0_1'
         ];
     }
 
@@ -147,5 +148,10 @@ class UsersInstaller extends BundleInstaller
         $unregistered = $groupsModel->newEntity();
         $unregistered->fromArray(['id' => 'ROLE_UNREGISTERED', 'name' => 'Unregistered', 'flood_control_time' => 60, 'admin_default' => 'deny', 'perm_default' => 'deny', 'moderator_default' => 'deny', 'owner' => 'app', 'custom_permissions' => '0', 'admin_panel_access' => 0]);
         $groupsModel->save($unregistered);
+    }
+
+    public function install_1_0_1()
+    {
+        $this->PDO->exec("ALTER TABLE {$this->prefix}users ADD `last_profile_update` int(11) NOT NULL DEFAULT '0'");
     }
 }

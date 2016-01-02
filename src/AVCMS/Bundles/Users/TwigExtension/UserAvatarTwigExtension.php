@@ -65,7 +65,7 @@ class UserAvatarTwigExtension extends \Twig_Extension
             return $this->siteUrl.'web/resources/Users/images/default_avatar.png';
         }
 
-        return $this->avatarPath.'/'.$avatar;
+        return $this->avatarPath.'/'.$avatar . '?x=' . $user->getLastProfileUpdate();
     }
 
     public function userCoverUrl(User $user)

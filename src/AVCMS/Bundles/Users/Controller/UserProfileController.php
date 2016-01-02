@@ -80,6 +80,8 @@ class UserProfileController extends Controller
                 $user->setCoverImage($filename);
             }
 
+            $user->setLastProfileUpdate(time());
+
             $users = $this->model('Users');
             $users->save($user);
         }
