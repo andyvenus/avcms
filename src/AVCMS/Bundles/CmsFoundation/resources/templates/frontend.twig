@@ -31,7 +31,6 @@
         {% endif %}
     {% endblock %}
 
-    {% include '@CmsFoundation/google_analytics.twig' %}
     {% include '@CmsFoundation/custom_header_code.twig' %}
 
     {% block header_extra %}{% endblock %}
@@ -65,6 +64,8 @@
 {% endblock %}
 
 {% include '@CmsFoundation/custom_body_code.twig' %}
+
+{% include '@CmsFoundation/google_analytics.twig' %}
 </body>
 
 </html>
