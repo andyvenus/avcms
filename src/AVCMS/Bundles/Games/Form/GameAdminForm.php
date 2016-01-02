@@ -81,6 +81,13 @@ class GameAdminForm extends AdminContentForm
             )
         ));
 
+        if ($game->getId() != 0) {
+            $this->add('hits', 'text', [
+                'label' => 'Total Times Played',
+                'section' => 'stats',
+            ]);
+        }
+
         parent::__construct($game->getId() ?: 0);
     }
 

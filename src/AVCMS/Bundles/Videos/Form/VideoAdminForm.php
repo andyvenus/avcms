@@ -72,6 +72,13 @@ class VideoAdminForm extends AdminContentForm
 
         $this->add('provider_id', 'hidden');
 
+        if ($video->getId() != 0) {
+            $this->add('hits', 'text', [
+                'label' => 'Total Times Watched',
+                'section' => 'stats',
+            ]);
+        }
+
         parent::__construct($video->getId() ?: 0);
     }
 

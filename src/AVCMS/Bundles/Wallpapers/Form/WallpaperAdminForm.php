@@ -82,6 +82,18 @@ class WallpaperAdminForm extends AdminContentForm
             )
         ));
 
+        if ($itemId != 0) {
+            $this->add('hits', 'text', [
+                'label' => 'Total Hits',
+                'section' => 'stats',
+            ]);
+
+            $this->add('total_downloads', 'text', [
+                'label' => 'Total Downloads',
+                'section' => "stats"
+            ]);
+        }
+
         parent::__construct($itemId);
 
         if ($import === true) {

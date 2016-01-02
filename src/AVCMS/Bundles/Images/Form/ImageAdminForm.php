@@ -79,6 +79,13 @@ class ImageAdminForm extends AdminContentForm
             )
         ));
 
+        if ($image->getId() != 0) {
+            $this->add('hits', 'text', [
+                'label' => 'Total Hits',
+                'section' => 'stats',
+            ]);
+        }
+
         parent::__construct($image->getId() ?: 0);
 
         if ($this->import === true) {
