@@ -394,6 +394,54 @@ a {
   height: 68px;
 }
 
+.finder-grid-container {
+  margin: 15px;
+}
+
+.grid-item {
+  border: 1px solid #e6e6e6;
+  margin-bottom: 15px;
+
+  .grid-item-main {
+    height: 85px;
+
+    background-color: white;
+
+    overflow: hidden;
+
+    padding: 7px 0;
+
+    .grid-thumbnail {
+      float: left;
+    }
+
+    .grid-item-info {
+      margin-left: 140px;
+      margin-right: 5px;
+    }
+
+    .finder-item-checkbox-container {
+      float: left;
+      padding: 0 5px;
+    }
+  }
+
+  .grid-item-footer {
+    background-color: darken(white, 9);
+    padding: 5px;
+    text-align: right;
+
+    background: rgba(240,240,240,1);
+    background: -moz-linear-gradient(top, rgba(240,240,240,1) 0%, rgba(250,250,250,1) 13%, rgba(250,250,250,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(240,240,240,1)), color-stop(13%, rgba(250,250,250,1)), color-stop(100%, rgba(250,250,250,1)));
+    background: -webkit-linear-gradient(top, rgba(240,240,240,1) 0%, rgba(250,250,250,1) 13%, rgba(250,250,250,1) 100%);
+    background: -o-linear-gradient(top, rgba(240,240,240,1) 0%, rgba(250,250,250,1) 13%, rgba(250,250,250,1) 100%);
+    background: -ms-linear-gradient(top, rgba(240,240,240,1) 0%, rgba(250,250,250,1) 13%, rgba(250,250,250,1) 100%);
+    background: linear-gradient(to bottom, rgba(240,240,240,1) 0%, rgba(250,250,250,1) 13%, rgba(250,250,250,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', endColorstr='#fafafa', GradientType=0 );
+  }
+}
+
 .browser-editor {
   .mobile-back {
     border-bottom: 1px solid darken(#f5f5f5, 5);
@@ -655,6 +703,13 @@ a {
 
   background: rgb(182, 182, 182); /* The Fallback */
   background: rgba(255, 255, 255, 0.76);
+}
+
+.select-inline {
+  padding: 0px;
+  margin: 0px;
+  display: inline;
+  width: 200px;
 }
 
 .select-sm-inline {

@@ -1,0 +1,113 @@
+{% extends '@admin/finder.twig' %}
+
+{% block finder_items %}
+    <div class="finder-grid-container">
+        <div class="row">
+            {% for item in items %}
+                <div class="col-md-4">
+                    <div class="grid-item" data-id="{{ item.providerId }}">
+                        <div class="grid-item-main">
+                            <div class="finder-item-checkbox-container">
+                                <input type="checkbox" {% if item.providerId in existing|keys %}disabled{% endif %} />
+                            </div>
+                            <div class="grid-thumbnail">
+                                <img class="video-thumbnail" style="cursor: pointer;" src="{{ video_thumbnail(item) }}" width="110" height="70"/>
+                            </div>
+                            <div class="grid-item-info">
+                                <a href="https://www.youtube.com/watch?v={{ item.providerId }}" target="_blank" style="font-size: 13px;">{{ item.name|truncate(85) }}</a>
+                            </div>
+                        </div>
+                        <div class="grid-item-footer">
+                            <a class="btn btn-xs btn-default" href="https://www.youtube.com/watch?v={{ item.providerId }}" target="_blank" title="View on site">
+                                <span class="glyphicon glyphicon-new-window"></span>
+                            </a>
+
+                            {% if item.providerId in existing|keys %}
+                                <a href="{{ url('videos_admin_edit', {'id': existing[item.providerId]}) }}" class="btn btn-xs btn-info">
+                                    <span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit{% endtrans %}
+                                </a>
+                            {% else %}
+                                {{ form_field(categoriesForm.category, {'class': 'no_select2 select-sm-inline'}) }}
+
+                                <button class="btn btn-xs btn-success avcms-import-video"><span class="glyphicon glyphicon-plus"></span> {% trans %}Import{% endtrans %}</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                {% if loop.index is divisible by(3) %}
+                    </div><div class="row">
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block finder_itemsx %}
+    <div class="row">
+    {% for item in items %}
+        <div class="col-md-4">
+            <div class="browser-finder-item grid-finder-item" data-id="{{ item.providerId }}" {% block finder_item_attr %}{% endblock %}>
+                {% block item_checkbox %}
+                    <div class="finder-item-checkbox-container">
+                        <input type="checkbox" />
+                    </div>
+                {% endblock %}
+
+                <div class="finder-item-main">
+                    <div class="finder-thumbnail">
+                        <img src="{{ video_thumbnail(item) }}" width="110" height="70"/>
+                    </div>
+
+                    <div class="finder-item-title" style="white-space: normal;" data-field="name">
+                        <a href="https://www.youtube.com/watch?v={{ item.providerId }}" target="_blank" style="font-size: 13px;">{{ item.name|truncate(55) }}</a>
+                    </div>
+
+                    <div class="btn-group">
+                        {% if item.providerId in existing %}
+                            <button class="btn btn-xs btn-success avcms-import-video" disabled><span class="glyphicon glyphicon-plus"></span> {% trans %}Imported{% endtrans %}</button>
+                        {% else %}
+                            <button class="btn btn-xs btn-success avcms-import-video"><span class="glyphicon glyphicon-plus"></span> {% trans %}Import{% endtrans %}</button>
+                        {% endif %}
+                    </div>
+
+                    <a class="btn btn-xs btn-default" href="https://www.youtube.com/watch?v={{ item.providerId }}" target="_blank" title="View on site">
+                        <span class="glyphicon glyphicon-new-window"></span>
+                    </a>
+                </div>
+                <div class="finder-item-extended">
+                    {% block item_extended %}
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-xs-3 hidden-xs">
+
+                                </div>
+                                <div class="col-xs-3 hidden-xs" style="word-break: break-all">
+
+                                </div>
+                                <div class="col-xs-2 hidden-xs">
+                                    {{ item.hits }}
+                                </div>
+                                <div class="col-xs-3 hidden-xs">
+                                    {% if item.lastHit %}
+
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    {% if loop.index is divisible by(3) %}
+        </div><div class="row">
+    {% endif %}
+    {% else %}
+        <div style="display:none;">NORESULTS</div>
+        <div class="finder-no-results">
+            {% block no_results %}{% trans %}No results{% endtrans %}{% endblock %}
+        </div>
+    {% endfor %}
+    </div>
+
+{% endblock %}

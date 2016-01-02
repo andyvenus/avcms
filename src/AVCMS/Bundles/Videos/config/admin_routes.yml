@@ -1,0 +1,134 @@
+videos_admin_edit:
+  path:     /videos/edit/{id}
+  defaults: { _controller: 'Videos::VideosAdminController::editAction' }
+
+videos_admin_add:
+  path:     /videos/new
+  defaults: { _controller: 'Videos::VideosAdminController::editAction' }
+
+videos_admin_delete:
+  path:     /videos/delete
+  defaults: { _controller: 'Videos::VideosAdminController::deleteAction' }
+
+videos_admin_home:
+  path: /videos
+  defaults: { _controller: 'Videos::VideosAdminController::homeAction' }
+
+videos_admin_finder:
+  path: /videos/finder/{page}
+  defaults: { page: 1, _controller: 'Videos::VideosAdminController::finderAction' }
+
+videos_admin_toggle_published:
+  path: /videos/publish
+  defaults: { _controller: Videos::VideosAdminController::togglePublishedAction }
+
+videos_admin_toggle_featured:
+  path: /videos/toggle-featured
+  defaults: { _controller: Videos::VideosAdminController::toggleFeaturedAction }
+
+# Get video info #
+
+videos_admin_get_info:
+  path: /videos/get-info
+  defaults: { _controller: Videos::VideosAdminController::getVideoInfoAction }
+
+# Import Videos #
+import_videos_admin_home:
+  path: /import-videos
+  defaults: { _controller: 'Videos::ImportVideosAdminController::homeAction' }
+
+import_videos_admin_import:
+  path: /import-videos/import
+  defaults: { _controller: 'Videos::ImportVideosAdminController::importAction' }
+
+import_videos_admin_finder:
+  path: /import-videos/finder/{page}
+  defaults: { page: 1, _controller: 'Videos::ImportVideosAdminController::finderAction' }
+
+# File Select #
+videos_admin_find_files:
+  path: /videos/find-files
+  defaults: { _controller: 'Videos::VideoFilesAdminController::findFilesAction' }
+
+videos_admin_upload_file:
+  path: /videos/upload
+  defaults: { _controller: 'Videos::VideoFilesAdminController::uploadFilesAction' }
+
+videos_grab_file:
+  path: /videos/grab-file
+  defaults: { _controller: Videos::VideoFilesAdminController::grabFileAction }
+
+# Categories #
+videos_manage_categories:
+  path: /videos/categories
+  defaults: { _controller: 'Videos::VideosAdminController::manageCategoriesAction', contentType: video }
+
+videos_save_categories_order:
+  path: /videos/categories/save-order
+  defaults: { _controller: Videos::VideosAdminController::saveOrderAction, contentType: video }
+
+videos_admin_add_category:
+  path: /videos/categories/new
+  defaults: { _controller: Videos::VideosAdminController::editCategoryAction, contentType: video }
+
+videos_admin_delete_category:
+  path: /videos/categories/delete/{id}
+  defaults: { _controller: Videos::VideosAdminController::deleteCategoryAction, contentType: video }
+
+videos_admin_edit_category:
+  path: /videos/categories/edit/{id}
+  defaults: { _controller: Videos::VideosAdminController::editCategoryAction, contentType: video }
+
+# Video Feeds #
+update_video_feeds:
+  path:     /video-feeds/update
+  defaults: { _controller: 'Videos::VideoFeedsAdminController::updateFeedsAction' }
+
+download_videos_feed:
+  path:     /video-feeds/download
+  defaults: { _controller: 'Videos::VideoFeedsAdminController::downloadFeedAction' }
+
+import_feed_video:
+  path:     /video-feeds/import
+  defaults: { _controller: 'Videos::VideoFeedsAdminController::importVideoAction' }
+
+play_feed_video:
+  path:     /video-feeds/play/{id}
+  defaults: { _controller: 'Videos::VideoFeedsAdminController::playVideoAction' }
+
+video_feeds_admin_reject:
+  path:     /video-feeds/delete
+  defaults: { _controller: 'Videos::VideoFeedsAdminController::rejectAction' }
+
+video_feed_categories:
+  path:     /video-feeds/categories
+  defaults: { _controller: 'Videos::VideoFeedsAdminController::categoriesSetupAction' }
+
+video_feeds_admin_home:
+  path: /video-feeds
+  defaults: { _controller: 'Videos::VideoFeedsAdminController::homeAction' }
+
+video_feeds_admin_finder:
+  path: /video-feeds/finder/{page}
+  defaults: { page: 1, _controller: 'Videos::VideoFeedsAdminController::finderAction' }
+
+# Manage Submissions #
+video_submissions_admin_review:
+    path:     /video-submissions/review/{id}
+    defaults: { _controller: 'Videos::VideoSubmissionsAdminController::reviewAction' }
+
+video_submissions_admin_delete:
+    path:     /video-submissions/delete
+    defaults: { _controller: 'Videos::VideoSubmissionsAdminController::deleteAction' }
+
+video_submissions_admin_home:
+  path: /video-submissions
+  defaults: { _controller: 'Videos::VideoSubmissionsAdminController::homeAction' }
+
+video_submissions_admin_finder:
+  path: /video-submissions/finder/{page}
+  defaults: { page: 1, _controller: 'Videos::VideoSubmissionsAdminController::finderAction' }
+
+video_submissions_admin_play:
+  path: /video-submissions/play/{id}
+  defaults: { _controller: 'Videos::VideoSubmissionsAdminController::playVideoAction' }

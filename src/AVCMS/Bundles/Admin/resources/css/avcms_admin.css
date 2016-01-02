@@ -266,6 +266,38 @@ a {
   z-index: 10;
   height: 68px; }
 
+.finder-grid-container {
+  margin: 15px; }
+
+.grid-item {
+  border: 1px solid #e6e6e6;
+  margin-bottom: 15px; }
+  .grid-item .grid-item-main {
+    height: 85px;
+    background-color: white;
+    overflow: hidden;
+    padding: 7px 0; }
+    .grid-item .grid-item-main .grid-thumbnail {
+      float: left; }
+    .grid-item .grid-item-main .grid-item-info {
+      margin-left: 140px;
+      margin-right: 5px; }
+    .grid-item .grid-item-main .finder-item-checkbox-container {
+      float: left;
+      padding: 0 5px; }
+  .grid-item .grid-item-footer {
+    background-color: #e8e8e8;
+    padding: 5px;
+    text-align: right;
+    background: #f0f0f0;
+    background: -moz-linear-gradient(top, #f0f0f0 0%, #fafafa 13%, #fafafa 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, #f0f0f0), color-stop(13%, #fafafa), color-stop(100%, #fafafa));
+    background: -webkit-linear-gradient(top, #f0f0f0 0%, #fafafa 13%, #fafafa 100%);
+    background: -o-linear-gradient(top, #f0f0f0 0%, #fafafa 13%, #fafafa 100%);
+    background: -ms-linear-gradient(top, #f0f0f0 0%, #fafafa 13%, #fafafa 100%);
+    background: linear-gradient(to bottom, #f0f0f0 0%, #fafafa 13%, #fafafa 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', endColorstr='#fafafa', GradientType=0 ); }
+
 .browser-editor .mobile-back {
   border-bottom: 1px solid #e8e8e8;
   background-color: #f5f5f5;
@@ -432,6 +464,12 @@ a {
   /* The Fallback */
   background: rgba(255, 255, 255, 0.76); }
 
+.select-inline {
+  padding: 0px;
+  margin: 0px;
+  display: inline;
+  width: 200px; }
+
 .select-sm-inline {
   padding: 0px;
   margin: 0px;
@@ -447,3 +485,5 @@ a {
 
 .monospaced-field {
   font-family: "Courier New", Courier, monospace; }
+
+/*# sourceMappingURL=avcms_admin.css.map */

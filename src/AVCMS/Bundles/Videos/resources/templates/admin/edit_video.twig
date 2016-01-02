@@ -1,0 +1,69 @@
+{% extends '@admin/edit_item.twig' %}
+
+{% block title -%}
+    {% spaceless %}
+        {% if item.id %}
+            {% trans with {'item': item.name} %}Editing {item}{% endtrans %}
+        {% else %}
+            {% trans %}New Video{% endtrans %}
+        {% endif %}
+    {% endspaceless  %}
+{% endblock %}
+
+{% block editor_title_edit %}
+    <span class="light">{% trans %}Editing Video{% endtrans %}:</span> <span data-id="{{ item.id }}" data-field="name">{{ item.name }}</span>
+{% endblock %}
+
+{% block editor_title_new %}
+    {% trans %}New Video{% endtrans %}
+{% endblock %}
+
+{% block form_rows %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">{% trans %}Video{% endtrans %}</h1>
+        </div>
+        <div class="panel-body">
+            {{ form_rows_before(form, 'video_thumbnail') }}
+
+            <div class="provider-info">
+                {% if not item.id %}
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                    Enter the URL to a video on a site such as YouTube or Vine and any valid details
+                    will automatically be used to fill in the form. You can also enter the URL to any MP4 or FLV video.
+                {% else %}
+                    Provider: <span class="label label-default">{{ provider.name|default('None') }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">{% trans %}Thumbnail{% endtrans %}</h1>
+        </div>
+        <div class="panel-body">
+            {{ form_rows_between(form, 'video_thumbnail', 'thumbnail') }}
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">{% trans %}Details{% endtrans %}</h1>
+        </div>
+        <div class="panel-body">
+            {{ form_rows_between(form, 'name', 'slug') }}
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">{% trans %}Publish{% endtrans %}</h1>
+        </div>
+        <div class="panel-body">
+            {{ form_rows_after(form, 'slug') }}
+        </div>
+    </div>
+
+{% endblock %}

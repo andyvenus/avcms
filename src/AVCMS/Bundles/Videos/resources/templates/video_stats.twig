@@ -1,0 +1,20 @@
+{% if admin_settings.show_video_ratings %}
+    <span class="text-success"><span class="glyphicon glyphicon-thumbs-up"></span> {{ video.likes }}</span>
+    <span class="text-danger"><span class="glyphicon glyphicon-thumbs-down"></span> {{ video.dislikes }}</span>
+{% endif %}
+
+{% if admin_settings.show_video_hits %}
+    &nbsp;<span title="{% trans %}Times Video Played{% endtrans %}"><span class="glyphicon glyphicon-eye-open"></span> {{ video.hits }}</span>
+{% endif %}
+
+{% if admin_settings.show_video_date %}
+    &nbsp;<span class="glyphicon glyphicon-calendar"></span> {{ video.publishDate|date(settings.date_format) }}
+{% endif %}
+
+{% if admin_settings.show_video_category %}
+    &nbsp;<span class="glyphicon glyphicon-folder-close"></span> {{ video.category.name }}
+{% endif %}
+
+{% if admin_settings.show_video_comments %}
+    &nbsp;<span class="glyphicon glyphicon-comment"></span> {{ video.comments }}
+{% endif %}

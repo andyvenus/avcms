@@ -1,0 +1,101 @@
+<?php
+/**
+ * User: Andy
+ * Date: 12/02/15
+ * Time: 14:09
+ */
+
+namespace AVCMS\Bundles\Videos\Controller;
+
+use AVCMS\Bundles\Tags\Module\TagsModuleTrait;
+use AVCMS\Bundles\Users\Model\User;
+use AVCMS\Core\Controller\Controller;
+use AVCMS\Core\Module\Exception\SkipModuleException;
+use Symfony\Component\HttpFoundation\Response;
+
+class VideoModulesController extends Controller
+{
+    use TagsModuleTrait;
+
+    /**
+     * @var \AVCMS\Bundles\Videos\Model\Videos
+     */
+    private $videos;
+
+    public function setUp()
+    {
+        $this->videos = $this->model('Videos');
+    }
+
+    public function videosModule($adminSettings, User $user = null)
+    {
+        $moreButton = null;
+
+        $query = $this->videos->find()
+            ->limit($adminSettings['limit'])
+            ->order($adminSettings['order'])
+            ->published();
+
+        if ($adminSettings['filter'] === 'featured') {
+            $query->featured();
+            $moreButton = ['url' => $this->generateUrl('featured_videos'), 'label' => 'All Featured Videos'];
+        }
+        elseif ($adminSettings['filter'] === 'likes') {
+            if (!isset($user)) {
+                $user = $this->activeUser();
+
+                if (!$user->getId()) {
+                    throw new SkipModuleException;
+                }
+            }
+
+            $ratings = $this->model('LikeDislike:Ratings');
+            $ids = $ratings->getLikedIds($user->getId(), 'video', $adminSettings['limit']);
+            $query = $this->videos->find()->ids($ids, 'videos.id');
+            $moreButton = ['url' => $this->generateUrl('liked_videos', ['likes_user' => $user->getSlug()]), 'label' => 'All Liked Videos'];
+        }
+
+        if ($adminSettings['show_video_category']) {
+            $query->join($this->model('VideoCategories'), ['name', 'slug']);
+        }
+
+        $videos = $query->get();
+
+        return new Response($this->render($this->getModuleTemplate($adminSettings['layout']), array(
+            'videos' => $videos,
+            'admin_settings' => $adminSettings,
+            'columns' => $adminSettings['columns'],
+            'more_button' => $moreButton
+        )));
+    }
+
+    protected function getModuleTemplate($layout)
+    {
+        if ($layout === 'list') {
+            $template = 'videos_list_module.twig';
+        }
+        else {
+            $template = 'videos_thumbnail_module.twig';
+        }
+
+        return '@Videos/module/'.$template;
+    }
+
+    public function tagsModule($adminSettings)
+    {
+        return $this->getTagsModule($adminSettings, 'video', 'browse_videos', 'tags');
+    }
+
+    public function videoStatsModule()
+    {
+        $totalVideos = $this->videos->query()->count();
+        $totalPlays = $this->videos->query()->select([$this->videos->query()->raw('SUM(hits) as total_plays')])->first(\PDO::FETCH_ASSOC)['total_plays'];
+        $totalLikes = $this->videos->query()->select([$this->videos->query()->raw('SUM(likes) as total_likes')])->first(\PDO::FETCH_ASSOC)['total_likes'];
+
+        return new Response($this->render('@Videos/module/video_stats_module.twig', [
+            'total_videos' => $totalVideos,
+            'total_plays' => $totalPlays,
+            'total_likes' => $totalLikes
+        ]));
+    }
+}

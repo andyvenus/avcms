@@ -1,0 +1,22 @@
+{% extends '@admin/editor.twig' %}
+
+{% block title -%}
+    {% trans %}Import Video{% endtrans %}
+{% endblock %}
+
+{% block editor_title %}
+   {{ block('title') }}
+{% endblock %}
+
+{% block editor_content %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">{% trans %}Video URL{% endtrans %}</h1>
+        </div>
+        <div class="panel-body">
+            {{ form(import_form) }}
+        </div>
+    </div>
+
+{% endblock %}

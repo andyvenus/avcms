@@ -25,7 +25,7 @@
         {% set published_btn_icon = 'glyphicon-eye-close' %}
     {% endif %}
 
-    <button class="btn btn-xs {{ published_btn_class }} avcms-toggle-published" data-toggle-publish-url="{{ path(ajax_route) }}" {% if publish_date > date().timestamp %} title="{{ publish_date|date(settings.time_format) }}" data-toggle="tooltip" data-placement="bottom" data-container="body"{% endif %}">
+    <button class="btn btn-xs {{ published_btn_class }} avcms-toggle-published" data-toggle-publish-url="{{ path(ajax_route) }}" {% if publish_date > date().timestamp %} title="{{ publish_date|date(settings.time_format) }}" data-toggle="tooltip" data-placement="bottom" data-container="body"{% else %}title="Publish/Unpublish"{% endif %}">
         <span class="glyphicon {{ published_btn_icon }}"></span>
     </button>
 {% endmacro %}
@@ -39,7 +39,7 @@
         {% set featured_btn_icon = 'glyphicon-star-empty' %}
     {% endif %}
 
-    <button class="btn btn-xs {{ featured_btn_class }} avcms-toggle-featured" data-toggle-featured-url="{{ path(ajax_route) }}">
+    <button class="btn btn-xs {{ featured_btn_class }} avcms-toggle-featured" data-toggle-featured-url="{{ path(ajax_route) }}" title="Feature">
         <span class="glyphicon {{ featured_btn_icon }}"></span>
     </button>
 {% endmacro %}
@@ -48,13 +48,13 @@
     {% if icon == null %}
         {% set icon = 'glyphicon glyphicon-remove' %}
     {% endif %}
-    <button class="btn btn-xs btn-default avcms-delete-item" data-delete-url="{{ path(ajax_route) }}">
+    <button class="btn btn-xs btn-default avcms-delete-item" data-delete-url="{{ path(ajax_route) }}" title="Delete">
         <span class="{{ icon }}"></span>
     </button>
 {% endmacro %}
 
 {% macro view(route, route_vars) %}
-    <a class="btn btn-xs btn-default" href="{{ path(route, route_vars) }}" target="_blank">
+    <a class="btn btn-xs btn-default" href="{{ path(route, route_vars) }}" target="_blank" title="View on site">
         <span class="glyphicon glyphicon-new-window"></span>
     </a>
 {% endmacro %}

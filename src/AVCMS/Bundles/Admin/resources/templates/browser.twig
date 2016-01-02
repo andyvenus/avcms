@@ -16,6 +16,8 @@
                     {% block expand_finder_button %}{% endblock %}
                 </div>
 
+                {% block finder_header_extra %}{% endblock %}
+
                 <div class="browser-finder-filters">
                     {% block finder_filters -%}
                         {{ form_start(finder_filters_form) }}
@@ -51,11 +53,13 @@
                     <button type="button" class="btn btn-default btn-xs deselect-all-button">{% trans %}Deselect All{% endtrans %}</button>
                     <button type="button" class="btn btn-default btn-xs selected-count" disabled="disabled">0</button>
                 </div><br/>
-                <div class="btn-group">
-                    {% block checked_options_buttons %}
+                {% block checked_options_buttons_outer %}
+                    <div class="btn-group">
+                        {% block checked_options_buttons %}
 
-                    {% endblock %}
-                </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
             </div>
         </div>
         <div class="browser-editor">

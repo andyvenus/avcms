@@ -1,0 +1,43 @@
+video_testing:
+  path: /videos/test
+  defaults: { _controller: Videos::VideosController::testAction }
+
+videos_home:
+  path: /videos
+  defaults: { _controller: CmsFoundation::HomepageController::homepageAction, modulePosition: videos_home, title: Videos }
+
+watch_video:
+  path: /video/{slug}
+  defaults: { _controller: Videos::VideosController::playVideoAction }
+
+browse_videos:
+  path: /videos/browse/{page}
+  defaults: { _controller: Videos::VideosController::browseVideosAction, category: null, page: 1 }
+  requirements:
+    page:  \d+
+
+video_tag:
+  path: /videos/tag/{tags}
+  defaults: { _controller: Videos::VideosController::browseVideosAction, category: null, page: 1 }
+  requirements:
+    page:  \d+
+
+featured_videos:
+  path: /videos/featured
+  defaults: { _controller: Videos::VideosController::browseVideosAction, pageType: featured }
+
+liked_videos:
+  path: /videos/likes/{likes_user}
+  defaults: { _controller: Videos::VideosController::browseVideosAction, pageType: likes, likes_user: null }
+
+videos_rss_feed:
+  path: /videos/rss.xml
+  defaults: { _controller: Videos::VideosController::videosRssFeedAction }
+
+submit_video:
+  path: /videos/submit
+  defaults: { _controller: Videos::VideosController::submitVideoAction }
+
+video_category:
+  path: /videos/{category}/{page}
+  defaults: { _controller: Videos::VideosController::browseVideosAction, page: 1 }

@@ -4,8 +4,10 @@ $(document).ready(function() {
     var body = $('body');
 
     body.on('change', '.ajax-editor form', avcms.browser.editorFormChanged);
+
     body.on('change', 'form[name="filter_form"] select', avcms.browser.changeFinderFilters);
-    body.on('keyup', 'form[name="filter_form"] input', avcms.browser.changeFinderFilters);
+    body.on('change', 'form[name="filter_form"] input[data-no-auto-search]', avcms.browser.changeFinderFilters);
+    body.on('keyup', 'form[name="filter_form"] input:not([data-no-auto-search])', avcms.browser.changeFinderFilters);
     body.on('click', 'form[name="filter_form"] :checkbox', avcms.browser.changeFinderFilters);
     body.on('click', '.clear-search', avcms.browser.clearSearch);
 
@@ -259,7 +261,7 @@ avcms.browser = {
     getFinderSelectedIds: function() {
         var selected_ids = [];
         $('.finder-item-checkbox-container :checkbox:checked').each(function() {
-            selected_ids.push($(this).parents('.browser-finder-item').data('id'));
+            selected_ids.push($(this).parents('.browser-finder-item, .grid-item').data('id'));
         });
 
         return selected_ids;

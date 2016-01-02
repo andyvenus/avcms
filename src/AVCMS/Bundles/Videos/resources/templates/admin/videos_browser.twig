@@ -1,0 +1,38 @@
+{% extends '@admin/browser.twig' %}
+
+{% block finder_title %}
+    {% trans %}Videos{% endtrans %}
+    <span class="small">beta</span>
+{% endblock %}
+
+{% block expand_finder_button %}
+    {{ buttons.expand_finder('videos_admin_home') }}
+{% endblock %}
+
+{% block add_item %}
+    {{ buttons.add_item('videos_admin_add', 'Add Video') }}
+{% endblock %}
+
+{% block finder_extra_class %}
+    finder-wide
+{% endblock %}
+
+{% block finder %}
+    <div data-url="{{ path('videos_admin_finder') }}">
+        {{ render(path('videos_admin_finder')) }}
+    </div>
+{% endblock %}
+
+{% block mobile_back_link %}
+    {{ path('videos_admin_home') }}
+{% endblock %}
+
+{% block checked_options_buttons %}
+    {{ buttons.bulk_delete('videos_admin_delete') }}
+
+    {{ buttons.bulk_publish('videos_admin_toggle_published') }}
+    {{ buttons.bulk_unpublish('videos_admin_toggle_published') }}
+
+    {{ buttons.bulk_feature('videos_admin_toggle_featured') }}
+    {{ buttons.bulk_unfeature('videos_admin_toggle_featured') }}
+{% endblock %}

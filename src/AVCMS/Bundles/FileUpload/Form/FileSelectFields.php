@@ -56,7 +56,7 @@ class FileSelectFields {
         ]);
 
         $formBlueprint->add($groupName.'[grab]', 'text', [
-            'label' => 'Grab '.$fieldNameUc.' From URL',
+            'label' => 'Download '.$fieldNameUc.' From URL',
             'field_template' => '@FileUpload/grab_file_field.twig',
             'attr' => [
                 'data-grab-file-url' => $grabUrl

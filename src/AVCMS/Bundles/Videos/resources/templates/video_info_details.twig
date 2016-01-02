@@ -1,0 +1,18 @@
+<div style="margin-top: 15px;" class="browse-videos-details media">
+    <div class="media-left">
+        <a class="img-thumbnail" href="{{ path('watch_video', {slug: video.slug}) }}">
+            <img src="{{ video_thumbnail(video) }}" width="80"/>
+        </a>
+    </div>
+    <div class="media-body">
+        <strong><a href="{{ path('watch_video', {slug: video.slug}) }}">{{ video.name }}</a></strong>
+
+        {% if admin_settings.show_video_description %}
+            <span class="small" title="{{ video.description|striptags }}">{{ video.description|truncate(100)|striptags }}</span><br/>
+        {% endif %}
+
+        <span class="small text-muted">
+            {% include '@Videos/video_stats.twig' %}
+        </span>
+    </div>
+</div>

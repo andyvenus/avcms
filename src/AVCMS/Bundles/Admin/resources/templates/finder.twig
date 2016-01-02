@@ -20,7 +20,7 @@
 
 {% block finder_items %}
     {% for item in items %}
-        <div class="browser-finder-item" data-id="{{ item.id }}" {% block finder_item_attr %}{% endblock %}>
+        <div class="browser-finder-item" data-id="{% block item_id %}{{ item.id }}{% endblock %}" {% block finder_item_attr %}{% endblock %}>
             {% block item_checkbox %}
                 <div class="finder-item-checkbox-container">
                     <input type="checkbox" />

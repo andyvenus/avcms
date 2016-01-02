@@ -126,7 +126,13 @@ avcms.file_select = {
             form.find('[name="'+$(this).val()+'"]').parents('.form-group').hide();
         });
 
-        form.find('[name="'+target+'"]').parents('.form-group').show();
+        var field = form.find('[name="'+target+'"]');
+
+        field.parents('.form-group').show();
+
+        if (field.hasClass('grab-file-field')) {
+            field.val(field.parents('.panel-body').find('.avcms-file-path-field').val());
+        }
 
         avcms.event.fireEvent('file-select-change', {target: target, name: name, form: form})
     },

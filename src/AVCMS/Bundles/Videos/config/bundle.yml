@@ -1,0 +1,352 @@
+name: Videos
+namespace: AVCMS\Bundles\Videos
+toggle: true
+require:
+  - Framework
+
+assets:
+  video.js:
+    env: frontend
+  avcms_videos_admin.js:
+    env: admin
+
+  video-js.min.css:
+    env: frontend
+
+services:
+  - VideosServices
+
+categories:
+  video:
+    model: AVCMS\Bundles\Videos\Model\VideoCategories
+    content_model: AVCMS\Bundles\Videos\Model\Videos
+    route_prefix: videos_
+
+menu_items:
+  frontend:
+    video_categories:
+      label: Videos
+      icon: glyphicon glyphicon-tower
+      type: video_categories
+      default_order: 2
+      settings:
+        display: child
+    video_submissions:
+      label: Submit Video
+      icon: glyphicon glyphicon-upload
+      type: route
+      admin_setting: videos_allow_uploads
+      settings:
+        route: submit_video
+  admin:
+    videos_admin:
+      label: Videos
+      icon: glyphicon glyphicon-play
+      type: route
+      default_order: 2
+      permission: ADMIN_VIDEOS
+      settings:
+        route: videos_admin_home
+    videos_categories_admin:
+      label: Categories
+      icon: glyphicon glyphicon-th-list
+      type: route
+      default_order: 1
+      parent: videos_admin
+      settings:
+        route: videos_manage_categories
+    import_videos_admin:
+      label: Import Videos
+      icon: glyphicon glyphicon-import
+      type: route
+      default_order: 2
+      permission: ADMIN_VIDEOS
+      parent: videos_admin
+      settings:
+        route: import_videos_admin_home
+    videos_submissions_admin:
+      label: Submissions
+      icon: glyphicon glyphicon-inbox
+      type: route
+      default_order: 3
+      permission: ADMIN_VIDEOS
+      parent: videos_admin
+      settings:
+        route: video_submissions_admin_home
+
+admin_settings_sections:
+  videos: Videos
+  browse_videos: Browse Videos
+  video_ads: Adverts Before Videos
+
+admin_settings:
+  videos_allow_uploads:
+    type: checkbox
+    label: Allow Video Submissions
+    help: Allow users to submit videos to your site for admins to review
+    section: videos
+    default: 0
+  videos_max_submissions:
+    type: text
+    label: Maximum User Submissions
+    help: The maximum amount of videos a user can submit for review. They can submit more after an admin has accepted their existing submissions.
+    section: videos
+    default: 5
+    validation:
+      numeric:
+        rule: Numeric
+  video_ad_default:
+    label: Default Video Ad
+    help: The ad shown before videos without a specific ad selected
+    type: select
+    default: 0
+    choices:
+      0: None
+    choices_provider_service: adverts.choices_provider
+    section: video_ads
+  video_ad_countdown:
+    label: Video Ads Duration
+    help: How long to show the advert before the video automatically loads
+    type: text
+    default: 15
+    section: video_ads
+    validation:
+      numeric:
+        rule: Numeric
+  video_ad_allow_skip:
+    label: Allow Skipping
+    help: Allow users to skip the ads
+    type: checkbox
+    default: 1
+    section: video_ads
+  video_ad_show_to_everyone:
+    label: Ignore Permission
+    help: Who sees ads before videos can be set in the group permissions area. When this is on, everyone sees the ads regardless of that permission.
+    type: checkbox
+    default: 0
+    section: video_ads
+  videos_limit_plays:
+    label: Limit Video Plays
+    help: The number of videos that can be played before a user must register an account. Set to 0 to disable.
+    type: text
+    default: 0
+    section: videos
+    validation:
+      numeric:
+        rule: Numeric
+  browse_videos_layout:
+    type: select
+    label: Browse Videos Layout
+    choices:
+      details: Details
+      thumbnail: Thumbnail
+    default: details
+    section: browse_videos
+  browse_videos_columns:
+    type: select
+    label: Browse Videos Columns
+    choices:
+      1: 1
+      2: 2
+      3: 3
+      4: 4
+    default: 2
+    section: browse_videos
+  browse_videos_per_page:
+    type: text
+    label: Videos Per Page
+    help: Number of videos to show per page (browse, categories etc)
+    default: 20
+    section: browse_videos
+  show_video_description:
+    type: checkbox
+    label: Show Description
+    default: 1
+    section: browse_videos
+  show_video_ratings:
+    type: checkbox
+    label: Show Video Ratings
+    default: 1
+    section: browse_videos
+  show_video_hits:
+    type: checkbox
+    label: Show Video Hits
+    default: 1
+    section: browse_videos
+  show_video_date:
+    type: checkbox
+    label: Show Publish Date
+    default: 0
+    section: browse_videos
+  show_video_category:
+    type: checkbox
+    label: Show Category
+    default: 0
+    section: browse_videos
+  show_video_comments:
+    type: checkbox
+    label: Show Total Comments
+    default: 0
+    section: browse_videos
+
+comments:
+  video:
+    name: Video
+    model: AVCMS\Bundles\Videos\Model\Videos
+    title_field: name
+    frontend_route: watch_video
+    frontend_route_params: [slug]
+
+reports:
+  videos:
+    name: Video
+    model: AVCMS\Bundles\Videos\Model\Videos
+    route: videos_admin_edit
+    title_field: name
+    route_params: [id]
+
+ratings:
+  video:
+    name: Video
+    model: AVCMS\Bundles\Videos\Model\Videos
+
+frontend_search:
+  videos:
+    name: Videos
+    route: browse_videos
+    priority: 10
+
+module_positions:
+  videos_home:
+    name: Videos Homepage
+    description: The videos homepage
+    environment: frontend
+    global_modules: 1
+    type: content
+  watch_video_sidebar:
+    name: Play Video Sidebar
+    description: Sidebar on the play video page
+    environment: frontend
+    global_modules: 1
+    type: content
+  watch_video_top:
+    name: Play Video Top
+    description: Top of the play video page
+    environment: frontend
+    global_modules: 1
+    type: content
+  watch_video_details:
+    name: Play Video Details
+    description: Under the video details
+    environment: frontend
+    global_modules: 1
+    type: content
+
+modules:
+  videos:
+    name: Videos
+    description: A customisable list of videos
+    controller: Videos::VideoModulesController::videosModule
+    cachable: true
+    cache_bust_model: Videos
+    default_cache_time: 3600
+    accepted_template_types: [content, panel, list_panel, none]
+    admin_settings:
+      filter:
+        type: select
+        label: Filter
+        help: If "User's Likes" is selected, the module will show the likes of a user if one is passed to the module position (like on a users profile). Otherwise it will show the active user's likes.
+        default: none
+        choices:
+          none: None
+          featured: Featured
+          likes: User's Likes
+      layout:
+        type: select
+        label: Layout
+        choices:
+          list: List
+          thumbnails: Thumbnails
+          details: Details
+        default: list
+      columns:
+        type: select
+        label: Number of columns (thumbnail/details layout)
+        default: 3
+        choices:
+          1: 1
+          2: 2
+          3: 3
+          4: 4
+      order:
+        type: select
+        label: Order
+        choices:
+          publish-date-newest: Newest
+          top-hits: Most Played
+          liked: Most Liked
+          random: Random
+        default: newest
+      limit:
+        type: text
+        label: Number of videos to display
+        default: 5
+      show_video_description:
+        type: checkbox
+        label: Show Description
+        default: 1
+      show_video_date:
+        type: checkbox
+        label: Show Date
+        default: 0
+      show_video_hits:
+        type: checkbox
+        label: Show Hits
+        default: 1
+      show_video_ratings:
+        type: checkbox
+        label: Show Ratings
+        default: 1
+      show_video_category:
+        type: checkbox
+        label: Show Category
+        default: 1
+      show_video_comments:
+        type: checkbox
+        label: Show Total Comments
+        default: 0
+  video_tags:
+      name: Video Tag Cloud
+      description: A tag cloud for videos
+      controller: Videos::VideoModulesController::tagsModule
+      cachable: true
+      default_cache_time: 43200
+      cache_bust_model: Videos
+      accepted_template_types: [content, panel, none]
+      admin_settings:
+        limit:
+          type: text
+          label: Number of tags to display
+          default: 40
+  video_stats:
+    name: Video Stats
+    description: Video stats like total video, total plays etc
+    controller: Videos::VideoModulesController::videoStatsModule
+    cachable: true
+    default_cache_time: 43200
+    accepted_template_types: [content, panel, none]
+
+permissions:
+  ELEVATED_NO_VIDEO_ADS:
+    name: No Video Adverts
+    description: If allowed, users in this group will not see ads before videos
+  ADMIN_VIDEOS:
+    name: Videos Administration
+    description: Manage videos in the admin panel (including categories)
+  PERM_SUBMIT_VIDEOS:
+    name: Submit Videos
+    description: Can submit videos to the site for admins to review & accept
+
+container_params:
+  videos_dir: web/videos
+  video_thumbnails_dir: web/video-thumbnails

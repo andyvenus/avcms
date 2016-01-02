@@ -1,0 +1,31 @@
+{% extends '@admin/browser.twig' %}
+
+{% block finder_title %}
+    {% trans %}Import YouTube Videos{% endtrans %}
+{% endblock %}
+
+{% block expand_finder_button %}
+    {{ buttons.expand_finder('import_videos_admin_home') }}
+{% endblock %}
+
+{% block finder_extra_class %}
+    finder-wide
+{% endblock %}
+
+{% block finder %}
+    <div data-url="{{ path('import_videos_admin_finder') }}">
+        {{ render(path('import_videos_admin_finder')) }}
+    </div>
+{% endblock %}
+
+{% block mobile_back_link %}
+    {{ path('import_videos_admin_home') }}
+{% endblock %}
+
+{% block checked_options_buttons_outer %}
+    {{ form_field(bulk_categories_form.category, {'class': 'no_select2 select-inline'}) }}
+
+    <button class="btn btn-success btn-sm avcms-bulk-import-videos">
+        <span class="glyphicon glyphicon-plus"></span> {% trans %}Import{% endtrans %}
+    </button>
+{% endblock %}

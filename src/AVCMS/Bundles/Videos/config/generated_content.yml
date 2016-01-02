@@ -1,0 +1,96 @@
+videos:
+    bundle: Videos
+    namespace: AVCMS\Bundles\Videos
+    singular: video
+    plural: videos
+    uc_singular: Video
+    uc_plural: Videos
+    cc_singular: Video
+    cc_plural: Videos
+    dash_singular: video
+    dash_plural: videos
+    admin_home_route: videos_admin_home
+    admin_finder_route: videos_admin_finder
+    admin_delete_route: videos_admin_delete
+    admin_edit_route: videos_admin_edit
+    admin_add_route: videos_admin_add
+    admin_controller: 'Videos::VideosAdminController'
+    finder_item_extra_buttons: ''
+    database: videos
+    entity: AVCMS\Bundles\Videos\Model\Video
+    admin_form: AVCMS\Bundles\Videos\Form\VideoAdminForm
+    model_class: Videos
+    model_var_name: videos
+    title_field: name
+video_categories:
+    bundle: Videos
+    namespace: AVCMS\Bundles\Videos
+    singular: video_category
+    plural: video_categories
+    uc_singular: 'Video Category'
+    uc_plural: 'Video Categories'
+    cc_singular: VideoCategory
+    cc_plural: VideoCategories
+    dash_singular: video-category
+    dash_plural: video-categories
+    admin_home_route: video_categories_admin_home
+    admin_finder_route: video_categories_admin_finder
+    admin_delete_route: video_categories_admin_delete
+    admin_edit_route: video_categories_admin_edit
+    admin_add_route: video_categories_admin_add
+    admin_controller: 'Videos::VideoCategoriesAdminController'
+    finder_item_extra_buttons: ''
+    database: video_categories
+    entity: AVCMS\Bundles\Videos\Model\VideoCategory
+    admin_form: AVCMS\Bundles\Videos\Form\VideoCategoryAdminForm
+    model_class: VideoCategories
+    model_var_name: videoCategories
+    title_field: name
+video_embeds:
+    bundle: Videos
+    namespace: AVCMS\Bundles\Videos
+    singular: video_embed
+    plural: video_embeds
+    uc_singular: 'Video Embed'
+    uc_plural: 'Video Embeds'
+    cc_singular: VideoEmbed
+    cc_plural: VideoEmbeds
+    dash_singular: video-embed
+    dash_plural: video-embeds
+    admin_home_route: video_embeds_admin_home
+    admin_finder_route: video_embeds_admin_finder
+    admin_delete_route: video_embeds_admin_delete
+    admin_edit_route: video_embeds_admin_edit
+    admin_add_route: video_embeds_admin_add
+    admin_controller: 'Videos::VideoEmbedsAdminController'
+    finder_item_extra_buttons: ''
+    database: video_embeds
+    entity: AVCMS\Bundles\Videos\Model\VideoEmbed
+    admin_form: AVCMS\Bundles\Videos\Form\VideoEmbedAdminForm
+    model_class: VideoEmbeds
+    model_var_name: videoEmbeds
+    title_field: id
+feed_videos:
+    bundle: Videos
+    namespace: AVCMS\Bundles\Videos
+    singular: feed_video
+    plural: feed_videos
+    uc_singular: 'Feed Video'
+    uc_plural: 'Feed Videos'
+    cc_singular: FeedVideo
+    cc_plural: FeedVideos
+    dash_singular: feed-video
+    dash_plural: feed-videos
+    admin_home_route: video_feeds_admin_home
+    admin_finder_route: video_feeds_admin_finder
+    admin_delete_route: video_feeds_admin_reject
+    admin_edit_route: feed_videos_admin_edit
+    admin_add_route: feed_videos_admin_add
+    admin_controller: 'Videos::VideoFeedsAdminController'
+    finder_item_extra_buttons: ''
+    database: feed_videos
+    entity: AVCMS\Bundles\Videos\Model\FeedVideo
+    admin_form: AVCMS\Bundles\Videos\Form\FeedVideoAdminForm
+    model_class: FeedVideos
+    model_var_name: feedVideos
+    title_field: name
