@@ -287,6 +287,19 @@ modules:
           liked: Most Liked
           random: Random
         default: newest
+      show_more_button:
+        label: Show more button
+        type: checkbox
+        default: 1
+        help: Display a button that links to the browse videos section with the same order and filter as this module
+      more_button_start_page:
+        label: More button start page
+        type: select
+        default: 1
+        help: Should the user be directed to the first or second page of results when clicking the more button? Linking to the first page means they will see some of the same results from the module, but linking to the second page might mean they miss a few videos. For best results when linking to page 2, make this module show the same number of videos as shown per-page when browsing.
+        choices:
+          1: Page One
+          2: Page Two
       limit:
         type: text
         label: Number of videos to display
