@@ -20,18 +20,11 @@
     {% block video_box %}
         <div class="box box-primary video-box">
             <div class="box-top">
+                <h2 class="media-heading">{{ video.name }}</h2>
 
-                <div class="media">
-                    <div class="media-left">
-                        <img class="media-object" src="{{ video_thumbnail(video) }}" alt="{{ video.name }}" height="65">
-                    </div>
-                    <div class="media-body">
-                        <h2 class="media-heading">{{ video.name }}</h2>
-                        <a href="{{ path('video_category', {'category': video.category.slug}) }}">
-                           <span class="glyphicon glyphicon-folder-open"></span> &nbsp;{{ video.category.name }}
-                        </a>
-                    </div>
-                </div>
+                <a href="{{ path('video_category', {'category': video.category.slug}) }}">
+                    <span class="glyphicon glyphicon-folder-open"></span> &nbsp;{{ video.category.name }}
+                </a>
             </div>
 
             <div class="box-main">
@@ -101,7 +94,7 @@
                                 <p>{% trans %}Category{% endtrans %}: <a href="{{ path('video_category', {'category': video.category.slug}) }}"> {{ video.category.name }}</a></p>
                             </div>
                             <div class="col-md-4">
-                                <p>{% trans with {plays: video.hits} %}Played {plays} times{% endtrans %}</p>
+                                <p>{% trans with {hits: video.hits} %}Watched {hits} times{% endtrans %}</p>
                             </div>
 
                          </div>
