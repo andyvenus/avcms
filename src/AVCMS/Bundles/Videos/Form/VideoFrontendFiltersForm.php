@@ -20,6 +20,8 @@ class VideoFrontendFiltersForm extends FormBlueprint
             'choices' => [
                 'publish-date-newest' => 'Newest',
                 'publish-date-oldest' => 'Oldest',
+                'longest' => 'Longest Duration',
+                'shortest' => 'Shortest Duration',
                 'liked' => 'Most Liked',
                 'top-hits' => 'Most Watched',
                 'a-z' => 'A-Z',

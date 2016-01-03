@@ -49,6 +49,11 @@ class VideoAdminForm extends AdminContentForm
             'choices_translate' => false
         ));
 
+        $this->add('duration', 'text', [
+            'label' => 'Duration',
+            'help' => 'Duration in Hours:Minutes:Sections format (examples: 12:23, 1:23:32)'
+        ]);
+
         $this->add('tags', 'text', array(
             'label' => 'Tags'
         ));

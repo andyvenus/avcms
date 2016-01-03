@@ -235,6 +235,29 @@ class Video extends Entity implements RateInterface
     public function setDuration($value)
     {
         $this->set("duration", $value);
+
+        if (strpos($value, ':') === false) {
+            return;
+        }
+
+        $strTime = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "00:$1:$2", $value);
+
+        $hours = $minutes = $seconds = null;
+
+        sscanf($strTime, "%d:%d:%d", $hours, $minutes, $seconds);
+        $seconds = $hours * 3600 + $minutes * 60 + $seconds;
+
+        $this->setDurationSeconds($seconds);
+    }
+
+    public function getDurationSeconds()
+    {
+        return $this->get("duration_seconds");
+    }
+
+    public function setDurationSeconds($value)
+    {
+        $this->set("duration_seconds", $value);
     }
 
     public function getProvider()

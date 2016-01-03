@@ -22,8 +22,10 @@ class VideosAdminFiltersForm extends AdminFiltersForm
                 'top-hits' => 'Most Played',
                 'low-hits' => 'Least Played',
                 'liked' => 'Most Liked',
-                'last-hit-desc' => 'Recent Last Play',
-                'last-hit-asc' => 'Oldest Last Play'
+                'last-hit-desc' => 'Recent Last Watch',
+                'last-hit-asc' => 'Oldest Last Watch',
+                'longest' => 'Longest Duration',
+                'shortest' => 'Shortest Duration',
             )
         ));
 
