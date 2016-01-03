@@ -52,6 +52,7 @@ class VideosServices implements ServicesInterface
             ->setArguments([new Reference('videos.model')])
             ->addMethodCall('addType', [new Reference('video.type.youtube')])
             ->addMethodCall('addType', [new Reference('video.type.vimeo')])
+            ->addMethodCall('addType', [new Reference('video.type.dailymotion')])
         ;
 
         $container->register('video.type.youtube', 'AVCMS\Bundles\Videos\Type\YouTubeVideo')
@@ -59,6 +60,8 @@ class VideosServices implements ServicesInterface
         ;
 
         $container->register('video.type.vimeo', 'AVCMS\Bundles\Videos\Type\VimeoVideo');
+
+        $container->register('video.type.dailymotion', 'AVCMS\Bundles\Videos\Type\DailymotionVideo');
 
         $container->register('video_category_choices', 'AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider')
             ->setArguments([new Reference('videos.categories_model')])
