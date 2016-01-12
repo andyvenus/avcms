@@ -97,10 +97,18 @@ avcms.admin = {
         var target_field_name = input_field.data('slug-target');
         var target_field = input_field.closest('form').find('[name='+target_field_name+']');
 
+        var button = $('.slug_refresh_button').filter(':visible');
+
+        var button_html = button.html();
+
+        button.html('<img src="'+avcms.config.site_url+'web/resources/CmsFoundation/images/loader-round.gif" width="14">');
+
         $.ajax({
             url: avcms.config.site_url+"admin/generate_slug/" + input,
             dataType: 'json',
             success: function(data) {
+                button.html(button_html);
+
                 target_field.val(data.slug);
             }
         });
