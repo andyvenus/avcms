@@ -14,7 +14,7 @@ class VideoManager
     /**
      * @var AbstractVideoType[]
      */
-    private $importers = [];
+    private $types = [];
 
     /**
      * @var Videos
@@ -33,7 +33,7 @@ class VideoManager
      */
     public function addType(AbstractVideoType $videoImporter)
     {
-        $this->importers[$videoImporter->getId()] = $videoImporter;
+        $this->types[$videoImporter->getId()] = $videoImporter;
     }
 
     /**
@@ -56,7 +56,7 @@ class VideoManager
 
     public function getImporterForUrl($url)
     {
-        foreach ($this->importers as $importer) {
+        foreach ($this->types as $importer) {
             if ($importer->canHandleUrl($url)) {
                 return $importer;
             }
@@ -67,6 +67,14 @@ class VideoManager
 
     public function getType($id)
     {
-        return isset($this->importers[$id]) ? $this->importers[$id] : null;
+        return isset($this->types[$id]) ? $this->types[$id] : null;
+    }
+
+    /**
+     * @return AbstractVideoType[]
+     */
+    public function getTypes()
+    {
+        return $this->types;
     }
 }

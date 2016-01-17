@@ -94,11 +94,17 @@ class VideosAdminController extends AdminBaseController
 
         $videoProvider = $this->videoManager->getType($video->getProvider());
 
+        $allProviderNames = [];
+
+        foreach ($this->videoManager->getTypes() as $type) {
+            $allProviderNames[] = $type->getName();
+        }
+
         return $this->createEditResponse(
             $helper,
             '@Videos/admin/edit_video.twig',
             ['videos_admin_edit', ['id' => $id]],
-            ['provider' => $videoProvider]
+            ['provider' => $videoProvider, 'provider_names' => $allProviderNames,]
         );
     }
 
