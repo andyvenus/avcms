@@ -30,13 +30,4 @@ class VideosFinder extends Finder
             }
         });
     }
-
-    public function mobileOnly($mobileOnly)
-    {
-        if ($mobileOnly) {
-            $this->currentQuery->where('file', 'NOT LIKE', '%.swf%')->where('file', 'NOT LIKE', '%.unity3d%')->where('file', 'NOT LIKE', '%.dcr%');
-        }
-
-        return $this;
-    }
 }
