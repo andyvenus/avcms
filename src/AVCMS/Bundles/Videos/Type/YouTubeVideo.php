@@ -29,9 +29,14 @@ class YouTubeVideo extends AbstractVideoType
         return strpos($url, 'youtube.com') !== false;
     }
 
+    public function getIdFromUrl($url)
+    {
+        return $this->getQueryParameter($url, 'v');
+    }
+
     public function getVideoAtUrl($url, Video $video)
     {
-        $id = $this->getQueryParameter($url, 'v');
+        $id = $this->getIdFromUrl($url);
 
         if (!$id) {
             return false;

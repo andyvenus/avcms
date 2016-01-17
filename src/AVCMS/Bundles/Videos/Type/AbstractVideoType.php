@@ -26,6 +26,8 @@ abstract class AbstractVideoType
 
     abstract public function getExampleUrl();
 
+    abstract public function getIdFromUrl($url);
+
     abstract public function getVideoAtUrl($url, Video $video);
 
     protected function downloadFile($url)
@@ -91,7 +93,7 @@ abstract class AbstractVideoType
         return $timestamp;
     }
 
-    public function getIdFromUrl($url, $type = 'number')
+    public function extractIdFromUrl($url, $type = 'number')
     {
         $urlParts = explode('/', $url);
 

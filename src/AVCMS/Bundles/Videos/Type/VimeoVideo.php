@@ -31,17 +31,24 @@ class VimeoVideo extends AbstractVideoType
         return 'https://vimeo.com/[video_id]';
     }
 
-    public function getVideoAtUrl($url, Video $video)
+    public function getIdFromUrl($url)
     {
         $urlParts = explode('/', str_replace('//vimeo.com', '', $url));
 
         foreach ($urlParts as $urlPart) {
             if (is_numeric($urlPart)) {
-                $id = $urlPart;
+                return $urlPart;
             }
         }
 
-        if (!isset($id)) {
+        return false;
+    }
+
+    public function getVideoAtUrl($url, Video $video)
+    {
+        $id = $this->getIdFromUrl($url);
+
+        if (!$id) {
             return false;
         }
 

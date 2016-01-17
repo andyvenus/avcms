@@ -31,9 +31,14 @@ class DailymotionVideo extends AbstractVideoType
         return 'http://www.dailymotion.com/video/[id]_[video_slug]';
     }
 
+    public function getIdFromUrl($url)
+    {
+        return substr($url, strrpos($url, '/') + 1, 7);
+    }
+
     public function getVideoAtUrl($url, Video $video)
     {
-        $id = substr($url, strrpos($url, '/') + 1, 7);
+        $id = $this->getIdFromUrl($url);
 
         if (!$id) {
             return false;

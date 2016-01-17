@@ -31,11 +31,16 @@ class VevoVideo extends AbstractVideoType
         return 'http://www.vevo.com/watch/[video_id]';
     }
 
+    public function getIdFromUrl($url)
+    {
+        return $this->extractIdFromUrl($url, 'last');
+    }
+
     public function getVideoAtUrl($url, Video $video)
     {
         $this->parseCommonHtmlAtUrl($url, $video);
 
         $video->setProvider($this->getId());
-        $video->setProviderId($this->getIdFromUrl($url, 'last'));
+        $video->setProviderId($this->getIdFromUrl($url));
     }
 }

@@ -56,6 +56,10 @@ class VideoManager
 
     public function getImporterForUrl($url)
     {
+        if (strpos($url, '://') === false) {
+            throw new \Exception('Not a valid URL');
+        }
+
         foreach ($this->types as $importer) {
             if ($importer->canHandleUrl($url)) {
                 return $importer;

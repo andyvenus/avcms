@@ -31,6 +31,11 @@ class VineVideo extends AbstractVideoType
         return 'https://vine.co/v/[video_id]';
     }
 
+    public function getIdFromUrl($url)
+    {
+        return $this->extractIdFromUrl($url, 'last');
+    }
+
     public function getVideoAtUrl($url, Video $video)
     {
         $this->parseCommonHtmlAtUrl($url, $video);
@@ -38,6 +43,6 @@ class VineVideo extends AbstractVideoType
         $video->setDuration('00:06');
 
         $video->setProvider($this->getId());
-        $video->setProviderId($this->getIdFromUrl($url, 'last'));
+        $video->setProviderId($this->getIdFromUrl($url));
     }
 }

@@ -31,6 +31,11 @@ class MetacafeVideo extends AbstractVideoType
         return 'http://www.metacafe.com/watch/[video_id]/video_title_goes_here/';
     }
 
+    public function getIdFromUrl($url)
+    {
+        return $this->extractIdFromUrl($url);
+    }
+
     public function getVideoAtUrl($url, Video $video)
     {
         $this->parseCommonHtmlAtUrl($url, $video);
