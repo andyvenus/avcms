@@ -28,7 +28,10 @@
         {{ form(form) }}
     {% else %}
         <div class="alert alert-success">
-            {% trans %}Thanks for your submission, it's now pending review.{% endtrans %} <a href="{{ path('submit_image') }}">{% trans %}Click here to submit more images{% endtrans %}</a>
+            {% trans %}Thanks for your submission, it's now pending review.{% endtrans %}
+            <a href="{{ path('submit_image') }}" class="alert-link">
+                {% trans %}Click here to submit more images{% endtrans %}
+            </a>
         </div>
     {% endif %}
 {% endblock %}

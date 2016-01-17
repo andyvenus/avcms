@@ -21,7 +21,10 @@
                 {{ form(form) }}
             {% else %}
                 <div class="alert alert-success">
-                    {% trans %}Thanks for your submission, it's now pending review.{% endtrans %} <a href="{{ path('wallpaper_submit') }}">{% trans %}Click here to submit another image{% endtrans %}</a>
+                    {% trans %}Thanks for your submission, it's now pending review.{% endtrans %}
+                    <a href="{{ path('wallpaper_submit') }}" class="alert-link">
+                        {% trans %}Click here to submit another image{% endtrans %}
+                    </a>
                 </div>
             {% endif %}
         </div>
