@@ -98,7 +98,7 @@ class VideosTwigExtension extends \Twig_Extension
         }
 
         if (!isset($validParts)) {
-            return '00:00';
+            return '';
         }
 
         return implode(':', $validParts);
