@@ -1,16 +1,13 @@
 Videos
 Name
-Instructions
 Tags
-Played {plays} times
 Skip Advert
 Video Details
 Edit Video
-Fullscreen
 Report Issue
 Most Liked
 Browse Videos
-Times Video Played
+Times Video Watched
 Videos tagged with: {tags}
 No Videos Found
 Liked Videos
@@ -25,16 +22,26 @@ Date Added
 Newest
 Oldest
 You have already submitted {count} videos, please wait for them to be accepted first
-Video File
-Video Image
-I am the copyright owner of this video or have permission from the copyright owner
 Submit a Video
-Submit a video for us to use on our site! By submitting a video you give us full permission to use the video on our website.
-Videos must be Flash or Unity files and under {size} MB
-You must check the permissions field
-Thanks for your submission, it's now pending review.
 Click here to submit another video
 You have {total} video plays remaining before you must register
 Please login to continue playing videos
-Show only mobile videos
 Newest Videos
+Times Video Played
+Video URL
+HD Only
+Duration
+Any Duration
+Long (20+ mins)
+Medium (4-20 mins)
+Short (< 4 mins)
+Most Relevant
+Top Rated
+Title A-Z
+Most Views
+Most Watched
+Watched {hits} times
+Longest Duration
+Shortest Duration
+You can submit a video from any of these sites
+Submit a video for us to use on our site! Just enter the URL to a video on one of the supported sites below and we will find out the details.

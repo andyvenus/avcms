@@ -80,3 +80,18 @@ Video Submissions
 Review Video Submission
 Submit Video
 Show an advert before the video is loaded
+Video
+Import Video
+Date submitted
+Paste the URL to a video on a site such as YouTube or Vine and any valid details
+                    will automatically be used to fill in the form. You can also enter the URL to any MP4 or FLV video.
+Import Videos
+Video Category
+Import YouTube Videos
+Last Watched
+Imported
+Use Selected Category
+Total Times Watched
+Duration in Hours:Minutes:Sections format (examples: 12:23, 1:23:32)
+Recent Last Watch
+Oldest Last Watch
