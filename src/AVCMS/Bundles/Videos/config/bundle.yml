@@ -129,7 +129,7 @@ admin_settings:
     section: video_ads
   videos_limit_plays:
     label: Limit Video Plays
-    help: The number of videos that can be played before a user must register an account. Set to 0 to disable.
+    help: The number of videos that can be watched before a user must register an account. Set to 0 to disable.
     type: text
     default: 0
     section: videos

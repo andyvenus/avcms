@@ -80,3 +80,5 @@ Friends:
     enabled: true
 BulkUpload:
   enabled: true
+Videos:
+  enabled: false
