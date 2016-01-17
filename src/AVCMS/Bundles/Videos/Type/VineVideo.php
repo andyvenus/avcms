@@ -38,6 +38,6 @@ class VineVideo extends AbstractVideoType
         $video->setDuration('00:06');
 
         $video->setProvider($this->getId());
-        $video->setProviderId($this->getIdFromUrl($url), 'last');
+        $video->setProviderId($this->getIdFromUrl($url, 'last'));
     }
 }
