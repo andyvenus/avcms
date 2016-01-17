@@ -62,9 +62,9 @@ abstract class AbstractVideoType
     {
         $crawler = $this->parseHtmlAtUrl($url);
 
-        $data['name'] = $crawler->filter('meta[property="og:title"]')->first()->attr('content');
-        $data['description'] = $crawler->filter('meta[property="og:description"]')->first()->attr('content');
-        $data['thumbnail'] = $crawler->filter('meta[property="og:image"]')->first()->attr('content');
+        $data['name'] = htmlspecialchars_decode($crawler->filter('meta[property="og:title"]')->first()->attr('content'));
+        $data['description'] = htmlspecialchars_decode($crawler->filter('meta[property="og:description"]')->first()->attr('content'));
+        $data['thumbnail'] = htmlspecialchars_decode($crawler->filter('meta[property="og:image"]')->first()->attr('content'));
 
         try {
             $data['duration'] = $this->secondsToTimestamp($crawler->filter('meta[property="video:duration"]')->first()->attr('content'));
@@ -90,11 +90,15 @@ abstract class AbstractVideoType
     {
         $urlParts = explode('/', $url);
 
-        $id = null;
-
         if ($type == 'last') {
             return array_pop($urlParts);
         }
+
+        if (is_numeric($type)) {
+            return isset($urlParts[$type]) ? $urlParts[$type] : null;
+        }
+
+        $id = null;
 
         foreach ($urlParts as $urlPart) {
             if ($type == 'number' && is_numeric($urlPart)) {

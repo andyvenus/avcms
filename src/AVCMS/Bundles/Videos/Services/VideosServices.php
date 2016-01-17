@@ -68,6 +68,8 @@ class VideosServices implements ServicesInterface
 
         $container->register('video.type.vine', 'AVCMS\Bundles\Videos\Type\VineVideo')->addTag('video_type');
 
+        $container->register('video.type.funnyordie', 'AVCMS\Bundles\Videos\Type\FunnyOrDieVideo')->addTag('video_type');
+
         $container->register('video_category_choices', 'AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider')
             ->setArguments([new Reference('videos.categories_model')])
         ;
