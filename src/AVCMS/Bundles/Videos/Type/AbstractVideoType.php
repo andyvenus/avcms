@@ -85,7 +85,7 @@ abstract class AbstractVideoType
         $timestamp = gmdate('H:i:s', $seconds);
 
         if (strpos($timestamp, '00:') === 0) {
-            $timestamp = str_replace('00:', '', $timestamp);
+            $timestamp = substr($timestamp, 3);
         }
 
         return $timestamp;

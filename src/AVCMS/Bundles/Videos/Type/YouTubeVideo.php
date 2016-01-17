@@ -157,6 +157,13 @@ class YouTubeVideo extends AbstractVideoType
     private function getDuration($youtubeDuration){
         $start = new \DateTime('@0');
         $start->add(new \DateInterval($youtubeDuration));
-        return $start->format('H:i:s');
+
+        $formatted = $start->format('H:i:s');
+
+        if (strpos($formatted, '00:') === 0) {
+            $formatted = substr($formatted, 3);
+        }
+
+        return $formatted;
     }
 }
