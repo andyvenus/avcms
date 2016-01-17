@@ -8,6 +8,10 @@
     <meta property="og:title" content="{{ video.name }}" />
     <meta property="og:image" content="{{ video_thumbnail(video) }}" />
     <meta property="og:description" content="{{ video.description|striptags }}" />
+
+    {% if video.duration %}
+        <meta property="video:duration" content="{{ video.durationSeconds }}" />
+    {% endif %}
 {% endblock %}
 
 {% block content %}
