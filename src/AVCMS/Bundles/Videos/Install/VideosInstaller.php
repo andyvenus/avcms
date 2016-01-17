@@ -27,7 +27,6 @@ class VideosInstaller extends BundleInstaller
                   `description` text NOT NULL,
                   `file` text,
                   `category_id` int(11) unsigned NOT NULL,
-                  `category_parent_id` int(11) unsigned DEFAULT '0',
                   `hits` int(11) unsigned NOT NULL DEFAULT '0',
                   `last_hit` int(11) DEFAULT NULL,
                   `published` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -45,6 +44,11 @@ class VideosInstaller extends BundleInstaller
                   `likes` int(11) NOT NULL DEFAULT '0',
                   `dislikes` int(11) NOT NULL DEFAULT '0',
                   `comments` int(11) unsigned NOT NULL DEFAULT '0',
+                  `duration` varchar(8) DEFAULT NULL,
+                  `duration_seconds` int(11) DEFAULT NULL,
+                  `provider` varchar(40) DEFAULT NULL,
+                  `provider_id` varchar(120) DEFAULT NULL,
+                  `tags` text,
                   PRIMARY KEY (`id`),
                   KEY `seo_url` (`slug`),
                   KEY `category_id` (`category_id`)
@@ -78,8 +82,22 @@ class VideosInstaller extends BundleInstaller
                   `width` int(11) DEFAULT NULL,
                   `height` int(11) DEFAULT NULL,
                   `slug` varchar(200) DEFAULT NULL,
+                  `provider` varchar(40) DEFAULT NULL,
+                  `provider_id` varchar(120) DEFAULT NULL,
+                  `duration` varchar(8) DEFAULT NULL,
+                  `duration_seconds` int(11) DEFAULT NULL,
+                  `tags` text,
                   PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
+
+        $imageCategories = $this->modelFactory->create('AVCMS\Bundles\Videos\Model\VideoCategories');
+
+        $firstCategory = $imageCategories->newEntity();
+        $firstCategory->setName('First Category');
+        $firstCategory->setDescription('A first category to get going. Edit me or delete me!');
+        $firstCategory->setSlug('first-category');
+
+        $imageCategories->insert($firstCategory);
     }
 }
