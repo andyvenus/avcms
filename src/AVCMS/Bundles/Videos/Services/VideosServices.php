@@ -8,6 +8,7 @@
 namespace AVCMS\Bundles\Videos\Services;
 
 use AV\Service\ServicesInterface;
+use AVCMS\Bundles\Videos\Services\CompilerPass\VideoTypesCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
@@ -15,6 +16,8 @@ class VideosServices implements ServicesInterface
 {
     public function getServices($configuration, ContainerBuilder $container)
     {
+        $container->addCompilerPass(new VideoTypesCompilerPass());
+
         $container->register('twig_extension.videos', 'AVCMS\Bundles\Videos\TwigExtension\VideosTwigExtension')
             ->setArguments([new Reference('site_url'), '%videos_dir%', '%video_thumbnails_dir%'])
             ->addTag('twig.extension')
@@ -50,18 +53,20 @@ class VideosServices implements ServicesInterface
 
         $container->register('video_manager', 'AVCMS\Bundles\Videos\Type\VideoManager')
             ->setArguments([new Reference('videos.model')])
-            ->addMethodCall('addType', [new Reference('video.type.youtube')])
-            ->addMethodCall('addType', [new Reference('video.type.vimeo')])
-            ->addMethodCall('addType', [new Reference('video.type.dailymotion')])
         ;
 
         $container->register('video.type.youtube', 'AVCMS\Bundles\Videos\Type\YouTubeVideo')
             ->setArguments([new Reference('session')])
+            ->addTag('video_type')
         ;
 
-        $container->register('video.type.vimeo', 'AVCMS\Bundles\Videos\Type\VimeoVideo');
+        $container->register('video.type.vimeo', 'AVCMS\Bundles\Videos\Type\VimeoVideo')->addTag('video_type');
 
-        $container->register('video.type.dailymotion', 'AVCMS\Bundles\Videos\Type\DailymotionVideo');
+        $container->register('video.type.dailymotion', 'AVCMS\Bundles\Videos\Type\DailymotionVideo')->addTag('video_type');
+
+        $container->register('video.type.metacafe', 'AVCMS\Bundles\Videos\Type\MetacafeVideo')->addTag('video_type');
+
+        $container->register('video.type.vine', 'AVCMS\Bundles\Videos\Type\VineVideo')->addTag('video_type');
 
         $container->register('video_category_choices', 'AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider')
             ->setArguments([new Reference('videos.categories_model')])

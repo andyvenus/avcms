@@ -9,6 +9,7 @@ namespace AVCMS\Bundles\Videos\Type;
 
 use AVCMS\Bundles\Videos\Model\Video;
 use Curl\Curl;
+use Goutte\Client;
 
 abstract class AbstractVideoType
 {
@@ -48,6 +49,60 @@ abstract class AbstractVideoType
         $response = $curl->get($url);
 
         return $response;
+    }
+
+    protected function parseHtmlAtUrl($url)
+    {
+        $client = new Client();
+
+        return $client->request('GET', $url);
+    }
+
+    protected function parseCommonHtmlAtUrl($url, $video)
+    {
+        $crawler = $this->parseHtmlAtUrl($url);
+
+        $data['name'] = $crawler->filter('meta[property="og:title"]')->first()->attr('content');
+        $data['description'] = $crawler->filter('meta[property="og:description"]')->first()->attr('content');
+        $data['thumbnail'] = $crawler->filter('meta[property="og:image"]')->first()->attr('content');
+
+        try {
+            $data['duration'] = $this->secondsToTimestamp($crawler->filter('meta[property="video:duration"]')->first()->attr('content'));
+        } catch (\InvalidArgumentException $e) {}
+
+        $video->fromArray($data);
+
+        return $crawler;
+    }
+
+    protected function secondsToTimestamp($seconds)
+    {
+        $timestamp = gmdate('H:i:s', $seconds);
+
+        if (strpos($timestamp, '00:') === 0) {
+            $timestamp = str_replace('00:', '', $timestamp);
+        }
+
+        return $timestamp;
+    }
+
+    public function getIdFromUrl($url, $type = 'number')
+    {
+        $urlParts = explode('/', $url);
+
+        $id = null;
+
+        if ($type == 'last') {
+            return array_pop($urlParts);
+        }
+
+        foreach ($urlParts as $urlPart) {
+            if ($type == 'number' && is_numeric($urlPart)) {
+                $id = $urlPart;
+            }
+        }
+
+        return $id;
     }
 
     protected function getQueryParameter($url, $parameter)
