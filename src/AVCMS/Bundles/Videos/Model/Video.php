@@ -279,4 +279,14 @@ class Video extends Entity implements RateInterface
     {
         $this->set("provider_id", $value);
     }
+
+    public function getTags()
+    {
+        $this->get('tags');
+    }
+
+    public function setTags($value)
+    {
+        $this->set('tags', $value);
+    }
 }

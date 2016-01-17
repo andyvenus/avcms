@@ -61,6 +61,12 @@ avcms.videosAdmin = {
                         return;
                     }
 
+                    if (key == 'tags') {
+                        var split = value.split(',');
+                        form.find('[name="' + key + '"]').select2('val', split);
+                        return;
+                    }
+
                     form.find('[name="' + key + '"]').val(value);
                 });
 

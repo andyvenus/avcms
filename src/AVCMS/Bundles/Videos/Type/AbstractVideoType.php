@@ -70,6 +70,11 @@ abstract class AbstractVideoType
             $data['duration'] = $this->secondsToTimestamp($crawler->filter('meta[property="video:duration"]')->first()->attr('content'));
         } catch (\InvalidArgumentException $e) {}
 
+        try {
+            $data['tags'] = htmlspecialchars_decode($crawler->filter('meta[name="keywords"]')->first()->attr('content'));
+        } catch (\InvalidArgumentException $e) {}
+
+
         $video->fromArray($data);
 
         return $crawler;
