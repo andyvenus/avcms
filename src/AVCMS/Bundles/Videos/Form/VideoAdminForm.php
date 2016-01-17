@@ -29,7 +29,7 @@ class VideoAdminForm extends AdminContentForm
         new FileSelectFields($this, 'admin/videos/find-files', 'admin/videos/upload', 'admin/videos/grab-file', 'thumbnail', 'video_thumbnail', [], null, 'URL');
 
         $this->add('name', 'text', array(
-            'label' => 'Name',
+            'label' => 'Title',
             'attr' => [
                 'data-slug-target' => 'slug'
             ],
