@@ -7,12 +7,10 @@
 
 namespace AVCMS\Bundles\Videos\Controller;
 
-use AV\FileHandler\UploadedFileHandler;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Videos\Form\VideoFrontendFiltersForm;
 use AVCMS\Bundles\Videos\Form\SubmitVideoForm;
 use AVCMS\Bundles\Videos\Type\VideoManager;
-use AVCMS\Bundles\Videos\Type\YouTubeVideo;
 use AVCMS\Core\Controller\Controller;
 use AVCMS\Core\Rss\RssFeed;
 use AVCMS\Core\Rss\RssItem;
@@ -188,40 +186,33 @@ class VideosController extends Controller
         $form = $this->buildForm($formBlueprint, $request, $newSubmission);
 
         if ($form->isValid()) {
+            try {
+                $importer = $this->videoManager->getImporterForUrl($form->getData('file'));
+            } catch (\Exception $e) {
+                $form->setError('file', 'The entered video URL is not supported');
+            }
+        }
+
+        if ($form->isValid()) {
+            $videoExists = $this->videos->query()
+                ->where('provider', $importer->getId())
+                ->where('provider_id', $importer->getIdFromUrl($form->getData('file')))
+                ->count();
+
+            $videoExists += $submissions->query()
+                ->where('provider', $importer->getId())
+                ->where('provider_id', $importer->getIdFromUrl($form->getData('file')))
+                ->count();
+
+            if ($videoExists) {
+                $form->setError('file', 'This video has already been submitted');
+            }
+        }
+
+        if ($form->isValid()) {
             $form->saveToEntities();
 
-            $fileHandler = new UploadedFileHandler();
-
-            $submissionsVideosDir = $this->getParam('videos_dir').'/submissions';
-            if (!file_exists($submissionsVideosDir)) {
-                mkdir($submissionsVideosDir, 0777, true);
-            }
-
-            $submissionsThumbsDir = $this->getParam('video_thumbnails_dir').'/submissions';
-            if (!file_exists($submissionsThumbsDir)) {
-                mkdir($submissionsThumbsDir, 0777, true);
-            }
-
-            $fullFilePath = $fileHandler->moveFile($form->getData('file'), $submissionsVideosDir);
-            $fileRelPath = str_replace($this->getParam('videos_dir').'/', '', $fullFilePath);
-            $newSubmission->setFile($fileRelPath);
-
-            $fullThumbPath = $fileHandler->moveFile($form->getData('thumbnail'), $submissionsThumbsDir);
-            $thumbRelPath = str_replace($this->getParam('video_thumbnails_dir').'/', '', $fullThumbPath);
-            $newSubmission->setThumbnail($thumbRelPath);
-
-            $newSubmission->setCreatorId($this->activeUser()->getId());
-            $newSubmission->setSubmitterId($this->activeUser()->getId());
-            $newSubmission->setDateAdded(time());
-
-            $dimensions = @getimagesize($fullFilePath);
-
-            if (!$dimensions) {
-                $dimensions = [0, 0];
-            }
-
-            $newSubmission->setWidth($dimensions[0]);
-            $newSubmission->setHeight($dimensions[1]);
+            $importer->getVideoAtUrl($form->getData('file'), $newSubmission);
 
             $newSubmission->setSlug($this->get('slug.generator')->slugify($newSubmission->getName()));
 
@@ -229,7 +220,14 @@ class VideosController extends Controller
 
         }
 
-        return new Response($this->render('@Videos/submit_video.twig', ['form' => $form->createView()]));
+        return new Response($this->render(
+            '@Videos/submit_video.twig',
+            [
+                'form' => $form->createView(),
+                'providers' => $this->videoManager->getTypes(),
+                'submission' => $newSubmission
+            ]
+        ));
     }
 
     public function videosRssFeedAction()

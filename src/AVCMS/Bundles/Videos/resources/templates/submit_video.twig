@@ -9,11 +9,15 @@
 
     {% if form.isSubmitted() == false %}
         <div class="alert alert-info">
-            <span class="glyphicon glyphicon-info-sign"></span> {% trans %}Submit a video for us to use on our site! By submitting a video you give us full permission to use the video on our website.{% endtrans %}
+            <span class="glyphicon glyphicon-info-sign"></span> {% trans %}Submit a video for us to use on our site! Just enter the URL to a video on one of the supported sites below and we will find out the details.{% endtrans %}
         </div>
 
         <div class="alert alert-info">
-            <span class="glyphicon glyphicon-info-sign"></span> {% trans with {size: 50} %}Videos must be Flash or Unity files and under {size} MB{% endtrans %}
+            <span class="glyphicon glyphicon-info-sign"></span> {% trans %}You can submit a video from any of these sites{% endtrans %}:<br>
+
+                {% for provider in providers %}
+                    <span class="label label-primary">{{ provider.name }}</span>
+                {% endfor %}
         </div>
     {% endif %}
 
@@ -21,7 +25,10 @@
         {{ form(form) }}
     {% else %}
         <div class="alert alert-success">
-            {% trans %}Thanks for your submission, it's now pending review.{% endtrans %} <a href="{{ path('submit_video') }}">{% trans %}Click here to submit another video{% endtrans %}</a>
+            {% trans with {'title': submission.name} %}Thanks for your submission of the video "{title}", it's now pending review.{% endtrans %}
+            <a href="{{ path('submit_video') }}" class="alert-link">
+                {% trans %}Click here to submit another video{% endtrans %}
+            </a>
         </div>
     {% endif %}
 {% endblock %}

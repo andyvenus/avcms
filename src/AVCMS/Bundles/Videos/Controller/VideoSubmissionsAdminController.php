@@ -5,6 +5,7 @@ namespace AVCMS\Bundles\Videos\Controller;
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
 use AVCMS\Bundles\Categories\Form\ChoicesProvider\CategoryChoicesProvider;
 use AVCMS\Bundles\Videos\Form\VideoAdminForm;
+use AVCMS\Bundles\Videos\Type\VideoManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,9 +20,15 @@ class VideoSubmissionsAdminController extends AdminBaseController
 
     protected $browserTemplate = '@Videos/admin/video_submissions_browser.twig';
 
+    /**
+     * @var VideoManager
+     */
+    protected $videoManager;
+
     public function setUp()
     {
         $this->videoSubmissions = $this->model('VideoSubmissions');
+        $this->videoManager = $this->get('video_manager');
     }
 
     public function homeAction(Request $request)
@@ -58,9 +65,18 @@ class VideoSubmissionsAdminController extends AdminBaseController
             return new JsonResponse($json);
         }
         else {
+            $importer = $this->videoManager->getType($videoSubmission->getProvider());
+
             return new Response($this->renderAdminSection(
                 '@Videos/admin/review_video_submission.twig',
-                ['form' => $form->createView(), 'item' => $videoSubmission]
+                [
+                    'form' => $form->createView(),
+                    'item' => $videoSubmission,
+                    'provider' => [
+                        'name' => $importer->getName(),
+                        'id' => $importer->getId(),
+                    ]
+                ]
             ));
         }
     }
