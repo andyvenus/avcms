@@ -28,7 +28,7 @@ class VideoTypesCompilerPass implements CompilerPassInterface
         $definition->setMethodCalls(array());
 
         foreach ($container->findTaggedServiceIds('video_type') as $id => $attributes) {
-            $definition->addMethodCall('addType', array(new Reference($id), $attributes[0]['id']));
+            $definition->addMethodCall('addType', array(new Reference($id)));
         }
 
         $definition->setMethodCalls(array_merge($definition->getMethodCalls(), $calls));
