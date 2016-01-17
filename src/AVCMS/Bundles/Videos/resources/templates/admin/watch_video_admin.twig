@@ -1,0 +1,12 @@
+{% extends '@admin/editor.twig' %}
+
+{% block title %}{% trans with {name: video.name} %}Play Video: {name}{% endtrans %}{% endblock %}
+
+{% block editor_title %}{{ video.name }}{% endblock %}
+
+{% block editor_content %}
+    <span class="always-refresh"></span>
+    {{ embed_video(video, false) }}
+{% endblock %}
+
+{% block editor_animation %}{% endblock %}
