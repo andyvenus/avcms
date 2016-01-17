@@ -30,7 +30,7 @@
             <div class="provider-info">
                 {% if not item.id %}
                     <span class="glyphicon glyphicon-info-sign"></span>
-                    Enter the URL to a video on <span style="border-bottom: 1px dotted #999;cursor: help;" data-toggle="tooltip" title="{{ provider_names|join(', ') }}">these sites</span> and any valid details
+                    Enter the URL to a video on <span style="border-bottom: 1px dotted #999;cursor: help;" data-toggle="tooltip" title="{{ provider_names|sort|join(', ') }}">these sites</span> and any valid details
                     will automatically be used to fill in the form. You can also enter the URL to any MP4 or FLV video.
                 {% else %}
                     Provider: <span class="label label-default">{{ provider.name|default('None') }}</span>
