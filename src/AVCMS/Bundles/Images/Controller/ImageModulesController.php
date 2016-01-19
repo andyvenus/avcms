@@ -64,7 +64,7 @@ class ImageModulesController extends Controller
             }
 
             $ratings = $this->model('LikeDislike:Ratings');
-            $ids = $ratings->getLikedIds($user->getId(), 'image', $adminSettings['limit']);
+            $ids = $ratings->getLikedIds($user->getId(), 'image');
             $query = $this->images->find()->ids($ids, 'image_collections.id');
             $moreButton = ['url' => $this->generateUrl('liked_images', ['likes_user' => $user->getSlug()]), 'label' => 'All Liked Images'];
         }

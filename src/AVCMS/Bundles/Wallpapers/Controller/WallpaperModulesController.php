@@ -64,7 +64,7 @@ class WallpaperModulesController extends Controller
             }
 
             $ratings = $this->model('LikeDislike:Ratings');
-            $ids = $ratings->getLikedIds($user->getId(), 'wallpaper', $adminSettings['limit']);
+            $ids = $ratings->getLikedIds($user->getId(), 'wallpaper');
             $query = $this->wallpapers->find()->ids($ids, 'wallpapers.id');
             $moreButton = ['url' => $this->generateUrl('liked_wallpapers', ['likes_user' => $user->getSlug()]), 'label' => 'All Liked Wallpapers'];
         }

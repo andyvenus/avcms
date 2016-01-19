@@ -64,7 +64,7 @@ class VideoModulesController extends Controller
             }
 
             $ratings = $this->model('LikeDislike:Ratings');
-            $ids = $ratings->getLikedIds($user->getId(), 'video', $adminSettings['limit']);
+            $ids = $ratings->getLikedIds($user->getId(), 'video');
             $query = $this->videos->find()->ids($ids, 'videos.id');
             $moreButton = ['url' => $this->generateUrl('liked_videos', ['likes_user' => $user->getSlug()]), 'label' => 'All Liked Videos'];
         }
