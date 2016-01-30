@@ -1,3 +1,7 @@
 @import '_vars';
 
 @import '../../basic/css/_base_style';
+
+button.navbar-toggle.collapsed {
+  color: white;
+}

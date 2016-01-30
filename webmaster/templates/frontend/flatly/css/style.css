@@ -69,3 +69,8 @@ select[name=author] {
 
 .box {
   margin-bottom: 15px; }
+
+button.navbar-toggle.collapsed {
+  color: white; }
+
+/*# sourceMappingURL=style.css.map */
