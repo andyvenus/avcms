@@ -32,8 +32,6 @@ class SecurityServices implements ServicesInterface
             ->setArguments(array(9))
         ;
 
-        $container->register('security.random', 'Symfony\Component\Security\Core\Util\SecureRandom');
-
         // AUTHORIZATION
         $container->register('auth.access_decision_manager', 'Symfony\Component\Security\Core\Authorization\AccessDecisionManager')
             ->setArguments(array(array(new Reference('auth.voter.authenticated'), new Reference('auth.voter.permissions'), new Reference('auth.voter.role'))))

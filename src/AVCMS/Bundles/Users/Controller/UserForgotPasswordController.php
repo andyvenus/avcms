@@ -13,7 +13,6 @@ use AVCMS\Bundles\Users\Form\ForgotPasswordForm;
 use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Util\SecureRandom;
 
 class UserForgotPasswordController extends Controller
 {
@@ -32,11 +31,9 @@ class UserForgotPasswordController extends Controller
                 $form->addCustomErrors([new FormError('email', 'That user already has an active reset request. Please wait to try again.', true)]);
             }
             else {
-                $randomGen = new SecureRandom();
-
                 $newReset = $resets->newEntity();
                 $newReset->setUserId($user->getId());
-                $newReset->setCode(bin2hex($randomGen->nextBytes(20)));
+                $newReset->setCode(bin2hex(random_bytes(20)));
                 $newReset->setGenerated(time());
 
                 $resets->insert($newReset);

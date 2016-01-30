@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\Util\SecureRandom;
 
 class UserAuthController extends Controller
 {
@@ -129,13 +128,11 @@ class UserAuthController extends Controller
     private function sendValidationEmail(User $user)
     {
         if ($this->setting('validate_email_addresses')) {
-            $randomGen = new SecureRandom();
-
             $emailKey = $this->model('EmailValidationKeys')->query()->where('user_id', $user->getId())->first();
 
             if (!$emailKey) {
                 $emailKey = new EmailValidationKey();
-                $emailKey->setCode(bin2hex($randomGen->nextBytes(20)));
+                $emailKey->setCode(bin2hex(random_bytes(20)));
                 $emailKey->setGenerated(time());
                 $emailKey->setUserId($user->getId());
                 $this->model('EmailValidationKeys')->insert($emailKey);

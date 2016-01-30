@@ -53,7 +53,6 @@ class AuthServices implements ServicesInterface
                     'httponly' => true
                 ),
                 null,
-                new Reference('security.random')
             ))
             ->addMethodCall('setTokenProvider', array(new Reference('users.sessions_model')))
         ;

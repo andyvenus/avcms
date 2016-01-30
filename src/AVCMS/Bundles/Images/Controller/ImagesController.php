@@ -26,7 +26,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\Util\SecureRandom;
 use ZipArchive;
 
 class ImagesController extends Controller
@@ -264,7 +263,7 @@ class ImagesController extends Controller
             }
 
             $imageFiles = [];
-            $secureRandom = bin2hex((new SecureRandom())->nextBytes(5));
+            $secureRandom = bin2hex(random_bytes(5));
 
             foreach ($files as $uploadedImage) {
                 if (!$fileValidator->assert($uploadedImage)) {
