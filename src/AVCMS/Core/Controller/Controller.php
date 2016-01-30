@@ -5,7 +5,7 @@ namespace AVCMS\Core\Controller;
 use AV\Form\FormBlueprint;
 use AV\Form\FormHandler;
 use AV\Kernel\Bundle\BundleConfig;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -15,8 +15,10 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 
-abstract class Controller extends ContainerAware
+abstract class Controller
 {
+    use ContainerAwareTrait;
+
     /**
      * @var \AVCMS\Core\Translation\Translator
      */
