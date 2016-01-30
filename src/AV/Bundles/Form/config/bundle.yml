@@ -8,4 +8,4 @@ services:
  - FormServices
 
 container_params:
-  form.default_template: @Form/bootstrap_form.twig
+  form.default_template: "@Form/bootstrap_form.twig"

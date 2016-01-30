@@ -211,7 +211,7 @@ class BundleManager implements BundleManagerInterface
             $resources = [];
             foreach ($this->getConfigFiles() as $configLocation) {
                 if (file_exists($configLocation)) {
-                    $appBundlesConfig = array_replace_recursive($appBundlesConfig, Yaml::parse($configLocation));
+                    $appBundlesConfig = array_replace_recursive($appBundlesConfig, Yaml::parse(file_get_contents($configLocation)));
                 }
 
                 $resources[] = new FileResource($configLocation);

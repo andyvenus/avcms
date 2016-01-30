@@ -106,7 +106,7 @@ container_params:
   test_var: users.model
   avatar_dir: web/avatars
   avatar_path: web/avatars
-  default_access_denied_template: @CmsErrorHandler/error.twig
+  default_access_denied_template: "@CmsErrorHandler/error.twig"
   access_denied_templates:
-    Symfony\Component\Security\Core\Exception\AccessDeniedException: @CmsErrorHandler/error.twig
-    AVCMS\Core\Security\Exception\SiteOfflineException: @CmsErrorHandler/site_offline.twig
+    Symfony\Component\Security\Core\Exception\AccessDeniedException: "@CmsErrorHandler/error.twig"
+    AVCMS\Core\Security\Exception\SiteOfflineException: "@CmsErrorHandler/site_offline.twig"

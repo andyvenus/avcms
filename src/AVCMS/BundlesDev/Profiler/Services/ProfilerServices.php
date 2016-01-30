@@ -47,7 +47,7 @@ class ProfilerServices implements ServicesInterface
         ;
 
         $container->register('listener.profiler', 'Symfony\Component\HttpKernel\EventListener\ProfilerListener')
-            ->setArguments(array(new Reference('profiler'), new Reference('request_matcher')))
+            ->setArguments(array(new Reference('profiler'), new Reference('request.stack'), new Reference('request_matcher')))
             ->addTag('event.subscriber')
         ;
 
