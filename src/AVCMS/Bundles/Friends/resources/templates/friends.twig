@@ -49,7 +49,7 @@
                         <div class="media-body">
                             <div class="pull-left">
                                 <h4 class="media-heading"><a href="{{ path('user_profile', {'slug': friend.slug}) }}">{{ friend.username }}</a></h4>
-                                {% trans %}Last Active{% endtrans %}: {{ friend.lastActive|date(settings.time_format) }}
+                                {% trans %}Last Active{% endtrans %}: {{ friend.lastActivity|date(settings.time_format) }}
                             </div>
 
                             <div class="pull-right">
