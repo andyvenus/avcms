@@ -653,6 +653,8 @@ class AvaImporterController extends Controller
             'database'  => $session->get('database_database'),
             'username'  => $session->get('database_username'),
             'password'  => $session->get('database_password'),
+            'charset' => 'utf8', // Optional
+            'collation' => 'utf8_unicode_ci', // Optional
             'prefix'    => 'ava_', // Table prefix, optional
         );
 
