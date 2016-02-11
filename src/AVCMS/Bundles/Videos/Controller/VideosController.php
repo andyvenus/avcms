@@ -215,6 +215,10 @@ class VideosController extends Controller
 
             $newSubmission->setSlug($this->get('slug.generator')->slugify($newSubmission->getName()));
 
+            $newSubmission->setCreatorId($this->activeUser()->getId());
+            $newSubmission->setSubmitterId($this->activeUser()->getId());
+            $newSubmission->setDateAdded(time());
+
             $submissions->save($newSubmission);
 
         }

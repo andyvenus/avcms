@@ -80,8 +80,6 @@ class VideosInstaller extends BundleInstaller
                   `date_added` int(11) NOT NULL DEFAULT '0',
                   `creator_id` int(11) DEFAULT NULL,
                   `submitter_id` int(11) NOT NULL DEFAULT '0',
-                  `width` int(11) DEFAULT NULL,
-                  `height` int(11) DEFAULT NULL,
                   `slug` varchar(200) DEFAULT NULL,
                   `provider` varchar(40) DEFAULT NULL,
                   `provider_id` varchar(120) DEFAULT NULL,
