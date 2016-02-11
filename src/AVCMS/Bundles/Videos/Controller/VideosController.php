@@ -64,7 +64,7 @@ class VideosController extends Controller
             $playsLeft = $this->setting('videos_limit_plays') - $played;
 
             if ($playsLeft <= 0) {
-                return $this->redirect('login', [], 302, 'info', $this->trans('Please login to continue playing videos'));
+                return $this->redirect('login', [], 302, 'info', $this->trans('Please login to continue watching videos'));
             }
             else {
                 $playCookie = new Cookie('avcms_videos_played', $played + 1, time() + 1209600);
@@ -73,6 +73,7 @@ class VideosController extends Controller
         }
 
         $response = new Response($this->render('@Videos/watch_video.twig', ['video' => $video, 'plays_left' => $playsLeft]));
+
         if (isset($playCookie)) {
             $response->headers->setCookie($playCookie);
         }
