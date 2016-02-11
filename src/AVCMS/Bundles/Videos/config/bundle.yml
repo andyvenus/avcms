@@ -5,6 +5,8 @@ require:
   - Framework
 
 assets:
+  avcms_videos.js:
+    env: frontend
   video.js:
     env: frontend
   avcms_videos_admin.js:

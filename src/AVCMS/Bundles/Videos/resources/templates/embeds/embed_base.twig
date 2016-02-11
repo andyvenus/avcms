@@ -1,0 +1,27 @@
+{% block embed_extra_before %}{% endblock %}
+
+<div id="avcms-video-container" data-original-width="{{ video.width }}" data-original-height="{{ video.height }}">
+    <div id="avcms-video-container-inner" style="width: {{ video.width }}px;height: {{ video.height }}px;margin: auto;">
+        {% block embed_code %}{% endblock %}
+    </div>
+</div>
+
+{% if (video.advertId or settings.video_ad_default) and (is_granted('ELEVATED_NO_VIDEO_ADS') == false or settings.video_ad_show_to_everyone) and show_advert == true %}
+    <div id="avcms-video-advert">
+        <div class="video-advert-info">
+            <div id="avcms-video-advert-countdown" data-countdown-time="{{ settings.video_ad_countdown }}">{{ settings.video_ad_countdown }}</div>
+            {% if settings.video_ad_allow_skip %}
+                <div id="avcms-video-advert-skip">
+                    <button class="btn btn-default btn-sm">{% trans %}Skip Advert{% endtrans %} <span class="glyphicon glyphicon-arrow-right"></span> </button>
+                </div>
+            {% endif %}
+        </div>
+        <div class="video-advert-main">
+            {% if video.advertId %}
+                {{ advert(video.advertId) }}
+            {% else %}
+                {{ advert(settings.video_ad_default) }}
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

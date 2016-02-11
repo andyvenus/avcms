@@ -41,11 +41,14 @@ class VideosTwigExtension extends \Twig_Extension
         return $thumbnail;
     }
 
-    public function embedVideo(Video $video)
+    public function embedVideo(Video $video, $showAdvert = true)
     {
         $this->setRealVideoUrl($video);
 
-        return $this->environment->render('@Videos/embeds/'.$video->getProvider().'.twig', ['video' => $video]);
+        return $this->environment->render('@Videos/embeds/'.$video->getProvider().'.twig', [
+            'video' => $video,
+            'show_advert' => $showAdvert
+        ]);
     }
 
     private function setRealVideoUrl(Video $video)

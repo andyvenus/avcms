@@ -1,1 +1,5 @@
-{{ video.embedCode|raw }}
+{% extends '@Videos/embeds/embed_base.twig' %}
+
+{% block embed_code %}
+    {{ video.embedCode|raw }}
+{% endblock %}
