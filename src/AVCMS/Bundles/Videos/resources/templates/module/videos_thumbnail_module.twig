@@ -20,7 +20,7 @@
     {% endfor %}
 </div>
 
-{% if more_button %}
+{% if more_button and admin_settings.show_more_button %}
     <div class="row">
         <div class="col-md-12 text-right">
             <a class="btn btn-default" href="{{ more_button.url }}">{{ more_button.label|trans }} <span class="glyphicon glyphicon-chevron-right"></span></a>
