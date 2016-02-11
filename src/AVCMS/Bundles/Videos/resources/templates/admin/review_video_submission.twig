@@ -5,3 +5,7 @@
 {% block editor_title %}
     <span class="light">{% trans %}Review Video Submission{% endtrans %}:</span> <span data-id="{{ item.id }}" data-field="name">{{ item.name }}</span>
 {% endblock %}
+
+{% block form_start %}
+    {{ form_start(form, {"data-item-id": item.id|default(0), 'class': 'review-video-submission'}) }}
+{% endblock %}

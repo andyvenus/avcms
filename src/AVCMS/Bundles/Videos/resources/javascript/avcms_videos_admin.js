@@ -38,6 +38,8 @@ $(document).ready(function() {
     body.on('click', '.avcms-bulk-import-videos', avcms.videosAdmin.bulkImportVideos);
 
     body.on('click', '.video-thumbnail', avcms.videosAdmin.selectVideo);
+
+    avcms.event.addEvent('submit-form-success', avcms.video_submissions.onReviewSuccess);
 });
 
 avcms.videosAdmin = {
@@ -136,5 +138,14 @@ avcms.videosAdmin = {
         checkbox.prop('checked', !checkbox.prop('checked'));
 
         avcms.browser.checkFinderChecked();
+    }
+};
+
+avcms.video_submissions = {
+    onReviewSuccess: function(form)
+    {
+        if (form.hasClass('review-video-submission')) {
+            $('.browser-finder-item[data-id="'+form.data('item-id')+'"]').remove();
+        }
     }
 };
