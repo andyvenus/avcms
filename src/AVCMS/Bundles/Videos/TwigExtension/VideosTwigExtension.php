@@ -104,6 +104,10 @@ class VideosTwigExtension extends \Twig_Extension
             return '';
         }
 
+        if (count($validParts) == 1) {
+            return '00:'.$validParts[0];
+        }
+
         return implode(':', $validParts);
     }
 
