@@ -62,6 +62,10 @@ avcms.bulk_upload = {
                     else {
                         progresser.html('<div class="label label-danger">' + data.result.error + '</div>');
                     }
+
+                    var folder = $('select[name=folder]').val().split('/').join('@');
+
+                    $('.go-to-import-button').attr('href', avcms.config.site_url + 'admin/wallpapers-bulk-import/import/'+folder);
                 },
                 progress: function (e, data) {
                     var name = data.files[0].name;

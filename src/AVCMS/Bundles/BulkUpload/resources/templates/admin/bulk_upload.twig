@@ -24,7 +24,13 @@
     </div>
 
     <div class="form-group new-upload" style="display:none;overflow: hidden;">
-        <button class="btn btn-warning btn-large new-upload-button">{% trans %}New Upload{% endtrans %}</button>
+        <button class="btn btn-warning btn-large new-upload-button">
+            <span class="glyphicon glyphicon-play-circle"></span> {% trans %}New Upload{% endtrans %}
+        </button>
+
+        <a class="btn btn-success btn-large go-to-import-button" href="#">
+            <span class="glyphicon glyphicon-import"></span> Import new files
+        </a>
     </div>
 
     <div class="selected-files-area"></div>
