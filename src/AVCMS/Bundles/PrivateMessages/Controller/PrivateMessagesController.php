@@ -51,10 +51,12 @@ class PrivateMessagesController extends Controller
             throw new InvalidCsrfTokenException;
         }
 
-        $unread = $this->messages->query()
+        $this->messages->query()
             ->where('recipient_id', $this->activeUser()->getId())
             ->whereIn('id', $request->get('ids'))
             ->delete();
+
+        $unread = $this->messages->updateMessageCount($this->activeUser()->getId());
 
         return new JsonResponse(['success' => true, 'unread' => $unread]);
     }

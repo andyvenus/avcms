@@ -8,6 +8,8 @@
             <h2>{{ block('title') }}</h2>
         </div>
 
+        <div id="pmMessage" class="well well-sm" style="display: none;">{% trans %}No New Messages{% endtrans %}</div>
+
         <div class="box-main">
             <div class="list-group">
                 {% for message in messages %}

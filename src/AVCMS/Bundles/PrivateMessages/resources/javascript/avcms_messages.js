@@ -22,6 +22,10 @@ avcms.messages = {
 
         avcms.messages.clearSelectedMessages();
 
+        if ($('.avcms-message').length == 0) {
+            $('#pmMessage').show();
+        }
+
         $.post(avcms.config.site_url + 'messages/delete', {ids: selected_ids}, avcms.messages.updateUnreadCount);
     },
 
