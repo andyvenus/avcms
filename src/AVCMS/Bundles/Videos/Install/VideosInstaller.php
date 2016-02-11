@@ -15,6 +15,7 @@ class VideosInstaller extends BundleInstaller
     {
         return [
             '1.0' => 'install_1_0_0',
+            '1.0.1' => 'install_1_0_1',
         ];
     }
 
@@ -99,5 +100,11 @@ class VideosInstaller extends BundleInstaller
         $firstCategory->setSlug('first-category');
 
         $imageCategories->insert($firstCategory);
+    }
+
+    public function install_1_0_1()
+    {
+        $this->PDO->exec("ALTER TABLE {$this->prefix}video_categories ADD parents varchar(255) DEFAULT NULL");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}video_categories ADD children varchar(255) DEFAULT NULL");
     }
 }
