@@ -42,6 +42,8 @@ Games:
     enabled: true
 Images:
     enabled: true
+Videos:
+    enabled: true
 FileUpload:
     enabled: true
 Categories:

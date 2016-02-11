@@ -42,6 +42,8 @@ Images:
     enabled: true
 Games:
     enabled: true
+Videos:
+    enabled: true
 FileUpload:
     enabled: true
 Categories:
@@ -80,5 +82,3 @@ Friends:
     enabled: true
 BulkUpload:
   enabled: true
-Videos:
-  enabled: false
