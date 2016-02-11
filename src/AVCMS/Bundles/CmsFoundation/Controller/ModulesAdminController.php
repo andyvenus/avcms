@@ -127,6 +127,15 @@ class ModulesAdminController extends AdminBaseController
         if ($formHandler->isSubmitted()) {
             if ($formHandler->isValid()) {
                 $formHandler->saveToEntities();
+
+                if (!$request->request->has('limit_routes_array')) {
+                    $moduleConfig->setLimitRoutesArray('');
+                }
+
+                if (!$request->request->has('permisions_array')) {
+                    $moduleConfig->setPermissionsArray('');
+                }
+
                 $this->modules->save($moduleConfig);
             }
 
