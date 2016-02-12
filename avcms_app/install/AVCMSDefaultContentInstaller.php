@@ -177,7 +177,39 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $imageTags->setTemplateType('panel');
         $imageTags->setCacheTime(43200);
 
-        $modules->insert([$newestWallpapersSidebar, $featuredWallpapersHome, $newestWallpapersHome, $featuredGamesHome, $newestGamesHome, $featuredImagesHome, $newestImagesHome, $wallpaperTags, $newestPostsModule, $gameTags, $imageTags]);
+        // Featured Videos - Homepage
+        $featuredVideosHome = $modules->newEntity();
+        $featuredVideosHome->setModule('videos');
+        $featuredVideosHome->setActive(1);
+        $featuredVideosHome->setPosition('homepage');
+        $featuredVideosHome->setTitle('Featured Videos');
+        $featuredVideosHome->setShowHeader(1);
+        $featuredVideosHome->setTemplateType('content');
+        $featuredVideosHome->setSettingsArray(['filter' => 'featured', 'layout' => 'thumbnails', 'columns' => 3, 'limit' => 6]);
+        $featuredVideosHome->setCacheTime(3600);
+
+        // Newest Videos - Homepage
+        $newestVideosHome = $modules->newEntity();
+        $newestVideosHome->setModule('videos');
+        $newestVideosHome->setActive(1);
+        $newestVideosHome->setPosition('homepage');
+        $newestVideosHome->setTitle('Newest Videos');
+        $newestVideosHome->setShowHeader(1);
+        $newestVideosHome->setTemplateType('content');
+        $newestVideosHome->setSettingsArray(['layout' => 'thumbnails', 'columns' => 3, 'limit' => 6]);
+        $newestVideosHome->setCacheTime(3600);
+
+        // Video Tags - Sidebar
+        $videoTags = $modules->newEntity();
+        $videoTags->setModule('video_tags');
+        $videoTags->setActive(1);
+        $videoTags->setPosition('sidebar');
+        $videoTags->setTitle('Video Tags');
+        $videoTags->setShowHeader(1);
+        $videoTags->setTemplateType('panel');
+        $videoTags->setCacheTime(43200);
+
+        $modules->insert([$newestWallpapersSidebar, $featuredWallpapersHome, $newestWallpapersHome, $featuredGamesHome, $newestGamesHome, $featuredImagesHome, $newestImagesHome, $wallpaperTags, $newestPostsModule, $gameTags, $imageTags, $featuredVideosHome, $newestVideosHome, $videoTags]);
 
         // Updates - Admin Dashboard
         $updatesModule = $modules->newEntity();
@@ -239,6 +271,16 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $topImagesAdminModule->setTemplateType('list_panel');
         $topImagesAdminModule->setSettingsArray(['order' => 'top-hits']);
 
+        // Top Videos - Admin Dashboard
+        $topVideosAdminModule = $modules->newEntity();
+        $topVideosAdminModule->setModule('videos');
+        $topVideosAdminModule->setActive(1);
+        $topVideosAdminModule->setPosition('admin_dashboard');
+        $topVideosAdminModule->setTitle('Top Videos');
+        $topVideosAdminModule->setShowHeader(1);
+        $topVideosAdminModule->setTemplateType('list_panel');
+        $topVideosAdminModule->setSettingsArray(['order' => 'top-hits']);
+
         // User Info - User Profile
         $userInfoModule = $modules->newEntity();
         $userInfoModule->setModule('user_info');
@@ -258,7 +300,7 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $likedWallpapersModule->setTemplateType('panel');
         $likedWallpapersModule->setSettingsArray(['layout' => 'thumbnails', 'columns' => 2, 'limit' => 6, 'filter' => 'likes']);
 
-        $modules->insert([$updatesModule, $reportsModule, $avsNewsModule, $topWallpapersAdminModule, $userInfoModule, $likedWallpapersModule, $topGamesAdminModule, $topImagesAdminModule]);
+        $modules->insert([$updatesModule, $reportsModule, $avsNewsModule, $topWallpapersAdminModule, $topVideosAdminModule, $userInfoModule, $likedWallpapersModule, $topGamesAdminModule, $topImagesAdminModule]);
     }
 
     public function blogDefaults()
@@ -302,17 +344,5 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $firstCategory->setSlug('first-category');
 
         $gameCategories->insert($firstCategory);
-    }
-
-    public function imageDefaults()
-    {
-        $imageCategories = $this->modelFactory->create('AVCMS\Bundles\Images\Model\ImageCategories');
-
-        $firstCategory = $imageCategories->newEntity();
-        $firstCategory->setName('First Category');
-        $firstCategory->setDescription('A first category to get going. Edit me or delete me!');
-        $firstCategory->setSlug('first-category');
-
-        $imageCategories->insert($firstCategory);
     }
 }

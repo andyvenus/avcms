@@ -1,0 +1,16 @@
+info:
+  name: Video Site Script
+  version: '1.0.7'
+  id: videositescript
+  url: http://www.avscripts.net/videositescript
+
+bundle_dirs:
+  AV\Bundles: src/AV/Bundles
+  AVCMS\Bundles: src/AVCMS/Bundles
+  AVCMS\BundlesDev: src/AVCMS/BundlesDev
+
+default_content_installer: VssDefaultContentInstaller
+
+license:
+  length: 15
+  prefix: vss

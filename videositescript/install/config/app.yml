@@ -1,0 +1,4 @@
+bundle_dirs:
+  AV\Bundles: src/AV/Bundles
+  AVCMS\Bundles: src/AVCMS/Bundles
+  AVCMS\BundlesDev: src/AVCMS/BundlesDev
