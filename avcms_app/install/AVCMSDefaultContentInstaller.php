@@ -209,7 +209,7 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $videoTags->setTemplateType('panel');
         $videoTags->setCacheTime(43200);
 
-        $modules->insert([$newestWallpapersSidebar, $featuredWallpapersHome, $newestWallpapersHome, $featuredGamesHome, $newestGamesHome, $featuredImagesHome, $newestImagesHome, $wallpaperTags, $newestPostsModule, $gameTags, $imageTags, $featuredVideosHome, $newestVideosHome, $videoTags]);
+        $modules->insert([$featuredVideosHome, $newestVideosHome, $videoTags, $featuredGamesHome, $newestGamesHome, $featuredImagesHome, $newestImagesHome, $newestWallpapersSidebar, $featuredWallpapersHome, $newestWallpapersHome, $wallpaperTags, $newestPostsModule, $gameTags, $imageTags]);
 
         // Updates - Admin Dashboard
         $updatesModule = $modules->newEntity();
@@ -344,5 +344,17 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $firstCategory->setSlug('first-category');
 
         $gameCategories->insert($firstCategory);
+    }
+
+    public function imageDefaults()
+    {
+        $imageCategories = $this->modelFactory->create('AVCMS\Bundles\Images\Model\ImageCategories');
+
+        $firstCategory = $imageCategories->newEntity();
+        $firstCategory->setName('First Category');
+        $firstCategory->setDescription('A first category to get going. Edit me or delete me!');
+        $firstCategory->setSlug('first-category');
+
+        $imageCategories->insert($firstCategory);
     }
 }
