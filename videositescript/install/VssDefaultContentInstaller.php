@@ -12,7 +12,6 @@ class VssDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentIns
         return array(
             'Blog' => ['1.0' => 'blogDefaults'],
             'CmsFoundation' => ['1.0' => 'cmsDefaults'],
-            'Videos' => ['1.0' => 'videoDefaults']
         );
     }
 
@@ -216,17 +215,5 @@ class VssDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentIns
         $post->setPublishDate(time());
 
         $blogPosts->save($post);
-    }
-
-    public function videoDefaults()
-    {
-        $videoCategories = $this->modelFactory->create('AVCMS\Bundles\Videos\Model\VideoCategories');
-
-        $firstCategory = $videoCategories->newEntity();
-        $firstCategory->setName('First Category');
-        $firstCategory->setDescription('A first category to get going. Edit me or delete me!');
-        $firstCategory->setSlug('first-category');
-
-        $videoCategories->insert($firstCategory);
     }
 }
