@@ -9,6 +9,7 @@ assets:
     env: frontend
   video.js:
     env: frontend
+    compress: false
   avcms_videos_admin.js:
     env: admin
 
