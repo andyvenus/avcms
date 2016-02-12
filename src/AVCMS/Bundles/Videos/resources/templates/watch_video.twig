@@ -36,7 +36,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         {% if plays_left and settings.videos_limit_plays %}
-                            <div class="alert alert-info">{% trans with {total: plays_left} %}You have {total} video plays remaining before you must register{% endtrans %}</div>
+                            <div class="alert alert-info">{% trans with {total: plays_left} %}You have {total} video views remaining before you must register{% endtrans %}</div>
                         {% endif %}
 
                         {{ embed_video(video) }}

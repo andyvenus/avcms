@@ -130,7 +130,7 @@ admin_settings:
     default: 0
     section: video_ads
   videos_limit_plays:
-    label: Limit Video Plays
+    label: Limit Video Views
     help: The number of videos that can be watched before a user must register an account. Set to 0 to disable.
     type: text
     default: 0
@@ -354,7 +354,7 @@ modules:
           default: 40
   video_stats:
     name: Video Stats
-    description: Video stats like total video, total plays etc
+    description: Video stats like total video, total views etc
     controller: Videos::VideoModulesController::videoStatsModule
     cachable: true
     default_cache_time: 43200

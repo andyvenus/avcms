@@ -24,7 +24,7 @@ Oldest
 You have already submitted {count} videos, please wait for them to be accepted first
 Submit a Video
 Click here to submit another video
-You have {total} video plays remaining before you must register
+You have {total} video views remaining before you must register
 Please login to continue playing videos
 Newest Videos
 Times Video Played
