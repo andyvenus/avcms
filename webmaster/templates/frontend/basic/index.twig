@@ -50,7 +50,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }} <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    {% if menu_item.url != '#' %}
+                                    {% if menu_item.url != '#' and menu_item.url != '' %}
                                         <li><a href="{{ menu_item.url }}"><span class="{{ menu_item.icon }}"></span> {{ menu_item.label }}</a></li>
                                         <li role="presentation" class="divider"></li>
                                     {% endif %}
