@@ -76,7 +76,7 @@ class VssDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentIns
         $featuredVideosHome->setTitle('Featured Videos');
         $featuredVideosHome->setShowHeader(1);
         $featuredVideosHome->setTemplateType('content');
-        $featuredVideosHome->setSettingsArray(['filter' => 'featured', 'layout' => 'thumbnails', 'columns' => 4, 'limit' => 8]);
+        $featuredVideosHome->setSettingsArray(['filter' => 'featured', 'layout' => 'thumbnails', 'columns' => 3, 'limit' => 6]);
         $featuredVideosHome->setCacheTime(3600);
 
         // Newest Videos - Homepage
@@ -87,7 +87,7 @@ class VssDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentIns
         $newestVideosHome->setTitle('Newest Videos');
         $newestVideosHome->setShowHeader(1);
         $newestVideosHome->setTemplateType('content');
-        $newestVideosHome->setSettingsArray(['layout' => 'thumbnails', 'columns' => 2, 'limit' => 18]);
+        $newestVideosHome->setSettingsArray(['layout' => 'thumbnails', 'columns' => 3, 'limit' => 18]);
         $newestVideosHome->setCacheTime(3600);
 
         // Newest Blog Posts - Sidebar
