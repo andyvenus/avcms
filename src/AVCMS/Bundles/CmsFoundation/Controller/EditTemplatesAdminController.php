@@ -66,10 +66,10 @@ class EditTemplatesAdminController extends AdminBaseController
 
                         $id = $filePath;
                         if ($info['type'] != 'template') {
-                            $id = str_replace('/'.$fileType.'/', '', $filePath);
+                            $id = str_replace(DIRECTORY_SEPARATOR.$fileType.DIRECTORY_SEPARATOR, '', $filePath);
                         }
 
-                        $id = str_replace('/', '::', $id);
+                        $id = str_replace(DIRECTORY_SEPARATOR, '::', $id);
                         if ($id[0] == ':') {
                             $id = ltrim($id, '::');
                         }
