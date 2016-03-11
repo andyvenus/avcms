@@ -52,7 +52,7 @@ class EditTemplatesAdminController extends AdminBaseController
                     if ($file->isDir()) {
                         continue;
                     } elseif (in_array($file->getExtension(), ['twig', 'css'])) {
-                        $filePath = str_replace($info['resources_dir'], '', $file->getPath().'/'.$file->getFilename());
+                        $filePath = str_replace($info['resources_dir'], '', $file->getPath().DIRECTORY_SEPARATOR.$file->getFilename());
 
                         if ($request->get('search') && strpos($filePath, $request->get('search')) === false) {
                             continue;
@@ -212,7 +212,7 @@ class EditTemplatesAdminController extends AdminBaseController
     protected function getFileHierarchy($type, $bundle, $fileType, $filePath)
     {
         if ($type === 'bundle') {
-            $hierarchy = $this->get('bundle.resource_locator')->findFileHierarchy($bundle, str_replace('/' . $fileType, '', $filePath), $fileType);
+            $hierarchy = $this->get('bundle.resource_locator')->findFileHierarchy($bundle, str_replace(DIRECTORY_SEPARATOR . $fileType, '', $filePath), $fileType);
         }
         else {
             $hierarchy = [];
