@@ -67,9 +67,9 @@ modules:
         type: select
         label: Order
         choices:
-          newest: Newest Posts
+          publish_date_newest: Newest Posts
           top_hits: Top Hits
-        default: newest
+        default: publish_date_newest
       limit:
         type: text
         label: Number of posts to display
