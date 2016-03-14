@@ -25,10 +25,12 @@
                 {% endfor %}
             </div>
 
-            <div class="col-md-12">
-                {% block members_pagination %}
-                    {{ pagination(total_pages, current_page) }}
-                {% endblock %}
+            <div class="row">
+                <div class="col-md-12">
+                    {% block members_pagination %}
+                        {{ pagination(total_pages, current_page) }}
+                    {% endblock %}
+                </div>
             </div>
         </div>
     </div>
