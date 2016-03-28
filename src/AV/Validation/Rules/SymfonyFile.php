@@ -39,7 +39,9 @@ class SymfonyFile extends Rule
             return false;
         }
 
-        if ($this->mimeTypes && (!isset($this->mimeTypes[$param->getClientOriginalExtension()]) || !in_array($param->getMimeType(), $this->mimeTypes[$param->getClientOriginalExtension()]))) {
+        $ext = strtolower($param->getClientOriginalExtension());
+
+        if ($this->mimeTypes && (!isset($this->mimeTypes[$ext]) || !in_array($param->getMimeType(), $this->mimeTypes[$ext]))) {
             $friendlyFileTypes = array_keys($this->mimeTypes);
 
             $friendlyFileTypesStr = implode(', ', $friendlyFileTypes);
