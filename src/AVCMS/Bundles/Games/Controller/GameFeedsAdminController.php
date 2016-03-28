@@ -98,7 +98,9 @@ class GameFeedsAdminController extends AdminBaseController
         $game->setPublished(1);
         $game->setPublishDate(time());
 
-        if ($this->setting('download_feed_games') && $feedGame->getDownloadable()) {
+        $gameExtension = strtok(pathinfo($game->getFile(), PATHINFO_EXTENSION), '?');
+
+        if ($this->setting('download_feed_games') && $feedGame->getDownloadable() && !in_array($gameExtension, ['html', 'htm'])) {
             $curl = new Curl();
             $curl->setOpt(CURLOPT_FOLLOWLOCATION, true);
 
@@ -111,8 +113,6 @@ class GameFeedsAdminController extends AdminBaseController
                 }
 
                 $handler = new CurlFileHandler(null, ['php' => '*']);
-
-                $gameExtension = strtok(pathinfo($game->getFile(), PATHINFO_EXTENSION), '?');
 
                 $filePath = $handler->moveFile($game->getFile(), $file, $this->getParam('games_dir').'/'.basename($game->getSlug())[0], $game->getSlug().'.'.$gameExtension);
 
