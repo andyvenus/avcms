@@ -8,8 +8,11 @@
 namespace AVCMS\Bundles\Blog\Controller;
 
 use AVCMS\Core\Controller\Controller;
+use AVCMS\Core\Rss\RssFeed;
+use AVCMS\Core\Rss\RssItem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class BlogController extends Controller
 {
@@ -77,5 +80,30 @@ class BlogController extends Controller
         $this->container->get('hitcounter')->registerHit($this->posts, $post->getId());
 
         return new Response($this->render('@Blog/blog_post_page.twig', array('post' => $post)));
+    }
+
+    // todo: test
+    public function blogRssFeedAction()
+    {
+        /**
+         * @var \AVCMS\Bundles\Blog\Model\BlogPost[] $posts
+         */
+        $posts = $this->posts->find()->published()->limit(30)->order('publish-date-newest')->get();
+
+        $feed = new RssFeed(
+            $this->trans('Blog Posts'),
+            $this->generateUrl('blog_archive', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            $this->trans('The latest blog posts')
+        );
+
+        foreach ($posts as $post) {
+            $url = $this->generateUrl('blog_post', ['slug' => $post->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL);
+            $date = new \DateTime();
+            $date->setTimestamp($post->getPublishDate());
+
+            $feed->addItem(new RssItem($post->getTitle(), $url, $date, strip_tags($post->getBody())));
+        }
+
+        return new Response($feed->build(), 200, ['Content-Type' => 'application/xml']);
     }
 }
