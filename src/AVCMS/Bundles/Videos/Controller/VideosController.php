@@ -56,6 +56,10 @@ class VideosController extends Controller
             throw $this->createNotFoundException('Video Not Found');
         }
 
+        if ($video->getSubmitterId()) {
+            $video->submitter = $this->model('@users')->getOne($video->getSubmitterId());
+        }
+
         $hitRegistered = $this->container->get('hitcounter')->registerHit($this->videos, $video->getId(), 'hits', 'id', 'last_hit');
 
         $playsLeft = null;
