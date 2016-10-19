@@ -82,7 +82,6 @@ class BlogController extends Controller
         return new Response($this->render('@Blog/blog_post_page.twig', array('post' => $post)));
     }
 
-    // todo: test
     public function blogRssFeedAction()
     {
         /**
