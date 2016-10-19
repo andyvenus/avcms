@@ -56,7 +56,7 @@ class VideosServices implements ServicesInterface
         ;
 
         $container->register('video.type.youtube', 'AVCMS\Bundles\Videos\Type\YouTubeVideo')
-            ->setArguments([new Reference('session')])
+            ->setArguments([new Reference('session'), new Reference('settings_manager')])
             ->addTag('video_type')
         ;
 

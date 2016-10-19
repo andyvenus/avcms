@@ -139,6 +139,12 @@ admin_settings:
     validation:
       numeric:
         rule: Numeric
+  videos_large_thumbnails:
+    label: Use large thumbnails
+    help: When using videos from providers like YouTube, use XL thumbnails
+    type: checkbox
+    default: 0
+    section: videos
   browse_videos_layout:
     type: select
     label: Browse Videos Layout

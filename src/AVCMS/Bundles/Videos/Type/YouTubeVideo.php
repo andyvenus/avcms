@@ -8,6 +8,7 @@
 namespace AVCMS\Bundles\Videos\Type;
 
 use AVCMS\Bundles\Videos\Model\Video;
+use AVCMS\Core\SettingsManager\SettingsManager;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class YouTubeVideo extends AbstractVideoType
@@ -15,13 +16,14 @@ class YouTubeVideo extends AbstractVideoType
     const API_KEY = 'AIzaSyAJhERffb-PlrFpo4o_S6lexAawcbwMcm4';
     const API_URL = 'https://www.googleapis.com/youtube/v3/';
 
-    private $nextPageToken;
-
     private $session;
 
-    public function __construct(Session $session)
+    private $settingsManager;
+
+    public function __construct(Session $session, SettingsManager $settingsManager)
     {
         $this->session = $session;
+        $this->settingsManager = $settingsManager;
     }
 
     public function canHandleUrl($url)
@@ -134,7 +136,12 @@ class YouTubeVideo extends AbstractVideoType
 
         $video->setDescription($details['snippet']['description']);
         $video->setName($details['snippet']['title']);
-        $video->setThumbnail($details['snippet']['thumbnails']['medium']['url']);
+
+        if ($this->settingsManager->getSetting('videos_large_thumbnails') && isset($details['snippet']['thumbnails']['maxres']['url'])) {
+            $video->setThumbnail($details['snippet']['thumbnails']['maxres']['url']);
+        } else {
+            $video->setThumbnail($details['snippet']['thumbnails']['medium']['url']);
+        }
 
         $video->setProviderId($id);
         $video->setProvider($this->getId());
