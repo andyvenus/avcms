@@ -86,7 +86,8 @@ class GamesController extends Controller
                 'order' => 'publish-date-newest',
                 'tags' => null,
                 'search' => null,
-                'mobile_only' => false
+                'mobile_only' => false,
+                'author' => null,
             ]);
 
         if ($this->setting('show_game_category')) {
@@ -105,25 +106,30 @@ class GamesController extends Controller
             }
         }
 
-        if ($pageType == 'likes') {
-            if ($request->get('likes_user') === null) {
+        if ($pageType == 'likes' || $pageType == 'submitted') {
+            if ($request->get('filter_user') === null) {
                 $user = $this->activeUser();
 
                 if (!$user->getId()) {
                     throw new AccessDeniedException('You must be logged in to view your liked games');
                 }
-            }
-            else {
-                $user = $this->model('Users')->find()->slug($request->get('likes_user'))->first();
+            } else {
+                $user = $this->model('Users')->find()->slug($request->get('filter_user'))->first();
 
                 if (!$user) {
                     throw $this->createNotFoundException();
                 }
             }
+        }
 
+        if ($pageType == 'likes') {
             $ratings = $this->model('LikeDislike:Ratings');
             $ids = $ratings->getLikedIds($user->getId(), 'game');
             $query = $query->ids($ids, 'games.id');
+        }
+
+        if ($pageType == 'submitted') {
+            $query->author($user->getId());
         }
 
         if ($pageType === 'featured') {
@@ -148,7 +154,7 @@ class GamesController extends Controller
             'filters_form' => $filtersForm->createView(),
             'finder_request' => $finder->getRequestFilters(),
             'admin_settings' => $this->get('settings_manager'),
-            'likes_user' => isset($user) ? $user : null,
+            'filter_user' => isset($user) ? $user : null,
         )));
     }
 

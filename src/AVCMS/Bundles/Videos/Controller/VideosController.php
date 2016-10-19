@@ -110,25 +110,30 @@ class VideosController extends Controller
             }
         }
 
-        if ($pageType == 'likes') {
+        if ($pageType == 'likes' || $pageType == 'submitted') {
             if ($request->get('likes_user') === null) {
                 $user = $this->activeUser();
 
                 if (!$user->getId()) {
                     throw new AccessDeniedException('You must be logged in to view your liked videos');
                 }
-            }
-            else {
+            } else {
                 $user = $this->model('Users')->find()->slug($request->get('likes_user'))->first();
 
                 if (!$user) {
                     throw $this->createNotFoundException();
                 }
             }
+        }
 
+        if ($pageType == 'likes') {
             $ratings = $this->model('LikeDislike:Ratings');
             $ids = $ratings->getLikedIds($user->getId(), 'video');
             $query = $query->ids($ids, 'videos.id');
+        }
+
+        if ($pageType == 'submitted') {
+            $query->author($user->getId());
         }
 
         if ($pageType === 'featured') {
@@ -153,7 +158,7 @@ class VideosController extends Controller
             'filters_form' => $filtersForm->createView(),
             'finder_request' => $finder->getRequestFilters(),
             'admin_settings' => $this->get('settings_manager'),
-            'likes_user' => isset($user) ? $user : null,
+            'filter_user' => isset($user) ? $user : null,
         )));
     }
 

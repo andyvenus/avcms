@@ -8,7 +8,9 @@
     {% elseif page_type == 'featured' %}
         {% trans %}Featured Games{% endtrans %}
     {% elseif page_type == 'likes' %}
-        {% trans with {username: likes_user.username} %}Games liked by {username}{% endtrans %}
+        {% trans with {username: filter_user.username} %}Games liked by {username}{% endtrans %}
+    {% elseif page_type == 'submitted' %}
+        {% trans with {username: filter_user.username} %}Games submitted by {username}{% endtrans %}
     {% else %}
         {% trans %}Browse Games{% endtrans %}
     {% endif %}

@@ -31,8 +31,12 @@ featured_images:
   defaults: { _controller: Images::ImagesController::browseImagesAction, pageType: featured }
 
 liked_images:
-  path: /images/likes/{likes_user}
-  defaults: { _controller: Images::ImagesController::browseImagesAction, pageType: likes, likes_user: null }
+  path: /images/likes/{filter_user}
+  defaults: { _controller: Images::ImagesController::browseImagesAction, pageType: likes, filter_user: null }
+
+submitted_images:
+  path: /images/submitted/{filter_user}
+  defaults: { _controller: Images::ImagesController::browseImagesAction, pageType: submitted, filter_user: null }
 
 images_rss_feed:
   path: /images/rss.xml

@@ -147,7 +147,6 @@ class ImagesController extends Controller
                 'order' => 'publish-date-newest',
                 'tags' => null,
                 'search' => null,
-                'mobile_only' => false
             ]);
 
         if ($this->setting('show_image_category')) {
@@ -166,25 +165,30 @@ class ImagesController extends Controller
             }
         }
 
-        if ($pageType == 'likes') {
+        if ($pageType == 'likes' || $pageType == 'submitted') {
             if ($request->get('likes_user') === null) {
                 $user = $this->activeUser();
 
                 if (!$user->getId()) {
                     throw new AccessDeniedException('You must be logged in to view your liked images');
                 }
-            }
-            else {
+            } else {
                 $user = $this->model('Users')->find()->slug($request->get('likes_user'))->first();
 
                 if (!$user) {
                     throw $this->createNotFoundException();
                 }
             }
+        }
 
+        if ($pageType == 'likes') {
             $ratings = $this->model('LikeDislike:Ratings');
             $ids = $ratings->getLikedIds($user->getId(), 'image');
             $query = $query->ids($ids, 'image_collections.id');
+        }
+
+        if ($pageType == 'submitted') {
+            $query->author($user->getId());
         }
 
         if ($pageType === 'featured') {
@@ -209,7 +213,7 @@ class ImagesController extends Controller
             'filters_form' => $filtersForm->createView(),
             'finder_request' => $finder->getRequestFilters(),
             'admin_settings' => $this->get('settings_manager'),
-            'likes_user' => isset($user) ? $user : null,
+            'filter_user' => isset($user) ? $user : null,
         )));
     }
 

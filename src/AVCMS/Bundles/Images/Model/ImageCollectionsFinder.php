@@ -7,38 +7,9 @@
 
 namespace AVCMS\Bundles\Images\Model;
 
-use AV\Model\Finder;
+use AVCMS\Bundles\CmsFoundation\Model\ContentFinder;
 
-class ImageCollectionsFinder extends Finder
+class ImageCollectionsFinder extends ContentFinder
 {
-    public function featured()
-    {
-        $this->currentQuery->where('featured', 1);
-    }
 
-    public function category($category)
-    {
-        if (!$category) {
-            return $this;
-        }
-
-        $this->currentQuery->where(function($q) use ($category) {
-            $q->where('category_id', $category->getId());
-
-            if ($category->getChildren()) {
-                $q->orWhereIn('category_id', $category->getChildren());
-            }
-        });
-
-        return $this;
-    }
-
-    public function mobileOnly($mobileOnly)
-    {
-        if ($mobileOnly) {
-            $this->currentQuery->where('file', 'NOT LIKE', '%.swf%')->where('file', 'NOT LIKE', '%.unity3d%')->where('file', 'NOT LIKE', '%.dcr%');
-        }
-
-        return $this;
-    }
 }

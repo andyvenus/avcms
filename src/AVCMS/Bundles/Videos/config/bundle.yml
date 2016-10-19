@@ -266,6 +266,7 @@ modules:
           none: None
           featured: Featured
           likes: User's Likes
+          submitted: User's Submitted Videos
       layout:
         type: select
         label: Layout

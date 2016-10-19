@@ -66,7 +66,19 @@ class VideoModulesController extends Controller
             $ratings = $this->model('LikeDislike:Ratings');
             $ids = $ratings->getLikedIds($user->getId(), 'video');
             $query->ids($ids, 'videos.id');
-            $moreButton = ['url' => $this->generateUrl('liked_videos', ['likes_user' => $user->getSlug()]), 'label' => 'All Liked Videos'];
+            $moreButton = ['url' => $this->generateUrl('liked_videos', ['filter_user' => $user->getSlug()]), 'label' => 'All Liked Videos'];
+        }
+        elseif ($adminSettings['filter'] === 'submitted') {
+            if (!isset($user)) {
+                $user = $this->activeUser();
+
+                if (!$user->getId()) {
+                    throw new SkipModuleException;
+                }
+            }
+
+            $query->author($user->getId());
+            $moreButton = ['url' => $this->generateUrl('submitted_videos', ['filter_user' => $user->getSlug()]), 'label' => 'All Submitted Videos'];
         }
         else {
             if ($adminSettings['more_button_start_page'] == 2) {

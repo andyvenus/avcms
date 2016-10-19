@@ -293,6 +293,7 @@ modules:
           none: None
           featured: Featured
           likes: User's Likes
+          submitted: User's Submitted Wallpapers
       order:
         type: select
         label: Order

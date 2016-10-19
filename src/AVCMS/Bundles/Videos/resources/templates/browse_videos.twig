@@ -8,7 +8,9 @@
     {% elseif page_type == 'featured' %}
         {% trans %}Featured Videos{% endtrans %}
     {% elseif page_type == 'likes' %}
-        {% trans with {username: likes_user.username} %}Videos liked by {username}{% endtrans %}
+        {% trans with {username: filter_user.username} %}Videos liked by {username}{% endtrans %}
+    {% elseif page_type == 'submitted' %}
+        {% trans with {username: filter_user.username} %}Videos submitted by {username}{% endtrans %}
     {% else %}
         {% trans %}Browse Videos{% endtrans %}
     {% endif %}

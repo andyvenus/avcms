@@ -297,6 +297,7 @@ modules:
           none: None
           featured: Featured
           likes: User's Likes
+          submitted: User's Submitted Games
       order:
         type: select
         label: Order

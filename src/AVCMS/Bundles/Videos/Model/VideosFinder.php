@@ -7,27 +7,9 @@
 
 namespace AVCMS\Bundles\Videos\Model;
 
-use AV\Model\Finder;
+use AVCMS\Bundles\CmsFoundation\Model\ContentFinder;
 
-class VideosFinder extends Finder
+class VideosFinder extends ContentFinder
 {
-    public function featured()
-    {
-        $this->currentQuery->where('featured', 1);
-    }
 
-    public function category($category)
-    {
-        if (!$category) {
-            return;
-        }
-
-        $this->currentQuery->where(function($q) use ($category) {
-            $q->where('category_id', $category->getId());
-
-            if ($category->getChildren()) {
-                $q->orWhereIn('category_id', $category->getChildren());
-            }
-        });
-    }
 }

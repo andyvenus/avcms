@@ -7,9 +7,9 @@
 
 namespace AVCMS\Bundles\Wallpapers\Model;
 
-use AV\Model\Finder;
+use AVCMS\Bundles\CmsFoundation\Model\ContentFinder;
 
-class WallpapersFinder extends Finder
+class WallpapersFinder extends ContentFinder
 {
     public function resolution($resolution)
     {
@@ -26,27 +26,5 @@ class WallpapersFinder extends Finder
         }
 
         $this->currentQuery->where('original_width', '>=', $dimensions[0])->where('original_height', '>=', $dimensions[1]);
-    }
-
-    public function featured()
-    {
-        $this->currentQuery->where('featured', 1);
-    }
-
-    public function category($category)
-    {
-        if (!$category) {
-            return $this;
-        }
-
-        $this->currentQuery->where(function($q) use ($category) {
-            $q->where('category_id', $category->getId());
-
-            if ($category->getChildren()) {
-                $q->orWhereIn('category_id', $category->getChildren());
-            }
-        });
-
-        return $this;
     }
 }

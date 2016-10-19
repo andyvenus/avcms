@@ -66,7 +66,19 @@ class WallpaperModulesController extends Controller
             $ratings = $this->model('LikeDislike:Ratings');
             $ids = $ratings->getLikedIds($user->getId(), 'wallpaper');
             $query->ids($ids, 'wallpapers.id');
-            $moreButton = ['url' => $this->generateUrl('liked_wallpapers', ['likes_user' => $user->getSlug()]), 'label' => 'All Liked Wallpapers'];
+            $moreButton = ['url' => $this->generateUrl('liked_wallpapers', ['filter_user' => $user->getSlug()]), 'label' => 'All Liked Wallpapers'];
+        }
+        elseif ($adminSettings['filter'] === 'submitted') {
+            if (!isset($user)) {
+                $user = $this->activeUser();
+
+                if (!$user->getId()) {
+                    throw new SkipModuleException;
+                }
+            }
+
+            $query->author($user->getId());
+            $moreButton = ['url' => $this->generateUrl('submitted_wallpapers', ['filter_user' => $user->getSlug()]), 'label' => 'All Submitted Wallpapers'];
         }
         else {
             if ($adminSettings['more_button_start_page'] == 2) {

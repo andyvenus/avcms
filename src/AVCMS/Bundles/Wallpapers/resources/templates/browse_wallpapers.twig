@@ -10,7 +10,9 @@
     {% elseif page_type == 'resolution' %}
         {% trans with {resolution: finder_request.resolution} %}{resolution} Wallpapers{% endtrans %}
     {% elseif page_type == 'likes' %}
-        {% trans with {username: likes_user.username} %}Wallpapers liked by {username}{% endtrans %}
+        {% trans with {username: filter_user.username} %}Wallpapers liked by {username}{% endtrans %}
+    {% elseif page_type == 'submitted' %}
+        {% trans with {username: filter_user.username} %}Wallpapers submitted by {username}{% endtrans %}
     {% else %}
         {% trans %}Browse Wallpapers{% endtrans %}
     {% endif %}

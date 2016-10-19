@@ -66,7 +66,19 @@ class GameModulesController extends Controller
             $ratings = $this->model('LikeDislike:Ratings');
             $ids = $ratings->getLikedIds($user->getId(), 'game');
             $query->ids($ids, 'games.id');
-            $moreButton = ['url' => $this->generateUrl('liked_games', ['likes_user' => $user->getSlug()]), 'label' => 'All Liked Games'];
+            $moreButton = ['url' => $this->generateUrl('liked_games', ['filter_user' => $user->getSlug()]), 'label' => 'All Liked Games'];
+        }
+        elseif ($adminSettings['filter'] === 'submitted') {
+            if (!isset($user)) {
+                $user = $this->activeUser();
+
+                if (!$user->getId()) {
+                    throw new SkipModuleException;
+                }
+            }
+
+            $query->author($user->getId());
+            $moreButton = ['url' => $this->generateUrl('submitted_games', ['filter_user' => $user->getSlug()]), 'label' => 'All Submitted Games'];
         }
         else {
             if ($adminSettings['more_button_start_page'] == 2) {

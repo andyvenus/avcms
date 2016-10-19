@@ -27,8 +27,12 @@ featured_videos:
   defaults: { _controller: Videos::VideosController::browseVideosAction, pageType: featured }
 
 liked_videos:
-  path: /videos/likes/{likes_user}
-  defaults: { _controller: Videos::VideosController::browseVideosAction, pageType: likes, likes_user: null }
+  path: /videos/likes/{filter_user}
+  defaults: { _controller: Videos::VideosController::browseVideosAction, pageType: likes, filter_user: null }
+
+submitted_videos:
+  path: /videos/submitted/{filter_user}
+  defaults: { _controller: Videos::VideosController::browseVideosAction, pageType: submitted, filter_user: null }
 
 videos_rss_feed:
   path: /videos/rss.xml

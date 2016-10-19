@@ -35,8 +35,12 @@ wallpaper_tag:
     page:  \d+
 
 liked_wallpapers:
-  path: /wallpapers/likes/{likes_user}
-  defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction, pageType: likes, likes_user: null }
+  path: /wallpapers/likes/{filter_user}
+  defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction, pageType: likes, filter_user: null }
+
+submitted_wallpapers:
+  path: /wallpapers/submitted/{filter_user}
+  defaults: { _controller: Wallpapers::WallpapersController::browseWallpapersAction, pageType: submitted, filter_user: null }
 
 wallpaper_submit:
   path: /wallpapers/submit

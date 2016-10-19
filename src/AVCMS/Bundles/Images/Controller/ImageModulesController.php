@@ -66,7 +66,19 @@ class ImageModulesController extends Controller
             $ratings = $this->model('LikeDislike:Ratings');
             $ids = $ratings->getLikedIds($user->getId(), 'image');
             $query->ids($ids, 'image_collections.id');
-            $moreButton = ['url' => $this->generateUrl('liked_images', ['likes_user' => $user->getSlug()]), 'label' => 'All Liked Images'];
+            $moreButton = ['url' => $this->generateUrl('liked_images', ['filter_user' => $user->getSlug()]), 'label' => 'All Liked Images'];
+        }
+        elseif ($adminSettings['filter'] === 'submitted') {
+            if (!isset($user)) {
+                $user = $this->activeUser();
+
+                if (!$user->getId()) {
+                    throw new SkipModuleException;
+                }
+            }
+
+            $query->author($user->getId());
+            $moreButton = ['url' => $this->generateUrl('submitted_images', ['filter_user' => $user->getSlug()]), 'label' => 'All Submitted Images'];
         }
         else {
             if ($adminSettings['more_button_start_page'] == 2) {
