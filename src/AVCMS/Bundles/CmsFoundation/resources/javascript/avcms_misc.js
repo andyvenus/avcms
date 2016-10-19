@@ -51,6 +51,11 @@ avcms.general = {
         avcms.general.mainLoaderOn();
 
         $.post(url, data, function(data) {
+            if (data.success == false) {
+                alert(data.error);
+                return;
+            }
+
             avcms.general.mainLoaderOff();
             $('body').append(data.html);
             var modal = $('#formModal');

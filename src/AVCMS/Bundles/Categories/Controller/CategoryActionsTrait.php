@@ -136,6 +136,10 @@ trait CategoryActionsTrait
 
         $category = $model->getOne($request->get('id'));
 
+        if ($model->query()->count() <= 1) {
+            return new JsonResponse(['success' => false, 'error' => 'Cannot delete the only category']);
+        }
+
         if (!$category) {
             throw $this->createNotFoundException('Category not found');
         }
