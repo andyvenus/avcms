@@ -35,7 +35,7 @@ class WallpaperPreviewsSitemap extends ContentSitemap
     public function getSitemapLinks($page)
     {
         $resolutions = $this->resolutionsManager->getAllUniqueResolutions();
-        $itemsPerPage = ceil(self::LINKS_PER_PAGE / count($resolutions));
+        $itemsPerPage = floor(self::LINKS_PER_PAGE / count($resolutions));
 
         /**
          * @var \AVCMS\Core\Model\ContentEntity[] $items
