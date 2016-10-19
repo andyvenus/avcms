@@ -65,7 +65,7 @@ avcms.bulk_upload = {
 
                     var folder = $('select[name=folder]').val().split('/').join('@');
 
-                    $('.go-to-import-button').attr('href', avcms.config.site_url + 'admin/wallpapers-bulk-import/import/'+folder);
+                    $('.go-to-import-button').attr('href', 'import/'+folder);
                 },
                 progress: function (e, data) {
                     var name = data.files[0].name;
