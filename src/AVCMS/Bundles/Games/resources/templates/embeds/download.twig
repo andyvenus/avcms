@@ -1,0 +1,12 @@
+{% extends '@Games/embeds/embed_base.twig' %}
+
+{% block game_container %}
+    <div id="avcms-game-container" data-original-width="500" data-original-height="80">
+        <div id="avcms-game-container-inner" class="text-center" style="width: 500px;height: 80px;margin: auto;">
+            <a href="{{ game.file }}" class="btn btn-lg btn-primary">
+                <i class="glyphicon glyphicon-download"></i>
+                {% trans with {game: game.name} %}Download {game}{% endtrans %}
+            </a>
+        </div>
+    </div>
+{% endblock %}

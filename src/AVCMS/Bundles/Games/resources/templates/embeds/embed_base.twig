@@ -1,10 +1,12 @@
 {% block embed_extra_before %}{% endblock %}
 
+{% block game_container %}
 <div id="avcms-game-container" data-original-width="{{ game.width }}" data-original-height="{{ game.height }}">
     <div id="avcms-game-container-inner" style="width: {{ game.width }}px;height: {{ game.height }}px;margin: auto;">
         {% block embed_code %}{% endblock %}
     </div>
 </div>
+{% endblock %}
 
 {% if (game.advertId or settings.game_ad_default) and (is_granted('ELEVATED_NO_GAME_ADS') == false or settings.game_ad_show_to_everyone) and show_advert == true %}
     <div id="avcms-game-advert">
