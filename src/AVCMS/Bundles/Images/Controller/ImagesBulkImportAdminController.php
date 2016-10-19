@@ -117,6 +117,7 @@ class ImagesBulkImportAdminController extends BulkImportAdminController
                     $replaceValues['{folder_name}'] = basename($folder);
                     $replaceValues['{original_width}'] = $dimensions[0];
                     $replaceValues['{original_height}'] = $dimensions[1];
+                    $replaceValues['{filename_words_comma}'] = strtolower(str_replace(' ', ',', $replaceValues['{clean_filename}']));
 
                     $allData = $newImageCollection->toArray();
                     $newData = [];
