@@ -16,6 +16,7 @@ class VideosInstaller extends BundleInstaller
         return [
             '1.0' => 'install_1_0_0',
             '1.0.1' => 'install_1_0_1',
+            '1.0.2' => 'install_1_0_2',
         ];
     }
 
@@ -104,5 +105,16 @@ class VideosInstaller extends BundleInstaller
     {
         $this->PDO->exec("ALTER TABLE {$this->prefix}video_categories ADD parents varchar(255) DEFAULT NULL");
         $this->PDO->exec("ALTER TABLE {$this->prefix}video_categories ADD children varchar(255) DEFAULT NULL");
+    }
+
+    public function install_1_0_2()
+    {
+        $this->PDO->exec("ALTER TABLE {$this->prefix}videos CHANGE `description` `description` text");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}videos CHANGE `thumbnail` `thumbnail` text");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}videos CHANGE `featured` `featured` tinyint(1) NOT NULL DEFAULT 0");
+
+        $this->PDO->exec("ALTER TABLE {$this->prefix}video_submissions CHANGE `description` `description` text");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}video_submissions CHANGE `instructions` `instructions` text");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}video_submissions CHANGE `thumbnail` `thumbnail` text");
     }
 }

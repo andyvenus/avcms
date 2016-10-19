@@ -14,7 +14,8 @@ class CommentsInstaller extends BundleInstaller
     public function getVersions()
     {
         return array(
-            '1.0' => 'install_1_0_0'
+            '1.0' => 'install_1_0_0',
+            '1.0.1' => 'install_1_0_1',
         );
     }
 
@@ -46,5 +47,10 @@ class CommentsInstaller extends BundleInstaller
                   PRIMARY KEY (`user_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
+    }
+
+    public function install_1_0_1()
+    {
+        $this->PDO->exec("ALTER TABLE {$this->prefix}comments CHANGE `replies` `replies` int(10) unsigned NOT NULL DEFAULT 0");
     }
 }

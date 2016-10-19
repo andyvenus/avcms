@@ -113,7 +113,7 @@ class UpdateMenusSubscriber implements EventSubscriberInterface
         foreach ($config as $menuId => $menuConfig) {
             $menu = new Menu();
             $menu->setId($menuId);
-            $menu->setCustom(false);
+            $menu->setCustom(0);
             $menu->setActive(1);
             $menu->setProvider($provider);
             $menu->setOwner($owner);

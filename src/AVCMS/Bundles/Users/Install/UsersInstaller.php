@@ -15,7 +15,8 @@ class UsersInstaller extends BundleInstaller
     {
         return [
             '1.0' => 'install_1_0_0',
-            '1.0.1' => 'install_1_0_1'
+            '1.0.1' => 'install_1_0_1',
+            '1.0.2' => 'install_1_0_2',
         ];
     }
 
@@ -96,7 +97,7 @@ class UsersInstaller extends BundleInstaller
                   `username` varchar(200) NOT NULL DEFAULT '',
                   `password` varchar(128) NOT NULL DEFAULT '',
                   `email` varchar(120) NOT NULL DEFAULT '',
-                  `email_validated` tinyint(1) NOT NULL,
+                  `email_validated` tinyint(1) DEFAULT 0,
                   `about` varchar(200) NOT NULL DEFAULT '',
                   `role_list` varchar(120) NOT NULL DEFAULT 'ROLE_USER',
                   `location` varchar(50) NOT NULL DEFAULT '',
@@ -153,5 +154,14 @@ class UsersInstaller extends BundleInstaller
     public function install_1_0_1()
     {
         $this->PDO->exec("ALTER TABLE {$this->prefix}users ADD `last_profile_update` int(11) NOT NULL DEFAULT '0'");
+    }
+
+    public function install_1_0_2()
+    {
+        $this->PDO->exec("ALTER TABLE {$this->prefix}users CHANGE `email_validated` `email_validated` tinyint(1) DEFAULT 0");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}users CHANGE `interests` `interests` text");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}users CHANGE `avatar` `avatar` varchar(25)");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}users CHANGE `cover_image` `cover_image` varchar(25)");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}users CHANGE `last_activity` `last_activity` int(11) NOT NULL DEFAULT 0");
     }
 }

@@ -209,7 +209,7 @@ class Video extends Entity implements RateInterface
 
     public function setSubmitterId($value)
     {
-        $this->set("submitter_id", $value);
+        $this->set("submitter_id", (int) $value);
     }
 
     public function getSubmitterId()

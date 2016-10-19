@@ -18,7 +18,8 @@ class GamesInstaller extends BundleInstaller
             '1.0.1' => 'install_1_0_1',
             '1.0.2' => 'install_1_0_2',
             '1.0.3' => 'install_1_0_3',
-            '1.0.4' => 'install_1_0_4'
+            '1.0.4' => 'install_1_0_4',
+            '1.0.5' => 'install_1_0_5'
         ];
     }
 
@@ -184,5 +185,24 @@ class GamesInstaller extends BundleInstaller
                 ('rar','@Games/embeds/download.twig'),
                 ('exe','@Games/embeds/download.twig')
         ");
+    }
+
+    public function install_1_0_5()
+    {
+        $this->PDO->exec("ALTER TABLE {$this->prefix}games CHANGE `description` `description` text");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}games CHANGE `instructions` `instructions` text");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}games CHANGE `width` `width` int(11) unsigned NOT NULL DEFAULT 0");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}games CHANGE `height` `height` int(11) unsigned NOT NULL DEFAULT 0");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}games CHANGE `thumbnail` `thumbnail` text");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}games CHANGE `featured` `featured` tinyint(1) NOT NULL DEFAULT 0");
+
+        $this->PDO->exec("ALTER TABLE {$this->prefix}feed_games CHANGE `description` `description` text");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}feed_games CHANGE `width` `width` int(11) unsigned NOT NULL DEFAULT 0");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}feed_games CHANGE `height` `height` int(11) unsigned NOT NULL DEFAULT 0");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}feed_games CHANGE `instructions` `instructions` text");
+
+        $this->PDO->exec("ALTER TABLE {$this->prefix}game_submissions CHANGE `description` `description` text");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}game_submissions CHANGE `instructions` `instructions` text");
+        $this->PDO->exec("ALTER TABLE {$this->prefix}game_submissions CHANGE `thumbnail` `thumbnail` text");
     }
 }

@@ -15,7 +15,8 @@ class WallpapersInstaller extends BundleInstaller
     {
         return array(
             '1.0' => 'install_1_0_0',
-            '1.0.1' => 'install_1_0_1'
+            '1.0.1' => 'install_1_0_1',
+            '1.0.2' => 'install_1_0_2',
         );
     }
 
@@ -111,5 +112,10 @@ class WallpapersInstaller extends BundleInstaller
 
             $categories->save($category);
         }
+    }
+
+    public function install_1_0_2()
+    {
+        $this->PDO->exec("ALTER TABLE {$this->prefix}wallpapers CHANGE `last_download` `last_download` int(11) unsigned NOT NULL DEFAULT 0");
     }
 }

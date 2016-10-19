@@ -17,7 +17,8 @@ class CmsFoundationInstaller extends BundleInstaller
             '1.0' => 'install_1_0_0',
             '1.0.1' => 'install_1_0_1',
             '1.0.2' => 'install_1_0_2',
-            '1.0.3' => 'install_1_0_3'
+            '1.0.3' => 'install_1_0_3',
+            '1.0.4' => 'install_1_0_4',
         );
     }
 
@@ -67,7 +68,7 @@ class CmsFoundationInstaller extends BundleInstaller
                   `show_header` tinyint(1) NOT NULL DEFAULT '0',
                   `template_type` varchar(40) NOT NULL DEFAULT 'plain',
                   `template` varchar(200) NOT NULL DEFAULT '0',
-                  `limit_routes` text NOT NULL,
+                  `limit_routes` text DEFAULT NULL,
                   `cache_time` int(11) DEFAULT NULL,
                   `permissions` varchar(140) DEFAULT NULL,
                   `published` int(11) NOT NULL DEFAULT '1',
@@ -126,5 +127,10 @@ class CmsFoundationInstaller extends BundleInstaller
                   PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
+    }
+
+    public function install_1_0_4()
+    {
+        $this->sql("ALTER TABLE {$this->prefix}modules CHANGE `limit_routes` `limit_routes` text DEFAULT null");
     }
 }
