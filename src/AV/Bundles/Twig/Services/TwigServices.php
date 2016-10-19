@@ -56,6 +56,10 @@ class TwigServices implements ServicesInterface
             ->addTag('twig.extension')
         ;
 
+        $container->register('twig.string_extension', 'Twig_Extension_StringLoader')
+            ->addTag('twig.extension')
+        ;
+
         $container->addCompilerPass(new TwigEnvironmentPass());
     }
 } 
