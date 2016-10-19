@@ -10,6 +10,8 @@ avcms.wallpapers = {
 
         var resolution = (screen.width * dpr)+'x'+(screen.height * dpr);
 
+        console.log("Detected resolution: " + resolution);
+
         var res = $('a[data-resolution="'+resolution+'"]').first();
 
         if (res.length !== 1) {
