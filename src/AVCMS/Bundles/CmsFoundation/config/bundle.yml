@@ -53,6 +53,12 @@ admin_settings:
     label: Site Offline Message
     default: Down for maintenance, back soon!
     section: main
+  force_https:
+    type: checkbox
+    label: Force Https
+    default: 0
+    section: main
+    help: Rewrite external asset URLs to https. This may break some URLs if the host does not support https.
 
   site_email_address:
     type: text

@@ -9,6 +9,7 @@ namespace AVCMS\Bundles\Games\TwigExtension;
 
 use AVCMS\Bundles\Games\Model\Game;
 use AVCMS\Bundles\Games\Model\GameEmbeds;
+use AVCMS\Core\SettingsManager\SettingsManager;
 
 class EmbedGameTwigExtension extends \Twig_Extension
 {
@@ -28,12 +29,15 @@ class EmbedGameTwigExtension extends \Twig_Extension
 
     private $thumbnailsPath;
 
-    public function __construct(GameEmbeds $gameEmbeds, $rootUrl, $gamesPath, $thumbnailsPath)
+    private $settingsManager;
+
+    public function __construct(GameEmbeds $gameEmbeds, SettingsManager $settingsManager, $rootUrl, $gamesPath, $thumbnailsPath)
     {
         $this->gameEmbeds = $gameEmbeds;
         $this->rootUrl = $rootUrl;
         $this->gamesPath = $gamesPath;
         $this->thumbnailsPath = $thumbnailsPath;
+        $this->settingsManager = $settingsManager;
     }
 
     public function gameThumbnailUrl(Game $game)
@@ -41,7 +45,11 @@ class EmbedGameTwigExtension extends \Twig_Extension
         $thumbnail = $game->getThumbnail();
 
         if (strpos($thumbnail, '://') === false) {
-            return $this->rootUrl.$this->thumbnailsPath.'/'.$thumbnail;
+            $thumbnail = $this->rootUrl.$this->thumbnailsPath.'/'.$thumbnail;
+        }
+
+        if ($this->settingsManager->getSetting('force_https')) {
+            $thumbnail = str_replace('http://', 'https://', $thumbnail);
         }
 
         return $thumbnail;
@@ -72,6 +80,10 @@ class EmbedGameTwigExtension extends \Twig_Extension
 
         if (strpos($url, '://') === false) {
             $game->setFile($this->rootUrl.$this->gamesPath.'/'.$url);
+        }
+
+        if ($this->settingsManager->getSetting('force_https')) {
+            $game->setFile(str_replace('http://', 'https://', $game->getFile()));
         }
     }
 

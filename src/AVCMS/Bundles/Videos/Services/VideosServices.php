@@ -19,7 +19,7 @@ class VideosServices implements ServicesInterface
         $container->addCompilerPass(new VideoTypesCompilerPass());
 
         $container->register('twig_extension.videos', 'AVCMS\Bundles\Videos\TwigExtension\VideosTwigExtension')
-            ->setArguments([new Reference('site_url'), '%videos_dir%', '%video_thumbnails_dir%'])
+            ->setArguments([new Reference('settings_manager'), new Reference('site_url'), '%videos_dir%', '%video_thumbnails_dir%'])
             ->addTag('twig.extension')
         ;
 

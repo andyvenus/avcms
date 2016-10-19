@@ -8,6 +8,7 @@
 namespace AVCMS\Bundles\Videos\TwigExtension;
 
 use AVCMS\Bundles\Videos\Model\Video;
+use AVCMS\Core\SettingsManager\SettingsManager;
 use Twig_SimpleFilter;
 
 class VideosTwigExtension extends \Twig_Extension
@@ -23,11 +24,14 @@ class VideosTwigExtension extends \Twig_Extension
 
     private $thumbnailsPath;
 
-    public function __construct($rootUrl, $videosPath, $thumbnailsPath)
+    private $settingsManager;
+
+    public function __construct(SettingsManager $settingsManager, $rootUrl, $videosPath, $thumbnailsPath)
     {
         $this->rootUrl = $rootUrl;
         $this->videosPath = $videosPath;
         $this->thumbnailsPath = $thumbnailsPath;
+        $this->settingsManager = $settingsManager;
     }
 
     public function videoThumbnailUrl(Video $video)
@@ -35,7 +39,11 @@ class VideosTwigExtension extends \Twig_Extension
         $thumbnail = $video->getThumbnail();
 
         if (strpos($thumbnail, '://') === false) {
-            return $this->rootUrl.$this->thumbnailsPath.'/'.$thumbnail;
+            $thumbnail = $this->rootUrl.$this->thumbnailsPath.'/'.$thumbnail;
+        }
+
+        if ($this->settingsManager->getSetting('force_https')) {
+            $thumbnail = str_replace('http://', 'https://', $thumbnail);
         }
 
         return $thumbnail;
@@ -57,6 +65,10 @@ class VideosTwigExtension extends \Twig_Extension
 
         if (strpos($url, '://') === false) {
             $video->setFile($this->rootUrl.$this->videosPath.'/'.$url);
+        }
+
+        if ($this->settingsManager->getSetting('force_https')) {
+            $video->setFile(str_replace('http://', 'https://', $video->getFile()));
         }
     }
 
