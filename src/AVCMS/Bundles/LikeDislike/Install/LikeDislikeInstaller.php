@@ -14,7 +14,8 @@ class LikeDislikeInstaller extends BundleInstaller
     public function getVersions()
     {
         return array(
-            '1.0' => 'install_1_0_0'
+            '1.0' => 'install_1_0_0',
+            '1.0.1' => 'install_1_0_1',
         );
     }
 
@@ -31,5 +32,10 @@ class LikeDislikeInstaller extends BundleInstaller
                   PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
+    }
+
+    public function install_1_0_1()
+    {
+        $this->PDO->exec("ALTER TABLE `{$this->prefix}ratings` ADD `ip` varchar(255) DEFAULT NULL");
     }
 }

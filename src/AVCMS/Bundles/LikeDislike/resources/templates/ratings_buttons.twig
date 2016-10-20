@@ -1,4 +1,4 @@
-{% if is_granted(['IS_AUTHENTICATED_REMEMBERED', 'IS_AUTHENTICATED_FULLY']) == false %}
+{% if is_granted(['IS_AUTHENTICATED_REMEMBERED', 'IS_AUTHENTICATED_FULLY']) == false and settings.enable_unregistered_ratings == 0 %}
     {% set no_login = true %}
 {% endif %}
 

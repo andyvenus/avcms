@@ -65,4 +65,14 @@ class Rating extends Entity
     {
         return $this->get("user_id");
     }
+
+    public function setIp($value)
+    {
+        $this->set("ip", $value);
+    }
+
+    public function getIp()
+    {
+        return $this->get("ip");
+    }
 }

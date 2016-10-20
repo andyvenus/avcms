@@ -28,7 +28,7 @@ class LikeDislikeController extends Controller
 
     public function registerVoteAction(Request $request)
     {
-        if (!$this->isGranted(['IS_AUTHENTICATED_REMEMBERED', 'IS_AUTHENTICATED_FULLY'])) {
+        if (!$this->isGranted(['IS_AUTHENTICATED_REMEMBERED', 'IS_AUTHENTICATED_FULLY']) && !$this->setting('enable_unregistered_ratings')) {
             return new JsonResponse(['success' => false, 'error' => $this->trans('Not logged in')]);
         }
 
@@ -40,7 +40,9 @@ class LikeDislikeController extends Controller
             throw $this->createNotFoundException('Rating type not found');
         }
 
-        $result = $this->ratingsManager->registerRating($rating, $contentType, $contentId);
+        $ip = $request->getClientIp();
+
+        $result = $this->ratingsManager->registerRating($rating, $contentType, $contentId, $ip);
 
         $content = $this->ratingsManager->getLastContent();
 

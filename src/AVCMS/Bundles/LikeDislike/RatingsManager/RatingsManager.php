@@ -57,7 +57,7 @@ class RatingsManager
         return $this->contentTypes;
     }
 
-    public function registerRating($rating, $contentType, $contentId)
+    public function registerRating($rating, $contentType, $contentId, $ip)
     {
         if (!$this->contentTypeValid($contentType)) {
             throw new \Exception("Content type not valid");
@@ -84,8 +84,13 @@ class RatingsManager
 
         $baseQuery = $this->ratings->query()
             ->where('content_id', $contentId)
-            ->where('content_type', $contentType)
-            ->where('user_id', $this->getUser()->getId());
+            ->where('content_type', $contentType);
+
+        if ($this->getUser()->getId()) {
+            $baseQuery->where('user_id', $this->getUser()->getId());
+        } else {
+            $baseQuery->where('ip', $ip)->where('user_id', 0);
+        }
 
         $entity = $baseQuery->first();
 
@@ -105,8 +110,9 @@ class RatingsManager
             $entity->setContentId($contentId);
             $entity->setContentType($contentType);
             $entity->setDate(time());
-            $entity->setUserId($this->getUser()->getId());
+            $entity->setUserId($this->getUser()->getId() ?: 0);
             $entity->setRating($rating);
+            $entity->setIp($ip);
 
             $this->ratings->save($entity);
         }
@@ -136,7 +142,21 @@ class RatingsManager
 
     public function getUsersRating($contentType, $contentId, $userId)
     {
-        return $this->ratings->query()->where('content_type', $contentType)->where('content_id', $contentId)->where('user_id', $userId)->first();
+        return $this->ratings->query()
+            ->where('content_type', $contentType)
+            ->where('content_id', $contentId)
+            ->where('user_id', $userId)
+            ->first();
+    }
+
+    public function getIpRating($contentType, $contentId, $ip)
+    {
+        return $this->ratings->query()
+            ->where('content_type', $contentType)
+            ->where('content_id', $contentId)
+            ->where('ip', $ip)
+            ->where('user_id', 0)
+            ->first();
     }
 
     protected function getUser()

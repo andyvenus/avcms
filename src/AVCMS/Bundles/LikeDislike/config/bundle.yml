@@ -17,3 +17,9 @@ admin_settings:
     label: Enable Like/Dislike ratings
     help: Enable Like/Dislike ratings for all content
     section: main
+  enable_unregistered_ratings:
+    type: checkbox
+    default: 0
+    label: Allow unregistered users to vote
+    help: Users won't need to be logged in to Like/Dislike content. It will be done by IP.
+    section: main

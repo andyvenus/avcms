@@ -24,7 +24,7 @@ class RatingsServices implements ServicesInterface
         ;
 
         $container->register('ratings.twig_extension', 'AVCMS\Bundles\LikeDislike\TwigExtension\LikeDislikeTwigExtension')
-            ->setArguments([new Reference('ratings_manager'), new Reference('security.token_storage'), new Reference('settings_manager')])
+            ->setArguments([new Reference('ratings_manager'), new Reference('security.token_storage'), new Reference('settings_manager'), new Reference('request.stack')])
             ->addTag('twig.extension')
         ;
     }

@@ -10,6 +10,8 @@ namespace AVCMS\Bundles\LikeDislike\TwigExtension;
 use AVCMS\Bundles\LikeDislike\RatingsManager\RateInterface;
 use AVCMS\Bundles\LikeDislike\RatingsManager\RatingsManager;
 use AVCMS\Core\SettingsManager\SettingsManager;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class LikeDislikeTwigExtension extends \Twig_Extension
@@ -28,11 +30,14 @@ class LikeDislikeTwigExtension extends \Twig_Extension
 
     private $settingsManager;
 
-    public function __construct(RatingsManager $ratingsManager, TokenStorage $tokenStorage, SettingsManager $settingsManager)
+    private $requestStack;
+
+    public function __construct(RatingsManager $ratingsManager, TokenStorage $tokenStorage, SettingsManager $settingsManager, RequestStack $requestStack)
     {
         $this->ratingsManager = $ratingsManager;
         $this->tokenStorage = $tokenStorage;
         $this->settingsManager = $settingsManager;
+        $this->requestStack = $requestStack;
     }
 
     public function initRuntime(\Twig_Environment $environment)
@@ -50,12 +55,17 @@ class LikeDislikeTwigExtension extends \Twig_Extension
     public function likeDislikeButtons($contentType, $contentId, RateInterface $content = null, $buttonsTemplate = '@LikeDislike/ratings_buttons.twig')
     {
         if (!$this->settingsManager->getSetting('enable_ratings')) {
-            return;
+            return null;
         }
 
         $userId = $this->getUser()->getId();
 
-        $rating = $this->ratingsManager->getUsersRating($contentType, $contentId, $userId);
+        if ($userId) {
+            $rating = $this->ratingsManager->getUsersRating($contentType, $contentId, $userId);
+        } else {
+            $ip = $this->requestStack->getCurrentRequest()->getClientIp();
+            $rating = $this->ratingsManager->getIpRating($contentType, $contentId, $ip);
+        }
 
         $ratingValue = null;
         if ($rating !== null) {

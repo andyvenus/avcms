@@ -14,7 +14,6 @@ avcms.likeDislike = {
             return;
         }
 
-
         var vote_val = $(this).data('vote-value');
         var group = $(this).parent('.like-dislike-buttons');
 
