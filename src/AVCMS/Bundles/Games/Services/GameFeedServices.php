@@ -23,8 +23,8 @@ class GameFeedServices implements ServicesInterface
             ->addMethodCall('addFeed', [new Reference('feed.free_online_games')])
             ->addMethodCall('addFeed', [new Reference('feed.arcade_game_feed')])
             ->addMethodCall('addFeed', [new Reference('feed.2_player_games')])
-            //->addMethodCall('addFeed', [new Reference('feed.unity_feeds')]) Unity Feeds have shuttered
             ->addMethodCall('addFeed', [new Reference('feed.famobi')])
+            ->addMethodCall('addFeed', [new Reference('feed.gamepix')])
         ;
 
         $container->register('feed_games.model', 'AVCMS\Bundles\Games\Model\FeedGames')
@@ -46,5 +46,7 @@ class GameFeedServices implements ServicesInterface
         $container->register('feed.unity_feeds', 'AVCMS\Bundles\Games\GameFeeds\UnityFeedsFeed');
 
         $container->register('feed.famobi', 'AVCMS\Bundles\Games\GameFeeds\FamobiFeed');
+
+        $container->register('feed.gamepix', 'AVCMS\Bundles\Games\GameFeeds\GamePixFeed');
     }
 }
