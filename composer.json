@@ -21,7 +21,7 @@
         "swiftmailer/swiftmailer": "5.*",
         "kriswallsmith/assetic": "1.3.*",
         "patchwork/jsqueeze": "2.0.*",
-        "filp/whoops": "2.0.*",
+        "filp/whoops": "2.1.*",
         "monolog/monolog": "1.*",
         "ircmaxell/password-compat": "1.0.*",
         "cocur/slugify": "@stable",
