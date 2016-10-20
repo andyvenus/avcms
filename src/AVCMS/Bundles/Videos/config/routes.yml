@@ -1,14 +1,10 @@
-video_testing:
-  path: /videos/test
-  defaults: { _controller: Videos::VideosController::testAction }
-
 videos_home:
   path: /videos
   defaults: { _controller: CmsFoundation::HomepageController::homepageAction, modulePosition: videos_home, title: Videos }
 
 watch_video:
   path: /video/{slug}
-  defaults: { _controller: Videos::VideosController::playVideoAction }
+  defaults: { _controller: Videos::VideosController::watchVideoAction }
 
 browse_videos:
   path: /videos/browse/{page}

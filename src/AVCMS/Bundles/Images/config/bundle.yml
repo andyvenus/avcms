@@ -278,12 +278,6 @@ module_positions:
     environment: frontend
     global_modules: 1
     type: content
-  image_collection_sidebar:
-    name: Image Collection Sidebar
-    description: Sidebar on the image collection page
-    environment: frontend
-    global_modules: 1
-    type: content
   image_collection_top:
     name: Image Collection Top
     description: Top of the image collection page
@@ -317,6 +311,7 @@ modules:
           featured: Featured
           likes: User's Likes
           submitted: User's Submitted Images
+          related: Related to the Current Image (if available)
       order:
         type: select
         label: Order

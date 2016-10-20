@@ -39,7 +39,7 @@ class GamesController extends Controller
         $game = $this->games->find()
             ->published()
             ->slug($slug)
-            ->join($this->gameCategories, ['name', 'slug'])
+            ->join($this->gameCategories, ['id', 'name', 'slug', 'children'])
             ->joinTaxonomy('tags')
             ->first();
 

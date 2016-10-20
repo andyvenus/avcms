@@ -9,6 +9,7 @@ namespace AVCMS\Bundles\Wallpapers\Controller;
 
 use AVCMS\Bundles\Tags\Module\TagsModuleTrait;
 use AVCMS\Bundles\Users\Model\User;
+use AVCMS\Bundles\Wallpapers\Model\Wallpaper;
 use AVCMS\Core\Controller\Controller;
 use AVCMS\Core\Module\Exception\SkipModuleException;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,7 +34,7 @@ class WallpaperModulesController extends Controller
         $this->wallpaperCategories = $this->model('WallpaperCategories');
     }
 
-    public function wallpapersModule($adminSettings, User $user = null)
+    public function wallpapersModule($adminSettings, User $user = null, Wallpaper $wallpaper = null)
     {
         $moreButton = null;
 
@@ -79,6 +80,12 @@ class WallpaperModulesController extends Controller
 
             $query->author($user->getId());
             $moreButton = ['url' => $this->generateUrl('submitted_wallpapers', ['filter_user' => $user->getSlug()]), 'label' => 'All Submitted Wallpapers'];
+        }
+        elseif ($adminSettings['filter'] == 'related') {
+            if ($wallpaper && isset($wallpaper->category)) {
+                $query->category($wallpaper->category)->getQuery()->where('wallpapers.id', '!=', $wallpaper->getId());
+                $moreButton = null;
+            }
         }
         else {
             if ($adminSettings['more_button_start_page'] == 2) {

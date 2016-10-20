@@ -234,12 +234,6 @@ module_positions:
     environment: frontend
     global_modules: 1
     type: content
-  watch_video_sidebar:
-    name: Play Video Sidebar
-    description: Sidebar on the play video page
-    environment: frontend
-    global_modules: 1
-    type: content
   watch_video_top:
     name: Play Video Top
     description: Top of the play video page
@@ -273,6 +267,7 @@ modules:
           featured: Featured
           likes: User's Likes
           submitted: User's Submitted Videos
+          related: Related to the Current Video (if available)
       layout:
         type: select
         label: Layout

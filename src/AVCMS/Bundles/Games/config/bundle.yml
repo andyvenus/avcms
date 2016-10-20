@@ -298,6 +298,7 @@ modules:
           featured: Featured
           likes: User's Likes
           submitted: User's Submitted Games
+          related: Related to the Current Game (if available)
       order:
         type: select
         label: Order

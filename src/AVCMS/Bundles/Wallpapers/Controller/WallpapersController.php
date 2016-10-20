@@ -122,7 +122,7 @@ class WallpapersController extends Controller
         $wallpaper = $this->wallpapers->find()
             ->slug($slug)
             ->published()
-            ->join($this->model('WallpaperCategories'), ['id', 'slug', 'name'])
+            ->join($this->model('WallpaperCategories'), ['id', 'slug', 'name', 'children'])
             ->joinTaxonomy('tags')
             ->first();
 
@@ -143,7 +143,12 @@ class WallpapersController extends Controller
 
     public function wallpaperPreviewAction(Request $request, $slug)
     {
-        $wallpaper = $this->wallpapers->find()->slug($slug)->published()->first();
+        $wallpaper = $this->wallpapers
+            ->find()
+            ->slug($slug)
+            ->published()
+            ->join($this->model('WallpaperCategories'), ['id', 'slug', 'name', 'children'])
+            ->first();
 
         if (!$wallpaper) {
             throw $this->createNotFoundException('Wallpaper Not Found');

@@ -53,7 +53,7 @@ class ImagesController extends Controller
         $imageCollection = $this->imageCollections->find()
             ->published()
             ->slug($slug)
-            ->join($this->imageCategories, ['name', 'slug'])
+            ->join($this->imageCategories, ['id', 'name', 'slug', 'children'])
             ->joinTaxonomy('tags')
             ->first();
 

@@ -7,6 +7,7 @@
 
 namespace AVCMS\Bundles\Games\Controller;
 
+use AVCMS\Bundles\Games\Model\Game;
 use AVCMS\Bundles\Tags\Module\TagsModuleTrait;
 use AVCMS\Bundles\Users\Model\User;
 use AVCMS\Core\Controller\Controller;
@@ -33,7 +34,7 @@ class GameModulesController extends Controller
         $this->gameCategories = $this->model('GameCategories');
     }
 
-    public function gamesModule($adminSettings, User $user = null)
+    public function gamesModule($adminSettings, User $user = null, Game $game = null)
     {
         $moreButton = null;
 
@@ -79,6 +80,12 @@ class GameModulesController extends Controller
 
             $query->author($user->getId());
             $moreButton = ['url' => $this->generateUrl('submitted_games', ['filter_user' => $user->getSlug()]), 'label' => 'All Submitted Games'];
+        }
+        elseif ($adminSettings['filter'] == 'related') {
+            if ($game && isset($game->category)) {
+                $query->category($game->category)->getQuery()->where('games.id', '!=', $game->getId());
+                $moreButton = null;
+            }
         }
         else {
             if ($adminSettings['more_button_start_page'] == 2) {

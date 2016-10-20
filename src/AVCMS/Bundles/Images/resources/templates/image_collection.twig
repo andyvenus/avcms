@@ -14,7 +14,7 @@
 
     {% block image_top_modules %}
         <div class="image-top-modules">
-            {{ render_modules('image_collection_top') }}
+            {{ render_modules('image_collection_top', {imageCollection: image_collection}) }}
         </div>
     {% endblock %}
 
@@ -116,7 +116,7 @@
 
             {% block image_details_modules %}
                 <div class="image-details-modules">
-                    {{ render_modules('image_collection_details') }}
+                    {{ render_modules('image_collection_details', {imageCollection: image_collection}) }}
                 </div>
             {% endblock %}
 

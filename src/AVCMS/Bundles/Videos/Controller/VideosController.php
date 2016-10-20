@@ -43,12 +43,12 @@ class VideosController extends Controller
         $this->videoManager = $this->get('video_manager');
     }
 
-    public function playVideoAction(Request $request, $slug)
+    public function watchVideoAction(Request $request, $slug)
     {
         $video = $this->videos->find()
             ->published()
             ->slug($slug)
-            ->join($this->videoCategories, ['name', 'slug'])
+            ->join($this->videoCategories, ['id', 'name', 'slug', 'children'])
             ->joinTaxonomy('tags')
             ->first();
 

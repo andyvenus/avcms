@@ -9,6 +9,7 @@ namespace AVCMS\Bundles\Videos\Controller;
 
 use AVCMS\Bundles\Tags\Module\TagsModuleTrait;
 use AVCMS\Bundles\Users\Model\User;
+use AVCMS\Bundles\Videos\Model\Video;
 use AVCMS\Core\Controller\Controller;
 use AVCMS\Core\Module\Exception\SkipModuleException;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,7 +34,7 @@ class VideoModulesController extends Controller
         $this->videoCategories = $this->model('VideoCategories');
     }
 
-    public function videosModule($adminSettings, User $user = null)
+    public function videosModule($adminSettings, User $user = null, Video $video = null)
     {
         $moreButton = null;
 
@@ -79,6 +80,12 @@ class VideoModulesController extends Controller
 
             $query->author($user->getId());
             $moreButton = ['url' => $this->generateUrl('submitted_videos', ['filter_user' => $user->getSlug()]), 'label' => 'All Submitted Videos'];
+        }
+        elseif ($adminSettings['filter'] == 'related') {
+            if ($video && isset($video->category)) {
+                $query->category($video->category)->getQuery()->where('videos.id', '!=', $video->getId());
+                $moreButton = null;
+            }
         }
         else {
             if ($adminSettings['more_button_start_page'] == 2) {

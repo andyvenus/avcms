@@ -17,7 +17,7 @@
 {% block content %}
     {% block video_top_modules %}
         <div class="video-top-modules">
-            {{ render_modules('watch_video_top') }}
+            {{ render_modules('watch_video_top', {video: video}) }}
         </div>
     {% endblock %}
 
@@ -108,7 +108,7 @@
 
             {% block video_details_modules %}
                 <div class="video-details-modules">
-                    {{ render_modules('watch_video_details') }}
+                    {{ render_modules('watch_video_details', {video: video}) }}
                 </div>
             {% endblock %}
 

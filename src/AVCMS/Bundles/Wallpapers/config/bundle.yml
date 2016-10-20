@@ -294,6 +294,7 @@ modules:
           featured: Featured
           likes: User's Likes
           submitted: User's Submitted Wallpapers
+          related: Related to the Current Wallpaper (if available)
       order:
         type: select
         label: Order

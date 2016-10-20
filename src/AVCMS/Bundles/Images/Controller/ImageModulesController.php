@@ -7,6 +7,7 @@
 
 namespace AVCMS\Bundles\Images\Controller;
 
+use AVCMS\Bundles\Images\Model\ImageCollection;
 use AVCMS\Bundles\Tags\Module\TagsModuleTrait;
 use AVCMS\Bundles\Users\Model\User;
 use AVCMS\Core\Controller\Controller;
@@ -33,7 +34,7 @@ class ImageModulesController extends Controller
         $this->imageCategories = $this->model('ImageCategories');
     }
 
-    public function imagesModule($adminSettings, User $user = null)
+    public function imagesModule($adminSettings, User $user = null, ImageCollection $imageCollection = null)
     {
         $moreButton = null;
 
@@ -79,6 +80,12 @@ class ImageModulesController extends Controller
 
             $query->author($user->getId());
             $moreButton = ['url' => $this->generateUrl('submitted_images', ['filter_user' => $user->getSlug()]), 'label' => 'All Submitted Images'];
+        }
+        elseif ($adminSettings['filter'] == 'related') {
+            if ($imageCollection && isset($imageCollection->category)) {
+                $query->category($imageCollection->category)->getQuery()->where('image_collections.id', '!=', $imageCollection->getId());
+                $moreButton = null;
+            }
         }
         else {
             if ($adminSettings['more_button_start_page'] == 2) {
