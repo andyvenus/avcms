@@ -149,6 +149,17 @@ class UsersAdminController extends AdminBaseController
         return new Response($this->renderAdminSection('@Users/admin/user_options.twig', ['remove_accounts_form' => $removeAccountsForm->createView()]));
     }
 
+    public function userEmailsAction()
+    {
+        $emails = [];
+
+        foreach ($this->model('Users')->query()->get() as $user) {
+            $emails[] = $user->getEmail();
+        }
+
+        return new Response($this->renderAdminSection('@Users/admin/user_emails.twig', ['emails' => $emails]));
+    }
+
     protected function getSharedTemplateVars()
     {
         $template_vars = parent::getSharedTemplateVars();

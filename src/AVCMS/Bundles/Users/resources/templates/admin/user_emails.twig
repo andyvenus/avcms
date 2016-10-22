@@ -1,0 +1,15 @@
+{% extends '@admin/editor.twig' %}
+
+{% block title %}
+    {% trans %}User Email List{% endtrans %}
+{% endblock %}
+
+{% block editor_title %}
+    <a class="light" href="{{ url('users_admin_options') }}">{% trans %}User Options{% endtrans %}</a>
+    <span class="light">/</span>
+    {% trans %}User Email List{% endtrans %}
+{% endblock %}
+
+{% block editor_content %}
+    <textarea class="form-control" rows="20" onClick="this.select();">{{ emails|join(', ') }}</textarea>
+{% endblock %}

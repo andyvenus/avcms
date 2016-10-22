@@ -22,6 +22,10 @@ users_admin_options:
   path: /users/options
   defaults: { _controller: Users::UsersAdminController::userOptionsAction }
 
+users_admin_emails:
+  path: /users/emails
+  defaults: { _controller: Users::UsersAdminController::userEmailsAction }
+
 user_groups_admin_edit:
     path:     /user-groups/edit/{id}
     defaults: { _controller: 'Users::UserGroupsAdminController::editAction' }
