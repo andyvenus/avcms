@@ -55,7 +55,7 @@
                         <a class="btn btn-default" href="{{ path('games_admin_edit', {'id': game.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit Game{% endtrans %}</a>
                     {% endif %}
 
-                    {% if game.fileExtension not in ['unity3d', 'zip', 'rar', 'exe'] %}
+                    {% if game.fileExtension not in ['unity3d', 'zip', 'rar', 'exe'] and game.embedType == 'embed' %}
                         <button class="btn btn-default" id="avcms-game-fullscreen"><span class="glyphicon glyphicon-fullscreen"></span> {% trans %}Fullscreen{% endtrans %}</button>
                     {% endif %}
 

@@ -60,6 +60,9 @@ class EmbedGameTwigExtension extends \Twig_Extension
         if (!$game->getFile()) {
             $fileExtension = 'html_embed';
         }
+        elseif ($game->getEmbedType() == 'link') {
+            $fileExtension = 'link';
+        }
         else {
             $this->setRealGameUrl($game);
             $fileExtension = pathinfo(strtok($game->getFile(),  '?'), PATHINFO_EXTENSION);

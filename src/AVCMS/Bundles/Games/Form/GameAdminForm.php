@@ -24,6 +24,15 @@ class GameAdminForm extends AdminContentForm
             'label' => 'Embed Code',
         ));
 
+        $this->add('embed_type', 'radio', array(
+            'label' => 'Embed Type',
+            'choices' => [
+                'embed' => 'Embed',
+                'link' => 'Open in new window'
+            ],
+            'default' => 'embed'
+        ));
+
         $this->add('width', 'text', array(
             'label' => 'Width',
         ));

@@ -107,6 +107,16 @@ class Game extends Entity implements RateInterface
         return $this->get("embed_code");
     }
 
+    public function setEmbedType($value)
+    {
+        $this->set("embed_type", $value);
+    }
+
+    public function getEmbedType()
+    {
+        return $this->get("embed_type");
+    }
+
     public function getFeatured()
     {
         return $this->get("featured");

@@ -19,7 +19,8 @@ class GamesInstaller extends BundleInstaller
             '1.0.2' => 'install_1_0_2',
             '1.0.3' => 'install_1_0_3',
             '1.0.4' => 'install_1_0_4',
-            '1.0.5' => 'install_1_0_5'
+            '1.0.5' => 'install_1_0_5',
+            '1.0.6' => 'install_1_0_6'
         ];
     }
 
@@ -204,5 +205,16 @@ class GamesInstaller extends BundleInstaller
         $this->PDO->exec("ALTER TABLE {$this->prefix}game_submissions CHANGE `description` `description` text");
         $this->PDO->exec("ALTER TABLE {$this->prefix}game_submissions CHANGE `instructions` `instructions` text");
         $this->PDO->exec("ALTER TABLE {$this->prefix}game_submissions CHANGE `thumbnail` `thumbnail` text");
+    }
+
+    public function install_1_0_6()
+    {
+        $this->PDO->exec("ALTER TABLE {$this->prefix}games ADD `embed_type` varchar(30) NOT NULL DEFAULT 'embed'");
+
+        $this->PDO->exec("
+            INSERT INTO `{$this->prefix}game_embeds` (`extension`, `template`)
+            VALUES
+                ('link','@Games/embeds/link.twig')
+        ");
     }
 }
