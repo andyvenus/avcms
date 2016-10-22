@@ -84,7 +84,7 @@ Video
 Import Video
 Date submitted
 Paste the URL to a video on a site such as YouTube or Vine and any valid details
-                    will automatically be used to fill in the form. You can also enter the URL to any MP4 or FLV video.
+will automatically be used to fill in the form. You can also enter the URL to any MP4 or FLV video.
 Import Videos
 Video Category
 Import YouTube Videos

@@ -60,3 +60,5 @@ Report Issue
 All Liked Wallpapers
 Please login to submit a wallpaper
 Newest Wallpapers
+Wallpapers liked by {username}
+Wallpapers submitted by {username}

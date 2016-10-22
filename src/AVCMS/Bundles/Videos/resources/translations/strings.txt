@@ -45,3 +45,6 @@ Longest Duration
 Shortest Duration
 You can submit a video from any of these sites
 Submit a video for us to use on our site! Just enter the URL to a video on one of the supported sites below and we will find out the details.
+Submit a video for us to use on our site! Just enter the URL to a video on one of the supported sites below.
+Please login to continue watching videos
+Videos submitted by {username}

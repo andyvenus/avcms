@@ -9,3 +9,4 @@ Blog Categories
 Posts tagged with: {tags}
 Subcategories
 Blog Posts
+The latest blog posts

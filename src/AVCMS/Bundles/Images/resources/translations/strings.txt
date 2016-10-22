@@ -38,3 +38,4 @@ Submitted By
 Most Liked
 Images tagged with: {tags}
 Subcategories
+Images submitted by {username}

@@ -80,3 +80,5 @@ Game Submissions
 Review Game Submission
 Submit Game
 Show an advert before the game is loaded
+Related
+Open in new window

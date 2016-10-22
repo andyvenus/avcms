@@ -115,3 +115,4 @@ Show Wallpaper Hits
 Show Comments
 Show Total Comments
 Submit Wallpaper
+The filename split into a comma delimited list. Suitable for tags.

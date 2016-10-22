@@ -38,3 +38,8 @@ You have {total} game plays remaining before you must register
 Please login to continue playing games
 Show only mobile games
 Newest Games
+Google Chrome no longer supports Unity. If you are using Chrome, please use another browser to play this game.
+Submitted By
+Games submitted by {username}
+Download {game}
+Play {game}
