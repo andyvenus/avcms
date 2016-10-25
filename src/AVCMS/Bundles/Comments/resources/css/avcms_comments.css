@@ -5,10 +5,12 @@
 .new-comment {
   margin-bottom: 15px; }
 
-.comment .panel-body {
-  word-break: break-all; }
+.avcms-comment .panel-body {
+  word-wrap: break-word; }
 
 .comment-replies {
   width: 90%;
   min-width: 300px;
   float: right; }
+
+/*# sourceMappingURL=avcms_comments.css.map */
