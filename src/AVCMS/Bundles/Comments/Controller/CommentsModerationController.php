@@ -8,8 +8,10 @@
 namespace AVCMS\Bundles\Comments\Controller;
 
 use AVCMS\Bundles\Admin\Controller\AdminBaseController;
+use AVCMS\Bundles\Comments\Model\Comment;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class CommentsModerationController extends AdminBaseController
@@ -48,6 +50,11 @@ class CommentsModerationController extends AdminBaseController
         $ids = (array) $ids;
         foreach ($ids as $id) {
             $comment = $this->comments->getOne($id);
+
+            if (!$comment) {
+                throw new NotFoundHttpException();
+            }
+
             $type = $comment->getContentType();
 
             $typeConfig = $this->container->get('comment_types_manager')->getContentType($type);
@@ -55,8 +62,12 @@ class CommentsModerationController extends AdminBaseController
             $model = $this->model($typeConfig['model']);
             $content = $model->getOne($comment->getContentId());
 
+            $this->deleteAllReplies($comment);
+
+            $this->comments->delete($comment);
+
             if (is_callable([$content, 'getComments']) && is_callable([$content, 'setComments'])) {
-                $content->setComments(intval($content->getComments()) - 1);
+                $content->setComments($this->comments->getContentCommentCount($type, $comment->getContentId()));
                 $model->save($content);
             }
 
@@ -65,8 +76,17 @@ class CommentsModerationController extends AdminBaseController
             }
         }
 
-        $this->comments->deleteById($ids);
-
         return new JsonResponse(array('success' => 1));
+    }
+
+    private function deleteAllReplies(Comment $comment)
+    {
+        $replies = $this->comments->getReplies($comment->getId(), $this->model('Users'));
+
+        foreach ($replies as $reply) {
+            $this->comments->delete($reply);
+
+            $this->deleteAllReplies($reply);
+        }
     }
 }

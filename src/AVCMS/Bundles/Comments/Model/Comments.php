@@ -67,4 +67,9 @@ class Comments extends Model
 
         $this->query()->where('id', $commentId)->update(['replies' => $replies]);
     }
+
+    public function getContentCommentCount($contentType, $contentId)
+    {
+        return $this->query()->where('content_type', $contentType)->where('content_id', $contentId)->count();
+    }
 }

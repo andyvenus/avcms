@@ -139,7 +139,7 @@ avcms.comments = {
                         alert('Error: '+data.error);
                     }
                     else {
-                        button.parents('.avcms-comment').remove();
+                        $('.avcms-comment[data-id='+id+'], .avcms-comment-replies-container[data-reply-id='+id+']').remove();
                     }
                 }
             })
