@@ -29,6 +29,8 @@ class MenuAdminForm extends FormBlueprint
 
     public function getValidationRules(Validator $validator)
     {
-        $validator->addRule('id', new MustNotExist('AVCMS\Bundles\CmsFoundation\Model\Menus', 'id', $this->itemId), 'That menu identifier is already in use');
+        if ($this->itemId === 0) {
+            $validator->addRule('id', new MustNotExist('AVCMS\Bundles\CmsFoundation\Model\Menus', 'id', $this->itemId), 'That menu identifier is already in use');
+        }
     }
 }
