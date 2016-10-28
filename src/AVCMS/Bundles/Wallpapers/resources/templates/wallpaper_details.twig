@@ -84,7 +84,14 @@
                     <div class="col-md-4">
                         <p>
                             {% trans %}Original Resolution{% endtrans %}:
-                            <a href="{{ path('wallpaper_preview', {slug: wallpaper.slug, resolution: wallpaper.originalWidth ~ 'x' ~ wallpaper.originalHeight}) }}">{{ wallpaper.originalWidth }}x{{ wallpaper.originalHeight }}</a>
+
+                            {% if settings.wallpaper_res_link_type == 'preview' %}
+                                {% set orig_res_url = path('wallpaper_preview', {slug: wallpaper.slug, resolution: wallpaper.originalWidth ~ 'x' ~ wallpaper.originalHeight}) %}
+                            {% else %}
+                                {% set orig_res_url = wp_download_url(wallpaper, wallpaper.originalWidth, wallpaper.originalHeight) %}
+                            {% endif %}
+
+                            <a href="{{ orig_res_url }}">{{ wallpaper.originalWidth }}x{{ wallpaper.originalHeight }}</a>
                         </p>
                     </div>
                 </div>
@@ -119,12 +126,7 @@
                                     <h4>{{ resolution_category }}</h4>
 
                                     {% for resolution, name in category_resolutions %}
-                                        {% if settings.wallpaper_res_link_type == 'preview' %}
-                                            {% set res_url = path('wallpaper_preview', {slug: wallpaper.slug, resolution: resolution}) %}
-                                        {% else %}
-                                            {% set res = resolution|split('x') %}
-                                            {% set res_url = wp_download_url(wallpaper, res[0], res[1]) %}
-                                        {% endif %}
+                                        o
 
                                         <a data-resolution="{{ resolution }}" href="{{ res_url }}">{{ name }}</a><br/>
                                     {% endfor %}
