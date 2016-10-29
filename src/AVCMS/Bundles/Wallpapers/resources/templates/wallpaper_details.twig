@@ -126,7 +126,12 @@
                                     <h4>{{ resolution_category }}</h4>
 
                                     {% for resolution, name in category_resolutions %}
-                                        o
+                                        {% if settings.wallpaper_res_link_type == 'preview' %}
+                                            {% set res_url = path('wallpaper_preview', {slug: wallpaper.slug, resolution: resolution}) %}
+                                        {% else %}
+                                            {% set res = resolution|split('x') %}
+                                            {% set res_url = wp_download_url(wallpaper, res[0], res[1]) %}
+                                        {% endif %}
 
                                         <a data-resolution="{{ resolution }}" href="{{ res_url }}">{{ name }}</a><br/>
                                     {% endfor %}
