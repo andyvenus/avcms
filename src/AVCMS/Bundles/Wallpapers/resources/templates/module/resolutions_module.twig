@@ -1,13 +1,13 @@
-<p>{% trans %}Your resolution{% endtrans %}: <a href="#" class="current-res-link"></a></p>
+<p>{% trans %}Your resolution{% endtrans %}: <a href="#" class="current-res-browse-link"></a></p>
 
 {% for category, resolutions in resolution_categories %}
-    <div class="row">
+    <div class="row module-resolutions">
         <div class="col-xs-12">
             <p><strong>{{ category }}</strong></p>
 
             <p>
                 {% for resolution_id, resolution_name in resolutions %}
-                    <a data-resolution="{{ resolution_id }}" href="{{ path('wallpaper_browse_resolution', {'resolution': resolution_id}) }}">{{ resolution_name }}</a><br/>
+                    <a data-browse-resolution="{{ resolution_id }}" href="{{ path('wallpaper_browse_resolution', {'resolution': resolution_id}) }}">{{ resolution_name }}</a><br/>
                 {% endfor %}
             </p>
         </div>
