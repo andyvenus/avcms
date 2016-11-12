@@ -135,12 +135,5 @@ class ImagesInstaller extends BundleInstaller
         $this->PDO->exec("ALTER TABLE {$this->prefix}image_collections CHANGE `description` `description` text");
         $this->PDO->exec("ALTER TABLE {$this->prefix}image_collections CHANGE `thumbnail` `thumbnail` text");
         $this->PDO->exec("ALTER TABLE {$this->prefix}image_collections CHANGE `featured` `featured` tinyint(1) NOT NULL DEFAULT 0");
-
-        $this->PDO->exec("ALTER TABLE {$this->prefix}feed_games CHANGE `description` `description` text");
-        $this->PDO->exec("ALTER TABLE {$this->prefix}feed_games CHANGE `width` `width` int(11) unsigned NOT NULL DEFAULT 0");
-        $this->PDO->exec("ALTER TABLE {$this->prefix}feed_games CHANGE `height` `height` int(11) unsigned NOT NULL DEFAULT 0");
-        $this->PDO->exec("ALTER TABLE {$this->prefix}feed_games CHANGE `instructions` `instructions` text");
-
-        $this->PDO->exec("ALTER TABLE {$this->prefix}game_submissions CHANGE `description` `description` text");
     }
 }
