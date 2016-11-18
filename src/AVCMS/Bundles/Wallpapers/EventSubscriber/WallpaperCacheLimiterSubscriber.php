@@ -42,7 +42,9 @@ class WallpaperCacheLimiterSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if ($request->get('_route') === 'wallpaper_image' && strpos($response->headers->get('Content-Type'), 'image') !== false && $request->get('thumbnail') !== true) {
+        $route = $request->get('_route');
+
+        if (($route === 'wallpaper_image' || $route == 'wallpaper_download' ) && strpos($response->headers->get('Content-Type'), 'image') !== false && $request->get('thumbnail') !== true) {
             $config = $this->bundleManager->getBundleConfig('Wallpapers');
 
             $wallpaperCacheDir = $this->rootDir.'/'.$this->webPath.'/'.$config->config->web_dir.'/'.$request->get('slug');
