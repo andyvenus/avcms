@@ -243,7 +243,16 @@ class ImagesController extends Controller
 
         $formBlueprint = new SubmitImageForm(new CategoryChoicesProvider($this->model('ImageCategories')));
 
+        if ($request->files->has('files') && is_array($request->files->get('files')) && $request->files->get('files')[0] == null) {
+            $request->files->remove('files');
+            $noFiles = true;
+        }
+
         $form = $this->buildForm($formBlueprint, $request, $newSubmission);
+
+        if (isset($noFiles)) {
+            $form->setError('files', 'You must upload at least one file');
+        }
 
         if ($form->isValid()) {
             $form->saveToEntities();
