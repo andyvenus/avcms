@@ -13,7 +13,7 @@ class ChangeEmailForm extends FormBlueprint
 {
     public function __construct($currentEmail)
     {
-        $this->add('email_address', 'text', [
+        $this->add('email', 'text', [
             'label' => 'Email Address',
             'required' => true,
             'validation' => [
