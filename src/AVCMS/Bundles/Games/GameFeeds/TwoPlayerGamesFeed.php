@@ -20,7 +20,7 @@ class TwoPlayerGamesFeed implements GameFeedInterface
      */
     public function getFeedUrl(SettingsManager $settings)
     {
-        return 'http://www.2pg.com/games_for_your_site.xml';
+        return 'http://old.2pg.com/games_for_your_site.xml';
     }
 
     /**
