@@ -117,6 +117,11 @@ class Wallpaper extends ContentEntity implements RateInterface
         $this->set('original_height', $height);
     }
 
+    public function getOriginalResolution()
+    {
+        return $this->getOriginalWidth() . 'x' . $this->getOriginalHeight();
+    }
+
     public function getSubmitterId()
     {
         return $this->get("submitter_id");

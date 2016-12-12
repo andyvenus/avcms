@@ -148,8 +148,15 @@
             {% endblock %}
         {% else %}
             {% block wallpaper_original_resolution %}
+                {% if settings.wallpaper_res_link_type == 'preview' %}
+                    {% set res_url = path('wallpaper_preview', {slug: wallpaper.slug, resolution: wallpaper.originalResolution}) %}
+                {% else %}
+                    {% set res = resolution|split('x') %}
+                    {% set res_url = wp_download_url(wallpaper, wallpaper.originalWidth, wallpaper.originalHeight) %}
+                {% endif %}
+
                 <div class="wallpaper-original-only text-center">
-                    <a href="{{ path('wallpaper_preview', {slug: wallpaper.slug, resolution: wallpaper.originalWidth ~ 'x' ~ wallpaper.originalHeight }) }}" class="btn btn-primary btn-lg">
+                    <a href="{{ res_url }}" class="btn btn-primary btn-lg">
                         {% trans %}Preview & Download{% endtrans %}
                     </a>
                 </div>
