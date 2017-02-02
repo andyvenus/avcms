@@ -143,7 +143,11 @@ class AssetManager
             }
         }
 
-        $assetUrls = array_merge($assetUrls, $this->rawAssetUrls[$assetType][$environment]);
+        $assetUrls = array_merge(
+            $assetUrls,
+            $this->rawAssetUrls[$assetType][$environment],
+            $this->rawAssetUrls[$assetType][AssetManager::SHARED]
+        );
 
         return $assetUrls;
     }

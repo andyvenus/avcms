@@ -72,7 +72,12 @@ class AssetManagerExtension extends \Twig_Extension
         }
 
         $urls = ["web/compiled/$environment.$ext?x={$this->getLastGen()}"];
-        $urls = array_merge($urls, $this->assetManager->getRawAssetUrls($assetType, $environment));
+
+        $urls = array_merge(
+            $urls,
+            $this->assetManager->getRawAssetUrls($assetType, $environment),
+            $this->assetManager->getRawAssetUrls($assetType, AssetManager::SHARED)
+        );
 
         return $urls;
     }
