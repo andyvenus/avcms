@@ -1,0 +1,38 @@
+.video-duration {
+  bottom: 0px;
+  right: 0px;
+  display: inline-block;
+  position: absolute;
+  color: white;
+  background: rgba(22, 22, 22, 0.71);
+  font-size: 11px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  padding: 1px 3px; }
+
+.video-thumb-container {
+  position: relative; }
+
+#avcms-video-container {
+  margin-bottom: 15px;
+  overflow: auto; }
+
+#avcms-video-container-inner {
+  overflow: hidden; }
+
+#avcms-video-advert {
+  text-align: center;
+  margin-bottom: 15px;
+  display: none; }
+
+#avcms-video-advert-countdown {
+  font-size: 20px; }
+
+#avcms-video-advert-countdown, #avcms-video-advert-skip {
+  display: inline-block; }
+
+#avcms-video-advert-countdown {
+  width: 40px; }
+
+.video-advert-info {
+  margin-bottom: 15px; }
