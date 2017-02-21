@@ -161,6 +161,7 @@ admin_settings:
       2: 2
       3: 3
       4: 4
+      6: 6
     default: 2
     section: browse_videos
   browse_videos_per_page:
