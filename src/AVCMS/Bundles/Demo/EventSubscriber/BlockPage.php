@@ -17,19 +17,21 @@ class BlockPage implements EventSubscriberInterface
     public function block(GetResponseEvent $event)
     {
         $request = $event->getRequest();
-        $route = $request->get('_route');
+        $uri = $request->getRequestUri();
 
-        $blocked = ['generate_assets', 'check_for_updates', 'updates'];
+        $blocked = ['/admin/regenerate-assets', '/email-password', '/admin/updates'];
 
-        if (in_array($route, $blocked)) {
-            $event->setResponse(new Response('Sorry this page is blocked in the demo'));
+        foreach ($blocked as $url) {
+            if (strpos($uri, $url) === 0) {
+                $event->setResponse(new Response('Sorry this page is blocked in the demo'));
+            }
         }
     }
 
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::REQUEST => ['block']
+            KernelEvents::REQUEST => [['block', -50]]
         ];
     }
 }
