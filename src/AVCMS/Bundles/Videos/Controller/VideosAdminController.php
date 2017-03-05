@@ -114,7 +114,12 @@ class VideosAdminController extends AdminBaseController
             ->setSearchFields(array('videos.name'))
             ->setResultsPerPage(15)
             ->join($this->model('VideoCategories'), ['id', 'name', 'slug'])
-            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null, 'category' => 0));
+            ->handleRequest($request, array('page' => 1, 'order' => 'newest', 'id' => null, 'search' => null));
+
+        if ($categoryId = $request->query->get('category')) {
+            $finder->category($this->model('VideoCategories')->getOne($categoryId));
+        }
+
         $items = $finder->get();
 
         return new Response($this->render('@Videos/admin/videos_finder.twig', array('items' => $items, 'page' => $finder->getCurrentPage())));
