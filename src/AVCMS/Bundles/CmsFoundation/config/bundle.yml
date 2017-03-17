@@ -27,11 +27,6 @@ admin_settings:
     default: AVCMS
     section: main
     required: true
-    validation:
-      min_length:
-        class: AV\Validation\Rules\Length
-        arguments:
-          - 5
   site_tagline:
     type: text
     label: Site Tagline
