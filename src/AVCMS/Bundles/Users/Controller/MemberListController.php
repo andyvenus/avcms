@@ -11,6 +11,7 @@ use AVCMS\Bundles\Users\Form\MemberListSearchForm;
 use AVCMS\Core\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class MemberListController extends Controller
 {
@@ -26,6 +27,10 @@ class MemberListController extends Controller
 
     public function memberListAction(Request $request)
     {
+        if (!$this->setting('users_enabled')) {
+            throw new NotFoundHttpException;
+        }
+
         $finder = $this->users->find();
         $users = $finder->setSearchFields(array('username', 'email'))
             ->setResultsPerPage(32)
