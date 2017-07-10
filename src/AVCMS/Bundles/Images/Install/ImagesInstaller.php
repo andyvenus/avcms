@@ -62,7 +62,7 @@ class ImagesInstaller extends BundleInstaller
                   `collection_id` int(11) DEFAULT NULL,
                   `import_folder` text,
                   PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
 
         $this->PDO->exec("
