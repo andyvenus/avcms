@@ -17,12 +17,9 @@ class GameFeedServices implements ServicesInterface
     {
         $container->register('game_feed_downloader', 'AVCMS\Bundles\Games\GameFeeds\Downloader\GameFeedDownloader')
             ->setArguments([new Reference('settings_manager'), new Reference('feed_games.model')])
-            ->addMethodCall('addFeed', [new Reference('feed.fgd')])
             ->addMethodCall('addFeed', [new Reference('feed.kongregate')])
-            ->addMethodCall('addFeed', [new Reference('feed.spil_games')])
             ->addMethodCall('addFeed', [new Reference('feed.free_online_games')])
             ->addMethodCall('addFeed', [new Reference('feed.arcade_game_feed')])
-            ->addMethodCall('addFeed', [new Reference('feed.2_player_games')])
             ->addMethodCall('addFeed', [new Reference('feed.famobi')])
             ->addMethodCall('addFeed', [new Reference('feed.gamepix')])
             ->addMethodCall('addFeed', [new Reference('feed.html_games')])
