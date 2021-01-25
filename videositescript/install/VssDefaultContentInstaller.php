@@ -133,14 +133,14 @@ class VssDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentIns
         $modules->insert([$newestVideosSidebar, $featuredVideosHome, $newestVideosHome, $newestPostsModule, $videoTags, $linksModule, $shareModule]);
 
         // Updates - Admin Dashboard
-        $updatesModule = $modules->newEntity();
-        $updatesModule->setModule('avcms_updates');
-        $updatesModule->setActive(1);
-        $updatesModule->setPosition('admin_dashboard');
-        $updatesModule->setTitle('Updates');
-        $updatesModule->setShowHeader(1);
-        $updatesModule->setTemplateType('panel');
-        $updatesModule->setCacheTime(999999);
+        // $updatesModule = $modules->newEntity();
+        // $updatesModule->setModule('avcms_updates');
+        // $updatesModule->setActive(1);
+        // $updatesModule->setPosition('admin_dashboard');
+        // $updatesModule->setTitle('Updates');
+        // $updatesModule->setShowHeader(1);
+        // $updatesModule->setTemplateType('panel');
+        // $updatesModule->setCacheTime(999999);
 
         // Reports - Admin Dashboard
         $reportsModule = $modules->newEntity();
@@ -154,13 +154,13 @@ class VssDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentIns
         $reportsModule->setCacheTime(3600);
 
         // AVS News - Admin Dashboard
-        $avsNewsModule = $modules->newEntity();
-        $avsNewsModule->setModule('avcms_news');
-        $avsNewsModule->setActive(1);
-        $avsNewsModule->setPosition('admin_dashboard');
-        $avsNewsModule->setTitle('AV Scripts News');
-        $avsNewsModule->setShowHeader(1);
-        $avsNewsModule->setTemplateType('panel');
+        // $avsNewsModule = $modules->newEntity();
+        // $avsNewsModule->setModule('avcms_news');
+        // $avsNewsModule->setActive(1);
+        // $avsNewsModule->setPosition('admin_dashboard');
+        // $avsNewsModule->setTitle('AV Scripts News');
+        // $avsNewsModule->setShowHeader(1);
+        // $avsNewsModule->setTemplateType('panel');
 
         // Video Stats - Admin Dashboard
         $videoStatsModule = $modules->newEntity();
@@ -200,7 +200,7 @@ class VssDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentIns
         $likedVideosModule->setTemplateType('panel');
         $likedVideosModule->setSettingsArray(['layout' => 'thumbnails', 'columns' => 2, 'limit' => 6, 'filter' => 'likes']);
 
-        $modules->insert([$updatesModule, $reportsModule, $avsNewsModule, $videoStatsModule, $userInfoModule, $likedVideosModule, $topVideosAdminModule]);
+        $modules->insert([$reportsModule, $videoStatsModule, $userInfoModule, $likedVideosModule, $topVideosAdminModule]);
     }
 
     public function blogDefaults()

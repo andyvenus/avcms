@@ -80,7 +80,5 @@ PrivateMessages:
     enabled: true
 Friends:
     enabled: true
-NextPrevMod:
-    enabled: true
 BulkUpload:
     enabled: true

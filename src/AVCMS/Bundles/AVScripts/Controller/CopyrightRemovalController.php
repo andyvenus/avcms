@@ -18,9 +18,6 @@ class CopyrightRemovalController extends AdminBaseController
 {
     public function copyrightRemovalAction(Request $request)
     {
-        $appInfo = $this->getParam('app_config')['info'];
-        $webmasterDir = $this->getParam('root_dir').'/webmaster';
-
         $form = $this->buildForm(new CopyrightRemovalForm($this->setting('copyright_message')), $request);
 
         if ($form->isSubmitted()) {
@@ -30,18 +27,8 @@ class CopyrightRemovalController extends AdminBaseController
         }
 
         $apiResponse = null;
-        if (file_exists($webmasterDir.'/license.php')) {
-            $curl = new Curl();
 
-            $apiResponse = $curl->post($this->getParam('avs_api_url') . '/validate-copyright-removal', ['app_id' => $appInfo['id'], 'license_key' => include $webmasterDir . '/license.php']);
-
-            if (!is_object($apiResponse)) {
-                $apiResponse = ['success' => false, 'error' => 'Invalid Server Response'];
-            }
-        }
-        else {
-            $apiResponse = ['success' => true];
-        }
+        $apiResponse = ['success' => true];
 
         return new Response($this->renderAdminSection('@AVScripts/admin/copyright_removal.twig', ['api_response' => $apiResponse, 'form' => $form->createView()]));
     }

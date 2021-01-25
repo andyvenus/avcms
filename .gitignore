@@ -1,0 +1,11 @@
+webmaster/config/database.php
+webmaster/installer_lock.txt
+vendor
+web/resources/*
+!web/resources/.gitkeep
+cache/*
+web/compiled/*
+!web/compiled/.gitkeep
+.idea/*
+dev/*
+!dev/.gitkeep

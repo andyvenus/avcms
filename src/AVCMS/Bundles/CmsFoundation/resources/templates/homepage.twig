@@ -1,6 +1,6 @@
 {% extends 'index.twig' %}
 
-{% if full_title %}
+{% if has_full_title %}
     {% block full_title %}{{ homepage_title|trans }}{% endblock %}
 {% else %}
     {% block title %}{{ homepage_title|trans }}{% endblock %}

@@ -1,0 +1,17 @@
+h1, h2, h3, h4, h5, h6, p {
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.avcms-vertical-helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.site-offline {
+  background-color: #a3200f;
+  color: white;
+  text-align: center;
+  padding: 4px;
+}

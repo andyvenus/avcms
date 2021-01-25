@@ -212,14 +212,14 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $modules->insert([$featuredVideosHome, $newestVideosHome, $videoTags, $featuredGamesHome, $newestGamesHome, $featuredImagesHome, $newestImagesHome, $newestWallpapersSidebar, $featuredWallpapersHome, $newestWallpapersHome, $wallpaperTags, $newestPostsModule, $gameTags, $imageTags]);
 
         // Updates - Admin Dashboard
-        $updatesModule = $modules->newEntity();
-        $updatesModule->setModule('avcms_updates');
-        $updatesModule->setActive(1);
-        $updatesModule->setPosition('admin_dashboard');
-        $updatesModule->setTitle('Updates');
-        $updatesModule->setShowHeader(1);
-        $updatesModule->setTemplateType('panel');
-        $updatesModule->setCacheTime(999999);
+        // $updatesModule = $modules->newEntity();
+        // $updatesModule->setModule('avcms_updates');
+        // $updatesModule->setActive(1);
+        // $updatesModule->setPosition('admin_dashboard');
+        // $updatesModule->setTitle('Updates');
+        // $updatesModule->setShowHeader(1);
+        // $updatesModule->setTemplateType('panel');
+        // $updatesModule->setCacheTime(999999);
 
         // Reports - Admin Dashboard
         $reportsModule = $modules->newEntity();
@@ -233,13 +233,13 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $reportsModule->setCacheTime(3600);
 
         // AVS News - Admin Dashboard
-        $avsNewsModule = $modules->newEntity();
-        $avsNewsModule->setModule('avcms_news');
-        $avsNewsModule->setActive(1);
-        $avsNewsModule->setPosition('admin_dashboard');
-        $avsNewsModule->setTitle('AV Scripts News');
-        $avsNewsModule->setShowHeader(1);
-        $avsNewsModule->setTemplateType('panel');
+        // $avsNewsModule = $modules->newEntity();
+        // $avsNewsModule->setModule('avcms_news');
+        // $avsNewsModule->setActive(1);
+        // $avsNewsModule->setPosition('admin_dashboard');
+        // $avsNewsModule->setTitle('AV Scripts News');
+        // $avsNewsModule->setShowHeader(1);
+        // $avsNewsModule->setTemplateType('panel');
 
         // Top Wallpapers - Admin Dashboard
         $topWallpapersAdminModule = $modules->newEntity();
@@ -300,7 +300,7 @@ class AVCMSDefaultContentInstaller extends \AVCMS\Core\Installer\DefaultContentI
         $likedWallpapersModule->setTemplateType('panel');
         $likedWallpapersModule->setSettingsArray(['layout' => 'thumbnails', 'columns' => 2, 'limit' => 6, 'filter' => 'likes']);
 
-        $modules->insert([$updatesModule, $reportsModule, $avsNewsModule, $topWallpapersAdminModule, $topVideosAdminModule, $userInfoModule, $likedWallpapersModule, $topGamesAdminModule, $topImagesAdminModule]);
+        $modules->insert([$reportsModule, $topWallpapersAdminModule, $topVideosAdminModule, $userInfoModule, $likedWallpapersModule, $topGamesAdminModule, $topImagesAdminModule]);
     }
 
     public function blogDefaults()

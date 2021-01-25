@@ -28,6 +28,6 @@ class HomepageController extends Controller
             $description = $this->setting($modulePosition.'_meta_description');
         }
 
-        return new Response($this->render('@CmsFoundation/homepage.twig', ['module_position' => $modulePosition, 'homepage_title' => $title, 'full_title' => $fullTitle, 'homepage_description' => $description]));
+        return new Response($this->render('@CmsFoundation/homepage.twig', ['module_position' => $modulePosition, 'homepage_title' => $title, 'has_full_title' => $fullTitle, 'homepage_description' => $description]));
     }
 }
