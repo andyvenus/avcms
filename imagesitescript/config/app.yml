@@ -9,8 +9,4 @@ bundle_dirs:
   AVCMS\Bundles: src/AVCMS/Bundles
   AVCMS\BundlesDev: src/AVCMS/BundlesDev
 
-license:
-  length: 15
-  prefix: iss
-
 default_content_installer: ImageDefaultContentInstaller

@@ -9,8 +9,4 @@ bundle_dirs:
   AVCMS\Bundles: src/AVCMS/Bundles
   AVCMS\BundlesDev: src/AVCMS/BundlesDev
 
-license:
-  length: 15
-  prefix: wss
-
 default_content_installer: WallpaperDefaultContentInstaller

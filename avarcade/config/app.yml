@@ -10,7 +10,3 @@ bundle_dirs:
   AVCMS\BundlesDev: src/AVCMS/BundlesDev
 
 default_content_installer: AVArcadeDefaultContentInstaller
-
-license:
-  length: 30
-  prefix: ava

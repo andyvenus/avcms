@@ -10,7 +10,3 @@ bundle_dirs:
   AVCMS\BundlesDev: src/AVCMS/BundlesDev
 
 default_content_installer: VssDefaultContentInstaller
-
-license:
-  length: 15
-  prefix: vss
